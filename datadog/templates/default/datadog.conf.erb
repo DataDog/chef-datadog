@@ -1,0 +1,152 @@
+[Main]
+
+# The host of the Datadog intake server to send agent data to 
+dd_url: <%= @dd_url %>
+
+# The Datadog api key to associate your agent's data with your organization.
+# Can be found here:
+# https://app.datadoghq.com/account/settings
+api_key: <%= @api_key %>
+
+# Boolean to enable debug_mode, which outputs massive amounts of log messages 
+# to the /tmp/ directory.
+debug_mode: no 
+
+# How often you want the agent to collect data, in seconds. Any value between
+# 15 and 60 is a reasonable interval.
+check_freq: 15
+
+# unused, leave blank
+agent_key:
+
+# use chef's hostname instead of the result of `hostname`
+hostname: <%= node.name %>
+
+# ========================================================================== #
+# Service-specific configuration                                             #
+# ========================================================================== #
+
+# -------------------------------------------------------------------------- #
+#   Apache                                                                   #
+# -------------------------------------------------------------------------- #
+
+# Url to Apache's status page. Must have mod_status installed.
+# See http://httpd.apache.org/docs/2.0/mod/mod_status.html for details.
+#apache_status_url: http://www.example.com/server-status/?auto
+
+
+# -------------------------------------------------------------------------- #
+#   Ganglia                                                                  #
+# -------------------------------------------------------------------------- #
+
+# Ganglia host where gmetad is running
+#ganglia_host: localhost
+
+# Ganglia port where gmetad is running
+#ganglia_port: 8651
+
+
+# -------------------------------------------------------------------------- #
+#   MySQL                                                                    #
+# -------------------------------------------------------------------------- #
+
+# MySQL host
+#mysql_server:
+
+# MySQL user. It only runs "SHOW STATUS" queries, which doesn't require
+# any privileges, so you should consider creating a separate, unprivileged
+# user
+#mysql_user:
+
+# MySQL user's password
+#mysql_pass:
+
+
+# -------------------------------------------------------------------------- #
+#   Nginx                                                                    #
+# -------------------------------------------------------------------------- #
+
+# Url to nginx's status page. Must have http_stub_status_module installed.
+# See http://wiki.nginx.org/HttpStubStatusModule for details.
+#nginx_status_url: http://localhost:81/nginx_status/
+
+# -------------------------------------------------------------------------- #
+#   RabbitMQ                                                                 #
+# -------------------------------------------------------------------------- #
+
+# Url to RabbitMQ's status page. Must have rabbitmq-status plugin installed.
+# See http://www.lshift.net/blog/2009/11/30/introducing-rabbitmq-status-plugin 
+# for details. 
+#rabbitmq_status_url: http://www.example.com:55672/json
+#rabbitmq_user: guest
+#rabbitmq_pass: guest
+
+
+# -------------------------------------------------------------------------- #
+#   MongoDB                                                                  #
+# -------------------------------------------------------------------------- #
+
+# MongoDB uri. For example: mongodb://my_user:my_pass@localhost/my_db
+#mongodb_server:
+
+# -------------------------------------------------------------------------- #
+#   CouchDB                                                                  #
+# -------------------------------------------------------------------------- #
+
+# CouchDB host
+#couchdb_server:
+
+
+# -------------------------------------------------------------------------- #
+#   Hudson                                                                   #
+# -------------------------------------------------------------------------- #
+
+# Path to Hudson's home directory
+#hudson_home: /var/lib/hudson/
+
+<% if node[:nagios] && node[:nagios][:server] && node[:nagios][:log_dir] %>
+# -------------------------------------------------------------------------- #
+#   Nagios                                                                   #
+# -------------------------------------------------------------------------- #
+
+# Path to Nagios's event log file
+nagios_log: <%= node[:nagios][:log_dir] %>/nagios.log
+<% end %>
+
+# -------------------------------------------------------------------------- #
+#   Cassandra                                                                #
+# -------------------------------------------------------------------------- #
+#cassandra_host: localhost
+#cassandra_port: 8080
+#cassandra_nodetool: /usr/bin/nodetool
+
+# -------------------------------------------------------------------------- #
+#   Java                                                                     #
+# -------------------------------------------------------------------------- #
+
+# JMX server:port to connect to
+# jvm_jmx_server: localhost:8090
+#jvm_jmx_server:
+
+# JMX user to log in with, if needed
+#jvm_jmx_user: john
+
+# Password for the configured JMX user
+#jvm_jmx_pass: foobar
+
+# Name to report the statistics for this java VM. This will allow to monitor
+# Several JVMs running on the same machine
+#jvm_jmx_name: Java
+
+# -------------------------------------------------------------------------- #
+#   Tomcat                                                                   #
+# -------------------------------------------------------------------------- #
+
+# host:port to connect to. Must be configured in tomcat setenv.sh or similar
+#tomcat_jmx_server:
+
+# JMX user to log in with, if needed
+#tomcat_jmx_user: john
+
+# Password for the configured JMX user
+#tomcat_jmx_pass: foobar
