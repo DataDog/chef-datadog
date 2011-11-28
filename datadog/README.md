@@ -67,9 +67,10 @@ Changes/Roadmap
 ## Future
 * `dd-agent` - Add support for RPM installs - Red Hat, CentOS, Scientific, Fedora
 
-## v.1.0.2
+## v.0.0.2
 * Initial refactoring, including the `dd-agent` cookbook here
 * Adding chef-handler-datadog to report to the newsfeed
+* Added ruby-dev dependency
 
 License and Author
 ==================
