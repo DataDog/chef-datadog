@@ -19,7 +19,7 @@ Cookbooks
 The following Opscode cookbooks are dependencies:
 
 * apt
-& chef_handler
+* chef_handler
 * yum
 
 
@@ -27,7 +27,7 @@ Attributes
 ==========
 
 * `node[:datadog][:api_key]` = This needs to be retrieved from your Account Settings page.
-* `node[:datadog][:application_key]` = There are none by default. Visit the Account Settings page to create a new APplication Key, to be used in conjunction with your API key.
+* `node[:datadog][:application_key]` = There are none by default. Visit the Account Settings page to create a new Application Key, to be used in conjunction with your API key.
 
 * `node[:datadog][:url]` = The location of where Datadog is hosted. Should never change.
 * `node[:datadog][:repo]` = Where the Datadog-maintained packages are located. Should never change.
