@@ -17,9 +17,9 @@
 # limitations under the License.
 #
 
-# Only support Debian & Ubuntu (RedHat et al. coming soon)
 case node.platform
 when "debian", "ubuntu"
+  include_recipe "apt"
   
   apt_repository 'datadog' do
     keyserver 'keyserver.ubuntu.com'
@@ -30,28 +30,53 @@ when "debian", "ubuntu"
     action :add
   end
 
-  package 'datadog-agent'
+  package "datadog-agent"
 
-  service "datadog-agent" do
-    action :enable
-    supports :restart => true
+when "redhat", "centos"
+  # Depending on the version, deploy a package    
+  include_recipe "yum"
+
+  yum_repository "datadog" do
+    name "datadog"
+    description "datadog"
+    url "http://apt.datadoghq.com/rpm/"
+    action :add
   end
 
-  directory "/etc/dd-agent" do
-      owner "root"
-      group "root"
-      mode 0755
-  end
+  # datadog-agent requires python2.6, not available on RH5 by default
+  if node[:platform_version].to_i <= 5
+    package "datadog-agent-base"
+  elsif node[:platform_version].to_i >= 6
+    package "datadog-agent"
+  end 
+end
 
-  if node.attribute?("datadog") and node.datadog.attribute?("api_key")
-      template "/etc/dd-agent/datadog.conf" do
-          owner "root"
-          group "root"
-          mode 0644
-          variables(:api_key => node[:datadog][:api_key], :dd_url => node[:datadog][:url])
-          notifies :restart, "service[datadog-agent]", :immediately
-      end
-  else
-      raise "Add a [:datadog][:api_key] attribute to configure this node's Datadog Agent."
+# Common configuration
+service "datadog-agent" do
+  action :enable
+  supports :restart => true
+end
+
+# Make sure the config directory exists
+directory "/etc/dd-agent" do
+  owner "root"
+  group "root"
+  mode 0755
+end
+
+#
+# Configures a basic agent
+# If you want to autoconfigure sources based on other chef recipes
+# Fork this repo and issue pull requests
+#
+if node.attribute?("datadog") and node.datadog.attribute?("api_key")
+  template "/etc/dd-agent/datadog.conf" do
+    owner "root"
+    group "root"
+    mode 0644
+    variables(:api_key => node[:datadog][:api_key], :dd_url => node[:datadog][:url])
+    notifies :restart, "service[datadog-agent]", :immediately
   end
+else
+  raise "Add a [:datadog][:api_key] attribute to configure this node's Datadog Agent."
 end
