@@ -64,8 +64,8 @@ We are not making use of data_bags in this recipe at this time, as it is unlikel
 Changes/Roadmap
 ===============
 
-## Future
-* `dd-agent` - Add support for RPM installs - Red Hat, CentOS, Scientific, Fedora
+## v.0.0.3
+* `dd-agent` - Added support for RPM installs - Red Hat, CentOS, Scientific, Fedora
 
 ## v.0.0.2
 * Initial refactoring, including the `dd-agent` cookbook here
