@@ -11,7 +11,7 @@ Requirements
 Platform
 --------
 
-* Debian, Ubuntu
+* Debian, Ubuntu, RedHat, CentOS
 
 Cookbooks
 ---------
@@ -76,6 +76,7 @@ License and Author
 ==================
 
 Author:: Mike Fiedler (<miketheman@gmail.com>)
+Author:: Alexis Le-quoc (<alq@datadoghq.com>)
 
 Copyright 2011, Datadog, Inc.
 
