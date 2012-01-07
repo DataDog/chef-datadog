@@ -20,7 +20,7 @@
 # Place your API Key here, or set it on the role/environment/node
 default[:datadog][:api_key] = nil
 
-# Create an appliaction key on the Account Settings page
+# Create an application key called "chef-handler" on the Account Settings page
 default[:datadog][:application_key] = nil
 
 # Don't change these

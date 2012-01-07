@@ -30,6 +30,18 @@ when "debian", "ubuntu"
     action :add
   end
 
+  # Thanks to @joepcds for the Ubuntu 11.04 fix
+  # setuptools has been packaged with a bug
+  # https://bugs.launchpad.net/ubuntu/+source/supervisor/+bug/777862
+  if node.platform_version.to_f == 11.04
+      package 'python-setuptools'
+  
+    execute "elementtree" do
+      command "easy_install elementtree"
+      creates "/usr/local/lib/python2.7/dist-packages/elementtree-1.2.7_20070827_preview-py2.7.egg"
+    end
+  end
+  
   package "datadog-agent"
 
 when "redhat", "centos"
