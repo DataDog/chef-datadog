@@ -51,7 +51,7 @@ when "redhat", "centos"
   yum_repository "datadog" do
     name "datadog"
     description "datadog"
-    url "http://apt.datadoghq.com/rpm/"
+    url node[:datadog][:repo]
     action :add
   end
 
