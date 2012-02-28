@@ -111,6 +111,17 @@ hostname: <%= node.name %>
 
 # Path to Nagios's event log file
 nagios_log: <%= node[:nagios][:log_dir] %>/nagios.log
+
+# If you use perfdata, dd-agent can import automatically and in real-time
+# performance data collected by nagios.
+# For more information on perfdata configuration, please refer to
+# http://nagios.sourceforge.net/docs/3_0/perfdata.html
+#
+# Path to Nagios' ***configuration*** file where the properties
+# host|service_perfdata_file and host|service_perfdata_file_template
+# are defined.
+nagios_perf_cfg: <%= node[:nagios][:conf_dir] %>/nagios.cfg
+
 <% end %>
 
 # -------------------------------------------------------------------------- #
