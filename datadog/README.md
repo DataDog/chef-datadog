@@ -1,7 +1,7 @@
 Datadog Cookbook
 ================
 
-Chef recipes to deploy Datadog's components automatically.
+Chef recipes to deploy Datadog's components and configuration automatically.
 
 Requirements
 ============
@@ -26,12 +26,73 @@ The following Opscode cookbooks are dependencies:
 Attributes
 ==========
 
-* `node[:datadog][:api_key]` = This needs to be retrieved from your Account Settings page.
-* `node[:datadog][:application_key]` = There are none by default. Visit the Account Settings page to create a new Application Key, to be used in conjunction with your API key.
+* `node[:datadog][:api_key]`    	= This needs to be retrieved from your Account Settings page.
+* `node[:datadog][:application_key]`= There are none by default. Visit the Account Settings page to create a new Application Key, to be used in conjunction with your API key.
+* `node[:datadog][:url]` 			= The location of where Datadog is hosted. Should never change.
+* `node[:datadog][:repo]` 			= Where the Datadog-maintained packages are located. Should never change.
+* `node[:datadog][:debug]` 			= Where the Datadog-maintained packages are located. Should never change.
+* `node[:datadog][:check_freq]`		= Where the Datadog-maintained packages are located. Should never change.
 
-* `node[:datadog][:url]` = The location of where Datadog is hosted. Should never change.
-* `node[:datadog][:repo]` = Where the Datadog-maintained packages are located. Should never change.
+apache
+-------
+* `node[:apache][:status_url]` 		= Url to Apache's status page. Must have mod_status installed.  See http://httpd.apache.org/docs/2.0/mod/mod_status.html for details.
 
+ganglia
+-------
+* `node[:ganglia][:url]` 			= Ganglia host where gmetad is running
+* `node[:ganglia][:port]` 			= Ganglia port where gmetad is running
+
+mysql
+-------
+* `node[:mysql][:server]`			= MySQL host
+* `node[:mysql][:user]`				= MySQL user. It only runs "SHOW STATUS" queries, which doesn't require any privileges, so you should consider creating a separate, unprivileged user.
+* `node[:mysql][:pass]`				= MySQL user's password
+
+nginx
+-------
+* `node[:nginx][:status_url]`		= Url to nginx's status page. Must have http_stub_status_module installed.  See http://wiki.nginx.org/HttpStubStatusModule for details.
+
+rabbitmq
+-------
+* `node[:rabbitmq][:status_url]`	= Url to RabbitMQ's status page. Must have rabbitmq-status plugin installed.  See http://www.lshift.net/blog/2009/11/30/introducing-rabbitmq-status-plugin for details.
+* `node[:rabbitmq][:user]`			= RabbitMQ user
+* `node[:rabbitmq][:pass]`			= RabbitMQ user's password
+
+mongodb
+-------
+* `node[:mongodb][:server]`			= MongoDB uri. For example: mongodb://my_user:my_pass@localhost/my_db
+
+couchdb
+-------
+* `node[:couchdb][:server]`			= CouchDB host
+
+jenkins
+-------
+* `node[:jenkins][:home_dir]`		= Path to Jenkins's home directory
+
+nagios
+-------
+* `node[:nagios][:log_dir]`			= Path to Nagios's event log file
+* `node[:nagios][:conf_dir]`		= If you use perfdata, dd-agent can import automatically and in real-time performance data collected by nagios.  For more information on perfdata configuration, please refer to http://nagios.sourceforge.net/docs/3_0/perfdata.html.  Path to Nagios' ***configuration*** file where the properties host|service_perfdata_file and host|service_perfdata_file_template are defined.
+
+cassandra
+-------
+* `node[:cassandra][:host]`			= Cassandra host
+* `node[:cassandra][:port]`			= Cassandra port
+* `node[:cassandra][:nodetool]`		= Path to nodetool
+
+java
+-------
+* `node[:jvm_jmx][:server]`			= JMX server:port to connect to
+* `node[:jvm_jmx][:user]`			= JMX user to log in with, if needed
+* `node[:jvm_jmx][:pass]`			= Password for the configured JMX user
+* `node[:jvm_jmx][:name]`			= Name to report the statistics for this java VM. This will allow to monitor several JVMs running on the same machine.
+
+tomcat
+-------
+* `node[:tomcat_jmx][:server]`		= host:port to connect to. Must be configured in tomcat setenv.sh or similar
+* `node[:tomcat_jmx][:user]`		= JMX user to log in with, if needed
+* `node[:tomcat_jmx][:pass]`		= Password for the configured JMX user
 
 Recipes
 =======
