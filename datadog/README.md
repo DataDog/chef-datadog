@@ -63,6 +63,8 @@ We are not making use of data_bags in this recipe at this time, as it is unlikel
 
 Changes/Roadmap
 ===============
+## v.0.0.4
+* `dd-agent` - Added support for Nagios PerfData and Graphite.
 
 ## v.0.0.3
 * `dd-agent` - Added support for RPM installs - Red Hat, CentOS, Scientific, Fedora
