@@ -1,177 +1,100 @@
 [Main]
 
-# The host of the Datadog intake server to send agent data to 
+##
+# datadog defaults
+##
+
 dd_url: <%= @dd_url %>
-
-# The Datadog api key to associate your agent's data with your organization.
-# Can be found here:
-# https://app.datadoghq.com/account/settings
 api_key: <%= @api_key %>
-
-# Boolean to enable debug_mode, which outputs massive amounts of log messages 
-# to the /tmp/ directory.
-debug_mode: no 
-
-# How often you want the agent to collect data, in seconds. Any value between
-# 15 and 60 is a reasonable interval.
-check_freq: 15
-
-# unused, leave blank
-agent_key:
-
-# use chef's hostname instead of the result of `hostname`
+debug_mode: <%= node[:datadog][:debug] %>
+check_freq: <%= node[:datadog][:check_freq] %>
+agent_key: <%= node[:datadog][:debug] %>
 hostname: <%= node.name %>
+use_ec2_instance_id: <%= node[:datadog][:ec2_id] %>
+use_mount: <%= node[:datadog][:use_mount] %>
+listen_port: <%= node[:datadog][:agent_port] %>
 
-# Use the amazon EC2 instance-id instead of hostname (unless hostname is
-# explicitly set)
-use_ec2_instance_id: no
-
-# Use mount points instead of volumes to track disk and fs metrics
-use_mount: no
-
-# Change port the agent is listening to
-# listen_port: 17123
-
-# Start a graphite listener on this port
-# https://github.com/DataDog/dd-agent/wiki/Feeding-Datadog-with-Graphite
-# graphite_listen_port: 17124
-
-# ========================================================================== #
-# Service-specific configuration                                             #
-# ========================================================================== #
-
-# -------------------------------------------------------------------------- #
-#   Apache                                                                   #
-# -------------------------------------------------------------------------- #
-
-# Url to Apache's status page. Must have mod_status installed.
-# See http://httpd.apache.org/docs/2.0/mod/mod_status.html for details.
-#apache_status_url: http://www.example.com/server-status/?auto
-
-
-# -------------------------------------------------------------------------- #
-#   Ganglia                                                                  #
-# -------------------------------------------------------------------------- #
-
-# Ganglia host where gmetad is running
-#ganglia_host: localhost
-
-# Ganglia port where gmetad is running
-#ganglia_port: 8651
-
-
-# -------------------------------------------------------------------------- #
-#   MySQL                                                                    #
-# -------------------------------------------------------------------------- #
-
-# MySQL host
-#mysql_server:
-
-# MySQL user. It only runs "SHOW STATUS" queries, which doesn't require
-# any privileges, so you should consider creating a separate, unprivileged
-# user
-#mysql_user:
-
-# MySQL user's password
-#mysql_pass:
-
-
-# -------------------------------------------------------------------------- #
-#   Nginx                                                                    #
-# -------------------------------------------------------------------------- #
-
-# Url to nginx's status page. Must have http_stub_status_module installed.
-# See http://wiki.nginx.org/HttpStubStatusModule for details.
-#nginx_status_url: http://localhost:81/nginx_status/
-
-# -------------------------------------------------------------------------- #
-#   RabbitMQ                                                                 #
-# -------------------------------------------------------------------------- #
-
-# Url to RabbitMQ's status page. Must have rabbitmq-status plugin installed.
-# See http://www.lshift.net/blog/2009/11/30/introducing-rabbitmq-status-plugin 
-# for details. 
-#rabbitmq_status_url: http://www.example.com:55672/json
-#rabbitmq_user: guest
-#rabbitmq_pass: guest
-
-
-# -------------------------------------------------------------------------- #
-#   MongoDB                                                                  #
-# -------------------------------------------------------------------------- #
-
-# MongoDB uri. For example: mongodb://my_user:my_pass@localhost/my_db
-#mongodb_server:
-
-# -------------------------------------------------------------------------- #
-#   CouchDB                                                                  #
-# -------------------------------------------------------------------------- #
-
-# CouchDB host
-#couchdb_server:
-
-
-# -------------------------------------------------------------------------- #
-#   Hudson                                                                   #
-# -------------------------------------------------------------------------- #
-
-# Path to Hudson's home directory
-#hudson_home: /var/lib/hudson/
-
-<% if node[:nagios] && node[:nagios][:server] && node[:nagios][:log_dir] %>
-# -------------------------------------------------------------------------- #
-#   Nagios                                                                   #
-# -------------------------------------------------------------------------- #
-
-# Path to Nagios's event log file
-nagios_log: <%= node[:nagios][:log_dir] %>/nagios.log
-
-# If you use perfdata, dd-agent can import automatically and in real-time
-# performance data collected by nagios.
-# For more information on perfdata configuration, please refer to
-# http://nagios.sourceforge.net/docs/3_0/perfdata.html
-#
-# Path to Nagios' ***configuration*** file where the properties
-# host|service_perfdata_file and host|service_perfdata_file_template
-# are defined.
-nagios_perf_cfg: <%= node[:nagios][:conf_dir] %>/nagios.cfg
-
+<% if node[:datadog][:graphite] %>
+graphite_listen_port: <%= node[:datadog][:graphite_port] %>
 <% end %>
 
-# -------------------------------------------------------------------------- #
-#   Cassandra                                                                #
-# -------------------------------------------------------------------------- #
-#cassandra_host: localhost
-#cassandra_port: 8080
-#cassandra_nodetool: /usr/bin/nodetool
+##
+# service defaults
+##
 
-# -------------------------------------------------------------------------- #
-#   Java                                                                     #
-# -------------------------------------------------------------------------- #
+# apache
+<% if node[:apache][:status_url] %>
+apache_status_url: <%= node[:apache][:status_url] %>
+<% end %>
 
-# JMX server:port to connect to
-# jvm_jmx_server: localhost:8090
-#jvm_jmx_server:
+nagios_log: <%= node[:nagios][:log_dir] %>/nagios.log
 
-# JMX user to log in with, if needed
-#jvm_jmx_user: john
+nagios_perf_cfg: <%= node[:nagios][:conf_dir] %>/nagios.cfg
 
-# Password for the configured JMX user
-#jvm_jmx_pass: foobar
+# ganglia
+<% if node[:ganglia][:url] %>
+ganglia_host: <%= node[:ganglia][:url] %>
+ganglia_port: <%= node[:ganglia][:port] %>
+<% end %>
 
-# Name to report the statistics for this java VM. This will allow to monitor
-# Several JVMs running on the same machine
-#jvm_jmx_name: Java
+# mysql
+<% if node[:mysql][:server] %>
+mysql_server: <%= node[:mysql][:server] %>
+mysql_user: <%= node[:mysql][:user] %>
+mysql_pass: <%= node[:mysql][:pass] %>
+<% end %>
 
-# -------------------------------------------------------------------------- #
-#   Tomcat                                                                   #
-# -------------------------------------------------------------------------- #
+# nginx
+<% if node[:nginx][:status_url] %>
+nginx_status_url: <%= node[:nginx][:status_url] %>
+<% end %>
 
-# host:port to connect to. Must be configured in tomcat setenv.sh or similar
-#tomcat_jmx_server:
+# rabbitmq
+<% if node[:rabbitmq][:status_url] %>
+rabbitmq_status_url: <%= node[:rabbitmq][:status_url] %>
+rabbitmq_user: <%= node[:rabbitmq][:user] %>
+rabbitmq_pass: <%= node[:rabbitmq][:pass] %>
+<% end %>
 
-# JMX user to log in with, if needed
-#tomcat_jmx_user: john
+# mongodb
+<% if node[:mongodb][:server] %>
+mongodb_server: <%= node[:mongodb][:server] %>
+<% end %>
 
-# Password for the configured JMX user
-#tomcat_jmx_pass: foobar
+# couchdb
+<% if node[:couchdb][:server] %>
+couchdb_server: <%= node[:couchdb][:server] %>
+<% end %>
+
+# jenkins
+<% if node[:jenkins][:home_dir] %>
+hudson_home: <%= node[:jenkins][:home_dir] %>
+<% end %>
+
+# nagios
+<% if node[:nagios][:log_dir] %>
+nagios_log: <%= node[:nagios][:log_dir] %>/nagios.log
+nagios_perf_cfg: <%= node[:nagios][:conf_dir] %>/nagios.cfg
+<% end %>
+
+# cassandra
+<% if node[:cassandra][:host] %>
+cassandra_host: <%= [:cassandra][:host] %>
+cassandra_port: <%= node[:cassandra][:port] %>
+cassandra_nodetool: <%= node[:cassandra][:nodetool] %>
+<% end %>
+
+# java jmx
+<% if node[:jvm_jmx][:server] %>
+jvm_jmx_server: <%= [:jvm_jmx][:server] %>
+jvm_jmx_user: <%= [:jvm_jmx][:user] %>
+jvm_jmx_pass: <%= [:jvm_jmx][:pass] %>
+jvm_jmx_name: <%= [:jvm_jmx][:name] %>
+<% end %>
+
+# tomcat jmx
+<% if node[:tomcat_jmx][:server] %>
+tomcat_jmx_server: <%= [:tomcat_jmx][:server] %>
+tomcat_jmx_user: <%= [:tomcat_jmx][:user] %>
+tomcat_jmx_pass: <%= [:tomcat_jmx][:pass] %>
+<% end %>
