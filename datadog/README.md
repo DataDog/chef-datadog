@@ -30,8 +30,8 @@ Attributes
 * `node[:datadog][:application_key]`= There are none by default. Visit the Account Settings page to create a new Application Key, to be used in conjunction with your API key.
 * `node[:datadog][:url]` 			= The location of where Datadog is hosted. Should never change.
 * `node[:datadog][:repo]` 			= Where the Datadog-maintained packages are located. Should never change.
-* `node[:datadog][:debug]` 			= Where the Datadog-maintained packages are located. Should never change.
-* `node[:datadog][:check_freq]`		= Where the Datadog-maintained packages are located. Should never change.
+* `node[:datadog][:debug]` 			= Will trigger heavy logging to /tmp/dd-agent.log
+* `node[:datadog][:check_freq]`		= How often checks should be run. By default, set to 15s.
 
 apache
 -------
