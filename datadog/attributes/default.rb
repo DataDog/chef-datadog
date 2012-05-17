@@ -39,9 +39,10 @@ default[:datadog][:debug] = false
 # 15 and 60 is a reasonable interval.
 default[:datadog][:check_freq] = 15
 
-# Use the amazon EC2 instance-id instead of hostname (unless hostname is
-# explicitly set)
-default[:datadog][:ec2_id] = "no"
+# If running on ec2, use the instance-id as the host identifier
+# rather than the hostname.
+# If you have set up meaningful hostnames for your EC2 instances, set this to "no"
+default[:datadog][:ec2_id] = "yes"
 
 # Use mount points instead of volumes to track disk and fs metrics
 default[:datadog][:use_mount] = "no"
