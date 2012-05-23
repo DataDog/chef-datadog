@@ -94,3 +94,8 @@ tomcat_jmx_server: <%= [:tomcat_jmx][:server] %>
 tomcat_jmx_user: <%= [:tomcat_jmx][:user] %>
 tomcat_jmx_pass: <%= [:tomcat_jmx][:pass] %>
 <% end %>
+
+<% if node[:varnish] %>
+# Varnish
+varnishstat: <%= %x{which varnishstat}.strip %>
+<% end %>

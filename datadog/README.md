@@ -124,16 +124,22 @@ We are not making use of data_bags in this recipe at this time, as it is unlikel
 
 Changes/Roadmap
 ===============
-## v.0.0.5
+## v0.0.8
+* `dd-agent` - Add varnish support.
+
+## v0.0.7
+* `dd-agent` - default to using instance IDs as hostnames when running dd-agent on EC2
+
+## v0.0.5
 * `dd-agent` - Full datadog.conf template using attributes (thanks @drewrothstein)
 
-## v.0.0.4
+## v0.0.4
 * `dd-agent` - Added support for Nagios PerfData and Graphite.
 
-## v.0.0.3
+## v0.0.3
 * `dd-agent` - Added support for RPM installs - Red Hat, CentOS, Scientific, Fedora
 
-## v.0.0.2
+## v0.0.2
 * Initial refactoring, including the `dd-agent` cookbook here
 * Adding chef-handler-datadog to report to the newsfeed
 * Added ruby-dev dependency
