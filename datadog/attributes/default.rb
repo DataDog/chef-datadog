@@ -108,3 +108,6 @@ default[:jvm_jmx][:name] = nil        # Java
 default[:tomcat_jmx][:server] = nil   # localhost
 default[:tomcat_jmx][:user] = nil     # john
 default[:tomcat_jmx][:pass] = nil     # foobar
+
+# varnish
+default[:varnish] = nil               # varnish present? set to true if so
