@@ -10,8 +10,8 @@ debug_mode: <%= node[:datadog][:debug] %>
 check_freq: <%= node[:datadog][:check_freq] %>
 agent_key: <%= node[:datadog][:debug] %>
 hostname: <%= node.name %>
-use_ec2_instance_id: <%= node[:datadog][:ec2_id] %>
-use_mount: <%= node[:datadog][:use_mount] %>
+use_ec2_instance_id: <%= node[:datadog][:use_ec2_instance_id] ? "yes": "no" %>
+use_mount: <%= node[:datadog][:use_mount] ? "yes" : "no"  %>
 listen_port: <%= node[:datadog][:agent_port] %>
 
 <% if node[:datadog][:graphite] %>

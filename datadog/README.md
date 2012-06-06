@@ -31,7 +31,8 @@ Attributes
 * `node[:datadog][:url]` 			= The location of where Datadog is hosted. Should never change.
 * `node[:datadog][:repo]` 			= Where the Datadog-maintained packages are located. Should never change.
 * `node[:datadog][:debug]` 			= Will trigger heavy logging to /tmp/dd-agent.log
-* `node[:datadog][:check_freq]`		= How often checks should be run. By default, set to 15s.
+* `node[:datadog][:use_ec2_instance_id]` = Whether to use the instance-id in lieu of hostname when running on EC2. No effect on non-EC2 servers.
+* `node[:datadog][:use_mount]`      = Whether to use the mount point instead of the device name for all I/O metrics.
 
 apache
 -------
@@ -41,6 +42,11 @@ ganglia
 -------
 * `node[:ganglia][:url]` 			= Ganglia host where gmetad is running
 * `node[:ganglia][:port]` 			= Ganglia port where gmetad is running
+
+graphite
+--------
+* `node[:datadog][:graphite]`       = Turns the agent into a Graphite carbon relay.
+* `node[:datadog][:graphite_port]`  = Port that the carbon relay will listen on.
 
 mysql
 -------
@@ -94,6 +100,10 @@ tomcat
 * `node[:tomcat_jmx][:user]`		= JMX user to log in with, if needed
 * `node[:tomcat_jmx][:pass]`		= Password for the configured JMX user
 
+varnish
+-------
+* `node[:varnish]`                  = if true, will invoke `varnishstat` on the server to gather varnish metrics.
+
 Recipes
 =======
 
@@ -124,6 +134,12 @@ We are not making use of data_bags in this recipe at this time, as it is unlikel
 
 Changes/Roadmap
 ===============
+## v0.0.10
+* `dd-handler` - Corrects attribute name.
+
+## v0.0.9
+* `dd-agent` - Adds an explicit varnish attribute.
+
 ## v0.0.8
 * `dd-agent` - Add varnish support.
 
