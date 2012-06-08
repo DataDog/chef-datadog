@@ -1,3 +1,7 @@
+Where to Find the Code
+======================
+To submit issues and patches please visit https://github.com/DataDog/cookbooks.
+
 Datadog Cookbook
 ================
 
@@ -134,6 +138,9 @@ We are not making use of data_bags in this recipe at this time, as it is unlikel
 
 Changes/Roadmap
 ===============
+## v0.0.11
+* Link to github repository.
+
 ## v0.0.10
 * `dd-handler` - Corrects attribute name.
 
