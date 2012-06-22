@@ -24,7 +24,7 @@ when "debian", "ubuntu"
   apt_repository 'datadog' do
     keyserver 'keyserver.ubuntu.com'
     key 'C7A7DA52'
-    uri node[:datadog][:repo]
+    uri node[:datadog][:aptrepo]
     distribution "unstable"
     components ["main"]
     action :add
@@ -51,7 +51,7 @@ when "redhat", "centos"
   yum_repository "datadog" do
     name "datadog"
     description "datadog"
-    url node[:datadog][:repo]
+    url node[:datadog][:yumrepo]
     action :add
   end
 

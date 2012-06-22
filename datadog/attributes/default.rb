@@ -29,7 +29,10 @@ default[:datadog][:application_key] = nil
 # Don't change these
 # The host of the Datadog intake server to send agent data to
 default[:datadog][:url] = "https://app.datadoghq.com"
-default[:datadog][:repo] = "http://apt.datadoghq.com"
+
+# Repository URLs
+default[:datadog][:aptrepo] = "http://apt.datadoghq.com"
+default[:datadog][:yumrepo] = "http://yum.datadoghq.com/rpm"
 
 # Boolean to enable debug_mode, which outputs massive amounts of log messages 
 # to the /tmp/ directory.
