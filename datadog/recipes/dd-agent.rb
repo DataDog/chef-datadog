@@ -46,7 +46,7 @@ when "debian", "ubuntu"
 
 when "redhat", "centos"
   # Depending on the version, deploy a package    
-  include_recipe "yum"
+  include_recipe "yum::epel"
 
   yum_repository "datadog" do
     name "datadog"
