@@ -24,7 +24,7 @@ The following Opscode cookbooks are dependencies:
 
 * apt
 * chef_handler
-* yum
+* yum::epel
 
 
 Attributes
@@ -138,6 +138,9 @@ We are not making use of data_bags in this recipe at this time, as it is unlikel
 
 Changes/Roadmap
 ===============
+## v0.0.12
+* Updated for CentOS dependencies
+
 ## v0.0.11
 * Link to github repository.
 
