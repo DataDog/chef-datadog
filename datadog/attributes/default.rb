@@ -45,7 +45,7 @@ default[:datadog][:check_freq] = 15
 # If running on ec2, use the instance-id as the host identifier
 # rather than the hostname.
 # If you have set up meaningful hostnames for your EC2 instances, set this to "no"
-default[:datadog][:use_ec2_instance_id] = true
+default[:datadog][:use_ec2_instance_id] = false
 
 # Use mount points instead of volumes to track disk and fs metrics
 default[:datadog][:use_mount] = false
