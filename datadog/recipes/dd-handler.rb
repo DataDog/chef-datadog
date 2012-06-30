@@ -23,10 +23,10 @@ ENV["DATADOG_HOST"] = node[:datadog][:url]
 # Install dependency library
 pkgs = value_for_platform(
     ["redhat","centos","fedora","scientific"] =>
-        {"default" => "ruby-devel" },
+        {"default" => ["ruby-devel"] },
     [ "debian", "ubuntu" ] =>
-        {"default" => "ruby-dev" },
-    "default" => "ruby-dev"
+        {"default" => ["ruby-dev"] },
+    "default" => ["ruby-dev"]
   )
 
 pkgs.each do |pkg|
