@@ -17,14 +17,14 @@
 # limitations under the License.
 #
 
-case node.platform
+case node['platform']
 when "debian", "ubuntu"
   include_recipe "apt"
   
   apt_repository 'datadog' do
     keyserver 'keyserver.ubuntu.com'
     key 'C7A7DA52'
-    uri node[:datadog][:aptrepo]
+    uri node['datadog']['aptrepo']
     distribution "unstable"
     components ["main"]
     action :add
@@ -33,7 +33,7 @@ when "debian", "ubuntu"
   # Thanks to @joepcds for the Ubuntu 11.04 fix
   # setuptools has been packaged with a bug
   # https://bugs.launchpad.net/ubuntu/+source/supervisor/+bug/777862
-  if node.platform_version.to_f == 11.04
+  if node['platform_version'].to_f == 11.04
       package 'python-setuptools'
   
     execute "elementtree" do
@@ -51,14 +51,14 @@ when "redhat", "centos"
   yum_repository "datadog" do
     name "datadog"
     description "datadog"
-    url node[:datadog][:yumrepo]
+    url node['datadog']['yumrepo']
     action :add
   end
 
   # datadog-agent requires python2.6, not available on RH5 by default
-  if node[:platform_version].to_i <= 5
+  if node['platform_version'].to_i <= 5
     package "datadog-agent-base"
-  elsif node[:platform_version].to_i >= 6
+  elsif node['platform_version'].to_i >= 6
     package "datadog-agent"
   end 
 end
@@ -81,14 +81,14 @@ end
 # If you want to autoconfigure sources based on other chef recipes
 # Fork this repo and issue pull requests
 #
-if node.attribute?("datadog") and node.datadog.attribute?("api_key")
+if node.attribute?('datadog') and node['datadog'].attribute?("api_key")
   template "/etc/dd-agent/datadog.conf" do
     owner "root"
     group "root"
     mode 0644
-    variables(:api_key => node[:datadog][:api_key], :dd_url => node[:datadog][:url])
+    variables(:api_key => node['datadog']['api_key'], :dd_url => node['datadog']['url'])
     notifies :restart, "service[datadog-agent]", :immediately
   end
 else
-  raise "Add a [:datadog][:api_key] attribute to configure this node's Datadog Agent."
+  raise "Add a ['datadog']['api_key'] attribute to configure this node's Datadog Agent."
 end

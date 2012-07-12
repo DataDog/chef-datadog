@@ -6,96 +6,111 @@
 
 dd_url: <%= @dd_url %>
 api_key: <%= @api_key %>
-debug_mode: <%= node[:datadog][:debug] %>
-check_freq: <%= node[:datadog][:check_freq] %>
-agent_key: <%= node[:datadog][:debug] %>
+debug_mode: <%= node['datadog']['debug'] %>
+check_freq: <%= node['datadog']['check_freq'] %>
+agent_key: <%= node['datadog']['debug'] %>
 hostname: <%= node.name %>
-use_ec2_instance_id: <%= node[:datadog][:use_ec2_instance_id] ? "yes": "no" %>
-use_mount: <%= node[:datadog][:use_mount] ? "yes" : "no"  %>
-listen_port: <%= node[:datadog][:agent_port] %>
+use_ec2_instance_id: <%= node['datadog']['use_ec2_instance_id'] ? "yes": "no" %>
+use_mount: <%= node['datadog']['use_mount'] ? "yes" : "no"  %>
+listen_port: <%= node['datadog']['agent_port'] %>
 
-<% if node[:datadog][:graphite] %>
-graphite_listen_port: <%= node[:datadog][:graphite_port] %>
+<% if node['datadog']['graphite'] %>
+graphite_listen_port: <%= node['datadog']['graphite_port'] %>
 <% end %>
 
 ##
 # service defaults
 ##
 
-<% if node[:apache][:status_url] %>
+<% if node['apache']['status_url'] %>
 # apache
-apache_status_url: <%= node[:apache][:status_url] %>
+apache_status_url: <%= node['apache']['status_url'] %>
 <% end %>
 
-<% if node[:ganglia][:url] %>
+<% if node['ganglia']['url'] %>
 # ganglia
-ganglia_host: <%= node[:ganglia][:url] %>
-ganglia_port: <%= node[:ganglia][:port] %>
+ganglia_host: <%= node['ganglia']['url'] %>
+ganglia_port: <%= node['ganglia']['port'] %>
 <% end %>
 
-<% if node[:mysql][:server] %>
+<% if node['mysql']['server'] %>
 # mysql
-mysql_server: <%= node[:mysql][:server] %>
-mysql_user: <%= node[:mysql][:user] %>
-mysql_pass: <%= node[:mysql][:pass] %>
+mysql_server: <%= node['mysql']['server'] %>
+mysql_user: <%= node['mysql']['user'] %>
+mysql_pass: <%= node['mysql']['pass'] %>
 <% end %>
 
-<% if node[:nginx][:status_url] %>
+<% if node['nginx']['status_url'] %>
 # nginx
-nginx_status_url: <%= node[:nginx][:status_url] %>
+nginx_status_url: <%= node['nginx']['status_url'] %>
 <% end %>
 
-<% if node[:rabbitmq][:status_url] %>
+<% if node['rabbitmq']['status_url'] %>
 # rabbitmq
-rabbitmq_status_url: <%= node[:rabbitmq][:status_url] %>
-rabbitmq_user: <%= node[:rabbitmq][:user] %>
-rabbitmq_pass: <%= node[:rabbitmq][:pass] %>
+rabbitmq_status_url: <%= node['rabbitmq']['status_url'] %>
+rabbitmq_user: <%= node['rabbitmq']['user'] %>
+rabbitmq_pass: <%= node['rabbitmq']['pass'] %>
 <% end %>
 
-<% if node[:mongodb][:server] %>
+<% if node['mongodb']['server'] %>
 # mongodb
-mongodb_server: <%= node[:mongodb][:server] %>
+mongodb_server: <%= node['mongodb']['server'] %>
 <% end %>
 
-<% if node[:couchdb][:server] %>
+<% if node['couchdb']['server'] %>
 # couchdb
-couchdb_server: <%= node[:couchdb][:server] %>
+couchdb_server: <%= node['couchdb']['server'] %>
 <% end %>
 
-<% if node[:jenkins][:home_dir] %>
+<% if node['jenkins']['home_dir'] %>
 # jenkins
-hudson_home: <%= node[:jenkins][:home_dir] %>
+hudson_home: <%= node['jenkins']['home_dir'] %>
 <% end %>
 
-<% if node[:nagios][:log_dir] %>
+<% if node['nagios']['log_dir'] %>
 # nagios
-nagios_log: <%= node[:nagios][:log_dir] %>/nagios.log
-nagios_perf_cfg: <%= node[:nagios][:conf_dir] %>/nagios.cfg
+nagios_log: <%= node['nagios']['log_dir'] %>/nagios.log
+nagios_perf_cfg: <%= node['nagios']['conf_dir'] %>/nagios.cfg
 <% end %>
 
-<% if node[:cassandra][:host] %>
+<% if node['cassandra']['host'] %>
 # cassandra
-cassandra_host: <%= [:cassandra][:host] %>
-cassandra_port: <%= node[:cassandra][:port] %>
-cassandra_nodetool: <%= node[:cassandra][:nodetool] %>
+cassandra_host: <%= ['cassandra']['host'] %>
+cassandra_port: <%= node['cassandra']['port'] %>
+cassandra_nodetool: <%= node['cassandra']['nodetool'] %>
 <% end %>
 
-<% if node[:jvm_jmx][:server] %>
+<% if node['jvm_jmx']['server'] %>
 # java jmx
-jvm_jmx_server: <%= [:jvm_jmx][:server] %>
-jvm_jmx_user: <%= [:jvm_jmx][:user] %>
-jvm_jmx_pass: <%= [:jvm_jmx][:pass] %>
-jvm_jmx_name: <%= [:jvm_jmx][:name] %>
+jvm_jmx_server: <%= ['jvm_jmx']['server'] %>
+jvm_jmx_user: <%= ['jvm_jmx']['user'] %>
+jvm_jmx_pass: <%= ['jvm_jmx']['pass'] %>
+jvm_jmx_name: <%= ['jvm_jmx']['name'] %>
 <% end %>
 
-<% if node[:tomcat_jmx][:server] %>
+<% if node['tomcat_jmx']['server'] %>
 # tomcat jmx
-tomcat_jmx_server: <%= [:tomcat_jmx][:server] %>
-tomcat_jmx_user: <%= [:tomcat_jmx][:user] %>
-tomcat_jmx_pass: <%= [:tomcat_jmx][:pass] %>
+tomcat_jmx_server: <%= ['tomcat_jmx']['server'] %>
+tomcat_jmx_user: <%= ['tomcat_jmx']['user'] %>
+tomcat_jmx_pass: <%= ['tomcat_jmx']['pass'] %>
 <% end %>
 
-<% if node[:varnish] %>
-# Varnish
+<% if node['varnish'] %>
+# Varnish, from http://community.opscode.com/cookbooks/varnish
 varnishstat: <%= %x{which varnishstat}.strip %>
+<% end %>
+
+<% if node['memcached'] %>
+# memcached, from http://community.opscode.com/cookbooks/memcached
+<% if node['memcached']['listen'] == "0.0.0.0" %>
+memcache_server: localhost
+<% else %>
+memcache_server: <%= node['memcached']['listen'] %>
+<% end %>
+memcache_port: <%= node['memcached']['port'] %>
+<% end %>
+
+<% if node['redis'] %>
+# redis, from http://community.opscode.com/cookbooks/redis
+redis_urls: <%= node['redis']['server']['addr']%>:<%= node['redis']['server']['port'] %>
 <% end %>
