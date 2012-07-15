@@ -18,7 +18,7 @@
 #
 
 include_recipe "chef_handler"
-ENV["DATADOG_HOST"] = node[:datadog][:url]
+ENV["DATADOG_HOST"] = node['datadog']['url']
 
 # Install dependency library
 pkgs = value_for_platform(
@@ -47,8 +47,8 @@ require 'chef-handler-datadog'
 chef_handler "Datadog" do
   source "chef-handler-datadog"
   arguments [ 
-    :api_key => node[:datadog][:api_key], 
-    :application_key => node[:datadog][:application_key]
+    :api_key => node['datadog']['api_key'], 
+    :application_key => node['datadog']['application_key']
   ]
   supports :report => true, :exception => true
   action :nothing

@@ -108,6 +108,16 @@ varnish
 -------
 * `node[:varnish]`                  = if true, will invoke `varnishstat` on the server to gather varnish metrics.
 
+memcached
+---------
+* `node[:memcached][:listen]`       = memcached address; if 0.0.0.0 dd-agent will connect via the loopback address.
+* `node[:memcached][:port]`         = memcached port
+
+redis
+-----
+* `node[:redis][:server][:addr]`    = redis server address
+* `node[:redis][:server][:port]`    = redis server port
+
 Recipes
 =======
 
@@ -135,9 +145,12 @@ Usage
 
 We are not making use of data_bags in this recipe at this time, as it is unlikely that you will have more than 1 API key.
 
-
 Changes/Roadmap
 ===============
+
+## v0.0.13
+* Added redis & memcached
+
 ## v0.0.12
 * Updated for CentOS dependencies
 
