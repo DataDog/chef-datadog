@@ -153,6 +153,7 @@ Changes/Roadmap
 * `dd-handler` - updated to leverage `chef_gem` resource if available
 * Updated copyright for 2012
 * Updated syntax for node attribute accessors
+* Some syntax styling fixes
 
 ## v0.0.12
 * Updated for CentOS dependencies

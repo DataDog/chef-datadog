@@ -22,12 +22,14 @@ ENV["DATADOG_HOST"] = node['datadog']['url']
 
 # Install dependency library
 pkgs = value_for_platform(
-    ["redhat","centos","fedora","scientific"] =>
-        {"default" => ["ruby-devel"] },
-    [ "debian", "ubuntu" ] =>
-        {"default" => ["ruby-dev"] },
+  ["redhat", "centos", "fedora", "scientific"] => {
+    "default" => ["ruby-devel"]
+  },
+  ["debian", "ubuntu"] => {
     "default" => ["ruby-dev"]
-  )
+  },
+  "default" => ["ruby-dev"]
+)
 
 pkgs.each do |pkg|
   package pkg do
@@ -53,8 +55,8 @@ end
 # Create the handler to run at the end of the Chef execution
 chef_handler "Datadog" do
   source "chef-handler-datadog"
-  arguments [ 
-    :api_key => node['datadog']['api_key'], 
+  arguments [
+    :api_key => node['datadog']['api_key'],
     :application_key => node['datadog']['application_key']
   ]
   supports :report => true, :exception => true

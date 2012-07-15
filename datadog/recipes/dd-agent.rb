@@ -20,7 +20,7 @@
 case node['platform']
 when "debian", "ubuntu"
   include_recipe "apt"
-  
+
   apt_repository 'datadog' do
     keyserver 'keyserver.ubuntu.com'
     key 'C7A7DA52'
@@ -34,14 +34,14 @@ when "debian", "ubuntu"
   # setuptools has been packaged with a bug
   # https://bugs.launchpad.net/ubuntu/+source/supervisor/+bug/777862
   if node['platform_version'].to_f == 11.04
-      package 'python-setuptools'
-  
+    package 'python-setuptools'
+
     execute "elementtree" do
       command "easy_install elementtree"
       creates "/usr/local/lib/python2.7/dist-packages/elementtree-1.2.7_20070827_preview-py2.7.egg"
     end
   end
-  
+
   package "datadog-agent"
 
 when "redhat", "centos", "scientific", "amazon"
@@ -60,7 +60,7 @@ when "redhat", "centos", "scientific", "amazon"
     package "datadog-agent-base"
   elsif node['platform_version'].to_i >= 6
     package "datadog-agent"
-  end 
+  end
 end
 
 # Common configuration
@@ -86,7 +86,10 @@ if node.attribute?('datadog') and node['datadog'].attribute?("api_key")
     owner "root"
     group "root"
     mode 0644
-    variables(:api_key => node['datadog']['api_key'], :dd_url => node['datadog']['url'])
+    variables(
+      :api_key => node['datadog']['api_key'],
+      :dd_url => node['datadog']['url']
+    )
     notifies :restart, "service[datadog-agent]", :immediately
   end
 else
