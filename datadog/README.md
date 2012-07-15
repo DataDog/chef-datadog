@@ -131,7 +131,7 @@ Installs the Datadog agent on the target system, sets the API key, and start the
 
 dd-handler
 ----------
-Installs the `chef-handler-datadog` gem and invokes the handler at the end of a chef run to report the details back to the newsfeed.
+Installs the [chef-handler-datadog](https://rubygems.org/gems/chef-handler-datadog) gem and invokes the handler at the end of a chef run to report the details back to the newsfeed.
 
 
 Usage
@@ -147,9 +147,11 @@ We are not making use of data_bags in this recipe at this time, as it is unlikel
 
 Changes/Roadmap
 ===============
-
 ## v0.0.13
 * Added redis & memcached
+* `dd-agent` - updated to include more platforms
+* `dd-handler` - updated to leverage `chef_gem` resource if available
+* Updated copyright for 2012
 * Updated syntax for node attribute accessors
 
 ## v0.0.12
