@@ -44,7 +44,7 @@ when "debian", "ubuntu"
   
   package "datadog-agent"
 
-when "redhat", "centos"
+when "redhat", "centos", "scientific", "amazon"
   # Depending on the version, deploy a package    
   include_recipe "yum::epel"
 
