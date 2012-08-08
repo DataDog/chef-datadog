@@ -81,17 +81,15 @@ end
 # If you want to autoconfigure sources based on other chef recipes
 # Fork this repo and issue pull requests
 #
-if node.attribute?('datadog') and node['datadog'].attribute?("api_key")
-  template "/etc/dd-agent/datadog.conf" do
-    owner "root"
-    group "root"
-    mode 0644
-    variables(
-      :api_key => node['datadog']['api_key'],
-      :dd_url => node['datadog']['url']
-    )
-    notifies :restart, "service[datadog-agent]", :immediately
-  end
-else
-  raise "Add a ['datadog']['api_key'] attribute to configure this node's Datadog Agent."
+raise "Add a ['datadog']['api_key'] attribute to configure this node's Datadog Agent." if node['datadog'] && node['datadog']['api_key'].nil?
+
+template "/etc/dd-agent/datadog.conf" do
+  owner "root"
+  group "root"
+  mode 0644
+  variables(
+    :api_key => node['datadog']['api_key'],
+    :dd_url => node['datadog']['url']
+  )
+  notifies :restart, "service[datadog-agent]", :immediately
 end
