@@ -30,13 +30,14 @@ The following Opscode cookbooks are dependencies:
 Attributes
 ==========
 
-* `node['datadog']['api_key']`    	= This needs to be retrieved from your Account Settings page.
-* `node['datadog']['application_key']`= There are none by default. Visit the Account Settings page to create a new Application Key, to be used in conjunction with your API key.
-* `node['datadog']['url']` 			= The location of where Datadog is hosted. Should never change.
-* `node['datadog']['repo']` 			= Where the Datadog-maintained packages are located. Should never change.
-* `node['datadog']['debug']` 			= Will trigger heavy logging to /tmp/dd-agent.log
+* `node['datadog']['api_key']`    	       = This needs to be retrieved from your Account Settings page.
+* `node['datadog']['application_key']`     = There are none by default. Visit the Account Settings page to create a new Application Key, to be used in conjunction with your API key.
+* `node['datadog']['url']` 			       = The location of where Datadog is hosted. Should never change.
+* `node['datadog']['repo']` 			   = Where the Datadog-maintained packages are located. Should never change.
+* `node['datadog']['debug']` 			   = Will trigger heavy logging to /tmp/dd-agent.log
 * `node['datadog']['use_ec2_instance_id']` = Whether to use the instance-id in lieu of hostname when running on EC2. No effect on non-EC2 servers.
-* `node['datadog']['use_mount']`      = Whether to use the mount point instead of the device name for all I/O metrics.
+* `node['datadog']['use_mount']`           = Whether to use the mount point instead of the device name for all I/O metrics.
+* `node['datadog']['tags']`                = List of Datadog tags you want to apply to this host
 
 apache
 -------
@@ -44,7 +45,7 @@ apache
 
 ganglia
 -------
-* `node['ganglia']['url']` 			= Ganglia host where gmetad is running
+* `node['ganglia']['url']` 			    = Ganglia host where gmetad is running
 * `node['ganglia']['port']` 			= Ganglia port where gmetad is running
 
 graphite
@@ -54,9 +55,9 @@ graphite
 
 mysql
 -------
-* `node['mysql']['server']`			= MySQL host
-* `node['mysql']['user']`				= MySQL user. It only runs "SHOW STATUS" queries, which doesn't require any privileges, so you should consider creating a separate, unprivileged user.
-* `node['mysql']['pass']`				= MySQL user's password
+* `node['mysql']['server']`			  = MySQL host
+* `node['mysql']['user']`	          = MySQL user. It only runs "SHOW STATUS" queries, which doesn't require any privileges, so you should consider creating a separate, unprivileged user.
+* `node['mysql']['pass']`	          = MySQL user's password
 
 nginx
 -------
