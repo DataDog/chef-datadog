@@ -74,9 +74,9 @@ default['ganglia']['url'] = nil         # localhost
 default['ganglia']['port'] = 8651
 
 # haproxy
-default[:haproxy][:stats_url] = nil
-default[:haproxy][:stats_user] = nil
-default[:haproxy][:stats_password] = nil
+default['haproxy']['stats_url'] = nil
+default['haproxy']['stats_user'] = nil
+default['haproxy']['stats_password'] = nil
 
 # mysql
 default['mysql']['server'] = nil        # localhost
