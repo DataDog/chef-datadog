@@ -53,6 +53,12 @@ graphite
 * `node['datadog']['graphite']`       = Turns the agent into a Graphite carbon relay.
 * `node['datadog']['graphite_port']`  = Port that the carbon relay will listen on.
 
+haproxy
+-------
+* `node['datadog']['haproxy']['stats_url']`      = URL for haproxy stats
+* `node['datadog']['haproxy']['stats_user']`     = Optional HTTP Basic Auth user to access haproxy stats
+* `node['datadog']['haproxy']['stats_password']` = Optional HTTP Basic Auth password to access haproxy stats
+
 mysql
 -------
 * `node['mysql']['server']`			  = MySQL host
