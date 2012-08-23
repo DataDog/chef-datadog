@@ -73,6 +73,11 @@ default['apache']['status_url'] = nil   # http://www.example.com/server-status/?
 default['ganglia']['url'] = nil         # localhost
 default['ganglia']['port'] = 8651
 
+# haproxy
+default[:haproxy][:stats_url] = nil
+default[:haproxy][:stats_user] = nil
+default[:haproxy][:stats_password] = nil
+
 # mysql
 default['mysql']['server'] = nil        # localhost
 default['mysql']['user'] = "readonly"

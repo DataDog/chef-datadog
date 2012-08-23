@@ -35,6 +35,15 @@ ganglia_host: <%= node['ganglia']['url'] %>
 ganglia_port: <%= node['ganglia']['port'] %>
 <% end %>
 
+<% if node[:haproxy][:stats_url] %>
+# haproxy
+haproxy_url: <%= node[:haproxy][:stats_url] %>
+  <% if node[:haproxy][:stats_user] && node[:haproxy][:stats_password] %>
+haproxy_user: <%= node[:haproxy][:stats_user] %>
+haproxy_password: <%= node[:haproxy][:stats_password] %>
+  <% end %>
+<% end %>
+
 <% if node['mysql']['server'] %>
 # mysql
 mysql_server: <%= node['mysql']['server'] %>
