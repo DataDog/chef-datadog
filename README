@@ -1,3 +1,0 @@
-This is where we store cookbooks to be used with OpsCode Chef, a popular configuration management tool.
-
-If you use Chef and Datadog, this is where you want to start. Check out the `datadog` cookbook.
