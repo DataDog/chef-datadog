@@ -89,6 +89,12 @@ default['rabbitmq']['pass'] = "guest"
 # mongodb
 default['mongodb']['server'] = nil      # mongodb://my_user:my_pass@localhost/my_db
 
+# postgres
+default['postgres']['server'] = nil
+default['postgres']['port'] = 5432
+default['postgres']['user'] = "datadog"
+default['postgres']['password'] = nil
+
 # couchdb
 default['couchdb']['server'] = nil
 
