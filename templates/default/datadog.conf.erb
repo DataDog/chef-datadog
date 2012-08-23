@@ -51,6 +51,14 @@ mysql_user: <%= node['mysql']['user'] %>
 mysql_pass: <%= node['mysql']['pass'] %>
 <% end %>
 
+<% if node['postgres']['server'] && node['postgres']['password'] %>
+# postgres
+postgresql_server: <%= node['postgres']['server'] %>
+postgresql_port: <%= node['postgres']['port'] || 5432 %>
+postgresql_user: <%= node['postgres']['user'] %>
+postgresql_pass: <%= node['postgres']['password'] %>
+<% end %>
+
 <% if node['nginx']['status_url'] %>
 # nginx
 nginx_status_url: <%= node['nginx']['status_url'] %>

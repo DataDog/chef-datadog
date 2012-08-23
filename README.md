@@ -61,9 +61,18 @@ haproxy
 
 mysql
 -------
-* `node['mysql']['server']`			  = MySQL host
-* `node['mysql']['user']`	          = MySQL user. It only runs "SHOW STATUS" queries, which doesn't require any privileges, so you should consider creating a separate, unprivileged user.
-* `node['mysql']['pass']`	          = MySQL user's password
+* `node['mysql']['server']` = MySQL host
+* `node['mysql']['user']`   = MySQL user. It only runs "SHOW STATUS" queries, which doesn't require any privileges, so you should consider creating a separate, unprivileged user.
+* `node['mysql']['pass']`   = MySQL user's password
+
+postgres
+--------
+* `node['postgres']['server']`   = PostgreSQL host
+* `node['postgres']['port']`     = 5432 by default
+* `node['postgres']['user']`     = user that the agent will use to connect, "datadog" by default
+* `node['postgres']['password']` = password to connect the datadog agent
+
+Do not forget to update you `pg_hba.conf` and `SIGHUP` postgres in case your postgres access control requires it.
 
 nginx
 -------
