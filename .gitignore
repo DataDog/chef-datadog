@@ -1,0 +1,24 @@
+# bundler
+.bundle
+Gemfile.lock
+
+# For MacOS:
+.DS_Store
+
+# For RVM
+.rvmrc
+
+# For TextMate
+*.tmproj
+
+# For emacs:
+*~
+*#
+.#*
+\#*#
+
+# For vim:
+.*.sw[a-z]
+
+# For Vagrant
+.vagrant
