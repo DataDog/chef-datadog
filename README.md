@@ -1,6 +1,8 @@
 Where to Find the Code
 ======================
-To submit issues and patches please visit https://github.com/DataDog/cookbooks.
+To submit issues and patches please visit https://github.com/DataDog/chef-datadog.
+
+[![Build Status](https://secure.travis-ci.org/DataDog/chef-datadog.png?branch=master)](http://travis-ci.org/DataDog/chef-datadog)
 
 Datadog Cookbook
 ================
