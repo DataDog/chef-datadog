@@ -54,7 +54,7 @@ mysql_pass: <%= node['mysql']['pass'] %>
 <% if node['postgres']['server'] && node['postgres']['password'] %>
 # postgres
 postgresql_server: <%= node['postgres']['server'] %>
-postgresql_port: <%= node['postgres']['port'] || 5432 %>
+postgresql_port: <%= node['postgres']['port'] %>
 postgresql_user: <%= node['postgres']['user'] %>
 postgresql_pass: <%= node['postgres']['password'] %>
 <% end %>
