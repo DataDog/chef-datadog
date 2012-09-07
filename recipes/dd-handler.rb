@@ -46,15 +46,15 @@ if(Gem::Version.new(Chef::VERSION) < Gem::Version.new('0.10.9'))
   end
   r.run_action(:install)
   Gem.clear_paths
-  require 'chef-handler-datadog'
 else
   # The chef_gem provider was introduced in Chef 0.10.10
   chef_gem "chef-handler-datadog"
 end
+require 'chef/handler/datadog'
 
 # Create the handler to run at the end of the Chef execution
-chef_handler "Datadog" do
-  source "chef-handler-datadog"
+chef_handler "Chef::Handler::Datadog" do
+  source "chef/handler/datadog"
   arguments [
     :api_key => node['datadog']['api_key'],
     :application_key => node['datadog']['application_key']
