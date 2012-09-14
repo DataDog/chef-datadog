@@ -23,3 +23,7 @@ Gemfile.lock
 # For Vagrant
 .vagrant
 /.rbenv-version
+
+# Berkshelf
+Berksfile.lock
+cookbooks/
