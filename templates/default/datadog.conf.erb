@@ -133,3 +133,55 @@ memcache_port: <%= node['memcached']['port'] %>
 # redis, from http://community.opscode.com/cookbooks/redis
 redis_urls: <%= node['redis']['server']['addr']%>:<%= node['redis']['server']['port'] %>
 <% end %>
+
+##############################################################################
+#################### NOTHING TO MODIFY AFTER THIS LINE #######################
+##############################################################################
+
+# -------------------------------------------------------------------------- #
+#  Logging Configuration
+#
+#  PLEASE READ ME!
+#
+#  DO NOT PUT ANY INTEGRATION CONFIGURATION AFTER THIS SECTION
+#  IT WILL BE IGNORED.
+#  I REPEAT, IT WILL BE IGNORED.
+#
+# -------------------------------------------------------------------------- #
+
+[loggers]
+keys:root,dogstatsd
+
+[handlers]
+keys:dogstatsd
+
+[formatters]
+keys:ddagent
+
+# DogStatsd logging
+
+[logger_root]
+level:INFO
+handlers:
+propagate:0
+qualname:root
+
+[logger_dogstatsd]
+level:INFO
+handlers:dogstatsd
+propagate:0
+qualname:dogstatsd
+
+[handler_dogstatsd]
+class:FileHandler
+level:INFO
+formatter:ddagent
+args:('/tmp/dogstatsd.log', 'a')
+
+[formatter_ddagent]
+format: %(asctime)s | %(name)s | %(levelname)s | %(message)s
+class:logging.Formatter
+
+# IF YOU ADD ANYTHING HERE, IT WILL BE IGNORED
+# SO IF YOU WANT TO CONFIGURE AN INTEGRATION,
+# DO IT IN THE SECTION ABOVE
