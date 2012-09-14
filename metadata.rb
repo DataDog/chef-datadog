@@ -1,3 +1,4 @@
+name             "datadog"
 maintainer       "Datadog"
 maintainer_email "package@datadoghq.com"
 license          "Apache 2.0"
@@ -6,7 +7,7 @@ long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "0.0.13"
 
 depends          "apt"
-depends          "chef_handler"
+depends          "chef_handler", ">= 1.0.6"
 depends          "yum"
 
 recipe "datadog::default", "Default"
