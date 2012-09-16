@@ -42,5 +42,5 @@ end
 # https://github.com/acrmp/chefspec
 desc "Run ChefSpec Unit Tests"
 task :chefspec do
-  sh %{rspec cookbooks/datadog}
+  sh %{rspec cookbooks/datadog/spec/}
 end
