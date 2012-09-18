@@ -20,23 +20,6 @@
 include_recipe "chef_handler"
 ENV["DATADOG_HOST"] = node['datadog']['url']
 
-# Install dependency library
-pkgs = value_for_platform(
-  ["redhat", "centos", "fedora", "scientific"] => {
-    "default" => ["ruby-devel"]
-  },
-  ["debian", "ubuntu"] => {
-    "default" => ["ruby-dev"]
-  },
-  "default" => ["ruby-dev"]
-)
-
-pkgs.each do |pkg|
-  package pkg do
-    action :install
-  end
-end
-
 if(Gem::Version.new(Chef::VERSION) < Gem::Version.new('0.10.9'))
   Chef::Log.debug 'Installing gem with trick method'
   # This method ensures that the gem will be available for loading on the first run
