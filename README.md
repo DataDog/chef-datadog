@@ -165,13 +165,16 @@ We are not making use of data_bags in this recipe at this time, as it is unlikel
 
 Changes/Roadmap
 ===============
-## v0.0.13
-* Added redis & memcached
+## v0.1.1
+* Added support for postgres, redis & memcached
 * `dd-agent` - updated to include more platforms
 * `dd-handler` - updated to leverage `chef_gem` resource if available
 * Updated copyright for 2012
 * Updated syntax for node attribute accessors
 * Some syntax styling fixes
+* Added agent logging configuration
+* Removed extraneous dependencies
+* Added automated testing suite
 
 ## v0.0.12
 * Updated for CentOS dependencies
