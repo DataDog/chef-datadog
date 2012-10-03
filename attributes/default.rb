@@ -67,70 +67,70 @@ default['datadog']['graphite_port'] = 17124
 ##
 
 # apache
-default['apache']['status_url'] = nil   # http://www.example.com/server-status/?auto
+default['datadog']['apache']['status_url'] = nil   # http://www.example.com/server-status/?auto
 
 # ganglia
-default['ganglia']['url'] = nil         # localhost
-default['ganglia']['port'] = 8651
+default['datadog']['ganglia']['url'] = nil         # localhost
+default['datadog']['ganglia']['port'] = 8651
 
 # haproxy
-default['haproxy']['stats_url'] = nil
-default['haproxy']['stats_user'] = nil
-default['haproxy']['stats_password'] = nil
+default['datadog']['haproxy']['stats_url'] = nil
+default['datadog']['haproxy']['stats_user'] = nil
+default['datadog']['haproxy']['stats_password'] = nil
 
 # mysql
-default['mysql']['server'] = nil        # localhost
-default['mysql']['user'] = "readonly"
-default['mysql']['pass'] = "readonly"
+default['datadog']['mysql']['server'] = nil        # localhost
+default['datadog']['mysql']['user'] = "readonly"
+default['datadog']['mysql']['pass'] = "readonly"
 
 # nginx
-default['nginx']['status_url'] = nil    # http://localhost:81/nginx_status/
+default['datadog']['nginx']['status_url'] = nil    # http://localhost:81/nginx_status/
 
 # rabbitmq
-default['rabbitmq']['status_url'] = nil # http://www.example.com:55672/json
-default['rabbitmq']['user'] = "guest"
-default['rabbitmq']['pass'] = "guest"
+default['datadog']['rabbitmq']['status_url'] = nil # http://www.example.com:55672/json
+default['datadog']['rabbitmq']['user'] = "guest"
+default['datadog']['rabbitmq']['pass'] = "guest"
 
 # mongodb
-default['mongodb']['server'] = nil      # mongodb://my_user:my_pass@localhost/my_db
+default['datadog']['mongodb']['server'] = nil      # mongodb://my_user:my_pass@localhost/my_db
 
 # postgres
-default['postgres']['server'] = nil
-default['postgres']['port'] = 5432
-default['postgres']['user'] = "datadog"
-default['postgres']['password'] = nil
+default['datadog']['postgres']['server'] = nil
+default['datadog']['postgres']['port'] = 5432
+default['datadog']['postgres']['user'] = "datadog"
+default['datadog']['postgres']['password'] = nil
 
 # couchdb
-default['couchdb']['server'] = nil
+default['datadog']['couchdb']['server'] = nil
 
 # jenkins
-default['jenkins']['home_dir'] = nil    # /var/lib/hudson/
+default['datadog']['jenkins']['home_dir'] = nil    # /var/lib/hudson/
 
 # nagios
-default['nagios']['log_dir'] = nil      # /usr/local/nagios/etc
-default['nagios']['conf_dir'] = nil     # /usr/local/nagios/etc
+default['datadog']['nagios']['log_dir'] = nil      # /usr/local/nagios/etc
+default['datadog']['nagios']['conf_dir'] = nil     # /usr/local/nagios/etc
 
 # cassandra
-default['cassandra']['host'] = nil      # localhost
-default['cassandra']['port'] = 8080
-default['cassandra']['nodetool'] = "/usr/bin/nodetool"
+default['datadog']['cassandra']['host'] = nil      # localhost
+default['datadog']['cassandra']['port'] = 8080
+default['datadog']['cassandra']['nodetool'] = "/usr/bin/nodetool"
 
 # java
-default['jvm_jmx']['server'] = nil      # localhost:8090
-default['jvm_jmx']['user'] = nil        # john
-default['jvm_jmx']['pass'] = nil        # foobar
-default['jvm_jmx']['name'] = nil        # Java
+default['datadog']['jvm_jmx']['server'] = nil      # localhost:8090
+default['datadog']['jvm_jmx']['user'] = nil        # john
+default['datadog']['jvm_jmx']['pass'] = nil        # foobar
+default['datadog']['jvm_jmx']['name'] = nil        # Java
 
 # tomcat
-default['tomcat_jmx']['server'] = nil   # localhost
-default['tomcat_jmx']['user'] = nil     # john
-default['tomcat_jmx']['pass'] = nil     # foobar
+default['datadog']['tomcat_jmx']['server'] = nil   # localhost
+default['datadog']['tomcat_jmx']['user'] = nil     # john
+default['datadog']['tomcat_jmx']['pass'] = nil     # foobar
 
 # varnish
-default['varnish'] = nil               # varnish present? set to true if so
+default['datadog']['varnish'] = nil               # varnish present? set to true if so
 
 # memcache
-default['memcached'] = nil
+default['datadog']['memcached'] = nil
 
 # redis
-default['redis'] = nil
+default['datadog']['redis'] = nil
