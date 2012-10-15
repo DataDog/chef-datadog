@@ -165,6 +165,9 @@ We are not making use of data_bags in this recipe at this time, as it is unlikel
 
 Changes/Roadmap
 ===============
+## v0.1.2
+* Fixed typo in jmx section
+
 ## v0.1.1
 * Added support for postgres, redis & memcached
 * `dd-agent` - updated to include more platforms
