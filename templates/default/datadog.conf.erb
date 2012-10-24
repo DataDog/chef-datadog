@@ -44,9 +44,9 @@ haproxy_password: <%= node['haproxy']['stats_password'] %>
   <% end %>
 <% end %>
 
-<% if node['mysql'] && node['mysql']['server'] %>
+<% if node['datadog']['mysql']['server'] %>
 # mysql
-mysql_server: <%= node['mysql']['server'] %>
+mysql_server: <%= node['datadog']['mysql']['server'] %>
 mysql_user: <%= node['mysql']['user'] %>
 mysql_pass: <%= node['mysql']['pass'] %>
 <% end %>

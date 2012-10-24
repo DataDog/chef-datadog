@@ -79,7 +79,7 @@ default['datadog']['graphite_port'] = 17124
 #default['haproxy']['stats_password'] = nil
 
 # mysql
-#default['mysql']['server'] = nil        # localhost
+default['datadog']['mysql']['server'] = nil        # localhost
 #default['mysql']['user'] = "readonly"
 #default['mysql']['pass'] = "readonly"
 
