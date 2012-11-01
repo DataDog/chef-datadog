@@ -20,6 +20,21 @@ tags: <%= node['datadog']['tags'] %>
 graphite_listen_port: <%= node['datadog']['graphite_port'] %>
 <% end %>
 
+<% if node['datadog']['dogstatsd'] %>
+# ========================================================================== #
+# DogStatsd configuration                                                    #
+# ========================================================================== #
+
+# DogStatsd is a small server that aggregates your custom app metrics. For
+# usage information, check out http://docs.datadoghq.com
+
+#  Make sure your client is sending to the same port.
+dogstatsd_port : <%= node['datadog']['dogstatsd_port'] %>
+
+## The dogstatsd flush period.
+dogstatsd_interval : <%= node['datadog']['dogstatsd_interval'] %>
+<% end %>
+
 ##
 # service defaults
 ##
