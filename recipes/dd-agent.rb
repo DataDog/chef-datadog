@@ -36,8 +36,7 @@ when "debian", "ubuntu"
   if node['platform_version'].to_f == 11.04
     package 'python-setuptools'
 
-    execute "elementtree" do
-      command "easy_install elementtree"
+    easy_install_package "elementtree" do
       creates "/usr/local/lib/python2.7/dist-packages/elementtree-1.2.7_20070827_preview-py2.7.egg"
     end
   end

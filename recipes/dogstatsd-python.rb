@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-execute "easy_install dogstatsd-python" do
+easy_install_package "dogstatsd-python" do
   only_if { node['platform'] =="ubuntu" && node['datadog']['setup-dogstatsd-python'] }
 end
 
