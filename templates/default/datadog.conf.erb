@@ -15,6 +15,9 @@ use_mount: <%= node['datadog']['use_mount'] ? "yes" : "no"  %>
 listen_port: <%= node['datadog']['agent_port'] %>
 tags: <%= node['datadog']['tags'] %>
 
+<% node[:datadog][:conf_lines].each do |key, value| -%>
+<%= key %>: <%= value %>
+<% end -%>
 
 <% if node['datadog']['graphite'] %>
 graphite_listen_port: <%= node['datadog']['graphite_port'] %>
