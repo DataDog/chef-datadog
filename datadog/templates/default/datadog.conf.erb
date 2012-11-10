@@ -14,6 +14,10 @@ use_ec2_instance_id: <%= node[:datadog][:use_ec2_instance_id] ? "yes": "no" %>
 use_mount: <%= node[:datadog][:use_mount] ? "yes" : "no"  %>
 listen_port: <%= node[:datadog][:agent_port] %>
 
+<% node[:datadog][:conf_lines].each do |key, value| -%>
+<%= key %>: <%= value %>
+<% end -%>
+
 <% if node[:datadog][:graphite] %>
 graphite_listen_port: <%= node[:datadog][:graphite_port] %>
 <% end %>
