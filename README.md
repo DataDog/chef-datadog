@@ -40,7 +40,7 @@ Attributes
 * `node['datadog']['use_ec2_instance_id']` = Whether to use the instance-id in lieu of hostname when running on EC2. No effect on non-EC2 servers.
 * `node['datadog']['use_mount']`           = Whether to use the mount point instead of the device name for all I/O metrics.
 * `node['datadog']['tags']`                = List of Datadog tags you want to apply to this host
-* `node[:datadog][:conf_lines]`            = A hash of extra lines to specify in datadog.conf.
+* `node['datadog']['conf_lines']`            = A hash of extra lines to specify in datadog.conf.
 
 apache
 -------
