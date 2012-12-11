@@ -133,15 +133,15 @@ tomcat_jmx_pass: <%= node['tomcat_jmx']['pass'] %>
 varnishstat: <%= %x{which varnishstat}.strip %>
 <% end %>
 
-<% if node['memcached'] %>
-# memcached, from http://community.opscode.com/cookbooks/memcached
-<% if node['memcached']['listen'] == "0.0.0.0" %>
-memcache_server: localhost
-<% else %>
-memcache_server: <%= node['memcached']['listen'] %>
-<% end %>
-memcache_port: <%= node['memcached']['port'] %>
-<% end %>
+# <% if node['memcached'] %>
+# # memcached, from http://community.opscode.com/cookbooks/memcached
+# <% if node['memcached']['listen'] == "0.0.0.0" %>
+# memcache_server: localhost
+# <% else %>
+# memcache_server: <%= node['memcached']['listen'] %>
+# <% end %>
+# memcache_port: <%= node['memcached']['port'] %>
+# <% end %>
 
 <% if node['redis'] %>
 # redis, from http://community.opscode.com/cookbooks/redis
