@@ -30,7 +30,7 @@ end
 # http://berkshelf.com/
 desc "Install Berkshelf shims"
 task :berks do
-  sh %{berks install --shims}
+  sh %{berks install --path ./cookbooks}
 end
 
 # http://wiki.opscode.com/display/chef/Managing+Cookbooks+With+Knife#ManagingCookbooksWithKnife-test

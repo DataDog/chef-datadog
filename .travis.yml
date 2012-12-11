@@ -4,9 +4,10 @@ rvm:
 
 bundler_args: --without=development
 
-before_install:
- - sudo apt-get update -qq
- - sudo apt-get install -qq libgecode-dev
-
 before_script:
  - rake berks
+
+env:
+ - CHEF_VERSION=10.12.0
+ - CHEF_VERSION=10.14.4
+ - CHEF_VERSION=10.16.2
