@@ -9,18 +9,18 @@ task :default => [:tailor, :foodcritic, :knife, :chefspec]
 
 Tailor::RakeTask.new do |task|
   task.file_set('attributes/**/*.rb', "attributes") do |style|
-    style.max_line_length 160, level => :warn
+    style.max_line_length 160, :level => :warn
   end
   task.file_set('definitions/**/*.rb', "definitions")
   task.file_set('libraries/**/*.rb', "libraries")
   task.file_set('metadata.rb', "metadata")
   task.file_set('providers/**/*.rb', "providers")
   task.file_set('recipes/**/*.rb', "recipes") do |style|
-    style.max_line_length 160, level => :warn
+    style.max_line_length 160, :level => :warn
   end
   task.file_set('resources/**/*.rb', "resources")
   task.file_set('spec/**/*.rb', "tests") do |style|
-    style.max_line_length 160, level => :warn
+    style.max_line_length 160, :level => :warn
   end
 end
 
