@@ -6,3 +6,9 @@ bundler_args: --without=development
 
 before_script:
  - rake berks
+
+env:
+ - CHEF_VERSION=0.10.10
+ - CHEF_VERSION=10.12.0
+ - CHEF_VERSION=10.14.4
+ - CHEF_VERSION=10.16.2
