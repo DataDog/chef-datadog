@@ -19,7 +19,9 @@ Tailor::RakeTask.new do |task|
     style.max_line_length 160, level: :warn
   end
   task.file_set('resources/**/*.rb', "resources")
-  # task.file_set('templates/**/*.erb', "templates")
+  task.file_set('spec/**/*.rb', "tests") do |style|
+    style.max_line_length 160, level: :warn
+  end
 end
 
 FoodCritic::Rake::LintTask.new do |t|
@@ -42,5 +44,5 @@ end
 # https://github.com/acrmp/chefspec
 desc "Run ChefSpec Unit Tests"
 task :chefspec do
-  sh %{rspec cookbooks/datadog/spec/}
+  sh %{rspec --color cookbooks/datadog/spec/}
 end
