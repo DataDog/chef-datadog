@@ -83,6 +83,10 @@ end
 #
 raise "Add a ['datadog']['api_key'] attribute to configure this node's Datadog Agent." if node['datadog'] && node['datadog']['api_key'].nil?
 
+if not node.run_list.recipes.include?("datadog::dd-handler")
+  Chef::Log.warn "To set host tags, you must use recipe[datadog::dd-handler]"
+end
+
 template "/etc/dd-agent/datadog.conf" do
   owner "root"
   group "root"

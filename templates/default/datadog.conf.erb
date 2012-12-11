@@ -13,7 +13,6 @@ hostname: <%= node.name %>
 use_ec2_instance_id: <%= node['datadog']['use_ec2_instance_id'] ? "yes": "no" %>
 use_mount: <%= node['datadog']['use_mount'] ? "yes" : "no"  %>
 listen_port: <%= node['datadog']['agent_port'] %>
-tags: <%= node['datadog']['tags'] %>
 
 
 <% if node['datadog']['graphite'] %>
@@ -134,15 +133,15 @@ tomcat_jmx_pass: <%= node['tomcat_jmx']['pass'] %>
 varnishstat: <%= %x{which varnishstat}.strip %>
 <% end %>
 
-<% if node['memcached'] %>
-# memcached, from http://community.opscode.com/cookbooks/memcached
-<% if node['memcached']['listen'] == "0.0.0.0" %>
-memcache_server: localhost
-<% else %>
-memcache_server: <%= node['memcached']['listen'] %>
-<% end %>
-memcache_port: <%= node['memcached']['port'] %>
-<% end %>
+# <% if node['memcached'] %>
+# # memcached, from http://community.opscode.com/cookbooks/memcached
+# <% if node['memcached']['listen'] == "0.0.0.0" %>
+# memcache_server: localhost
+# <% else %>
+# memcache_server: <%= node['memcached']['listen'] %>
+# <% end %>
+# memcache_port: <%= node['memcached']['port'] %>
+# <% end %>
 
 <% if node['redis'] %>
 # redis, from http://community.opscode.com/cookbooks/redis
