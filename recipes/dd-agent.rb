@@ -42,7 +42,12 @@ when "debian", "ubuntu"
     end
   end
 
-  package "datadog-agent"
+  # datadog-agent requires python2.6, not available on LTS till 10.04
+  if (node['platform'] == "ubuntu") and (node['platform_version'].to_f <= 8.04)
+    package "datadog-agent-base"
+  else
+    package "datadog-agent"
+  end
 
 when "redhat", "centos", "scientific", "amazon"
   # Depending on the version, deploy a package    
