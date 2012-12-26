@@ -19,4 +19,5 @@ group :test do
   gem "berkshelf", "~> 1.0"
   gem "chefspec", "~> 0.7"
   gem "fauxhai", "~> 0.0"
+  gem "moneta", "< 0.7.0" # See http://tickets.opscode.com/browse/CHEF-3721
 end
