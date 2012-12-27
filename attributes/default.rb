@@ -66,6 +66,9 @@ default['datadog']['dogstatsd'] = true
 default['datadog']['dogstatsd_port'] = 8125
 default['datadog']['dogstatsd_interval'] = 10
 
+# Set up dogstreams
+default['datadog']['dogstreams'] = []
+
 ##
 # Service specific attributes, use override in node/role configuration
 ##
