@@ -33,6 +33,9 @@ default['datadog']['url'] = "https://app.datadoghq.com"
 # Add tags as override attributes in your role  
 default['datadog']['tags'] = ""
 
+# If you want to install dogstatsd-python then set to true 
+default['datadog']['setup-dogstatsd-python'] = false
+
 # Repository URLs
 default['datadog']['aptrepo'] = "http://apt.datadoghq.com"
 default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm"
