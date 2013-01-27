@@ -35,11 +35,7 @@ when "debian", "ubuntu"
   # https://bugs.launchpad.net/ubuntu/+source/supervisor/+bug/777862
   if node['platform_version'].to_f == 11.04
     package 'python-setuptools'
-
-    execute "elementtree" do
-      command "easy_install elementtree"
-      creates "/usr/local/lib/python2.7/dist-packages/elementtree-1.2.7_20070827_preview-py2.7.egg"
-    end
+    easy_install_package "elementtree"
   end
 
   # datadog-agent requires python2.6, not available on LTS till 10.04
