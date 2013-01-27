@@ -37,6 +37,13 @@ when "debian", "ubuntu"
     package 'python-setuptools'
     easy_install_package "elementtree"
   end
+  
+  # apt-1.8.0 has a bug that makes the new apt-repo not available right away
+  # running apt-get update clears the issue
+  log "Running apt-get update to work around COOK-2171" do
+    notifies :run, resources(:execute => "apt-get update"), :immediately
+    not_if "apt-cache search datadog-agent | grep datadog-agent"
+  end
 
   # datadog-agent requires python2.6, not available on LTS till 10.04
   if (node['platform'] == "ubuntu") and (node['platform_version'].to_f <= 8.04)
