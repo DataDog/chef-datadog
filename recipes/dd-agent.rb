@@ -37,7 +37,7 @@ when "debian", "ubuntu"
     package 'python-setuptools'
     easy_install_package "elementtree"
   end
-  
+
   # apt-1.8.0 has a bug that makes the new apt-repo not available right away
   # running apt-get update clears the issue
   log "Running apt-get update to work around COOK-2171" do
