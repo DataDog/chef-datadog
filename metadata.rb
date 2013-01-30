@@ -13,3 +13,6 @@ depends          "yum"
 recipe "datadog::default", "Default"
 recipe "datadog::dd-agent", "Installs the Datadog Agent"
 recipe "datadog::dd-handler", "Installs a Chef handler for Datadog"
+
+# integration specific
+recipe "datadog::cassandra", "Installs and configures the Cassandra integration"

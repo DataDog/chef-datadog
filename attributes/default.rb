@@ -117,11 +117,6 @@ default['jenkins']['home_dir'] = nil    # /var/lib/hudson/
 default['nagios']['log_dir'] = nil      # /usr/local/nagios/etc
 default['nagios']['conf_dir'] = nil     # /usr/local/nagios/etc
 
-# cassandra
-default['cassandra']['host'] = nil      # localhost
-default['cassandra']['port'] = 8080
-default['cassandra']['nodetool'] = "/usr/bin/nodetool"
-
 # java
 default['jvm_jmx']['server'] = nil      # localhost:8090
 default['jvm_jmx']['user'] = nil        # john
