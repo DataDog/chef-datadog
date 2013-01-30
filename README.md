@@ -106,9 +106,7 @@ nagios
 
 cassandra
 -------
-* `node['cassandra']['host']`			= Cassandra host
-* `node['cassandra']['port']`			= Cassandra port
-* `node['cassandra']['nodetool']`		= Path to nodetool
+* Simply add the recipe `datadog::cassandra` to your role.
 
 java
 -------
@@ -166,6 +164,9 @@ We are not making use of data_bags in this recipe at this time, as it is unlikel
 
 Changes/Roadmap
 ===============
+## v0.2.0
+* Revamped configuration of integrations using checks.d
+
 ## v0.1.3
 * Work-around for COOK-2171
 
