@@ -40,7 +40,8 @@ chef_handler "Chef::Handler::Datadog" do
   source "chef/handler/datadog"
   arguments [
     :api_key => node['datadog']['api_key'],
-    :application_key => node['datadog']['application_key']
+    :application_key => node['datadog']['application_key'],
+    :use_ec2_instance_id => node['datadog']['user_ec2_instance_id']
   ]
   supports :report => true, :exception => true
   action :nothing
