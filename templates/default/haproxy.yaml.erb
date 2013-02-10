@@ -1,0 +1,6 @@
+init_config:
+
+instances:
+  - username: <%= node['datadog']['haproxy']['stats_user'] %>
+    password: <%= node['datadog']['haproxy']['stats_password'] %>
+    url:      <%= node['datadog']['haproxy']['stats_url'] %>
