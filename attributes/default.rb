@@ -45,9 +45,8 @@ default['datadog']['debug'] = false
 # 15 and 60 is a reasonable interval.
 default['datadog']['check_freq'] = 15
 
-# If running on ec2, use the instance-id as the host identifier
-# rather than the hostname.
-# If you have set up meaningful hostnames for your EC2 instances, set this to "no"
+# If running on ec2, if true, use the instance-id as the host identifier
+# rather than the hostname for the agent or nodename for chef-handler.
 default['datadog']['use_ec2_instance_id'] = false
 
 # Use mount points instead of volumes to track disk and fs metrics
