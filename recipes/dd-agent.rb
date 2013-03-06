@@ -99,5 +99,5 @@ template "/etc/dd-agent/datadog.conf" do
     :api_key => node['datadog']['api_key'],
     :dd_url => node['datadog']['url']
   )
-  notifies :restart, "service[datadog-agent]", :immediately
+  notifies :restart, "service[datadog-agent]"
 end
