@@ -1,6 +1,7 @@
 Where to Find the Code
 ======================
 To submit issues and patches please visit https://github.com/DataDog/chef-datadog.
+The code is licensed under the Apache License 2.0 (see  LICENSE for details).
 
 [![Build Status](https://secure.travis-ci.org/DataDog/chef-datadog.png?branch=master)](http://travis-ci.org/DataDog/chef-datadog)
 
