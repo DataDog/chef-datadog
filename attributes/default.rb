@@ -60,6 +60,9 @@ default['datadog']['agent_port'] = 17123
 default['datadog']['graphite'] = false
 default['datadog']['graphite_port'] = 17124
 
+# log-parsing configuration
+default['datadog']['dogstreams'] = []
+
 ##
 # Service specific attributes, use override in node/role configuration
 ##
@@ -96,6 +99,7 @@ default['datadog']['postgres']['server'] = nil
 default['datadog']['postgres']['port'] = 5432
 default['datadog']['postgres']['user'] = "datadog"
 default['datadog']['postgres']['password'] = nil
+default['datadog']['postgres']['tags'] = []
 
 # couchdb
 default['datadog']['couchdb']['server'] = nil

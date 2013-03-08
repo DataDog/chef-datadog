@@ -1,10 +1,13 @@
 init_config:
 
 instances:
-#   -   host: localhost
-#       port: 5432
-#       username: my_username
-#       password: my_password
-#       tags:
-#            - optional_tag1
-#            - optional_tag2
+<% unless node.datadog.postgres.server.nil? %>
+  - host: <%= node.datadog.postgres.server %>
+    port: <%= node.datadog.postgres.port %>
+    username: <%= node.datadog.postgres.user %>
+    password: <%= node.datadog.postgres.password %>
+    tags:
+    <% node.datadog.postgres.tags.each do |t| -%>
+      - <%= t %>
+    <% end -%>
+<% end -%>
