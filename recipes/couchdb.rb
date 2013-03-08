@@ -1,2 +1,2 @@
 include_recipe "datadog:dd-agent"
-monitor "couch"
+datadog_ddmonitor "couch"

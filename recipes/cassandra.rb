@@ -1,3 +1,3 @@
 # monitor cassandra
 include_recipe "datadog::dd-agent"
-monitor "cassandra"
+datadog_ddmonitor "cassandra"

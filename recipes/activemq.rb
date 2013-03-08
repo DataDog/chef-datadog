@@ -1,2 +1,2 @@
 include_recipe "datadog:dd-agent"
-monitor "activemq"
+datadog_ddmonitor "activemq"

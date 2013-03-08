@@ -5,6 +5,7 @@ def whyrun_supported?
 end
 
 action :add do
+  Chef::Log.info"Adding monitoring for #{new_resource.name}"
   new_resource.updated_by_last_action(false)
   template "/etc/dd-agent/conf.d/#{new_resource.name}.yaml" do
     owner "dd-agent"
