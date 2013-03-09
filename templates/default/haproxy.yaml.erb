@@ -1,6 +1,8 @@
 init_config:
 
 instances:
+  <% unless node['datadog']['haproxy']['stats_url'].nil? -%>
   - username: <%= node['datadog']['haproxy']['stats_user'] %>
     password: <%= node['datadog']['haproxy']['stats_password'] %>
     url:      <%= node['datadog']['haproxy']['stats_url'] %>
+  <% end -%>

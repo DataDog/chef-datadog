@@ -1,13 +1,12 @@
 init_config:
 
 instances:
-    # For every instance, you have an `nginx_status_url` and (optionally)
-    # a list of tags.
-
-    -   nginx_status_url: http://example.com/nginx_status/
-        tags:
-            -   instance:foo
-
-    -   nginx_status_url: http://example2.com:1234/nginx_status/
-        tags:
-            -   instance:bar
+<% node.datadog.nginx.each do |a| -%>
+  - nginx_status_url: <%= a['status_url'] %>
+    tags:
+  <% if a.defined?('tags') -%>
+    <% a['tags'].each do |t| -%>
+    - <%= t %>
+    <% end -%>
+  <% end -%>
+<% end -%>

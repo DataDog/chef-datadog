@@ -68,7 +68,13 @@ default['datadog']['dogstreams'] = []
 ##
 
 # apache
-default['datadog']['apache']['status_url'] = nil   # http://www.example.com/server-status/?auto
+# a list of status_url and tags (itself a list)
+# default['datadog']['apache'] = [{'status_url': 'https://localhost/server-status?auto', 'tags': ['foo', 'bar']}]
+default['datadog']['apache'] = []
+# nginx
+# a list of status_url and tags (itself a list)
+# default['datadog']['nginx'] = [{'status_url': 'https://localhost/status', 'tags': ['foo', 'bar']}]
+default['datadog']['nginx'] = []
 
 # ganglia
 default['datadog']['ganglia']['url'] = nil # e.g. localhost
@@ -83,11 +89,8 @@ default['datadog']['mysql']['server'] = nil        # localhost
 default['datadog']['mysql']['user'] = "readonly"
 default['datadog']['mysql']['pass'] = "readonly"
 
-# nginx
-default['datadog']['nginx']['status_url'] = nil    # http://localhost:81/nginx_status/
-
 # rabbitmq
-default['datadog']['rabbitmq']['status_url'] = nil # http://www.example.com:55672/json
+default['datadog']['rabbitmq']['api_url'] = nil # http://www.example.com:15672/api/
 default['datadog']['rabbitmq']['user'] = "guest"
 default['datadog']['rabbitmq']['pass'] = "guest"
 
