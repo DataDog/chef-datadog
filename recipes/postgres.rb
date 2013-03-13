@@ -1,4 +1,5 @@
 include_recipe "datadog::dd-agent"
+
 package "psycopg2" do
   case node["platform"]
   when "debian", "ubuntu"
@@ -8,4 +9,5 @@ package "psycopg2" do
   end
   action :install
 end
-datadog_ddmonitor "postgres"
+
+datadog_ddmonitor :name => "postgres", :init_config => nil, :instances => node.datadog.postgres.instances
