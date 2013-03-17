@@ -42,6 +42,7 @@ Attributes
 * `node['datadog']['use_mount']`           = Whether to use the mount point instead of the device name for all I/O metrics.
 * `node['datadog']['tags']`                = List of Datadog tags you want to apply to this host
 * `node['datadog']['dogstreams']`          = List of Dogstreams (see [Guide to Log Parsing](http://docs.datadoghq.com/guides/logs/) for details).
+* `node['datadog']['agent_version']        = Sets the datadog agent version to install (default: latest available version)
 
 apache
 -------
@@ -167,6 +168,9 @@ We are not making use of data_bags in this recipe at this time, as it is unlikel
 
 Changes/Roadmap
 ===============
+## v0.2.0
+* Added `node['datadog']['agent_version']` attribute
+
 ## v0.1.3
 * Work-around for COOK-2171
 

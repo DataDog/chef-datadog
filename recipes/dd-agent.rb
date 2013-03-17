@@ -47,9 +47,13 @@ when "debian", "ubuntu"
 
   # datadog-agent requires python2.6, not available on LTS till 10.04
   if (node['platform'] == "ubuntu") and (node['platform_version'].to_f <= 8.04)
-    package "datadog-agent-base"
+    package "datadog-agent-base" do
+      version node['datadog']['agent_version']
+    end
   else
-    package "datadog-agent"
+    package "datadog-agent" do
+      version node['datadog']['agent_version']
+    end
   end
 
 when "redhat", "centos", "scientific", "amazon"
@@ -65,9 +69,13 @@ when "redhat", "centos", "scientific", "amazon"
 
   # datadog-agent requires python2.6, not available on RH5 by default
   if node['platform_version'].to_i <= 5
-    package "datadog-agent-base"
+    package "datadog-agent-base" do
+      version node['datadog']['agent_version']
+    end
   elsif node['platform_version'].to_i >= 6
-    package "datadog-agent"
+    package "datadog-agent" do
+      version node['datadog']['agent_version']
+    end
   end
 end
 
