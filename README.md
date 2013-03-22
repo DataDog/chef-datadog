@@ -45,98 +45,98 @@ Attributes
 
 apache
 -------
-* `node['apache']['status_url']` 		= Url to Apache's status page. Must have mod_status installed.  See http://httpd.apache.org/docs/2.0/mod/mod_status.html for details.
+* `node['datadog']['apache']['status_url']` 		= Url to Apache's status page. Must have mod_status installed.  See http://httpd.apache.org/docs/2.0/mod/mod_status.html for details.
 
 ganglia
 -------
-* `node['ganglia']['url']` 			    = Ganglia host where gmetad is running
-* `node['ganglia']['port']` 			= Ganglia port where gmetad is running
+* `node['datadog']['ganglia']['url']` 			    = Ganglia host where gmetad is running
+* `node['datadog']['ganglia']['port']` 			= Ganglia port where gmetad is running
 
 graphite
 --------
-* `node['datadog']['graphite']`       = Turns the agent into a Graphite carbon relay.
-* `node['datadog']['graphite_port']`  = Port that the carbon relay will listen on.
+* `node['datadog']['datadog']['graphite']`       = Turns the agent into a Graphite carbon relay.
+* `node['datadog']['datadog']['graphite_port']`  = Port that the carbon relay will listen on.
 
 haproxy
 -------
-* `node['datadog']['haproxy']['stats_url']`      = URL for haproxy stats
-* `node['datadog']['haproxy']['stats_user']`     = Optional HTTP Basic Auth user to access haproxy stats
-* `node['datadog']['haproxy']['stats_password']` = Optional HTTP Basic Auth password to access haproxy stats
+* `node['datadog']['datadog']['haproxy']['stats_url']`      = URL for haproxy stats
+* `node['datadog']['datadog']['haproxy']['stats_user']`     = Optional HTTP Basic Auth user to access haproxy stats
+* `node['datadog']['datadog']['haproxy']['stats_password']` = Optional HTTP Basic Auth password to access haproxy stats
 
 mysql
 -------
-* `node['mysql']['server']` = MySQL host
-* `node['mysql']['user']`   = MySQL user. It only runs "SHOW STATUS" queries, which doesn't require any privileges, so you should consider creating a separate, unprivileged user.
-* `node['mysql']['pass']`   = MySQL user's password
+* `node['datadog']['mysql']['server']` = MySQL host
+* `node['datadog']['mysql']['user']`   = MySQL user. It only runs "SHOW STATUS" queries, which doesn't require any privileges, so you should consider creating a separate, unprivileged user.
+* `node['datadog']['mysql']['pass']`   = MySQL user's password
 
 postgres
 --------
-* `node['postgres']['server']`   = PostgreSQL host
-* `node['postgres']['port']`     = 5432 by default
-* `node['postgres']['user']`     = user that the agent will use to connect, "datadog" by default
-* `node['postgres']['password']` = password to connect the datadog agent
+* `node['datadog']['postgres']['server']`   = PostgreSQL host
+* `node['datadog']['postgres']['port']`     = 5432 by default
+* `node['datadog']['postgres']['user']`     = user that the agent will use to connect, "datadog" by default
+* `node['datadog']['postgres']['password']` = password to connect the datadog agent
 
 Do not forget to update you `pg_hba.conf` and `SIGHUP` postgres in case your postgres access control requires it.
 
 nginx
 -------
-* `node['nginx']['status_url']`		= Url to nginx's status page. Must have http_stub_status_module installed.  See http://wiki.nginx.org/HttpStubStatusModule for details.
+* `node['datadog']['nginx']['status_url']`		= Url to nginx's status page. Must have http_stub_status_module installed.  See http://wiki.nginx.org/HttpStubStatusModule for details.
 
 rabbitmq
 -------
-* `node['rabbitmq']['status_url']`	= Url to RabbitMQ's status page. Must have rabbitmq-status plugin installed.  See http://www.lshift.net/blog/2009/11/30/introducing-rabbitmq-status-plugin for details.
-* `node['rabbitmq']['user']`			= RabbitMQ user
-* `node['rabbitmq']['pass']`			= RabbitMQ user's password
+* `node['datadog']['rabbitmq']['status_url']`	= Url to RabbitMQ's status page. Must have rabbitmq-status plugin installed.  See http://www.lshift.net/blog/2009/11/30/introducing-rabbitmq-status-plugin for details.
+* `node['datadog']['rabbitmq']['user']`			= RabbitMQ user
+* `node['datadog']['rabbitmq']['pass']`			= RabbitMQ user's password
 
 mongodb
 -------
-* `node['mongodb']['server']`			= MongoDB uri. For example: mongodb://my_user:my_pass@localhost/my_db
+* `node['datadog']['mongodb']['server']`			= MongoDB uri. For example: mongodb://my_user:my_pass@localhost/my_db
 
 couchdb
 -------
-* `node['couchdb']['server']`			= CouchDB host
+* `node['datadog']['couchdb']['server']`			= CouchDB host
 
 jenkins
 -------
-* `node['jenkins']['home_dir']`		= Path to Jenkins's home directory
+* `node['datadog']['jenkins']['home_dir']`		= Path to Jenkins's home directory
 
 nagios
 -------
-* `node['nagios']['log_dir']`			= Path to Nagios's event log file
-* `node['nagios']['conf_dir']`		= If you use perfdata, dd-agent can import automatically and in real-time performance data collected by nagios.  For more information on perfdata configuration, please refer to http://nagios.sourceforge.net/docs/3_0/perfdata.html.  Path to Nagios' ***configuration*** file where the properties host|service_perfdata_file and host|service_perfdata_file_template are defined.
+* `node['datadog']['nagios']['log_dir']`			= Path to Nagios's event log file
+* `node['datadog']['nagios']['conf_dir']`		= If you use perfdata, dd-agent can import automatically and in real-time performance data collected by nagios.  For more information on perfdata configuration, please refer to http://nagios.sourceforge.net/docs/3_0/perfdata.html.  Path to Nagios' ***configuration*** file where the properties host|service_perfdata_file and host|service_perfdata_file_template are defined.
 
 cassandra
 -------
-* `node['cassandra']['host']`			= Cassandra host
-* `node['cassandra']['port']`			= Cassandra port
-* `node['cassandra']['nodetool']`		= Path to nodetool
+* `node['datadog']['cassandra']['host']`			= Cassandra host
+* `node['datadog']['cassandra']['port']`			= Cassandra port
+* `node['datadog']['cassandra']['nodetool']`		= Path to nodetool
 
 java
 -------
-* `node['jvm_jmx']['server']`			= JMX server:port to connect to
-* `node['jvm_jmx']['user']`			= JMX user to log in with, if needed
-* `node['jvm_jmx']['pass']`			= Password for the configured JMX user
-* `node['jvm_jmx']['name']`			= Name to report the statistics for this java VM. This will allow to monitor several JVMs running on the same machine.
+* `node['datadog']['jvm_jmx']['server']`			= JMX server:port to connect to
+* `node['datadog']['jvm_jmx']['user']`			= JMX user to log in with, if needed
+* `node['datadog']['jvm_jmx']['pass']`			= Password for the configured JMX user
+* `node['datadog']['jvm_jmx']['name']`			= Name to report the statistics for this java VM. This will allow to monitor several JVMs running on the same machine.
 
 tomcat
 -------
-* `node['tomcat_jmx']['server']`		= host:port to connect to. Must be configured in tomcat setenv.sh or similar
-* `node['tomcat_jmx']['user']`		= JMX user to log in with, if needed
-* `node['tomcat_jmx']['pass']`		= Password for the configured JMX user
+* `node['datadog']['tomcat_jmx']['server']`		= host:port to connect to. Must be configured in tomcat setenv.sh or similar
+* `node['datadog']['tomcat_jmx']['user']`		= JMX user to log in with, if needed
+* `node['datadog']['tomcat_jmx']['pass']`		= Password for the configured JMX user
 
 varnish
 -------
-* `node['varnish']`                  = if true, will invoke `varnishstat` on the server to gather varnish metrics.
+* `node['datadog']['varnish']`                  = if true, will invoke `varnishstat` on the server to gather varnish metrics.
 
 memcached
 ---------
-* `node['memcached']['listen']`       = memcached address; if 0.0.0.0 dd-agent will connect via the loopback address.
-* `node['memcached']['port']`         = memcached port
+* `node['datadog']['memcached']['listen']`       = memcached address; if 0.0.0.0 dd-agent will connect via the loopback address.
+* `node['datadog']['memcached']['port']`         = memcached port
 
 redis
 -----
-* `node['redis']['server']['addr']`    = redis server address
-* `node['redis']['server']['port']`    = redis server port
+* `node['datadog']['redis']['server']['addr']`    = redis server address
+* `node['datadog']['redis']['server']['port']`    = redis server port
 
 Recipes
 =======
