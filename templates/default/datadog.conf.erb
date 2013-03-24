@@ -42,114 +42,114 @@ dogstatsd_interval : <%= node['datadog']['dogstatsd_interval'] %>
 # service defaults
 ##
 
-<% if node['apache']['status_url'] %>
+<% if node['datadog']['apache']['status_url'] %>
 # apache
-apache_status_url: <%= node['apache']['status_url'] %>
+apache_status_url: <%= node['datadog']['apache']['status_url'] %>
 <% end %>
 
-<% if node['ganglia']['url'] %>
+<% if node['datadog']['ganglia']['url'] %>
 # ganglia
-ganglia_host: <%= node['ganglia']['url'] %>
-ganglia_port: <%= node['ganglia']['port'] %>
+ganglia_host: <%= node['datadog']['ganglia']['url'] %>
+ganglia_port: <%= node['datadog']['ganglia']['port'] %>
 <% end %>
 
-<% if node['haproxy']['stats_url'] %>
+<% if node['datadog']['haproxy']['stats_url'] %>
 # haproxy
-haproxy_url: <%= node['haproxy']['stats_url'] %>
-  <% if node['haproxy']['stats_user'] && node['haproxy']['stats_password'] %>
-haproxy_user: <%= node['haproxy']['stats_user'] %>
-haproxy_password: <%= node['haproxy']['stats_password'] %>
+haproxy_url: <%= node['datadog']['haproxy']['stats_url'] %>
+  <% if node['datadog']['haproxy']['stats_user'] && node['datadog']['haproxy']['stats_password'] %>
+haproxy_user: <%= node['datadog']['haproxy']['stats_user'] %>
+haproxy_password: <%= node['datadog']['haproxy']['stats_password'] %>
   <% end %>
 <% end %>
 
-<% if node['mysql']['server'] %>
+<% if node['datadog']['mysql']['server'] %>
 # mysql
-mysql_server: <%= node['mysql']['server'] %>
-mysql_user: <%= node['mysql']['user'] %>
-mysql_pass: <%= node['mysql']['pass'] %>
+mysql_server: <%= node['datadog']['mysql']['server'] %>
+mysql_user: <%= node['datadog']['mysql']['user'] %>
+mysql_pass: <%= node['datadog']['mysql']['pass'] %>
 <% end %>
 
-<% if node['postgres']['server'] && node['postgres']['password'] %>
+<% if node['datadog']['postgres']['server'] && node['datadog']['postgres']['password'] %>
 # postgres
-postgresql_server: <%= node['postgres']['server'] %>
-postgresql_port: <%= node['postgres']['port'] %>
-postgresql_user: <%= node['postgres']['user'] %>
-postgresql_pass: <%= node['postgres']['password'] %>
+postgresql_server: <%= node['datadog']['postgres']['server'] %>
+postgresql_port: <%= node['datadog']['postgres']['port'] %>
+postgresql_user: <%= node['datadog']['postgres']['user'] %>
+postgresql_pass: <%= node['postgres'['datadog']]['password'] %>
 <% end %>
 
-<% if node['nginx']['status_url'] %>
+<% if node['datadog']['nginx']['status_url'] %>
 # nginx
-nginx_status_url: <%= node['nginx']['status_url'] %>
+nginx_status_url: <%= node['datadog']['nginx']['status_url'] %>
 <% end %>
 
-<% if node['rabbitmq']['status_url'] %>
+<% if node['datadog']['rabbitmq']['status_url'] %>
 # rabbitmq
-rabbitmq_status_url: <%= node['rabbitmq']['status_url'] %>
-rabbitmq_user: <%= node['rabbitmq']['user'] %>
-rabbitmq_pass: <%= node['rabbitmq']['pass'] %>
+rabbitmq_status_url: <%= node['datadog']['rabbitmq']['status_url'] %>
+rabbitmq_user: <%= node['datadog']['rabbitmq']['user'] %>
+rabbitmq_pass: <%= node['datadog']['rabbitmq']['pass'] %>
 <% end %>
 
-<% if node['mongodb']['server'] %>
+<% if node['datadog']['mongodb']['server'] %>
 # mongodb
-mongodb_server: <%= node['mongodb']['server'] %>
+mongodb_server: <%= node['datadog']['mongodb']['server'] %>
 <% end %>
 
-<% if node['couchdb']['server'] %>
+<% if node['datadog']['couchdb']['server'] %>
 # couchdb
-couchdb_server: <%= node['couchdb']['server'] %>
+couchdb_server: <%= node['datadog']['couchdb']['server'] %>
 <% end %>
 
-<% if node['jenkins']['home_dir'] %>
+<% if node['datadog']['jenkins']['home_dir'] %>
 # jenkins
-hudson_home: <%= node['jenkins']['home_dir'] %>
+hudson_home: <%= node['datadog']['jenkins']['home_dir'] %>
 <% end %>
 
-<% if node['nagios']['log_dir'] %>
+<% if node['datadog']['nagios']['log_dir'] %>
 # nagios
-nagios_log: <%= node['nagios']['log_dir'] %>/nagios.log
-nagios_perf_cfg: <%= node['nagios']['conf_dir'] %>/nagios.cfg
+nagios_log: <%= node['datadog']['nagios']['log_dir'] %>/nagios.log
+nagios_perf_cfg: <%= node['datadog']['nagios']['conf_dir'] %>/nagios.cfg
 <% end %>
 
-<% if node['cassandra']['host'] %>
+<% if node['datadog']['cassandra']['host'] %>
 # cassandra
-cassandra_host: <%= node['cassandra']['host'] %>
-cassandra_port: <%= node['cassandra']['port'] %>
-cassandra_nodetool: <%= node['cassandra']['nodetool'] %>
+cassandra_host: <%= node['datadog']['cassandra']['host'] %>
+cassandra_port: <%= node['datadog']['cassandra']['port'] %>
+cassandra_nodetool: <%= node['datadog']['cassandra']['nodetool'] %>
 <% end %>
 
-<% if node['jvm_jmx']['server'] %>
+<% if node['datadog']['jvm_jmx']['server'] %>
 # java jmx
-jvm_jmx_server: <%= node['jvm_jmx']['server'] %>
-jvm_jmx_user: <%= node['jvm_jmx']['user'] %>
-jvm_jmx_pass: <%= node['jvm_jmx']['pass'] %>
-jvm_jmx_name: <%= node['jvm_jmx']['name'] %>
+jvm_jmx_server: <%= node['datadog']['jvm_jmx']['server'] %>
+jvm_jmx_user: <%= node['datadog']['jvm_jmx']['user'] %>
+jvm_jmx_pass: <%= node['datadog']['jvm_jmx']['pass'] %>
+jvm_jmx_name: <%= node['datadog']['jvm_jmx']['name'] %>
 <% end %>
 
-<% if node['tomcat_jmx']['server'] %>
+<% if node['datadog']['tomcat_jmx']['server'] %>
 # tomcat jmx
-tomcat_jmx_server: <%= node['tomcat_jmx']['server'] %>
-tomcat_jmx_user: <%= node['tomcat_jmx']['user'] %>
-tomcat_jmx_pass: <%= node['tomcat_jmx']['pass'] %>
+tomcat_jmx_server: <%= node['datadog']['tomcat_jmx']['server'] %>
+tomcat_jmx_user: <%= node['datadog']['tomcat_jmx']['user'] %>
+tomcat_jmx_pass: <%= node['datadog']['tomcat_jmx']['pass'] %>
 <% end %>
 
-<% if node['varnish'] %>
+<% if node['datadog']['varnish'] %>
 # Varnish, from http://community.opscode.com/cookbooks/varnish
 varnishstat: <%= %x{which varnishstat}.strip %>
 <% end %>
 
-<% if node['memcached'] %>
+<% if node['datadog']['memcached'] %>
 # memcached, from http://community.opscode.com/cookbooks/memcached
-<% if node['memcached']['listen'] == "0.0.0.0" %>
+<% if node['datadog']['memcached']['listen'] == "0.0.0.0" %>
 memcache_server: localhost
 <% else %>
-memcache_server: <%= node['memcached']['listen'] %>
+memcache_server: <%= node['datadog']['memcached']['listen'] %>
 <% end %>
-memcache_port: <%= node['memcached']['port'] %>
+memcache_port: <%= node['datadog']['memcached']['port'] %>
 <% end %>
 
-<% if node['redis'] %>
+<% if node['datadog']['redis'] %>
 # redis, from http://community.opscode.com/cookbooks/redis
-redis_urls: <%= node['redis']['server']['addr']%>:<%= node['redis']['server']['port'] %>
+redis_urls: <%= node['datadog']['redis']['server']['addr']%>:<%= node['redis']['server']['port'] %>
 <% end %>
 
 ##############################################################################
