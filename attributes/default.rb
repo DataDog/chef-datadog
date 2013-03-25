@@ -33,7 +33,8 @@ default['datadog']['url'] = "https://app.datadoghq.com"
 # Add tags as override attributes in your role  
 default['datadog']['tags'] = ""
 
-# Repository URLs
+# Repository configuration
+default['datadog']['installrepo'] = true
 default['datadog']['aptrepo'] = "http://apt.datadoghq.com"
 default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm"
 

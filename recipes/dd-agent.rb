@@ -17,19 +17,13 @@
 # limitations under the License.
 #
 
+# Install the Apt/Yum repository if enabled
+if node['datadog']['installrepo']
+  include_recipe "datadog::repository"
+end
+
 case node['platform']
 when "debian", "ubuntu"
-  include_recipe "apt"
-
-  apt_repository 'datadog' do
-    keyserver 'keyserver.ubuntu.com'
-    key 'C7A7DA52'
-    uri node['datadog']['aptrepo']
-    distribution "unstable"
-    components ["main"]
-    action :add
-  end
-
   # Thanks to @joepcds for the Ubuntu 11.04 fix
   # setuptools has been packaged with a bug
   # https://bugs.launchpad.net/ubuntu/+source/supervisor/+bug/777862
@@ -53,16 +47,6 @@ when "debian", "ubuntu"
   end
 
 when "redhat", "centos", "scientific", "amazon"
-  # Depending on the version, deploy a package    
-  include_recipe "yum::epel"
-
-  yum_repository "datadog" do
-    name "datadog"
-    description "datadog"
-    url node['datadog']['yumrepo']
-    action :add
-  end
-
   # datadog-agent requires python2.6, not available on RH5 by default
   if node['platform_version'].to_i <= 5
     package "datadog-agent-base"
