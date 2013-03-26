@@ -38,6 +38,9 @@ default['datadog']['installrepo'] = true
 default['datadog']['aptrepo'] = "http://apt.datadoghq.com"
 default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm"
 
+# Agent Version
+default['datadog']['agent_version'] = nil
+
 # Boolean to enable debug_mode, which outputs massive amounts of log messages 
 # to the /tmp/ directory.
 default['datadog']['debug'] = false
