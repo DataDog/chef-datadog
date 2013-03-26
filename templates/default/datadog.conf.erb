@@ -74,7 +74,7 @@ mysql_pass: <%= node['datadog']['mysql']['pass'] %>
 postgresql_server: <%= node['datadog']['postgres']['server'] %>
 postgresql_port: <%= node['datadog']['postgres']['port'] %>
 postgresql_user: <%= node['datadog']['postgres']['user'] %>
-postgresql_pass: <%= node['postgres'['datadog']]['password'] %>
+postgresql_pass: <%= node['datadog']['postgres']['password'] %>
 <% end %>
 
 <% if node['datadog']['nginx']['status_url'] %>
@@ -149,7 +149,7 @@ memcache_port: <%= node['datadog']['memcached']['port'] %>
 
 <% if node['datadog']['redis'] %>
 # redis, from http://community.opscode.com/cookbooks/redis
-redis_urls: <%= node['datadog']['redis']['server']['addr']%>:<%= node['redis']['server']['port'] %>
+redis_urls: <%= node['datadog']['redis']['server']['addr']%>:<%= node['datadog']['redis']['server']['port'] %>
 <% end %>
 
 ##############################################################################
