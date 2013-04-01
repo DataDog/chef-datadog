@@ -43,6 +43,8 @@ Attributes
 * `node['datadog']['tags']`                = List of Datadog tags you want to apply to this host
 * `node['datadog']['dogstreams']`          = List of Dogstreams (see [Guide to Log Parsing](http://docs.datadoghq.com/guides/logs/) for details).
 * `node['datadog']['agent_version']        = Sets the datadog agent version to install (default: latest available version)
+* `node['datadog']['use_syslog']           = Whether the agent should log to syslog (default: true)
+* `node['datadog']['old_logging_config']   = Whether to use pre-3.5.0 agent logging configuration (default: false)
 
 apache
 -------

@@ -4,7 +4,7 @@ maintainer_email "package@datadoghq.com"
 license          "Apache 2.0"
 description      "Installs/Configures datadog components"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          "0.2.0"
+version          "0.3.0"
 
 depends          "apt"
 depends          "chef_handler", "~> 1.0.6"
