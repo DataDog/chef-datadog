@@ -89,7 +89,10 @@ template "/etc/dd-agent/datadog.conf" do
   mode 0644
   variables(
     :api_key => node['datadog']['api_key'],
-    :dd_url => node['datadog']['url']
+    :dd_url => node['datadog']['url'],
+    :log_level => node['datadog']['debug'] ? 'DEBUG' : 'INFO',
+    :old_logging_config => node['datadog']['old_logging_config'],
+    :use_syslog => node['datadog']['use_syslog'],
   )
   notifies :restart, "service[datadog-agent]", :immediately
 end

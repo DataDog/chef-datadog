@@ -45,6 +45,12 @@ default['datadog']['agent_version'] = nil
 # to the /tmp/ directory.
 default['datadog']['debug'] = false
 
+# Boolean to enable logging to syslog (in addition to logging to files)
+default['datadog']['use_syslog'] = true
+
+# Set to true to enable old-style (pre agent 3.5.x) logging configuration
+default['datadog']['old_logging_config'] = false
+
 # How often you want the agent to collect data, in seconds. Any value between
 # 15 and 60 is a reasonable interval.
 default['datadog']['check_freq'] = 15
