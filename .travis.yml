@@ -4,10 +4,9 @@ rvm:
 
 bundler_args: --without=development
 
+gemfile:
+  - gemfiles/Gemfile.chef-11
+  - gemfiles/Gemfile.chef-10
+
 before_script:
  - rake berks
-
-env:
- - CHEF_VERSION=10.12.0
- - CHEF_VERSION=10.14.4
- - CHEF_VERSION=10.16.2
