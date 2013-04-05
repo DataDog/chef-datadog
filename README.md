@@ -170,6 +170,7 @@ Changes/Roadmap
 ===============
 ## v0.2.0
 * Added `node['datadog']['agent_version']` attribute
+* All attributes exist in the datadog namespace
 
 ## v0.1.3
 * Work-around for COOK-2171
