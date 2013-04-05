@@ -77,70 +77,70 @@ default['datadog']['dogstreams'] = []
 ##
 
 # apache
-default['apache']['status_url'] = nil   # http://www.example.com/server-status/?auto
+#default['apache']['status_url'] = nil   # http://www.example.com/server-status/?auto
 
 # ganglia
-default['ganglia']['url'] = nil         # localhost
-default['ganglia']['port'] = 8651
+#default['ganglia']['url'] = nil         # localhost
+#default['ganglia']['port'] = 8651
 
 # haproxy
-default['haproxy']['stats_url'] = nil
-default['haproxy']['stats_user'] = nil
-default['haproxy']['stats_password'] = nil
+#default['haproxy']['stats_url'] = nil
+#default['haproxy']['stats_user'] = nil
+#default['haproxy']['stats_password'] = nil
 
 # mysql
-default['mysql']['server'] = nil        # localhost
-default['mysql']['user'] = "readonly"
-default['mysql']['pass'] = "readonly"
+default['datadog']['mysql']['server'] = nil        # localhost
+#default['mysql']['user'] = "readonly"
+#default['mysql']['pass'] = "readonly"
 
 # nginx
-default['nginx']['status_url'] = nil    # http://localhost:81/nginx_status/
+#default['nginx']['status_url'] = nil    # http://localhost:81/nginx_status/
 
 # rabbitmq
-default['rabbitmq']['status_url'] = nil # http://www.example.com:55672/json
-default['rabbitmq']['user'] = "guest"
-default['rabbitmq']['pass'] = "guest"
+#default['rabbitmq']['status_url'] = nil # http://www.example.com:55672/json
+#default['rabbitmq']['user'] = "guest"
+#default['rabbitmq']['pass'] = "guest"
 
 # mongodb
-default['mongodb']['server'] = nil      # mongodb://my_user:my_pass@localhost/my_db
+#default['mongodb']['server'] = nil      # mongodb://my_user:my_pass@localhost/my_db
 
 # postgres
-default['postgres']['server'] = nil
-default['postgres']['port'] = 5432
-default['postgres']['user'] = "datadog"
-default['postgres']['password'] = nil
+#default['postgres']['server'] = nil
+#default['postgres']['port'] = 5432
+#default['postgres']['user'] = "datadog"
+#default['postgres']['password'] = nil
 
 # couchdb
-default['couchdb']['server'] = nil
+#default['couchdb']['server'] = nil
 
 # jenkins
-default['jenkins']['home_dir'] = nil    # /var/lib/hudson/
+#default['jenkins']['home_dir'] = nil    # /var/lib/hudson/
 
 # nagios
-default['nagios']['log_dir'] = nil      # /usr/local/nagios/etc
-default['nagios']['conf_dir'] = nil     # /usr/local/nagios/etc
+#default['nagios']['log_dir'] = nil      # /usr/local/nagios/etc
+#default['nagios']['conf_dir'] = nil     # /usr/local/nagios/etc
 
 # cassandra
-default['cassandra']['host'] = nil      # localhost
-default['cassandra']['port'] = 8080
-default['cassandra']['nodetool'] = "/usr/bin/nodetool"
+#default['cassandra']['host'] = nil      # localhost
+#default['cassandra']['port'] = 8080
+#default['cassandra']['nodetool'] = "/usr/bin/nodetool"
 
 # java
-default['jvm_jmx']['server'] = nil      # localhost:8090
-default['jvm_jmx']['user'] = nil        # john
-default['jvm_jmx']['pass'] = nil        # foobar
-default['jvm_jmx']['name'] = nil        # Java
+#default['jvm_jmx']['server'] = nil      # localhost:8090
+#default['jvm_jmx']['user'] = nil        # john
+#default['jvm_jmx']['pass'] = nil        # foobar
+#default['jvm_jmx']['name'] = nil        # Java
 
 # tomcat
-default['tomcat_jmx']['server'] = nil   # localhost
-default['tomcat_jmx']['user'] = nil     # john
-default['tomcat_jmx']['pass'] = nil     # foobar
+#default['tomcat_jmx']['server'] = nil   # localhost
+#default['tomcat_jmx']['user'] = nil     # john
+#default['tomcat_jmx']['pass'] = nil     # foobar
 
 # varnish
-default['varnish'] = nil               # varnish present? set to true if so
+#default['varnish'] = nil               # varnish present? set to true if so
 
 # memcache
-default['memcached'] = nil
+#default['memcached'] = nil
 
 # redis
-default['redis'] = nil
+#default['redis'] = nil

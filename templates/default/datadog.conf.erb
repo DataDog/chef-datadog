@@ -42,18 +42,18 @@ dogstatsd_interval : <%= node['datadog']['dogstatsd_interval'] %>
 # service defaults
 ##
 
-<% if node['apache']['status_url'] %>
+<% if node['apache'] && node['apache']['status_url'] %>
 # apache
 apache_status_url: <%= node['apache']['status_url'] %>
 <% end %>
 
-<% if node['ganglia']['url'] %>
+<% if node['ganglia'] && node['ganglia']['url'] %>
 # ganglia
 ganglia_host: <%= node['ganglia']['url'] %>
 ganglia_port: <%= node['ganglia']['port'] %>
 <% end %>
 
-<% if node['haproxy']['stats_url'] %>
+<% if node['haproxy'] && node['haproxy']['stats_url'] %>
 # haproxy
 haproxy_url: <%= node['haproxy']['stats_url'] %>
   <% if node['haproxy']['stats_user'] && node['haproxy']['stats_password'] %>
@@ -62,14 +62,14 @@ haproxy_password: <%= node['haproxy']['stats_password'] %>
   <% end %>
 <% end %>
 
-<% if node['mysql']['server'] %>
+<% if node['datadog']['mysql']['server'] %>
 # mysql
-mysql_server: <%= node['mysql']['server'] %>
+mysql_server: <%= node['datadog']['mysql']['server'] %>
 mysql_user: <%= node['mysql']['user'] %>
 mysql_pass: <%= node['mysql']['pass'] %>
 <% end %>
 
-<% if node['postgres']['server'] && node['postgres']['password'] %>
+<% if node['postgres'] && node['postgres']['server'] && node['postgres']['password'] %>
 # postgres
 postgresql_server: <%= node['postgres']['server'] %>
 postgresql_port: <%= node['postgres']['port'] %>
@@ -77,47 +77,47 @@ postgresql_user: <%= node['postgres']['user'] %>
 postgresql_pass: <%= node['postgres']['password'] %>
 <% end %>
 
-<% if node['nginx']['status_url'] %>
+<% if node['nginx'] && node['nginx']['status_url'] %>
 # nginx
 nginx_status_url: <%= node['nginx']['status_url'] %>
 <% end %>
 
-<% if node['rabbitmq']['status_url'] %>
+<% if node['rabbitmq'] && node['rabbitmq']['status_url'] %>
 # rabbitmq
 rabbitmq_status_url: <%= node['rabbitmq']['status_url'] %>
 rabbitmq_user: <%= node['rabbitmq']['user'] %>
 rabbitmq_pass: <%= node['rabbitmq']['pass'] %>
 <% end %>
 
-<% if node['mongodb']['server'] %>
+<% if node['mongodb'] && node['mongodb']['server'] %>
 # mongodb
 mongodb_server: <%= node['mongodb']['server'] %>
 <% end %>
 
-<% if node['couchdb']['server'] %>
+<% if node['couchdb'] && node['couchdb']['server'] %>
 # couchdb
 couchdb_server: <%= node['couchdb']['server'] %>
 <% end %>
 
-<% if node['jenkins']['home_dir'] %>
+<% if node['jenkins'] && node['jenkins']['home_dir'] %>
 # jenkins
 hudson_home: <%= node['jenkins']['home_dir'] %>
 <% end %>
 
-<% if node['nagios']['log_dir'] %>
+<% if node['nagios'] && node['nagios']['log_dir'] %>
 # nagios
 nagios_log: <%= node['nagios']['log_dir'] %>/nagios.log
 nagios_perf_cfg: <%= node['nagios']['conf_dir'] %>/nagios.cfg
 <% end %>
 
-<% if node['cassandra']['host'] %>
+<% if node['cassandra'] && node['cassandra']['host'] %>
 # cassandra
 cassandra_host: <%= node['cassandra']['host'] %>
 cassandra_port: <%= node['cassandra']['port'] %>
 cassandra_nodetool: <%= node['cassandra']['nodetool'] %>
 <% end %>
 
-<% if node['jvm_jmx']['server'] %>
+<% if node['jvm_jmx'] && node['jvm_jmx']['server'] %>
 # java jmx
 jvm_jmx_server: <%= node['jvm_jmx']['server'] %>
 jvm_jmx_user: <%= node['jvm_jmx']['user'] %>
@@ -125,7 +125,7 @@ jvm_jmx_pass: <%= node['jvm_jmx']['pass'] %>
 jvm_jmx_name: <%= node['jvm_jmx']['name'] %>
 <% end %>
 
-<% if node['tomcat_jmx']['server'] %>
+<% if node['tomcat_jmx'] && node['tomcat_jmx']['server'] %>
 # tomcat jmx
 tomcat_jmx_server: <%= node['tomcat_jmx']['server'] %>
 tomcat_jmx_user: <%= node['tomcat_jmx']['user'] %>
@@ -139,7 +139,7 @@ varnishstat: <%= %x{which varnishstat}.strip %>
 
 <% if node['memcached'] %>
 # memcached, from http://community.opscode.com/cookbooks/memcached
-<% if node['memcached']['listen'] == "0.0.0.0" %>
+<% if node['memcached'] && node['memcached']['listen'] == "0.0.0.0" %>
 memcache_server: localhost
 <% else %>
 memcache_server: <%= node['memcached']['listen'] %>
