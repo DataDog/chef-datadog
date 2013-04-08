@@ -1,10 +1,7 @@
 # -*- encoding: utf-8 -*-
 source "http://rubygems.org"
 
-chef_version = ENV.key?('CHEF_VERSION') ? "= #{ENV['CHEF_VERSION']}" : ['~> 10']
-
 gem "rake", "~> 10"
-gem "chef", chef_version
 
 group :development do
   gem "travis-lint", "~> 1.4"
