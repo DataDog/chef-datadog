@@ -36,7 +36,7 @@ describe 'datadog::dd-agent' do
 
   context 'when using a redhat-family distro above 6.x' do
     before do
-      Fauxhai.mock(platform: 'centos', version: '6.3') do |node|
+      Fauxhai.mock(:platform => 'centos', :version => '6.3') do |node|
         node['datadog'] = { :api_key => "somethingnotnil" }
       end
     end
