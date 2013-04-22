@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-source "http://rubygems.org"
+source "https://rubygems.org"
 
 gem "rake", "~> 10"
 
