@@ -1,2 +1,1 @@
 require 'chefspec'
-require 'fauxhai'

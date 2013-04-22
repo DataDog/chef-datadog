@@ -14,7 +14,5 @@ group :test do
   gem "tailor", "~> 1.1" # Ruby style
   gem "foodcritic", "~> 1.6" # Lint testing
   gem "berkshelf", "~> 1.0"
-  gem "chefspec", "~> 0.7"
-  gem "fauxhai", "~> 0.0"
-  gem "moneta", "< 0.7.0" # See http://tickets.opscode.com/browse/CHEF-3721
+  gem "chefspec", "~> 1.0.0.rc1" # See https://github.com/acrmp/chefspec/issues/93
 end
