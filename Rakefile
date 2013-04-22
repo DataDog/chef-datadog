@@ -9,7 +9,6 @@ task :default => [
   :tailor,
   :foodcritic,
   :berks,
-  :knife,
   :chefspec
 ]
 
