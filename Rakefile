@@ -38,16 +38,16 @@ end
 # http://berkshelf.com/
 desc "Check out cookbooks from Berkshelf to local path"
 task :berks do
-  sh %{berks install --path ./cookbooks}
+  sh %{bundle exec berks install --path ./cookbooks}
 end
 
 desc "Test Datadog cookbook via knife"
 task :knife do
-  sh %{knife cookbook test datadog -o cookbooks}
+  sh %{bundle exec knife cookbook test datadog -o cookbooks}
 end
 
 # https://github.com/acrmp/chefspec
 desc "Run ChefSpec Unit Tests"
 task :chefspec do
-  sh %{rspec --color cookbooks/datadog/spec/}
+  sh %{bundle exec rspec --color cookbooks/datadog/spec/}
 end
