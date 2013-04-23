@@ -2,7 +2,7 @@ language: ruby
 rvm:
   - 1.9.3
 
-bundler_args: --without=development
+bundler_args: --without=development vagrant
 
 gemfile:
   - gemfiles/Gemfile.chef-11

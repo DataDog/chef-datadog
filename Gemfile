@@ -15,6 +15,9 @@ group :test do
   gem "foodcritic", "~> 2.1" # Lint testing
   gem "berkshelf", "~> 1.0"
   gem "chefspec", "~> 1.0.0"
+end
+
+group :vagrant do
   gem "test-kitchen",  "1.0.0.alpha.5"
   gem 'kitchen-vagrant'
 end
