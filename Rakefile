@@ -52,3 +52,10 @@ desc "Run ChefSpec Unit Tests"
 task :chefspec do
   sh %{bundle exec rspec --color cookbooks/datadog/spec/}
 end
+
+begin
+  require 'kitchen/rake_tasks'
+  Kitchen::RakeTasks.new
+rescue LoadError
+  puts ">>>>> Kitchen gem not loaded, omitting tasks" unless ENV['CI']
+end

@@ -29,3 +29,5 @@ Gemfile*.lock
 # Berkshelf
 Berksfile.lock
 cookbooks/
+.kitchen/
+.kitchen.local.yml
