@@ -18,7 +18,9 @@ Tailor::RakeTask.new do |task|
   end
   task.file_set('definitions/**/*.rb', "definitions")
   task.file_set('libraries/**/*.rb', "libraries")
-  task.file_set('metadata.rb', "metadata")
+  task.file_set('metadata.rb', "metadata") do |style|
+    style.max_line_length 160, :level => :warn
+  end
   task.file_set('providers/**/*.rb', "providers")
   task.file_set('recipes/**/*.rb', "recipes") do |style|
     style.max_line_length 160, :level => :warn
