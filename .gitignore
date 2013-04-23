@@ -1,11 +1,14 @@
 # bundler
 .bundle
-Gemfile.lock
+Gemfile*.lock
 
 # For MacOS:
 .DS_Store
 
-# For RVM
+# For Ruby Managers
+.rbenv-version
+.ruby-version
+.ruby-gemset
 .rvmrc
 
 # For TextMate
@@ -22,7 +25,6 @@ Gemfile.lock
 
 # For Vagrant
 .vagrant
-/.rbenv-version
 
 # Berkshelf
 Berksfile.lock
