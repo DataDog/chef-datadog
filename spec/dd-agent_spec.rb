@@ -42,19 +42,18 @@ describe 'datadog::dd-agent' do
   context 'when using a redhat-family distro above 6.x' do
 
     let(:chef_run) do
-      ChefSpec::ChefRunner.new(platform: 'centos', version: '6.3') do |node|
-        node.set['datadog'] = {
-          'api_key' => "somethingnotnil"
-        }
-      end
+      ChefSpec::ChefRunner.new(
+        platform: 'centos',
+        version: '6.3',
+      ) do |node|
+          node.set['datadog'] = {
+            'api_key' => "somethingnotnil"
+          }
+        end
     end
 
     before do
       chef_run.converge 'datadog::dd-agent'
-    end
-
-    it 'sets up the EPEL repository' do
-      pending "step intp yum::epel?"
     end
 
     it 'sets up a yum repository' do

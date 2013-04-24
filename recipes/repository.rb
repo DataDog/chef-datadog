@@ -31,8 +31,8 @@ when "debian", "ubuntu"
   end
 
 when "redhat", "centos", "scientific", "amazon"
-  # Depending on the version, deploy a package    
-  include_recipe "yum::epel"
+  # Depending on the version, deploy a package
+  include_recipe "yum"
 
   yum_repository "datadog" do
     name "datadog"

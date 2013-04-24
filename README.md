@@ -27,7 +27,7 @@ The following Opscode cookbooks are dependencies:
 
 * apt
 * chef_handler
-* yum::epel
+* yum
 
 
 Attributes
