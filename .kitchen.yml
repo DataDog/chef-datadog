@@ -33,11 +33,3 @@ suites:
   attributes:
     datadog:
       api_key: somethingnotnil
-
-- name: dd-agent-staging
-  run_list: ["recipe[datadog::dd-agent]"]
-  attributes:
-    datadog:
-      api_key: somethingnotnil
-      agent_version: 3.6.3 # Specific version to test on all platforms.
-      repo_url: blah
