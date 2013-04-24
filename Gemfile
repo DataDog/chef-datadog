@@ -6,7 +6,7 @@ gem "rake", "~> 10"
 group :development do
   gem "travis-lint", "~> 1.4"
   gem "guard", "~> 1.3"
-  # gem "guard-foodcritic", "~> 1.0" # See https://github.com/cgriego/guard-foodcritic/pull/1
+  gem "guard-foodcritic", "~> 1.0.1"
   gem "guard-rspec", "~> 2.3"
 end
 
