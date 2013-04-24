@@ -166,6 +166,9 @@ We are not making use of data_bags in this recipe at this time, as it is unlikel
 
 Changes/Roadmap
 ===============
+## v0.1.4
+* Changed Ruby syntax of spec tests to support 1.8.7
+
 ## v0.1.3
 * Work-around for COOK-2171
 

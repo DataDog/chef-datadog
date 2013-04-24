@@ -5,10 +5,16 @@ describe 'datadog::dd-agent' do
   # This recipe needs to have an api_key, otherwise `raise` is called.
   # It also depends on specific platofrm versions for software install
   context 'when using a debian-family distro' do
-    before do
-      Fauxhai.mock(:platform => 'ubuntu', :version => '12.04') do |node|
-        node['datadog'] = { :api_key => "somethingnotnil" }
-      end
+
+    let(:chef_run) do
+      ChefSpec::ChefRunner.new(
+        :platform => 'ubuntu',
+        :version => '12.04'
+      ) do |node|
+          node.set['datadog'] = {
+            'api_key' => "somethingnotnil"
+          }
+        end
     end
 
     let (:chef_run) { ChefSpec::ChefRunner.new.converge 'datadog::dd-agent' }
@@ -35,10 +41,16 @@ describe 'datadog::dd-agent' do
   end
 
   context 'when using a redhat-family distro above 6.x' do
-    before do
-      Fauxhai.mock(platform: 'centos', version: '6.3') do |node|
-        node['datadog'] = { :api_key => "somethingnotnil" }
-      end
+
+    let(:chef_run) do
+      ChefSpec::ChefRunner.new(
+        :platform => 'centos',
+        :version => '6.3'
+      ) do |node|
+          node.set['datadog'] = {
+            'api_key' => "somethingnotnil"
+          }
+        end
     end
 
     let (:chef_run) { ChefSpec::ChefRunner.new.converge 'datadog::dd-agent' }
