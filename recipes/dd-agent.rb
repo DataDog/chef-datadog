@@ -35,7 +35,7 @@ when "debian", "ubuntu"
   # apt-1.8.0 has a bug that makes the new apt-repo not available right away
   # running apt-get update clears the issue
   log "Running apt-get update to work around COOK-2171" do
-    notifies :run, resources(:execute => "apt-get update"), :immediately
+    notifies :run, "execute[apt-get update]", :immediately
     not_if "apt-cache search datadog-agent | grep datadog-agent"
   end
 
