@@ -1,8 +1,11 @@
-init_config:
-
 instances:
-  <% unless node['datadog']['haproxy']['stats_url'].nil? -%>
-  - username: <%= node['datadog']['haproxy']['stats_user'] %>
-    password: <%= node['datadog']['haproxy']['stats_password'] %>
-    url:      <%= node['datadog']['haproxy']['stats_url'] %>
+  <% node.datadog.haproxy.instances.each do |i| -%>
+  - url:      <%= i['url'] %>
+    <% if i.defined?('username') && i.defined?('password') %->
+    username: <%= i['username'] %>
+    password: <%= i['password'] %>
+    <% end -%>
   <% end -%>
+
+# Nothing to configure below
+init_config:

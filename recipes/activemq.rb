@@ -1,6 +1,6 @@
 include_recipe "datadog:dd-agent"
 
-# Monitor cassandra
+# Monitor activemq
 # 
 # Assuming you have 2 clusters "test" and "prod",
 # one with and one without authentication

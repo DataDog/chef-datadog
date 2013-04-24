@@ -1,4 +1,8 @@
+instances:
+  <% node.datadog.couch.instances do |i| %->
+  - server: <%= i['server'] %>
+  <% end -%>
+
+# Nothing to change below
 init_config:
 
-#instances:
-#    - server: http://localhost:5984
