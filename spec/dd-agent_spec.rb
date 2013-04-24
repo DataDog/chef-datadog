@@ -7,11 +7,14 @@ describe 'datadog::dd-agent' do
   context 'when using a debian-family distro' do
 
     let(:chef_run) do
-      ChefSpec::ChefRunner.new(platform: 'ubuntu', version: '12.04') do |node|
-        node.set['datadog'] = {
-          'api_key' => "somethingnotnil"
-        }
-      end
+      ChefSpec::ChefRunner.new(
+        :platform => 'ubuntu',
+        :version => '12.04'
+      ) do |node|
+          node.set['datadog'] = {
+            'api_key' => "somethingnotnil"
+          }
+        end
     end
 
     before do
@@ -43,8 +46,8 @@ describe 'datadog::dd-agent' do
 
     let(:chef_run) do
       ChefSpec::ChefRunner.new(
-        platform: 'centos',
-        version: '6.3',
+        :platform => 'centos',
+        :version => '6.3'
       ) do |node|
           node.set['datadog'] = {
             'api_key' => "somethingnotnil"
