@@ -1,5 +1,3 @@
-init_config:
-
 instances:
     # The Cacti checks requires access to the Cacti DB in MySQL and to the RRD
     # files that contain the metrics tracked in Cacti.
@@ -13,8 +11,15 @@ instances:
     # one per line, that should be fetched. If no whitelist is specified, all
     # metrics will be fetched.
     #
-    -   mysql_host: localhost
-        mysql_user: MYSQL_USER
-        mysql_password: MYSQL_PASSWORD
-        rrd_path: /path/to/cacti/rra
-        #rrd_whitelist: /path/to/rrd_whitelist.txt
+  <% node.datadog.cacti.instances.each do |i| -%>
+    - mysql_host: <%= i['mysql_host'] %>
+      mysql_user: <%= i['mysql_user'] %>
+      mysql_password: <%= i['mysql_password'] %>
+      rrd_path: <%= i['rrd_path'] %>
+      <% if i.defined?('rrd_path') -%>
+      rrd_whitelist: <%= i['rrd_whitelist'] %>
+      <% end -%>
+  <% end -%>
+
+# Nothing to configure here
+init_config:

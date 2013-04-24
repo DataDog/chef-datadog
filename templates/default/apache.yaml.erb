@@ -1,12 +1,13 @@
-init_config:
-
 instances:
-<% node.datadog.apache.each do |a| -%>
-  - apache_status_url: <%= a['status_url'] %>
+<% node.datadog.apache.instances.each do |i| -%>
+  - apache_status_url: <%= i['status_url'] %>
     tags:
-  <% if a.defined?('tags') -%>
-    <% a['tags'].each do |t| -%>
+  <% if i.defined?('tags') -%>
+    <% i['tags'].each do |t| -%>
     - <%= t %>
     <% end -%>
   <% end -%>
 <% end -%>
+
+# Nothing to configure here
+init_config:
