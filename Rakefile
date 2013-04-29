@@ -50,7 +50,7 @@ end
 # https://github.com/acrmp/chefspec
 desc "Run ChefSpec Unit Tests"
 task :chefspec do
-  sh %{bundle exec rspec --color cookbooks/datadog/spec/}
+  sh %{bundle exec rspec cookbooks/datadog/spec/}
 end
 
 begin
