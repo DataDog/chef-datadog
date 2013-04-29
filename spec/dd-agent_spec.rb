@@ -14,8 +14,7 @@ describe 'datadog::dd-agent' do
           node.set['datadog'] = {
             'api_key' => "somethingnotnil"
           }
-        end
-      .converge('datadog::dd-agent')
+        end.converge('datadog::dd-agent')
     end
 
     it 'installs the datadog-agent' do
@@ -45,8 +44,7 @@ describe 'datadog::dd-agent' do
           node.set['datadog'] = {
             'api_key' => "somethingnotnil"
           }
-        end
-      .converge('datadog::dd-agent')
+        end.converge('datadog::dd-agent')
     end
 
     it 'installs the datadog-agent package' do
