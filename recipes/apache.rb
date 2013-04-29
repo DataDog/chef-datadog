@@ -1,4 +1,5 @@
-include_recipe "datadog:dd-agent"
+include_recipe "datadog::dd-agent"
+
 # Monitor apache
 # 
 # Assuming you have 2 instances "test" and "prod"
@@ -15,4 +16,7 @@ include_recipe "datadog:dd-agent"
 #                                  }
 #                                 ]
 
-datadog_ddmonitor :name => "apache", :init_config => nil, :instances => node.datadog.apache.instances
+datadog_ddmonitor "apache" do
+  init_config nil
+  instances node["datadog"]["apache"]["instances"]
+end

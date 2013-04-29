@@ -1,8 +1,8 @@
 instances:
-<% node.datadog.apache.instances.each do |i| -%>
+<% @instances.each do |i| -%>
   - apache_status_url: <%= i['status_url'] %>
     tags:
-  <% if i.defined?('tags') -%>
+  <% if i.key?('tags') -%>
     <% i['tags'].each do |t| -%>
     - <%= t %>
     <% end -%>

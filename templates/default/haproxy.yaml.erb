@@ -1,7 +1,7 @@
 instances:
-  <% node.datadog.haproxy.instances.each do |i| -%>
+  <% @instances.each do |i| -%>
   - url:      <%= i['url'] %>
-    <% if i.defined?('username') && i.defined?('password') %->
+    <% if i.key?('username') && i.key?('password') -%>
     username: <%= i['username'] %>
     password: <%= i['password'] %>
     <% end -%>

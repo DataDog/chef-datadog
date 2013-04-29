@@ -8,16 +8,24 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = "vagrant-dd"
  
   config.vm.provision :chef_solo do |chef|
+    chef.add_recipe "datadog::apache"
     chef.add_recipe "datadog::cassandra"
     chef.add_recipe "datadog::couchdb"
+    chef.add_recipe "datadog::elasticsearch"
+    chef.add_recipe "datadog::haproxy"
+    chef.add_recipe "datadog::nginx"
  
     chef.json = {
       :datadog => {
         :api_key => "nah",
         :haproxy => {
-          :stats_url => "HOWDY",
-          :stats_user => "me!",
-          :stats_password => "yeahright",
+          :instances => [
+                         {
+                           :url => "http://localhost/admin?stats",
+                           :username => "me!",
+                           :password => "yeahright"
+                         }
+                        ]
         },
         :couch => {
           :instances => [
@@ -32,6 +40,28 @@ Vagrant.configure("2") do |config|
                            :host => "localhost",
                            :port => 7199,
                            :instance => "test"
+                         }
+                        ]
+        },
+        :apache => {
+          :instances => [
+                         {
+                           :status_url => "http://localost:81/status",
+                           :name => "test"
+                         }
+                        ]
+        },
+        :nginx => {
+          :instances => [
+                         {
+                           :url => "http://localhost:1234"
+                         }
+                        ]
+        },
+        :elasticsearch => {
+          :instances => [
+                         {
+                           :url => "http://localhost:9200"
                          }
                         ]
         }

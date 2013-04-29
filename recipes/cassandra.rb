@@ -21,6 +21,5 @@ include_recipe "datadog::dd-agent"
 #                                    ]
 
 datadog_ddmonitor "cassandra" do
-  init_config nil
   instances node["datadog"]["cassandra"]["instances"]
 end

@@ -20,4 +20,6 @@ include_recipe "datadog::dd-agent"
 #                                 }
 #                                ]
 
-datadog_ddmonitor :name => "cacti",:init_config => nil, :instances => node.datadog.cacti.instances
+datadog_ddmonitor "cacti" do
+  instances node["datadog"]["cacti"]["instances"]
+end

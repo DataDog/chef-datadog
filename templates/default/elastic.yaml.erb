@@ -1,5 +1,7 @@
 instances:
-    - #url: http://localhost:9200
+  <% @instances.each do |i| -%>
+  - url: <%= i.url %>
+  <% end %>
 
 # Nothing to configure below
 init_config:

@@ -11,4 +11,6 @@ include_recipe "datadog::dd-agent"
 #                                     }
 #                                    ]
 
-datadog_ddmonitor :name => "haproxy",:init_config => nil, :instances => node.datadog.haproxy.instances
+datadog_ddmonitor "haproxy" do
+  instances node["datadog"]["haproxy"]["instances"]
+end
