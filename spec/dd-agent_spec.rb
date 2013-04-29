@@ -21,10 +21,6 @@ describe 'datadog::dd-agent' do
       chef_run.converge 'datadog::dd-agent'
     end
 
-    it 'sets up an apt repository' do
-      pending "step into apt"
-    end
-
     it 'installs the datadog-agent' do
       chef_run.should install_package 'datadog-agent'
     end
@@ -57,10 +53,6 @@ describe 'datadog::dd-agent' do
 
     before do
       chef_run.converge 'datadog::dd-agent'
-    end
-
-    it 'sets up a yum repository' do
-      pending "step into yum"
     end
 
     it 'installs the datadog-agent package' do
