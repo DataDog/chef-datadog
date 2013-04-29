@@ -8,4 +8,4 @@ attribute :name, :kind_of => String, :name_attribute => true
 # we mimic these here, no validation is performed until the template
 # is evaluated.
 attribute :init_config, :kind_of => Hash, :optional => true, :default => {}
-attribute :instances, :kind_of => List, :optional => true, :default => []
+attribute :instances, :kind_of => Array, :optional => true, :default => []
