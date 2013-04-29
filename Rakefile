@@ -5,7 +5,12 @@ require 'foodcritic'
 # https://github.com/turboladen/tailor
 require 'tailor/rake_task'
 
-task :default => [:tailor, :foodcritic, :knife, :chefspec]
+task :default => [
+  :tailor,
+  :foodcritic,
+  :berks,
+  :chefspec
+]
 
 Tailor::RakeTask.new do |task|
   task.file_set('attributes/**/*.rb', "attributes") do |style|
@@ -13,7 +18,9 @@ Tailor::RakeTask.new do |task|
   end
   task.file_set('definitions/**/*.rb', "definitions")
   task.file_set('libraries/**/*.rb', "libraries")
-  task.file_set('metadata.rb', "metadata")
+  task.file_set('metadata.rb', "metadata") do |style|
+    style.max_line_length 160, :level => :warn
+  end
   task.file_set('providers/**/*.rb', "providers")
   task.file_set('recipes/**/*.rb', "recipes") do |style|
     style.max_line_length 160, :level => :warn
@@ -30,19 +37,25 @@ FoodCritic::Rake::LintTask.new do |t|
 end
 
 # http://berkshelf.com/
-desc "Install Berkshelf shims"
+desc "Check out cookbooks from Berkshelf to local path"
 task :berks do
-  sh %{berks install --path ./cookbooks}
+  sh %{bundle exec berks install --path ./cookbooks}
 end
 
-# http://wiki.opscode.com/display/chef/Managing+Cookbooks+With+Knife#ManagingCookbooksWithKnife-test
-desc "Test cookbooks via knife"
+desc "Test Datadog cookbook via knife"
 task :knife do
-  sh %{knife cookbook test -o cookbooks -a}
+  sh %{bundle exec knife cookbook test datadog -o cookbooks}
 end
 
 # https://github.com/acrmp/chefspec
 desc "Run ChefSpec Unit Tests"
 task :chefspec do
-  sh %{rspec --color cookbooks/datadog/spec/}
+  sh %{bundle exec rspec --color cookbooks/datadog/spec/}
+end
+
+begin
+  require 'kitchen/rake_tasks'
+  Kitchen::RakeTasks.new
+rescue LoadError
+  puts ">>>>> Kitchen gem not loaded, omitting tasks" unless ENV['CI']
 end

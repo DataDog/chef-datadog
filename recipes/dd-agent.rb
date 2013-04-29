@@ -17,19 +17,13 @@
 # limitations under the License.
 #
 
+# Install the Apt/Yum repository if enabled
+if node['datadog']['installrepo']
+  include_recipe "datadog::repository"
+end
+
 case node['platform']
 when "debian", "ubuntu"
-  include_recipe "apt"
-
-  apt_repository 'datadog' do
-    keyserver 'keyserver.ubuntu.com'
-    key 'C7A7DA52'
-    uri node['datadog']['aptrepo']
-    distribution "unstable"
-    components ["main"]
-    action :add
-  end
-
   # Thanks to @joepcds for the Ubuntu 11.04 fix
   # setuptools has been packaged with a bug
   # https://bugs.launchpad.net/ubuntu/+source/supervisor/+bug/777862
@@ -41,33 +35,31 @@ when "debian", "ubuntu"
   # apt-1.8.0 has a bug that makes the new apt-repo not available right away
   # running apt-get update clears the issue
   log "Running apt-get update to work around COOK-2171" do
-    notifies :run, resources(:execute => "apt-get update"), :immediately
+    notifies :run, "execute[apt-get update]", :immediately
     not_if "apt-cache search datadog-agent | grep datadog-agent"
   end
 
   # datadog-agent requires python2.6, not available on LTS till 10.04
   if (node['platform'] == "ubuntu") and (node['platform_version'].to_f <= 8.04)
-    package "datadog-agent-base"
+    package "datadog-agent-base" do
+      version node['datadog']['agent_version']
+    end
   else
-    package "datadog-agent"
+    package "datadog-agent" do
+      version node['datadog']['agent_version']
+    end
   end
 
 when "redhat", "centos", "scientific", "amazon"
-  # Depending on the version, deploy a package    
-  include_recipe "yum::epel"
-
-  yum_repository "datadog" do
-    name "datadog"
-    description "datadog"
-    url node['datadog']['yumrepo']
-    action :add
-  end
-
   # datadog-agent requires python2.6, not available on RH5 by default
   if node['platform_version'].to_i <= 5
-    package "datadog-agent-base"
+    package "datadog-agent-base" do
+      version node['datadog']['agent_version']
+    end
   elsif node['platform_version'].to_i >= 6
-    package "datadog-agent"
+    package "datadog-agent" do
+      version node['datadog']['agent_version']
+    end
   end
 end
 
@@ -99,5 +91,5 @@ template "/etc/dd-agent/datadog.conf" do
     :api_key => node['datadog']['api_key'],
     :dd_url => node['datadog']['url']
   )
-  notifies :restart, "service[datadog-agent]"
+  notifies :restart, "service[datadog-agent]", :delayed
 end

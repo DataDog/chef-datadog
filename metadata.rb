@@ -13,6 +13,9 @@ depends          "yum"
 recipe "datadog::default", "Default"
 recipe "datadog::dd-agent", "Installs the Datadog Agent"
 recipe "datadog::dd-handler", "Installs a Chef handler for Datadog"
+recipe "datadog::repository", "Installs the Datadog package repository"
+recipe "datadog::dogstatsd-python", "Installs the Python dogstatsd package for custom metrics"
+recipe "datadog::dogstatsd-ruby", "Installs the Ruby dogstatsd package for custom metrics"
 
 # integration-specific
 recipe "datadog::cassandra", "Installs and configures the Cassandra integration"
