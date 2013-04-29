@@ -1,5 +1,3 @@
-include_recipe "datadog:dd-agent"
-
 include_recipe "datadog::dd-agent"
 
 # Monitor couchDB
@@ -19,4 +17,7 @@ include_recipe "datadog::dd-agent"
 #                                 }
 #                                ]
 
-datadog_ddmonitor :name => "couch", :init_config => nil, :instances => node.datadog.couch.instances
+datadog_ddmonitor "couch" do
+  init_config nil
+  instances node["datadog"]["couch"]["instances"]
+end

@@ -9,7 +9,7 @@ action :add do
   new_resource.updated_by_last_action(false)
   template "/etc/dd-agent/conf.d/#{new_resource.name}.yaml" do
     owner "dd-agent"
-    mode 00400
+    mode 00600
     notifies :restart, resources(:service => "datadog-agent")
     variables(:init_config => new_resource.init_config, :instances => new_resource.instances)
   end

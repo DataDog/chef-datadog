@@ -4,15 +4,16 @@ maintainer_email "package@datadoghq.com"
 license          "Apache 2.0"
 description      "Installs/Configures datadog components"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          "0.2.0"
+version          "1.0.0"
 
 depends          "apt"
-depends          "chef_handler", "~> 1.0.6"
+depends          "chef_handler", "~> 1.1.0"
 depends          "yum"
 
 recipe "datadog::default", "Default"
 recipe "datadog::dd-agent", "Installs the Datadog Agent"
 recipe "datadog::dd-handler", "Installs a Chef handler for Datadog"
 
-# integration specific
+# integration-specific
 recipe "datadog::cassandra", "Installs and configures the Cassandra integration"
+recipe "datadog::couchdb", "Installs and configures the Cassandra integration"

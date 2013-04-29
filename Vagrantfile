@@ -8,7 +8,8 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = "vagrant-dd"
  
   config.vm.provision :chef_solo do |chef|
-    chef.add_recipe "datadog::dd-agent"
+    chef.add_recipe "datadog::cassandra"
+    chef.add_recipe "datadog::couchdb"
  
     chef.json = {
       :datadog => {
@@ -18,6 +19,22 @@ Vagrant.configure("2") do |config|
           :stats_user => "me!",
           :stats_password => "yeahright",
         },
+        :couch => {
+          :instances => [
+                         {
+                           :server => "localhost"
+                         }
+                        ]
+        },
+        :cassandra => {
+          :instances => [
+                         {
+                           :host => "localhost",
+                           :port => 7199,
+                           :instance => "test"
+                         }
+                        ]
+        }
       }
     }
   end
