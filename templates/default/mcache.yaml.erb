@@ -1,7 +1,14 @@
-init_config:
-
 instances:
-#    - url: localhost  # url used to connect to the memcached instance
-#      port: 11211
-#      tags:
-#        - optional_tag
+  <% @instances.each do |i| -%>
+  - url: <%= i['url'] %>
+    port: <%= i['port'] %>
+    <% if i.key?('tags') -%>
+    tags:
+      <% i['tags'].each do |t| -%>
+      - <%= t %>
+      <% end -%>
+    <% end -%>
+  <% end -%>
+
+init_config:
+# No init_config section needed

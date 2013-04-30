@@ -1,7 +1,13 @@
-init_config:
-
 instances:
-#   -   server: mongodb://localhost:27017
-#       tags:
-#            - optional_tag1
-#            - optional_tag2
+  <% @instances.each do |i| -%>
+  - server: mongodb://<%= i['host']%>:<%= i['port'] %>
+    <% if i.key?('tags') -%>
+    tags:
+      <% i['tags'].each do |t| -%>
+    - <%= t %>
+      <% end -%>
+    <% end -%>
+  <% end -%>
+
+init_config:
+# No init_config details needed

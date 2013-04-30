@@ -14,6 +14,11 @@ Vagrant.configure("2") do |config|
     chef.add_recipe "datadog::elasticsearch"
     chef.add_recipe "datadog::haproxy"
     chef.add_recipe "datadog::nginx"
+    chef.add_recipe "datadog::memcache"
+    chef.add_recipe "datadog::jenkins"
+    chef.add_recipe "datadog::kyototycoon"
+    chef.add_recipe "datadog::lighttpd"
+    chef.add_recipe "datadog::mongo"
  
     chef.json = {
       :datadog => {

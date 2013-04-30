@@ -1,5 +1,7 @@
-init_config:
-
 instances:
-    -   name: default
-        jenkins_home: /var/lib/jenkins
+  <% if @instances.each |i| do -%>
+  - name: <%= i['name'] %>
+    jenkins_home: <%= i['home'] %>
+  <% end -%>
+
+init_config:

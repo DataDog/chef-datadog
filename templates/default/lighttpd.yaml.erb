@@ -1,18 +1,13 @@
-init_config:
-
 instances:
-    # For every instance, you have an `lighttpd_status_url` and (optionally)
-    # a list of tags.
+  <% @instances.each do |i| -%>
+  - lighttpd_status_url: <%= i['status_url'] %>
+    <% if i.key?('tags') -%>
+    tags:
+      <% i['tags'].each_pair do |k, v| -%>
+      - <%= k %>: <%= v %>
+      <% end -%>
+    <% end -%>
+  <% end -%
 
-    -   lighttpd_status_url: http://example.com/server-status?auto
-        tags:
-            -   instance:foo
-
-    -   lighttpd_status_url: http://example2.com:1234/server-status?auto
-        tags:
-            -   instance:bar
-
-    # Lighttpd2 status url
-    -   lighttpd_status_url: http://example.com/server-status?format=plain
-        tags:
-            -   instance:l2
+init_config:
+# No init_config section needed

@@ -10,17 +10,18 @@ action :add do
   template "/etc/dd-agent/conf.d/#{new_resource.name}.yaml" do
     owner "dd-agent"
     mode 00600
-    notifies :restart, resources(:service => "datadog-agent")
-    variables(:init_config => new_resource.init_config, :instances => new_resource.instances)
+    notifies :restart, resources(:service => "datadog-agent"), :delayed
+    variables(:init_config => new_resource.init_config,
+              :instances => new_resource.instances)
   end
 end
 
 action :remove do
   if ::File.exists?("/etc/dd-agent/conf.d/#{new_resource.name}.yaml")
-    Chef::Log.info "Un-monitoring #{new_resource.name} from /etc/dd-agent/conf.d/"
+    Chef::Log.info "Removing #{new_resource.name} from /etc/dd-agent/conf.d/"
     file "/etc/dd-agent/conf.d/#{new_resource.name}.yaml" do
       action :delete
-      notifies :restart, resources(:service => "datadog-agent")
+      notifies :restart, resources(:service => "datadog-agent"), :delayed
     end
     new_resource.updated_by_last_action(true)
   end
