@@ -11,8 +11,10 @@ action :add do
     owner "dd-agent"
     mode 00600
     notifies :restart, resources(:service => "datadog-agent"), :delayed
-    variables(:init_config => new_resource.init_config,
-              :instances => new_resource.instances)
+    variables(
+      :init_config => new_resource.init_config,
+      :instances => new_resource.instances
+    )
   end
 end
 
