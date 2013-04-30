@@ -6,79 +6,63 @@ describe 'datadog::dd-agent' do
   # It also depends on specific platofrm versions for software install
   context 'when using a debian-family distro' do
 
-    let(:chef_run) do
-      ChefSpec::ChefRunner.new(
+    before(:all) do
+      @chef_run = ChefSpec::ChefRunner.new(
         :platform => 'ubuntu',
         :version => '12.04'
       ) do |node|
           node.set['datadog'] = {
             'api_key' => "somethingnotnil"
           }
-        end
-    end
-
-    before do
-      chef_run.converge 'datadog::dd-agent'
-    end
-
-    it 'sets up an apt repository' do
-      pending "step into apt"
+        end.converge('datadog::dd-agent')
     end
 
     it 'installs the datadog-agent' do
-      chef_run.should install_package 'datadog-agent'
+      expect(@chef_run).to install_package 'datadog-agent'
     end
 
     it 'enables the datadog-agent service' do
-      chef_run.should set_service_to_start_on_boot 'datadog-agent'
+      expect(@chef_run).to set_service_to_start_on_boot 'datadog-agent'
     end
 
     it 'ensures the dd-agent directory exists' do
-      chef_run.should create_directory '/etc/dd-agent'
+      expect(@chef_run).to create_directory '/etc/dd-agent'
     end
 
     it 'drops an agent config file' do
-      chef_run.should create_file '/etc/dd-agent/datadog.conf'
+      expect(@chef_run).to create_file '/etc/dd-agent/datadog.conf'
     end
   end
 
   context 'when using a redhat-family distro above 6.x' do
 
-    let(:chef_run) do
-      ChefSpec::ChefRunner.new(
+    before(:all) do
+      @chef_run = ChefSpec::ChefRunner.new(
         :platform => 'centos',
         :version => '6.3'
       ) do |node|
           node.set['datadog'] = {
             'api_key' => "somethingnotnil"
           }
-        end
-    end
-
-    before do
-      chef_run.converge 'datadog::dd-agent'
-    end
-
-    it 'sets up a yum repository' do
-      pending "step into yum"
+        end.converge('datadog::dd-agent')
     end
 
     it 'installs the datadog-agent package' do
-      chef_run.should install_package 'datadog-agent'
+      expect(@chef_run).to install_package 'datadog-agent'
     end
 
     it 'does not install the datadog-agent-base package' do
-      chef_run.should_not install_package 'datadog-agent-base'
+      expect(@chef_run).not_to install_package 'datadog-agent-base'
     end
 
     it 'enables the datadog-agent service' do
-      chef_run.should set_service_to_start_on_boot 'datadog-agent'
+      expect(@chef_run).to set_service_to_start_on_boot 'datadog-agent'
     end
 
     it 'creates a configuration file' do
-      chef_run.should create_file '/etc/dd-agent/datadog.conf'
-      # chef_run.should notify 'service[datadog-agent]', :restart
+      expect(@chef_run).to create_file '/etc/dd-agent/datadog.conf'
     end
+
   end
 
 end
