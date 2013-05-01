@@ -2,34 +2,58 @@
 driver_plugin: vagrant
 
 platforms:
-- name: ubuntu-12.04
+- name: ubuntu-12.04_chef_11.4.4
+  driver_config:
+    box: opscode_ubuntu-12.04_chef-11.4.4
+    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_chef-11.4.4.box
+    require_chef_omnibus: 11.4.4
+- name: ubuntu-12.04_chef_10.24.4
   driver_config:
     box: canonical-ubuntu-12.04
     box_url: http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box
-    require_chef_omnibus: true
-- name: ubuntu-10.04
+    require_chef_omnibus: 10.24.4
+- name: ubuntu-10.04_chef_11.4.4
   driver_config:
-    box: opscode-ubuntu-10.04
-    box_url: http://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-10.04_chef-11.2.0.box
-    # require_chef_omnibus: 10.24.0
-- name: centos-6.3
+    box: opscode_ubuntu-10.04_chef-11.4.4
+    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-10.04_chef-11.4.4.box
+    require_chef_omnibus: 11.4.4
+- name: ubuntu-10.04_chef_10.24.4
   driver_config:
-    box: opscode-centos-6.3
-    box_url: http://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.3_chef-11.2.0.box
-- name: centos-5.8
+    box: opscode_ubuntu-10.04_chef-11.4.4
+    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-10.04_chef-11.4.4.box
+    require_chef_omnibus: 10.24.4
+
+- name: centos-6.4_chef_11.4.4
   driver_config:
-    box: opscode-centos-5.8
-    box_url: http://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-5.8_chef-11.2.0.box
+    box: opscode-centos-6.4_chef_11.4.4
+    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.4_chef-11.4.4.box
+    require_chef_omnibus: 11.4.4
+- name: centos-6.4_chef_10.24.4
+  driver_config:
+    box: opscode-centos-6.4_chef_11.4.4
+    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.4_chef-11.4.4.box
+    require_chef_omnibus: 10.24.4
+- name: centos-5.9_chef_11.4.4
+  driver_config:
+    box: opscode-centos-5.9_chef-11.4.4
+    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-5.9_chef-11.4.4.box
+    require_chef_omnibus: 11.4.4
+- name: centos-5.8_chef_10.24.4
+  driver_config:
+    box: opscode-centos-5.9_chef-11.4.4
+    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-5.9_chef-11.4.4.box
+    require_chef_omnibus: 10.24.4
 
 suites:
-- name: default
-  run_list: ["recipe[datadog::default]"]
-  attributes: {}
-  # This should actually do nothing.
-  # There is a sanity.bats test to simply verify that /tmp exists.
+# - name: default
+#   run_list: ["recipe[datadog::default]"]
+#   attributes: {}
+#   # This should actually do nothing.
+#   # There is a sanity.bats test to simply verify that /tmp exists.
 
 - name: dd-agent
-  run_list: ["recipe[datadog::dd-agent]"]
+  run_list: ["recipe[datadog::dd-handler]", "recipe[datadog::dd-agent]"]
   attributes:
     datadog:
       api_key: somethingnotnil
+      application_key: alsonotnil

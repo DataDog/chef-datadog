@@ -4,5 +4,15 @@
 
 @test "agent is running" {
   run /etc/init.d/datadog-agent info
-  [ $status -eq 0 ]
+  [ "$status" -eq 0 ]
+}
+
+@test "info returns an OK" {
+  run /etc/init.d/datadog-agent info
+  [[ "$output" =~ "OK" ]]
+}
+
+@test "info returns no ERRORs" {
+  run /etc/init.d/datadog-agent info
+  [[ ! "$output" =~ "ERROR" ]]
 }
