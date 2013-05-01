@@ -22,8 +22,8 @@ if node['datadog']['installrepo']
   include_recipe "datadog::repository"
 end
 
-case node['platform']
-when "debian", "ubuntu"
+case node['platform_family']
+when "debian"
   # Thanks to @joepcds for the Ubuntu 11.04 fix
   # setuptools has been packaged with a bug
   # https://bugs.launchpad.net/ubuntu/+source/supervisor/+bug/777862
@@ -50,7 +50,7 @@ when "debian", "ubuntu"
     end
   end
 
-when "redhat", "centos", "scientific", "amazon"
+when "rhel"
   # datadog-agent requires python2.6, not available on RH5 by default
   if node['platform_version'].to_i <= 5
     package "datadog-agent-base" do

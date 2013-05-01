@@ -6,6 +6,17 @@ description      "Installs/Configures datadog components"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "1.0.0"
 
+%w{
+  amazon
+  centos
+  debian
+  redhat
+  scientific
+  ubuntu
+}.each do |os|
+  supports os
+end
+
 depends          "apt"
 depends          "chef_handler", "~> 1.1.0"
 depends          "yum"
@@ -19,4 +30,4 @@ recipe "datadog::dogstatsd-ruby", "Installs the Ruby dogstatsd package for custo
 
 # integration-specific
 recipe "datadog::cassandra", "Installs and configures the Cassandra integration"
-recipe "datadog::couchdb", "Installs and configures the Cassandra integration"
+recipe "datadog::couchdb", "Installs and configures the CouchDB integration"
