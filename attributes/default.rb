@@ -67,6 +67,12 @@ default['datadog']['graphite_port'] = 17124
 # log-parsing configuration
 default['datadog']['dogstreams'] = []
 
+# Logging configuration
+default['datadog']['syslog']['active'] = false
+default['datadog']['syslog']['udp'] = false
+default['datadog']['syslog']['host'] = nil
+default['datadog']['syslog']['port'] = nil
+
 #
 # For service-specific configuration, see /etc/dd-agent/conf.d
 #

@@ -47,7 +47,7 @@ log_level: INFO
 # if syslog is enabled but a host and port are not set, a local domain socket
 # connection will be attempted
 #
-log_to_syslog: <%= node['datadog']['syslog'] ? 'yes' : 'no' %>
+log_to_syslog: <%= node['datadog']['syslog']['active'] ? 'yes' : 'no' %>
 <% if node['datadog']['syslog']['udp'] -%>
 syslog_host: <%= node['datadog']['syslog']['host'] %>
 syslog_port: <%= node['datadog']['syslog']['port'] %>
