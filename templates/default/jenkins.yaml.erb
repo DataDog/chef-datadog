@@ -1,5 +1,5 @@
 instances:
-  <% if @instances.each |i| do -%>
+  <% @instances.each do |i| -%>
   - name: <%= i['name'] %>
     jenkins_home: <%= i['home'] %>
   <% end -%>
