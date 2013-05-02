@@ -1,22 +1,22 @@
-include_recipe "datadog::dd-agent"
+include_recipe 'datadog::dd-agent'
 
 # Monitor apache
 # 
-# Assuming you have 2 instances "test" and "prod"
-# you need to set up the following attributes.
+# Assuming you have 2 instances "prod" and "test", you will need to set
+# up the following attributes at some point in your Chef run, in either
+# a role or another cookbook.
 # 
-# node.datadog.apache.instances = [
-#                                  {
-#                                   :apache_status_url => "http://localhost:81/status/",
-#                                   :tags => ["prod"]
-#                                  },
-#                                  {
-#                                   :apache_status_url => "http://localhost:82/status/",
-#                                   :name => ["test"]
-#                                  }
-#                                 ]
+# node['datadog']['apache']['instances'] = [
+#   {
+#     'status_url' => "http://localhost:81/status/",
+#     'tags' => ["prod"]
+#   },
+#   {
+#     'status_url' => "http://localhost:82/status/",
+#     'name' => ["test"]
+#   }
+# ]
 
-datadog_ddmonitor "apache" do
-  init_config nil
-  instances node["datadog"]["apache"]["instances"]
+datadog_monitor 'apache' do
+  instances node['datadog']['apache']['instances']
 end
