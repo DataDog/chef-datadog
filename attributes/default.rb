@@ -73,6 +73,6 @@ default['datadog']['syslog']['udp'] = false
 default['datadog']['syslog']['host'] = nil
 default['datadog']['syslog']['port'] = nil
 
-#
-# For service-specific configuration, see /etc/dd-agent/conf.d
-#
+# For service-specific configuration, use the integration recipes included
+# in this cookbook, and apply them to the appropirate node's run list.
+# Read more at http://docs.datadoghq.com/
