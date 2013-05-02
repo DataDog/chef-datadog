@@ -8,6 +8,8 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = "vagrant-dd"
  
   config.vm.provision :chef_solo do |chef|
+    chef.log_level = :debug
+
     chef.add_recipe "datadog::apache"
     chef.add_recipe "datadog::cassandra"
     chef.add_recipe "datadog::couchdb"
@@ -69,7 +71,42 @@ Vagrant.configure("2") do |config|
                            :url => "http://localhost:9200"
                          }
                         ]
-        }
+        },
+        :memcache => {
+          :instances => [
+                         {
+                           :server => "localhost"
+                         }
+                        ]
+        },
+        :jenkins => {
+          :instances => [
+                         {
+                           :server => "localhost"
+                         }
+                        ]
+        },
+        :kyototycoon => {
+          :instances => [
+                         {
+                           :server => "localhost"
+                         }
+                        ]
+        },
+        :lighttpd => {
+          :instances => [
+                         {
+                           :server => "localhost"
+                         }
+                        ]
+        },
+        :mongo => {
+          :instances => [
+                         {
+                           :server => "localhost"
+                         }
+                        ]
+        },
       }
     }
   end
