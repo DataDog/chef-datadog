@@ -78,8 +78,8 @@ end
 
 #
 # Configures a basic agent
-# If you want to autoconfigure sources based on other chef recipes
-# Fork this repo and issue pull requests
+# To add integration-specific configurations, add 'datadog::config_name' to
+# the node's run_list and set the relevant attributes
 #
 raise "Add a ['datadog']['api_key'] attribute to configure this node's Datadog Agent." if node['datadog'] && node['datadog']['api_key'].nil?
 
