@@ -1,8 +1,6 @@
-init_config:
-
 instances:
 <% @instances.each do |i| -%>
-  - nginx_status_url: <%= i['url'] %>
+  - nginx_status_url: <%= i['nginx_status_url'] %>
     tags:
   <% if i.key?('tags') -%>
     <% i['tags'].each do |t| -%>
@@ -10,3 +8,6 @@ instances:
     <% end -%>
   <% end -%>
 <% end -%>
+
+# Nothing to configure here
+init_config:
