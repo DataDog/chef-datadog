@@ -2,15 +2,13 @@ init_config:
 # empty by design
 
 instances:
-<% unless @instances.nil? -%>
-  <% @instances.each do |i| -%>
-  - host: <%= i.server %>
-    port: <%= i.port %>
-    username: <%= i.user %>
-    password: <%= i.password %>
+<% @instances.each do |i| -%>
+  - host: <%= i["server"] %>
+    port: <%= i["port"] || 5432 %>
+    username: <%= i["username"] %>
+    password: <%= i["password"] %>
     tags:
-    <% i.tags.each do |t| -%>
+    <% i["tags"].each do |t| -%>
       - <%= t %>
-    <% end unless i.tags.nil? -%>
-  <% end -%>
+    <% end if i.key?("tags") -%>
 <% end -%>
