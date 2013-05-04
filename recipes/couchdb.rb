@@ -17,7 +17,7 @@ include_recipe "datadog::dd-agent"
 #                                 }
 #                                ]
 
-datadog_ddmonitor "couch" do
+datadog_monitor "couch" do
   init_config nil
   instances node["datadog"]["couch"]["instances"]
 end

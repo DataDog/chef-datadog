@@ -14,6 +14,6 @@ include_recipe "datadog::dd-agent"
 #                                         }
 #                                        ]
 
-datadog_ddmonitor "elastic" do
+datadog_monitor "elastic" do
   instances node["datadog"]["elasticsearch"]["instances"]
 end

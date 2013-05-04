@@ -1,6 +1,6 @@
 instances:
     <% @instances.each do |i| -%>
-    - host: <%= i['host'] %>
+    - host: <%= i['server'] %>
       port: <%= i['port'] %>
       <% if i['user'] -%>
       user: <%= i['user'] %>

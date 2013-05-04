@@ -20,6 +20,6 @@ include_recipe "datadog::dd-agent"
 #                                     }
 #                                    ]
 
-datadog_ddmonitor "activemq" do
+datadog_monitor "activemq" do
   instances node["datadog"]["activemq"]["instances"]
 end

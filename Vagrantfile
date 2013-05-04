@@ -44,7 +44,7 @@ Vagrant.configure("2") do |config|
         :cassandra => {
           :instances => [
                          {
-                           :host => "localhost",
+                           :server => "localhost",
                            :port => 7199,
                            :instance => "test"
                          }
@@ -107,6 +107,13 @@ Vagrant.configure("2") do |config|
                          }
                         ]
         },
+        :redis => {
+          :instances => [
+                         {
+                           :server => "localhost"
+                         }
+                        ]
+        }
       }
     }
   end

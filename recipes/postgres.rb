@@ -10,4 +10,6 @@ package "psycopg2" do
   action :install
 end
 
-datadog_ddmonitor :name => "postgres", :init_config => nil, :instances => node.datadog.postgres.instances
+datadog_monitor "postgres" do
+  instances node["datadog"]["postgres"]["instances"]
+end

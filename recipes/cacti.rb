@@ -20,6 +20,6 @@ include_recipe "datadog::dd-agent"
 #                                 }
 #                                ]
 
-datadog_ddmonitor "cacti" do
+datadog_monitor "cacti" do
   instances node["datadog"]["cacti"]["instances"]
 end

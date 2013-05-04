@@ -20,6 +20,6 @@ include_recipe "datadog::dd-agent"
 #                                     }
 #                                    ]
 
-datadog_ddmonitor "cassandra" do
+datadog_monitor "cassandra" do
   instances node["datadog"]["cassandra"]["instances"]
 end

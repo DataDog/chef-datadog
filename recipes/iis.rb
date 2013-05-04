@@ -18,6 +18,6 @@ include_recipe "datadog::dd-agent"
 #                               }
 #                              ]
 
-datadog_ddmonitor "iis" do
+datadog_monitor "iis" do
   instances node["datadog"]["iis"]["instances"]
 end

@@ -17,6 +17,6 @@ include_recipe "datadog::dd-agent"
 #                                       }
 #                                      ]
 
-datadog_ddmonitor "kyototycoon" do
+datadog_monitor "kyototycoon" do
   instances node['datadog']['kyototycoon']['instances']
 end
