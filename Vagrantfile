@@ -25,7 +25,8 @@ Vagrant.configure("2") do |config|
     chef.add_recipe "datadog::postgres"
     chef.add_recipe "datadog::tomcat"
     chef.add_recipe "datadog::riak"
- 
+    chef.add_recipe "datadog::varnish"
+
     chef.json = {
       :datadog => {
         :api_key => "nah",
@@ -140,6 +141,16 @@ Vagrant.configure("2") do |config|
           :instances => [
                          {
                            :url => "http://localhost:1234/stats"
+                         }
+                        ]
+        },
+        :varnish => {
+          :instances => [
+                         {
+                           :varnishstat => "/opt/local/bin/varnishstat"
+                         },
+                         {
+                           :tags => ["prod", "cache"]
                          }
                         ]
         }
