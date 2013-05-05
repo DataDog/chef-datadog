@@ -1,9 +1,13 @@
 instances:
-#    -   host: localhost
-#        port: 7199
-#        user: username
-#        password: password
-#        name: tomcat_instance
+<% @instances.each do |i| -%>
+  -  host: <%= i["server"] %>
+     port: <%= i["port"]  %>
+  <% if i.key?("username") -%>
+     user: <%= i["username"] %>
+     password: <%= i["password"] %>
+  <% end -%>
+     name: <%= i["name"] || "tomcat" %>
+<% end -%>
 
 # List of metrics to be collected by the integration
 # You should not need to modify this.

@@ -23,6 +23,7 @@ Vagrant.configure("2") do |config|
     chef.add_recipe "datadog::mongo"
     chef.add_recipe "datadog::redis"
     chef.add_recipe "datadog::postgres"
+    chef.add_recipe "datadog::tomcat"
  
     chef.json = {
       :datadog => {
@@ -122,6 +123,15 @@ Vagrant.configure("2") do |config|
                            :server => "localhost",
                            :username => "data",
                            :password => "dog"
+                         }
+                        ]
+        },
+        :tomcat => {
+          :instances => [
+                         {
+                           :server => "localhost",
+                           :port => 11234,
+                           :name => "test"
                          }
                         ]
         }
