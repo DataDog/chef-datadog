@@ -26,6 +26,7 @@ Vagrant.configure("2") do |config|
     chef.add_recipe "datadog::tomcat"
     chef.add_recipe "datadog::riak"
     chef.add_recipe "datadog::varnish"
+    chef.add_recipe "datadog::jmx"
 
     chef.json = {
       :datadog => {
@@ -153,6 +154,34 @@ Vagrant.configure("2") do |config|
                            :tags => ["prod", "cache"]
                          }
                         ]
+        },
+        :jmx => {
+          :instances => [
+                         {
+                           :server => "localhost",
+                           :port => 1234,
+                           :name => "test",
+                           :username => "toto",
+                           :password => "secret",
+                           :include => [
+                                        {
+                                          :domain => "haha",
+                                          :bean => "hihi",
+                                          :attributes => [
+                                                          {
+                                                            :metric_type => "counter",
+                                                            :alias => "my.metric"
+                                                          }
+                                                         ]
+                                        }
+                                       ],
+                           :exclude => [
+                                        {
+                                          :bean => "banned"
+                                        }
+                                       ]
+                         }
+                       ]
         }
       }
     }
