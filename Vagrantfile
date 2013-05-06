@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
     chef.add_recipe "datadog::kyototycoon"
     chef.add_recipe "datadog::lighttpd"
     chef.add_recipe "datadog::mongo"
-    chef.add_recipe "datadog::redis"
+    chef.add_recipe "datadog::redisdb"
     chef.add_recipe "datadog::postgres"
     chef.add_recipe "datadog::tomcat"
     chef.add_recipe "datadog::riak"
@@ -113,7 +113,7 @@ Vagrant.configure("2") do |config|
                          }
                         ]
         },
-        :redis => {
+        :redisdb => {
           :instances => [
                          {
                            :server => "localhost"

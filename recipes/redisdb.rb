@@ -15,5 +15,5 @@ easy_install_package "redis" do
 end
 
 datadog_monitor "redisdb" do
-  instances node["datadog"]["redis"]["instances"]
+  instances node["datadog"]["redisdb"]["instances"]
 end
