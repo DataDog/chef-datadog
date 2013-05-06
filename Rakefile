@@ -39,7 +39,8 @@ end
 # http://berkshelf.com/
 desc "Check out cookbooks from Berkshelf to local path"
 task :berks do
-  sh %{bundle exec berks install --path ./cookbooks}
+  sh %{rm -fr ./cookbooks}
+  sh %{bundle exec berks install --except integration --path ./cookbooks}
 end
 
 desc "Test Datadog cookbook via knife"

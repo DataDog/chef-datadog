@@ -1,0 +1,11 @@
+instances:
+  <% @instances.each do |i| -%>
+  - url:      <%= i['url'] %>
+    <% if i.key?('username') && i.key?('password') -%>
+    username: <%= i['username'] %>
+    password: <%= i['password'] %>
+    <% end -%>
+  <% end -%>
+
+# Nothing to configure below
+init_config:

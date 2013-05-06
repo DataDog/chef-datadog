@@ -22,8 +22,8 @@ if node['datadog']['installrepo']
   include_recipe "datadog::repository"
 end
 
-case node['platform']
-when "debian", "ubuntu"
+case node['platform_family']
+when "debian"
   # Thanks to @joepcds for the Ubuntu 11.04 fix
   # setuptools has been packaged with a bug
   # https://bugs.launchpad.net/ubuntu/+source/supervisor/+bug/777862
@@ -50,7 +50,7 @@ when "debian", "ubuntu"
     end
   end
 
-when "redhat", "centos", "scientific", "amazon"
+when "rhel"
   # datadog-agent requires python2.6, not available on RH5 by default
   if node['platform_version'].to_i <= 5
     package "datadog-agent-base" do
@@ -78,8 +78,8 @@ end
 
 #
 # Configures a basic agent
-# If you want to autoconfigure sources based on other chef recipes
-# Fork this repo and issue pull requests
+# To add integration-specific configurations, add 'datadog::config_name' to
+# the node's run_list and set the relevant attributes
 #
 raise "Add a ['datadog']['api_key'] attribute to configure this node's Datadog Agent." if node['datadog'] && node['datadog']['api_key'].nil?
 
