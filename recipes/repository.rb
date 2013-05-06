@@ -17,8 +17,8 @@
 # limitations under the License.
 #
 
-case node['platform']
-when "debian", "ubuntu"
+case node['platform_family']
+when "debian"
   include_recipe "apt"
 
   apt_repository 'datadog' do
@@ -30,8 +30,7 @@ when "debian", "ubuntu"
     action :add
   end
 
-when "redhat", "centos", "scientific", "amazon"
-  # Depending on the version, deploy a package
+when "rhel"
   include_recipe "yum"
 
   yum_repository "datadog" do

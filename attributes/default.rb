@@ -64,83 +64,15 @@ default['datadog']['agent_port'] = 17123
 default['datadog']['graphite'] = false
 default['datadog']['graphite_port'] = 17124
 
-# Start dogstatsd by default
-default['datadog']['dogstatsd'] = true
-default['datadog']['dogstatsd_port'] = 8125
-default['datadog']['dogstatsd_interval'] = 10
-
-# Set up dogstreams
+# log-parsing configuration
 default['datadog']['dogstreams'] = []
 
-##
-# Service specific attributes, use override in node/role configuration
-##
+# Logging configuration
+default['datadog']['syslog']['active'] = false
+default['datadog']['syslog']['udp'] = false
+default['datadog']['syslog']['host'] = nil
+default['datadog']['syslog']['port'] = nil
 
-# apache
-default['datadog']['apache']['status_url'] = nil   # http://www.example.com/server-status/?auto
-
-# ganglia
-default['datadog']['ganglia']['url'] = nil         # localhost
-default['datadog']['ganglia']['port'] = 8651
-
-# haproxy
-default['datadog']['haproxy']['stats_url'] = nil
-default['datadog']['haproxy']['stats_user'] = nil
-default['datadog']['haproxy']['stats_password'] = nil
-
-# mysql
-default['datadog']['mysql']['server'] = nil        # localhost
-default['datadog']['mysql']['user'] = "readonly"
-default['datadog']['mysql']['pass'] = "readonly"
-
-# nginx
-default['datadog']['nginx']['status_url'] = nil    # http://localhost:81/nginx_status/
-
-# rabbitmq
-default['datadog']['rabbitmq']['status_url'] = nil # http://www.example.com:55672/json
-default['datadog']['rabbitmq']['user'] = "guest"
-default['datadog']['rabbitmq']['pass'] = "guest"
-
-# mongodb
-default['datadog']['mongodb']['server'] = nil      # mongodb://my_user:my_pass@localhost/my_db
-
-# postgres
-default['datadog']['postgres']['server'] = nil
-default['datadog']['postgres']['port'] = 5432
-default['datadog']['postgres']['user'] = "datadog"
-default['datadog']['postgres']['password'] = nil
-
-# couchdb
-default['datadog']['couchdb']['server'] = nil
-
-# jenkins
-default['datadog']['jenkins']['home_dir'] = nil    # /var/lib/hudson/
-
-# nagios
-default['datadog']['nagios']['log_dir'] = nil      # /usr/local/nagios/etc
-default['datadog']['nagios']['conf_dir'] = nil     # /usr/local/nagios/etc
-
-# cassandra
-default['datadog']['cassandra']['host'] = nil      # localhost
-default['datadog']['cassandra']['port'] = 8080
-default['datadog']['cassandra']['nodetool'] = "/usr/bin/nodetool"
-
-# java
-default['datadog']['jvm_jmx']['server'] = nil      # localhost:8090
-default['datadog']['jvm_jmx']['user'] = nil        # john
-default['datadog']['jvm_jmx']['pass'] = nil        # foobar
-default['datadog']['jvm_jmx']['name'] = nil        # Java
-
-# tomcat
-default['datadog']['tomcat_jmx']['server'] = nil   # localhost
-default['datadog']['tomcat_jmx']['user'] = nil     # john
-default['datadog']['tomcat_jmx']['pass'] = nil     # foobar
-
-# varnish
-default['datadog']['varnish'] = nil               # varnish present? set to true if so
-
-# memcache
-default['datadog']['memcached'] = nil
-
-# redis
-default['datadog']['redis'] = nil
+# For service-specific configuration, use the integration recipes included
+# in this cookbook, and apply them to the appropirate node's run list.
+# Read more at http://docs.datadoghq.com/

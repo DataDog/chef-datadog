@@ -1,0 +1,21 @@
+instances:
+<% @instances.each do |i| -%>
+  - server: <%= i['server'] %>
+    user: <%= i['user'] %>
+    pass: <%= i['pass'] %>
+    tags:
+  <% if i.key?('tags') -%>
+    <% i['tags'].each do |t| -%>
+    - <%= t %>
+    <% end -%>
+  <% end -%>
+  <% if i.key?('options') -%>
+    options:
+    <% i['options'].each do |o| -%>
+      <%= o %>
+    <% end -%>
+  <% end -%>
+<% end -%>
+
+# Nothing to configure here
+init_config:

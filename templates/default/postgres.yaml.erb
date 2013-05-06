@@ -1,0 +1,14 @@
+init_config:
+# empty by design
+
+instances:
+<% @instances.each do |i| -%>
+  - host: <%= i["server"] %>
+    port: <%= i["port"] || 5432 %>
+    username: <%= i["username"] %>
+    password: <%= i["password"] %>
+    tags:
+    <% i["tags"].each do |t| -%>
+      - <%= t %>
+    <% end if i.key?("tags") -%>
+<% end -%>
