@@ -7,7 +7,7 @@
 # current machine, you will have to create an instance with empty params.
 
 instances:
-  <% @instances.each |i| do -%>
+  <% @instances.each do |i| -%>
     <% if i['host'] == 'localhost' -%>
   - host: .
     <% else -%>
@@ -19,9 +19,10 @@ instances:
     <% end -%>
     <% if i.key?('tags') -%>
     tags:
-      <% i['tags'].each |t| do -%>
+      <% i['tags'].each do |t| -%>
       - <%= t %>
       <% end -%>
     <% end -%>
+  <% end -%>
 
 init_config:
