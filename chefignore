@@ -33,12 +33,14 @@ a.out
 */.hg/*
 */.svn/*
 
-## Don't send rspecs up in cookbook
+## Testing
 .watchr
 .rspec
 spec/*
 spec/fixtures/*
 features/*
+.chef/
+.kitchen/
 
 ## SCM
 .gitignore
