@@ -1,7 +1,14 @@
 Changes
 =======
 
-# v1.0.0 - 2013/05/06
+# v1.0.1 - 2013-05-14
+
+* Fixed iis and rabbitmq template syntax - #58 @gregf
+* Updated style/spacing in ActiveMQ template
+* Updated test suite to validate cookbook & templates
+* Updated chefignore to clean the built cookbook from containing cruft
+
+# v1.0.0 - 2013-05-06
 
 * **BREAKING CHANGE**: Moved all attributes into `datadog` namespace - #46 (#23, #26)
 
