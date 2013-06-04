@@ -4,7 +4,7 @@ include_recipe "datadog::dd-agent"
 # 
 # node.datadog.riak.instances = [
 #   {
-#     :url => "http://localhost:11234/stats",
+#     :url => "http://localhost:8098/stats",
 #   }
 # ]
 
