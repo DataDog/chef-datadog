@@ -18,7 +18,7 @@ version          "1.0.1"
 end
 
 # apt cookbook 3.0.0 added functionality that does not exist in Chef 10.
-if(Gem::Version.new(Chef::VERSION) < Gem::Version.new('11.0.0'))
+if(Gem::Version.new(::Chef::VERSION) < Gem::Version.new('11.0.0'))
   depends          "apt", "~> 2"
 else
   depends          "apt"
