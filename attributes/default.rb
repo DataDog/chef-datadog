@@ -30,7 +30,7 @@ default['datadog']['application_key'] = nil
 # The host of the Datadog intake server to send agent data to
 default['datadog']['url'] = "https://app.datadoghq.com"
 
-# Add tags as override attributes in your role  
+# Add tags as override attributes in your role
 default['datadog']['tags'] = ""
 
 # Repository configuration
@@ -41,7 +41,10 @@ default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm"
 # Agent Version
 default['datadog']['agent_version'] = nil
 
-# Boolean to enable debug_mode, which outputs massive amounts of log messages 
+# Chef handler version
+default['datadog']['chef_handler_version'] = nil
+
+# Boolean to enable debug_mode, which outputs massive amounts of log messages
 # to the /tmp/ directory.
 default['datadog']['debug'] = false
 
