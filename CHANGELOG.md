@@ -1,6 +1,10 @@
 Changes
 =======
 
+# v1.0.2 - 2013-07-01
+
+* Fixed postgresql tagging
+
 # v1.0.1 - 2013-05-14
 
 * Fixed iis and rabbitmq template syntax - #58 @gregf
