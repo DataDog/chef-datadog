@@ -76,3 +76,5 @@ default['datadog']['syslog']['port'] = nil
 # For service-specific configuration, use the integration recipes included
 # in this cookbook, and apply them to the appropirate node's run list.
 # Read more at http://docs.datadoghq.com/
+
+default['datadog']['network']['instances'] = [{'collect_connection_state' => 'false', 'excluded_interfaces' => ['lo', 'lo0']}]
