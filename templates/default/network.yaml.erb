@@ -1,0 +1,10 @@
+init_config:
+
+instances:
+<% @instances.each do |i| -%>
+ - collect_connection_state: <%= i["collect_connection_state"] %>
+   excluded_interfaces:
+ <% i["excluded_interfaces"].each do |interface| -%>
+     - <%= interface %>
+ <% end -%>
+<% end -%>
