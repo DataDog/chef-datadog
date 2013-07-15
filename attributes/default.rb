@@ -41,6 +41,10 @@ default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm"
 # Agent Version
 default['datadog']['agent_version'] = nil
 
+# Force install datadog-agent-base (usually only installed on systems with
+# a version of python lower than 2.6) instead of datadog-agent
+default['datadog']['install_base'] = false
+
 # Boolean to enable debug_mode, which outputs massive amounts of log messages 
 # to the /tmp/ directory.
 default['datadog']['debug'] = false
