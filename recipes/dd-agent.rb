@@ -22,8 +22,7 @@ if node['datadog']['installrepo']
   include_recipe "datadog::repository"
 end
 
-case node['platform_family']
-when "debian"
+if node['platform_family'] == 'debian'
   # Thanks to @joepcds for the Ubuntu 11.04 fix
   # setuptools has been packaged with a bug
   # https://bugs.launchpad.net/ubuntu/+source/supervisor/+bug/777862
@@ -38,28 +37,15 @@ when "debian"
     notifies :run, "execute[apt-get update]", :immediately
     not_if "apt-cache search datadog-agent | grep datadog-agent"
   end
+end
 
-  # datadog-agent requires python2.6, not available on LTS till 10.04
-  if node['datadog']['install_base'] || ((node['platform'] == "ubuntu") and (node['platform_version'].to_f <= 8.04))
-    package "datadog-agent-base" do
-      version node['datadog']['agent_version']
-    end
-  else
-    package "datadog-agent" do
-      version node['datadog']['agent_version']
-    end
+if node['datadog']['install_base']
+  package "datadog-agent-base" do
+    version node['datadog']['agent_version']
   end
-
-when "rhel"
-  # datadog-agent requires python2.6, not available on RH5 by default
-  if node['datadog']['install_base'] || node['platform_version'].to_i <= 5
-    package "datadog-agent-base" do
-      version node['datadog']['agent_version']
-    end
-  elsif node['platform_version'].to_i >= 6
-    package "datadog-agent" do
-      version node['datadog']['agent_version']
-    end
+else
+  package "datadog-agent" do
+    version node['datadog']['agent_version']
   end
 end
 
