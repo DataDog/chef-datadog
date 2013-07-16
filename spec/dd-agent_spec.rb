@@ -97,15 +97,17 @@ describe 'datadog::dd-agent' do
     it_behaves_like 'datadog-agent'
   end
 
-  context 'when using a redhat-family distro above 6.x and installing base' do
+  context 'when using CentOS 5.8 and installing base' do
 
     before(:all) do
       @chef_run = ChefSpec::ChefRunner.new(
         :platform => 'centos',
-        :version => '6.3'
+        :version => '5.8'
       ) do |node|
           node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
-          node.set['languages'] = { 'python' => { 'version' => '2.4' } }
+          # fauxhai currently does not have languages other than Ruby, so we
+          # add it here. See https://github.com/customink/fauxhai/issues/39
+          node.set['languages'] = { 'python' => { 'version' => '2.4.3' } }
         end.converge('datadog::dd-agent')
     end
 
