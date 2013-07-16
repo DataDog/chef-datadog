@@ -17,7 +17,7 @@ version          "1.0.1"
   supports os
 end
 
-depends          "apt"
+depends          "apt", "= 1.10.0"
 depends          "chef_handler", "~> 1.1.0"
 depends          "yum"
 
