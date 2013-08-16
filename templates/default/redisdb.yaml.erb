@@ -1,7 +1,7 @@
 instances:
 <% @instances.each do |i| -%>
   - host: <%= i["server"] %>
-    port: <%= i["port"] || 6739 %>
+    port: <%= i["port"] || 6379 %>
     <% if i.key?("password") -%>
     password: <%= i["password"] %>
     <% end -%>
