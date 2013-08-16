@@ -34,13 +34,15 @@ a.out
 */.svn/*
 
 ## Testing
-.watchr
-.rspec
-spec/*
-spec/fixtures/*
-features/*
 .chef/
 .kitchen/
+.rspec
+.travis.yml
+.watchr
+features/*
+gemfiles/*
+spec/*
+spec/fixtures/*
 
 ## SCM
 .gitignore
@@ -55,3 +57,9 @@ Rakefile
 
 # Vagrant
 .vagrant
+
+# Ruby managers
+.rbenv
+.ruby-gemset
+.ruby-version
+.rvmrc
