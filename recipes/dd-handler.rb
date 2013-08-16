@@ -25,13 +25,17 @@ if(Gem::Version.new(Chef::VERSION) < Gem::Version.new('0.10.9'))
   # This method ensures that the gem will be available for loading on the first run
   # TODO: Remove once 0.10.8 is fully end-of-life
   r = gem_package "chef-handler-datadog" do
+    version ">= 0.2.0"
     action :nothing
   end
-  r.run_action(:install)
+  r.run_action(:upgrade)
   Gem.clear_paths
 else
   # The chef_gem provider was introduced in Chef 0.10.10
-  chef_gem "chef-handler-datadog"
+  chef_gem "chef-handler-datadog" do
+    version ">= 0.2.0"
+    action :upgrade
+  end
 end
 require 'chef/handler/datadog'
 

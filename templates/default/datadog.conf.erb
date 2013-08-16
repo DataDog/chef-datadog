@@ -8,7 +8,6 @@ check_freq: <%= node['datadog']['check_freq'] %>
 hostname: <%= node.name %>
 use_mount: <%= node['datadog']['use_mount'] ? "yes" : "no"  %>
 listen_port: <%= node['datadog']['agent_port'] %>
-tags: <%= node['datadog']['tags'] %>
 
 <% if !node['datadog']['dogstreams'].empty? -%>
 dogstreams: <%= node['datadog']['dogstreams'].join(', ') %>
