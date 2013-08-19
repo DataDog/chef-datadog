@@ -1,1 +1,6 @@
-default['datadog']['network']['instances'] = [{'collect_connection_state' => 'false', 'excluded_interfaces' => ['lo', 'lo0']}]
+default['datadog']['network']['instances'] = [
+  {
+    'collect_connection_state' => 'false',
+    'excluded_interfaces' => ['lo', 'lo0']
+  }
+]
