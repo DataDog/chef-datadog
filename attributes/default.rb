@@ -41,6 +41,14 @@ default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm"
 # Agent Version
 default['datadog']['agent_version'] = nil
 
+# Set to true to always install datadog-agent-base (usually only installed on
+# systems with a version of Python lower than 2.6) instead of datadog-agent
+begin
+  default['datadog']['install_base'] = Gem::Version.new(node['languages']['python']['version']) < Gem::Version.new('2.6.0')
+rescue NoMethodError # nodes['languages']['python'] == nil
+  Chef::Log.warn 'no version of python found'
+end
+
 # Boolean to enable debug_mode, which outputs massive amounts of log messages 
 # to the /tmp/ directory.
 default['datadog']['debug'] = false
