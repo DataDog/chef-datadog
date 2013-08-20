@@ -43,6 +43,7 @@ features/*
 gemfiles/*
 spec/*
 spec/fixtures/*
+test/*
 
 ## SCM
 .gitignore
