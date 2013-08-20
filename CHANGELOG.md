@@ -1,16 +1,33 @@
 Changes
 =======
 
-# v1.0.1 - 2013-05-14
+# 1.1.0 / 2013-08-20
 
-* Fixed iis and rabbitmq template syntax - #58 @gregf
+* [FEATURE] Parameterize chef-handler-datadog Gem version, [#60][] [@mfischer-zd][]
+* [FEATURE] Allow control of `network.yaml` via attributes, [#63][] [@JoeDeVries][]
+* [FEATURE] Use Python version from Ohai to determine packages to install, [#65][] [@elijahandrews][]
+* [BUGFIX] redisdb default port in template should be 6379, [#59][] [@miketheman][]
+* [BUGFIX] templates creating empty `tags` in config when unspecified for multiple integrations [#61][] [@alq][]
+* [MISC] updated tests [@elijahandres][], [@miketheman][]
+* [MISC] correct the riak integration example, [@miketheman][]
+* [MISC] updated CHANGELOG.md style, [@miketheman][]
+
+#### Dependency Note
+One of the dependencies of this cookbook is the `apt` cookbook.
+A change introduced in the `apt` cookbook 2.0.0 release was a Chef 11-specific feature that would break on any Chef 10 system, so we considered adding a restriction in our `metadata.rb` to anything below 2.0.0.
+
+A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well with both Chef 10 and 11. We recommend using this version, or higher.
+
+# 1.0.1 / 2013-05-14
+
+* Fixed iis and rabbitmq template syntax - [#58][] [@gregf][]
 * Updated style/spacing in ActiveMQ template
 * Updated test suite to validate cookbook & templates
 * Updated chefignore to clean the built cookbook from containing cruft
 
-# v1.0.0 - 2013-05-06
+# 1.0.0 / 2013-05-06
 
-* **BREAKING CHANGE**: Moved all attributes into `datadog` namespace - #46 (#23, #26)
+* **BREAKING CHANGE**: Moved all attributes into `datadog` namespace - [#46][] ([#23][], [#26][])
 
   Reasoning behind this was that originally we attempted to auto-detect many common attributes and deploy automatic monitoring for them.
   We found that since inclusion of the `datadog` cookbook early in the run list caused the compile phase to be populated with our defaults (mostly `nil`), instead of the desired target, and namespacing of the attributes became necessary.
@@ -20,31 +37,31 @@ Changes
   The new provider is used in many pre-provided integration recipes, such as `datadog::apache`.
   This enables a run list to include this recipe, as well as populate a node attribute with the needed instance details to monitor the given service
 
-* Updated dependencies in Gemfile, simplifies travis build - #34, #55
-* Much improved test system (chefspec, test-kitchen) - #35 & others
-* Tests against multiple versions of Chef - #18
-* Added language-specific recipes for installing `dogstatsd` - (#28)
-* Added ability to control `dogstatsd` from agent config via attribute - #27
+* Updated dependencies in Gemfile, simplifies travis build - [#34][], [#55][]
+* Much improved test system (chefspec, test-kitchen) - [#35][] & others
+* Tests against multiple versions of Chef - [#18][]
+* Added language-specific recipes for installing `dogstatsd` - ([#28][])
+* Added ability to control `dogstatsd` from agent config via attribute - [#27][]
 * Placed the `dogstatsd` log file in `/var/log/` instead of `/tmp`
-* Added attribute to configure dogstreams in `datadog.conf` - #37
+* Added attribute to configure dogstreams in `datadog.conf` - [#37][]
 * Updated for `platform_family` semantics
 * Added `node['datadog']['agent_version']` attribute
-* (Handler Recipe) Better handling of EC2 instance ID for Handler - #44
+* (Handler Recipe) Better handling of EC2 instance ID for Handler - [#44][]
 * Updated for agent 3.6.x logging syntax
-* Generated config file removes some whitespace - #56
+* Generated config file removes some whitespace - [#56][]
 * Removed dependency on `yum::epel`, only uses `yum` for the `repository` recipe
 
 
-## v0.1.4
+# 0.1.4 / 2013-04-25
 * Quick fix for backporting test code to support upload in ruby 1.8.7
 
-## v0.1.3
+# 0.1.3 / 2013-01-27
 * Work-around for COOK-2171
 
-## v0.1.2
+# 0.1.2 / 2012-10-15
 * Fixed typo in jmx section
 
-## v0.1.1
+# 0.1.1 / 2012-09-18
 * Added support for postgres, redis & memcached
 * `dd-agent` - updated to include more platforms
 * `dd-handler` - updated to leverage `chef_gem` resource if available
@@ -55,34 +72,63 @@ Changes
 * Removed extraneous dependencies
 * Added automated testing suite
 
-## v0.0.12
+# 0.0.12
 * Updated for CentOS dependencies
 
-## v0.0.11
+# 0.0.11
 * Link to github repository.
 
-## v0.0.10
+# 0.0.10
 * `dd-handler` - Corrects attribute name.
 
-## v0.0.9
+# 0.0.9
 * `dd-agent` - Adds an explicit varnish attribute.
 
-## v0.0.8
+# 0.0.8
 * `dd-agent` - Add varnish support.
 
-## v0.0.7
+# 0.0.7
 * `dd-agent` - default to using instance IDs as hostnames when running dd-agent on EC2
 
-## v0.0.5
-* `dd-agent` - Full datadog.conf template using attributes (thanks @drewrothstein)
+# 0.0.5
+* `dd-agent` - Full datadog.conf template using attributes (thanks [@drewrothstein][])
 
-## v0.0.4
+# 0.0.4
 * `dd-agent` - Added support for Nagios PerfData and Graphite.
 
-## v0.0.3
+# 0.0.3
 * `dd-agent` - Added support for RPM installs - Red Hat, CentOS, Scientific, Fedora
 
-## v0.0.2
+# 0.0.2
 * Initial refactoring, including the `dd-agent` cookbook here
 * Adding chef-handler-datadog to report to the newsfeed
 * Added ruby-dev dependency
+
+<!--- The following link definition list is generated by PimpMyChangelog --->
+[#18]: https://github.com/DataDog/chef-datadog/issues/18
+[#22]: https://github.com/DataDog/chef-datadog/issues/22
+[#23]: https://github.com/DataDog/chef-datadog/issues/23
+[#26]: https://github.com/DataDog/chef-datadog/issues/26
+[#27]: https://github.com/DataDog/chef-datadog/issues/27
+[#28]: https://github.com/DataDog/chef-datadog/issues/28
+[#34]: https://github.com/DataDog/chef-datadog/issues/34
+[#35]: https://github.com/DataDog/chef-datadog/issues/35
+[#37]: https://github.com/DataDog/chef-datadog/issues/37
+[#44]: https://github.com/DataDog/chef-datadog/issues/44
+[#46]: https://github.com/DataDog/chef-datadog/issues/46
+[#55]: https://github.com/DataDog/chef-datadog/issues/55
+[#56]: https://github.com/DataDog/chef-datadog/issues/56
+[#58]: https://github.com/DataDog/chef-datadog/issues/58
+[#59]: https://github.com/DataDog/chef-datadog/issues/59
+[#60]: https://github.com/DataDog/chef-datadog/issues/60
+[#61]: https://github.com/DataDog/chef-datadog/issues/61
+[#63]: https://github.com/DataDog/chef-datadog/issues/63
+[#65]: https://github.com/DataDog/chef-datadog/issues/65
+[@JoeDeVries]: https://github.com/JoeDeVries
+[@alq]: https://github.com/alq
+[@drewrothstein]: https://github.com/drewrothstein
+[@elijahandres]: https://github.com/elijahandres
+[@elijahandrews]: https://github.com/elijahandrews
+[@gregf]: https://github.com/gregf
+[@mfischer-zd]: https://github.com/mfischer-zd
+[@miketheman]: https://github.com/miketheman
