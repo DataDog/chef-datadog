@@ -16,7 +16,6 @@ end
 # The `rake berks` should be performed prior to running this.
 spec_paths = Dir.glob(File.join("cookbooks", "**", "spec"))
 guard 'rspec',
-  :version => 2,
   :cli => '--color --format nested',
   :spec_paths => spec_paths do
 
