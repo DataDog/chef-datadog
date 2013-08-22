@@ -17,3 +17,5 @@ include_recipe "datadog::dd-agent"
 datadog_monitor "mcache" do
   instances node["datadog"]["memcache"]["instances"]
 end
+
+package 'python-memcache'
