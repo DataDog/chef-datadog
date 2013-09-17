@@ -4,7 +4,7 @@ maintainer_email "package@datadoghq.com"
 license          "Apache 2.0"
 description      "Installs/Configures datadog components"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          "1.0.1"
+version          "1.1.0"
 
 %w{
   amazon
@@ -17,12 +17,7 @@ version          "1.0.1"
   supports os
 end
 
-# apt cookbook 3.0.0 added functionality that does not exist in Chef 10.
-if(Gem::Version.new(::Chef::VERSION) < Gem::Version.new('11.0.0'))
-  depends          "apt", "~> 2"
-else
-  depends          "apt"
-end
+depends          "apt" # We recommend '>= 2.1.0'. See CHANGELOG.md for details
 depends          "chef_handler", "~> 1.1.0"
 depends          "yum"
 

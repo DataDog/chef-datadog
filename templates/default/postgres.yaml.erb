@@ -7,8 +7,10 @@ instances:
     port: <%= i["port"] || 5432 %>
     username: <%= i["username"] %>
     password: <%= i["password"] %>
+    <% if i.key?("tags") -%>
     tags:
-    <% i["tags"].each do |t| -%>
+        <% i["tags"].each do |t| -%>
       - <%= t %>
-    <% end if i.key?("tags") -%>
+      	<% end -%>
+    <% end -%>
 <% end -%>

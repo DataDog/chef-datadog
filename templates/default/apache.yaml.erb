@@ -1,8 +1,8 @@
 instances:
 <% @instances.each do |i| -%>
   - apache_status_url: <%= i['status_url'] %>
-    tags:
   <% if i.key?('tags') -%>
+    tags:
     <% i['tags'].each do |t| -%>
     - <%= t %>
     <% end -%>

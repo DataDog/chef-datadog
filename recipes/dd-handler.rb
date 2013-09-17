@@ -26,12 +26,16 @@ if(Gem::Version.new(Chef::VERSION) < Gem::Version.new('0.10.9'))
   # TODO: Remove once 0.10.8 is fully end-of-life
   r = gem_package "chef-handler-datadog" do
     action :nothing
+    version node["datadog"]["chef_handler_version"]
   end
   r.run_action(:install)
   Gem.clear_paths
 else
   # The chef_gem provider was introduced in Chef 0.10.10
-  chef_gem "chef-handler-datadog"
+  chef_gem "chef-handler-datadog" do
+    action :install
+    version node["datadog"]["chef_handler_version"]
+  end
 end
 require 'chef/handler/datadog'
 
