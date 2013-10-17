@@ -1,5 +1,9 @@
 Changes
 =======
+# 1.1.1 / 2013-10-17
+
+* [BUGFIX] redis python client check was not properly checking the default version, [@remh][]
+* [BUGFIX] tailor 1.3.1 caught some cosmetic issue, [@alq][]
 
 # 1.1.0 / 2013-08-20
 
