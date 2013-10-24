@@ -92,5 +92,3 @@ default['datadog']['syslog']['port'] = nil
 default['datadog']['legacy_integrations']['nagios']['enabled'] = false
 default['datadog']['legacy_integrations']['nagios']['description'] = "Nagios integration"
 default['datadog']['legacy_integrations']['nagios']['config']['nagios_log'] = '/var/log/nagios3/nagios.log'
-
-
