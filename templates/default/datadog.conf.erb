@@ -69,10 +69,11 @@ if node['datadog']['legacy_integrations']
 <%= description %>
 <%
     ## Todo: add guardrails against other valid config directives
-    int_hash['config'].each do |k,v|
+      int_hash['config'].each do |k,v|
 -%>
 <%= k %>: <%= v %>
 <%
+      end
     end
   end
 end
