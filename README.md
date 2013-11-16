@@ -72,3 +72,7 @@ Usage
 We are not making use of data_bags in this recipe at this time, as it is unlikely that you will have more than one API key and one application key.
 
 For more deployment details, visit the [Datadog Documentation site](http://docs.datadoghq.com/).
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/DataDog/chef-datadog/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
