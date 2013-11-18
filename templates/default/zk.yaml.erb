@@ -1,9 +1,14 @@
-init_config:
-
 instances:
-#   -   host: localhost
-#       port: 2181
-#       timeout: 3
-#       tags:
-#            - optional_tag1
-#            - optional_tag2
+  <% @instances.each do |instance| -%>
+  - host: <%= instance["host"] %>
+    port: <%= instance["port"] %>
+    timeout: <%= instance["timeout"] %>
+    <% if instance.key?("tags") -%>
+    tags:
+      <% instance["tags"].each do |tag| -%>
+      - <%= tag %>
+      <% end -%>
+    <% end -%>
+  <% end %>
+
+init_config:
