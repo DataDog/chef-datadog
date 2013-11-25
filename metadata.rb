@@ -20,6 +20,7 @@ end
 depends          "apt" # We recommend '>= 2.1.0'. See CHANGELOG.md for details
 depends          "chef_handler", "~> 1.1.0"
 depends          "yum"
+supports         "python"
 
 recipe "datadog::default", "Default"
 recipe "datadog::dd-agent", "Installs the Datadog Agent"
