@@ -4,6 +4,7 @@ Changes
 # 1.2.0 / Unreleased
 
 * [FEATURE] added hdfs recipe and template, [#77][] [@phlipper][]
+* [FEATURE] added zookeeper recipe and template, [#74][] [@phlipper][]
 
 # 1.1.1 / 2013-10-17
 
@@ -136,6 +137,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#63]: https://github.com/DataDog/chef-datadog/issues/63
 [#65]: https://github.com/DataDog/chef-datadog/issues/65
 [#67]: https://github.com/DataDog/chef-datadog/issues/67
+[#74]: https://github.com/DataDog/chef-datadog/issues/74
 [#77]: https://github.com/DataDog/chef-datadog/issues/77
 [@JoeDeVries]: https://github.com/JoeDeVries
 [@alq]: https://github.com/alq
