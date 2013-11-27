@@ -1,5 +1,10 @@
 Changes
 =======
+
+# 1.2.0 / Unreleased
+
+* [FEATURE] added hdfs recipe and template, [#77][] [@phlipper][]
+
 # 1.1.1 / 2013-10-17
 
 * [FEATURE] added rabbitmq recipe and template, [@miketheman][]
@@ -131,6 +136,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#63]: https://github.com/DataDog/chef-datadog/issues/63
 [#65]: https://github.com/DataDog/chef-datadog/issues/65
 [#67]: https://github.com/DataDog/chef-datadog/issues/67
+[#77]: https://github.com/DataDog/chef-datadog/issues/77
 [@JoeDeVries]: https://github.com/JoeDeVries
 [@alq]: https://github.com/alq
 [@drewrothstein]: https://github.com/drewrothstein
@@ -139,4 +145,5 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@gregf]: https://github.com/gregf
 [@mfischer-zd]: https://github.com/mfischer-zd
 [@miketheman]: https://github.com/miketheman
+[@phlipper]: https://github.com/phlipper
 [@remh]: https://github.com/remh
