@@ -43,8 +43,10 @@ default['datadog']['agent_version'] = nil
 
 # Set to true to always install datadog-agent-base (usually only installed on
 # systems with a version of Python lower than 2.6) instead of datadog-agent
+#
+# The .gsub is done because some platforms may append characters that aren't valid for a Gem::Version comparison.
 begin
-  default['datadog']['install_base'] = Gem::Version.new(node['languages']['python']['version']) < Gem::Version.new('2.6.0')
+  default['datadog']['install_base'] = Gem::Version.new(node['languages']['python']['version'].gsub(/(\d\.\d\.\d).+/, "\\1")) < Gem::Version.new('2.6.0')
 rescue NoMethodError # nodes['languages']['python'] == nil
   Chef::Log.warn 'no version of python found'
 end
