@@ -67,6 +67,21 @@ describe 'datadog::dd-agent' do
     it_behaves_like 'datadog-agent'
   end
 
+  context 'when using a debian-family w/ a non-numeric version string' do
+
+    before(:all) do
+      @chef_run = ChefSpec::ChefRunner.new(
+        :platform => 'debian',
+        :version => '7.2'
+      ) do |node|
+          node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
+          node.set['languages'] = { 'python' => { 'version' => '2.7.5+' } }
+        end.converge('datadog::dd-agent')
+    end
+
+    it_behaves_like 'datadog-agent'
+  end
+
   context 'when using a debian-family distro and installing base' do
     before(:all) do
       @chef_run = ChefSpec::Runner.new(
