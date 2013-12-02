@@ -72,7 +72,7 @@ describe 'datadog::dd-agent' do
     before(:all) do
       @chef_run = ChefSpec::ChefRunner.new(
         :platform => 'debian',
-        :version => '7.2'
+        :version => '7.0'
       ) do |node|
           node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
           node.set['languages'] = { 'python' => { 'version' => '2.7.5+' } }
