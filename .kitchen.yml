@@ -44,6 +44,17 @@ platforms:
     box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-5.9_chef-11.4.4.box
     require_chef_omnibus: 10.24.4
 
+- name: debian-7.2_chef_11.4.4
+  driver_config:
+    box: opscode-debian-7.2
+    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_debian-7.2.0_chef-provisionerless.box
+    require_chef_omnibus: 11.4.4
+- name: debian-7.2_chef_10.24.4
+  driver_config:
+    box: opscode-debian-7.2
+    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_debian-7.2.0_chef-provisionerless.box
+    require_chef_omnibus: 10.24.4
+
 suites:
 # - name: default
 #   run_list: ["recipe[datadog::default]"]
