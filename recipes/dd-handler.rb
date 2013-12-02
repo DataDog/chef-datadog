@@ -20,7 +20,7 @@
 include_recipe "chef_handler"
 ENV["DATADOG_HOST"] = node['datadog']['url']
 
-if(Gem::Version.new(Chef::VERSION) < Gem::Version.new('0.10.9'))
+if Gem::Version.new(Chef::VERSION) < Gem::Version.new('0.10.9')
   Chef::Log.debug 'Installing gem with trick method'
   # This method ensures that the gem will be available for loading on the first run
   # TODO: Remove once 0.10.8 is fully end-of-life
