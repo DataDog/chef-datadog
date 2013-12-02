@@ -9,6 +9,12 @@ hostname: <%= node.name %>
 use_mount: <%= node['datadog']['use_mount'] ? "yes" : "no"  %>
 listen_port: <%= node['datadog']['agent_port'] %>
 tags: <%= node['datadog']['tags'] %>
+<% if node['datadog']['web_proxy']['host'] -%>
+proxy_host: <%= node['datadog']['web_proxy']['host'] %>
+proxy_port: <%= node['datadog']['web_proxy']['port'] %>
+proxy_user: <%= node['datadog']['web_proxy']['user'] %>
+proxy_password: <%= node['datadog']['web_proxy']['password'] %>
+<% end -%> 
 
 <% if !node['datadog']['dogstreams'].empty? -%>
 dogstreams: <%= node['datadog']['dogstreams'].join(', ') %>
