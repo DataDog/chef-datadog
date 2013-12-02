@@ -14,10 +14,10 @@ group :test do
   gem "tailor", "~> 1.1" # Ruby style
   gem "foodcritic", "~> 2.1" # Lint testing
   gem "berkshelf", "~> 2.0"
-  gem "chefspec", "~> 1.0"
+  gem "chefspec", "~> 2.0"
 end
 
 group :vagrant do
-  gem "test-kitchen",  "1.0.0.beta.2"
-  gem 'kitchen-vagrant'
+  gem "test-kitchen",  "~> 1.0.0"
+  gem "kitchen-vagrant"
 end
