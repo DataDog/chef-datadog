@@ -16,7 +16,7 @@ include_recipe "datadog::dd-agent"
 #     'host' => "remote",
 #     'port' => "5432",
 #     'username' => "datadog",
-#     'name' => ["prod"]
+#     'tags' => ["prod"]
 #   }
 # ]
 
