@@ -47,6 +47,8 @@ begin
   default['datadog']['install_base'] = Gem::Version.new(node['languages']['python']['version']) < Gem::Version.new('2.6.0')
 rescue NoMethodError # nodes['languages']['python'] == nil
   Chef::Log.warn 'no version of python found'
+rescue ArgumentError
+  Chef::Log.warn "could not parse python version string: #{node['languages']['python']['version']}"
 end
 
 # Chef handler version
