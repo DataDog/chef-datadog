@@ -33,6 +33,9 @@ default['datadog']['url'] = "https://app.datadoghq.com"
 # Add tags as override attributes in your role
 default['datadog']['tags'] = ""
 
+# Autorestart agent
+default['datadog']['autorestart'] = false
+
 # Repository configuration
 default['datadog']['installrepo'] = true
 default['datadog']['aptrepo'] = "http://apt.datadoghq.com"
