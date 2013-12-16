@@ -19,7 +19,7 @@ end
 
 depends          "apt" # We recommend '>= 2.1.0'. See CHANGELOG.md for details
 depends          "chef_handler", "~> 1.1.0"
-depends          "yum", "=< 3.0.0"
+depends          "yum", "< 3.0.0"
 suggests         "python"
 
 recipe "datadog::default", "Default"
