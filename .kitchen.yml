@@ -57,3 +57,13 @@ suites:
     datadog:
       api_key: somethingnotnil
       application_key: alsonotnil
+- name: mongo
+  run_list: ["recipe[datadog::dd-handler]", "recipe[datadog::dd-agent]", "recipe[datadog::mongo]"]
+  attributes:
+    datadog:
+      api_key: somethingnotnil
+      application_key: alsonotnil
+      mongo:
+        instances:
+        - host: localhost
+          port: 27017
