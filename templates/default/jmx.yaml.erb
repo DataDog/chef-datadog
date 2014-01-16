@@ -15,7 +15,7 @@ instances:
       <% if c.key?("bean") -%>
       bean: <%= c["bean"] %>
       <% end -%>
-      <% if c.key("attributes") -%>
+      <% if c.key?("attributes") -%>
       attribute:
         <% c["attributes"].each do |a| -%>
         attribute<%= c["attributes"].index(a) %>:
@@ -32,7 +32,7 @@ instances:
       <% if c.key?("bean") -%>
       bean: <%= c["bean"] %>
       <% end -%>
-      <% if c.key("attributes") -%>
+      <% if c.key?("attributes") -%>
       attribute:
         <% c["attributes"].each do |a| -%>
         attribute<%= c["attributes"].index(a) %>:
