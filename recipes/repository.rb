@@ -38,5 +38,7 @@ when "rhel"
     description "datadog"
     url node['datadog']['yumrepo']
     action :add
+    # see https://github.com/DataDog/chef-datadog/issues/89
+    gpgcheck false if respond_to? :gpgcheck
   end
 end
