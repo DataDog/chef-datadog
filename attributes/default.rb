@@ -84,6 +84,11 @@ default['datadog']['syslog']['udp'] = false
 default['datadog']['syslog']['host'] = nil
 default['datadog']['syslog']['port'] = nil
 
+# datadog-Statsd
+default['datadog']['dogstatsd'] = false
+default['datadog']['dogstatsd_port'] = 8125
+default['datadog']['dogstatsd_interval'] = 10
+
 # For service-specific configuration, use the integration recipes included
 # in this cookbook, and apply them to the appropirate node's run list.
 # Read more at http://docs.datadoghq.com/
