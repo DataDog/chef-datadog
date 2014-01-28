@@ -2,9 +2,11 @@ instances:
 <% @instances.each do |i| -%>
   - host: <%= i["server"] %>
     port: <%= i["port"] %>
-    name: <%= i["name"] %>
-    user: <%= i["username"] %>
-    password: <%= i["password"] %>
+    <% ["name", "username", "password"].each do |key| -%>
+    <% if i.key?(key) -%>
+    <%= key %>: <%= i[key] %>
+    <% end -%>
+    <% end -%>
   <% if i.key?("include") || i.key?("exclude") -%>
     conf:
     <% i["include"].each do |c| -%>
