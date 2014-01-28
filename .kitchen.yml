@@ -71,6 +71,7 @@ suites:
         instances:
           - server: localhost
             port: 9999
+            extra_key: extra_val
             include:
               - domain: domain0
               - domain: domain1
