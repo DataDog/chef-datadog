@@ -52,6 +52,9 @@ end
 # Chef handler version
 default['datadog']['chef_handler_version'] = nil
 
+# Enable the Chef handler to report to datadog
+default['datadog']['chef_handler_enable'] = true
+
 # Boolean to enable debug_mode, which outputs massive amounts of log messages
 # to the /tmp/ directory.
 default['datadog']['debug'] = false

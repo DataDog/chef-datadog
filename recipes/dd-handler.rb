@@ -40,13 +40,15 @@ end
 require 'chef/handler/datadog'
 
 # Create the handler to run at the end of the Chef execution
-chef_handler "Chef::Handler::Datadog" do
-  source "chef/handler/datadog"
-  arguments [
-    :api_key => node['datadog']['api_key'],
-    :application_key => node['datadog']['application_key'],
-    :use_ec2_instance_id => node['datadog']['use_ec2_instance_id']
-  ]
-  supports :report => true, :exception => true
-  action :nothing
-end.run_action(:enable)
+if node['datadog']['chef_handler_enable']
+  chef_handler "Chef::Handler::Datadog" do
+    source "chef/handler/datadog"
+    arguments [
+      :api_key => node['datadog']['api_key'],
+      :application_key => node['datadog']['application_key'],
+      :use_ec2_instance_id => node['datadog']['use_ec2_instance_id']
+    ]
+    supports :report => true, :exception => true
+    action :nothing
+  end.run_action(:enable)
+end
