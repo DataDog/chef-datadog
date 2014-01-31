@@ -17,6 +17,7 @@
 # limitations under the License.
 #
 
+extend DataDog
 include_recipe "chef_handler"
 ENV["DATADOG_HOST"] = node['datadog']['url']
 
@@ -40,11 +41,13 @@ end
 require 'chef/handler/datadog'
 
 # Create the handler to run at the end of the Chef execution
+api_key = get_key('api')
+application_key = get_key('application')
 chef_handler "Chef::Handler::Datadog" do
   source "chef/handler/datadog"
   arguments [
-    :api_key => node['datadog']['api_key'],
-    :application_key => node['datadog']['application_key'],
+    :api_key => api_key,
+    :application_key => application_key,
     :use_ec2_instance_id => node['datadog']['use_ec2_instance_id']
   ]
   supports :report => true, :exception => true
