@@ -7,8 +7,9 @@ module DataDog
 
   def check_key(type)
     key_name = "#{type}_key"
-    dog_hash = node['datadog']
-    dog_hash[key_name] || (dog_hash['databag']['name'] && dog_hash['databag']['item'])
+    ddog_hash = node['datadog']
+    true if ddog_hash[key_name] ||
+      (ddog_hash['databag']['name'] && ddog_hash['databag']['item'])
   end
 
   def get_key(type)
