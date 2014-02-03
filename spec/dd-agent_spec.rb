@@ -10,7 +10,7 @@ shared_examples_for 'datadog-agent' do
   end
 
   it 'enables the datadog-agent service' do
-    expect(@chef_run).to set_service_to_start_on_boot 'datadog-agent'
+    expect(@chef_run).to enable_service 'datadog-agent'
   end
 
   it 'ensures the dd-agent directory exists' do
@@ -18,7 +18,23 @@ shared_examples_for 'datadog-agent' do
   end
 
   it 'drops an agent config file' do
-    expect(@chef_run).to create_file '/etc/dd-agent/datadog.conf'
+    expect(@chef_run).to create_template('/etc/dd-agent/datadog.conf').with(
+      :owner => "root",
+      :group => "root",
+      :mode => 0644,
+      :variables => {
+        :api_key => "somethingnotnil",
+        :dd_url => @chef_run.node['datadog']['url']
+      }
+    )
+  end
+
+  it 'uses an encrypted databag when api_key is nil' do
+    if @chef_run.node['datadog']['api_key'].nil?
+      name = @chef_run.node['datadog']['databag']['name']
+      item = @chef_run.node['datadog']['databag']['item']
+      expect(Chef::EncryptedDataBagItem).to have_received(:load).with(name, item)
+    end
   end
 end
 
@@ -32,7 +48,7 @@ shared_examples_for 'datadog-agent-base' do
   end
 
   it 'enables the datadog-agent service' do
-    expect(@chef_run).to set_service_to_start_on_boot 'datadog-agent'
+    expect(@chef_run).to enable_service 'datadog-agent'
   end
 
   it 'ensures the dd-agent directory exists' do
@@ -40,7 +56,15 @@ shared_examples_for 'datadog-agent-base' do
   end
 
   it 'drops an agent config file' do
-    expect(@chef_run).to create_file '/etc/dd-agent/datadog.conf'
+    expect(@chef_run).to create_template('/etc/dd-agent/datadog.conf').with(
+      :owner => "root",
+      :group => "root",
+      :mode => 0644,
+      :variables => {
+        :api_key => "somethingnotnil",
+        :dd_url => @chef_run.node['datadog']['url']
+      }
+    )
   end
 end
 
@@ -55,7 +79,9 @@ describe 'datadog::dd-agent' do
   context 'when using a debian-family distro' do
 
     before(:all) do
-      @chef_run = ChefSpec::ChefRunner.new(
+      stub_command("apt-cache search datadog-agent | grep datadog-agent").and_return(true)
+
+      @chef_run = ChefSpec::Runner.new(
         :platform => 'ubuntu',
         :version => '12.04'
       ) do |node|
@@ -70,7 +96,9 @@ describe 'datadog::dd-agent' do
   context 'when using a debian-family distro and installing base' do
 
     before(:all) do
-      @chef_run = ChefSpec::ChefRunner.new(
+      stub_command("apt-cache search datadog-agent | grep datadog-agent").and_return(true)
+
+      @chef_run = ChefSpec::Runner.new(
         :platform => 'ubuntu',
         :version => '12.04'
       ) do |node|
@@ -85,7 +113,9 @@ describe 'datadog::dd-agent' do
   context 'when using a redhat-family distro above 6.x' do
 
     before(:all) do
-      @chef_run = ChefSpec::ChefRunner.new(
+      stub_command("apt-cache search datadog-agent | grep datadog-agent").and_return(true)
+
+      @chef_run = ChefSpec::Runner.new(
         :platform => 'centos',
         :version => '6.3'
       ) do |node|
@@ -100,7 +130,9 @@ describe 'datadog::dd-agent' do
   context 'when using CentOS 5.8 and installing base' do
 
     before(:all) do
-      @chef_run = ChefSpec::ChefRunner.new(
+      stub_command("apt-cache search datadog-agent | grep datadog-agent").and_return(true)
+
+      @chef_run = ChefSpec::Runner.new(
         :platform => 'centos',
         :version => '5.8'
       ) do |node|
@@ -114,4 +146,35 @@ describe 'datadog::dd-agent' do
     it_behaves_like 'datadog-agent-base'
   end
 
+  context 'when using an encrypted data bag' do
+
+    before(:all) do
+      stub_command("apt-cache search datadog-agent | grep datadog-agent").and_return(true)
+      Chef::EncryptedDataBagItem.stub(:load).and_return({
+        'api_key' => 'abc123',
+        'application_key' => 'zyx987'
+      })
+
+      @chef_run = ChefSpec::Runner.new(
+        :platform => 'ubuntu',
+        :version => '12.04'
+      ) do |node|
+          node.set['datadog']['databag'] = { 'name' => 'foo', 'item' => 'bar' }
+          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+        end.converge('datadog::dd-agent')
+    end
+
+    it 'uses an encrypted databag when api_key is nil' do
+      expect(Chef::EncryptedDataBagItem).to have_received(:load).with('foo', 'bar')
+    end
+
+    it 'drops an agent config file' do
+      expect(@chef_run).to create_template('/etc/dd-agent/datadog.conf').with(
+        :variables => {
+          :api_key => "abc123",
+          :dd_url => @chef_run.node['datadog']['url']
+        }
+      )
+    end
+  end
 end

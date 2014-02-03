@@ -52,8 +52,11 @@ suites:
 #   # There is a sanity.bats test to simply verify that /tmp exists.
 
 - name: dd-agent
+  data_bags_path: "test/integration/dd-agent/data_bags"
+  encrypted_data_bag_secret_key_path: "test/integration/dd-agent/encrypted_data_bag_secret"
   run_list: ["recipe[datadog::dd-handler]", "recipe[datadog::dd-agent]"]
   attributes:
     datadog:
-      api_key: somethingnotnil
-      application_key: alsonotnil
+      databag:
+        name: datadog
+        item: api_keys
