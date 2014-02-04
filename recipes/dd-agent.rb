@@ -42,10 +42,12 @@ end
 if node['datadog']['install_base']
   package "datadog-agent-base" do
     version node['datadog']['agent_version']
+    options "--enablerepo=datadog"
   end
 else
   package "datadog-agent" do
     version node['datadog']['agent_version']
+    options "--enablerepo=datadog"
   end
 end
 
