@@ -10,6 +10,10 @@ use_mount: <%= node['datadog']['use_mount'] ? "yes" : "no"  %>
 listen_port: <%= node['datadog']['agent_port'] %>
 tags: <%= node['datadog']['tags'] %>
 
+<% if node['datadog']['non_local_traffic'] == true %>
+non_local_traffic: true
+<% end -%>
+
 <% if !node['datadog']['dogstreams'].empty? -%>
 dogstreams: <%= node['datadog']['dogstreams'].join(', ') %>
 <% end -%>

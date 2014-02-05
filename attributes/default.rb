@@ -56,6 +56,10 @@ default['datadog']['chef_handler_version'] = nil
 # to the /tmp/ directory.
 default['datadog']['debug'] = false
 
+# Default to false to non_local_traffic
+# See: https://github.com/DataDog/dd-agent/wiki/Network-Traffic-and-Proxy-Configuration
+default['datadog']['non_local_traffic'] = false
+
 # How often you want the agent to collect data, in seconds. Any value between
 # 15 and 60 is a reasonable interval.
 default['datadog']['check_freq'] = 15
