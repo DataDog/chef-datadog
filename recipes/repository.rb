@@ -37,6 +37,7 @@ when "rhel"
     name "datadog"
     description "datadog"
     url node['datadog']['yumrepo']
+    gpgcheck false
     action :add
   end
 end
