@@ -18,7 +18,7 @@ version          "1.1.1"
 end
 
 depends          "chef_handler", "~> 1.1.0"
-depends          "yum"
+depends          "python", "~> 1.4.2"
 
 recipe "datadog::default", "Default"
 recipe "datadog::dd-agent", "Installs the Datadog Agent"
