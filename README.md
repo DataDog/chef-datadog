@@ -13,7 +13,7 @@ Chef recipes to deploy Datadog's components and configuration automatically.
 Requirements
 ============
 - python >= 2.6
-- chef >= 10.12
+- chef >= 10.14
 
 Platforms
 ---------
