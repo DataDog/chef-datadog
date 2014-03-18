@@ -10,7 +10,7 @@ shared_examples_for 'datadog-agent' do
   end
 
   it 'enables the datadog-agent service' do
-    expect(@chef_run).to set_service_to_start_on_boot 'datadog-agent'
+    expect(@chef_run).to enable_service 'datadog-agent'
   end
 
   it 'ensures the dd-agent directory exists' do
@@ -18,7 +18,7 @@ shared_examples_for 'datadog-agent' do
   end
 
   it 'drops an agent config file' do
-    expect(@chef_run).to create_file '/etc/dd-agent/datadog.conf'
+    expect(@chef_run).to create_template '/etc/dd-agent/datadog.conf'
   end
 end
 
@@ -32,7 +32,7 @@ shared_examples_for 'datadog-agent-base' do
   end
 
   it 'enables the datadog-agent service' do
-    expect(@chef_run).to set_service_to_start_on_boot 'datadog-agent'
+    expect(@chef_run).to enable_service 'datadog-agent'
   end
 
   it 'ensures the dd-agent directory exists' do
@@ -40,52 +40,53 @@ shared_examples_for 'datadog-agent-base' do
   end
 
   it 'drops an agent config file' do
-    expect(@chef_run).to create_file '/etc/dd-agent/datadog.conf'
+    expect(@chef_run).to create_template '/etc/dd-agent/datadog.conf'
   end
 end
 
 
-
 describe 'datadog::dd-agent' do
-
   # This recipe needs to have an api_key, otherwise `raise` is called.
   # It also depends on the version of Python present on the platform:
   #   2.6 and up => datadog-agent is installed
   #   below 2.6 => datadog-agent-base is installed
   context 'when using a debian-family distro' do
-
     before(:all) do
-      @chef_run = ChefSpec::ChefRunner.new(
-        :platform => 'ubuntu',
-        :version => '12.04'
+      @chef_run = ChefSpec::Runner.new(
+        platform: 'ubuntu',
+        version: '12.04',
       ) do |node|
           node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
           node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
-        end.converge('datadog::dd-agent')
+        end
+      # prevent apt-cache from actually running
+      stub_command('apt-cache search datadog-agent | grep datadog-agent').and_return(true)
+      @chef_run.converge 'datadog::dd-agent'
     end
 
     it_behaves_like 'datadog-agent'
   end
 
   context 'when using a debian-family distro and installing base' do
-
     before(:all) do
-      @chef_run = ChefSpec::ChefRunner.new(
+      @chef_run = ChefSpec::Runner.new(
         :platform => 'ubuntu',
         :version => '12.04'
       ) do |node|
           node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
           node.set['languages'] = { 'python' => { 'version' => '2.4' } }
-        end.converge('datadog::dd-agent')
+        end
+      # prevent apt-cache from actually running
+      stub_command('apt-cache search datadog-agent | grep datadog-agent').and_return(true)
+      @chef_run.converge 'datadog::dd-agent'
     end
 
     it_behaves_like 'datadog-agent-base'
   end
 
   context 'when using a redhat-family distro above 6.x' do
-
     before(:all) do
-      @chef_run = ChefSpec::ChefRunner.new(
+      @chef_run = ChefSpec::Runner.new(
         :platform => 'centos',
         :version => '6.3'
       ) do |node|
@@ -98,15 +99,12 @@ describe 'datadog::dd-agent' do
   end
 
   context 'when using CentOS 5.8 and installing base' do
-
     before(:all) do
-      @chef_run = ChefSpec::ChefRunner.new(
+      @chef_run = ChefSpec::Runner.new(
         :platform => 'centos',
         :version => '5.8'
       ) do |node|
           node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
-          # fauxhai currently does not have languages other than Ruby, so we
-          # add it here. See https://github.com/customink/fauxhai/issues/39
           node.set['languages'] = { 'python' => { 'version' => '2.4.3' } }
         end.converge('datadog::dd-agent')
     end
