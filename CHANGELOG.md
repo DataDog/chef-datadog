@@ -3,6 +3,7 @@ Changes
 
 # 1.2.0 / Unreleased
 
+* [FEATURE] Allow for non-conf.d integrations to be set via attributes, [#66][] [@babbottscott][]
 * [FEATURE] added hdfs recipe and template, [#77][] [@phlipper][]
 * [FEATURE] added zookeeper recipe and template, [#74][] [@phlipper][]
 * [BUGFIX] Set gpgcheck to false for `yum` repo if it exists, [#89][] [@alexism][], [#101][] [@nkts][]
@@ -137,6 +138,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#61]: https://github.com/DataDog/chef-datadog/issues/61
 [#63]: https://github.com/DataDog/chef-datadog/issues/63
 [#65]: https://github.com/DataDog/chef-datadog/issues/65
+[#66]: https://github.com/DataDog/chef-datadog/issues/66
 [#67]: https://github.com/DataDog/chef-datadog/issues/67
 [#74]: https://github.com/DataDog/chef-datadog/issues/74
 [#77]: https://github.com/DataDog/chef-datadog/issues/77
@@ -145,6 +147,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@JoeDeVries]: https://github.com/JoeDeVries
 [@alexism]: https://github.com/alexism
 [@alq]: https://github.com/alq
+[@babbottscott]: https://github.com/babbottscott
 [@drewrothstein]: https://github.com/drewrothstein
 [@elijahandres]: https://github.com/elijahandres
 [@elijahandrews]: https://github.com/elijahandrews
