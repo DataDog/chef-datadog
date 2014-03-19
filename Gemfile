@@ -18,6 +18,6 @@ group :test do
 end
 
 group :vagrant do
-  gem "test-kitchen",  "1.0.0.beta.2"
+  gem 'test-kitchen', '~> 1.2.0'
   gem 'kitchen-vagrant'
 end
