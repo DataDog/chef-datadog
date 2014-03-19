@@ -7,6 +7,7 @@ Changes
 * [FEATURE] Allow for non-conf.d integrations to be set via attributes, [#66][] [@babbottscott][]
 * [FEATURE] added hdfs recipe and template, [#77][] [@phlipper][]
 * [FEATURE] added zookeeper recipe and template, [#74][] [@phlipper][]
+* [BUGFIX] Handle unrecognized Python version strings in a better fashion, [#79][] [#80][] [#84][], [@jtimberman][], [@schisamo][], [@miketheman][]
 * [BUGFIX] Set gpgcheck to false for `yum` repo if it exists, [#89][] [@alexism][], [#101][] [@nkts][]
 
 # 1.1.1 / 2013-10-17
@@ -144,6 +145,9 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#74]: https://github.com/DataDog/chef-datadog/issues/74
 [#76]: https://github.com/DataDog/chef-datadog/issues/76
 [#77]: https://github.com/DataDog/chef-datadog/issues/77
+[#79]: https://github.com/DataDog/chef-datadog/issues/79
+[#80]: https://github.com/DataDog/chef-datadog/issues/80
+[#84]: https://github.com/DataDog/chef-datadog/issues/84
 [#89]: https://github.com/DataDog/chef-datadog/issues/89
 [#101]: https://github.com/DataDog/chef-datadog/issues/101
 [@JoeDeVries]: https://github.com/JoeDeVries
@@ -154,9 +158,11 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@elijahandres]: https://github.com/elijahandres
 [@elijahandrews]: https://github.com/elijahandrews
 [@gregf]: https://github.com/gregf
+[@jtimberman]: https://github.com/jtimberman
 [@mfischer-zd]: https://github.com/mfischer-zd
 [@miketheman]: https://github.com/miketheman
 [@nkts]: https://github.com/nkts
 [@phlipper]: https://github.com/phlipper
 [@remh]: https://github.com/remh
 [@ryandjurovich]: https://github.com/ryandjurovich
+[@schisamo]: https://github.com/schisamo
