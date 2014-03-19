@@ -3,6 +3,7 @@ Changes
 
 # 1.2.0 / Unreleased
 
+* [FEATURE] Allow override of Agent config for hostname via attribute, [#76][] [@ryandjurovich][]
 * [FEATURE] Allow for non-conf.d integrations to be set via attributes, [#66][] [@babbottscott][]
 * [FEATURE] added hdfs recipe and template, [#77][] [@phlipper][]
 * [FEATURE] added zookeeper recipe and template, [#74][] [@phlipper][]
@@ -141,6 +142,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#66]: https://github.com/DataDog/chef-datadog/issues/66
 [#67]: https://github.com/DataDog/chef-datadog/issues/67
 [#74]: https://github.com/DataDog/chef-datadog/issues/74
+[#76]: https://github.com/DataDog/chef-datadog/issues/76
 [#77]: https://github.com/DataDog/chef-datadog/issues/77
 [#89]: https://github.com/DataDog/chef-datadog/issues/89
 [#101]: https://github.com/DataDog/chef-datadog/issues/101
@@ -157,3 +159,4 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@nkts]: https://github.com/nkts
 [@phlipper]: https://github.com/phlipper
 [@remh]: https://github.com/remh
+[@ryandjurovich]: https://github.com/ryandjurovich
