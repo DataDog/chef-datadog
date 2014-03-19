@@ -60,6 +60,10 @@ default['datadog']['debug'] = false
 # 15 and 60 is a reasonable interval.
 default['datadog']['check_freq'] = 15
 
+# Specify agent hostname
+# More information available here: http://docs.datadoghq.com/hostnames/#agent
+default['datadog']['hostname'] = node.name
+
 # If running on ec2, if true, use the instance-id as the host identifier
 # rather than the hostname for the agent or nodename for chef-handler.
 default['datadog']['use_ec2_instance_id'] = false
