@@ -3,12 +3,18 @@ Changes
 
 # 1.2.0 / Unreleased
 
+* [FEATURE] Allow jmx template to accept arbitrary `key, value` statements, [#93][] [@clofresh][]
+* [FEATURE] Add name param to varnish recipe, [#86][] [@clofresh][]
+* [FEATURE] Allow attribute-driven settings for web proxy, [#82][]  [@antonio-osorio][]
 * [FEATURE] Allow override of Agent config for hostname via attribute, [#76][] [@ryandjurovich][]
 * [FEATURE] Allow for non-conf.d integrations to be set via attributes, [#66][] [@babbottscott][]
 * [FEATURE] added hdfs recipe and template, [#77][] [@phlipper][]
 * [FEATURE] added zookeeper recipe and template, [#74][] [@phlipper][]
+* [BUGFIX] Properly indent jmx template, [#88][] [@flah00][]
 * [BUGFIX] Handle unrecognized Python version strings in a better fashion, [#79][] [#80][] [#84][], [@jtimberman][], [@schisamo][], [@miketheman][]
 * [BUGFIX] Set gpgcheck to false for `yum` repo if it exists, [#89][] [@alexism][], [#101][] [@nkts][]
+* [MISC] Inline doc for postgres recipe, [#83][] [@timusg][]
+
 
 # 1.1.1 / 2013-10-17
 
@@ -147,16 +153,24 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#77]: https://github.com/DataDog/chef-datadog/issues/77
 [#79]: https://github.com/DataDog/chef-datadog/issues/79
 [#80]: https://github.com/DataDog/chef-datadog/issues/80
+[#82]: https://github.com/DataDog/chef-datadog/issues/82
+[#83]: https://github.com/DataDog/chef-datadog/issues/83
 [#84]: https://github.com/DataDog/chef-datadog/issues/84
+[#86]: https://github.com/DataDog/chef-datadog/issues/86
+[#88]: https://github.com/DataDog/chef-datadog/issues/88
 [#89]: https://github.com/DataDog/chef-datadog/issues/89
+[#93]: https://github.com/DataDog/chef-datadog/issues/93
 [#101]: https://github.com/DataDog/chef-datadog/issues/101
 [@JoeDeVries]: https://github.com/JoeDeVries
 [@alexism]: https://github.com/alexism
 [@alq]: https://github.com/alq
+[@antonio-osorio]: https://github.com/antonio-osorio
 [@babbottscott]: https://github.com/babbottscott
+[@clofresh]: https://github.com/clofresh
 [@drewrothstein]: https://github.com/drewrothstein
 [@elijahandres]: https://github.com/elijahandres
 [@elijahandrews]: https://github.com/elijahandrews
+[@flah00]: https://github.com/flah00
 [@gregf]: https://github.com/gregf
 [@jtimberman]: https://github.com/jtimberman
 [@mfischer-zd]: https://github.com/mfischer-zd
@@ -166,3 +180,4 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@remh]: https://github.com/remh
 [@ryandjurovich]: https://github.com/ryandjurovich
 [@schisamo]: https://github.com/schisamo
+[@timusg]: https://github.com/timusg
