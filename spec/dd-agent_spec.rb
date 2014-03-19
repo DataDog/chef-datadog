@@ -68,15 +68,17 @@ describe 'datadog::dd-agent' do
   end
 
   context 'when using a debian-family w/ a non-numeric version string' do
-
     before(:all) do
-      @chef_run = ChefSpec::ChefRunner.new(
+      @chef_run = ChefSpec::Runner.new(
         :platform => 'debian',
         :version => '7.2'
       ) do |node|
           node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
           node.set['languages'] = { 'python' => { 'version' => '2.7.5+' } }
-        end.converge('datadog::dd-agent')
+        end
+      # prevent apt-cache from actually running
+      stub_command('apt-cache search datadog-agent | grep datadog-agent').and_return(true)
+      @chef_run.converge 'datadog::dd-agent'
     end
 
     it_behaves_like 'datadog-agent'
