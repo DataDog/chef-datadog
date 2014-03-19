@@ -71,3 +71,22 @@ suites:
     datadog:
       api_key: somethingnotnil
       application_key: alsonotnil
+
+- name: dd-agent-jmx
+  run_list:
+    - recipe[datadog::dd-handler]
+    - recipe[datadog::dd-agent]
+    - recipe[datadog::jmx]
+  attributes:
+    datadog:
+      api_key: somethingnotnil
+      application_key: alsonotnil
+      jmx:
+        instances:
+          - server: localhost
+            port: 9999
+            extra_key: extra_val
+            include:
+              - domain: domain0
+              - domain: domain1
+            exclude: []

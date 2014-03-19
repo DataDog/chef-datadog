@@ -1,10 +1,10 @@
+<% excluded_keys = ["host", "server", "conf", "include", "exclude"] -%>
 instances:
 <% @instances.each do |i| -%>
   - host: <%= i["server"] %>
-    port: <%= i["port"] %>
-    name: <%= i["name"] %>
-    user: <%= i["username"] %>
-    password: <%= i["password"] %>
+    <% (i.keys - excluded_keys).each do |key| -%>
+    <%= key %>: <%= i[key] %>
+    <% end -%>
   <% if i.key?("include") || i.key?("exclude") -%>
     conf:
       <% i["include"].each do |c| -%>
