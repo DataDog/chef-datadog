@@ -5,7 +5,7 @@ Changes
 
 * [FEATURE] added hdfs recipe and template, [#77][] [@phlipper][]
 * [FEATURE] added zookeeper recipe and template, [#74][] [@phlipper][]
-* [BUGFIX] Set gpgcheck to false for `yum` repo, [#101][] [@nkts][]
+* [BUGFIX] Set gpgcheck to false for `yum` repo if it exists, [#89][] [@alexism][], [#101][] [@nkts][]
 
 # 1.1.1 / 2013-10-17
 
@@ -140,8 +140,10 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#67]: https://github.com/DataDog/chef-datadog/issues/67
 [#74]: https://github.com/DataDog/chef-datadog/issues/74
 [#77]: https://github.com/DataDog/chef-datadog/issues/77
+[#89]: https://github.com/DataDog/chef-datadog/issues/89
 [#101]: https://github.com/DataDog/chef-datadog/issues/101
 [@JoeDeVries]: https://github.com/JoeDeVries
+[@alexism]: https://github.com/alexism
 [@alq]: https://github.com/alq
 [@drewrothstein]: https://github.com/drewrothstein
 [@elijahandres]: https://github.com/elijahandres
