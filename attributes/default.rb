@@ -78,6 +78,9 @@ default['datadog']['use_mount'] = false
 # Change port the agent is listening to
 default['datadog']['agent_port'] = 17123
 
+# Start agent or not
+default['datadog']['agent_start'] = true
+
 # Start a graphite listener on this port
 # https://github.com/DataDog/dd-agent/wiki/Feeding-Datadog-with-Graphite
 default['datadog']['graphite'] = false

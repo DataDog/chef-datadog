@@ -49,11 +49,16 @@ else
   end
 end
 
-# Common configuration
-service "datadog-agent" do
-  action :enable
-  supports :restart => true
+
+if node['datadog']['agent_start'] == true
+  agent_action = :start
+else
+  agent_action = :stop
 end
+
+log "using agent_action #{node['datadog']['agent_start']} #{agent_action}"
+
+
 
 # Make sure the config directory exists
 directory "/etc/dd-agent" do
@@ -77,5 +82,11 @@ template "/etc/dd-agent/datadog.conf" do
     :api_key => node['datadog']['api_key'],
     :dd_url => node['datadog']['url']
   )
-  notifies :restart, "service[datadog-agent]", :delayed
+end
+
+# Common configuration
+service "datadog-agent" do
+  action [ :enable , agent_action ]
+  supports :restart => true , :status => true, :start => true, :stop => true
+  subscribes :restart, "template[/etc/dd-agent/datadog.conf]", :delayed unless node['datadog']['agent_start'] == false
 end
