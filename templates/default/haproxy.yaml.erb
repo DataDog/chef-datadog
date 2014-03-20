@@ -5,6 +5,9 @@ instances:
     username: <%= i['username'] %>
     password: <%= i['password'] %>
     <% end -%>
+    <% if i.key?('status_check') -%>
+    status_check: True
+    <% end -%>
   <% end -%>
 
 # Nothing to configure below
