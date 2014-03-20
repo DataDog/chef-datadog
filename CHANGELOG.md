@@ -3,6 +3,7 @@ Changes
 
 # 1.2.0 / Unreleased
 
+* [FEATURE] Allow attribute control over whether to allow the local Agent to handle non-local traffic, [#100][] [@coosh][]
 * [FEATURE] Allow attribute control over whether the Chef Handler is activated, [#95][] [@jedi4ever][], [@miketheman][]
 * [FEATURE] Allow attribute control over whether Agent should be running, [#94][] [@jedi4ever][], [@miketheman][]
 * [FEATURE] Reintroduce attribute config for dogstatsd daemon, [#90][] [@jedi4ever][], [@miketheman][]
@@ -33,7 +34,7 @@ Changes
 * [FEATURE] Use Python version from Ohai to determine packages to install, [#65][] [@elijahandrews][]
 * [BUGFIX] redisdb default port in template should be 6379, [#59][] [@miketheman][]
 * [BUGFIX] templates creating empty `tags` in config when unspecified for multiple integrations [#61][] [@alq][]
-* [MISC] updated tests [@elijahandres][], [@miketheman][]
+* [MISC] updated tests [@elijahandrews][], [@miketheman][]
 * [MISC] correct the riak integration example, [@miketheman][]
 * [MISC] updated CHANGELOG.md style, [@miketheman][]
 
@@ -166,6 +167,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#93]: https://github.com/DataDog/chef-datadog/issues/93
 [#94]: https://github.com/DataDog/chef-datadog/issues/94
 [#95]: https://github.com/DataDog/chef-datadog/issues/95
+[#100]: https://github.com/DataDog/chef-datadog/issues/100
 [#101]: https://github.com/DataDog/chef-datadog/issues/101
 [@JoeDeVries]: https://github.com/JoeDeVries
 [@alexism]: https://github.com/alexism
@@ -173,8 +175,8 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@antonio-osorio]: https://github.com/antonio-osorio
 [@babbottscott]: https://github.com/babbottscott
 [@clofresh]: https://github.com/clofresh
+[@coosh]: https://github.com/coosh
 [@drewrothstein]: https://github.com/drewrothstein
-[@elijahandres]: https://github.com/elijahandres
 [@elijahandrews]: https://github.com/elijahandrews
 [@flah00]: https://github.com/flah00
 [@gregf]: https://github.com/gregf
