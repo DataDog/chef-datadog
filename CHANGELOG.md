@@ -3,6 +3,7 @@ Changes
 
 # 1.2.0 / Unreleased
 
+* [FEATURE] Allow attribute control over whether the Chef Handler is activated, [#95][] [@jedi4ever][], [@miketheman][]
 * [FEATURE] Allow attribute control over whether Agent should be running, [#94][] [@jedi4ever][], [@miketheman][]
 * [FEATURE] Reintroduce attribute config for dogstatsd daemon, [#90][] [@jedi4ever][], [@miketheman][]
 * [FEATURE] Allow jmx template to accept arbitrary `key, value` statements, [#93][] [@clofresh][]
@@ -164,6 +165,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#90]: https://github.com/DataDog/chef-datadog/issues/90
 [#93]: https://github.com/DataDog/chef-datadog/issues/93
 [#94]: https://github.com/DataDog/chef-datadog/issues/94
+[#95]: https://github.com/DataDog/chef-datadog/issues/95
 [#101]: https://github.com/DataDog/chef-datadog/issues/101
 [@JoeDeVries]: https://github.com/JoeDeVries
 [@alexism]: https://github.com/alexism
