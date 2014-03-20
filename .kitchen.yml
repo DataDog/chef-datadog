@@ -92,7 +92,6 @@ suites:
 - name: dd-agent-jmx
   run_list:
     - recipe[datadog::dd-handler]
-    - recipe[datadog::dd-agent]
     - recipe[datadog::jmx]
   attributes:
     datadog:
@@ -111,7 +110,6 @@ suites:
 - name: dd-agent-mongo
   run_list:
     - recipe[datadog::dd-handler]
-    - recipe[datadog::dd-agent]
     - recipe[datadog::mongo]
   attributes:
     datadog:
