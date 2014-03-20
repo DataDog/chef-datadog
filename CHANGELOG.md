@@ -3,6 +3,7 @@ Changes
 
 # 1.2.0 / Unreleased
 
+* [FEATURE] Add more parameters to the haproxy templte to collect status metrics, [#103][] [@evan2645][] & [@miketheman][]
 * [FEATURE] `datadog::mongo` recipe now installs `pymongo` and prerequisites, [#81][] [@dwradcliffe][]
 * [FEATURE] Allow attribute control over whether to allow the local Agent to handle non-local traffic, [#100][] [@coosh][]
 * [FEATURE] Allow attribute control over whether the Chef Handler is activated, [#95][] [@jedi4ever][], [@miketheman][]
@@ -171,6 +172,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#95]: https://github.com/DataDog/chef-datadog/issues/95
 [#100]: https://github.com/DataDog/chef-datadog/issues/100
 [#101]: https://github.com/DataDog/chef-datadog/issues/101
+[#103]: https://github.com/DataDog/chef-datadog/issues/103
 [@JoeDeVries]: https://github.com/JoeDeVries
 [@alexism]: https://github.com/alexism
 [@alq]: https://github.com/alq
@@ -181,6 +183,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@drewrothstein]: https://github.com/drewrothstein
 [@dwradcliffe]: https://github.com/dwradcliffe
 [@elijahandrews]: https://github.com/elijahandrews
+[@evan2645]: https://github.com/evan2645
 [@flah00]: https://github.com/flah00
 [@gregf]: https://github.com/gregf
 [@jedi4ever]: https://github.com/jedi4ever
