@@ -72,6 +72,23 @@ suites:
       api_key: somethingnotnil
       application_key: alsonotnil
 
+- name: dd-agent-haproxy
+  run_list:
+    - recipe[datadog::dd-handler]
+    - recipe[datadog::haproxy]
+  attributes:
+    datadog:
+      api_key: somethingnotnil
+      application_key: alsonotnil
+      haproxy:
+        instances:
+          - username: admin
+            password: sekret
+            url: http://localhost:22002/status
+            status_check: false
+            collect_aggregates_only: true
+            collect_status_metrics: true
+
 - name: dd-agent-jmx
   run_list:
     - recipe[datadog::dd-handler]

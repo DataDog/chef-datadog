@@ -8,7 +8,9 @@ include_recipe "datadog::dd-agent"
 #                                       :url => "http://localhost/stats_url",
 #                                       :username => "username",
 #                                       :password => "secret",
-#                                       :status_check => true
+#                                       :status_check => false,
+#                                       :collect_aggregates_only => true,
+#                                       :collect_status_metrics => true
 #                                     }
 #                                    ]
 

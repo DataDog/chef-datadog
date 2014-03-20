@@ -1,3 +1,4 @@
+<% excluded_keys = ["url", "username", "password"] -%>
 instances:
   <% @instances.each do |i| -%>
   - url:      <%= i['url'] %>
@@ -5,8 +6,8 @@ instances:
     username: <%= i['username'] %>
     password: <%= i['password'] %>
     <% end -%>
-    <% if i.key?('status_check') -%>
-    status_check: True
+    <% (i.keys - excluded_keys).each do |key| -%>
+    <%= key %>: <%= i[key] %>
     <% end -%>
   <% end -%>
 
