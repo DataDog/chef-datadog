@@ -98,6 +98,11 @@ default['datadog']['web_proxy']['port'] = nil
 default['datadog']['web_proxy']['user'] = nil
 default['datadog']['web_proxy']['password'] = nil
 
+# dogstatsd
+default['datadog']['dogstatsd'] = true
+default['datadog']['dogstatsd_port'] = 8125
+default['datadog']['dogstatsd_interval'] = 10
+
 # For service-specific configuration, use the integration recipes included
 # in this cookbook, and apply them to the appropirate node's run list.
 # Read more at http://docs.datadoghq.com/
