@@ -3,6 +3,7 @@ Changes
 
 # 1.2.0 / Unreleased
 
+* [FEATURE] `datadog::mongo` recipe now installs `pymongo` and prerequisites, [#81][] [@dwradcliffe][]
 * [FEATURE] Allow attribute control over whether to allow the local Agent to handle non-local traffic, [#100][] [@coosh][]
 * [FEATURE] Allow attribute control over whether the Chef Handler is activated, [#95][] [@jedi4ever][], [@miketheman][]
 * [FEATURE] Allow attribute control over whether Agent should be running, [#94][] [@jedi4ever][], [@miketheman][]
@@ -157,6 +158,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#77]: https://github.com/DataDog/chef-datadog/issues/77
 [#79]: https://github.com/DataDog/chef-datadog/issues/79
 [#80]: https://github.com/DataDog/chef-datadog/issues/80
+[#81]: https://github.com/DataDog/chef-datadog/issues/81
 [#82]: https://github.com/DataDog/chef-datadog/issues/82
 [#83]: https://github.com/DataDog/chef-datadog/issues/83
 [#84]: https://github.com/DataDog/chef-datadog/issues/84
@@ -177,6 +179,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@clofresh]: https://github.com/clofresh
 [@coosh]: https://github.com/coosh
 [@drewrothstein]: https://github.com/drewrothstein
+[@dwradcliffe]: https://github.com/dwradcliffe
 [@elijahandrews]: https://github.com/elijahandrews
 [@flah00]: https://github.com/flah00
 [@gregf]: https://github.com/gregf
