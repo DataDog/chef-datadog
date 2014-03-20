@@ -102,6 +102,7 @@ default['datadog']['web_proxy']['password'] = nil
 default['datadog']['dogstatsd'] = true
 default['datadog']['dogstatsd_port'] = 8125
 default['datadog']['dogstatsd_interval'] = 10
+default['datadog']['dogstatsd_normalize'] = 'yes'
 
 # For service-specific configuration, use the integration recipes included
 # in this cookbook, and apply them to the appropirate node's run list.

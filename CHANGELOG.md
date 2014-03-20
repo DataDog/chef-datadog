@@ -3,6 +3,7 @@ Changes
 
 # 1.2.0 / Unreleased
 
+* [FEATURE] Reintroduce attribute config for dogstatsd daemon, #90 @jedi4ever, @miketheman
 * [FEATURE] Allow jmx template to accept arbitrary `key, value` statements, [#93][] [@clofresh][]
 * [FEATURE] Add name param to varnish recipe, [#86][] [@clofresh][]
 * [FEATURE] Allow attribute-driven settings for web proxy, [#82][]  [@antonio-osorio][]
