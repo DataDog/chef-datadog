@@ -3,7 +3,8 @@ Changes
 
 # 1.2.0 / Unreleased
 
-* [FEATURE] Reintroduce attribute config for dogstatsd daemon, #90 @jedi4ever, @miketheman
+* [FEATURE] Allow attribute control over whether Agent should be running, [#94][] [@jedi4ever][], [@miketheman][]
+* [FEATURE] Reintroduce attribute config for dogstatsd daemon, [#90][] [@jedi4ever][], [@miketheman][]
 * [FEATURE] Allow jmx template to accept arbitrary `key, value` statements, [#93][] [@clofresh][]
 * [FEATURE] Add name param to varnish recipe, [#86][] [@clofresh][]
 * [FEATURE] Allow attribute-driven settings for web proxy, [#82][]  [@antonio-osorio][]
@@ -160,7 +161,9 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#86]: https://github.com/DataDog/chef-datadog/issues/86
 [#88]: https://github.com/DataDog/chef-datadog/issues/88
 [#89]: https://github.com/DataDog/chef-datadog/issues/89
+[#90]: https://github.com/DataDog/chef-datadog/issues/90
 [#93]: https://github.com/DataDog/chef-datadog/issues/93
+[#94]: https://github.com/DataDog/chef-datadog/issues/94
 [#101]: https://github.com/DataDog/chef-datadog/issues/101
 [@JoeDeVries]: https://github.com/JoeDeVries
 [@alexism]: https://github.com/alexism
@@ -173,6 +176,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@elijahandrews]: https://github.com/elijahandrews
 [@flah00]: https://github.com/flah00
 [@gregf]: https://github.com/gregf
+[@jedi4ever]: https://github.com/jedi4ever
 [@jtimberman]: https://github.com/jtimberman
 [@mfischer-zd]: https://github.com/mfischer-zd
 [@miketheman]: https://github.com/miketheman
