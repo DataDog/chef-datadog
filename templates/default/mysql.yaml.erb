@@ -3,6 +3,9 @@ instances:
   - server: <%= i['server'] %>
     user: <%= i['user'] %>
     pass: <%= i['pass'] %>
+    <% if i.key?('sock') -%>
+    sock: <%= i['sock'] %>
+    <% end -%>
   <% if i.key?('tags') -%>
     tags:
     <% i['tags'].each do |t| -%>
