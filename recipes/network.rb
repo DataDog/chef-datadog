@@ -9,7 +9,7 @@ include_recipe "datadog::dd-agent"
 #   },
 # ]
 
-Chef::Log.warn 'Datadog network check only supports a single `instance`, please check attribute assignments' if node['datadog']['network']['instances'].count > 1
+Chef::Log.warn 'Datadog network check only supports one `instance`, please check attribute assignments' if node['datadog']['network']['instances'].count > 1
 
 datadog_monitor "network" do
   instances node["datadog"]["network"]["instances"]

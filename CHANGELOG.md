@@ -12,6 +12,7 @@ Changes
 * [FEATURE] Allow attribute control over whether Agent should be running, [#94][] [@jedi4ever][], [@miketheman][]
 * [FEATURE] Reintroduce attribute config for dogstatsd daemon, [#90][] [@jedi4ever][], [@miketheman][]
 * [FEATURE] Allow jmx template to accept arbitrary `key, value` statements, [#93][] [@clofresh][]
+* [FEATURE] Allow cassandra/zookeeper templates to accept arbitrary `key, value` statements, @miketheman
 * [FEATURE] Add name param to varnish recipe, [#86][] [@clofresh][]
 * [FEATURE] Allow attribute-driven settings for web proxy, [#82][]  [@antonio-osorio][]
 * [FEATURE] Allow override of Agent config for hostname via attribute, [#76][] [@ryandjurovich][]

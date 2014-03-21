@@ -1,3 +1,4 @@
+<% excluded_keys = ["host", "port", "user", "password", "name"] -%>
 instances:
     <% @instances.each do |i| -%>
     - host: <%= i['server'] %>
@@ -10,6 +11,9 @@ instances:
       <% end -%>
       <% if i['instance'] -%>
       name: <%= i['instance'] %>
+      <% end -%>
+      <% (i.keys - excluded_keys).each do |key| -%>
+      <%= key %>: <%= i[key] %>
       <% end -%>
     <% end -%>
 
@@ -49,7 +53,7 @@ init_config:
             - PendingTasks
         exclude:
           keyspace: system
-          attribute: 
+          attribute:
             - MinimumCompactionThreshold
             - MaximumCompactionThreshold
             - RowCacheKeysToSave
