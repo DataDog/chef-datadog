@@ -1,16 +1,13 @@
 #!/usr/bin/env rake
 
-# http://acrmp.github.com/foodcritic/
 require 'foodcritic'
-# https://github.com/turboladen/tailor
+require 'rspec/core/rake_task'
 require 'tailor/rake_task'
 
 task :default => [
   :tailor,
   :foodcritic,
-  :berks,
-  :knife,
-  :chefspec
+  :spec
 ]
 
 Tailor::RakeTask.new do |task|
@@ -37,23 +34,9 @@ FoodCritic::Rake::LintTask.new do |t|
   t.options = { :chef_version => '0.10.8' }
 end
 
-# http://berkshelf.com/
-desc "Check out cookbooks from Berkshelf to local path"
-task :berks do
-  sh %{rm -fr ./cookbooks}
-  sh %{bundle exec berks install --except integration --path ./cookbooks}
-end
-
-desc "Test Datadog cookbook via knife"
-task :knife do
-  sh %{bundle exec knife cookbook test datadog -o cookbooks}
-end
-
-# https://github.com/acrmp/chefspec
-desc "Run ChefSpec Unit Tests"
-task :chefspec do
-  sh %{bundle exec rspec cookbooks/datadog/spec/}
-end
+# Rspec and ChefSpec
+desc "Run ChefSpec examples"
+RSpec::Core::RakeTask.new(:spec)
 
 begin
   require 'kitchen/rake_tasks'
