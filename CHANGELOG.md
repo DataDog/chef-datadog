@@ -18,6 +18,7 @@ Changes
 * [FEATURE] Allow for non-conf.d integrations to be set via attributes, [#66][] [@babbottscott][]
 * [FEATURE] added hdfs recipe and template, [#77][] [@phlipper][]
 * [FEATURE] added zookeeper recipe and template, [#74][] [@phlipper][]
+* [BUGFIX] Warn user when more than one `network` instance is defined, [#98][] [@miketheman][]
 * [BUGFIX] Properly indent jmx template, [#88][] [@flah00][]
 * [BUGFIX] Handle unrecognized Python version strings in a better fashion, [#79][] [#80][] [#84][], [@jtimberman][], [@schisamo][], [@miketheman][]
 * [BUGFIX] Set gpgcheck to false for `yum` repo if it exists, [#89][] [@alexism][], [#101][] [@nkts][]
@@ -173,6 +174,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#94]: https://github.com/DataDog/chef-datadog/issues/94
 [#95]: https://github.com/DataDog/chef-datadog/issues/95
 [#97]: https://github.com/DataDog/chef-datadog/issues/97
+[#98]: https://github.com/DataDog/chef-datadog/issues/98
 [#100]: https://github.com/DataDog/chef-datadog/issues/100
 [#101]: https://github.com/DataDog/chef-datadog/issues/101
 [#103]: https://github.com/DataDog/chef-datadog/issues/103
