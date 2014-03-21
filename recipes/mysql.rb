@@ -11,7 +11,7 @@ include_recipe 'datadog::dd-agent'
 #     'server' => "localhost",
 #     'user' => "my_username",
 #     'pass' => "my_password",
-#     'sock" => "/path/to/mysql.sock",
+#     'sock' => "/path/to/mysql.sock",
 #     'tags' => ["prod"],
 #     'options' => [
 #       "replication: 0",
