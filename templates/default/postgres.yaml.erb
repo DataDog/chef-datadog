@@ -13,4 +13,10 @@ instances:
       - <%= t %>
       	<% end -%>
     <% end -%>
+    <% if i.key?("relations") -%>
+    relations:
+        <% i["relations"].each do |r| -%>
+      - <%= r %>
+        <% end -%>
+    <% end -%>
 <% end -%>
