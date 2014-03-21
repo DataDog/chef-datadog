@@ -3,6 +3,7 @@ Changes
 
 # 1.2.0 / Unreleased
 
+* [FEATURE] Add `relations` parameter to Postgres check config, [#97][] [@miketheman][]
 * [FEATURE] Add `sock` parameter to MySQL check configuration, [#105][] [@thisismana][]
 * [FEATURE] Add more parameters to the haproxy templte to collect status metrics, [#103][] [@evan2645][] & [@miketheman][]
 * [FEATURE] `datadog::mongo` recipe now installs `pymongo` and prerequisites, [#81][] [@dwradcliffe][]
@@ -171,6 +172,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#93]: https://github.com/DataDog/chef-datadog/issues/93
 [#94]: https://github.com/DataDog/chef-datadog/issues/94
 [#95]: https://github.com/DataDog/chef-datadog/issues/95
+[#97]: https://github.com/DataDog/chef-datadog/issues/97
 [#100]: https://github.com/DataDog/chef-datadog/issues/100
 [#101]: https://github.com/DataDog/chef-datadog/issues/101
 [#103]: https://github.com/DataDog/chef-datadog/issues/103
