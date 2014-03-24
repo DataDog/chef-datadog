@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 1.2.0 / Unreleased
+# 1.2.0 / 2014-03-24
 
 * [FEATURE] Add `relations` parameter to Postgres check config, [#97][] [@miketheman][]
 * [FEATURE] Add `sock` parameter to MySQL check configuration, [#105][] [@thisismana][]
