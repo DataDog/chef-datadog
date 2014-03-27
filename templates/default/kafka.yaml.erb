@@ -1,11 +1,23 @@
   <% @instances.each do |i| -%>
-  - name: <%= i['name'] %>
-    report_url: <%= i['report_url'] %> # e.g. http://localhost:1978/rpc/report
-    <% if i.key?('tags') -%>
-    tags:
-      <% @tags.each do |k, v| -%>
-      <%= k %>: <%= v %>
-      <% end -%>
+  - host: <%= i['host'] %>
+    port: <%= i['port'] %>
+    <% if i['name'] -%>
+    name: <%= i['name'] %>
+    <% end -%>
+    <% if i['user'] -%>
+    user: <%= i['user'] %>
+    <% end -%>
+    <% if i['password'] -%>
+    password: <%= i['password'] %>
+    <% end -%>
+    <% if i['java_bin_path'] -%>
+    java_bin_path: <%= i['java_bin_path'] %> #Optional, should be set if the agent cannot find your java executable
+    <% end -%>
+    <% if i['trust_store_path'] -%>
+    trust_store_path: <%= i['trust_store_path'] %> # Optional, should be set if ssl is enabled
+    <% end -%>
+    <% if i['trust_store_password'] -%>
+    trust_store_password: <%= i['trust_store_password'] %>
     <% end -%>
   <% end -%>
 
