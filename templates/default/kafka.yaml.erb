@@ -1,24 +1,25 @@
+instances:
   <% @instances.each do |i| -%>
   - host: <%= i['host'] %>
-  port: <%= i['port'] %>
-  <% if i['name'] -%>
-  name: <%= i['name'] %>
-  <% end -%>
-  <% if i['user'] -%>
-  user: <%= i['user'] %>
-  <% end -%>
-  <% if i['password'] -%>
-  password: <%= i['password'] %>
-  <% end -%>
-  <% if i['java_bin_path'] -%>
-  java_bin_path: <%= i['java_bin_path'] %> #Optional, should be set if the agent cannot find your java executable
-  <% end -%>
-  <% if i['trust_store_path'] -%>
-  trust_store_path: <%= i['trust_store_path'] %> # Optional, should be set if ssl is enabled
-  <% end -%>
-  <% if i['trust_store_password'] -%>
-  trust_store_password: <%= i['trust_store_password'] %>
-  <% end -%>
+    port: <%= i['port'] %>
+    <% if i['name'] -%>
+    name: <%= i['name'] %>
+    <% end -%>
+    <% if i['user'] -%>
+    user: <%= i['user'] %>
+    <% end -%>
+    <% if i['password'] -%>
+    password: <%= i['password'] %>
+    <% end -%>
+    <% if i['java_bin_path'] -%>
+    java_bin_path: <%= i['java_bin_path'] %> #Optional, should be set if the agent cannot find your java executable
+    <% end -%>
+    <% if i['trust_store_path'] -%>
+    trust_store_path: <%= i['trust_store_path'] %> # Optional, should be set if ssl is enabled
+    <% end -%>
+    <% if i['trust_store_password'] -%>
+    trust_store_password: <%= i['trust_store_password'] %>
+    <% end -%>
   <% end -%>
 
 init_config:
@@ -26,10 +27,10 @@ init_config:
 
   # Metrics collected by this check. You should not have to modify this.
   conf:
-  #
-  # Aggregate cluster stats
-  #
-  - include:
+    #
+    # Aggregate cluster stats
+    #
+    - include:
       domain: '"kafka.server"'
       bean: '"kafka.server":type="BrokerTopicMetrics",name="AllTopicsBytesOutPerSec"'
       attribute:

@@ -153,9 +153,6 @@ suites:
             zk_connect_str: localhost:2181
             zk_prefix: /0.8
             consumer_groups:
-              consumer1:
-                topic1: [0, 1, 4, 12]
-                topic2: [1, 15]
-              consumer2:
-                topic1: [0, 1, 4, 12]
+              my_consumer:
+                my_topic: [0, 1, 4, 12]
 
