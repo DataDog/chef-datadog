@@ -119,3 +119,40 @@ suites:
         instances:
           - host: localhost
             port: 27017
+
+- name: dd-agent-kafka
+  run_list:
+    - recipe[datadog::dd-handler]
+    - recipe[datadog::kafka]
+  attributes:
+    datadog:
+      api_key: somethingnotnil
+      application_key: alsonotnil
+      kafka:
+        instances:
+          - host: localhost
+            port: 9999
+            name: my_kafka
+            user: username
+            password: password
+            java_bin_path: /path/to/java
+            trust_store_path: /path/to/trustStore.jks
+            trust_store_password: password
+
+- name: dd-agent-kafka-consumer
+  run_list:
+    - recipe[datadog::dd-handler]
+    - recipe[datadog::kafka_consumer]
+  attributes:
+    datadog:
+      api_key: somethingnotnil
+      application_key: alsonotnil
+      kafka_consumer:
+        instances:
+          - kafka_connect_str: localhost:19092
+            zk_connect_str: localhost:2181
+            zk_prefix: /0.8
+            consumer_groups:
+              my_consumer:
+                my_topic: [0, 1, 4, 12]
+
