@@ -17,6 +17,7 @@ include_recipe "datadog::dd-agent"
 #     'port' => "5432",
 #     'username' => "datadog",
 #     'tags' => ["prod"],
+#     'dbname' => 'my_database',
 #     'relations' => ["apple_table", "orange_table"]
 #   }
 # ]

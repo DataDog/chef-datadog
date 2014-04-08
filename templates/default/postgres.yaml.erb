@@ -13,6 +13,7 @@ instances:
       - <%= t %>
       	<% end -%>
     <% end -%>
+    <%= i['dbname'] if i.key?('dbname') -%>
     <% if i.key?("relations") -%>
     relations:
         <% i["relations"].each do |r| -%>
