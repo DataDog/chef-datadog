@@ -13,7 +13,9 @@ instances:
       - <%= t %>
       	<% end -%>
     <% end -%>
-    <%= i['dbname'] if i.key?('dbname') -%>
+    <%- if i.key?('dbname') %>
+    dbname: <%= i['dbname'] %>
+    <% end -%>
     <% if i.key?("relations") -%>
     relations:
         <% i["relations"].each do |r| -%>
