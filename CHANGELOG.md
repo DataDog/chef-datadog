@@ -1,6 +1,11 @@
 Changes
 =======
 
+# 1.3.0 / Unreleased
+
+* [FEATURE] Add `kafka` monitoring recipe & tests, #113 @qqfr2507
+* [FEATURE] Allow database name to be passed into postgres template, [@miketheman][]
+
 # 1.2.0 / 2014-03-24
 
 * [FEATURE] Add `relations` parameter to Postgres check config, [#97][] [@miketheman][]
