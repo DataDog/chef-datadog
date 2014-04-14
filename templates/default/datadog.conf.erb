@@ -27,6 +27,10 @@ non_local_traffic: true
 dogstreams: <%= node['datadog']['dogstreams'].join(', ') %>
 <% end -%>
 
+<% if !node['datadog']['custom_emitters'].empty? -%>
+custom_emitters: <%= node['datadog']['custom_emitters'].join(', ') %>
+<% end -%>
+
 <% if node['datadog']['graphite'] -%>
 graphite_listen_port: <%= node['datadog']['graphite_port'] %>
 <% end -%>
