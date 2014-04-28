@@ -116,6 +116,8 @@ default['datadog']['dogstatsd'] = true
 default['datadog']['dogstatsd_port'] = 8125
 default['datadog']['dogstatsd_interval'] = 10
 default['datadog']['dogstatsd_normalize'] = 'yes'
+default['datadog']['statsd_forward_host'] = nil
+default['datadog']['statsd_forward_port'] = 8125
 
 # For service-specific configuration, use the integration recipes included
 # in this cookbook, and apply them to the appropirate node's run list.
