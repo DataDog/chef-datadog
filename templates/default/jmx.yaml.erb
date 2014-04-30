@@ -7,39 +7,24 @@ instances:
     <% end -%>
   <% if i.key?("include") || i.key?("exclude") -%>
     conf:
-      <% i["include"].each do |c| -%>
-      - include:
-          <% if c.key?("domain") -%>
-          domain: <%= c["domain"] %>
-          <% end -%>
-          <% if c.key?("bean") -%>
-          bean: <%= c["bean"] %>
-          <% end -%>
-          <% if c.key?("attributes") -%>
-          attribute:
-            <% c["attributes"].each do |a| -%>
-            attribute<%= c["attributes"].index(a) %>:
-              metric_type: <%= a["metric_type"] %>
-              alias: <%= a["alias"] %>
+      <% ["include", "exclude"].each do |conf_type| -%>
+        <% i[conf_type].each do |c| -%>
+        - <%= conf_type %>:
+            <% if c.key?("domain") -%>
+            domain: <%= c["domain"] %>
             <% end -%>
-          <% end -%>
-      <% end -%>
-      <% i["exclude"].each do |c| -%>
-      - exclude:
-          <% if c.key?("domain") -%>
-          domain: <%= c["domain"] %>
-          <% end -%>
-          <% if c.key?("bean") -%>
-          bean: <%= c["bean"] %>
-          <% end -%>
-          <% if c.key?("attributes") -%>
-          attribute:
-            <% c["attributes"].each do |a| -%>
-            attribute<%= c["attributes"].index(a) %>:
-              metric_type: <%= a["metric_type"] %>
-              alias: <%= a["alias"] %>
+            <% if c.key?("bean") -%>
+            bean: <%= c["bean"] %>
             <% end -%>
-          <% end -%>
+            <% if c.key?("attributes") -%>
+            attribute:
+              <% c["attributes"].each do |a| -%>
+              <%= a["name"] %>:
+                metric_type: <%= a["metric_type"] %>
+                alias: <%= a["alias"] %>
+              <% end -%>
+            <% end -%>
+        <% end -%>
       <% end -%>
   <% end -%>
 <% end -%>
