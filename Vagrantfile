@@ -27,6 +27,8 @@ Vagrant.configure("2") do |config|
     chef.add_recipe "datadog::riak"
     chef.add_recipe "datadog::varnish"
     chef.add_recipe "datadog::jmx"
+    chef.add_recipe "datadog::http_check"
+    chef.add_recipe "datadog::tcp_check"
 
     chef.json = {
       :datadog => {
@@ -182,6 +184,34 @@ Vagrant.configure("2") do |config|
                                        ]
                          }
                        ]
+        },
+        :http_check => {
+          :instances => [
+                         {
+                           :name => "test",
+                           :url => "http://localhost/"
+                         },
+                         {
+                           :name => "test with notify",
+                           :url => "http://localhost/with-notify",
+                           :notify => ["user@example.com","pagerduty"]
+                         }
+                        ]
+        },
+        :tcp_check => {
+          :instances => [
+                         {
+                           :name => "test",
+                           :host => "localhost",
+                           :port => 1234
+                         },
+                         {
+                           :name => "test2",
+                           :host => "localhost",
+                           :port => 5678,
+                           :notify => ["user@example.com","pagerduty"]
+                         }
+                        ]
         }
       }
     }
