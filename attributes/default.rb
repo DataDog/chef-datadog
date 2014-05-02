@@ -39,7 +39,7 @@ default['datadog']['autorestart'] = false
 # Repository configuration
 default['datadog']['installrepo'] = true
 default['datadog']['aptrepo'] = "http://apt.datadoghq.com"
-default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm"
+default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm/"
 
 # Agent Version
 default['datadog']['agent_version'] = nil
