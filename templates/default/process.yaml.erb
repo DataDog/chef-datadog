@@ -6,8 +6,8 @@ instances:
   raise "Process to be monitored must have a search_string" unless i['search_string']
 -%>
   - name: <%= i['name'] %>
-  - search_string: <%= i['search_string'] %>
+    search_string: <%= i['search_string'] %>
 <% if i['exact_match'] -%>
-  - exact_match: <%= i['exact_match'] %>
+    exact_match: <%= i['exact_match'] %>
 <% end -%>
 <% end -%>
