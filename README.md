@@ -3,7 +3,7 @@ Where to Find the Code
 To submit issues and patches please visit https://github.com/DataDog/chef-datadog.
 The code is licensed under the Apache License 2.0 (see  LICENSE for details).
 
-[![Build Status](https://secure.travis-ci.org/DataDog/chef-datadog.png?branch=master)](http://travis-ci.org/DataDog/chef-datadog)
+[![Build Status](https://secure.travis-ci.org/DataDog/chef-datadog.svg?branch=master)](http://travis-ci.org/DataDog/chef-datadog)
 
 Datadog Cookbook
 ================
@@ -73,6 +73,4 @@ We are not making use of data_bags in this recipe at this time, as it is unlikel
 
 For more deployment details, visit the [Datadog Documentation site](http://docs.datadoghq.com/).
 
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/DataDog/chef-datadog/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
