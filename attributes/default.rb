@@ -17,14 +17,17 @@
 # limitations under the License.
 #
 
+# Load settings from an encrypted data bag, if available
+dd_settings = Chef::EncryptedDataBagItem.load('datadog', 'settings')[node.chef_environment] rescue {}
+
 # Place your API Key here, or set it on the role/environment/node
 # The Datadog api key to associate your agent's data with your organization.
 # Can be found here:
 # https://app.datadoghq.com/account/settings
-default['datadog']['api_key'] = nil
+default['datadog']['api_key'] = (dd_settings['api_key'] rescue nil)
 
 # Create an application key on the Account Settings page
-default['datadog']['application_key'] = nil
+default['datadog']['application_key'] = (dd_settings['application_key'] rescue nil)
 
 # Don't change these
 # The host of the Datadog intake server to send agent data to
