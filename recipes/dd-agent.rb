@@ -39,14 +39,14 @@ if node['platform_family'] == 'debian'
   end
 end
 
-if node['datadog']['install_base']
+if node['datadog']['agent_version'].nil? || node['datadog']['agent_version'].split('.')[0].to_i >= 5
   package "datadog-agent-base" do
-    version node['datadog']['agent_version']
+    action :remove
   end
-else
-  package "datadog-agent" do
-    version node['datadog']['agent_version']
-  end
+end
+
+package "datadog-agent" do
+  version node['datadog']['agent_version']
 end
 
 # Set the correct Agent startup action
