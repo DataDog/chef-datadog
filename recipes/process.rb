@@ -24,6 +24,9 @@ include_recipe "datadog::dd-agent"
 #   },
 # ]
 
+package "python-setuptools"
+easy_install_package "psutil"
+
 datadog_monitor "process" do
   instances node['datadog']['process']['instances']
 end
