@@ -27,6 +27,7 @@ Vagrant.configure("2") do |config|
     chef.add_recipe "datadog::riak"
     chef.add_recipe "datadog::varnish"
     chef.add_recipe "datadog::jmx"
+    chef.add_recipe "datadog::tokumx"
 
     chef.json = {
       :datadog => {
@@ -107,6 +108,13 @@ Vagrant.configure("2") do |config|
                         ]
         },
         :mongo => {
+          :instances => [
+                         {
+                           :server => "localhost"
+                         }
+                        ]
+        },
+        :tokumx => {
           :instances => [
                          {
                            :server => "localhost"
