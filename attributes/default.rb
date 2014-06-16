@@ -38,16 +38,15 @@ default['datadog']['autorestart'] = false
 
 # Repository configuration
 architecture_map = {
-    'i686' => 'i386/',
-    'i386' => 'i386/',
-    'x86_64' => 'x86_64/',
-    'amd64' => 'x86_64/'
-
+  'i686' => 'i386',
+  'i386' => 'i386',
+  'x86_64' => 'x86_64',
+  'amd64' => 'x86_64'
 }
 
 default['datadog']['installrepo'] = true
 default['datadog']['aptrepo'] = "http://apt.datadoghq.com"
-default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}"
+default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/"
 
 # Agent Version
 default['datadog']['agent_version'] = nil
