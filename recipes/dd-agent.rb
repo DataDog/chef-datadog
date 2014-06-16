@@ -39,9 +39,9 @@ if node['platform_family'] == 'debian'
   end
 end
 
-  package "datadog-agent" do
-    version node['datadog']['agent_version']
-  end
+package "datadog-agent" do
+  version node['datadog']['agent_version']
+end
 
 # Set the correct Agent startup action
 agent_action = node['datadog']['agent_start'] ? :start : :stop
