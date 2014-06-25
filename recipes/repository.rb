@@ -25,7 +25,7 @@ when "debian"
     keyserver 'keyserver.ubuntu.com'
     key 'C7A7DA52'
     uri node['datadog']['aptrepo']
-    distribution node['datadog']['aptrepo_distribution']
+    distribution node['datadog']['aptrepo_distribution'] # TODO: refactor for namespace, internal use only
     components ["main"]
     action :add
   end

@@ -46,7 +46,7 @@ architecture_map.default = "x86_64"
 
 default['datadog']['installrepo'] = true
 default['datadog']['aptrepo'] = "http://apt.datadoghq.com"
-default['datadog']['aptrepo_distribution'] = "stable"
+default['datadog']['aptrepo_distribution'] = "stable" # TODO: refactor for namespace, internal use only
 default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/"
 
 # Agent Version
