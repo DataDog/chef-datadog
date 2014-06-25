@@ -40,9 +40,9 @@ default['datadog']['autorestart'] = false
 architecture_map = {
   'i686' => 'i386',
   'i386' => 'i386',
-  'x86_64' => 'x86_64',
-  'amd64' => 'x86_64'
+  'x86' => 'i386'
 }
+architecture_map.default = "x86_64"
 
 default['datadog']['installrepo'] = true
 default['datadog']['aptrepo'] = "http://apt.datadoghq.com"
