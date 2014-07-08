@@ -39,7 +39,7 @@ if node['platform_family'] == 'debian'
   end
 end
 
-if node['datadog-agent']['agent_version'].nil? || node['datadog-agent']['version'].split('.')[0].to_i >= 5
+if node['datadog-agent']['agent_version'].nil? || node['datadog-agent']['agent_version'].split('.')[0].to_i >= 5
   package "datadog-agent-base" do
     action :remove
   end
