@@ -41,7 +41,6 @@ end
 
 if node['datadog-agent']['agent_version'].nil? || node['datadog-agent']['version'].split('.')[0].to_i >= 5
 package "datadog-agent-base" do
-  ignore_failure true
   action :remove
 end
 
