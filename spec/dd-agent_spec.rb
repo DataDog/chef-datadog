@@ -24,7 +24,7 @@ end
 
 describe 'datadog::dd-agent' do
   # This recipe needs to have an api_key, otherwise `raise` is called.
- 
+
   context 'when using a debian-family distro' do
     before(:all) do
       @chef_run = ChefSpec::Runner.new(
