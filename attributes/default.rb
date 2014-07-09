@@ -48,6 +48,19 @@ default['datadog']['installrepo'] = true
 default['datadog']['aptrepo'] = "http://apt.datadoghq.com"
 default['datadog']['aptrepo_distribution'] = "stable" # TODO: refactor for namespace, internal use only
 default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/"
+ 
+# Set to true to always install datadog-agent-base (usually only installed on
+# systems with a version of Python lower than 2.6) instead of datadog-agent
+# if the version to install is specified and < 5.x
+#
+# The .gsub is done because some platforms may append characters that aren't valid for a Gem::Version comparison.
+begin
+  default['datadog']['install_base'] = Gem::Version.new(node['languages']['python']['version'].gsub(/(\d\.\d\.\d).+/, "\\1")) < Gem::Version.new('2.6.0')
+rescue NoMethodError # nodes['languages']['python'] == nil
+  Chef::Log.warn 'no version of python found'
+rescue ArgumentError
+  Chef::Log.warn "could not parse python version string: #{node['languages']['python']['version']}"
+end
 
 # Agent Version
 default['datadog']['agent_version'] = nil

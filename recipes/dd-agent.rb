@@ -39,14 +39,37 @@ if node['platform_family'] == 'debian'
   end
 end
 
-package "datadog-agent-base" do
-  action :remove
-  only_if { node['datadog']['agent_version'].nil? || node['datadog']['agent_version'].split('.')[0].to_i >= 5 }
-end
+if node['datadog']['install_base']
+  # This is host without Python 2.6 or 2.7
 
+  if node['datadog']['agent_version'].nil? || node['datadog']['agent_version'].split('.')[0].to_i >= 5
+    # We are trying to install agent > 5.0, so we remove datadog-agent-base and install datadog-agent
 
-package "datadog-agent" do
-  version node['datadog']['agent_version']
+    package "datadog-agent-base" do
+      action :remove
+    end
+
+    package "datadog-agent" do
+      version node['datadog']['agent_version']
+    end
+
+  else
+    # The version we are trying to install is < 5.0, we make sure datadog-agent is not installed 
+    # and we install  datadog-agent-base
+    package "datadog-agent" do
+      action :remove
+    end
+
+    package "datadog-agent-base" do
+      version node['datadog']['agent_version']
+    end
+  end
+
+else
+  # This host has python 2.6 or higher we can install datadog-agent in any cases
+  package "datadog-agent" do
+    version node['datadog']['agent_version']
+  end
 end
 
 # Set the correct Agent startup action
