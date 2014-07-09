@@ -48,7 +48,7 @@ default['datadog']['installrepo'] = true
 default['datadog']['aptrepo'] = "http://apt.datadoghq.com"
 default['datadog']['aptrepo_distribution'] = "stable" # TODO: refactor for namespace, internal use only
 default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/"
- 
+
 # Set to true to always install datadog-agent-base (usually only installed on
 # systems with a version of Python lower than 2.6) instead of datadog-agent
 # if the version to install is specified and < 5.x
