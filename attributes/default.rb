@@ -37,15 +37,21 @@ default['datadog']['tags'] = ""
 default['datadog']['autorestart'] = false
 
 # Repository configuration
+architecture_map = {
+  'i686' => 'i386',
+  'i386' => 'i386',
+  'x86' => 'i386'
+}
+architecture_map.default = "x86_64"
+
 default['datadog']['installrepo'] = true
 default['datadog']['aptrepo'] = "http://apt.datadoghq.com"
-default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm/"
-
-# Agent Version
-default['datadog']['agent_version'] = nil
+default['datadog']['aptrepo_distribution'] = "stable" # TODO: refactor for namespace, internal use only
+default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/"
 
 # Set to true to always install datadog-agent-base (usually only installed on
 # systems with a version of Python lower than 2.6) instead of datadog-agent
+# if the version to install is specified and < 5.x
 #
 # The .gsub is done because some platforms may append characters that aren't valid for a Gem::Version comparison.
 begin
@@ -55,6 +61,9 @@ rescue NoMethodError # nodes['languages']['python'] == nil
 rescue ArgumentError
   Chef::Log.warn "could not parse python version string: #{node['languages']['python']['version']}"
 end
+
+# Agent Version
+default['datadog']['agent_version'] = nil
 
 # Chef handler version
 default['datadog']['chef_handler_version'] = nil
