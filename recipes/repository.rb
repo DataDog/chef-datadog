@@ -22,7 +22,7 @@ when "debian"
   include_recipe "apt"
 
   apt_repository 'datadog' do
-    keyserver 'keyserver.ubuntu.com'
+    keyserver 'hkp://keyserver.ubuntu.com:80'
     key 'C7A7DA52'
     uri node['datadog']['aptrepo']
     distribution "unstable"
