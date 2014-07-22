@@ -32,3 +32,4 @@ recipe "datadog::dogstatsd-ruby", "Installs the Ruby dogstatsd package for custo
 # integration-specific
 recipe "datadog::cassandra", "Installs and configures the Cassandra integration"
 recipe "datadog::couchdb", "Installs and configures the CouchDB integration"
+recipe "datadog::sidekiq", "Installs and configures monitoring for sidekiq"
