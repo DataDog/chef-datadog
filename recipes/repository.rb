@@ -34,10 +34,9 @@ when "rhel"
   include_recipe "yum"
 
   yum_repository "datadog" do
-    name "datadog"
-    description "datadog"
-    url node['datadog']['yumrepo']
+    description node['yum']['datadog']['description']
+    baseurl node['yum']['datadog']['baseurl']
     gpgcheck false if respond_to? :gpgcheck
-    action :add
+    action :create
   end
 end
