@@ -43,13 +43,11 @@ if node['datadog']['install_base']
   package "datadog-agent-base" do
     options "--force-yes" if node['datadog']['agent_version']
     version node['datadog']['agent_version']
-    action node['datadog']['agent_version'] ? :upgrade : :install
   end
 else
   package "datadog-agent" do
     options "--force-yes" if node['datadog']['agent_version']
     version node['datadog']['agent_version']
-    action node['datadog']['agent_version'] ? :upgrade : :install
   end
 end
 
