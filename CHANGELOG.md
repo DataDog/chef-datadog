@@ -3,7 +3,8 @@ Changes
 
 # 1.3.0 / Unreleased
 
-* [FEATURE] Add `kafka` monitoring recipe & tests, #113 @qqfr2507
+* [OPTIMIZE] Remove extra `apt-get` call during Agent recipe run, [@miketheman][]
+* [FEATURE] Add `kafka` monitoring recipe & tests, [#113][] [@qqfr2507][]
 * [FEATURE] Allow database name to be passed into postgres template, [@miketheman][]
 
 # 1.2.0 / 2014-03-24
@@ -17,7 +18,7 @@ Changes
 * [FEATURE] Allow attribute control over whether Agent should be running, [#94][] [@jedi4ever][], [@miketheman][]
 * [FEATURE] Reintroduce attribute config for dogstatsd daemon, [#90][] [@jedi4ever][], [@miketheman][]
 * [FEATURE] Allow jmx template to accept arbitrary `key, value` statements, [#93][] [@clofresh][]
-* [FEATURE] Allow cassandra/zookeeper templates to accept arbitrary `key, value` statements, @miketheman
+* [FEATURE] Allow cassandra/zookeeper templates to accept arbitrary `key, value` statements, [@miketheman][]
 * [FEATURE] Add name param to varnish recipe, [#86][] [@clofresh][]
 * [FEATURE] Allow attribute-driven settings for web proxy, [#82][]  [@antonio-osorio][]
 * [FEATURE] Allow override of Agent config for hostname via attribute, [#76][] [@ryandjurovich][]
@@ -185,6 +186,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#101]: https://github.com/DataDog/chef-datadog/issues/101
 [#103]: https://github.com/DataDog/chef-datadog/issues/103
 [#105]: https://github.com/DataDog/chef-datadog/issues/105
+[#113]: https://github.com/DataDog/chef-datadog/issues/113
 [@JoeDeVries]: https://github.com/JoeDeVries
 [@alexism]: https://github.com/alexism
 [@alq]: https://github.com/alq
@@ -204,6 +206,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@miketheman]: https://github.com/miketheman
 [@nkts]: https://github.com/nkts
 [@phlipper]: https://github.com/phlipper
+[@qqfr2507]: https://github.com/qqfr2507
 [@remh]: https://github.com/remh
 [@ryandjurovich]: https://github.com/ryandjurovich
 [@schisamo]: https://github.com/schisamo
