@@ -30,13 +30,6 @@ if node['platform_family'] == 'debian'
     package 'python-setuptools'
     easy_install_package "elementtree"
   end
-
-  # apt-1.8.0 has a bug that makes the new apt-repo not available right away
-  # running apt-get update clears the issue
-  log "Running apt-get update to work around COOK-2171" do
-    notifies :run, "execute[apt-get update]", :immediately
-    not_if "apt-cache search datadog-agent | grep datadog-agent"
-  end
 end
 
 if node['datadog']['install_base']
