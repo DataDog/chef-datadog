@@ -19,17 +19,7 @@
 
 # Install the Apt/Yum repository if enabled
 if node['datadog']['installrepo']
-  include_recipe "datadog::repository"
-end
-
-if node['platform_family'] == 'debian'
-  # Thanks to @joepcds for the Ubuntu 11.04 fix
-  # setuptools has been packaged with a bug
-  # https://bugs.launchpad.net/ubuntu/+source/supervisor/+bug/777862
-  if node['platform_version'].to_f == 11.04
-    package 'python-setuptools'
-    easy_install_package "elementtree"
-  end
+  include_recipe 'datadog::repository'
 end
 
 if node['datadog']['install_base']
