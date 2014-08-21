@@ -25,7 +25,7 @@ when "debian"
     keyserver 'keyserver.ubuntu.com'
     key 'C7A7DA52'
     uri node['datadog']['aptrepo']
-    distribution "unstable"
+    distribution node['datadog']['aptrepo_dist']
     components ["main"]
     action :add
   end
