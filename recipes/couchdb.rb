@@ -1,7 +1,7 @@
 include_recipe "datadog::dd-agent"
 
 # Monitor couchDB
-# 
+#
 # Assuming you have 2 instances on the same host
 # you need to set up the following attributes.
 # Each instance's metric will be tagged with "instance:server_url".

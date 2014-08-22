@@ -155,4 +155,3 @@ suites:
             consumer_groups:
               my_consumer:
                 my_topic: [0, 1, 4, 12]
-
