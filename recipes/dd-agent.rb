@@ -45,9 +45,9 @@ end
 agent_action = node['datadog']['agent_start'] ? :start : :stop
 
 # Make sure the config directory exists
-directory "/etc/dd-agent" do
-  owner "root"
-  group "root"
+directory '/etc/dd-agent' do
+  owner 'root'
+  group 'root'
   mode 0755
 end
 
@@ -58,9 +58,9 @@ end
 #
 raise "Add a ['datadog']['api_key'] attribute to configure this node's Datadog Agent." if node['datadog'] && node['datadog']['api_key'].nil?
 
-template "/etc/dd-agent/datadog.conf" do
-  owner "root"
-  group "root"
+template '/etc/dd-agent/datadog.conf' do
+  owner 'root'
+  group 'root'
   mode 0644
   variables(
     :api_key => node['datadog']['api_key'],
@@ -69,7 +69,7 @@ template "/etc/dd-agent/datadog.conf" do
 end
 
 # Common configuration
-service "datadog-agent" do
+service 'datadog-agent' do
   action [:enable, agent_action]
   supports :restart => true, :status => true, :start => true, :stop => true
   subscribes :restart, 'template[/etc/dd-agent/datadog.conf]', :delayed unless node['datadog']['agent_start'] == false

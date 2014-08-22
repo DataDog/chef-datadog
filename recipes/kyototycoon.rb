@@ -1,4 +1,4 @@
-include_recipe "datadog::dd-agent"
+include_recipe 'datadog::dd-agent'
 
 # Integrate Kyoto Tycoon metrics into Datadog
 #
@@ -17,6 +17,6 @@ include_recipe "datadog::dd-agent"
 #                                       }
 #                                      ]
 
-datadog_monitor "kyototycoon" do
+datadog_monitor 'kyototycoon' do
   instances node['datadog']['kyototycoon']['instances']
 end

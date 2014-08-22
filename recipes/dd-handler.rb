@@ -17,18 +17,18 @@
 # limitations under the License.
 #
 
-include_recipe "chef_handler"
-ENV["DATADOG_HOST"] = node['datadog']['url']
+include_recipe 'chef_handler'
+ENV['DATADOG_HOST'] = node['datadog']['url']
 
-chef_gem "chef-handler-datadog" do
+chef_gem 'chef-handler-datadog' do
   action :install
-  version node["datadog"]["chef_handler_version"]
+  version node['datadog']['chef_handler_version']
 end
 require 'chef/handler/datadog'
 
 # Create the handler to run at the end of the Chef execution
-chef_handler "Chef::Handler::Datadog" do
-  source "chef/handler/datadog"
+chef_handler 'Chef::Handler::Datadog' do
+  source 'chef/handler/datadog'
   arguments [
     :api_key => node['datadog']['api_key'],
     :application_key => node['datadog']['application_key'],

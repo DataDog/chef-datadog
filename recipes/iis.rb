@@ -1,4 +1,4 @@
-include_recipe "datadog::dd-agent"
+include_recipe 'datadog::dd-agent'
 
 # Integrate IIS metrics
 #
@@ -18,6 +18,6 @@ include_recipe "datadog::dd-agent"
 #                               }
 #                              ]
 
-datadog_monitor "iis" do
-  instances node["datadog"]["iis"]["instances"]
+datadog_monitor 'iis' do
+  instances node['datadog']['iis']['instances']
 end

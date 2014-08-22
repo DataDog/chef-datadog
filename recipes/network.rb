@@ -1,4 +1,4 @@
-include_recipe "datadog::dd-agent"
+include_recipe 'datadog::dd-agent'
 
 # Monitor network
 #
@@ -11,6 +11,6 @@ include_recipe "datadog::dd-agent"
 
 Chef::Log.warn 'Datadog network check only supports one `instance`, please check attribute assignments' if node['datadog']['network']['instances'].count > 1
 
-datadog_monitor "network" do
-  instances node["datadog"]["network"]["instances"]
+datadog_monitor 'network' do
+  instances node['datadog']['network']['instances']
 end

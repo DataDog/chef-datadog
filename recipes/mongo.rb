@@ -1,4 +1,4 @@
-include_recipe "datadog::dd-agent"
+include_recipe 'datadog::dd-agent'
 
 # Monitor mongo
 #
@@ -9,6 +9,6 @@ include_recipe "datadog::dd-agent"
 #   }
 # ]
 
-datadog_monitor "mongo" do
-  instances node["datadog"]["mongo"]["instances"]
+datadog_monitor 'mongo' do
+  instances node['datadog']['mongo']['instances']
 end

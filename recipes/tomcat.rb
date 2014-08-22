@@ -1,4 +1,4 @@
-include_recipe "datadog::dd-agent"
+include_recipe 'datadog::dd-agent'
 
 # Monitor tomcat
 #
@@ -20,6 +20,6 @@ include_recipe "datadog::dd-agent"
 #   }
 # ]
 
-datadog_monitor "tomcat" do
-  instances node["datadog"]["tomcat"]["instances"]
+datadog_monitor 'tomcat' do
+  instances node['datadog']['tomcat']['instances']
 end

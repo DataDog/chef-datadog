@@ -1,4 +1,4 @@
-include_recipe "datadog::dd-agent"
+include_recipe 'datadog::dd-agent'
 
 # Monitor Kafka
 #
@@ -11,6 +11,6 @@ include_recipe "datadog::dd-agent"
 #   }
 # ]
 
-datadog_monitor "kafka_consumer" do
+datadog_monitor 'kafka_consumer' do
   instances node['datadog']['kafka_consumer']['instances']
 end

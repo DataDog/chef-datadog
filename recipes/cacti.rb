@@ -1,4 +1,4 @@
-include_recipe "datadog::dd-agent"
+include_recipe 'datadog::dd-agent'
 
 # Import cacti data
 #
@@ -20,6 +20,6 @@ include_recipe "datadog::dd-agent"
 #                                 }
 #                                ]
 
-datadog_monitor "cacti" do
-  instances node["datadog"]["cacti"]["instances"]
+datadog_monitor 'cacti' do
+  instances node['datadog']['cacti']['instances']
 end

@@ -1,4 +1,4 @@
-include_recipe "datadog::dd-agent"
+include_recipe 'datadog::dd-agent'
 
 # Monitor riak
 #
@@ -8,6 +8,6 @@ include_recipe "datadog::dd-agent"
 #   }
 # ]
 
-datadog_monitor "riak" do
-  instances node["datadog"]["riak"]["instances"]
+datadog_monitor 'riak' do
+  instances node['datadog']['riak']['instances']
 end

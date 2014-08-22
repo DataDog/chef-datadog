@@ -3,8 +3,8 @@
 # Recipe:: zookeeper
 #
 
-include_recipe "datadog::dd-agent"
+include_recipe 'datadog::dd-agent'
 
-datadog_monitor "zk" do
-  instances node["datadog"]["zookeeper"]["instances"]
+datadog_monitor 'zk' do
+  instances node['datadog']['zookeeper']['instances']
 end

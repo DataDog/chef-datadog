@@ -1,4 +1,4 @@
-include_recipe "datadog::dd-agent"
+include_recipe 'datadog::dd-agent'
 
 # Monitor postgres
 #
@@ -22,6 +22,6 @@ include_recipe "datadog::dd-agent"
 #   }
 # ]
 
-datadog_monitor "postgres" do
-  instances node["datadog"]["postgres"]["instances"]
+datadog_monitor 'postgres' do
+  instances node['datadog']['postgres']['instances']
 end

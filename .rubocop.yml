@@ -32,10 +32,6 @@ Style/SignalException:
 Style/SingleSpaceBeforeFirstArg:
   Enabled: false
 
-# TODO: change these!!
-Style/StringLiterals:
-  Enabled: false
-
 # Only enforce a wordlist for 5 or longer lists.
 Style/WordArray:
   MinSize: 5

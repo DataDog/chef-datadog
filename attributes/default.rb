@@ -28,10 +28,10 @@ default['datadog']['application_key'] = nil
 
 # Don't change these
 # The host of the Datadog intake server to send agent data to
-default['datadog']['url'] = "https://app.datadoghq.com"
+default['datadog']['url'] = 'https://app.datadoghq.com'
 
 # Add tags as override attributes in your role
-default['datadog']['tags'] = ""
+default['datadog']['tags'] = ''
 
 # Autorestart agent
 default['datadog']['autorestart'] = false
@@ -54,7 +54,7 @@ default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm/#{architecture_map
 #
 # The .gsub is done because some platforms may append characters that aren't valid for a Gem::Version comparison.
 begin
-  default['datadog']['install_base'] = Gem::Version.new(node['languages']['python']['version'].gsub(/(\d\.\d\.\d).+/, "\\1")) < Gem::Version.new('2.6.0')
+  default['datadog']['install_base'] = Gem::Version.new(node['languages']['python']['version'].gsub(/(\d\.\d\.\d).+/, '\\1')) < Gem::Version.new('2.6.0')
 rescue NoMethodError # nodes['languages']['python'] == nil
   Chef::Log.warn 'no version of python found, please install Agent version 5.x or higher.'
 rescue ArgumentError
@@ -131,5 +131,5 @@ default['datadog']['dogstatsd_normalize'] = 'yes'
 
 # For older integrations that do not consume the conf.d yaml files
 default['datadog']['legacy_integrations']['nagios']['enabled'] = false
-default['datadog']['legacy_integrations']['nagios']['description'] = "Nagios integration"
+default['datadog']['legacy_integrations']['nagios']['description'] = 'Nagios integration'
 default['datadog']['legacy_integrations']['nagios']['config']['nagios_log'] = '/var/log/nagios3/nagios.log'

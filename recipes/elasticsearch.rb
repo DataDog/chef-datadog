@@ -1,4 +1,4 @@
-include_recipe "datadog::dd-agent"
+include_recipe 'datadog::dd-agent'
 
 # Monitor elasticsearch
 #
@@ -14,6 +14,6 @@ include_recipe "datadog::dd-agent"
 #                                         }
 #                                        ]
 
-datadog_monitor "elastic" do
-  instances node["datadog"]["elasticsearch"]["instances"]
+datadog_monitor 'elastic' do
+  instances node['datadog']['elasticsearch']['instances']
 end
