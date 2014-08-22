@@ -19,7 +19,7 @@ action :add do
 end
 
 action :remove do
-  if ::File.exists?("/etc/dd-agent/conf.d/#{new_resource.name}.yaml")
+  if ::File.exist?("/etc/dd-agent/conf.d/#{new_resource.name}.yaml")
     Chef::Log.debug "Removing #{new_resource.name} from /etc/dd-agent/conf.d/"
     file "/etc/dd-agent/conf.d/#{new_resource.name}.yaml" do
       action :delete

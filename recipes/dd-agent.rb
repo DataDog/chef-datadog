@@ -18,9 +18,7 @@
 #
 
 # Install the Apt/Yum repository if enabled
-if node['datadog']['installrepo']
-  include_recipe 'datadog::repository'
-end
+include_recipe 'datadog::repository' if node['datadog']['installrepo']
 
 dd_agent_version = node['datadog']['agent_version']
 

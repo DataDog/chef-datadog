@@ -6,14 +6,14 @@ description      "Installs/Configures datadog components"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '1.2.0'
 
-%w{
+%w(
   amazon
   centos
   debian
   redhat
   scientific
   ubuntu
-}.each do |os|
+).each do |os|
   supports os
 end
 
