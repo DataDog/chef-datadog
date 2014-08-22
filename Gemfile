@@ -11,10 +11,10 @@ group :development do
 end
 
 group :test do
-  gem "tailor", "~> 1.3" # Ruby style
   gem "foodcritic", "~> 2.1" # Lint testing
   gem "berkshelf", "~> 2.0"
   gem "chefspec", "~> 3.2"
+  gem 'rubocop', '= 0.24.1'
 end
 
 group :vagrant do
