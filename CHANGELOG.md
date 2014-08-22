@@ -1,11 +1,35 @@
 Changes
 =======
 
-# 1.3.0 / Unreleased
+# 2.0.0 / 2014-08-22
 
+* **BREAKING CHANGE**: Datadog Agent 5.0.0 Release Edition
+
+  With the release of Datadog Agent 5.x, all Python dependencies are now bundled, and extensions for monitoring are no
+  longer needed. Integration-specific recipes no longer install any packages, so if you are using a version older than
+  5.x, you may have to install these yourself. This greatly simplifies deployment of all components for monitoring.
+  See commit b77582122f3db774a838f90907b421e544dd099c for the exact package resources that have been removed.
+  Affected recipes:
+
+  - hdfs
+  - memcache
+  - mongodb
+  - mysql
+  - postgres
+  - redisdb
+
+* **BREAKING CHANGE**: Removed chef_gem support for Chef versions pre 0.10.9.
+
+  We haven't supported this version of Chef in some time, so it's unlikely that you will be affected at all.
+  Just in case, please review what versions of Chef you have installed, and use an older version of this cookbook until
+  you can upgrade them.
+
+* [OPTIMIZE] Update repository recipe to choose correct arch, [@remh][]
+* [OPTIMIZE] Remove conditional python dep for Ubuntu 11.04, [@miketheman][]
 * [OPTIMIZE] Remove extra `apt-get` call during Agent recipe run, [@miketheman][]
 * [FEATURE] Add `kafka` monitoring recipe & tests, [#113][] [@qqfr2507][]
 * [FEATURE] Allow database name to be passed into postgres template, [@miketheman][]
+* [MISC] Many updates to testing suite. Faster style, better specs. [@miketheman][]
 
 # 1.2.0 / 2014-03-24
 
