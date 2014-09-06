@@ -30,8 +30,8 @@ when 'debian'
     action :add
   end
 
-when 'rhel'
-  include_recipe 'yum'
+when "rhel", "fedora"
+  include_recipe "yum"
 
   yum_repository 'datadog' do
     name 'datadog'
