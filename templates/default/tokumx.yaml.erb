@@ -1,13 +1,16 @@
-instances:
-  <% @instances.each do |i| -%>
-  - server: mongodb://<%= i['host']%>:<%= i['port'] %>
-    <% if i.key?('tags') -%>
-    tags:
-      <% i['tags'].each do |t| -%>
-    - <%= t %>
-      <% end -%>
-    <% end -%>
-  <% end -%>
+include_recipe 'analytics'
+include_recipe 'datadog::dd-agent'
 
-init_config:
-# No init_config details needed
+# Monitor tokumx
+#
+# node.set['datadog']['tokumx']['instances'] = [
+#   {
+#     'host' => 'localhost',
+#     'port' => '27017',
+#     'dname' => 'admin'
+#   }
+# ]
+
+datadog_monitor 'tokumx' do
+  instances node['datadog']['tokumx']['instances']
+end
