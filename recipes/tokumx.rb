@@ -5,7 +5,8 @@ include_recipe "datadog::dd-agent"
 # node.set['datadog']['tokumx']['instances'] = [
 #   {
 #     'host' => 'localhost',
-#     'port' => '27017'
+#     'port' => '27017',
+#     'dbname' => 'admin',
 #   }
 # ]
 
