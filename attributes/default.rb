@@ -26,6 +26,10 @@ default['datadog']['api_key'] = nil
 # Create an application key on the Account Settings page
 default['datadog']['application_key'] = nil
 
+# Optionally define an encrypted data bag to pull your keys from
+default['datadog']['databag']['name'] = nil
+default['datadog']['databag']['item'] = nil
+
 # Don't change these
 # The host of the Datadog intake server to send agent data to
 default['datadog']['url'] = 'https://app.datadoghq.com'

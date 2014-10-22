@@ -1,0 +1,15 @@
+{
+  "id": "api_keys",
+  "api_key": {
+    "encrypted_data": "Kg9EDAMX6zEofE49nOxSZJni9UFcBwLeg/mVt/TWQuM=\n",
+    "iv": "y9tkADw5JlX1BQKutXNstw==\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  },
+  "application_key": {
+    "encrypted_data": "a2YNcAHL5kt50RluXhiissvxK6HEZxyYr7nFo8lBWr4=\n",
+    "iv": "RfRSTUWECQytW/fHCp9Seg==\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  }
+}

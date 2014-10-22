@@ -10,7 +10,15 @@ shared_examples_for 'common resources' do
   end
 
   it 'drops an agent config file' do
-    expect(@chef_run).to create_template '/etc/dd-agent/datadog.conf'
+    expect(@chef_run).to create_template('/etc/dd-agent/datadog.conf').with(
+      :owner => "root",
+      :group => "root",
+      :mode => 0644,
+      :variables => {
+        :api_key => "somethingnotnil",
+        :dd_url => @chef_run.node['datadog']['url']
+      }
+    )
   end
 
   it 'enables the datadog-agent service' do
@@ -19,6 +27,16 @@ shared_examples_for 'common resources' do
 
   it 'starts the datadog-agent service' do
     expect(@chef_run).to start_service 'datadog-agent'
+  end
+end
+
+shared_examples_for 'encrypted-databag' do
+  it 'uses an encrypted databag when api_key is nil' do
+    if @chef_run.node['datadog']['api_key'].nil?
+      name = @chef_run.node['datadog']['databag']['name']
+      item = @chef_run.node['datadog']['databag']['item']
+      expect(Chef::EncryptedDataBagItem).to have_received(:load).with(name, item)
+    end
   end
 end
 
@@ -243,5 +261,38 @@ describe 'datadog::dd-agent' do
 
       it_behaves_like 'debianoids'
     end
+  end
+
+  context 'when using an encrypted data bag' do
+
+    before(:each) do
+      Chef::EncryptedDataBagItem.stub(:load).and_return({
+        'api_key' => 'abc123',
+        'application_key' => 'zyx987'
+      })
+
+      @chef_run = ChefSpec::SoloRunner.new(
+        :platform => 'ubuntu',
+        :version => '12.04'
+      ) do |node|
+          node.set['datadog']['databag'] = { 'name' => 'foo', 'item' => 'bar' }
+          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+        end.converge('datadog::dd-agent')
+    end
+
+    it 'uses an encrypted databag when api_key is nil' do
+      expect(Chef::EncryptedDataBagItem).to have_received(:load).with('foo', 'bar')
+    end
+
+    it 'drops an agent config file' do
+      expect(@chef_run).to create_template('/etc/dd-agent/datadog.conf').with(
+        :variables => {
+          :api_key => "abc123",
+          :dd_url => @chef_run.node['datadog']['url']
+        }
+      )
+    end
+
+    it_behaves_like 'encrypted-databag'
   end
 end

@@ -7,6 +7,11 @@
   [ "$status" -eq 0 ]
 }
 
+@test "api key is set" {
+  run grep abc123 /etc/dd-agent/datadog.conf
+  [ "$status" -eq 0 ]
+}
+
 @test "info returns an OK" {
   run /etc/init.d/datadog-agent info
   [ "$status" -eq 0 ]
