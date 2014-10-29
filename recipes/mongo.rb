@@ -12,3 +12,11 @@ include_recipe 'datadog::dd-agent'
 datadog_monitor 'mongo' do
   instances node['datadog']['mongo']['instances']
 end
+
+cookbook_file "/usr/share/datadog/agent/checks.d/mongo.py" do
+	source "mongo.py"
+	owner "root"
+	group "root"
+	mode 00644
+	action :create
+end
