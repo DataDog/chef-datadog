@@ -1,10 +1,35 @@
 Changes
 =======
 
-# 1.3.0 / Unreleased
+# 2.0.0 / 2014-08-22
 
-* [FEATURE] Add `kafka` monitoring recipe & tests, #113 @qqfr2507
+* **BREAKING CHANGE**: Datadog Agent 5.0.0 Release Edition
+
+  With the release of Datadog Agent 5.x, all Python dependencies are now bundled, and extensions for monitoring are no
+  longer needed. Integration-specific recipes no longer install any packages, so if you are using a version older than
+  5.x, you may have to install these yourself. This greatly simplifies deployment of all components for monitoring.
+  See commit b77582122f3db774a838f90907b421e544dd099c for the exact package resources that have been removed.
+  Affected recipes:
+
+  - hdfs
+  - memcache
+  - mongodb
+  - mysql
+  - postgres
+  - redisdb
+
+* **BREAKING CHANGE**: Removed chef_gem support for Chef versions pre 0.10.9.
+
+  We haven't supported this version of Chef in some time, so it's unlikely that you will be affected at all.
+  Just in case, please review what versions of Chef you have installed, and use an older version of this cookbook until
+  you can upgrade them.
+
+* [OPTIMIZE] Update repository recipe to choose correct arch, [@remh][]
+* [OPTIMIZE] Remove conditional python dep for Ubuntu 11.04, [@miketheman][]
+* [OPTIMIZE] Remove extra `apt-get` call during Agent recipe run, [@miketheman][]
+* [FEATURE] Add `kafka` monitoring recipe & tests, [#113][] [@qqfr2507][]
 * [FEATURE] Allow database name to be passed into postgres template, [@miketheman][]
+* [MISC] Many updates to testing suite. Faster style, better specs. [@miketheman][]
 
 # 1.2.0 / 2014-03-24
 
@@ -17,7 +42,7 @@ Changes
 * [FEATURE] Allow attribute control over whether Agent should be running, [#94][] [@jedi4ever][], [@miketheman][]
 * [FEATURE] Reintroduce attribute config for dogstatsd daemon, [#90][] [@jedi4ever][], [@miketheman][]
 * [FEATURE] Allow jmx template to accept arbitrary `key, value` statements, [#93][] [@clofresh][]
-* [FEATURE] Allow cassandra/zookeeper templates to accept arbitrary `key, value` statements, @miketheman
+* [FEATURE] Allow cassandra/zookeeper templates to accept arbitrary `key, value` statements, [@miketheman][]
 * [FEATURE] Add name param to varnish recipe, [#86][] [@clofresh][]
 * [FEATURE] Allow attribute-driven settings for web proxy, [#82][]  [@antonio-osorio][]
 * [FEATURE] Allow override of Agent config for hostname via attribute, [#76][] [@ryandjurovich][]
@@ -185,6 +210,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#101]: https://github.com/DataDog/chef-datadog/issues/101
 [#103]: https://github.com/DataDog/chef-datadog/issues/103
 [#105]: https://github.com/DataDog/chef-datadog/issues/105
+[#113]: https://github.com/DataDog/chef-datadog/issues/113
 [@JoeDeVries]: https://github.com/JoeDeVries
 [@alexism]: https://github.com/alexism
 [@alq]: https://github.com/alq
@@ -204,6 +230,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@miketheman]: https://github.com/miketheman
 [@nkts]: https://github.com/nkts
 [@phlipper]: https://github.com/phlipper
+[@qqfr2507]: https://github.com/qqfr2507
 [@remh]: https://github.com/remh
 [@ryandjurovich]: https://github.com/ryandjurovich
 [@schisamo]: https://github.com/schisamo

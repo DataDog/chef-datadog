@@ -1,4 +1,4 @@
-include_recipe "datadog::dd-agent"
+include_recipe 'datadog::dd-agent'
 
 # Monitor haproxy
 
@@ -14,6 +14,6 @@ include_recipe "datadog::dd-agent"
 #                                     }
 #                                    ]
 
-datadog_monitor "haproxy" do
-  instances node["datadog"]["haproxy"]["instances"]
+datadog_monitor 'haproxy' do
+  instances node['datadog']['haproxy']['instances']
 end

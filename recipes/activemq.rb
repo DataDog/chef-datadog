@@ -1,7 +1,7 @@
-include_recipe "datadog::dd-agent"
+include_recipe 'datadog::dd-agent'
 
 # Monitor activemq
-# 
+#
 # Assuming you have 2 clusters "test" and "prod",
 # one with and one without authentication
 # you need to set up the following attributes
@@ -20,6 +20,6 @@ include_recipe "datadog::dd-agent"
 #                                     }
 #                                    ]
 
-datadog_monitor "activemq" do
-  instances node["datadog"]["activemq"]["instances"]
+datadog_monitor 'activemq' do
+  instances node['datadog']['activemq']['instances']
 end

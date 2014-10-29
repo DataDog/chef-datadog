@@ -1,7 +1,7 @@
-include_recipe "datadog::dd-agent"
+include_recipe 'datadog::dd-agent'
 
 # Monitor tomcat
-# 
+#
 # Assuming you have 2 instances "test" and "prod",
 # one with and one without authentication
 # you need to set up the following attributes
@@ -20,6 +20,6 @@ include_recipe "datadog::dd-agent"
 #   }
 # ]
 
-datadog_monitor "tomcat" do
-  instances node["datadog"]["tomcat"]["instances"]
+datadog_monitor 'tomcat' do
+  instances node['datadog']['tomcat']['instances']
 end

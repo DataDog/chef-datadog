@@ -1,7 +1,7 @@
-include_recipe "datadog::dd-agent"
+include_recipe 'datadog::dd-agent'
 
 # Monitor couchDB
-# 
+#
 # Assuming you have 2 instances on the same host
 # you need to set up the following attributes.
 # Each instance's metric will be tagged with "instance:server_url".
@@ -17,7 +17,7 @@ include_recipe "datadog::dd-agent"
 #                                 }
 #                                ]
 
-datadog_monitor "couch" do
+datadog_monitor 'couch' do
   init_config nil
-  instances node["datadog"]["couch"]["instances"]
+  instances node['datadog']['couch']['instances']
 end

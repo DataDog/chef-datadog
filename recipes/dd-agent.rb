@@ -18,34 +18,26 @@
 #
 
 # Install the Apt/Yum repository if enabled
-if node['datadog']['installrepo']
-  include_recipe "datadog::repository"
-end
+include_recipe 'datadog::repository' if node['datadog']['installrepo']
 
-if node['platform_family'] == 'debian'
-  # Thanks to @joepcds for the Ubuntu 11.04 fix
-  # setuptools has been packaged with a bug
-  # https://bugs.launchpad.net/ubuntu/+source/supervisor/+bug/777862
-  if node['platform_version'].to_f == 11.04
-    package 'python-setuptools'
-    easy_install_package "elementtree"
-  end
+dd_agent_version = node['datadog']['agent_version']
 
-  # apt-1.8.0 has a bug that makes the new apt-repo not available right away
-  # running apt-get update clears the issue
-  log "Running apt-get update to work around COOK-2171" do
-    notifies :run, "execute[apt-get update]", :immediately
-    not_if "apt-cache search datadog-agent | grep datadog-agent"
-  end
-end
+# If version specified and lower than 5.x
+if !dd_agent_version.nil? && dd_agent_version.split('.')[0].to_i < 5
+  # Select correct package name based on attribute
+  dd_pkg_name = node['datadog']['install_base'] ? 'datadog-agent-base' : 'datadog-agent'
 
-if node['datadog']['install_base']
-  package "datadog-agent-base" do
-    version node['datadog']['agent_version']
+  package dd_pkg_name do
+    version dd_agent_version
   end
 else
-  package "datadog-agent" do
-    version node['datadog']['agent_version']
+  # default behavior, remove the `base` package as it is no longer needed
+  package 'datadog-agent-base' do
+    action :remove
+  end
+  # Install the regular package
+  package 'datadog-agent' do
+    version dd_agent_version
   end
 end
 
@@ -53,9 +45,9 @@ end
 agent_action = node['datadog']['agent_start'] ? :start : :stop
 
 # Make sure the config directory exists
-directory "/etc/dd-agent" do
-  owner "root"
-  group "root"
+directory '/etc/dd-agent' do
+  owner 'root'
+  group 'root'
   mode 0755
 end
 
@@ -66,9 +58,9 @@ end
 #
 raise "Add a ['datadog']['api_key'] attribute to configure this node's Datadog Agent." if node['datadog'] && node['datadog']['api_key'].nil?
 
-template "/etc/dd-agent/datadog.conf" do
-  owner "root"
-  group "root"
+template '/etc/dd-agent/datadog.conf' do
+  owner 'root'
+  group 'root'
   mode 0644
   variables(
     :api_key => node['datadog']['api_key'],
@@ -77,7 +69,7 @@ template "/etc/dd-agent/datadog.conf" do
 end
 
 # Common configuration
-service "datadog-agent" do
+service 'datadog-agent' do
   action [:enable, agent_action]
   supports :restart => true, :status => true, :start => true, :stop => true
   subscribes :restart, 'template[/etc/dd-agent/datadog.conf]', :delayed unless node['datadog']['agent_start'] == false

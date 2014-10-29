@@ -22,14 +22,8 @@
 #   }
 # ]
 
-include_recipe "datadog::dd-agent"
+include_recipe 'datadog::dd-agent'
 
-include_recipe "python" # ~FC007 ignore to prevent extra cookbooks from being downloaded
-
-python_pip "snakebite" do
-  version node["datadog"]["hdfs"]["snakebite_version"]
-end
-
-datadog_monitor "hdfs" do
-  instances node["datadog"]["hdfs"]["instances"]
+datadog_monitor 'hdfs' do
+  instances node['datadog']['hdfs']['instances']
 end

@@ -1,4 +1,4 @@
-include_recipe "datadog::dd-agent"
+include_recipe 'datadog::dd-agent'
 
 # Monitor Varnish
 #
@@ -21,7 +21,6 @@ include_recipe "datadog::dd-agent"
 #   }
 # ]
 
-
-datadog_monitor "varnish" do
-  instances node["datadog"]["varnish"]["instances"]
+datadog_monitor 'varnish' do
+  instances node['datadog']['varnish']['instances']
 end

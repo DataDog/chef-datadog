@@ -1,4 +1,4 @@
-include_recipe "datadog::dd-agent"
+include_recipe 'datadog::dd-agent'
 
 # Integrate jenkins builds
 #
@@ -18,6 +18,6 @@ include_recipe "datadog::dd-agent"
 #
 # Note that this check can only monitor local jenkins instances
 
-datadog_monitor "jenkins" do
+datadog_monitor 'jenkins' do
   instances node['datadog']['jenkins']['instances']
 end

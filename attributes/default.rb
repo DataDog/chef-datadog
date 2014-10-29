@@ -31,33 +31,41 @@ default['datadog']['application_key'] = (dd_settings['application_key'] rescue n
 
 # Don't change these
 # The host of the Datadog intake server to send agent data to
-default['datadog']['url'] = "https://app.datadoghq.com"
+default['datadog']['url'] = 'https://app.datadoghq.com'
 
 # Add tags as override attributes in your role
-default['datadog']['tags'] = ""
+default['datadog']['tags'] = ''
 
 # Autorestart agent
 default['datadog']['autorestart'] = false
 
 # Repository configuration
-default['datadog']['installrepo'] = true
-default['datadog']['aptrepo'] = "http://apt.datadoghq.com"
-default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm/"
+architecture_map = {
+  'i686' => 'i386',
+  'i386' => 'i386',
+  'x86' => 'i386'
+}
+architecture_map.default = 'x86_64'
 
-# Agent Version
-default['datadog']['agent_version'] = nil
+default['datadog']['installrepo'] = true
+default['datadog']['aptrepo'] = 'http://apt.datadoghq.com'
+default['datadog']['aptrepo_dist'] = 'stable'
+default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/"
 
 # Set to true to always install datadog-agent-base (usually only installed on
 # systems with a version of Python lower than 2.6) instead of datadog-agent
 #
 # The .gsub is done because some platforms may append characters that aren't valid for a Gem::Version comparison.
 begin
-  default['datadog']['install_base'] = Gem::Version.new(node['languages']['python']['version'].gsub(/(\d\.\d\.\d).+/, "\\1")) < Gem::Version.new('2.6.0')
+  default['datadog']['install_base'] = Gem::Version.new(node['languages']['python']['version'].gsub(/(\d\.\d\.\d).+/, '\\1')) < Gem::Version.new('2.6.0')
 rescue NoMethodError # nodes['languages']['python'] == nil
-  Chef::Log.warn 'no version of python found'
+  Chef::Log.warn 'no version of python found, please install Agent version 5.x or higher.'
 rescue ArgumentError
   Chef::Log.warn "could not parse python version string: #{node['languages']['python']['version']}"
 end
+
+# Agent Version
+default['datadog']['agent_version'] = nil
 
 # Chef handler version
 default['datadog']['chef_handler_version'] = nil
@@ -126,5 +134,5 @@ default['datadog']['dogstatsd_normalize'] = 'yes'
 
 # For older integrations that do not consume the conf.d yaml files
 default['datadog']['legacy_integrations']['nagios']['enabled'] = false
-default['datadog']['legacy_integrations']['nagios']['description'] = "Nagios integration"
+default['datadog']['legacy_integrations']['nagios']['description'] = 'Nagios integration'
 default['datadog']['legacy_integrations']['nagios']['config']['nagios_log'] = '/var/log/nagios3/nagios.log'

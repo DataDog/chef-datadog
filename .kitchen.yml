@@ -4,23 +4,23 @@ driver_plugin: vagrant
 platforms:
 - name: ubuntu-12.04_chef_11.4.4
   driver_config:
-    box: opscode_ubuntu-12.04_chef-11.4.4
-    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_chef-11.4.4.box
+    box: opscode_ubuntu-12.04_chef-provisionerless
+    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-12.04_chef-provisionerless.box
     require_chef_omnibus: 11.4.4
 - name: ubuntu-12.04_chef_10.24.4
   driver_config:
-    box: opscode_ubuntu-12.04_chef-11.4.4
-    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_chef-11.4.4.box
+    box: opscode_ubuntu-12.04_chef-provisionerless
+    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-12.04_chef-provisionerless.box
     require_chef_omnibus: 10.24.4
 - name: ubuntu-10.04_chef_11.4.4
   driver_config:
-    box: opscode_ubuntu-10.04_chef-11.4.4
-    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-10.04_chef-11.4.4.box
+    box: opscode_ubuntu-10.04_chef-provisionerless
+    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-10.04_chef-provisionerless.box
     require_chef_omnibus: 11.4.4
 - name: ubuntu-10.04_chef_10.24.4
   driver_config:
-    box: opscode_ubuntu-10.04_chef-11.4.4
-    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-10.04_chef-11.4.4.box
+    box: opscode_ubuntu-10.04_chef-provisionerless
+    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-10.04_chef-provisionerless.box
     require_chef_omnibus: 10.24.4
 
 - name: centos-6.4_chef_11.4.4
@@ -155,4 +155,3 @@ suites:
             consumer_groups:
               my_consumer:
                 my_topic: [0, 1, 4, 12]
-

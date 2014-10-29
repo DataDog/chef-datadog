@@ -1,4 +1,4 @@
-include_recipe "datadog::dd-agent"
+include_recipe 'datadog::dd-agent'
 
 # Integrate rabbitmq metrics into Datadog
 #
@@ -14,6 +14,6 @@ include_recipe "datadog::dd-agent"
 #                                    }
 #                                   ]
 
-datadog_monitor "rabbitmq" do
-  instances node["datadog"]["rabbitmq"]["instances"]
+datadog_monitor 'rabbitmq' do
+  instances node['datadog']['rabbitmq']['instances']
 end

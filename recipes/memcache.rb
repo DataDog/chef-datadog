@@ -1,4 +1,4 @@
-include_recipe "datadog::dd-agent"
+include_recipe 'datadog::dd-agent'
 
 # Integrate memcache metrics into Datadog
 #
@@ -14,13 +14,6 @@ include_recipe "datadog::dd-agent"
 #                                    }
 #                                   ]
 
-case node["platform_family"]
-when "debian"
-  package "python-memcache"
-when "rhel"
-  package "python-memcached"
-end
-
-datadog_monitor "mcache" do
-  instances node["datadog"]["memcache"]["instances"]
+datadog_monitor 'mcache' do
+  instances node['datadog']['memcache']['instances']
 end
