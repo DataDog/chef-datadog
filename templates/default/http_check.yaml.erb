@@ -34,7 +34,7 @@ instances:
     <% end -%>
     <% if i.key?('headers') -%>
     headers:
-      <% i['notify'].each_pair do |k,v| -%>
+      <% i['headers'].each_pair do |k,v| -%>
         <%= k %>: <%= v %>
       <% end -%>
     <% end -%>
