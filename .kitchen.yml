@@ -7,42 +7,26 @@ provisioner:
     ssl_verify_mode: :verify_none # Chef outputs an ugly SSL warning otherwise
 
 platforms:
-<% %w(11.16.4 10.34.4 10.14.4).each do |chef_version| %>
-- name: ubuntu-12.04-<%= chef_version %>
+# Loop through two lists and output a total matrix of all possible platform + chef versions
+<% %w(
+      ubuntu-12.04
+      ubuntu-10.04
+      centos-6.5
+      centos-5.10
+      debian-7.4.0
+    ).each do |platform_version| %>
+<% %w(
+      11.16.4
+      10.34.4
+      10.14.4
+    ).each do |chef_version| %>
+
+- name: <%= platform_version %>-<%= chef_version %>
   driver_config:
-    box: opscode-ubuntu-12.04
-    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
+    box: opscode_<%= platform_version %>_chef-provisionerless
+    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_<%= platform_version %>_provisionerless.box
     require_chef_omnibus: <%= chef_version %>
-  run_list:
-  - recipe[apt]
-- name: ubuntu-10.04-<%= chef_version %>
-  driver_config:
-    box: opscode-ubuntu-10.04
-    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-10.04_provisionerless.box
-    require_chef_omnibus: <%= chef_version %>
-  run_list:
-  - recipe[apt]
-- name: centos-6.5-<%= chef_version %>
-  driver_config:
-    box: opscode-centos-6.5
-    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-6.5_provisionerless.box
-    require_chef_omnibus: <%= chef_version %>
-  run_list:
-  - recipe[yum::epel]
-- name: centos-5.10-<%= chef_version %>
-  driver_config:
-    box: opscode-centos-5.10
-    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-5.10_provisionerless.box
-    require_chef_omnibus: <%= chef_version %>
-  run_list:
-  - recipe[yum::epel]
-- name: debian-7.4.0-<%= chef_version %>
-  driver_config:
-    box: opscode-debian-7.4.0
-    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_debian-7.4.0_provisionerless.box
-    require_chef_omnibus: <%= chef_version %>
-  run_list:
-  - recipe[apt]
+<% end %>
 <% end %>
 
 suites:
