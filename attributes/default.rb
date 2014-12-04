@@ -35,6 +35,9 @@ default['datadog']['agent_download_url'] = 'https://s3.amazonaws.com/ddagent-win
 # Add tags as override attributes in your role
 default['datadog']['tags'] = ''
 
+# Collect EC2 tags, set to 'yes' to collect
+default['datadog']['collect_ec2_tags'] = nil
+
 # Autorestart agent
 default['datadog']['autorestart'] = false
 
