@@ -33,6 +33,9 @@ default['datadog']['url'] = 'https://app.datadoghq.com'
 # Add tags as override attributes in your role
 default['datadog']['tags'] = ''
 
+# Collect EC2 tags, set to 'yes' to collect
+default['datadog']['collect_ec2_tags'] = nil
+
 # Autorestart agent
 default['datadog']['autorestart'] = false
 
