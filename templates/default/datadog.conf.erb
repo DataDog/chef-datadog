@@ -11,7 +11,12 @@ listen_port: <%= node['datadog']['agent_port'] %>
 <% if node['datadog']['autorestart'] -%>
 autorestart: <%= node['datadog']['autorestart'] %>
 <% end -%>
+
 tags: <%= node['datadog']['tags'] %>
+<% if node['datadog']['collect_ec2_tags'] -%>
+collect_ec2_tags: <%= node['datadog']['collect_ec2_tags'] %>
+<% end -%>
+
 <% if node['datadog']['web_proxy']['host'] -%>
 proxy_host: <%= node['datadog']['web_proxy']['host'] %>
 proxy_port: <%= node['datadog']['web_proxy']['port'] %>
