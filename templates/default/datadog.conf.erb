@@ -8,9 +8,6 @@ check_freq: <%= node['datadog']['check_freq'] %>
 hostname: <%= node['datadog']['hostname'] %>
 use_mount: <%= node['datadog']['use_mount'] ? "yes" : "no"  %>
 listen_port: <%= node['datadog']['agent_port'] %>
-<% if node['datadog']['autorestart'] -%>
-autorestart: <%= node['datadog']['autorestart'] %>
-<% end -%>
 tags: <%= node['datadog']['tags'] %>
 <% if node['datadog']['web_proxy']['host'] -%>
 proxy_host: <%= node['datadog']['web_proxy']['host'] %>
