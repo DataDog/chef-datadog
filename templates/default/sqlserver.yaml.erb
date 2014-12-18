@@ -1,3 +1,5 @@
+# This file is built by Chef. Direct modification will be overwritten!
+
 init_config:
     #
     # By default, we only capture *some* of the metrics available in the
@@ -32,8 +34,26 @@ init_config:
     #        counter_name: Log Flushes/sec
     #        instance_name: ALL
     #        tag_by: db
+  <% if @init_config.key?('custom_metrics') -%>
+  custom_metrics:
+    <% @init_config['custom_metrics'].each do |i| -%>
+    - name: <%= i['name'] %>
+      type: <%= i['type'] %>
+      counter_name: <%= i['counter_name'] %>
+      <% if i.key?('instance_name') -%>
+      instance_name: <%= i['instance_name'] %>
+      <% end -%>
+      <% if i.key?('tag_by') -%>
+      tag_by: <%= i['tag_by'] %>
+      <% end -%>
+    <% end -%>
+  <% end -%>
 
 instances:
-    -   host: HOST,PORT
-        username: my_username
-        password: my_password
+  <% @instances.each do |i| -%>
+  - host: <%= i['host'] %><% if i.key?('port') -%>,<%= i['port'] %><% end -%>
+    <% if i.key?('username') -%>
+    username: <%= i['username'] %>
+    password: <%= i['password'] %>
+    <% end -%>
+  <% end -%>

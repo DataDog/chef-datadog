@@ -1,11 +1,11 @@
-include_recipe 'datadog::dd-agent'
+include_recipe 'datadog::dd-agent-config'
 
 # Integrate IIS metrics
 #
 # Simply declare the following attributes
 # One instance per server.
 #
-# node.datadog.iis.instances = [
+# node['datadog']['iis']['instances'] = [
 #                               {
 #                                 "host" => "localhost",
 #                                 "tags" => ["prod", "other_tag"]
@@ -14,6 +14,7 @@ include_recipe 'datadog::dd-agent'
 #                                 "host" => "other.server.com",
 #                                 "username" => "myuser",
 #                                 "password" => "password",
+#                                 "sites" => ["Default", "Site2"]
 #                                 "tags" => ["prod", "other_tag"]
 #                               }
 #                              ]

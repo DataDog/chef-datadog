@@ -30,6 +30,20 @@ default['datadog']['application_key'] = nil
 # The host of the Datadog intake server to send agent data to
 default['datadog']['url'] = 'https://app.datadoghq.com'
 
+# Values that differ on Windows
+# The location of the config folder (containing conf.d)
+# The location of the dd agent folder (containing checks.d)
+# The name of the DD agent service
+if platform_family?("windows")
+	default['datadog']['configDir'] = "#{ENV['ProgramData']}/Datadog"
+	default['datadog']['agentDir'] = "#{ENV['ProgramFiles(x86)']}/Datadog/Datadog Agent"
+	default['datadog']['agent_name'] = 'DatadogAgent'
+else
+	default['datadog']['configDir'] = '/etc/dd-agent'
+	default['datadog']['agentDir'] = '/etc/dd-agent'
+	default['datadog']['agent_name'] = 'datadog-agent'
+end
+
 # Add tags as override attributes in your role
 default['datadog']['tags'] = ''
 
