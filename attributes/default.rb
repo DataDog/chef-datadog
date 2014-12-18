@@ -30,6 +30,8 @@ default['datadog']['application_key'] = nil
 # The host of the Datadog intake server to send agent data to
 default['datadog']['url'] = 'https://app.datadoghq.com'
 
+default['datadog']['agent_download_url'] = 'https://s3.amazonaws.com/ddagent-windows-stable/ddagent-cli.msi'
+
 # Add tags as override attributes in your role
 default['datadog']['tags'] = ''
 
