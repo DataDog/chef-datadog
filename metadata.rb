@@ -22,6 +22,8 @@ depends          'apt' # We recommend '>= 2.1.0'. See CHANGELOG.md for details
 depends          'chef_handler', '~> 1.1.0'
 depends          'yum'
 
+suggests         'sudo'
+
 recipe 'datadog::default', 'Default'
 recipe 'datadog::dd-agent', 'Installs the Datadog Agent'
 recipe 'datadog::dd-handler', 'Installs a Chef handler for Datadog'
@@ -32,3 +34,4 @@ recipe 'datadog::dogstatsd-ruby', 'Installs the Ruby dogstatsd package for custo
 # integration-specific
 recipe 'datadog::cassandra', 'Installs and configures the Cassandra integration'
 recipe 'datadog::couchdb', 'Installs and configures the CouchDB integration'
+recipe 'datadog::postfix', 'Installs and configures the Postfix integration'
