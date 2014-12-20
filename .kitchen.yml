@@ -349,3 +349,25 @@ suites:
           - name: test2
             host: localhost
             port: 5678
+- name: datadog_postfix
+  run_list:
+    - recipe[sudo]
+    - recipe[datadog::postfix]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      postfix:
+        instances:
+        - directory: "/var/spool/postfix"
+          queues:
+          - incoming
+          - active
+          - deferred
+          tags:
+          - prod
+          - postfix_core
+        - directory: "/var/spool/postfix"
+          queues:
+          - bounce
+          tags:
+          - test
