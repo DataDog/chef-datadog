@@ -12,7 +12,6 @@ Chef recipes to deploy Datadog's components and configuration automatically.
 
 Requirements
 ============
-- python >= 2.6
 - chef >= 10.14
 
 Platforms
@@ -63,7 +62,7 @@ Usage
 =====
 
 1. Add this cookbook to your Chef Server, either by installing with knife or downloading and uploading to your chef-server with knife.
-2. Add your API Key, either to `attributes/default.rb`, or by using the inheritance model and placing it on the node via `environment`, `role` or declaring it in another cookbook at a higher precendence level.
+2. Add your API Key, either to `attributes/default.rb`, or by using the inheritance model and placing it on the node via `environment`, `role` or declaring it in another cookbook at a higher precedence level.
 3. Create an 'application key' for `chef_handler` [here](https://app.datadoghq.com/account/settings#api), and add it to your node, like in Step #2.
 3. Upload the cookbook to chef server via: `knife cookbook upload datadog`
 4. Associate the recipes with the desired `roles`, i.e. "role:chef-client" should contain "datadog::dd-handler" and a "role:base" should start the agent with "datadog::dd-agent".
@@ -72,5 +71,3 @@ Usage
 We are not making use of data_bags in this recipe at this time, as it is unlikely that you will have more than one API key and one application key.
 
 For more deployment details, visit the [Datadog Documentation site](http://docs.datadoghq.com/).
-
-
