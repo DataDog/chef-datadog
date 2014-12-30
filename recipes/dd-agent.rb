@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-case node['platform_family']
+case node['platform']
 when 'windows'
   include_recipe 'datadog::dd-agent-windows'
 else
