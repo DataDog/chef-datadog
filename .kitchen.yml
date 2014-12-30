@@ -69,13 +69,30 @@ suites:
       application_key: alsonotnil
       jmx:
         instances:
-          - server: localhost
+          - host: localhost
             port: 9999
             extra_key: extra_val
-            include:
-              - domain: domain0
-              - domain: domain1
-            exclude: []
+            conf:
+              - include:
+                  domain: domain0
+                  type: ThreadPool
+                  bean: tomcat_bean
+                  attributes:
+                    maxThreads:
+                      alias: tomcat.threads.max
+                      metric_type: gauge
+                    bytesReceived:
+                      alias: tomcat.bytes_rcvd
+                      metric_type: counter
+                include:
+                  domain: org.apache.cassandra.db
+                  attributes:
+                    - BloomFilterDiskSpaceUsed
+                    - Capacity
+                  bean_name: com.datadoghq.test:type=BeanType,tag1=my_bean_name
+                  foo: bar
+                exclude:
+                - domain: evil_domain
 
 - name: dd-agent-mongo
   run_list:
