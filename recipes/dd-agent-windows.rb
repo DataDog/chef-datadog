@@ -18,7 +18,7 @@
 #
 ::Chef::Recipe.send(:include, Datadog::Helper)
 
-dd_agent_version = node['datadog']['agent_version']
+# dd_agent_version = node['datadog']['agent_version']
 # ddagent-cli-5.1.1.msi
 # latest = "https://s3.amazonaws.com/ddagent-windows-stable/ddagent-cli.msi"
 # url = "https://s3.amazonaws.com/ddagent-windows-stable/ddagent-cli-#{node['datadog']['agent_version']}.msi"
@@ -53,9 +53,9 @@ end
 # Set the correct Agent startup action
 agent_action = node['datadog']['agent_start'] ? :start : :stop
 
-template "installs the datadog configuration file" do
+template 'installs the datadog configuration file' do
   path config_path
-  source "datadog.conf.erb"
+  source 'datadog.conf.erb'
   variables(
     :api_key => node['datadog']['api_key'],
     :dd_url => node['datadog']['url']
