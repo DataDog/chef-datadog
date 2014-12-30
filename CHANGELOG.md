@@ -1,6 +1,16 @@
 Changes
 =======
 
+# 2.1.0 / Unreleased
+
+* [BUGFIX] Simplify JMX configuration, [#116][] [@miketheman][]
+  **NOTE** This has been broken for some time, and has had multiple attempts at fixing properly. The correct interface
+  has never been documented, and the implementation has always been left up to the reader. We have changed this to be
+  much simpler - instead of trying to account for any possible methods
+
+* [DOCS] Remove suggestion for python cookbook, as it is no longer needed. [@miketheman][]
+* [MISC] Updates to test suite for simplicity, deprecation warnings, dependencies [@miketheman][] & [@darron][]
+
 # 2.0.0 / 2014-08-22
 
 * **BREAKING CHANGE**: Datadog Agent 5.0.0 Release Edition
@@ -211,6 +221,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#103]: https://github.com/DataDog/chef-datadog/issues/103
 [#105]: https://github.com/DataDog/chef-datadog/issues/105
 [#113]: https://github.com/DataDog/chef-datadog/issues/113
+[#116]: https://github.com/DataDog/chef-datadog/issues/116
 [@JoeDeVries]: https://github.com/JoeDeVries
 [@alexism]: https://github.com/alexism
 [@alq]: https://github.com/alq
@@ -218,6 +229,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@babbottscott]: https://github.com/babbottscott
 [@clofresh]: https://github.com/clofresh
 [@coosh]: https://github.com/coosh
+[@darron]: https://github.com/darron
 [@drewrothstein]: https://github.com/drewrothstein
 [@dwradcliffe]: https://github.com/dwradcliffe
 [@elijahandrews]: https://github.com/elijahandrews
