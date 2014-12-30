@@ -49,6 +49,7 @@ default['datadog']['aptrepo'] = 'http://apt.datadoghq.com'
 default['datadog']['aptrepo_dist'] = 'stable'
 default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/"
 
+# DEPRECATED, will be removed after the release of datadog-agent 6.0
 # Set to true to always install datadog-agent-base (usually only installed on
 # systems with a version of Python lower than 2.6) instead of datadog-agent
 #
