@@ -151,6 +151,20 @@ describe 'datadog::dd-agent' do
       it_behaves_like 'rhellions'
       it_behaves_like 'no version set'
     end
+
+    context 'on Fedora distro' do
+      before(:all) do
+        @chef_run = ChefSpec::SoloRunner.new(
+        :platform => 'fedora',
+        :version => '21'
+        ) do |node|
+          node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
+        end.converge('datadog::dd-agent')
+      end
+
+      it_behaves_like 'rhellions'
+      it_behaves_like 'no version set'
+    end
   end
 
   context 'version 5.x is set' do
