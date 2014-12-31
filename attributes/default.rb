@@ -108,6 +108,9 @@ default['datadog']['graphite_port'] = 17124
 # log-parsing configuration
 default['datadog']['dogstreams'] = []
 
+# custom emitter configuration
+default['datadog']['custom_emitters'] = []
+
 # Logging configuration
 default['datadog']['syslog']['active'] = false
 default['datadog']['syslog']['udp'] = false
