@@ -3,6 +3,7 @@ Changes
 
 # 2.1.0 / Unreleased
 
+* [FEATURE] Add support for custom emitters, [#123][] [@arthurnn][] & [@graemej][]
 * [FEATURE] Add support for statsd forwarding in config file, [#117][] [@ctrlok][]
 
 * [BUGFIX] Simplify JMX configuration, [#116][] [@miketheman][]
@@ -225,10 +226,12 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#113]: https://github.com/DataDog/chef-datadog/issues/113
 [#116]: https://github.com/DataDog/chef-datadog/issues/116
 [#117]: https://github.com/DataDog/chef-datadog/issues/117
+[#123]: https://github.com/DataDog/chef-datadog/issues/123
 [@JoeDeVries]: https://github.com/JoeDeVries
 [@alexism]: https://github.com/alexism
 [@alq]: https://github.com/alq
 [@antonio-osorio]: https://github.com/antonio-osorio
+[@arthurnn]: https://github.com/arthurnn
 [@babbottscott]: https://github.com/babbottscott
 [@clofresh]: https://github.com/clofresh
 [@coosh]: https://github.com/coosh
@@ -239,6 +242,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@elijahandrews]: https://github.com/elijahandrews
 [@evan2645]: https://github.com/evan2645
 [@flah00]: https://github.com/flah00
+[@graemej]: https://github.com/graemej
 [@gregf]: https://github.com/gregf
 [@jedi4ever]: https://github.com/jedi4ever
 [@jtimberman]: https://github.com/jtimberman
