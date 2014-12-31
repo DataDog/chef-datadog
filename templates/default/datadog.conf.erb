@@ -48,6 +48,10 @@ dogstatsd_interval: <%= node['datadog']['dogstatsd_interval'] %>
 ## If 'yes', counters and rates will be normalized to 1 second (that is divided
 ## by the dogstatsd_interval) before being sent to the server. Defaults to 'yes'
 dogstatsd_normalize: <%= node['datadog']['dogstatsd_normalize'] %>
+<% if node['datadog']['statsd_forward_host'] -%>
+statsd_forward_host: <%= node['datadog']['statsd_forward_host'] %>
+statsd_forward_port: <%= node['datadog']['statsd_forward_port'] %>
+<% end -%>
 <% end -%>
 
 # ========================================================================== #
