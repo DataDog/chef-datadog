@@ -8,6 +8,7 @@ check_freq: <%= node['datadog']['check_freq'] %>
 hostname: <%= node['datadog']['hostname'] %>
 use_mount: <%= node['datadog']['use_mount'] ? "yes" : "no"  %>
 listen_port: <%= node['datadog']['agent_port'] %>
+bind_host: <%= node['datadog']['bind_host'] %>
 <% if node['datadog']['autorestart'] -%>
 autorestart: <%= node['datadog']['autorestart'] %>
 <% end -%>

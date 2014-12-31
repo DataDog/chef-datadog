@@ -79,6 +79,9 @@ default['datadog']['debug'] = false
 # See: https://github.com/DataDog/dd-agent/wiki/Network-Traffic-and-Proxy-Configuration
 default['datadog']['non_local_traffic'] = false
 
+# The loopback address the Forwarder and Dogstatsd will bind.
+default['datadog']['bind_host'] = 'localhost'
+
 # How often you want the agent to collect data, in seconds. Any value between
 # 15 and 60 is a reasonable interval.
 default['datadog']['check_freq'] = 15
