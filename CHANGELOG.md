@@ -3,6 +3,7 @@ Changes
 
 # 2.1.0 / Unreleased
 
+* [FEATURE] Add support for bind_host parameter, [#148][] [@jblancett][]
 * [FEATURE] Add support for Fedora platform, [#135][] [@juliandunn][]
 * [FEATURE] Add recipe for package removal, [#125][] [@bitmonk][]
 * [FEATURE] Add support for custom emitters, [#123][] [@arthurnn][] & [@graemej][]
@@ -231,6 +232,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#123]: https://github.com/DataDog/chef-datadog/issues/123
 [#125]: https://github.com/DataDog/chef-datadog/issues/125
 [#135]: https://github.com/DataDog/chef-datadog/issues/135
+[#148]: https://github.com/DataDog/chef-datadog/issues/148
 [@JoeDeVries]: https://github.com/JoeDeVries
 [@alexism]: https://github.com/alexism
 [@alq]: https://github.com/alq
@@ -249,6 +251,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@flah00]: https://github.com/flah00
 [@graemej]: https://github.com/graemej
 [@gregf]: https://github.com/gregf
+[@jblancett]: https://github.com/jblancett
 [@jedi4ever]: https://github.com/jedi4ever
 [@jtimberman]: https://github.com/jtimberman
 [@juliandunn]: https://github.com/juliandunn
