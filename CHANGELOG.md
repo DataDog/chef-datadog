@@ -3,6 +3,8 @@ Changes
 
 # 2.1.0 / Unreleased
 
+* [FEATURE] Add support for statsd forwarding in config file, [#117][] [@ctrlok][]
+
 * [BUGFIX] Simplify JMX configuration, [#116][] [@miketheman][]
   **NOTE** This has been broken for some time, and has had multiple attempts at fixing properly. The correct interface
   has never been documented, and the implementation has always been left up to the reader. We have changed this to be
@@ -222,6 +224,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#105]: https://github.com/DataDog/chef-datadog/issues/105
 [#113]: https://github.com/DataDog/chef-datadog/issues/113
 [#116]: https://github.com/DataDog/chef-datadog/issues/116
+[#117]: https://github.com/DataDog/chef-datadog/issues/117
 [@JoeDeVries]: https://github.com/JoeDeVries
 [@alexism]: https://github.com/alexism
 [@alq]: https://github.com/alq
@@ -229,6 +232,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@babbottscott]: https://github.com/babbottscott
 [@clofresh]: https://github.com/clofresh
 [@coosh]: https://github.com/coosh
+[@ctrlok]: https://github.com/ctrlok
 [@darron]: https://github.com/darron
 [@drewrothstein]: https://github.com/drewrothstein
 [@dwradcliffe]: https://github.com/dwradcliffe
