@@ -10,6 +10,7 @@ version          '2.0.0'
   amazon
   centos
   debian
+  fedora
   redhat
   scientific
   ubuntu
