@@ -3,6 +3,7 @@ Changes
 
 # 2.1.0 / Unreleased
 
+* [FEATURE] Add support for Fedora platform, [#135][] [@juliandunn][]
 * [FEATURE] Add recipe for package removal, [#125][] [@bitmonk][]
 * [FEATURE] Add support for custom emitters, [#123][] [@arthurnn][] & [@graemej][]
 * [FEATURE] Add support for statsd forwarding in config file, [#117][] [@ctrlok][]
@@ -229,6 +230,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#117]: https://github.com/DataDog/chef-datadog/issues/117
 [#123]: https://github.com/DataDog/chef-datadog/issues/123
 [#125]: https://github.com/DataDog/chef-datadog/issues/125
+[#135]: https://github.com/DataDog/chef-datadog/issues/135
 [@JoeDeVries]: https://github.com/JoeDeVries
 [@alexism]: https://github.com/alexism
 [@alq]: https://github.com/alq
@@ -249,6 +251,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@gregf]: https://github.com/gregf
 [@jedi4ever]: https://github.com/jedi4ever
 [@jtimberman]: https://github.com/jtimberman
+[@juliandunn]: https://github.com/juliandunn
 [@mfischer-zd]: https://github.com/mfischer-zd
 [@miketheman]: https://github.com/miketheman
 [@nkts]: https://github.com/nkts
