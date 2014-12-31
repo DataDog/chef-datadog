@@ -3,6 +3,7 @@ Changes
 
 # 2.1.0 / Unreleased
 
+* [FEATURE] Add recipe for package removal, [#125][] [@bitmonk][]
 * [FEATURE] Add support for custom emitters, [#123][] [@arthurnn][] & [@graemej][]
 * [FEATURE] Add support for statsd forwarding in config file, [#117][] [@ctrlok][]
 
@@ -227,12 +228,14 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#116]: https://github.com/DataDog/chef-datadog/issues/116
 [#117]: https://github.com/DataDog/chef-datadog/issues/117
 [#123]: https://github.com/DataDog/chef-datadog/issues/123
+[#125]: https://github.com/DataDog/chef-datadog/issues/125
 [@JoeDeVries]: https://github.com/JoeDeVries
 [@alexism]: https://github.com/alexism
 [@alq]: https://github.com/alq
 [@antonio-osorio]: https://github.com/antonio-osorio
 [@arthurnn]: https://github.com/arthurnn
 [@babbottscott]: https://github.com/babbottscott
+[@bitmonk]: https://github.com/bitmonk
 [@clofresh]: https://github.com/clofresh
 [@coosh]: https://github.com/coosh
 [@ctrlok]: https://github.com/ctrlok
