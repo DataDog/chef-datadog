@@ -1,6 +1,21 @@
 instances:
   <% @instances.each do |i| -%>
   - url: <%= i["url"] %>
+    <% unless i["is_external"].nil? %>
+    is_external: <%= i["is_external"] %>
+    <% end %>
+    <% unless i["username"].nil? %>
+    username: <%= i["username"] %>
+    <% end %>
+    <% unless i["password"].nil? %>
+    password: <%= i["password"] %>
+    <% end %>
+    <% if i.key?('tags') -%>
+    tags:
+      <% i['tags'].each do |t| -%>
+      - <%= t %>
+      <% end -%>
+    <% end -%>
   <% end %>
 
 # Nothing to configure below
