@@ -52,6 +52,7 @@ default['datadog']['aptrepo'] = 'http://apt.datadoghq.com'
 default['datadog']['aptrepo_dist'] = 'stable'
 default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/"
 
+# DEPRECATED, will be removed after the release of datadog-agent 6.0
 # Set to true to always install datadog-agent-base (usually only installed on
 # systems with a version of Python lower than 2.6) instead of datadog-agent
 #
@@ -80,6 +81,9 @@ default['datadog']['debug'] = false
 # Default to false to non_local_traffic
 # See: https://github.com/DataDog/dd-agent/wiki/Network-Traffic-and-Proxy-Configuration
 default['datadog']['non_local_traffic'] = false
+
+# The loopback address the Forwarder and Dogstatsd will bind.
+default['datadog']['bind_host'] = 'localhost'
 
 # How often you want the agent to collect data, in seconds. Any value between
 # 15 and 60 is a reasonable interval.
@@ -110,6 +114,9 @@ default['datadog']['graphite_port'] = 17124
 # log-parsing configuration
 default['datadog']['dogstreams'] = []
 
+# custom emitter configuration
+default['datadog']['custom_emitters'] = []
+
 # Logging configuration
 default['datadog']['syslog']['active'] = false
 default['datadog']['syslog']['udp'] = false
@@ -127,6 +134,8 @@ default['datadog']['dogstatsd'] = true
 default['datadog']['dogstatsd_port'] = 8125
 default['datadog']['dogstatsd_interval'] = 10
 default['datadog']['dogstatsd_normalize'] = 'yes'
+default['datadog']['statsd_forward_host'] = nil
+default['datadog']['statsd_forward_port'] = 8125
 
 # For service-specific configuration, use the integration recipes included
 # in this cookbook, and apply them to the appropirate node's run list.

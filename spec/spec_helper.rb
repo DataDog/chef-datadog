@@ -9,4 +9,4 @@ RSpec.configure do |config|
   config.formatter = :documentation # :progress, :html, :textmate
 end
 
-at_exit { ChefSpec::Coverage.report! }
+ChefSpec::Coverage.start!
