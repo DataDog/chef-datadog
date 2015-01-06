@@ -34,7 +34,7 @@ default['datadog']['url'] = 'https://app.datadoghq.com'
 default['datadog']['tags'] = ''
 
 # Collect EC2 tags
-default['datadog']['collect_ec2_tags'] = 'no'
+default['datadog']['collect_ec2_tags'] = nil
 
 # Autorestart agent
 default['datadog']['autorestart'] = false
