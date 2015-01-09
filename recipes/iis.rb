@@ -1,4 +1,4 @@
-include_recipe 'datadog::dd-agent'
+include_recipe 'datadog::windows'
 
 # Integrate IIS metrics
 #
