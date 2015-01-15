@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 group :test do
   gem 'berkshelf', '~> 3.1'
   gem 'chefspec', '~> 4.2'
+  gem 'coveralls', '~> 0.7.1', require: false
   gem 'foodcritic', '~> 4.0.0'
   gem 'rake', '>= 10.2'
   gem 'rubocop', '= 0.28.0'
