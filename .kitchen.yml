@@ -44,7 +44,21 @@ suites:
       api_key: somethingnotnil
       application_key: alsonotnil
 
-- name: dd-agent-haproxy
+- name: datadog_activemq
+  run_list:
+    - recipe[datadog::activemq]
+  attributes:
+    datadog:
+      api_key: somethingnotnil
+      application_key: alsonotnil
+      activemq:
+        instances:
+          - host: localhost
+            port: 1099
+            user: someuser
+            password: somepass
+
+- name: datadog_haproxy
   run_list:
     - recipe[datadog::haproxy]
   attributes:
@@ -60,7 +74,7 @@ suites:
             collect_aggregates_only: true
             collect_status_metrics: true
 
-- name: dd-agent-jmx
+- name: datadog_jmx
   run_list:
     - recipe[datadog::jmx]
   attributes:
@@ -94,7 +108,7 @@ suites:
                 exclude:
                 - domain: evil_domain
 
-- name: dd-agent-mongo
+- name: datadog_mongo
   run_list:
     - recipe[datadog::mongo]
   attributes:
@@ -106,7 +120,7 @@ suites:
           - host: localhost
             port: 27017
 
-- name: dd-agent-kafka
+- name: datadog_kafka
   run_list:
     - recipe[datadog::kafka]
   attributes:
@@ -124,7 +138,7 @@ suites:
             trust_store_path: /path/to/trustStore.jks
             trust_store_password: password
 
-- name: dd-agent-kafka-consumer
+- name: datadog_kafka_consumer
   run_list:
     - recipe[datadog::kafka_consumer]
   attributes:
