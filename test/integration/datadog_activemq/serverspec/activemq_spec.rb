@@ -23,7 +23,7 @@ describe file(AGENT_CONFIG) do
         {
           'host' => 'localhost',
           'port' => 1099,
-          'username' => 'someuser',
+          'user' => 'someuser',
           'password' => 'somepass'
         }
       ],
