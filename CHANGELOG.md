@@ -3,6 +3,7 @@ Changes
 
 # 2.1.0 / Unreleased
 
+* [OPTIMIZE] Use hkp keyserver URL on debianoids, [#138][] [@khouse][]
 * [BUGFIX] Use correct indentation for kafka recipe, correct values, add tests, [#163][], [@donaldguy][] & [@miketheman][]
 * [BUGFIX] Use correct indentation for activemq recipe, correct param, add tests, [#171][] [@SelerityMichael][] & [@miketheman][]
 * [FEATURE] Add support for bind_host parameter, [#148][] [@jblancett][]
@@ -234,6 +235,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#123]: https://github.com/DataDog/chef-datadog/issues/123
 [#125]: https://github.com/DataDog/chef-datadog/issues/125
 [#135]: https://github.com/DataDog/chef-datadog/issues/135
+[#138]: https://github.com/DataDog/chef-datadog/issues/138
 [#148]: https://github.com/DataDog/chef-datadog/issues/148
 [#163]: https://github.com/DataDog/chef-datadog/issues/163
 [#171]: https://github.com/DataDog/chef-datadog/issues/171
@@ -261,6 +263,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@jedi4ever]: https://github.com/jedi4ever
 [@jtimberman]: https://github.com/jtimberman
 [@juliandunn]: https://github.com/juliandunn
+[@khouse]: https://github.com/khouse
 [@mfischer-zd]: https://github.com/mfischer-zd
 [@miketheman]: https://github.com/miketheman
 [@nkts]: https://github.com/nkts
