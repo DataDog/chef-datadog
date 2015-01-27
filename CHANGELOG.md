@@ -3,6 +3,7 @@ Changes
 
 # 2.1.0 / Unreleased
 
+* [FEATURE] Add Agent package attribute to control package provider action, [#127][], [#147][] [@miketheman][]
 * [OPTIMIZE] Use hkp keyserver URL on debianoids, [#138][] [@khouse][]
 * [BUGFIX] Use correct indentation for kafka recipe, correct values, add tests, [#163][], [@donaldguy][] & [@miketheman][]
 * [BUGFIX] Use correct indentation for activemq recipe, correct param, add tests, [#171][] [@SelerityMichael][] & [@miketheman][]
@@ -234,8 +235,10 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#117]: https://github.com/DataDog/chef-datadog/issues/117
 [#123]: https://github.com/DataDog/chef-datadog/issues/123
 [#125]: https://github.com/DataDog/chef-datadog/issues/125
+[#127]: https://github.com/DataDog/chef-datadog/issues/127
 [#135]: https://github.com/DataDog/chef-datadog/issues/135
 [#138]: https://github.com/DataDog/chef-datadog/issues/138
+[#147]: https://github.com/DataDog/chef-datadog/issues/147
 [#148]: https://github.com/DataDog/chef-datadog/issues/148
 [#163]: https://github.com/DataDog/chef-datadog/issues/163
 [#171]: https://github.com/DataDog/chef-datadog/issues/171
