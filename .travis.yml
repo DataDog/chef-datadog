@@ -8,4 +8,4 @@ rvm:
   - 2.1.5
   - 2.2.0
 
-bundler_args: --without=integration
+bundler_args: --without=integration development
