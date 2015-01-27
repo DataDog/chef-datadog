@@ -3,6 +3,7 @@ Changes
 
 # 2.1.0 / Unreleased
 
+* [FEATURE] Add configuration flag to control collection of EC2 tags from Agent, [#159][] [@mirceal][]
 * [FEATURE] Add Agent package attribute to control package provider action, [#127][], [#147][] [@miketheman][]
 * [OPTIMIZE] Use hkp keyserver URL on debianoids, [#138][] [@khouse][]
 * [BUGFIX] Use correct indentation for kafka recipe, correct values, add tests, [#163][], [@donaldguy][] & [@miketheman][]
@@ -240,6 +241,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#138]: https://github.com/DataDog/chef-datadog/issues/138
 [#147]: https://github.com/DataDog/chef-datadog/issues/147
 [#148]: https://github.com/DataDog/chef-datadog/issues/148
+[#159]: https://github.com/DataDog/chef-datadog/issues/159
 [#163]: https://github.com/DataDog/chef-datadog/issues/163
 [#171]: https://github.com/DataDog/chef-datadog/issues/171
 [@JoeDeVries]: https://github.com/JoeDeVries
@@ -269,6 +271,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@khouse]: https://github.com/khouse
 [@mfischer-zd]: https://github.com/mfischer-zd
 [@miketheman]: https://github.com/miketheman
+[@mirceal]: https://github.com/mirceal
 [@nkts]: https://github.com/nkts
 [@phlipper]: https://github.com/phlipper
 [@qqfr2507]: https://github.com/qqfr2507
