@@ -100,7 +100,7 @@ default['datadog']['check_freq'] = 15
 default['datadog']['hostname'] = node.name
 
 # If running on ec2, if true, use the instance-id as the host identifier
-# rather than the hostname for the agent or nodename for chef-handler.
+# rather than the hostname for chef-handler.
 default['datadog']['use_ec2_instance_id'] = false
 
 # Use mount points instead of volumes to track disk and fs metrics
