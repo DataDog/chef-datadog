@@ -3,7 +3,9 @@ Where to Find the Code
 To submit issues and patches please visit https://github.com/DataDog/chef-datadog.
 The code is licensed under the Apache License 2.0 (see  LICENSE for details).
 
+[![Chef cookbook](https://img.shields.io/cookbook/v/datadog.svg?style=flat)](https://github.com/DataDog/chef-datadog)
 [![Build Status](https://secure.travis-ci.org/DataDog/chef-datadog.svg?branch=master)](http://travis-ci.org/DataDog/chef-datadog)
+[![Coverage Status](https://coveralls.io/repos/DataDog/chef-datadog/badge.svg?branch=master)](https://coveralls.io/r/DataDog/chef-datadog?branch=master)
 
 Datadog Cookbook
 ================
