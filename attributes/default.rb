@@ -65,6 +65,10 @@ end
 # Agent Version
 default['datadog']['agent_version'] = nil
 
+# Agent package action
+# Allow override with `upgrade` to get latest
+default['datadog']['agent_package_action'] = 'install'
+
 # Chef handler version
 default['datadog']['chef_handler_version'] = nil
 
