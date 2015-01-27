@@ -37,3 +37,7 @@ cookbooks/
 
 # Coverage
 coverage/
+
+# Local environment managaers
+.env
+.envrc
