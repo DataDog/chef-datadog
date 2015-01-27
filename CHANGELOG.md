@@ -3,6 +3,7 @@ Changes
 
 # 2.1.0 / Unreleased
 
+* [BUGFIX] Use correct indentation for kafka recipe, correct values, add tests, [#163][], [@donaldguy][] & [@miketheman][]
 * [BUGFIX] Use correct indentation for activemq recipe, correct param, add tests, [#171][] [@SelerityMichael][] & [@miketheman][]
 * [FEATURE] Add support for bind_host parameter, [#148][] [@jblancett][]
 * [FEATURE] Add support for Fedora platform, [#135][] [@juliandunn][]
@@ -234,6 +235,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#125]: https://github.com/DataDog/chef-datadog/issues/125
 [#135]: https://github.com/DataDog/chef-datadog/issues/135
 [#148]: https://github.com/DataDog/chef-datadog/issues/148
+[#163]: https://github.com/DataDog/chef-datadog/issues/163
 [#171]: https://github.com/DataDog/chef-datadog/issues/171
 [@JoeDeVries]: https://github.com/JoeDeVries
 [@SelerityMichael]: https://github.com/SelerityMichael
@@ -247,6 +249,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@coosh]: https://github.com/coosh
 [@ctrlok]: https://github.com/ctrlok
 [@darron]: https://github.com/darron
+[@donaldguy]: https://github.com/donaldguy
 [@drewrothstein]: https://github.com/drewrothstein
 [@dwradcliffe]: https://github.com/dwradcliffe
 [@elijahandrews]: https://github.com/elijahandrews
