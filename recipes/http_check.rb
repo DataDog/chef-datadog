@@ -14,7 +14,7 @@ include_recipe 'datadog::dd-agent'
 #       'skip_event' => true,
 #       'tags' => [
 #        'myApp',
-#        'serviceName' 
+#        'serviceName'
 #       ]
 #     }
 #   ]
