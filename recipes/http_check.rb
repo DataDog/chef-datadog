@@ -1,11 +1,9 @@
 include_recipe 'datadog::dd-agent'
 
-# Monitor http
+# Build a data structure with configuration.
 # @see http://docs.datadoghq.com/guides/network_checks/
-#
-# Assuming you have a web server you want to check
-# via http you could set up the following attributes
-# node.datadog.http_check.instances = [
+# @example
+#   node.override['datadog']['http_check']['instances'] = [
 #     {
 #       'name' => 'MyHTTPcheck',
 #       'url' => 'http://my.server/some/service',
