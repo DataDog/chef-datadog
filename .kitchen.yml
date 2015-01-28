@@ -169,3 +169,49 @@ suites:
             consumer_groups:
               my_consumer:
                 my_topic: [0, 1, 4, 12]
+
+- name: dd-agent-http-check
+  run_list:
+    - recipe[datadog::dd-handler]
+    - recipe[datadog::http_check]
+  attributes:
+    datadog:
+      api_key: somethingnotnil
+      application_key: alsonotnil
+      http_check:
+        init_config:
+          notify:
+            - "user1@example.com"
+            - "pagerduty1"
+        instances:
+          - name: "test"
+            url: "http://localhost/"
+          - name: "test with notify"
+            url: "http://localhost/"
+            notify:
+              - "user2@example.com"
+              - "pagerduty2"
+
+- name: dd-agent-tcp-check
+  run_list:
+    - recipe[datadog::dd-handler]
+    - recipe[datadog::tcp_check]
+  attributes:
+    datadog:
+      api_key: somethingnotnil
+      application_key: alsonotnil
+      tcp_check:
+        init_config:
+          notify:
+            - "user1@example.com"
+            - "pagerduty1"
+        instances:
+          - name: "test"
+            host: "localhost"
+            port: 1234
+          - name: "test with notify"
+            host: "localhost"
+            port: 5678
+            notify:
+              - "user2@example.com"
+              - "pagerduty2"
