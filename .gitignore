@@ -30,5 +30,14 @@ Gemfile*.lock
 Berksfile.lock
 cookbooks/
 /.ruby-version
+
+# Test-Kitchen
 .kitchen/
 .kitchen.local.yml
+
+# Coverage
+coverage/
+
+# Local environment managaers
+.env
+.envrc

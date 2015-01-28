@@ -25,7 +25,9 @@ task style: ['style:chef', 'style:ruby']
 
 # Rspec and ChefSpec
 desc 'Run ChefSpec examples'
-RSpec::Core::RakeTask.new(:spec)
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.verbose = false
+end
 
 begin
   require 'kitchen/rake_tasks'

@@ -2,7 +2,7 @@
 # Cookbook Name:: datadog
 # Recipe:: repository
 #
-# Copyright 2013-2014, Datadog
+# Copyright 2013-2015, Datadog
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ when 'debian'
   include_recipe 'apt'
 
   apt_repository 'datadog' do
-    keyserver 'keyserver.ubuntu.com'
+    keyserver 'hkp://keyserver.ubuntu.com:80'
     key 'C7A7DA52'
     uri node['datadog']['aptrepo']
     distribution node['datadog']['aptrepo_dist']

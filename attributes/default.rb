@@ -2,7 +2,7 @@
 # Cookbook Name:: datadog
 # Attributes:: default
 #
-# Copyright 2011-2014, Datadog
+# Copyright 2011-2015, Datadog
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -32,6 +32,9 @@ default['datadog']['url'] = 'https://app.datadoghq.com'
 
 # Add tags as override attributes in your role
 default['datadog']['tags'] = ''
+
+# Collect EC2 tags, set to 'yes' to collect
+default['datadog']['collect_ec2_tags'] = nil
 
 # Autorestart agent
 default['datadog']['autorestart'] = false
@@ -65,6 +68,10 @@ end
 # Agent Version
 default['datadog']['agent_version'] = nil
 
+# Agent package action
+# Allow override with `upgrade` to get latest
+default['datadog']['agent_package_action'] = 'install'
+
 # Chef handler version
 default['datadog']['chef_handler_version'] = nil
 
@@ -91,7 +98,7 @@ default['datadog']['check_freq'] = 15
 default['datadog']['hostname'] = node.name
 
 # If running on ec2, if true, use the instance-id as the host identifier
-# rather than the hostname for the agent or nodename for chef-handler.
+# rather than the hostname for chef-handler.
 default['datadog']['use_ec2_instance_id'] = false
 
 # Use mount points instead of volumes to track disk and fs metrics

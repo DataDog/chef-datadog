@@ -2,7 +2,7 @@
 # Cookbook Name:: datadog
 # Recipe:: dd-agent
 #
-# Copyright 2011-2014, Datadog
+# Copyright 2011-2015, Datadog
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -38,6 +38,7 @@ else
   # Install the regular package
   package 'datadog-agent' do
     version dd_agent_version
+    action node['datadog']['agent_package_action'] # default is :install
   end
 end
 
