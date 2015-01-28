@@ -26,19 +26,10 @@ describe file(AGENT_CONFIG) do
         },
         {
           'name' => 'test with notify',
-          'url' => 'http://localhost/',
-          'notify' => [
-            'user2@example.com',
-            'pagerduty2'
-          ]
+          'url' => 'http://localhost/'
         }
       ],
-      'init_config' => {
-        'notify' => [
-          'user1@example.com',
-          'pagerduty1'
-        ]
-      }
+      'init_config' => nil
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

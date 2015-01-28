@@ -178,18 +178,11 @@ suites:
       api_key: somethingnotnil
       application_key: alsonotnil
       http_check:
-        init_config:
-          notify:
-            - "user1@example.com"
-            - "pagerduty1"
         instances:
           - name: "test"
             url: "http://localhost/"
           - name: "test with notify"
             url: "http://localhost/"
-            notify:
-              - "user2@example.com"
-              - "pagerduty2"
 
 - name: datadog_tcp_check
   run_list:
@@ -199,10 +192,6 @@ suites:
       api_key: somethingnotnil
       application_key: alsonotnil
       tcp_check:
-        init_config:
-          notify:
-            - "user1@example.com"
-            - "pagerduty1"
         instances:
           - name: "test"
             host: "localhost"
@@ -210,6 +199,3 @@ suites:
           - name: "test with notify"
             host: "localhost"
             port: 5678
-            notify:
-              - "user2@example.com"
-              - "pagerduty2"

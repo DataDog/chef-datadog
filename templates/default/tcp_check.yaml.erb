@@ -1,23 +1,10 @@
 init_config:
-<% if @init_config.key?("notify") -%>
-    notify:
-      <% @init_config["notify"].each do |k| -%>
-      - <%= k %>
-      <% end -%>
-<% end -%>
 
-<% excluded_keys = ["name", "notify"] -%>
+<% excluded_keys = ["name"] -%>
 instances:
 <% @instances.each do |i| -%>
   - name: <%= i['name'] %>
     <% (i.keys - excluded_keys).each do |key| -%>
     <%= key %>: <%= i[key] %>
     <% end -%>
-    <% if i.key?('notify') -%>
-    notify:
-      <% i['notify'].each do |k| -%>
-      - <%= k %>
-      <% end -%>
-    <% end -%>
-
 <% end -%>

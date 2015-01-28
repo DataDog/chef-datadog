@@ -1,15 +1,9 @@
 init_config:
-<% if @init_config.key?("notify") -%>
-    notify:
-      <% @init_config["notify"].each do |k| -%>
-      - <%= k %>
-      <% end -%>
-<% end -%>
 <% if @init_config.key?("ca_certs") -%>
     ca_certs: <%= @init_config["ca_certs"] -%>
 <% end -%>
 
-<% excluded_keys = ["name", "username", "password", "tags", "headers", "notify"] -%>
+<% excluded_keys = ["name", "username", "password", "tags", "headers"] -%>
 instances:
 <% @instances.each do |i| -%>
   - name: <%= i['name'] %>
@@ -32,11 +26,4 @@ instances:
         <%= k %>: <%= v %>
       <% end -%>
     <% end -%>
-    <% if i.key?('notify') -%>
-    notify:
-      <% i['notify'].each do |k| -%>
-      - <%= k %>
-      <% end -%>
-    <% end -%>
-
 <% end -%>
