@@ -58,6 +58,22 @@ suites:
             user: someuser
             password: somepass
 
+- name: datadog_apache
+  run_list:
+    - recipe[datadog::apache]
+  attributes:
+    datadog:
+      api_key: somethingnotnil
+      application_key: alsonotnil
+      apache:
+        instances:
+          - status_url: http://mysite.com/server-status?auto
+            apache_user: someusername
+            apache_password: sekret
+            tags:
+              - kitchen
+              - sink
+
 - name: datadog_haproxy
   run_list:
     - recipe[datadog::haproxy]
