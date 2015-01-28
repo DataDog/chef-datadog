@@ -163,6 +163,19 @@ suites:
             collect_aggregates_only: true
             collect_status_metrics: true
 
+- name: datadog_http_check
+  run_list:
+    - recipe[datadog::http_check]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      http_check:
+        instances:
+          - name: test
+            url: http://localhost/
+          - name: test2
+            url: http://localhost/
+
 - name: datadog_jmx
   run_list:
     - recipe[datadog::jmx]
@@ -256,3 +269,18 @@ suites:
             search_string:
               - "somepid"
               - "pidname"
+
+- name: datadog_tcp_check
+  run_list:
+    - recipe[datadog::tcp_check]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      tcp_check:
+        instances:
+          - name: test
+            host: localhost
+            port: 1234
+          - name: test2
+            host: localhost
+            port: 5678
