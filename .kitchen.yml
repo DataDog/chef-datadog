@@ -108,6 +108,19 @@ suites:
             password: somepass
             process_name_regex: .*cassandra.*
 
+- name: datadog_couchdb
+  run_list:
+    - recipe[datadog::couchdb]
+  attributes:
+    datadog:
+      api_key: somethingnotnil
+      application_key: alsonotnil
+      couch:
+        instances:
+          - server: http://localhost:5984
+            user: someuser
+            password: somepass
+
 - name: datadog_haproxy
   run_list:
     - recipe[datadog::haproxy]

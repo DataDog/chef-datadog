@@ -8,12 +8,12 @@ include_recipe 'datadog::dd-agent'
 # to help you differentiate between instances.
 # NOTE the "couch" instead of "couchdb" attribute.
 #
-# node.datadog.couch.instances = [
+# node['datadog']['couch']['instances'] = [
 #                                 {
-#                                  :server => "http://localhost:1234"
+#                                  server: 'http://localhost:1234'
 #                                 },
 #                                 {
-#                                  :server => "http://localhost:4567"
+#                                  server: 'http://localhost:4567'
 #                                 }
 #                                ]
 
