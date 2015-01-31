@@ -18,6 +18,7 @@ Changes
   **NOTE** This has been broken for some time, and has had multiple attempts at fixing properly. The correct interface
   has never been documented, and the implementation has always been left up to the reader. We have changed this to be
   much simpler - instead of trying to account for any possible methods
+* [BUGFIX] Correct cassandra template render flags, [@miketheman][]
 
 * [DOCS] Remove suggestion for python cookbook, as it is no longer needed. [@miketheman][]
 * [MISC] Updates to test suite for simplicity, deprecation warnings, dependencies [@miketheman][] & [@darron][]
