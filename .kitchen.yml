@@ -74,6 +74,25 @@ suites:
               - kitchen
               - sink
 
+- name: datadog_cacti
+  run_list:
+    - recipe[datadog::cacti]
+  attributes:
+    datadog:
+      api_key: somethingnotnil
+      application_key: alsonotnil
+      cacti:
+        instances:
+          - mysql_host: localhost
+            mysql_user: mysql_read_only
+            mysql_password: mysql_read_only_password
+            rrd_path: /path/to/cacti/rra
+            rrd_whitelist: /path/to/rrd_whitelist.txt
+            field_names:
+              - ifIndex
+              - dskDevice
+              - ifName
+
 - name: datadog_haproxy
   run_list:
     - recipe[datadog::haproxy]
