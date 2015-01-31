@@ -93,6 +93,21 @@ suites:
               - dskDevice
               - ifName
 
+- name: datadog_cassandra
+  run_list:
+    - recipe[datadog::cassandra]
+  attributes:
+    datadog:
+      api_key: somethingnotnil
+      application_key: alsonotnil
+      cassandra:
+        instances:
+          - host: localhost
+            port: 7199
+            user: someuser
+            password: somepass
+            process_name_regex: .*cassandra.*
+
 - name: datadog_haproxy
   run_list:
     - recipe[datadog::haproxy]
