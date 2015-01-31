@@ -33,7 +33,7 @@ end
 namespace :generate do
   desc 'Create an integration kitchen test template'
   task :test_suite, :recipe_name do |_, arg|
-    gemfile_relative_path = '../../../integration/helpers/serverspec/Gemfile'
+    gemfile_relative_path = '../../helpers/serverspec/Gemfile'
     sspec_template = "#{Dir.pwd}/test/integration/helpers/serverspec/spec_template.rb"
 
     suite_name = "datadog_#{arg['recipe_name']}"
