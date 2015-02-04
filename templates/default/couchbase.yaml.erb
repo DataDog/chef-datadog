@@ -1,0 +1,18 @@
+instances:
+<% @instances.each do |i| -%>
+  - server: <%= i["server"] %>
+    user: <%= i["user"] %>
+    password: <%= i["password"] %>
+    <% if i.key?("timeout") -%>
+    timeout: <%= i["timeout"] %>
+    <% end -%>
+    <% if i.key?("tags") -%>
+    tags:
+      <% i["tags"].each do |t| -%>
+      - <%= t %>
+      <% end -%>
+    <% end -%>
+<% end -%>
+
+init_config:
+# nothing to add here
