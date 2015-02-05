@@ -1,0 +1,67 @@
+import time
+import requests
+import json
+from checks import AgentCheck
+from hashlib import md5
+
+class KeynoteCheck(AgentCheck):
+    def check(self, instance):
+        api = {}
+        api["url"] = self.init_config.get('api_url', 'no endpoint provided')
+        api["key"] = self.init_config.get('api_key', 'no key provided')
+        api["timeout"] = self.init_config.get('api_timeout', 10)
+
+        properties = self.init_config.get('properties')
+
+        data = self.get_data(api)
+
+        # Load the property information:
+        #config = json.load(open('keynote.json'))
+
+        # The two types of keynote checks:
+        perspectives = {
+            0 : "TxP",
+            1 : "ApP"
+        }
+
+        for perspective in perspectives:
+            for thing in data["product"][perspective]["measurement"]:
+                print thing["alias"]
+                tags = []
+                #If we recognize the property, tag it:
+                if thing["alias"] in properties:
+                    if "tags" in properties[thing["alias"]]:
+                     tags = properties[thing["alias"]]["tags"]
+                     print "!!!!!!   TAGS: |%s|" % tags
+                tags.append(perspectives[perspective])
+                tags.append("property:{0}".format(thing["alias"]))
+                tags.extend(self.init_config.get('universal tags', []))
+
+                print "Fetching data for %s with tags |%s|" % (thing["alias"], tags)
+                for datum in thing["avail_data"]:
+                    if datum["value"] not in ["0", "-"]:
+                        label = "keynote.%s" % datum["name"]
+                        print "Sending gauge for %s at value %s" % (label, float(datum["value"]))
+
+                        self.gauge(label, float(datum["value"]), tags=tags, hostname="keynote")
+
+    def get_data(self, api):
+        print "Getting data from %s" % api["url"]
+        # Fetch the Keynote data
+        options = {
+            'api_key' : api["key"],
+            'format' : 'json'
+        }
+        try:
+            r = requests.get(api["url"], params=options)
+        except requests.exceptions.Timeout as e:
+            self.event({
+                'timestamp': int(time.time()),
+                'event_type': 'http_check',
+                'msg_title': 'Keynote API failure',
+                'msg_text': 'Call to Keynote dashboard API timed out after %s seconds.' % api["timeout"],
+                'aggregation_key': md5(api["url"]).hexdigest(),
+                'tags' : ['sadtrombone']
+            })
+
+        return r.json()

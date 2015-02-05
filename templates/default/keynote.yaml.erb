@@ -1,0 +1,19 @@
+init_config:
+    api_url: <%= node['datadog']['keynote']['api_url'] %>
+    api_key: <%= node['datadog']['keynote']['api_key'] %>
+    api_timeout: <%= node['datadog']['keynote']['api_timeout'] %>
+    universal tags:
+        <% node['datadog']['keynote']['universal tags'].each do |t| -%>
+        - <%= t %>
+        <% end %>
+    properties:
+<% node['datadog']['keynote']['properties'].each_pair do |property,tags| %>
+        <%= property %>:
+            tags:
+            <% tags['tags'].each do |t| -%>
+                - <%= t %>
+            <% end %>
+<% end %>
+
+instances:
+    [{}]
