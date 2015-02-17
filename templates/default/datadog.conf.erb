@@ -13,7 +13,11 @@ bind_host: <%= node['datadog']['bind_host'] %>
 autorestart: <%= node['datadog']['autorestart'] %>
 <% end -%>
 
+<% if node['datadog']['tags'].respond_to?("map") %>
+tags: <%= node['datadog']['tags'].select{|k,v| not v.nil?}.map{|k,v| "#{k}:#{v}"}.join(",") %>
+<% else %>
 tags: <%= node['datadog']['tags'] %>
+<% end %>
 <% if node['datadog']['collect_ec2_tags'] -%>
 collect_ec2_tags: <%= node['datadog']['collect_ec2_tags'] %>
 <% end -%>
