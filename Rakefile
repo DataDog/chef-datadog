@@ -55,6 +55,8 @@ namespace :generate do
       FileUtils.symlink(gemfile_relative_path, 'Gemfile')
     end
 
+    suite_name.gsub!('_', '-')
+
     puts <<-EOT.sub(/\n$/, '')
       New test suite created!
       Next steps:
