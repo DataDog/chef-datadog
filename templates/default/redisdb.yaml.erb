@@ -1,14 +1,30 @@
 instances:
 <% @instances.each do |i| -%>
+  <% if i.key?("unix_socket_path") -%>
+  - unix_socket_path: <%= i["unix_socket_path"] %>
+  <% else -%>
   - host: <%= i["server"] %>
     port: <%= i["port"] || 6379 %>
+  <% end -%>
     <% if i.key?("password") -%>
     password: <%= i["password"] %>
+    <% end -%>
+    <% if i.key?("db") -%>
+    db: <%= i["db"] %>
     <% end -%>
     <% if i.key?("tags") -%>
     tags:
       <% i["tags"].each do |t| -%>
       - <%= t %>
+      <% end -%>
+    <% end -%>
+    <% if i.key?("keys") -%>
+        <% if i.key?("warn_on_missing_keys") and i["warn_on_missing_keys"]-%>
+    warn_on_missing_keys: True
+        <% end -%>
+    keys:
+      <% i["keys"].each do |k| -%>
+      - <%= k %>
       <% end -%>
     <% end -%>
 <% end -%>
