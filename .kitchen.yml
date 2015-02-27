@@ -116,6 +116,22 @@ suites:
             user: someuser
             password: somepass
 
+- name: datadog_elasticsearch
+  run_list:
+    - recipe[datadog::elasticsearch]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      elasticsearch:
+        instances:
+          - url: http://localhost:9200
+            username: someuser
+            password: somepass
+            is_external: false
+            tags:
+              - kitchen
+              - sink
+
 - name: datadog_haproxy
   run_list:
     - recipe[datadog::haproxy]
