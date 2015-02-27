@@ -3,6 +3,7 @@ Changes
 
 # 2.1.0 / Unreleased
 
+* [FEATURE] Add configuration flags to elasticsearch template, [#169][] [@chrissnell][]
 * [FEATURE] Add configuration flag to control collection of EC2 tags from Agent, [#159][] [@mirceal][]
 * [FEATURE] Add Agent package attribute to control package provider action, [#127][], [#147][] [@miketheman][]
 * [OPTIMIZE] Use hkp keyserver URL on debianoids, [#138][] [@khouse][]
@@ -244,6 +245,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#148]: https://github.com/DataDog/chef-datadog/issues/148
 [#159]: https://github.com/DataDog/chef-datadog/issues/159
 [#163]: https://github.com/DataDog/chef-datadog/issues/163
+[#169]: https://github.com/DataDog/chef-datadog/issues/169
 [#171]: https://github.com/DataDog/chef-datadog/issues/171
 [@JoeDeVries]: https://github.com/JoeDeVries
 [@SelerityMichael]: https://github.com/SelerityMichael
@@ -253,6 +255,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@arthurnn]: https://github.com/arthurnn
 [@babbottscott]: https://github.com/babbottscott
 [@bitmonk]: https://github.com/bitmonk
+[@chrissnell]: https://github.com/chrissnell
 [@clofresh]: https://github.com/clofresh
 [@coosh]: https://github.com/coosh
 [@ctrlok]: https://github.com/ctrlok
