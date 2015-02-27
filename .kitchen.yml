@@ -40,7 +40,7 @@ suites:
   run_list:
     - recipe[datadog::dd-agent]
   attributes:
-    datadog:
+    datadog: &DATADOG
       api_key: somethingnotnil
       application_key: alsonotnil
 
@@ -49,8 +49,7 @@ suites:
     - recipe[datadog::activemq]
   attributes:
     datadog:
-      api_key: somethingnotnil
-      application_key: alsonotnil
+      <<: *DATADOG
       activemq:
         instances:
           - host: localhost
@@ -63,8 +62,7 @@ suites:
     - recipe[datadog::apache]
   attributes:
     datadog:
-      api_key: somethingnotnil
-      application_key: alsonotnil
+      <<: *DATADOG
       apache:
         instances:
           - status_url: http://mysite.com/server-status?auto
@@ -79,8 +77,7 @@ suites:
     - recipe[datadog::cacti]
   attributes:
     datadog:
-      api_key: somethingnotnil
-      application_key: alsonotnil
+      <<: *DATADOG
       cacti:
         instances:
           - mysql_host: localhost
@@ -98,8 +95,7 @@ suites:
     - recipe[datadog::cassandra]
   attributes:
     datadog:
-      api_key: somethingnotnil
-      application_key: alsonotnil
+      <<: *DATADOG
       cassandra:
         instances:
           - host: localhost
@@ -113,8 +109,7 @@ suites:
     - recipe[datadog::couchdb]
   attributes:
     datadog:
-      api_key: somethingnotnil
-      application_key: alsonotnil
+      <<: *DATADOG
       couch:
         instances:
           - server: http://localhost:5984
@@ -126,8 +121,7 @@ suites:
     - recipe[datadog::haproxy]
   attributes:
     datadog:
-      api_key: somethingnotnil
-      application_key: alsonotnil
+      <<: *DATADOG
       haproxy:
         instances:
           - username: admin
@@ -142,8 +136,7 @@ suites:
     - recipe[datadog::jmx]
   attributes:
     datadog:
-      api_key: somethingnotnil
-      application_key: alsonotnil
+      <<: *DATADOG
       jmx:
         instances:
           - host: localhost
@@ -176,8 +169,7 @@ suites:
     - recipe[datadog::mongo]
   attributes:
     datadog:
-      api_key: somethingnotnil
-      application_key: alsonotnil
+      <<: *DATADOG
       mongo:
         instances:
           - host: localhost
@@ -188,8 +180,7 @@ suites:
     - recipe[datadog::kafka]
   attributes:
     datadog:
-      api_key: somethingnotnil
-      application_key: alsonotnil
+      <<: *DATADOG
       kafka:
         instances:
           - host: localhost
@@ -206,8 +197,7 @@ suites:
     - recipe[datadog::kafka_consumer]
   attributes:
     datadog:
-      api_key: somethingnotnil
-      application_key: alsonotnil
+      <<: *DATADOG
       kafka_consumer:
         instances:
           - kafka_connect_str: localhost:19092
