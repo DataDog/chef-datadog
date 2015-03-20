@@ -44,11 +44,7 @@ end
 #
 raise "Add a ['datadog']['api_key'] attribute to configure this node's Datadog Agent." if node['datadog'] && node['datadog']['api_key'].nil?
 
-if Datadog::Helper.older_than_windows2003r2?
-  config_path = 'C:\Documents and Settings\All Users\Application Data\Datadog\datadog.conf'
-else
-  config_path = 'C:\ProgramData\Datadog\datadog.conf'
-end
+config_path = 'C:\ProgramData\Datadog\datadog.conf'
 
 # Set the correct Agent startup action
 agent_action = node['datadog']['agent_start'] ? :start : :stop

@@ -7,13 +7,13 @@ include_recipe 'datadog::dd-agent'
 #
 # node['datadog']['postgres']['instances'] = [
 #   {
-#     'host' => "localhost",
+#     'server' => "localhost",
 #     'port' => "5432",
 #     'username' => "datadog",
 #     'tags' => ["test"]
 #   },
 #   {
-#     'host' => "remote",
+#     'server' => "remote",
 #     'port' => "5432",
 #     'username' => "datadog",
 #     'tags' => ["prod"],

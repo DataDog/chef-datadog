@@ -23,6 +23,8 @@ shared_examples_for 'common resources' do
 end
 
 shared_examples_for 'datadog-agent' do
+  it_behaves_like 'common resources'
+
   it 'installs the datadog-agent' do
     expect(@chef_run).to install_package 'datadog-agent'
   end
@@ -44,6 +46,18 @@ shared_examples_for 'datadog-agent-base' do
   end
 end
 
+shared_examples_for 'debianoids' do
+  it 'sets up an apt repo' do
+    expect(@chef_run).to add_apt_repository('datadog')
+  end
+end
+
+shared_examples_for 'rhellions' do
+  it 'sets up a yum repo' do
+    expect(@chef_run).to add_yum_repository('datadog')
+  end
+end
+
 shared_examples_for 'no version set' do
   it_behaves_like 'common resources'
 
@@ -56,7 +70,6 @@ shared_examples_for 'version set below 4.x' do
   it_behaves_like 'datadog-agent-base'
 end
 
-
 describe 'datadog::dd-agent' do
   context 'no version set' do
     # This recipe needs to have an api_key, otherwise `raise` is called.
@@ -65,111 +78,170 @@ describe 'datadog::dd-agent' do
     #   below 2.6 => datadog-agent-base is installed
     context 'on debian-family distro' do
       before(:all) do
-        @chef_run = ChefSpec::Runner.new(
+        @chef_run = ChefSpec::SoloRunner.new(
           platform: 'ubuntu',
-          version: '12.04',
+          version: '12.04'
         ) do |node|
-            node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
-            node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
-          end
-        @chef_run.converge 'datadog::dd-agent'
+          node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
+          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+        end
+        @chef_run.converge described_recipe
       end
 
+      it_behaves_like 'debianoids'
       it_behaves_like 'no version set'
     end
 
     context 'on debian-family w/non-numeric python version string' do
       before(:all) do
-        @chef_run = ChefSpec::Runner.new(
+        @chef_run = ChefSpec::SoloRunner.new(
           :platform => 'debian',
           :version => '7.2'
         ) do |node|
-            node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
-            node.set['languages'] = { 'python' => { 'version' => '2.7.5+' } }
-          end
-        @chef_run.converge 'datadog::dd-agent'
+          node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
+          node.set['languages'] = { 'python' => { 'version' => '2.7.5+' } }
+        end
+        @chef_run.converge described_recipe
       end
 
+      it_behaves_like 'debianoids'
       it_behaves_like 'no version set'
     end
 
     context 'on debian-family with older python' do
       before(:all) do
-        @chef_run = ChefSpec::Runner.new(
+        @chef_run = ChefSpec::SoloRunner.new(
           :platform => 'ubuntu',
           :version => '12.04'
         ) do |node|
-            node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
-            node.set['languages'] = { 'python' => { 'version' => '2.4' } }
-          end
-        @chef_run.converge 'datadog::dd-agent'
+          node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
+          node.set['languages'] = { 'python' => { 'version' => '2.4' } }
+        end
+        @chef_run.converge described_recipe
       end
 
+      it_behaves_like 'debianoids'
       it_behaves_like 'no version set'
     end
 
     context 'on RedHat-family distro above 6.x' do
       before(:all) do
-        @chef_run = ChefSpec::Runner.new(
+        @chef_run = ChefSpec::SoloRunner.new(
           :platform => 'centos',
           :version => '6.3'
         ) do |node|
-            node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
-            node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
-          end.converge('datadog::dd-agent')
+          node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
+          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+        end.converge('datadog::dd-agent')
       end
 
+      it_behaves_like 'rhellions'
       it_behaves_like 'no version set'
     end
 
     context 'on CentOS 5.8 distro' do
       before(:all) do
-        @chef_run = ChefSpec::Runner.new(
+        @chef_run = ChefSpec::SoloRunner.new(
           :platform => 'centos',
           :version => '5.8'
         ) do |node|
-            node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
-            node.set['languages'] = { 'python' => { 'version' => '2.4.3' } }
-          end.converge('datadog::dd-agent')
+          node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
+          node.set['languages'] = { 'python' => { 'version' => '2.4.3' } }
+        end.converge('datadog::dd-agent')
       end
 
+      it_behaves_like 'rhellions'
+      it_behaves_like 'no version set'
+    end
+
+    context 'on Fedora distro' do
+      before(:all) do
+        @chef_run = ChefSpec::SoloRunner.new(
+        :platform => 'fedora',
+        :version => '21'
+        ) do |node|
+          node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
+          node.set['languages'] = { 'python' => { 'version' => '2.7.9' } }
+        end.converge('datadog::dd-agent')
+      end
+
+      it_behaves_like 'rhellions'
       it_behaves_like 'no version set'
     end
   end
 
   context 'version 5.x is set' do
     before(:all) do
-      @chef_run = ChefSpec::Runner.new(
+      @chef_run = ChefSpec::SoloRunner.new(
         :platform => 'ubuntu',
         :version => '14.04'
       ) do |node|
-          node.set['datadog'] = {
-            'api_key' => 'somethingnotnil',
-            'agent_version' => '5.1.0-440'
-          }
-          node.set['languages'] = { 'python' => { 'version' => '2.4' } }
-        end
-      @chef_run.converge 'datadog::dd-agent'
+        node.set['datadog'] = {
+          'api_key' => 'somethingnotnil',
+          'agent_version' => '5.1.0-440'
+        }
+        node.set['languages'] = { 'python' => { 'version' => '2.4' } }
+      end
+      @chef_run.converge described_recipe
     end
 
+    it_behaves_like 'debianoids'
     it_behaves_like 'no version set'
   end
 
   context 'version 4.x is set' do
     before(:all) do
-      @chef_run = ChefSpec::Runner.new(
+      @chef_run = ChefSpec::SoloRunner.new(
         :platform => 'ubuntu',
         :version => '10.04'
       ) do |node|
-          node.set['datadog'] = {
-            'api_key' => 'somethingnotnil',
-            'agent_version' => '4.4.0-200'
-          }
-          node.set['languages'] = { 'python' => { 'version' => '2.4' } }
-        end
-      @chef_run.converge 'datadog::dd-agent'
+        node.set['datadog'] = {
+          'api_key' => 'somethingnotnil',
+          'agent_version' => '4.4.0-200'
+        }
+        node.set['languages'] = { 'python' => { 'version' => '2.4' } }
+      end
+      @chef_run.converge described_recipe
     end
 
+    it_behaves_like 'debianoids'
     it_behaves_like 'version set below 4.x'
+  end
+
+  context 'package action' do
+    context 'default :install' do
+      before(:all) do
+        @chef_run = ChefSpec::SoloRunner.new(
+          platform: 'ubuntu',
+          version: '12.04'
+        ) do |node|
+          node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
+          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+        end
+        @chef_run.converge described_recipe
+      end
+
+      it_behaves_like 'debianoids'
+      it_behaves_like 'no version set'
+    end
+
+    context 'override with :upgrade' do
+      before(:all) do
+        @chef_run = ChefSpec::SoloRunner.new(
+          platform: 'ubuntu',
+          version: '12.04'
+        ) do |node|
+          node.set['datadog'] = { 'api_key' => 'somethingnotnil', 'agent_package_action' => :upgrade }
+          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+        end
+        @chef_run.converge described_recipe
+      end
+
+      it 'upgrades the datadog-agent package' do
+        expect(@chef_run).to upgrade_package('datadog-agent')
+      end
+
+      it_behaves_like 'debianoids'
+    end
   end
 end

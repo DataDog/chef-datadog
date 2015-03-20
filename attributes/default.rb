@@ -2,7 +2,7 @@
 # Cookbook Name:: datadog
 # Attributes:: default
 #
-# Copyright 2011-2014, Datadog
+# Copyright 2011-2015, Datadog
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -35,6 +35,9 @@ default['datadog']['agent_download_url'] = 'https://s3.amazonaws.com/ddagent-win
 # Add tags as override attributes in your role
 default['datadog']['tags'] = ''
 
+# Collect EC2 tags, set to 'yes' to collect
+default['datadog']['collect_ec2_tags'] = nil
+
 # Autorestart agent
 default['datadog']['autorestart'] = false
 
@@ -51,6 +54,7 @@ default['datadog']['aptrepo'] = 'http://apt.datadoghq.com'
 default['datadog']['aptrepo_dist'] = 'stable'
 default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/"
 
+# DEPRECATED, will be removed after the release of datadog-agent 6.0
 # Set to true to always install datadog-agent-base (usually only installed on
 # systems with a version of Python lower than 2.6) instead of datadog-agent
 #
@@ -66,6 +70,10 @@ end
 # Agent Version
 default['datadog']['agent_version'] = nil
 
+# Agent package action
+# Allow override with `upgrade` to get latest
+default['datadog']['agent_package_action'] = 'install'
+
 # Chef handler version
 default['datadog']['chef_handler_version'] = nil
 
@@ -80,6 +88,9 @@ default['datadog']['debug'] = false
 # See: https://github.com/DataDog/dd-agent/wiki/Network-Traffic-and-Proxy-Configuration
 default['datadog']['non_local_traffic'] = false
 
+# The loopback address the Forwarder and Dogstatsd will bind.
+default['datadog']['bind_host'] = 'localhost'
+
 # How often you want the agent to collect data, in seconds. Any value between
 # 15 and 60 is a reasonable interval.
 default['datadog']['check_freq'] = 15
@@ -89,7 +100,7 @@ default['datadog']['check_freq'] = 15
 default['datadog']['hostname'] = node.name
 
 # If running on ec2, if true, use the instance-id as the host identifier
-# rather than the hostname for the agent or nodename for chef-handler.
+# rather than the hostname for chef-handler.
 default['datadog']['use_ec2_instance_id'] = false
 
 # Use mount points instead of volumes to track disk and fs metrics
@@ -109,6 +120,9 @@ default['datadog']['graphite_port'] = 17124
 # log-parsing configuration
 default['datadog']['dogstreams'] = []
 
+# custom emitter configuration
+default['datadog']['custom_emitters'] = []
+
 # Logging configuration
 default['datadog']['syslog']['active'] = false
 default['datadog']['syslog']['udp'] = false
@@ -126,6 +140,8 @@ default['datadog']['dogstatsd'] = true
 default['datadog']['dogstatsd_port'] = 8125
 default['datadog']['dogstatsd_interval'] = 10
 default['datadog']['dogstatsd_normalize'] = 'yes'
+default['datadog']['statsd_forward_host'] = nil
+default['datadog']['statsd_forward_port'] = 8125
 
 # For service-specific configuration, use the integration recipes included
 # in this cookbook, and apply them to the appropirate node's run list.
