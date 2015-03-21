@@ -20,15 +20,12 @@ include_recipe 'datadog::dd-agent'
 #            "tags" : []
 #        }
 # }
-
 datadog_monitor 'keynote' do
   instances []
 end
 
 template '/opt/datadog-agent/agent/checks.d/keynote.py' do
-	action :create
-	owner 'dd-agent'
-	source 'keynote.py.erb'
+  action :create
+  owner 'dd-agent'
+  source 'keynote.py.erb'
 end
-
-

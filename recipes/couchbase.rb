@@ -13,7 +13,6 @@ include_recipe 'datadog::dd-agent'
 #                                      "password" => "password"
 #                                    }
 #                                   ]
-
 datadog_monitor 'couchbase' do
   instances node['datadog']['couchbase']['instances']
 end
