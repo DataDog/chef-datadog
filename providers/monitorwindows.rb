@@ -1,4 +1,4 @@
-# Creates the proper yaml file in 
+# Creates the proper yaml file in
 
 def whyrun_supported?
   true
@@ -27,7 +27,3 @@ action :remove do
     new_resource.updated_by_last_action(true)
   end
 end
-
-
-
-#{}"C:\\Documents and Settings\\All Users\\Application Data\Datadog\\conf.d"
