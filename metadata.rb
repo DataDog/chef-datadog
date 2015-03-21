@@ -4,7 +4,7 @@ maintainer_email 'package@datadoghq.com'
 license          'Apache 2.0'
 description      'Installs/Configures datadog components'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '2.0.0'
+version          '2.0.1'
 
 %w(
   amazon
@@ -32,3 +32,4 @@ recipe 'datadog::dogstatsd-ruby', 'Installs the Ruby dogstatsd package for custo
 # integration-specific
 recipe 'datadog::cassandra', 'Installs and configures the Cassandra integration'
 recipe 'datadog::couchdb', 'Installs and configures the CouchDB integration'
+recipe 'datadog::couchbase', 'Installs and configures the Couchbase integration'

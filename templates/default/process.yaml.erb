@@ -9,25 +9,27 @@ instances:
 #    
 # Examples:
 #
+# - name: ssh
+#   search_string: ['ssh', 'sshd']
+#   exact_match: False
+#
+# to add to role, add a "process" parameter to the datadog overrides:
+#{
+#  "datadog" : {
+#  "process" : [
+#    {
+#      "name" : "ssh",
+#      "search_string" : ['ssh', 'sshd'],
+#      "exact_match" : "False"
+#    }
+#  ]
+#}
+#
 
- - name: ssh
-   search_string: ['ssh', 'sshd']
-   exact_match: False
-
- - name: postgres
-   search_string: ['postgres']
-   
- - name: All
-   search_string: ['All']
-   
- - name: nodeserver
-   search_string: ['node server.js']
-   exact_match: False
-    
-#  -  name: python
-#     process: ['python']
-#  -  name: nodeserver
-#     search_string: ['node server.js']
-#  -  name: node
-#     process: ['node']
-#  -  name: All
+<% node['datadog']['process'].each do |p| %>
+  - name: <%= p["name"] %>
+    search_string: <%= p["search_string"] %>
+    <% if p.key?("exact_match") -%>
+    exact_match: <%= p["exact_match"] %>
+	  <% end %>
+<% end %>

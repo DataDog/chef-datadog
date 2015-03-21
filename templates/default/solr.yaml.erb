@@ -1,9 +1,21 @@
-instances:
+#instances:
 #    -   host: localhost
 #        port: 7199
 #        user: username
 #        password: password
 #        name: solr_instance
+
+instances:
+<% @instances.each do |i| -%>
+  -  host: <%= i["server"] %>
+     port: <%= i["port"]  %>
+  <% if i.key?("username") -%>
+     user: <%= i["username"] %>
+     password: <%= i["password"] %>
+  <% end -%>
+     name: <%= i["name"] || "solr_instance" %>
+<% end -%>
+
 
 
 # List of metrics to be collected by the integration

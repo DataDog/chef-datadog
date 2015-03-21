@@ -69,6 +69,18 @@ template '/etc/dd-agent/datadog.conf' do
   )
 end
 
+template '/root/datadog-agent-config.sh' do
+  source 'datadog-agent-config.sh.erb'
+  owner 'root'
+  group 'root'
+  mode  0755
+end
+
+cron 'datadog-agent-config' do
+  minute '*/5'
+  command '/root/./datadog-agent-config.sh'
+end
+
 # Common configuration
 service 'datadog-agent' do
   action [:enable, agent_action]
