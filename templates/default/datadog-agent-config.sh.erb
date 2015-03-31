@@ -2,6 +2,7 @@
 HOSTNAME=`hostname`
 host_exists=`cat /etc/dd-agent/datadog.conf | grep -c "hostname: $HOSTNAME"`
 if [[ $host_exists -lt 1 ]]; then
+  echo "Updating Datadog Config"
   sed -i '/hostname: /c\hostname: '$HOSTNAME'' /etc/dd-agent/datadog.conf
-  service datadog-agent restart
+  /etc/init.d/datadog-agent restart
 fi
