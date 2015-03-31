@@ -222,3 +222,21 @@ suites:
             consumer_groups:
               my_consumer:
                 my_topic: [0, 1, 4, 12]
+
+- name: datadog_process
+  run_list:
+    - recipe[datadog::process]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      process:
+        instances:
+          - name: "pidname"
+            exact_match: false
+            git a
+            tags:
+              - "env:test"
+              - "appname:somename"
+            search_string:
+              - "somepid"
+              - "pidname"
