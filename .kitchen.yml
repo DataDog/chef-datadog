@@ -233,7 +233,7 @@ suites:
         instances:
           - name: "pidname"
             exact_match: false
-            git a
+            ignore_denied_access: true
             tags:
               - "env:test"
               - "appname:somename"
