@@ -40,7 +40,7 @@ suites:
   run_list:
     - recipe[datadog::dd-agent]
   attributes:
-    datadog:
+    datadog: &DATADOG
       api_key: somethingnotnil
       application_key: alsonotnil
 
@@ -49,8 +49,7 @@ suites:
     - recipe[datadog::activemq]
   attributes:
     datadog:
-      api_key: somethingnotnil
-      application_key: alsonotnil
+      <<: *DATADOG
       activemq:
         instances:
           - host: localhost
@@ -63,8 +62,7 @@ suites:
     - recipe[datadog::apache]
   attributes:
     datadog:
-      api_key: somethingnotnil
-      application_key: alsonotnil
+      <<: *DATADOG
       apache:
         instances:
           - status_url: http://mysite.com/server-status?auto
@@ -74,13 +72,72 @@ suites:
               - kitchen
               - sink
 
+- name: datadog_cacti
+  run_list:
+    - recipe[datadog::cacti]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      cacti:
+        instances:
+          - mysql_host: localhost
+            mysql_user: mysql_read_only
+            mysql_password: mysql_read_only_password
+            rrd_path: /path/to/cacti/rra
+            rrd_whitelist: /path/to/rrd_whitelist.txt
+            field_names:
+              - ifIndex
+              - dskDevice
+              - ifName
+
+- name: datadog_cassandra
+  run_list:
+    - recipe[datadog::cassandra]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      cassandra:
+        instances:
+          - host: localhost
+            port: 7199
+            user: someuser
+            password: somepass
+            process_name_regex: .*cassandra.*
+
+- name: datadog_couchdb
+  run_list:
+    - recipe[datadog::couchdb]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      couch:
+        instances:
+          - server: http://localhost:5984
+            user: someuser
+            password: somepass
+
+- name: datadog_elasticsearch
+  run_list:
+    - recipe[datadog::elasticsearch]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      elasticsearch:
+        instances:
+          - url: http://localhost:9200
+            username: someuser
+            password: somepass
+            is_external: false
+            tags:
+              - kitchen
+              - sink
+
 - name: datadog_haproxy
   run_list:
     - recipe[datadog::haproxy]
   attributes:
     datadog:
-      api_key: somethingnotnil
-      application_key: alsonotnil
+      <<: *DATADOG
       haproxy:
         instances:
           - username: admin
@@ -95,8 +152,7 @@ suites:
     - recipe[datadog::jmx]
   attributes:
     datadog:
-      api_key: somethingnotnil
-      application_key: alsonotnil
+      <<: *DATADOG
       jmx:
         instances:
           - host: localhost
@@ -129,8 +185,7 @@ suites:
     - recipe[datadog::mongo]
   attributes:
     datadog:
-      api_key: somethingnotnil
-      application_key: alsonotnil
+      <<: *DATADOG
       mongo:
         instances:
           - host: localhost
@@ -141,8 +196,7 @@ suites:
     - recipe[datadog::kafka]
   attributes:
     datadog:
-      api_key: somethingnotnil
-      application_key: alsonotnil
+      <<: *DATADOG
       kafka:
         instances:
           - host: localhost
@@ -159,8 +213,7 @@ suites:
     - recipe[datadog::kafka_consumer]
   attributes:
     datadog:
-      api_key: somethingnotnil
-      application_key: alsonotnil
+      <<: *DATADOG
       kafka_consumer:
         instances:
           - kafka_connect_str: localhost:19092
@@ -169,6 +222,24 @@ suites:
             consumer_groups:
               my_consumer:
                 my_topic: [0, 1, 4, 12]
+
+- name: datadog_process
+  run_list:
+    - recipe[datadog::process]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      process:
+        instances:
+          - name: "pidname"
+            exact_match: false
+            ignore_denied_access: true
+            tags:
+              - "env:test"
+              - "appname:somename"
+            search_string:
+              - "somepid"
+              - "pidname"
 
 - name: datadog_http_check
   run_list:

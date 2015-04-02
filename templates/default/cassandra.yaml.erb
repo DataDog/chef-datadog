@@ -1,24 +1,12 @@
-<% excluded_keys = ["host", "port", "user", "password", "name"] -%>
 instances:
-  <% @instances.each do |i| -%>
-  - host: <%= i['server'] %>
-    port: <%= i['port'] || 7199%>
-    <% if i['user'] -%>
-    user: <%= i['username'] %>
-    <% end -%>
-    <% if i['password'] -%>
-    password: <%= i['password'] %>
-    <% end -%>
-    <% if i['instance'] -%>
-    name: <%= i['instance'] %>
-    <% end -%>
-    <% (i.keys - excluded_keys).each do |key| -%>
+<% @instances.each do |i| -%>
+  - host: <%= i['server'] || i['host'] %>
+  <% (i.keys - ['host']).each do |key| -%>
     <%= key %>: <%= i[key] %>
-    <% end -%>
   <% end -%>
+<% end -%>
 
-# List of metrics to be collected by the integration
-# You should not have to modify this.
+# List of metrics to be collected.
 init_config:
   conf:
     - include:
@@ -28,12 +16,10 @@ init_config:
           - BloomFilterFalsePositives
           - BloomFilterFalseRatio
           - Capacity
-          - CompressionRatio
           - CompletedTasks
+          - CompressionRatio
           - ExceptionCount
           - Hits
-          - RecentHitRate
-          - RowCacheRecentHitRate
           - KeyCacheRecentHitRate
           - LiveDiskSpaceUsed
           - LiveSSTableCount
@@ -44,28 +30,22 @@ init_config:
           - MemtableDataSize
           - MemtableSwitchCount
           - MinRowSize
+          - PendingTasks
           - ReadCount
+          - RecentHitRate
+          - RecentRangeLatencyMicros
           - RecentReadLatencyMicros
           - RecentWriteLatencyMicros
           - Requests
+          - RowCacheRecentHitRate
           - Size
           - TotalDiskSpaceUsed
           - TotalReadLatencyMicros
           - TotalWriteLatencyMicros
           - UpdateInterval
           - WriteCount
-          - PendingTasks
       exclude:
         keyspace: system
-        attribute:
-          - MinimumCompactionThreshold
-          - MaximumCompactionThreshold
-          - RowCacheKeysToSave
-          - KeyCacheSavePeriodInSeconds
-          - RowCacheSavePeriodInSeconds
-          - PendingTasks
-          - Scores
-          - RpcTimeout
     - include:
         domain: org.apache.cassandra.internal
         attribute:
