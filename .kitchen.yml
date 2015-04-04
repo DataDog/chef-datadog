@@ -132,6 +132,22 @@ suites:
               - kitchen
               - sink
 
+- name: datadog_fluentd
+  run_list:
+    - recipe[datadog::fluentd]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      fluentd:
+        instances:
+          - monitor_agent_url: http://localhost.com:24220/api/plugins.json
+            plugin_ids:
+              - api
+              - plugin
+            tags:
+              - kitchen
+              - sink
+
 - name: datadog_haproxy
   run_list:
     - recipe[datadog::haproxy]
