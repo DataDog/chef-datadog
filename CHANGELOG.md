@@ -3,6 +3,8 @@ Changes
 
 # 2.1.0 / Unreleased
 
+* [FEATURE] Add support for `fluentd` monitoring check, [#191][] [@takus][], [#192][] [@miketheman][]
+* [FEATURE] Add support for process monitoring check, [#190][] [@jpcallanta][]
 * [FEATURE] Add configuration flags to elasticsearch template, [#169][] [@chrissnell][]
 * [FEATURE] Add configuration flag to control collection of EC2 tags from Agent, [#159][] [@mirceal][]
 * [FEATURE] Add Agent package attribute to control package provider action, [#127][], [#147][] [@miketheman][]
@@ -247,6 +249,9 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#163]: https://github.com/DataDog/chef-datadog/issues/163
 [#169]: https://github.com/DataDog/chef-datadog/issues/169
 [#171]: https://github.com/DataDog/chef-datadog/issues/171
+[#190]: https://github.com/DataDog/chef-datadog/issues/190
+[#191]: https://github.com/DataDog/chef-datadog/issues/191
+[#192]: https://github.com/DataDog/chef-datadog/issues/192
 [@JoeDeVries]: https://github.com/JoeDeVries
 [@SelerityMichael]: https://github.com/SelerityMichael
 [@alexism]: https://github.com/alexism
@@ -270,6 +275,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@gregf]: https://github.com/gregf
 [@jblancett]: https://github.com/jblancett
 [@jedi4ever]: https://github.com/jedi4ever
+[@jpcallanta]: https://github.com/jpcallanta
 [@jtimberman]: https://github.com/jtimberman
 [@juliandunn]: https://github.com/juliandunn
 [@khouse]: https://github.com/khouse
@@ -282,5 +288,6 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@remh]: https://github.com/remh
 [@ryandjurovich]: https://github.com/ryandjurovich
 [@schisamo]: https://github.com/schisamo
+[@takus]: https://github.com/takus
 [@thisismana]: https://github.com/thisismana
 [@timusg]: https://github.com/timusg
