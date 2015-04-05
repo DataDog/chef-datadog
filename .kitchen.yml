@@ -256,3 +256,33 @@ suites:
             search_string:
               - "somepid"
               - "pidname"
+
+- name: datadog_http_check
+  run_list:
+    - recipe[datadog::http_check]
+  attributes:
+    datadog:
+      api_key: somethingnotnil
+      application_key: alsonotnil
+      http_check:
+        instances:
+          - name: "test"
+            url: "http://localhost/"
+          - name: "test with notify"
+            url: "http://localhost/"
+
+- name: datadog_tcp_check
+  run_list:
+    - recipe[datadog::tcp_check]
+  attributes:
+    datadog:
+      api_key: somethingnotnil
+      application_key: alsonotnil
+      tcp_check:
+        instances:
+          - name: "test"
+            host: "localhost"
+            port: 1234
+          - name: "test with notify"
+            host: "localhost"
+            port: 5678
