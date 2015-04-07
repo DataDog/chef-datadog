@@ -1,5 +1,8 @@
 ---
-driver_plugin: vagrant
+driver:
+  name: vagrant
+  customize:
+    memory: 1024
 
 provisioner:
   name: chef_zero
@@ -9,22 +12,24 @@ provisioner:
 platforms:
 # Loop through two lists and output a total matrix of all possible platform + chef versions
 <% %w(
+      ubuntu-14.04
       ubuntu-12.04
       ubuntu-10.04
-      centos-6.5
-      centos-5.10
-      debian-7.4.0
+      centos-6.6
+      centos-5.11
+      debian-7.7
     ).each do |platform_version| %>
 <% %w(
-      11.16.4
-      10.34.4
+      12.2.1
+      11.18.6
+      10.34.6
       10.14.4
     ).each do |chef_version| %>
 
 - name: <%= platform_version %>-<%= chef_version %>
   driver_config:
     box: opscode_<%= platform_version %>_chef-provisionerless
-    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_<%= platform_version %>_provisionerless.box
+    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_<%= platform_version %>_chef-provisionerless.box
     require_chef_omnibus: <%= chef_version %>
 <% end %>
 <% end %>
