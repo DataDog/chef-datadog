@@ -3,6 +3,7 @@ Changes
 
 # 2.1.0 / Unreleased
 
+* [FEATURE] Add support for `http` & `tcp` monitoring check, [#177][] [@mtougeron][], [#178][] [@chrissnell][], [@miketheman][]
 * [FEATURE] Add support for `fluentd` monitoring check, [#191][] [@takus][], [#192][] [@miketheman][]
 * [FEATURE] Add support for process monitoring check, [#190][] [@jpcallanta][]
 * [FEATURE] Add configuration flags to elasticsearch template, [#169][] [@chrissnell][]
@@ -249,6 +250,8 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#163]: https://github.com/DataDog/chef-datadog/issues/163
 [#169]: https://github.com/DataDog/chef-datadog/issues/169
 [#171]: https://github.com/DataDog/chef-datadog/issues/171
+[#177]: https://github.com/DataDog/chef-datadog/issues/177
+[#178]: https://github.com/DataDog/chef-datadog/issues/178
 [#190]: https://github.com/DataDog/chef-datadog/issues/190
 [#191]: https://github.com/DataDog/chef-datadog/issues/191
 [#192]: https://github.com/DataDog/chef-datadog/issues/192
@@ -282,6 +285,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@mfischer-zd]: https://github.com/mfischer-zd
 [@miketheman]: https://github.com/miketheman
 [@mirceal]: https://github.com/mirceal
+[@mtougeron]: https://github.com/mtougeron
 [@nkts]: https://github.com/nkts
 [@phlipper]: https://github.com/phlipper
 [@qqfr2507]: https://github.com/qqfr2507
