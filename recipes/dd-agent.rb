@@ -73,6 +73,12 @@ template '/root/datadog-agent-config.sh' do
   owner 'root'
   group 'root'
   mode  0755
+  notifies :run, 'execute[configure datadog-agent]', :immediately
+end
+
+execute 'configure datadog-agent' do
+  command '/root/./datadog-agent-config.sh'
+  action :nothing
 end
 
 cron 'datadog-agent-config' do
