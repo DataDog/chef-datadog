@@ -31,6 +31,8 @@ default['datadog']['application_key'] = nil
 default['datadog']['url'] = 'https://app.datadoghq.com'
 
 # Add tags as override attributes in your role
+# When using the Datadog Chef Handler, tags are set on the node with preset prefixes:
+# `env:node.chef_environment`, `role:node.node.run_list.role`, `tag:somecheftag`
 default['datadog']['tags'] = ''
 
 # Collect EC2 tags, set to 'yes' to collect
