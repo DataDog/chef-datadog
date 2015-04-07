@@ -80,9 +80,8 @@ default['datadog']['chef_handler_version'] = nil
 # Enable the Chef handler to report to datadog
 default['datadog']['chef_handler_enable'] = true
 
-# Boolean to enable debug_mode, which outputs massive amounts of log messages
-# to the /tmp/ directory.
-default['datadog']['debug'] = false
+# Log level. Should be a valid python log level https://docs.python.org/2/library/logging.html#logging-levels
+default['datadog']['log_level'] = 'INFO'
 
 # Default to false to non_local_traffic
 # See: https://github.com/DataDog/dd-agent/wiki/Network-Traffic-and-Proxy-Configuration

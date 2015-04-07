@@ -3,7 +3,6 @@
 [Main]
 dd_url: <%= @dd_url %>
 api_key: <%= @api_key %>
-debug_mode: <%= node['datadog']['debug'] %>
 check_freq: <%= node['datadog']['check_freq'] %>
 hostname: <%= node['datadog']['hostname'] %>
 use_mount: <%= node['datadog']['use_mount'] ? "yes" : "no"  %>
@@ -72,7 +71,7 @@ statsd_forward_port: <%= node['datadog']['statsd_forward_port'] %>
 # Logging
 # ========================================================================== #
 
-log_level: INFO
+log_level: <%= node['datadog']['log_level'] %>
 
 # collector_log_file: /var/log/datadog/collector.log
 # forwarder_log_file: /var/log/datadog/forwarder.log
