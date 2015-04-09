@@ -20,7 +20,7 @@
 include_recipe 'chef_handler'
 ENV['DATADOG_HOST'] = node['datadog']['url']
 
-chef_gem 'chef-handler-datadog' do
+chef_gem 'chef-handler-datadog' do # ~FC009
   action :install
   version node['datadog']['chef_handler_version']
   # Chef 12 introduced `compile_time` - remove when Chef 11 is EOL.
