@@ -23,6 +23,8 @@ ENV['DATADOG_HOST'] = node['datadog']['url']
 chef_gem 'chef-handler-datadog' do
   action :install
   version node['datadog']['chef_handler_version']
+  # Chef 12 introduced `compile_time` - remove when Chef 11 is EOL.
+  compile_time true if respond_to?(:compile_time)
 end
 require 'chef/handler/datadog'
 
