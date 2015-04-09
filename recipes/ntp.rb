@@ -1,11 +1,12 @@
 include_recipe 'datadog::dd-agent'
 
 # Build a data structure with configuration.
-# @see https://github.com/DataDog/dd-agent/blob/master/conf.d/ntp.yaml.example
+# @note NTP check is enabled by default since datadog-agent 5.3.0.
+# @see https://github.com/DataDog/dd-agent/blob/master/conf.d/ntp.yaml.default
 # @example
 #   node.override['datadog']['ntp']['instances'] = [
 #     {
-#       'offset_threshold' => '600',
+#       'offset_threshold' => '60',
 #       'host' => 'pool.ntp.org',
 #       'port' => 'ntp',
 #       'version' => '3',

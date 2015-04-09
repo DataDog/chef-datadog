@@ -220,6 +220,20 @@ suites:
           - host: localhost
             port: 27017
 
+- name: datadog_ntp
+  run_list:
+    - recipe[datadog::ntp]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      ntp:
+        instances:
+          - offset_threshold: 600
+            host: europe.pool.ntp.org
+            port: 9999
+            version: 4
+            timeout: 10
+
 - name: datadog_kafka
   run_list:
     - recipe[datadog::kafka]

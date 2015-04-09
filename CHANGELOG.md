@@ -3,6 +3,7 @@ Changes
 
 # 2.1.0 / Unreleased
 
+* [FEATURE] Add support for `ntp` check, [#182][] [@chrissnell][], [@miketheman][]
 * [OPTIMIZE] Remove long-dead `debug_mode` and replace with `log_level`, [#187][] [@remh][]
 * [FEATURE] Add support for `http` & `tcp` monitoring check, [#177][] [@mtougeron][], [#178][] [@chrissnell][], [@miketheman][]
 * [FEATURE] Add support for `fluentd` monitoring check, [#191][] [@takus][], [#192][] [@miketheman][]
@@ -253,6 +254,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#171]: https://github.com/DataDog/chef-datadog/issues/171
 [#177]: https://github.com/DataDog/chef-datadog/issues/177
 [#178]: https://github.com/DataDog/chef-datadog/issues/178
+[#182]: https://github.com/DataDog/chef-datadog/issues/182
 [#187]: https://github.com/DataDog/chef-datadog/issues/187
 [#190]: https://github.com/DataDog/chef-datadog/issues/190
 [#191]: https://github.com/DataDog/chef-datadog/issues/191
