@@ -19,13 +19,13 @@ describe file(AGENT_CONFIG) do
     generated = YAML.load_file(AGENT_CONFIG)
 
     expected = {
-      'instances' => [
+      instances: [
         {
-          'config param' => 'value',
-          'tags' => ['kitchen', 'sink']
+          config_param: 'value',
+          tags: ['kitchen', 'sink']
         }
       ],
-      'init_config' => nil
+      init_config: nil
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json
