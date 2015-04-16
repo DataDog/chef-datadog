@@ -266,6 +266,22 @@ suites:
               my_consumer:
                 my_topic: [0, 1, 4, 12]
 
+- name: datadog_mesos
+  run_list:
+    - recipe[datadog::mesos]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      mesos:
+        instances:
+          - url: localhost:5050
+            timeout: 8
+            tags:
+              - toto
+              - tata
+        init_config:
+          default_timeout: 10
+
 - name: datadog_process
   run_list:
     - recipe[datadog::process]
