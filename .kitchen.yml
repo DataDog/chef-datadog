@@ -124,6 +124,33 @@ suites:
             user: someuser
             password: somepass
 
+- name: datadog_docker
+  run_list:
+    - recipe[datadog::docker]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      docker:
+        init_config:
+          docker_root: /
+          socket_timeout: 10
+        instances:
+          - url: unix://var/run/docker.sock
+            new_tag_names: false
+            tag_by_command: false
+            tags:
+              - toto
+              - tata
+            include:
+              - docker_image:ubuntu
+              - docker_image:debian
+            exclude:
+              - .*
+            collect_events: true
+            collect_container_size: false
+            collect_all_metrics: false
+            collect_images_stats: false
+
 - name: datadog_elasticsearch
   run_list:
     - recipe[datadog::elasticsearch]
