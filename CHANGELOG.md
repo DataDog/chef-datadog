@@ -3,6 +3,9 @@ Changes
 
 # 2.1.0 / Unreleased
 
+* [FEATURE] Add support for `mesos` check, [#200][] [@DorianZaccaria][]
+* [FEATURE] Add support for `docker` check, [#197][] [@DorianZaccaria][]
+* [OPTIMIZE] Set compile_time when using chef_gem resource, [#196][] [@miketheman][]
 * [FEATURE] Add support for `ntp` check, [#182][] [@chrissnell][], [@miketheman][]
 * [OPTIMIZE] Remove long-dead `debug_mode` and replace with `log_level`, [#187][] [@remh][]
 * [FEATURE] Add support for `http` & `tcp` monitoring check, [#177][] [@mtougeron][], [#178][] [@chrissnell][], [@miketheman][]
@@ -259,6 +262,10 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#190]: https://github.com/DataDog/chef-datadog/issues/190
 [#191]: https://github.com/DataDog/chef-datadog/issues/191
 [#192]: https://github.com/DataDog/chef-datadog/issues/192
+[#196]: https://github.com/DataDog/chef-datadog/issues/196
+[#197]: https://github.com/DataDog/chef-datadog/issues/197
+[#200]: https://github.com/DataDog/chef-datadog/issues/200
+[@DorianZaccaria]: https://github.com/DorianZaccaria
 [@JoeDeVries]: https://github.com/JoeDeVries
 [@SelerityMichael]: https://github.com/SelerityMichael
 [@alexism]: https://github.com/alexism
