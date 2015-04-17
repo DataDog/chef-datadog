@@ -44,6 +44,14 @@ suites:
       api_key: somethingnotnil
       application_key: alsonotnil
 
+- name: dd-handler
+  run_list:
+    - recipe[datadog::dd-handler]
+  attributes:
+    datadog: &DATADOG
+      api_key: somethingnotnil
+      application_key: alsonotnil
+
 - name: datadog_activemq
   run_list:
     - recipe[datadog::activemq]
