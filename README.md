@@ -67,7 +67,7 @@ Usage
 
 1. Add this cookbook to your Chef Server, either by installing with knife or by adding it to your Berksfile:
   ```
-  cookbook 'datadog', '~> 2.0.0'
+  cookbook 'datadog', '~> 2.1.0'
   ```
 2. Add your API Key as a node attribute via an `environment` or `role` or by declaring it in another cookbook at a higher precedence level.
 3. Create an 'application key' for `chef_handler` [here](https://app.datadoghq.com/account/settings#api), and add it as a node attribute, as in Step #2.
