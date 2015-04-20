@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 2.1.0 / Unreleased
+# 2.1.0 / 2015-04-20
 
 * [FEATURE] Add support for `mesos` check, [#200][] [@DorianZaccaria][]
 * [FEATURE] Add support for `docker` check, [#197][] [@DorianZaccaria][]
@@ -22,13 +22,13 @@ Changes
 * [FEATURE] Add recipe for package removal, [#125][] [@bitmonk][]
 * [FEATURE] Add support for custom emitters, [#123][] [@arthurnn][] & [@graemej][]
 * [FEATURE] Add support for statsd forwarding in config file, [#117][] [@ctrlok][]
-
 * [BUGFIX] Simplify JMX configuration, [#116][] [@miketheman][]
+
   **NOTE** This has been broken for some time, and has had multiple attempts at fixing properly. The correct interface
   has never been documented, and the implementation has always been left up to the reader. We have changed this to be
   much simpler - instead of trying to account for any possible methods
-* [BUGFIX] Correct cassandra template render flags, [@miketheman][]
 
+* [BUGFIX] Correct cassandra template render flags, [@miketheman][]
 * [DOCS] Remove suggestion for python cookbook, as it is no longer needed. [@miketheman][]
 * [MISC] Updates to test suite for simplicity, deprecation warnings, dependencies [@miketheman][] & [@darron][]
 
