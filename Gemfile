@@ -2,6 +2,7 @@
 source 'https://rubygems.org'
 
 group :development do
+  gem 'emeril', '~> 0.8.0'
   gem 'guard', '>= 2.6'
   gem 'guard-foodcritic', '~> 1.0.3'
   gem 'guard-kitchen'

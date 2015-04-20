@@ -1,5 +1,6 @@
 #!/usr/bin/env rake
 
+require 'emeril/rake' unless ENV['CI']
 require 'fileutils'
 require 'foodcritic'
 require 'rspec/core/rake_task'
