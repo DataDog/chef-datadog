@@ -335,6 +335,25 @@ suites:
               - "somepid"
               - "pidname"
 
+- name: datadog_supervisord
+  run_list:
+    - recipe[datadog::supervisord]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      supervisord:
+        instances:
+          - name: server0
+            socket: unix:///var/run/default-supervisor.sock
+          - name: server1
+            host: localhost
+            port: 9001
+            user: user
+            pass: pass
+            proc_names:
+              - apache2
+              - webapp
+
 - name: datadog_tcp_check
   run_list:
     - recipe[datadog::tcp_check]
