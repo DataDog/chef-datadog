@@ -10,7 +10,7 @@ include_recipe 'datadog::dd-agent'
 #     :host => "localhost",
 #     :port => "9999",
 #     :name => "prod",
-#     :username => "username",
+#     :user => "username",
 #     :password => "secret"
 #   },
 #   {
