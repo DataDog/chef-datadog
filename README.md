@@ -88,6 +88,17 @@ Usage
     recipe[datadog::dd-handler]
   )
   ```
+  
+  If you need to use, for example, elasticsearch integration , just add :
+  run_list "recipe[datadog::elasticsearch]"
+  default_attributes(
+    'datadog' => {
+        "elasticsearch" => {
+            "instances" => ['url' => "http://localhost:9200"]
+        }
+    }
+)
+
 5. Wait until `chef-client` runs on the target node (or trigger chef-client manually if you're impatient)
 
 We are not making use of data_bags in this recipe at this time, as it is unlikely that you will have more than one API key and one application key.
