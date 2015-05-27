@@ -1,0 +1,10 @@
+instances:
+<% @instances.each do |i| -%>
+  - server: <%= i['server'] %>
+  <% (i.keys - ['server']).each do |key| -%>
+    <%= key %>: <%= i[key] %>
+  <% end -%>
+<% end -%>
+
+# Nothing to change below
+init_config:
