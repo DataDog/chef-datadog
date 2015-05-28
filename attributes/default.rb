@@ -57,6 +57,18 @@ default['datadog']['installrepo'] = true
 default['datadog']['aptrepo'] = 'http://apt.datadoghq.com'
 default['datadog']['aptrepo_dist'] = 'stable'
 default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/"
+default['datadog']['windows_agent_url'] = 'https://s3.amazonaws.com/ddagent-windows-stable/'
+
+# Values that differ on Windows
+# The location of the config folder (containing conf.d)
+# The name of the dd agent service
+if node['platform_family'] == 'windows'
+  default['datadog']['config_dir'] = "#{ENV['ProgramData']}/Datadog"
+  default['datadog']['agent_name'] = 'DatadogAgent'
+else
+  default['datadog']['config_dir'] = '/etc/dd-agent'
+  default['datadog']['agent_name'] = 'datadog-agent'
+end
 
 # DEPRECATED, will be removed after the release of datadog-agent 6.0
 # Set to true to always install datadog-agent-base (usually only installed on
