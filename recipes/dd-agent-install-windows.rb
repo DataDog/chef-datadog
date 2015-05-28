@@ -21,7 +21,7 @@ dd_agent_version = node['datadog']['agent_version']
 
 # If no version is specified, select the latest package
 dd_agent_msi = dd_agent_version ? "ddagent-cli-#{dd_agent_version}.msi" : 'ddagent-cli.msi'
-temp_file = "#{Chef::Config[:file_cache_path]}/#{dd_agent_msi}"
+temp_file = ::File.join(Chef::Config[:file_cache_path], dd_agent_msi)
 
 # Download the installer to a temp location
 remote_file temp_file do
