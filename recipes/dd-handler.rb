@@ -16,6 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+require 'uri'
 
 include_recipe 'chef_handler'
 ENV['DATADOG_HOST'] = node['datadog']['url']
@@ -27,6 +28,15 @@ chef_gem 'chef-handler-datadog' do # ~FC009
   compile_time true if respond_to?(:compile_time)
 end
 require 'chef/handler/datadog'
+
+# add web proxy from config support
+web_proxy = node['datadog']['web_proxy']
+unless web_proxy['host'].nil?
+  proxy_url = URI::HTTP.build(host: web_proxy['host'], port: web_proxy['port'])
+  proxy_url.user = web_proxy['user']
+  proxy_url.password = web_proxy['password']
+  ENV['HTTP_PROXY'] = proxy_url.to_s
+end
 
 # Create the handler to run at the end of the Chef execution
 chef_handler 'Chef::Handler::Datadog' do
