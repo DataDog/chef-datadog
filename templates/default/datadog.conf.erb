@@ -11,6 +11,9 @@ bind_host: <%= node['datadog']['bind_host'] %>
 <% if node['datadog']['autorestart'] -%>
 autorestart: <%= node['datadog']['autorestart'] %>
 <% end -%>
+<% if node['datadog']['web_proxy']['skip_ssl_validation'] -%>
+skip_ssl_validation: <%= node['datadog']['web_proxy']['skip_ssl_validation'] %>
+<% end -%>
 
 tags: <%= node['datadog']['tags'] %>
 <% if node['datadog']['collect_ec2_tags'] -%>
