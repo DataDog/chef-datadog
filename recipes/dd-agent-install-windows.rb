@@ -21,12 +21,15 @@ dd_agent_version = node['datadog']['agent_version']
 
 # If no version is specified, select the latest package
 dd_agent_msi = dd_agent_version ? "ddagent-cli-#{dd_agent_version}.msi" : 'ddagent-cli.msi'
-temp_file = ::File.join(Chef::Config[:file_cache_path], dd_agent_msi)
+temp_file = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli.msi')
 
 # Download the installer to a temp location
-remote_file temp_file do
+remote_file 'MSI installer' do
+  path temp_file
   source node['datadog']['windows_agent_url'] + dd_agent_msi
-  action :create_if_missing
+  # As of v1.37, the windows cookbook doesn't upgrade the package if a newer version is downloaded
+  # As a workaround uninstall the package first if a new MSI is downloaded
+  notifies :remove, 'windows_package[Datadog Agent]', :immediately
 end
 
 # Install the package

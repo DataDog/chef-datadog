@@ -84,10 +84,11 @@ rescue ArgumentError
 end
 
 # Agent Version
+# Set to `nil` to install latest (will also upgrade to latest on Windows)
 default['datadog']['agent_version'] = nil
 
 # Agent package action
-# Allow override with `upgrade` to get latest
+# Allow override with `upgrade` to get latest (Linux only)
 default['datadog']['agent_package_action'] = 'install'
 
 # Chef handler version
