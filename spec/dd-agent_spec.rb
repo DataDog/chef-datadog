@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 shared_examples_for 'datadog-agent-base' do
-  it_behaves_like 'common resources'
+  it_behaves_like 'common linux resources'
 
   it 'installs the datadog-agent-base package' do
     expect(chef_run).to install_package 'datadog-agent-base'
@@ -29,13 +29,13 @@ shared_examples_for 'rhellions' do
 end
 
 shared_examples_for 'no version set' do
-  it_behaves_like 'common resources'
+  it_behaves_like 'common linux resources'
 
   it_behaves_like 'datadog-agent'
 end
 
 shared_examples_for 'version set below 4.x' do
-  it_behaves_like 'common resources'
+  it_behaves_like 'common linux resources'
 
   it_behaves_like 'datadog-agent-base'
 end
@@ -134,6 +134,20 @@ describe 'datadog::dd-agent' do
 
       it_behaves_like 'rhellions'
       it_behaves_like 'no version set'
+    end
+
+    context 'on Windows' do
+      cached(:chef_run)  do
+        ChefSpec::SoloRunner.new(
+          :platform => 'windows',
+          :version => '2012R2'
+        ) do |node|
+          node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
+          node.set['languages'] = { 'python' => { 'version' => '2.7.9' } }
+        end.converge described_recipe
+      end
+
+      it_behaves_like 'windows Datadog Agent'
     end
   end
 
