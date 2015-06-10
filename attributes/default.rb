@@ -78,7 +78,7 @@ end
 begin
   default['datadog']['install_base'] = Gem::Version.new(node['languages']['python']['version'].gsub(/(\d\.\d\.\d).+/, '\\1')) < Gem::Version.new('2.6.0')
 rescue NoMethodError # nodes['languages']['python'] == nil
-  Chef::Log.warn 'no version of python found, please install Agent version 5.x or higher.'
+  Chef::Log.warn 'no version of python found, please install Agent version 5.x or higher.' unless platform_family?('windows')
 rescue ArgumentError
   Chef::Log.warn "could not parse python version string: #{node['languages']['python']['version']}"
 end
