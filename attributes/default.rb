@@ -84,7 +84,7 @@ rescue ArgumentError
 end
 
 # Agent Version
-# Set to `nil` to install latest (will also upgrade to latest on Windows)
+# Default of `nil` will install latest version. On Windows, this will also upgrade to latest
 default['datadog']['agent_version'] = nil
 
 # Agent package action
