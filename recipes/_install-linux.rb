@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: datadog
-# Recipe:: dd-agent-install-linux
+# Recipe:: _install-linux
 #
 # Copyright 2011-2015, Datadog
 #

@@ -19,9 +19,9 @@
 
 # Install the agent
 if node['platform_family'] == 'windows'
-  include_recipe 'datadog::dd-agent-install-windows'
+  include_recipe 'datadog::_install-windows'
 else
-  include_recipe 'datadog::dd-agent-install-linux'
+  include_recipe 'datadog::_install-linux'
 end
 
 # Set the correct Agent startup action

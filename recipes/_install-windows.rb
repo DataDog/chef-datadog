@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: datadog
-# Recipe:: dd-agent-install-windows
+# Recipe:: _install-windows
 #
 # Copyright 2011-2015, Datadog
 #
@@ -35,6 +35,6 @@ end
 # Install the package
 windows_package 'Datadog Agent' do
   source temp_file
-  options "APIKEY=\"#{node['datadog']['api_key']}\" HOSTNAME=\"#{node['hostname']}\" TAGS=\"#{node['tags'].join(',')}\""
+  options %(APIKEY="#{node['datadog']['api_key']}" HOSTNAME="#{node['hostname']}" TAGS="#{node['tags'].join(',')}")
   action :install
 end
