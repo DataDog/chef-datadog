@@ -10,7 +10,11 @@ end
 action :add do
   Chef::Log.debug "Adding monitoring for #{new_resource.name}"
   template "#{node['datadog']['config_dir']}/conf.d/#{new_resource.name}.yaml" do
-    unless node['platform_family'] == 'windows'
+    if node['platform_family'] == 'windows'
+      owner 'Administrators'
+      rights :full_control, 'Administrators'
+      inherits false
+    else
       owner 'dd-agent'
       mode 00600
     end
