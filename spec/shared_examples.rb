@@ -40,11 +40,11 @@ shared_examples_for 'common windows resources' do
   it_behaves_like 'datadog-agent service'
 
   it 'ensures the Datadog config directory exists' do
-    expect(chef_run).to create_directory "#{ENV['ProgramData']}/Datadog"
+    expect(chef_run).to create_directory 'C:\ProgramData/Datadog'
   end
 
   it 'drops an agent config file' do
-    expect(chef_run).to create_template "#{ENV['ProgramData']}/Datadog/datadog.conf"
+    expect(chef_run).to create_template 'C:\ProgramData/Datadog/datadog.conf'
   end
 end
 

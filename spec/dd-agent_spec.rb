@@ -1,5 +1,12 @@
 require 'spec_helper'
 
+module EnvVar
+  def set_env_var(name, value)
+    allow(ENV).to receive(:[])
+    allow(ENV).to receive(:[]).with(name).and_return(value)
+  end
+end
+
 shared_examples_for 'datadog-agent-base' do
   it_behaves_like 'common linux resources'
 
@@ -41,6 +48,8 @@ shared_examples_for 'version set below 4.x' do
 end
 
 describe 'datadog::dd-agent' do
+  include EnvVar
+
   context 'no version set' do
     # This recipe needs to have an api_key, otherwise `raise` is called.
     # It also depends on the version of Python present on the platform:
@@ -138,6 +147,7 @@ describe 'datadog::dd-agent' do
 
     context 'on Windows' do
       cached(:chef_run)  do
+        set_env_var('ProgramData', 'C:\ProgramData')
         ChefSpec::SoloRunner.new(
           :platform => 'windows',
           :version => '2012R2'
