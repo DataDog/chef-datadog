@@ -24,4 +24,6 @@ group :integration do
   gem 'kitchen-vagrant', '~> 0.19.0'
   gem 'test-kitchen', '~> 1.4.2'
   gem 'travis-lint'
+  gem 'serverspec'
+  gem 'winrm-transport'
 end

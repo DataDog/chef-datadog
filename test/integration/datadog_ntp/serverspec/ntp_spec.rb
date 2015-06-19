@@ -1,14 +1,13 @@
 # Encoding: utf-8
 require 'json_spec'
-require 'serverspec'
+require_relative '../../../kitchen/data/spec_helper'
 require 'yaml'
 
-set :backend, :exec
-set :path, '/sbin:/usr/local/sbin:$PATH'
+set :path, '/sbin:/usr/local/sbin:$PATH' unless os[:family] == 'windows'
 
-AGENT_CONFIG = '/etc/dd-agent/conf.d/ntp.yaml'
+AGENT_CONFIG = File.join(@agent_config_dir, 'conf.d/ntp.yaml')
 
-describe service('datadog-agent') do
+describe service(@agent_service_name) do
   it { should be_running }
 end
 

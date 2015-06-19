@@ -4,6 +4,9 @@ driver:
   customize:
     memory: 1024
 
+provisioner:
+  data_path: test/shared  # directory containing shared helpers for integration tests
+
 platforms:
 # Loop through two lists and output a total matrix of all possible platform + chef versions
 # fedora-20 needs kitchen-docker 1.7.0, but other bugs prevent that version from being used.
@@ -27,6 +30,24 @@ platforms:
     box: opscode_<%= platform_version %>_chef-provisionerless
     box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_<%= platform_version %>_chef-provisionerless.box
     require_chef_omnibus: <%= chef_version %>
+<% end
+
+windows_platform = 'windows-2012r2'
+
+chef_versions.each do |chef_version|
+%>
+
+- name: <%= windows_platform %>-<%= chef_version %>
+  driver_config:
+    box: mwrock/Windows2012R2  # lightweight windows box
+    require_chef_omnibus: <%= chef_version %>
+    communicator: winrm
+    customize:
+      usb: "off"  # USB is disabled on this box to make it more lightweight
+      vrde: "on"  # enable RDP
+  transport:
+    name: winrm
+
 <% end %>
 
 suites:
@@ -83,6 +104,10 @@ suites:
 - name: datadog_cacti
   run_list:
     - recipe[datadog::cacti]
+  excludes:
+  <% chef_versions.each do |chef_version| %>
+    - <%= windows_platform %>-<%= chef_version %>
+  <% end %>
   attributes:
     datadog:
       <<: *DATADOG
@@ -156,6 +181,10 @@ suites:
 - name: datadog_docker
   run_list:
     - recipe[datadog::docker]
+  excludes:
+  <% chef_versions.each do |chef_version| %>
+    - <%= windows_platform %>-<%= chef_version %>
+  <% end %>
   attributes:
     datadog:
       <<: *DATADOG
@@ -327,6 +356,10 @@ suites:
 - name: datadog_kafka_consumer
   run_list:
     - recipe[datadog::kafka_consumer]
+  excludes:
+  <% chef_versions.each do |chef_version| %>
+    - <%= windows_platform %>-<%= chef_version %>
+  <% end %>
   attributes:
     datadog:
       <<: *DATADOG
@@ -342,6 +375,10 @@ suites:
 - name: datadog_mesos
   run_list:
     - recipe[datadog::mesos]
+  excludes:
+  <% chef_versions.each do |chef_version| %>
+    - <%= windows_platform %>-<%= chef_version %>
+  <% end %>
   attributes:
     datadog:
       <<: *DATADOG
@@ -374,6 +411,10 @@ suites:
 - name: datadog_process
   run_list:
     - recipe[datadog::process]
+  excludes:
+  <% chef_versions.each do |chef_version| %>
+    - <%= windows_platform %>-<%= chef_version %>
+  <% end %>
   attributes:
     datadog:
       <<: *DATADOG
