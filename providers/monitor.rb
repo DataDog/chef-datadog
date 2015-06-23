@@ -13,6 +13,7 @@ action :add do
       :init_config => new_resource.init_config,
       :instances   => new_resource.instances
     )
+    cookbook new_resource.cookbook
     notifies :restart, 'service[datadog-agent]', :delayed
   end
   new_resource.updated_by_last_action(false)
