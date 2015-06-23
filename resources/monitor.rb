@@ -4,15 +4,10 @@ actions :add, :remove
 default_action :add if defined?(default_action)
 
 attribute :name, :kind_of => String, :name_attribute => true
+attribute :cookbook, :kind_of => String, :default => 'datadog'
+
 # checks have 2 sections: init_config and instances
 # we mimic these here, no validation is performed until the template
 # is evaluated.
 attribute :init_config, :kind_of => Hash, :required => false, :default => {}
 attribute :instances, :kind_of => Array, :required => false, :default => []
-
-## We need access to `cookbook_name` from the instantiated Resource
-def cookbook(arg = nil)
-  set_or_return(:cookbook, arg,
-                :kind_of => String,
-                :default => cookbook_name)
-end
