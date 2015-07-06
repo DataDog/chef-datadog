@@ -104,7 +104,7 @@ suites:
 - name: datadog_cacti
   run_list:
     - recipe[datadog::cacti]
-  excludes:
+  excludes: &WINDOWS_PLATFORMS
   <% chef_versions.each do |chef_version| %>
     - <%= windows_platform %>-<%= chef_version %>
   <% end %>
@@ -181,10 +181,7 @@ suites:
 - name: datadog_docker
   run_list:
     - recipe[datadog::docker]
-  excludes:
-  <% chef_versions.each do |chef_version| %>
-    - <%= windows_platform %>-<%= chef_version %>
-  <% end %>
+  excludes: *WINDOWS_PLATFORMS
   attributes:
     datadog:
       <<: *DATADOG
@@ -356,10 +353,7 @@ suites:
 - name: datadog_kafka_consumer
   run_list:
     - recipe[datadog::kafka_consumer]
-  excludes:
-  <% chef_versions.each do |chef_version| %>
-    - <%= windows_platform %>-<%= chef_version %>
-  <% end %>
+  excludes: *WINDOWS_PLATFORMS
   attributes:
     datadog:
       <<: *DATADOG
@@ -375,10 +369,7 @@ suites:
 - name: datadog_mesos
   run_list:
     - recipe[datadog::mesos]
-  excludes:
-  <% chef_versions.each do |chef_version| %>
-    - <%= windows_platform %>-<%= chef_version %>
-  <% end %>
+  excludes: *WINDOWS_PLATFORMS
   attributes:
     datadog:
       <<: *DATADOG
@@ -411,10 +402,7 @@ suites:
 - name: datadog_process
   run_list:
     - recipe[datadog::process]
-  excludes:
-  <% chef_versions.each do |chef_version| %>
-    - <%= windows_platform %>-<%= chef_version %>
-  <% end %>
+  excludes: *WINDOWS_PLATFORMS
   attributes:
     datadog:
       <<: *DATADOG
