@@ -9,7 +9,7 @@ end
 
 action :add do
   Chef::Log.debug "Adding monitoring for #{new_resource.name}"
-  template "#{node['datadog']['config_dir']}/conf.d/#{new_resource.name}.yaml" do
+  template ::File.join(node['datadog']['config_dir'], 'conf.d', "#{new_resource.name}.yaml") do
     if node['platform_family'] == 'windows'
       owner 'Administrators'
       rights :full_control, 'Administrators'
@@ -32,8 +32,9 @@ action :add do
 end
 
 action :remove do
-  Chef::Log.debug "Removing #{new_resource.name} from #{node['datadog']['config_dir']}/conf.d/"
-  file "#{node['datadog']['config_dir']}/conf.d/#{new_resource.name}.yaml" do
+  confd_dir = ::File.join(node['datadog']['config_dir'], 'conf.d')
+  Chef::Log.debug "Removing #{new_resource.name} from #{confd_dir}"
+  file ::File.join(confd_dir, "#{new_resource.name}.yaml") do
     action :delete
     notifies :restart, 'service[datadog-agent]', :delayed if node['datadog']['agent_start']
   end
