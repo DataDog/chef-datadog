@@ -24,6 +24,7 @@ dd_agent_version = node['datadog']['agent_version']
 
 # If version specified and lower than 5.x
 if !dd_agent_version.nil? && dd_agent_version.split('.')[0].to_i < 5
+  Chef::Log.warn 'Support for Agent pre 5.x will be removed in datadog cookbook version 3.0'
   # Select correct package name based on attribute
   dd_pkg_name = node['datadog']['install_base'] ? 'datadog-agent-base' : 'datadog-agent'
 
