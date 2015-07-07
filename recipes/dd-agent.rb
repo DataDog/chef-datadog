@@ -33,8 +33,8 @@ agent_config_file = ::File.join(node['datadog']['config_dir'], 'datadog.conf')
 directory node['datadog']['config_dir'] do
   if node['platform_family'] == 'windows'
     owner 'Administrators'
-    rights :read, 'Users'
     rights :full_control, 'Administrators'
+    inherits false
   else
     owner 'dd-agent'
     group 'root'
@@ -52,8 +52,8 @@ raise "Add a ['datadog']['api_key'] attribute to configure this node's Datadog A
 template agent_config_file do
   if node['platform_family'] == 'windows'
     owner 'Administrators'
-    rights :read, 'Users'
     rights :full_control, 'Administrators'
+    inherits false
   else
     owner 'dd-agent'
     group 'root'
