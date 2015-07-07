@@ -1,9 +1,5 @@
 # Encoding: utf-8
-require 'json_spec'
-require_relative '../../../kitchen/data/spec_helper'
-require 'yaml'
-
-set :path, '/sbin:/usr/local/sbin:$PATH' unless os[:family] == 'windows'
+require 'spec_helper'
 
 JMX_CONFIG = File.join(@agent_config_dir, 'conf.d/jmx.yaml')
 

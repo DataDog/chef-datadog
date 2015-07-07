@@ -1,11 +1,10 @@
 # Shared helper for all serverspec tests
-# Require in a spec file with `require_relative '../../../kitchen/data/spec_helper'`
-# See http://jtimberman.housepub.org/blog/2014/12/31/quick-tip-serverspec-spec-helper-in-test-kitchen/
-
+require 'json_spec'
 require 'serverspec'
+require 'yaml'
 
 # manually determine if the platform is Windows or not
-# Serverspec as of v2.18 cannot detect the OS family of Windows target hosts
+# Serverspec as of v2.24 cannot detect the OS family of Windows target hosts
 # For reference see https://github.com/serverspec/serverspec/blob/master/WINDOWS_SUPPORT.md
 if ENV['OS'] == 'Windows_NT'
   set :backend, :cmd
@@ -20,3 +19,5 @@ else
   @agent_service_name = 'datadog-agent'
   @agent_config_dir = '/etc/dd-agent'
 end
+
+set :path, '/sbin:/usr/local/sbin:$PATH' unless os[:family] == 'windows'

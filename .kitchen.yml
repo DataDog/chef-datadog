@@ -4,9 +4,6 @@ driver:
   customize:
     memory: 1024
 
-provisioner:
-  data_path: test/shared  # directory containing shared helpers for integration tests
-
 platforms:
 # Loop through two lists and output a total matrix of all possible platform + chef versions
 # fedora-20 needs kitchen-docker 1.7.0, but other bugs prevent that version from being used.

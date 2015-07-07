@@ -1,4 +1,4 @@
-require_relative '../../../kitchen/data/spec_helper'
+require 'spec_helper'
 
 describe package(@agent_package_name) do
   it { should be_installed }
