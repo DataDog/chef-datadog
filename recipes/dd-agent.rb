@@ -47,7 +47,7 @@ agent_action = node['datadog']['agent_start'] ? :start : :stop
 
 # Make sure the config directory exists
 directory '/etc/dd-agent' do
-  owner 'root'
+  owner 'dd-agent'
   group 'root'
   mode 0755
 end
@@ -60,9 +60,9 @@ end
 raise "Add a ['datadog']['api_key'] attribute to configure this node's Datadog Agent." if node['datadog'] && node['datadog']['api_key'].nil?
 
 template '/etc/dd-agent/datadog.conf' do
-  owner 'root'
+  owner 'dd-agent'
   group 'root'
-  mode 0644
+  mode 0640
   variables(
     :api_key => node['datadog']['api_key'],
     :dd_url => node['datadog']['url']
