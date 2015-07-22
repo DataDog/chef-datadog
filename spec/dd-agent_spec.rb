@@ -243,5 +243,28 @@ describe 'datadog::dd-agent' do
 
       it_behaves_like 'debianoids'
     end
+
+    context 'use key/value for tags' do
+      before(:all) do
+        @chef_run = ChefSpec::SoloRunner.new(
+          platform: 'ubuntu',
+          version: '14.04'
+        ) do |node|
+          node.set['datadog'] = {
+            'api_key' => 'somethingnotnil',
+            'tags' => {'env' => 'foo', 'cluster' => 'bar'},
+            'languages' => {'python' => {'version' => '2.6.2'}}
+          }
+        end
+        @chef_run.converge described_recipe
+      end
+
+      it_behaves_like 'common resources'
+
+      it 'sets tags properly' do
+        expect(@chef_run).to render_file('/etc/dd-agent/datadog.conf').
+          with_content(/^tags: env:foo,cluster:bar$/)
+      end
+    end
   end
 end
