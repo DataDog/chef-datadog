@@ -21,6 +21,10 @@ case node['platform_family']
 when 'debian'
   include_recipe 'apt'
 
+  package 'apt-transport-https' do
+    action :install
+  end
+
   apt_repository 'datadog' do
     keyserver 'hkp://keyserver.ubuntu.com:80'
     key 'C7A7DA52'
