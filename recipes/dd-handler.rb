@@ -35,7 +35,7 @@ unless web_proxy['host'].nil?
   proxy_url = URI::HTTP.build(host: web_proxy['host'], port: web_proxy['port'])
   proxy_url.user = web_proxy['user']
   proxy_url.password = web_proxy['password']
-  ENV['HTTP_PROXY'] = proxy_url.to_s
+  ENV['DATADOG_PROXY'] = proxy_url.to_s
 end
 
 # Create the handler to run at the end of the Chef execution
