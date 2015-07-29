@@ -25,6 +25,8 @@ describe file(AGENT_CONFIG) do
           'username' => 'someuser',
           'password' => 'somepass',
           'is_external' => false,
+          'pshard_stats' => true,
+          'shard_level_metrics' => true,
           'tags' => ['kitchen', 'sink']
         }
       ],
