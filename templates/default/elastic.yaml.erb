@@ -1,6 +1,12 @@
 instances:
   <% @instances.each do |i| -%>
   - url: <%= i["url"] %>
+    <% unless i["shard_level_metrics"].nil? %>
+    shard_level_metrics: <%= i["shard_level_metrics"] %>
+    <% end %>
+    <% unless i["pshard_stats"].nil? %>
+    pshard_stats: <%= i["pshard_stats"] %>
+    <% end %>
     <% unless i["is_external"].nil? %>
     is_external: <%= i["is_external"] %>
     <% end %>
