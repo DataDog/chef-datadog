@@ -35,6 +35,10 @@ default['datadog']['url'] = 'https://app.datadoghq.com'
 # `env:node.chef_environment`, `role:node.node.run_list.role`, `tag:somecheftag`
 default['datadog']['tags'] = ''
 
+# Add one "dd_check:checkname" tag per running check. It makes it possible to slice
+# and dice per monitored app (= running Agent Check) on Datadog's backend.
+default['datadog']['create_dd_check_tags'] = nil
+
 # Collect EC2 tags, set to 'yes' to collect
 default['datadog']['collect_ec2_tags'] = nil
 

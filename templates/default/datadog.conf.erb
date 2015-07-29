@@ -13,6 +13,9 @@ autorestart: <%= node['datadog']['autorestart'] %>
 <% end -%>
 
 tags: <%= node['datadog']['tags'] %>
+<% if node['datadog']['create_dd_check_tags'] -%>
+create_dd_check_tags: <%= node['datadog']['create_dd_check_tags'] %>
+<% end -%>
 <% if node['datadog']['collect_ec2_tags'] -%>
 collect_ec2_tags: <%= node['datadog']['collect_ec2_tags'] %>
 <% end -%>
