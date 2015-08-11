@@ -9,9 +9,13 @@ node['datadog']['checkse'].each do |name, config|
         command "sudo service datadog-agent install #{name}"
     end
 
-    execute "configure check #{name}" do
-        puts "sudo service datadog-agent configure #{name} '#{JSON.dump(config)}'"
-        command "echo \"sudo service datadog-agent configure #{name} '#{JSON.dump(config)}'\""
+    if not name.include? "/"
+        name = 'tmichelet/dd-' + name + '-check'  # FIXME
     end
+    datadog_check_monitor name do
+      init_config config['init_config']
+      instances config['instances']
+    end
+
 end
 
