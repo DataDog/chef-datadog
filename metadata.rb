@@ -1,8 +1,8 @@
-name             'datadog'
-maintainer       'Datadog'
-maintainer_email 'package@datadoghq.com'
+name             'hello world'
+maintainer       'tmichelet'
+maintainer_email 'tristan@datadoghq.com'
 license          'Apache 2.0'
-description      'Installs/Configures datadog components'
+description      'hello world'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '2.1.0'
 
