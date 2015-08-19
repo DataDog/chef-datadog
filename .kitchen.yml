@@ -44,6 +44,18 @@ suites:
       api_key: somethingnotnil
       application_key: alsonotnil
 
+- name: dd-agent-encrypted-data-bag
+  data_bags_path: test/integration/dd-agent/data_bags
+  encrypted_data_bag_secret_key_path: test/integration/dd-agent/encrypted_data_bag_secret
+  run_list:
+    - recipe[datadog::dd-agent]
+    - recipe[datadog::dd-agent]
+  attributes:
+    datadog:
+      databag:
+        name: datadog
+        item: api_keys
+
 - name: dd-handler
   run_list:
     - recipe[datadog::dd-handler]
