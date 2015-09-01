@@ -37,7 +37,7 @@ when 'rhel', 'fedora'
     name 'datadog'
     description 'datadog'
     url node['datadog']['yumrepo']
-    gpgcheck false if respond_to? :gpgcheck
+    gpgkey 'https://yum.datadoghq.com/DATADOG_RPM_KEY.public'
     action :add
   end
 end
