@@ -3,7 +3,9 @@ instances:
   <% @instances.each do |instance| -%>
   - host: <%= instance["host"] %>
     port: <%= instance["port"] %>
+    <% if instance.key?("timeout") -%>
     timeout: <%= instance["timeout"] %>
+    <% end -%>
     <% if instance.key?("tags") -%>
     tags:
       <% instance["tags"].each do |tag| -%>
