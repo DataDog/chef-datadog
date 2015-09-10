@@ -11,6 +11,9 @@ instances:
       - <%= t %>
       <% end -%>
     <% end -%>
+    <% if i.key?("slowlog_max_len") -%>
+    slowlog-max-len: <%= i["slowlog_max_len"] %>
+    <% end -%>
 <% end -%>
 
 init_config:
