@@ -1,5 +1,8 @@
 # Creates the proper yaml file in /etc/dd-agent/conf.d/
 
+# Defined since Chef 11
+use_inline_resources if defined?(use_inline_resources)
+
 def whyrun_supported?
   true
 end
@@ -16,16 +19,16 @@ action :add do
     cookbook new_resource.cookbook
     notifies :restart, 'service[datadog-agent]', :delayed if node['datadog']['agent_start']
   end
-  new_resource.updated_by_last_action(false)
+
+  service 'datadog-agent'
 end
 
 action :remove do
-  if ::File.exist?("/etc/dd-agent/conf.d/#{new_resource.name}.yaml")
-    Chef::Log.debug "Removing #{new_resource.name} from /etc/dd-agent/conf.d/"
-    file "/etc/dd-agent/conf.d/#{new_resource.name}.yaml" do
-      action :delete
-      notifies :restart, 'service[datadog-agent]', :delayed if node['datadog']['agent_start']
-    end
-    new_resource.updated_by_last_action(true)
+  Chef::Log.debug "Removing #{new_resource.name} from /etc/dd-agent/conf.d/"
+  file "/etc/dd-agent/conf.d/#{new_resource.name}.yaml" do
+    action :delete
+    notifies :restart, 'service[datadog-agent]', :delayed if node['datadog']['agent_start']
   end
+
+  service 'datadog-agent'
 end
