@@ -1,3 +1,14 @@
-<%= JSON.parse(({ 'instances' => @instances }).to_json).to_yaml %>
+instances:
+<% @instances.each do |i| -%>
+  - name: <%= i['name'] %>
+    search_string: <%= i['search_string'] %>
+    <% if i['exact_match'] -%>exact_match: <%= i['exact_match'] %><% end -%>
+    <% if i['ignore_denied_access'] -%>ignore_denied_access: <%= i['ignore_denied_access'] %><% end -%>
+  <% if i['thresholds'] && (i['thresholds']['critical'] || i['thresholds']['warning']) -%>
+    thresholds:
+      <% if i['thresholds']['critical'] -%>critical: <%= i['thresholds']['critical'] %><% end -%>
+      <% if i['thresholds']['warning'] -%>warning: <%= i['thresholds']['warning'] %><% end -%>
+  <% end -%>
+<% end -%>
 
 init_config:
