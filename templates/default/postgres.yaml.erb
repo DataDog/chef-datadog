@@ -16,6 +16,9 @@ instances:
     <%- if i.key?('dbname') %>
     dbname: <%= i['dbname'] %>
     <% end -%>
+    <%- if i.key?('ssl') %>
+    ssl: <%= i['ssl'] %>
+    <% end -%>
     <% if i.key?("relations") -%>
     relations:
         <% i["relations"].each do |r| -%>
