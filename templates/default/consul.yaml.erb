@@ -7,9 +7,15 @@ instances:
     <% unless i['catalog_checks'].nil? %>
     catalog_checks: <%= i['catalog_checks'] %>
     <% end %>
-    <% if i['service_whitelist'].nil? %>
+    <% unless i['service_whitelist'].nil? %>
     service_whitelist: <%= i['service_whitelist'] %>
     <% end %>
+    <% if i.key?('tags') -%>
+    tags:
+      <% i['tags'].each do |t| -%>
+      - <%= t %>
+      <% end -%>
+    <% end -%>
 <% end -%>
 
 # Nothing to configure here
