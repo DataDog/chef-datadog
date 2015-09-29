@@ -98,6 +98,20 @@ suites:
               - dskDevice
               - ifName
 
+- name: datadog_consul
+  run_list:
+    - recipe[datadog::consul]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      consul:
+        instances:
+          - url: http://localhost:8500
+            new_leader_checks: false
+            catalog_checks: false
+            service_whitelist: consul
+            tags: ['_default']
+
 - name: datadog_cassandra
   run_list:
     - recipe[datadog::cassandra]
