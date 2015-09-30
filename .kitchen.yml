@@ -124,6 +124,21 @@ suites:
             user: someuser
             password: somepass
 
+- name: datadog_etcd
+  run_list:
+    - recipe[datadog::etcd]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      etcd:
+        instances:
+          - url: http://localhost:2379
+            timeout: 5
+            ssl_keyfile: /etc/etcd/ssl.key
+            ssl_certfile: /etc/etcd/ssl.crt
+            ssl_cert_validation: true
+            ssl_ca_certs: /etc/etcd/ca-certs.crt
+
 - name: datadog_docker
   run_list:
     - recipe[datadog::docker]
