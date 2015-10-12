@@ -4,23 +4,25 @@ source 'https://rubygems.org'
 group :development do
   gem 'emeril', '~> 0.8.0'
   gem 'guard', '>= 2.6'
-  gem 'guard-foodcritic', '~> 1.0.3'
+  gem 'guard-foodcritic', '~> 2.0.0'
   gem 'guard-kitchen'
   gem 'guard-rspec'
   gem 'guard-rubocop', '>= 1.1'
 end
 
 group :test do
-  gem 'berkshelf', '~> 3.1'
-  gem 'chefspec', '~> 4.2'
-  gem 'coveralls', '~> 0.7.1', require: false
-  gem 'foodcritic', '~> 4.0.0'
+  gem 'berkshelf', '~> 4.0.1'
+  gem 'chefspec', '~> 4.4.0'
+  gem 'coveralls', '~> 0.8.3', require: false
+  gem 'foodcritic', '~> 5.0.0'
+  gem 'json_spec', '~> 1.1.4'
   gem 'rake', '>= 10.2'
-  gem 'rubocop', '= 0.28.0'
+  gem 'rubocop', '= 0.34.2'
 end
 
 group :integration do
-  gem 'kitchen-vagrant'
-  gem 'test-kitchen', '~> 1.3.1'
+  gem 'kitchen-docker', '~> 2.3.0'
+  gem 'kitchen-vagrant', '~> 0.19.0'
+  gem 'test-kitchen', '~> 1.4.2'
   gem 'travis-lint'
 end
