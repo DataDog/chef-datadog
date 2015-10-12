@@ -18,44 +18,43 @@ describe file(JMX_CONFIG) do
   it 'is valid yaml matching input values' do
     generated = YAML.load_file(JMX_CONFIG)
 
-    expected = {
+    EXPECTED = {
       'init_config' => nil,
       'instances' => [
         {
           'conf' => [
             {
-              'exclude' => [
-                {
-                  'domain' => 'evil_domain'
-                }
-              ],
               'include' => {
+                'domain' => 'my_domain',
+                'bean' => ['my_bean', 'my_second_bean'],
                 'attribute' => {
-                  'bytesReceived' => { 'metric_type' => 'counter', 'alias' => 'tomcat.bytes_rcvd' },
-                  'maxThreads' => { 'metric_type' => 'gauge', 'alias' => 'tomcat.threads.max' }
-                },
-                'bean' => 'tomcat_bean',
-                'domain' => 'domain0',
-                'type' => 'ThreadPool'
-              },
-              'include' => {
-                'attributes' => [
-                  'BloomFilterDiskSpaceUsed',
-                  'Capacity'
-                ],
-                'bean_name' => 'com.datadoghq.test:type=BeanType,tag1=my_bean_name',
-                'domain' => 'org.apache.cassandra.db',
-                'foo' => 'bar'
+                  'attribute1' => { 'metric_type' => 'counter', 'alias' => 'jmx.my_metric_name' },
+                  'attribute2' =>  { 'metric_type' => 'gauge', 'alias' => 'jmx.my2ndattribute' }
+                }
               }
+            },
+            {
+              'include' => { 'domain' => '2nd_domain' },
+              'exclude' => { 'bean' => ['excluded_bean'] }
+            },
+            {
+              'include' => { 'domain_regex' => 'regex_on_domain' },
+              'exclude' => { 'bean_regex' => ['regex_on_excluded_bean'] }
             }
           ],
-          'extra_key' => 'extra_val',
           'host' => 'localhost',
-          'port' => 9999
+          'name' => 'jmx_instance',
+          'password' => 'somepass',
+          'port' => 7199,
+          'tags' => {
+            'env' => 'stage',
+            'newTag' => 'test'
+          },
+          'user' => 'someuser'
         }
       ]
     }
 
-    expect(generated.to_json).to be_json_eql expected.to_json
+    expect(generated.to_json).to be_json_eql EXPECTED.to_json
   end
 end

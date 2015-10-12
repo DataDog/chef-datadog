@@ -220,29 +220,36 @@ suites:
       jmx:
         instances:
           - host: localhost
-            port: 9999
-            extra_key: extra_val
+            port: 7199
+            user: someuser
+            password: somepass
+            name: jmx_instance
+            tags:
+              env: stage
+              newTag: test
             conf:
               - include:
-                  domain: domain0
-                  type: ThreadPool
-                  bean: tomcat_bean
-                  attributes:
-                    maxThreads:
-                      alias: tomcat.threads.max
-                      metric_type: gauge
-                    bytesReceived:
-                      alias: tomcat.bytes_rcvd
+                  domain: my_domain
+                  bean:
+                    - my_bean
+                    - my_second_bean
+                  attribute:
+                    attribute1:
                       metric_type: counter
-                include:
-                  domain: org.apache.cassandra.db
-                  attributes:
-                    - BloomFilterDiskSpaceUsed
-                    - Capacity
-                  bean_name: com.datadoghq.test:type=BeanType,tag1=my_bean_name
-                  foo: bar
+                      alias: jmx.my_metric_name
+                    attribute2:
+                      metric_type: gauge
+                      alias: jmx.my2ndattribute
+              - include:
+                  domain: 2nd_domain
                 exclude:
-                - domain: evil_domain
+                  bean:
+                    - excluded_bean
+              - include:
+                  domain_regex: regex_on_domain
+                exclude:
+                  bean_regex:
+                    - regex_on_excluded_bean
 
 - name: datadog_mongo
   run_list:

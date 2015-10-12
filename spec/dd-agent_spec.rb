@@ -157,8 +157,8 @@ describe 'datadog::dd-agent' do
     context 'on Fedora distro' do
       before(:all) do
         @chef_run = ChefSpec::SoloRunner.new(
-        :platform => 'fedora',
-        :version => '21'
+          :platform => 'fedora',
+          :version => '21'
         ) do |node|
           node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
           node.set['languages'] = { 'python' => { 'version' => '2.7.9' } }
