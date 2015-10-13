@@ -83,8 +83,7 @@ instances:
 
   subject { chef_run }
 
-  # @todo Figure out how to leverage shared_examples across test suites
-  # it_should_behave_like 'datadog::dd-agent'
+  it_behaves_like 'datadog-agent'
 
   it { is_expected.to include_recipe('datadog::dd-agent') }
 
