@@ -1,0 +1,17 @@
+# Each instance requires a directory and an array of queues.
+# Tags are optional.
+instances:
+  <% @instances.each do |instance| -%>
+  - directory: <%= instance['directory'] %>
+    queues:
+      <% Array(instance['queues']).each do |queue| -%>
+      - <%= queue %>
+      <% end -%>
+    tags:
+      <% Array(instance['tags']).each do |tag| -%>
+      - <%= tag %>
+      <% end -%>
+  <% end -%>
+
+# Postfix check does not require any init_config
+init_config:
