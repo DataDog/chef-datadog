@@ -30,6 +30,20 @@ default['datadog']['application_key'] = nil
 # The host of the Datadog intake server to send agent data to
 default['datadog']['url'] = 'https://app.datadoghq.com'
 
+# Values that differ on Windows
+# The location of the config folder (containing conf.d)
+# The location of the dd agent folder (containing checks.d)
+# The name of the DD agent service
+if platform_family?("windows")
+	default['datadog']['configDir'] = "#{ENV['ProgramData']}/Datadog"
+	default['datadog']['agentDir'] = "#{ENV['ProgramFiles(x86)']}/Datadog/Datadog Agent"
+	default['datadog']['agent_name'] = 'DatadogAgent'
+else
+	default['datadog']['configDir'] = '/etc/dd-agent'
+	default['datadog']['agentDir'] = '/etc/dd-agent'
+	default['datadog']['agent_name'] = 'datadog-agent'
+end
+
 # Add tags as override attributes in your role
 # When using the Datadog Chef Handler, tags are set on the node with preset prefixes:
 # `env:node.chef_environment`, `role:node.node.run_list.role`, `tag:somecheftag`
@@ -62,7 +76,7 @@ default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm/#{architecture_map
 begin
   default['datadog']['install_base'] = Gem::Version.new(node['languages']['python']['version'].gsub(/(\d\.\d\.\d).+/, '\\1')) < Gem::Version.new('2.6.0')
 rescue NoMethodError # nodes['languages']['python'] == nil
-  Chef::Log.warn 'no version of python found, please install Agent version 5.x or higher.'
+  Chef::Log.warn 'no version of python found, please install Agent version 5.x or higher.' unless platform_family?("windows")
 rescue ArgumentError
   Chef::Log.warn "could not parse python version string: #{node['languages']['python']['version']}"
 end

@@ -1,3 +1,5 @@
+# This file is built by Chef. Direct modification will be overwritten!
+
 init_config:
 
 instances:
@@ -35,39 +37,21 @@ instances:
     # WMI class you're using. This is only useful when you will have multiple
     # values for your WMI query. The examples below show how you can tag your
     # process metrics with the process name (giving a tag of "name:app_name").
+    #
 
-
-    # Fetch the number of processes and users
-    -   class: Win32_OperatingSystem
-        metrics:
-            -   [NumberOfProcesses, system.proc.count, gauge]
-            -   [NumberOfUsers, system.users.count, gauge]
-
-    # Fetch metrics for a single running application, called myapp
-    -   class: Win32_PerfFormattedData_PerfProc_Process
-        metrics:
-            -   [ThreadCount, my_app.threads.count, gauge]
-            -   [VirtualBytes, my_app.mem.virtual, gauge]
-        filters:
-            -   Name: myapp
-
-    # Fetch process metrics for a set of processes, tagging by app name.
-    -   class: Win32_PerfFormattedData_PerfProc_Process
-        metrics:
-            -   [ThreadCount, proc.threads.count, gauge]
-            -   [VirtualBytes, proc.mem.virtual, gauge]
-            -   [PercentProcessorTime, proc.cpu_pct, gauge]
-        filters:
-            -   Name: app1
-            -   Name: app2
-            -   Name: app3
-        tag_by: Name
-
-    # Fetch process metrics for every available process, tagging by app name.
-    -   class: Win32_PerfFormattedData_PerfProc_Process
-        metrics:
-            -   [IOReadBytesPerSec, proc.io.bytes_read, gauge]
-            -   [IOWriteBytesPerSec, proc.io.bytes_written, gauge]
-        tag_by: Name
-
-
+  <% @instances.each do |i| -%>
+  - class: <%= i['class'] %>
+    metrics:
+      <% i['metrics'].each do |m| -%>
+      - <%= m %>
+      <% end -%>
+    <% if i.key?('filters') -%>
+    filters:
+      <% i['filters'].each do |f| -%>
+      - <%= f %>
+      <% end -%>
+    <% end -%>
+    <% if i.key?('tag_by') -%>
+    tag_by: <%= i['tag_by'] %>
+    <% end -%>
+  <% end -%>

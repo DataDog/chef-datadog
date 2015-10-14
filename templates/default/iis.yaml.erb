@@ -1,3 +1,5 @@
+# This file is built by Chef. Direct modification will be overwritten!
+
 # By default, this check will run against a single instance - the current
 # machine that the Agent is running on. It will check the WMI performance
 # counters for IIS on that machine. 
@@ -16,6 +18,12 @@ instances:
     <% if i.key?('username') -%>
     username: <%= i['username'] %>
     password: <%= i['password'] %>
+    <% end -%>
+    <% if i.key?('sites') -%>
+    sites:
+      <% i['sites'].each do |s| -%>
+      - <%= s %>
+      <% end -%>
     <% end -%>
     <% if i.key?('tags') -%>
     tags:
