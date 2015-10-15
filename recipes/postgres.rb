@@ -16,6 +16,7 @@ include_recipe 'datadog::dd-agent'
 #       'username' => "datadog",
 #       'tags' => ["prod"],
 #       'dbname' => 'my_database',
+#       'ssl' => true,
 #       'relations' => ["apple_table", "orange_table"]
 #     }
 #   ]
