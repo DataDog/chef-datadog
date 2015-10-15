@@ -13,7 +13,8 @@ action :add do
       :init_config => new_resource.init_config,
       :instances   => new_resource.instances
     )
-    notifies :restart, 'service[datadog-agent]', :delayed
+    cookbook new_resource.cookbook
+    notifies :restart, 'service[datadog-agent]', :delayed if node['datadog']['agent_start']
   end
   new_resource.updated_by_last_action(false)
 end
@@ -23,7 +24,7 @@ action :remove do
     Chef::Log.debug "Removing #{new_resource.name} from /etc/dd-agent/conf.d/"
     file "/etc/dd-agent/conf.d/#{new_resource.name}.yaml" do
       action :delete
-      notifies :restart, 'service[datadog-agent]', :delayed
+      notifies :restart, 'service[datadog-agent]', :delayed if node['datadog']['agent_start']
     end
     new_resource.updated_by_last_action(true)
   end

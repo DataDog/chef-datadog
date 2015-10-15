@@ -4,6 +4,8 @@ actions :add, :remove
 default_action :add if defined?(default_action)
 
 attribute :name, :kind_of => String, :name_attribute => true
+attribute :cookbook, :kind_of => String, :default => 'datadog'
+
 # checks have 2 sections: init_config and instances
 # we mimic these here, no validation is performed until the template
 # is evaluated.
