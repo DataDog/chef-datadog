@@ -324,6 +324,22 @@ suites:
         init_config:
           default_timeout: 10
 
+- name: datadog_pgbouncer
+  run_list:
+    - recipe[datadog::pgbouncer]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      pgbouncer:
+        instances:
+          - host: localhost
+            port: 6432
+            username: john
+            password: doe
+            tags:
+              - toto
+              - tata
+
 - name: datadog_process
   run_list:
     - recipe[datadog::process]
