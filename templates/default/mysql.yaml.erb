@@ -1,6 +1,9 @@
 instances:
 <% @instances.each do |i| -%>
   - server: <%= i['server'] %>
+    <% if i.key?('port') -%>
+    port: <%= i['port'] %>
+    <% end -%>
     user: <%= i['user'] %>
     pass: <%= i['pass'] %>
     <% if i.key?('sock') -%>

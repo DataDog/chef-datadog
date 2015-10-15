@@ -9,6 +9,7 @@ include_recipe 'datadog::dd-agent'
 # node['datadog']['mysql']['instances'] = [
 #   {
 #     'server' => "localhost",
+#     'port' => 3306,
 #     'user' => "my_username",
 #     'pass' => "my_password",
 #     'sock' => "/path/to/mysql.sock",
