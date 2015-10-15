@@ -1,32 +1,34 @@
 # A Guardfile
 # More info at https://github.com/guard/guard#readme
 
-guard 'foodcritic',
-  :cookbook_paths => ".",
-  :cli => "--epic-fail correctness --chef-version 0.10.8" do
-  watch(%r{metadata.rb$})
-  watch(%r{attributes/.+\.rb$})
-  watch(%r{providers/.+\.rb$})
-  watch(%r{recipes/.+\.rb$})
-  watch(%r{resources/.+\.rb$})
-  watch(%r{templates/.+\.rb$})
+guard 'foodcritic', cookbook_paths: '.' do
+  watch(/attributes\/.+\.rb/)
+  watch(/providers\/.+\.rb/)
+  watch(/recipes\/.+\.rb/)
+  watch(/resources\/.+\.rb/)
+  watch(/templates\/.+/)
+  watch('metadata.rb')
 end
 
-# Since a cookbook depends on other cookbooks, this structure is needed.
-# The `rake berks` should be performed prior to running this.
-spec_paths = Dir.glob(File.join("cookbooks", "**", "spec"))
-guard 'rspec',
-  :cli => '--color --format nested',
-  :spec_paths => spec_paths do
+guard :rspec, cmd: 'bundle exec rspec' do
+  require 'guard/rspec/dsl'
+  dsl = Guard::RSpec::Dsl.new(self)
 
-  watch(%r{^cookbooks/.+/spec/.+_spec\.rb$})
-  watch(%r{^cookbooks/.+/spec/spec_helper.rb$})  { "spec" }
+  # RSpec files
+  rspec = dsl.rspec
+  watch(rspec.spec_helper) { rspec.spec_dir }
+  watch(rspec.spec_support) { rspec.spec_dir }
+  watch(rspec.spec_files)
 
-  # Chef paths example
-  watch(%r{cookbooks/.+/metadata.rb$})
-  watch(%r{cookbooks/.+/attributes/.+\.rb$})
-  watch(%r{cookbooks/.+/providers/.+\.rb$})
-  watch(%r{cookbooks/.+/recipes/.+\.rb$})
-  watch(%r{cookbooks/.+/resources/.+\.rb$})
-  watch(%r{cookbooks/.+/templates/.+\.rb$})
+  # Ruby files
+  ruby = dsl.ruby
+  dsl.watch_spec_files_for(ruby.lib_files)
+
+  # Chef files
+  watch(/attributes\/.+\.rb/)
+  watch(/providers\/.+\.rb/)
+  watch(/recipes\/.+\.rb/)
+  watch(/resources\/.+\.rb/)
+  watch(/templates\/.+/)
+  watch('metadata.rb')
 end
