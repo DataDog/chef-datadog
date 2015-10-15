@@ -20,6 +20,10 @@ shared_examples_for 'debianoids' do
   it 'installs apt-transport-https' do
     expect(chef_run).to install_package('apt-transport-https')
   end
+
+  it 'installs apt-transport-https' do
+    expect(@chef_run). to install_package('apt-transport-https')
+  end
 end
 
 shared_examples_for 'rhellions' do
