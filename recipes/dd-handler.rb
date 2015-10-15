@@ -17,6 +17,14 @@
 # limitations under the License.
 #
 
+if Chef::Config[:why_run]
+  # chef_handler 1.1 needs us to require datadog handler's file,
+  # which makes why-run runs fail when chef-handler-datadog is not installed,
+  # so skip the recipe when in why-run mode until we can use chef_handler 1.2
+  Chef::Log.warn('Running in why-run mode, skipping dd-handler')
+  return
+end
+
 include_recipe 'chef_handler'
 ENV['DATADOG_HOST'] = node['datadog']['url']
 
