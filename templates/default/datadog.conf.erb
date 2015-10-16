@@ -4,7 +4,9 @@
 dd_url: <%= @dd_url %>
 api_key: <%= @api_key %>
 check_freq: <%= node['datadog']['check_freq'] %>
+<% if node['datadog']['hostname'] -%>
 hostname: <%= node['datadog']['hostname'] %>
+<% end -%>
 use_mount: <%= node['datadog']['use_mount'] ? "yes" : "no"  %>
 listen_port: <%= node['datadog']['agent_port'] %>
 bind_host: <%= node['datadog']['bind_host'] %>
