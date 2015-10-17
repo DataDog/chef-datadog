@@ -1,6 +1,44 @@
 Changes
 =======
 
+# 2.2.0 / Unreleased
+
+* This release deserves a specific callout for a feature that has been finally
+  implemented and deserves a major round of applause to [@EasyAsABC123][],
+  [@rlaveycal][], [@olivielpeau][] for their efforts in making Windows platform
+  support in this cookbook a reality.
+
+* [FEATURE] Add support for `system_core` check, [#243][] [@miketheman][]
+* [FEATURE] Add support for `consul` check, [#238][] [@wk8][] & [@darron][]
+* [FEATURE] Add `ssl` support for `postgres` check, [#237][] [@uzyexe][]
+* [FEATURE] Add support for `etcd` check, [#235][] [@zshenker][] & [@darron][]
+* [FEATURE] Add RPM signature check, [#225][] [@elafarge][], [#240][] [@miketheman][]
+* [FEATURE] Add missing `varnish` check options, [#224][] [@hilli][]
+* [FEATURE] Add timeout option to `elasticsearch` check, [#223][] [@dominicchan][]
+* [FEATURE] Add per-shard config toggles to `elasticsearch` check. **Agent 5.5.0+**, [#221][] [@elafarge][]
+* [FEATURE] Add per-check tagging to `datadog.conf`. **Agent 5.5.0+**, [#220][] [@elafarge][] [ref](https://github.com/DataDog/dd-agent/pull/1570)
+* [FEATURE] Add port for `mysql` check, [#217][] [@NathanielMichael][]
+* [FEATURE] **Add support for Windows**, [#210][] [@EasyAsABC123][], [@rlaveycal][], [@olivielpeau][]
+* [FEATURE] Add `skip_ssl_validation` toggle to the datadog config file, [#209][] [@ABrehm264][]
+* [FEATURE] Add support for `supervisord` check, [#204][] [@DorianZaccaria][]
+* [FEATURE] Add support for `pgbouncer` check, [#198][] [@DorianZaccaria][]
+* [FEATURE] Update options for `redisdb` check, [#185][] [@opsline-radek][], [@miketheman][] (specs)
+* [FEATURE] Add support for `postfix` check, [#167][] [@phlipper][]
+* [BUGFIX] Fix `kafka` template `tags`, [#244][] [@LeoCavaille][]
+* [BUGFIX] Fix `updated_by_last_action` value of `monitor` provider, [#229][] [@olivielpeau][]
+* [BUGFIX] Make `zookeeper` check `timeout` optional, [#227][] [@olivielpeau][]
+* [OPTIMIZE] Skip `dd-handler` recipe in `why-run` mode, [#231][] [@olivielpeau][]
+* [OPTIMIZE] Add `apt-transport-https` for deb-based repo install, [#219][] [@darron][]
+* [OPTIMIZE] Change rights on Agent configuration files, [#218][] [@olivielpeau][]
+* [OPTIMIZE] Updates to `manage` LWRP, [#212][] [@jmanero-r7][]
+* [DOCS] Correct `kafka` example, [#205][] [@elafarge][]
+* [DOCS] Correct `fluentd` example, [#203][] [@inokappa][]
+* [MISC] Add Rake task for cleanup, [#216][] [@miketheman][]
+* [MISC] Update `guard` and `Guardfile`, [#215][] [@miketheman][]
+* [MISC] Create ChefSpec matchers for spec testing, [@miketheman][]
+* [MISC] Update `jmx` tests for accurate structure, [@miketheman][]
+* [MISC] Update libraries used in test suite, [@miketheman][]
+
 # 2.1.0 / 2015-04-20
 
 * [FEATURE] Add support for `mesos` check, [#200][] [@DorianZaccaria][]
@@ -253,20 +291,52 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#148]: https://github.com/DataDog/chef-datadog/issues/148
 [#159]: https://github.com/DataDog/chef-datadog/issues/159
 [#163]: https://github.com/DataDog/chef-datadog/issues/163
+[#167]: https://github.com/DataDog/chef-datadog/issues/167
 [#169]: https://github.com/DataDog/chef-datadog/issues/169
 [#171]: https://github.com/DataDog/chef-datadog/issues/171
 [#177]: https://github.com/DataDog/chef-datadog/issues/177
 [#178]: https://github.com/DataDog/chef-datadog/issues/178
 [#182]: https://github.com/DataDog/chef-datadog/issues/182
+[#185]: https://github.com/DataDog/chef-datadog/issues/185
 [#187]: https://github.com/DataDog/chef-datadog/issues/187
 [#190]: https://github.com/DataDog/chef-datadog/issues/190
 [#191]: https://github.com/DataDog/chef-datadog/issues/191
 [#192]: https://github.com/DataDog/chef-datadog/issues/192
 [#196]: https://github.com/DataDog/chef-datadog/issues/196
 [#197]: https://github.com/DataDog/chef-datadog/issues/197
+[#198]: https://github.com/DataDog/chef-datadog/issues/198
 [#200]: https://github.com/DataDog/chef-datadog/issues/200
+[#203]: https://github.com/DataDog/chef-datadog/issues/203
+[#204]: https://github.com/DataDog/chef-datadog/issues/204
+[#205]: https://github.com/DataDog/chef-datadog/issues/205
+[#209]: https://github.com/DataDog/chef-datadog/issues/209
+[#210]: https://github.com/DataDog/chef-datadog/issues/210
+[#212]: https://github.com/DataDog/chef-datadog/issues/212
+[#215]: https://github.com/DataDog/chef-datadog/issues/215
+[#216]: https://github.com/DataDog/chef-datadog/issues/216
+[#217]: https://github.com/DataDog/chef-datadog/issues/217
+[#218]: https://github.com/DataDog/chef-datadog/issues/218
+[#219]: https://github.com/DataDog/chef-datadog/issues/219
+[#220]: https://github.com/DataDog/chef-datadog/issues/220
+[#221]: https://github.com/DataDog/chef-datadog/issues/221
+[#223]: https://github.com/DataDog/chef-datadog/issues/223
+[#224]: https://github.com/DataDog/chef-datadog/issues/224
+[#225]: https://github.com/DataDog/chef-datadog/issues/225
+[#227]: https://github.com/DataDog/chef-datadog/issues/227
+[#229]: https://github.com/DataDog/chef-datadog/issues/229
+[#231]: https://github.com/DataDog/chef-datadog/issues/231
+[#235]: https://github.com/DataDog/chef-datadog/issues/235
+[#237]: https://github.com/DataDog/chef-datadog/issues/237
+[#238]: https://github.com/DataDog/chef-datadog/issues/238
+[#240]: https://github.com/DataDog/chef-datadog/issues/240
+[#243]: https://github.com/DataDog/chef-datadog/issues/243
+[#244]: https://github.com/DataDog/chef-datadog/issues/244
+[@ABrehm264]: https://github.com/ABrehm264
 [@DorianZaccaria]: https://github.com/DorianZaccaria
+[@EasyAsABC123]: https://github.com/EasyAsABC123
 [@JoeDeVries]: https://github.com/JoeDeVries
+[@LeoCavaille]: https://github.com/LeoCavaille
+[@NathanielMichael]: https://github.com/NathanielMichael
 [@SelerityMichael]: https://github.com/SelerityMichael
 [@alexism]: https://github.com/alexism
 [@alq]: https://github.com/alq
@@ -279,16 +349,21 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@coosh]: https://github.com/coosh
 [@ctrlok]: https://github.com/ctrlok
 [@darron]: https://github.com/darron
+[@dominicchan]: https://github.com/dominicchan
 [@donaldguy]: https://github.com/donaldguy
 [@drewrothstein]: https://github.com/drewrothstein
 [@dwradcliffe]: https://github.com/dwradcliffe
+[@elafarge]: https://github.com/elafarge
 [@elijahandrews]: https://github.com/elijahandrews
 [@evan2645]: https://github.com/evan2645
 [@flah00]: https://github.com/flah00
 [@graemej]: https://github.com/graemej
 [@gregf]: https://github.com/gregf
+[@hilli]: https://github.com/hilli
+[@inokappa]: https://github.com/inokappa
 [@jblancett]: https://github.com/jblancett
 [@jedi4ever]: https://github.com/jedi4ever
+[@jmanero-r7]: https://github.com/jmanero-r7
 [@jpcallanta]: https://github.com/jpcallanta
 [@jtimberman]: https://github.com/jtimberman
 [@juliandunn]: https://github.com/juliandunn
@@ -298,11 +373,17 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@mirceal]: https://github.com/mirceal
 [@mtougeron]: https://github.com/mtougeron
 [@nkts]: https://github.com/nkts
+[@olivielpeau]: https://github.com/olivielpeau
+[@opsline-radek]: https://github.com/opsline-radek
 [@phlipper]: https://github.com/phlipper
 [@qqfr2507]: https://github.com/qqfr2507
 [@remh]: https://github.com/remh
+[@rlaveycal]: https://github.com/rlaveycal
 [@ryandjurovich]: https://github.com/ryandjurovich
 [@schisamo]: https://github.com/schisamo
 [@takus]: https://github.com/takus
 [@thisismana]: https://github.com/thisismana
 [@timusg]: https://github.com/timusg
+[@uzyexe]: https://github.com/uzyexe
+[@wk8]: https://github.com/wk8
+[@zshenker]: https://github.com/zshenker
