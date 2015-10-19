@@ -17,4 +17,4 @@
 # limitations under the License.
 #
 
-easy_install_package 'dogstatsd-python'
+easy_install_package 'datadog'
