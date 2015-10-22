@@ -27,7 +27,7 @@ instances:
     <% end -%>
     <% if i.key?('tags') -%>
     tags:
-      <% @tags.each do |k, v| -%>
+      <% i['tags'].each do |k, v| -%>
       <%= k %>: <%= v %>
       <% end -%>
     <% end -%>
