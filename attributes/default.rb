@@ -97,6 +97,9 @@ default['datadog']['chef_handler_version'] = nil
 # Enable the Chef handler to report to datadog
 default['datadog']['chef_handler_enable'] = true
 
+# List to notify in case of chef failures
+default['datadog']['handler']['notify_on_failure'] = nil
+
 # Log level. Should be a valid python log level https://docs.python.org/2/library/logging.html#logging-levels
 default['datadog']['log_level'] = 'INFO'
 

@@ -42,6 +42,7 @@ chef_handler 'Chef::Handler::Datadog' do
   arguments [
     :api_key => node['datadog']['api_key'],
     :application_key => node['datadog']['application_key'],
+    :notify_on_failure => node['datadog']['handler']['notify_on_failure'],
     :use_ec2_instance_id => node['datadog']['use_ec2_instance_id']
   ]
   supports :report => true, :exception => true
