@@ -17,39 +17,29 @@
 # limitations under the License.
 #
 
-# Install the Apt/Yum repository if enabled
-include_recipe 'datadog::repository' if node['datadog']['installrepo']
-
-dd_agent_version = node['datadog']['agent_version']
-
-# If version specified and lower than 5.x
-if !dd_agent_version.nil? && dd_agent_version.split('.')[0].to_i < 5
-  # Select correct package name based on attribute
-  dd_pkg_name = node['datadog']['install_base'] ? 'datadog-agent-base' : 'datadog-agent'
-
-  package dd_pkg_name do
-    version dd_agent_version
-  end
+# Install the agent
+if node['platform_family'] == 'windows'
+  include_recipe 'datadog::_install-windows'
 else
-  # default behavior, remove the `base` package as it is no longer needed
-  package 'datadog-agent-base' do
-    action :remove
-  end
-  # Install the regular package
-  package 'datadog-agent' do
-    version dd_agent_version
-    action node['datadog']['agent_package_action'] # default is :install
-  end
+  include_recipe 'datadog::_install-linux'
 end
 
 # Set the correct Agent startup action
 agent_action = node['datadog']['agent_start'] ? :start : :stop
+# Set the correct config file
+agent_config_file = ::File.join(node['datadog']['config_dir'], 'datadog.conf')
 
 # Make sure the config directory exists
-directory '/etc/dd-agent' do
-  owner 'dd-agent'
-  group 'root'
-  mode 0755
+directory node['datadog']['config_dir'] do
+  if node['platform_family'] == 'windows'
+    owner 'Administrators'
+    rights :full_control, 'Administrators'
+    inherits false
+  else
+    owner 'dd-agent'
+    group 'root'
+    mode 0755
+  end
 end
 
 #
@@ -59,10 +49,16 @@ end
 #
 raise "Add a ['datadog']['api_key'] attribute to configure this node's Datadog Agent." if node['datadog'] && node['datadog']['api_key'].nil?
 
-template '/etc/dd-agent/datadog.conf' do
-  owner 'dd-agent'
-  group 'root'
-  mode 0640
+template agent_config_file do
+  if node['platform_family'] == 'windows'
+    owner 'Administrators'
+    rights :full_control, 'Administrators'
+    inherits false
+  else
+    owner 'dd-agent'
+    group 'root'
+    mode 0640
+  end
   variables(
     :api_key => node['datadog']['api_key'],
     :dd_url => node['datadog']['url']
@@ -71,7 +67,12 @@ end
 
 # Common configuration
 service 'datadog-agent' do
+  service_name node['datadog']['agent_name']
   action [:enable, agent_action]
-  supports :restart => true, :status => true, :start => true, :stop => true
-  subscribes :restart, 'template[/etc/dd-agent/datadog.conf]', :delayed unless node['datadog']['agent_start'] == false
+  if node['platform_family'] == 'windows'
+    supports :restart => true, :start => true, :stop => true
+  else
+    supports :restart => true, :status => true, :start => true, :stop => true
+  end
+  subscribes :restart, "template[#{agent_config_file}]", :delayed unless node['datadog']['agent_start'] == false
 end

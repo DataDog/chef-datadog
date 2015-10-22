@@ -27,6 +27,7 @@ Platforms
 * RedHat
 * Scientific Linux
 * Ubuntu
+* Windows (requires chef >= 12.0)
 
 Cookbooks
 ---------
@@ -35,6 +36,7 @@ The following Opscode cookbooks are dependencies:
 
 * `apt`
 * `chef_handler`
+* `windows`
 * `yum`
 
 

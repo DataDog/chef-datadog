@@ -57,6 +57,18 @@ default['datadog']['installrepo'] = true
 default['datadog']['aptrepo'] = 'http://apt.datadoghq.com'
 default['datadog']['aptrepo_dist'] = 'stable'
 default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/"
+default['datadog']['windows_agent_url'] = 'https://s3.amazonaws.com/ddagent-windows-stable/'
+
+# Values that differ on Windows
+# The location of the config folder (containing conf.d)
+# The name of the dd agent service
+if node['platform_family'] == 'windows'
+  default['datadog']['config_dir'] = "#{ENV['ProgramData']}/Datadog"
+  default['datadog']['agent_name'] = 'DatadogAgent'
+else
+  default['datadog']['config_dir'] = '/etc/dd-agent'
+  default['datadog']['agent_name'] = 'datadog-agent'
+end
 
 # DEPRECATED, will be removed after the release of datadog-agent 6.0
 # Set to true to always install datadog-agent-base (usually only installed on
@@ -66,16 +78,17 @@ default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm/#{architecture_map
 begin
   default['datadog']['install_base'] = Gem::Version.new(node['languages']['python']['version'].gsub(/(\d\.\d\.\d).+/, '\\1')) < Gem::Version.new('2.6.0')
 rescue NoMethodError # nodes['languages']['python'] == nil
-  Chef::Log.warn 'no version of python found, please install Agent version 5.x or higher.'
+  Chef::Log.warn 'no version of python found, please install Agent version 5.x or higher.' unless platform_family?('windows')
 rescue ArgumentError
   Chef::Log.warn "could not parse python version string: #{node['languages']['python']['version']}"
 end
 
 # Agent Version
+# Default of `nil` will install latest version. On Windows, this will also upgrade to latest
 default['datadog']['agent_version'] = nil
 
 # Agent package action
-# Allow override with `upgrade` to get latest
+# Allow override with `upgrade` to get latest (Linux only)
 default['datadog']['agent_package_action'] = 'install'
 
 # Chef handler version

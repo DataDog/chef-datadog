@@ -1,7 +1,14 @@
 require 'spec_helper'
 
+module EnvVar
+  def set_env_var(name, value)
+    allow(ENV).to receive(:[])
+    allow(ENV).to receive(:[]).with(name).and_return(value)
+  end
+end
+
 shared_examples_for 'datadog-agent-base' do
-  it_behaves_like 'common resources'
+  it_behaves_like 'common linux resources'
 
   it 'installs the datadog-agent-base package' do
     expect(chef_run).to install_package 'datadog-agent-base'
@@ -29,18 +36,20 @@ shared_examples_for 'rhellions' do
 end
 
 shared_examples_for 'no version set' do
-  it_behaves_like 'common resources'
+  it_behaves_like 'common linux resources'
 
   it_behaves_like 'datadog-agent'
 end
 
 shared_examples_for 'version set below 4.x' do
-  it_behaves_like 'common resources'
+  it_behaves_like 'common linux resources'
 
   it_behaves_like 'datadog-agent-base'
 end
 
 describe 'datadog::dd-agent' do
+  include EnvVar
+
   context 'no version set' do
     # This recipe needs to have an api_key, otherwise `raise` is called.
     # It also depends on the version of Python present on the platform:
@@ -134,6 +143,20 @@ describe 'datadog::dd-agent' do
 
       it_behaves_like 'rhellions'
       it_behaves_like 'no version set'
+    end
+
+    context 'on Windows' do
+      cached(:chef_run)  do
+        set_env_var('ProgramData', 'C:\ProgramData')
+        ChefSpec::SoloRunner.new(
+          :platform => 'windows',
+          :version => '2012R2'
+        ) do |node|
+          node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
+        end.converge described_recipe
+      end
+
+      it_behaves_like 'windows Datadog Agent'
     end
   end
 
