@@ -6,7 +6,7 @@ include_recipe 'datadog::dd-agent'
 #   node.override['datadog']['jmx']['instances'] = [
 #     {
 #       'host' => 'localhost',
-#       'port' => '7199',
+#       'port' => 7199,
 #       'name' 'prod_jmx_app',
 #       'conf' => [
 #         'include' => {
