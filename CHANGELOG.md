@@ -8,6 +8,7 @@ Changes
   [@rlaveycal][], [@olivielpeau][] for their efforts in making Windows platform
   support in this cookbook a reality.
 
+* [FEATURE] Add support for `solr` check, [#246][] [@miketheman][]
 * [FEATURE] Add support for `system_core` check, [#243][] [@miketheman][]
 * [FEATURE] Add support for `consul` check, [#238][] [@wk8][] & [@darron][]
 * [FEATURE] Add `ssl` support for `postgres` check, [#237][] [@uzyexe][]
@@ -333,6 +334,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#243]: https://github.com/DataDog/chef-datadog/issues/243
 [#244]: https://github.com/DataDog/chef-datadog/issues/244
 [#245]: https://github.com/DataDog/chef-datadog/issues/245
+[#246]: https://github.com/DataDog/chef-datadog/issues/246
 [@ABrehm264]: https://github.com/ABrehm264
 [@DorianZaccaria]: https://github.com/DorianZaccaria
 [@EasyAsABC123]: https://github.com/EasyAsABC123
