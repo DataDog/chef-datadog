@@ -31,6 +31,7 @@ Changes
 * [OPTIMIZE] Add `apt-transport-https` for deb-based repo install, [#219][] [@darron][]
 * [OPTIMIZE] Change rights on Agent configuration files, [#218][] [@olivielpeau][]
 * [OPTIMIZE] Updates to `manage` LWRP, [#212][] [@jmanero-r7][]
+* [DOCS] Correct `jmx` example, [#245][] [@tejom][]
 * [DOCS] Correct `kafka` example, [#205][] [@elafarge][]
 * [DOCS] Correct `fluentd` example, [#203][] [@inokappa][]
 * [MISC] Add Rake task for cleanup, [#216][] [@miketheman][]
@@ -331,6 +332,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#240]: https://github.com/DataDog/chef-datadog/issues/240
 [#243]: https://github.com/DataDog/chef-datadog/issues/243
 [#244]: https://github.com/DataDog/chef-datadog/issues/244
+[#245]: https://github.com/DataDog/chef-datadog/issues/245
 [@ABrehm264]: https://github.com/ABrehm264
 [@DorianZaccaria]: https://github.com/DorianZaccaria
 [@EasyAsABC123]: https://github.com/EasyAsABC123
@@ -382,6 +384,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@ryandjurovich]: https://github.com/ryandjurovich
 [@schisamo]: https://github.com/schisamo
 [@takus]: https://github.com/takus
+[@tejom]: https://github.com/tejom
 [@thisismana]: https://github.com/thisismana
 [@timusg]: https://github.com/timusg
 [@uzyexe]: https://github.com/uzyexe
