@@ -28,6 +28,7 @@ Changes
 * [BUGFIX] Fix `kafka` template `tags`, [#244][] [@LeoCavaille][]
 * [BUGFIX] Fix `updated_by_last_action` value of `monitor` provider, [#229][] [@olivielpeau][]
 * [BUGFIX] Make `zookeeper` check `timeout` optional, [#227][] [@olivielpeau][]
+* [OPTIMIZE] Add source & issues URLs for Supermarket, [#248][] [@jeffbyrnes][]
 * [OPTIMIZE] Skip `dd-handler` recipe in `why-run` mode, [#231][] [@olivielpeau][]
 * [OPTIMIZE] Add `apt-transport-https` for deb-based repo install, [#219][] [@darron][]
 * [OPTIMIZE] Change rights on Agent configuration files, [#218][] [@olivielpeau][]
@@ -335,6 +336,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#244]: https://github.com/DataDog/chef-datadog/issues/244
 [#245]: https://github.com/DataDog/chef-datadog/issues/245
 [#246]: https://github.com/DataDog/chef-datadog/issues/246
+[#248]: https://github.com/DataDog/chef-datadog/issues/248
 [@ABrehm264]: https://github.com/ABrehm264
 [@DorianZaccaria]: https://github.com/DorianZaccaria
 [@EasyAsABC123]: https://github.com/EasyAsABC123
@@ -367,6 +369,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@inokappa]: https://github.com/inokappa
 [@jblancett]: https://github.com/jblancett
 [@jedi4ever]: https://github.com/jedi4ever
+[@jeffbyrnes]: https://github.com/jeffbyrnes
 [@jmanero-r7]: https://github.com/jmanero-r7
 [@jpcallanta]: https://github.com/jpcallanta
 [@jtimberman]: https://github.com/jtimberman
