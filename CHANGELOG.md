@@ -8,6 +8,7 @@ Changes
   [@rlaveycal][], [@olivielpeau][] for their efforts in making Windows platform
   support in this cookbook a reality.
 
+* [FEATURE] Add support for `docker_daemon` check, [#249][] [@kurochan][]
 * [FEATURE] Add support for `solr` check, [#246][] [@miketheman][]
 * [FEATURE] Add support for `system_core` check, [#243][] [@miketheman][]
 * [FEATURE] Add support for `consul` check, [#238][] [@wk8][] & [@darron][]
@@ -28,6 +29,7 @@ Changes
 * [BUGFIX] Fix `kafka` template `tags`, [#244][] [@LeoCavaille][]
 * [BUGFIX] Fix `updated_by_last_action` value of `monitor` provider, [#229][] [@olivielpeau][]
 * [BUGFIX] Make `zookeeper` check `timeout` optional, [#227][] [@olivielpeau][]
+* [OPTIMIZE] Detect virtual package prior to removal, [#247][] [@dwradcliffe][]
 * [OPTIMIZE] Add source & issues URLs for Supermarket, [#248][] [@jeffbyrnes][]
 * [OPTIMIZE] Skip `dd-handler` recipe in `why-run` mode, [#231][] [@olivielpeau][]
 * [OPTIMIZE] Add `apt-transport-https` for deb-based repo install, [#219][] [@darron][]
@@ -336,7 +338,9 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#244]: https://github.com/DataDog/chef-datadog/issues/244
 [#245]: https://github.com/DataDog/chef-datadog/issues/245
 [#246]: https://github.com/DataDog/chef-datadog/issues/246
+[#247]: https://github.com/DataDog/chef-datadog/issues/247
 [#248]: https://github.com/DataDog/chef-datadog/issues/248
+[#249]: https://github.com/DataDog/chef-datadog/issues/249
 [@ABrehm264]: https://github.com/ABrehm264
 [@DorianZaccaria]: https://github.com/DorianZaccaria
 [@EasyAsABC123]: https://github.com/EasyAsABC123
@@ -375,6 +379,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@jtimberman]: https://github.com/jtimberman
 [@juliandunn]: https://github.com/juliandunn
 [@khouse]: https://github.com/khouse
+[@kurochan]: https://github.com/kurochan
 [@mfischer-zd]: https://github.com/mfischer-zd
 [@miketheman]: https://github.com/miketheman
 [@mirceal]: https://github.com/mirceal
