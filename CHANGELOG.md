@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 2.2.0 / Unreleased
+# 2.2.0 / 2015-10-27
 
 * This release deserves a specific callout for a feature that has been finally
   implemented and deserves a major round of applause to [@EasyAsABC123][],
