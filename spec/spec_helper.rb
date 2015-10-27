@@ -18,6 +18,11 @@ RSpec.configure do |config|
   # Supress deprecation warnings from `yum` cookbook.
   # @see https://github.com/chef-cookbooks/yum/issues/140
   config.log_level = :error
+
+  config.before do
+    stub_command('rpm -q datadog-agent-base')
+    stub_command('apt-cache policy datadog-agent-base | grep "Installed: (none)"')
+  end
 end
 
 ChefSpec::Coverage.start!
