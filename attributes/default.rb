@@ -57,6 +57,9 @@ default['datadog']['installrepo'] = true
 default['datadog']['aptrepo'] = 'http://apt.datadoghq.com'
 default['datadog']['aptrepo_dist'] = 'stable'
 default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/"
+default['datadog']['yumrepo_proxy'] = nil
+default['datadog']['yumrepo_proxy_username'] = nil
+default['datadog']['yumrepo_proxy_password'] = nil
 default['datadog']['windows_agent_url'] = 'https://s3.amazonaws.com/ddagent-windows-stable/'
 
 # Values that differ on Windows
