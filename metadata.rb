@@ -23,10 +23,10 @@ end
 
 depends          'apt' # We recommend '>= 2.1.0'. See CHANGELOG.md for details
 depends          'chef_handler', '~> 1.1'
-depends          'windows'
+depends          'windows' # We recommend '< 1.39.0' if running Chef >= 12.6. See README.md for details
 depends          'yum'
 
-suggests         'sudo'
+suggests         'sudo' # ~FC052
 
 recipe 'datadog::default', 'Default'
 recipe 'datadog::dd-agent', 'Installs the Datadog Agent'
