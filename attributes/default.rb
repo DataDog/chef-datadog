@@ -58,6 +58,7 @@ default['datadog']['aptrepo'] = 'http://apt.datadoghq.com'
 default['datadog']['aptrepo_dist'] = 'stable'
 default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/"
 default['datadog']['windows_agent_url'] = 'https://s3.amazonaws.com/ddagent-windows-stable/'
+default['datadog']['windows_agent_checksum'] = nil
 
 # Values that differ on Windows
 # The location of the config folder (containing conf.d)
