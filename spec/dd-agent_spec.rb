@@ -150,7 +150,8 @@ describe 'datadog::dd-agent' do
         set_env_var('ProgramData', 'C:\ProgramData')
         ChefSpec::SoloRunner.new(
           :platform => 'windows',
-          :version => '2012R2'
+          :version => '2012R2',
+          :file_cache_path => 'C:/chef/cache'
         ) do |node|
           node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
         end.converge described_recipe

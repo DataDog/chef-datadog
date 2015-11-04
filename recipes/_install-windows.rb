@@ -33,7 +33,7 @@ remote_file temp_file do
 end
 
 # Install the package
-windows_package 'Datadog Agent' do
+windows_package 'Datadog Agent' do # ~FC009
   source temp_file
   installer_type :msi
   options '/norestart ALLUSERS=1'

@@ -26,7 +26,7 @@ depends          'chef_handler', '~> 1.1.0'
 depends          'windows'
 depends          'yum'
 
-suggests         'sudo'
+suggests         'sudo' # ~FC052
 
 recipe 'datadog::default', 'Default'
 recipe 'datadog::dd-agent', 'Installs the Datadog Agent'
