@@ -12,6 +12,7 @@ The code is licensed under the Apache License 2.0 (see  LICENSE for details).
 Datadog Cookbook
 ================
 
+RCSAVAGE'S CRUDE FIX FOR DEALING WITH WINDOWS AGENTS.
 Chef recipes to deploy Datadog's components and configuration automatically.
 
 Requirements
