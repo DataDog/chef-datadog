@@ -8,7 +8,7 @@ AllCops:
 
 # We like longer lines
 Metrics/LineLength:
-  Max: 199
+  Max: 160
 
 # TODO: add encoding headers
 Style/Encoding:
