@@ -4,8 +4,94 @@ instances:
   <% (i.keys - ['host']).each do |key| -%>
     <%= key %>: <%= i[key] %>
   <% end -%>
+    cassandra_aliasing: true
 <% end -%>
 
+<% if @version == 2 %>
+init_config:
+  # List of metrics to be collected by the integration
+  # Read http://docs.datadoghq.com/integrations/java/ to learn how to customize it
+  conf:
+    - include:
+        domain: org.apache.cassandra.metrics
+        type: ClientRequest
+        scope:
+          - Read
+          - Write
+        name:
+          - Latency
+          - Timeouts
+          - Unavailables
+        attribute:
+          - Count
+          - OneMinuteRate
+    - include:
+        domain: org.apache.cassandra.metrics
+        type: ClientRequest
+        scope:
+          - Read
+          - Write
+        name:
+          - TotalLatency
+    - include:
+        domain: org.apache.cassandra.metrics
+        type: Storage
+        name:
+          - Load
+          - Exceptions
+    - include:
+        domain: org.apache.cassandra.metrics
+        type: ColumnFamily
+        name:
+          - TotalDiskSpaceUsed
+          - BloomFilterDiskSpaceUsed
+          - BloomFilterFalsePositives
+          - BloomFilterFalseRatio
+          - CompressionRatio
+          - LiveDiskSpaceUsed
+          - LiveSSTableCount
+          - MaxRowSize
+          - MeanRowSize
+          - MemtableColumnsCount
+          - MemtableLiveDataSize
+          - MemtableSwitchCount
+          - MinRowSize
+      exclude:
+        keyspace:
+          - system
+          - system_auth
+          - system_distributed
+          - system_traces
+    - include:
+        domain: org.apache.cassandra.metrics
+        type: Cache
+        name:
+          - Capacity
+          - Size
+        attribute:
+          - Value
+    - include:
+        domain: org.apache.cassandra.metrics
+        type: Cache
+        name:
+          - Hits
+          - Requests
+        attribute:
+          - Count
+    - include:
+        domain: org.apache.cassandra.metrics
+        type: ThreadPools
+        path: request
+        name:
+          - ActiveTasks
+          - CompletedTasks
+          - PendingTasks
+          - CurrentlyBlockedTasks
+    - include:
+        domain: org.apache.cassandra.db
+        attribute:
+          - UpdateInterval
+<% else %>
 # List of metrics to be collected.
 init_config:
   conf:
@@ -57,3 +143,4 @@ init_config:
         domain: org.apache.cassandra.net
         attribute:
           - TotalTimeouts
+<% end %>

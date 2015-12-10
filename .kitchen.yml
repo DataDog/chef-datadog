@@ -135,6 +135,21 @@ suites:
             password: somepass
             process_name_regex: .*cassandra.*
 
+- name: datadog_cassandra_version
+  run_list:
+    - recipe[datadog::cassandra]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      cassandra:
+        version: 2
+        instances:
+          - host: localhost
+            port: 7199
+            user: someuser
+            password: somepass
+            process_name_regex: .*cassandra.*
+
 - name: datadog_couchdb
   run_list:
     - recipe[datadog::couchdb]

@@ -20,7 +20,8 @@ describe file(AGENT_CONFIG) do
           port: 7199,
           user: 'someuser',
           password: 'somepass',
-          process_name_regex: '.*cassandra.*'
+          process_name_regex: '.*cassandra.*',
+          cassandra_aliasing: true
         }
       ],
       'init_config' => {
