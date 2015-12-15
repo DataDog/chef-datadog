@@ -35,6 +35,6 @@ end
 # Install the package
 windows_package 'Datadog Agent' do
   source temp_file
-  options %(APIKEY="#{node['datadog']['api_key']}" HOSTNAME="#{node['hostname']}" TAGS="#{node['tags'].join(',')}")
+  options %(ALLUSERS=1 APIKEY="#{node['datadog']['api_key']}" HOSTNAME="#{node['hostname']}" TAGS="#{node['tags'].join(',')}")
   action :install
 end
