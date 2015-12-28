@@ -29,6 +29,7 @@ instances:
     <% end -%>
     <% if i.key?('slowlog-max-len') -%>slowlog-max-len: <%= i['slowlog-max-len'] %><% end -%>
     <% if i.key?('socket_timeout') -%>socket_timeout: <%= i['socket_timeout'] %><% end -%>
+    <% if i.key?('command_stats') -%>command_stats: <%= i['command_stats'] %><% end -%>
 <% end -%>
 
 init_config:
