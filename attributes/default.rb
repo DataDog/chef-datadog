@@ -42,6 +42,12 @@ default['datadog']['create_dd_check_tags'] = nil
 # Collect EC2 tags, set to 'yes' to collect
 default['datadog']['collect_ec2_tags'] = nil
 
+# Collect instance metadata, set to 'yes' to collect
+default['datadog']['collect_instance_metadata'] = nil
+
+# Incorporate security-groups into tags collected from AWS EC2, set to 'yes' to collect
+default['datadog']['collect_security_groups'] = nil
+
 # Autorestart agent
 default['datadog']['autorestart'] = false
 
