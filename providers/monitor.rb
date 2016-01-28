@@ -18,6 +18,9 @@ action :add do
       owner 'dd-agent'
       mode 00600
     end
+
+    source 'integration.yaml.erb' if new_resource.use_integration_template
+
     variables(
       :init_config => new_resource.init_config,
       :instances   => new_resource.instances

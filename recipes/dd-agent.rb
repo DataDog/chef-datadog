@@ -76,3 +76,6 @@ service 'datadog-agent' do
   end
   subscribes :restart, "template[#{agent_config_file}]", :delayed unless node['datadog']['agent_start'] == false
 end
+
+# Install integration packages
+include_recipe 'datadog::integrations' if node['platform_family'] != 'windows'

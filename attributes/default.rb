@@ -160,6 +160,9 @@ default['datadog']['dogstatsd_normalize'] = 'yes'
 default['datadog']['statsd_forward_host'] = nil
 default['datadog']['statsd_forward_port'] = 8125
 
+# extra_packages to install
+default['datadog']['extra_packages'] = {}
+
 # For service-specific configuration, use the integration recipes included
 # in this cookbook, and apply them to the appropirate node's run list.
 # Read more at http://docs.datadoghq.com/
