@@ -181,6 +181,9 @@ default['datadog']['statsd_metric_namespace'] = nil
 default['datadog']['histogram_aggregates'] = 'max, median, avg, count'
 default['datadog']['histogram_percentiles'] = '0.95'
 
+# extra_packages to install
+default['datadog']['extra_packages'] = {}
+
 # For service-specific configuration, use the integration recipes included
 # in this cookbook, and apply them to the appropirate node's run list.
 # Read more at http://docs.datadoghq.com/

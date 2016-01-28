@@ -12,3 +12,4 @@ attribute :cookbook, :kind_of => String, :default => 'datadog'
 attribute :init_config, :kind_of => Hash, :required => false, :default => {}
 attribute :instances, :kind_of => Array, :required => false, :default => []
 attribute :version, :kind_of => Integer, :required => false, :default => nil
+attribute :use_integration_template, :kind_of => [TrueClass, FalseClass], :required => false, :default => false
