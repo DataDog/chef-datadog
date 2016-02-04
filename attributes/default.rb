@@ -147,6 +147,7 @@ default['datadog']['syslog']['active'] = false
 default['datadog']['syslog']['udp'] = false
 default['datadog']['syslog']['host'] = nil
 default['datadog']['syslog']['port'] = nil
+default['datadog']['log_file_directory'] = '/var/log/datadog'
 
 # Web proxy configuration
 default['datadog']['web_proxy']['host'] = nil
