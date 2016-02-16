@@ -1,0 +1,10 @@
+instances:
+<% @instances.each do |i| -%>
+  - directory: <%= i['directory'] %>
+    <% if i['name'] -%>name: <%= i['name'] %><% end -%>
+    <% if i['pattern'] -%>pattern: <%= i['pattern'] %><% end -%>
+    <% if i['recursive'] -%>recursive: <%= i['recursive'] %><% end -%>
+<% end -%>
+
+# Nothing to configure here
+init_config:
