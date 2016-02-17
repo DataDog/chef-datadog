@@ -98,6 +98,22 @@ suites:
               - kitchen
               - sink
 
+- name: datadog_directory
+  run_list:
+    - recipe[datadog::directory]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      directory:
+        instances:
+          - directory: "/path/to/directory"
+            name: "tag_value"
+            dirtagname: "tag_dirname"
+            filetagname: "tag_filename"
+            filegauges: False
+            pattern: "*.log"
+            recursive: True
+
 - name: datadog_cacti
   run_list:
     - recipe[datadog::cacti]

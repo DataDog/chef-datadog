@@ -4,9 +4,9 @@ instances:
     <% if i['name'] -%>name: "<%= i['name'] %>"<% end -%>
     <% if i['dirtagname'] -%>dirtagname: "<%= i['dirtagname'] %>"<% end -%>
     <% if i['filetagname'] -%>filetagname: "<%= i['filetagname'] %>"<% end -%>
-    <% if i['filegauges'] -%>filegauges: <%= i['filegauges'] %><% end -%>
+    <% if i.key?('filegauges') -%>filegauges: <%= i['filegauges'] %><% end -%>
     <% if i['pattern'] -%>pattern: "<%= i['pattern'] %>"<% end -%>
-    <% if i['recursive'] -%>recursive: <%= i['recursive'] %><% end -%>
+    <% if i.key?('recursive') -%>recursive: <%= i['recursive'] %><% end -%>
 <% end -%>
 
 # Nothing to configure here
