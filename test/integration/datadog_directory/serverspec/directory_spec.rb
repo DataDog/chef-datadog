@@ -16,13 +16,13 @@ describe file(AGENT_CONFIG) do
     expected = {
       'instances' => [
         {
-	  'directory' => '/path/to/directory',
-	  'name' => 'tag_value',
-	  'dirtagname' => 'tag_dirname',
-	  'filetagname' => 'tag_filename',
-	  'filegauges' => false,
-	  'pattern' => '*.log',
-	  'recursive' => true
+          'directory' => '/path/to/directory',
+          'name' => 'tag_value',
+          'dirtagname' => 'tag_dirname',
+          'filetagname' => 'tag_filename',
+          'filegauges' => false,
+          'pattern' => '*.log',
+          'recursive' => true
         }
       ],
       'init_config' => nil
