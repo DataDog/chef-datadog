@@ -380,6 +380,23 @@ suites:
         init_config:
           default_timeout: 10
 
+- name: datadog_marathon
+  run_list:
+    - recipe[datadog::marathon]
+  excludes: *WINDOWS_PLATFORMS
+  attributes:
+    datadog:
+      <<: *DATADOG
+      mesos:
+        instances:
+          - url: localhost:8080
+            timeout: 8
+            tags:
+              - toto
+              - tata
+        init_config:
+          default_timeout: 10
+
 - name: datadog_pgbouncer
   run_list:
     - recipe[datadog::pgbouncer]
