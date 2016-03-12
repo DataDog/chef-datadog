@@ -63,7 +63,7 @@ template agent_config_file do
     :api_key => node['datadog']['api_key'],
     :dd_url => node['datadog']['url']
   )
-  sensitive true if Chef::Resource::ChefGem.instance_methods(false).include?(:sensitive)
+  sensitive true if Chef::Resource.instance_methods(false).include?(:sensitive)
 end
 
 # Common configuration
