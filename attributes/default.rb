@@ -125,8 +125,8 @@ default['datadog']['use_mount'] = false
 # Change port the agent is listening to
 default['datadog']['agent_port'] = 17123
 
-# Disable the agent from starting at boot
-default['datadog']['agent_disable'] = false
+# Enable the agent to start at boot
+default['datadog']['agent_enable'] = true
 
 # Start agent or not
 default['datadog']['agent_start'] = true

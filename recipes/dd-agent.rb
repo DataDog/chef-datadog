@@ -25,7 +25,7 @@ else
 end
 
 # Set the Agent service enable or disable
-agent_boot_startup = node['datadog']['agent_disable'] ? :disable : :enable
+agent_enable = node['datadog']['agent_enable'] ? :enable : :disable
 # Set the correct Agent startup action
 agent_action = node['datadog']['agent_start'] ? :start : :stop
 # Set the correct config file
@@ -70,7 +70,7 @@ end
 # Common configuration
 service 'datadog-agent' do
   service_name node['datadog']['agent_name']
-  action [agent_boot_startup, agent_action]
+  action [agent_enable, agent_action]
   if node['platform_family'] == 'windows'
     supports :restart => true, :start => true, :stop => true
   else
