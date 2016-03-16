@@ -32,7 +32,7 @@ describe file(AGENT_CONFIG) do
             descriptors: ['one', 'two'],
             metrics: {
               field1: ['postgresql.field1', 'GAUGE'],
-              field2: ['postgresql.field2', 'COUNTER']
+              field2: ['postgresql.field2', 'MONOTONIC']
             },
             query: 'SELECT one, two, %s FROM foo',
             relation: true

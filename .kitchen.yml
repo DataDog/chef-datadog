@@ -451,7 +451,7 @@ suites:
                     - GAUGE
                   field2:
                     - postgresql.field2
-                    - COUNTER
+                    - MONOTONIC
                 query: SELECT one, two, %s FROM foo
                 relation: true
 
