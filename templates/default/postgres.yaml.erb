@@ -28,4 +28,26 @@ instances:
     <%- if i.key?("collect_function_metrics") %>
     collect_function_metrics: <%= i["collect_function_metrics"] %>
     <% end -%>
+    <% if i.key?('custom_metrics') -%>
+    custom_metrics:
+      <% i["custom_metrics"].each do |cm| -%>
+      - query: <%= cm["query"] %>
+        metrics:
+          <% cm["metrics"].each do |column, vals| -%>
+          <%= column %>:
+            <% Array(vals).each do |val| -%>
+            - <%= val %>
+            <% end -%>
+          <% end -%>
+        <% if cm.key?("descriptors") -%>
+        descriptors:
+          <% Array(cm["descriptors"]).each do |d| %>
+          - <%= d %>
+          <% end -%>
+        <% end -%>
+        <% if cm.key?("relation") -%>
+        relation: <%= cm["relation"] %>
+        <% end -%>
+      <% end -%>
+    <% end -%>
 <% end -%>

@@ -424,6 +424,37 @@ suites:
               - toto
               - tata
 
+- name: datadog_postgres
+  run_list:
+    - recipe[datadog::postgres]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      postgres:
+        instances:
+          - server: localhost
+            port: 5432
+            username: john
+            password: doe
+            dbname: dbname
+            tags:
+              - toto
+              - tata
+            ssl: true
+            custom_metrics:
+              - descriptors:
+                  - one
+                  - two
+                metrics:
+                  field1:
+                    - postgresql.field1
+                    - GAUGE
+                  field2:
+                    - postgresql.field2
+                    - COUNTER
+                query: SELECT one, two, %s FROM foo
+                relation: true
+
 - name: datadog_process
   run_list:
     - recipe[datadog::process]
