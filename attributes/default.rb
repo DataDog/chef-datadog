@@ -26,6 +26,12 @@ default['datadog']['api_key'] = nil
 # Create an application key on the Account Settings page
 default['datadog']['application_key'] = nil
 
+# Add this prefix to all Chef tags sent to Datadog: "#{tag_prefix}#{tag}"
+# This makes it easy to group hosts in Datadog by their Chef tags, but might be counterproductive
+# if your Chef tags are already in the "#{tag_group}:#{value}" form.
+# Set prefix to '' if you want Chef tags to be sent without prefix.
+default['datadog']['tag_prefix'] = 'tag:'
+
 # Don't change these
 # The host of the Datadog intake server to send agent data to
 default['datadog']['url'] = 'https://app.datadoghq.com'
