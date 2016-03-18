@@ -28,15 +28,32 @@ describe file(AGENT_CONFIG) do
           tags: ['toto', 'tata'],
           dbname: 'dbname',
           ssl: true,
-          custom_metrics: [{
-            descriptors: ['one', 'two'],
-            metrics: {
-              field1: ['postgresql.field1', 'GAUGE'],
-              field2: ['postgresql.field2', 'MONOTONIC']
+          custom_metrics: [
+            {
+              descriptors: [
+                ['query_column1', 'tag1'],
+                ['query_column2', 'tag2']
+              ],
+              metrics: {
+                field1: ['postgresql.field1', 'GAUGE'],
+                field2: ['postgresql.field2', 'MONOTONIC']
+              },
+              query: 'SELECT query_column1, query_column2, %s FROM foo',
+              relation: true
             },
-            query: 'SELECT one, two, %s FROM foo',
-            relation: true
-          }]
+            {
+              descriptors: [
+                ['three', 'three'],
+                ['four', 'four']
+              ],
+              metrics: {
+                field3: ['postgresql.field3', 'GAUGE'],
+                field4: ['postgresql.field4', 'MONOTONIC']
+              },
+              query: 'SELECT three, four, %s FROM foo',
+              relation: false
+            }
+          ]
         }
       ],
       init_config: nil
