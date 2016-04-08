@@ -115,6 +115,10 @@ default['datadog']['check_freq'] = 15
 # More information available here: http://docs.datadoghq.com/hostnames/#agent
 default['datadog']['hostname'] = node.name
 
+# If a hostname is set for the agent, and if true,
+# use the agent hostname as the host identifier for chef-handler
+default['datadog']['use_agent_hostname'] = false
+
 # If running on ec2, if true, use the instance-id as the host identifier
 # rather than the hostname for chef-handler.
 default['datadog']['use_ec2_instance_id'] = false

@@ -36,14 +36,17 @@ chef_gem 'chef-handler-datadog' do # ~FC009
 end
 require 'chef/handler/datadog'
 
+handler_config = {
+  :api_key => node['datadog']['api_key'],
+  :application_key => node['datadog']['application_key'],
+  :use_ec2_instance_id => node['datadog']['use_ec2_instance_id']
+}
+handler_config[:hostname] = node['datadog']['hostname'] if node['datadog']['use_agent_hostname']
+
 # Create the handler to run at the end of the Chef execution
 chef_handler 'Chef::Handler::Datadog' do
   source 'chef/handler/datadog'
-  arguments [
-    :api_key => node['datadog']['api_key'],
-    :application_key => node['datadog']['application_key'],
-    :use_ec2_instance_id => node['datadog']['use_ec2_instance_id']
-  ]
+  arguments [handler_config]
   supports :report => true, :exception => true
   action :nothing
 end.run_action(:enable) if node['datadog']['chef_handler_enable']
