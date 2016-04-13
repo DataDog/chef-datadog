@@ -453,6 +453,9 @@ suites:
     - recipe[sudo]
     - recipe[datadog::postfix]
   attributes:
+    authorization:
+      sudo:
+        include_sudoers_d: true
     datadog:
       <<: *DATADOG
       postfix:
