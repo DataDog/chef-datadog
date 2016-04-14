@@ -48,7 +48,7 @@ end
 # the node's run_list and set the relevant attributes
 #
 if node['datadog'] && node['datadog']['api_key'].nil? && node['datadog']['api_key_runstate_var'].nil?
-  raise "Add a ['datadog']['api_key'] or ['datadog']['api_key_runstate_var'] attribute to configure this node's Datadog Agent." 
+  raise "Add a ['datadog']['api_key'] or ['datadog']['api_key_runstate_var'] attribute to configure this node's Datadog Agent."
 end
 
 template agent_config_file do
