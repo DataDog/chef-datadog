@@ -61,6 +61,15 @@ suites:
     datadog: &DATADOG
       api_key: somethingnotnil
       application_key: alsonotnil
+      
+- name: dd-agent-runstate-var
+  run_list:
+    - recipe[datadog::_test_runstate_var]
+    - recipe[datadog::dd-agent]
+  attributes:
+    datadog: &DATADOG
+      api_key_runstate_var: datadog_api_key
+      application_key: alsonotnil
 
 - name: dd-handler
   run_list:

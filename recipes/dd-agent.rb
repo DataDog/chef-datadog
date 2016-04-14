@@ -47,7 +47,9 @@ end
 # To add integration-specific configurations, add 'datadog::config_name' to
 # the node's run_list and set the relevant attributes
 #
-raise "Add a ['datadog']['api_key'] attribute to configure this node's Datadog Agent." if node['datadog'] && node['datadog']['api_key'].nil?
+if node['datadog'] && node['datadog']['api_key'].nil? && node['datadog']['api_key_runstate_var'].nil?
+  raise "Add a ['datadog']['api_key'] or ['datadog']['api_key_runstate_var'] attribute to configure this node's Datadog Agent." 
+end
 
 template agent_config_file do
   if node['platform_family'] == 'windows'
@@ -60,7 +62,7 @@ template agent_config_file do
     mode 0640
   end
   variables(
-    :api_key => node['datadog']['api_key'],
+    :api_key => (!node['datadog']['api_key_runstate_var'].nil? ? node.run_state[node['datadog']['api_key_runstate_var']] : node['datadog']['api_key']),
     :dd_url => node['datadog']['url']
   )
 end

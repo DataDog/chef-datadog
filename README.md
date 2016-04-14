@@ -90,8 +90,7 @@ Usage
     recipe[datadog::dd-handler]
   )
   ```
-5. Wait until `chef-client` runs on the target node (or trigger chef-client manually if you're impatient)
-
-We are not making use of data_bags in this recipe at this time, as it is unlikely that you will have more than one API key and one application key.
+5. If you prefer retreiving your API key from an encrypted databag and not storing it on your chef server, you can also set `['datadog']['api_key_runstate_var']` to the `node.run_state` variable index which will contain the API key.  Please note this run-state variable must be defined before the inclusion of `dd-agent` and `dd-handler` recipes.  
+6. Wait until `chef-client` runs on the target node (or trigger chef-client manually if you're impatient)
 
 For more deployment details, visit the [Datadog Documentation site](http://docs.datadoghq.com/).

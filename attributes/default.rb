@@ -22,6 +22,7 @@
 # Can be found here:
 # https://app.datadoghq.com/account/settings
 default['datadog']['api_key'] = nil
+default['datadog']['api_key_runstate_var'] = nil
 
 # Create an application key on the Account Settings page
 default['datadog']['application_key'] = nil
