@@ -1,1 +1,3 @@
-../../helpers/serverspec/Gemfile
+source 'https://rubygems.org'
+
+gem 'json_spec', '~> 1.1'

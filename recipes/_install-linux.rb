@@ -37,10 +37,12 @@ else
     action :remove
     not_if 'rpm -q datadog-agent-base' if %w(rhel fedora).include?(node['platform_family'])
     not_if 'apt-cache policy datadog-agent-base | grep "Installed: (none)"' if node['platform_family'] == 'debian'
+    options '-y'
   end
   # Install the regular package
   package 'datadog-agent' do
     version dd_agent_version
     action node['datadog']['agent_package_action'] # default is :install
+    options '-y'
   end
 end

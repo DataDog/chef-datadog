@@ -49,6 +49,34 @@ end
 #
 raise "Add a ['datadog']['api_key'] attribute to configure this node's Datadog Agent." if node['datadog'] && node['datadog']['api_key'].nil?
 
+# Common configuration
+if node['platform_family'] == 'windows'
+  execute "datadog-agent-startup" do
+    command "sc start DatadogAgent"
+    action :run
+    not_if 'tasklist | findstr ddagent.exe'
+    only_if {::File.exists?("C:\\ProgramData\\Datadog\\datadog.conf")}
+  end
+
+  execute "datadog-agent-restart" do
+    command "taskkill /F /IM ddagent.exe && sc start DatadogAgent"
+    action :nothing
+    #only_if 'tasklist | findstr ddagent.exe'
+    ignore_failure true
+  end
+end
+
+service 'datadog-agent' do
+  service_name node['datadog']['agent_name']
+  action [:enable, agent_action]
+  if node['platform_family'] == 'windows'
+    supports :restart => true, :start => true, :stop => true
+  else
+    supports :restart => true, :status => true, :start => true, :stop => true
+  end
+  action [ :nothing ]
+end
+
 template agent_config_file do
   if node['platform_family'] == 'windows'
     owner 'Administrators'
@@ -63,16 +91,10 @@ template agent_config_file do
     :api_key => node['datadog']['api_key'],
     :dd_url => node['datadog']['url']
   )
-end
-
-# Common configuration
-service 'datadog-agent' do
-  service_name node['datadog']['agent_name']
-  action [:enable, agent_action]
-  if node['platform_family'] == 'windows'
-    supports :restart => true, :start => true, :stop => true
-  else
-    supports :restart => true, :status => true, :start => true, :stop => true
+  if node['platform_family'] == 'windows' 
+    puts "TEMPLATE-WINDOWS"
+    notifies :run, 'execute[datadog-agent-restart]', :delayed
+  else 
+    notifies :restart, 'service[datadog-agent]'
   end
-  subscribes :restart, "template[#{agent_config_file}]", :delayed unless node['datadog']['agent_start'] == false
 end
