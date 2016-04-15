@@ -441,6 +441,30 @@ suites:
               - "somepid"
               - "pidname"
 
+- name: datadog_ssh_check
+  run_list:
+    - recipe[datadog::ssh_check]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      ssh_check:
+        instances:
+          - host: localhost
+            username: root
+            password: password
+            add_missing_keys: false
+            tags:
+              - tag1
+              - tag2
+          - host: sftp_server.example.com
+            username: test
+            port: 2323
+            sftp_check: true
+            private_key_file: /path/to/key
+            tags:
+              - tag1
+              - tag3
+
 - name: datadog_supervisord
   run_list:
     - recipe[datadog::supervisord]
