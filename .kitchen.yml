@@ -316,6 +316,32 @@ suites:
           - host: localhost
             port: 27017
 
+- name: datadog_mysql
+  run_list:
+    - recipe[datadog::mysql]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      mysql:
+        instances:
+          - server: 1.1.1.1
+            port: 3307
+            user: my_username
+            pass: my_password
+            sock: /path/to/mysql.sock
+            tags: ['prod', 'my_app']
+            options:
+              - 'replication: 0'
+            queries:
+              - type: gauge
+                field: users_count
+                metric: my_app.my_users.count
+                query: SELECT COUNT(1) AS users_count FROM users
+              - type: gauge
+                field: max_query_time
+                metric: mysql.performance.max_query_time
+                query: SELECT IFNULL(MAX(TIME), 0) AS max_query_time FROM INFORMATION_SCHEMA.PROCESSLIST WHERE COMMAND != 'Sleep'
+
 - name: datadog_ntp
   run_list:
     - recipe[datadog::ntp]
