@@ -1,44 +1,46 @@
 describe 'datadog::redisdb' do
   expected_yaml = <<-EOF
-  init_config:
+    init_config:
 
-  instances:
-    - host: localhost
-      port: 6379
-      db: 0
-      password: mypassword
-      socket_timeout: 5
-      tags:
-        - optional_tag1
-        - optional_tag2
-      keys:
-        - key1
-        - key2
-      warn_on_missing_keys: True
-      slowlog-max-len: 128
+    instances:
+      - host: localhost
+        port: 6379
+        db: 0
+        password: somepass
+        socket_timeout: 5
+        tags:
+          - optional_tag1
+          - optional_tag2
+        keys:
+          - key1
+          - key2
+        warn_on_missing_keys: True
+        slowlog-max-len: 128
+        command_stats: True
   EOF
 
   cached(:chef_run) do
     ChefSpec::SoloRunner.new(step_into: ['datadog_monitor']) do |node|
-      node.automatic['languages'] = { 'python' => { 'version' => '2.7.2' } }
+      node.automatic['languages'] = { python: { version: '2.7.2' } }
 
       node.set['datadog'] = {
-        'api_key' => 'someapikey',
-        'redisdb' => {
-          'instances' => [
+        api_key: 'someapikey',
+        redisdb: {
+          instances: [
             {
-              'db' => 0,
-              'keys' => ['key1', 'key2'],
-              'port' => 6379,
-              'password' => 'mypassword',
-              'server' => 'localhost',
+              command_stats: true,
+              db: 0,
+              keys: ['key1', 'key2'],
+              port: 6379,
+              password: 'somepass',
+              server: 'localhost',
               'slowlog-max-len' => 128,
-              'socket_timeout' => 5,
-              'tags' => [
+              socket_timeout: 5,
+              tags: [
                 'optional_tag1',
                 'optional_tag2'
               ],
-              'warn_on_missing_keys' => true
+              warn_on_missing_keys: true
             }
           ]
         }
