@@ -164,6 +164,10 @@ default['datadog']['statsd_forward_host'] = nil
 default['datadog']['statsd_forward_port'] = 8125
 default['datadog']['statsd_metric_namespace'] = nil
 
+# Histogram settings
+default['datadog']['histogram_aggregates'] = 'max, median, avg, count'
+default['datadog']['histogram_percentiles'] = '0.95'
+
 # For service-specific configuration, use the integration recipes included
 # in this cookbook, and apply them to the appropirate node's run list.
 # Read more at http://docs.datadoghq.com/

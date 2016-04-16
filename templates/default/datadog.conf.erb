@@ -50,6 +50,10 @@ agent_checks_interval: <%= node['datadog']['agent_checks_interval'] %>
 graphite_listen_port: <%= node['datadog']['graphite_port'] %>
 <% end -%>
 
+## Histogram settings
+histogram_aggregates: <%= node['datadog']['histogram_aggregates'] %>
+histogram_percentiles: <%= node['datadog']['histogram_percentiles'] %>
+
 <% if node['datadog']['dogstatsd'] -%>
 # ========================================================================== #
 # DogStatsd configuration                                                    #
