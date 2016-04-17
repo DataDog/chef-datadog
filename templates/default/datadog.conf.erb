@@ -15,7 +15,7 @@ autorestart: <%= node['datadog']['autorestart'] %>
 skip_ssl_validation: <%= node['datadog']['web_proxy']['skip_ssl_validation'] %>
 <% end -%>
 
-tags: <%= node['datadog']['tags'] %>
+tags: <%= @tags %>
 <% if node['datadog']['create_dd_check_tags'] -%>
 create_dd_check_tags: <%= node['datadog']['create_dd_check_tags'] %>
 <% end -%>

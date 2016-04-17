@@ -61,7 +61,8 @@ template agent_config_file do
   end
   variables(
     :api_key => node['datadog']['api_key'],
-    :dd_url => node['datadog']['url']
+    :dd_url => node['datadog']['url'],
+    :tags => node['datadog']['tags']
   )
   sensitive true if Chef::Resource.instance_methods(false).include?(:sensitive)
 end
