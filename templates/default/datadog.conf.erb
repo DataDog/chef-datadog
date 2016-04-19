@@ -15,10 +15,10 @@ autorestart: <%= node['datadog']['autorestart'] %>
 skip_ssl_validation: <%= node['datadog']['web_proxy']['skip_ssl_validation'] %>
 <% end -%>
 
-<% if @tags.respond_to?(:each_pair) -%>
-tags: <%= @tags.reject{|k,v| v.empty? }.map{|k,v| "#{k}:#{v}" }.join(",") %>
+<% if node['datadog']['tags'].respond_to?(:each_pair) -%>
+tags: <%= node['datadog']['tags'].reject{|k,v| v.empty? }.map{|k,v| "#{k}:#{v}" }.join(',') %>
 <% else -%>
-tags: <%= @tags %>
+tags: <%= node['datadog']['tags'] %>
 <% end -%>
 <% if node['datadog']['create_dd_check_tags'] -%>
 create_dd_check_tags: <%= node['datadog']['create_dd_check_tags'] %>
