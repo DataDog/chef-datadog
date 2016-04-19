@@ -31,6 +31,9 @@ default['datadog']['application_key'] = nil
 default['datadog']['url'] = 'https://app.datadoghq.com'
 
 # Add tags as override attributes in your role
+# This can be a string of comma separated tags or a hash in this format:
+# default['datadog']['tags'] = { 'datacenter' => 'us-east' }
+# Thie above outputs a string: 'datacenter:us-east'
 # When using the Datadog Chef Handler, tags are set on the node with preset prefixes:
 # `env:node.chef_environment`, `role:node.node.run_list.role`, `tag:somecheftag`
 default['datadog']['tags'] = ''
