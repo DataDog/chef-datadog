@@ -273,5 +273,27 @@ describe 'datadog::dd-agent' do
           .with_content(/^tags: datacenter:us-foo,database:bar$/)
       end
     end
+
+    context 'does not use empty tags' do
+      cached(:chef_run) do
+        ChefSpec::SoloRunner.new(
+          platform: 'ubuntu',
+          version: '12.04'
+        ) do |node|
+          node.set['datadog'] = {
+            'api_key' => 'somethingnotnil',
+            'tags' => { 'datacenter' => 'us-foo', 'database' => '' }
+          }
+          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+        end.converge described_recipe
+      end
+
+      it_behaves_like 'common linux resources'
+
+      it 'sets tags from the tags attribute' do
+        expect(chef_run).to render_file('/etc/dd-agent/datadog.conf')
+          .with_content(/^tags: datacenter:us-foo$/)
+      end
+    end
   end
 end
