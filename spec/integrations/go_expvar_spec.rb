@@ -27,17 +27,17 @@ describe 'datadog::go_expvar' do
           init_config: nil,
           instances: [
             {
-              'expvar_url' => "http://localhost:8080/debug/vars",
-              'tags' => ["application:my_go_app"],
+              'expvar_url' => 'http://localhost:8080/debug/vars',
+              'tags' => ['application:my_go_app'],
               'metrics' => [
                 {
                   'path' => 'test_metric_name_1', 'alias' => 'go_expvar.test_metric_name_1', 'type' => 'gauge'
                 },
                 {
-                  'path' => 'test_metric_name_2', 'alias' => 'go_expvar.test_metric_name_2', 'type' => 'rate', 'tags' => ["category:customtag1", "customtag2"]
+                  'path' => 'test_metric_name_2', 'alias' => 'go_expvar.test_metric_name_2', 'type' => 'rate', 'tags' => ['category:customtag1', 'customtag2']
                 }
               ]
-            } 
+            }
           ]
         }
       }
