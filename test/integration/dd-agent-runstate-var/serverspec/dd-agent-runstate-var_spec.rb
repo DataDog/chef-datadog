@@ -15,5 +15,5 @@ describe command('/etc/init.d/datadog-agent info'), :if => os[:family] != 'windo
 end
 
 describe file('/etc/dd-agent/datadog.conf') do
-  its(:content) { should match /api_key: somethingnotnil/ }
+  its(:content) { should match(/api_key: somethingnotnil/) }
 end
