@@ -3,17 +3,15 @@ include_recipe 'datadog::dd-agent'
 # Build a data structure with configuration.
 # @see https://www.datadoghq.com/2014/06/monitor-docker-datadog/
 # @example
-#   node.override['datadog']['docker_daemon']['init_config'] = [
-#     {
-#       docker_root: '/',
-#       socket_timeout: 10,
-#       tls: false,
-#       tls_client_cert: '/path/to/client-cert.pem',
-#       tls_client_key: '/path/to/client-key.pem',
-#       tls_cacert: '/path/to/ca.pem',
-#       tls_verify: true
-#     }
-#   ]
+#   node.override['datadog']['docker_daemon']['init_config'] = {
+#     docker_root: '/',
+#     socket_timeout: 10,
+#     tls: false,
+#     tls_client_cert: '/path/to/client-cert.pem',
+#     tls_client_key: '/path/to/client-key.pem',
+#     tls_cacert: '/path/to/ca.pem',
+#     tls_verify: true
+#   }
 #   node.override['datadog']['docker_daemon']['instances'] = [
 #     {
 #       url: 'unix://var/run/docker.sock',

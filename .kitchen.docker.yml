@@ -1,0 +1,14 @@
+---
+driver:
+  name: docker
+  use_sudo: false
+
+platforms:
+  - name: ubuntu-14.04
+  # Exclude this OS for now, due to some odd behavior with the NTP check on CircleCI systems.
+  # See https://circleci.com/gh/DataDog/chef-datadog/19
+  # and http://support.ntp.org/bin/view/Support/KnownOsIssues#Section_9.2.4.2.5.3.
+  # - name: ubuntu-12.04
+  - name: centos-6.6
+  - name: centos-5.11
+  - name: debian-7.7

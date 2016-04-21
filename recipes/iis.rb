@@ -8,7 +8,8 @@ include_recipe 'datadog::dd-agent'
 # node.datadog.iis.instances = [
 #                               {
 #                                 "host" => "localhost",
-#                                 "tags" => ["prod", "other_tag"]
+#                                 "tags" => ["prod", "other_tag"],
+#                                 "sites" => ["Default Web Site"]
 #                               },
 #                               {
 #                                 "host" => "other.server.com",

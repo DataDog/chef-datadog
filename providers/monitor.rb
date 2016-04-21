@@ -23,6 +23,7 @@ action :add do
       :instances   => new_resource.instances
     )
     cookbook new_resource.cookbook
+    sensitive true if Chef::Resource.instance_methods(false).include?(:sensitive)
     notifies :restart, 'service[datadog-agent]', :delayed if node['datadog']['agent_start']
   end
 
@@ -36,6 +37,7 @@ action :remove do
   Chef::Log.debug "Removing #{new_resource.name} from #{confd_dir}"
   file ::File.join(confd_dir, "#{new_resource.name}.yaml") do
     action :delete
+    sensitive true if Chef::Resource.instance_methods(false).include?(:sensitive)
     notifies :restart, 'service[datadog-agent]', :delayed if node['datadog']['agent_start']
   end
 

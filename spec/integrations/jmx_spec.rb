@@ -61,7 +61,7 @@ instances:
                     'bean' => ['my_bean', 'my_second_bean'],
                     'attribute' => {
                       'attribute1' => { 'metric_type' => 'counter', 'alias' => 'jmx.my_metric_name' },
-                      'attribute2' =>  { 'metric_type' => 'gauge', 'alias' => 'jmx.my2ndattribute' }
+                      'attribute2' => { 'metric_type' => 'gauge', 'alias' => 'jmx.my2ndattribute' }
                     }
                   }
                 },
