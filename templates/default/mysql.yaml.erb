@@ -21,6 +21,15 @@ instances:
       <%= o %>
     <% end -%>
   <% end -%>
+  <% if i.key?('queries') -%>
+    queries:
+    <% i['queries'].each do |q| -%>
+      - type: <%= q['type'] %>
+        field: <%= q['field'] %>
+        metric: <%= q['metric'] %>
+        query: <%= q['query'] %>
+    <% end -%>
+  <% end -%>
 <% end -%>
 
 # Nothing to configure here

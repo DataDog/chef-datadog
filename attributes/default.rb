@@ -58,6 +58,9 @@ default['datadog']['installrepo'] = true
 default['datadog']['aptrepo'] = 'http://apt.datadoghq.com'
 default['datadog']['aptrepo_dist'] = 'stable'
 default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/"
+default['datadog']['yumrepo_proxy'] = nil
+default['datadog']['yumrepo_proxy_username'] = nil
+default['datadog']['yumrepo_proxy_password'] = nil
 default['datadog']['windows_agent_url'] = 'https://s3.amazonaws.com/ddagent-windows-stable/'
 
 # Values that differ on Windows
@@ -160,6 +163,11 @@ default['datadog']['dogstatsd_interval'] = 10
 default['datadog']['dogstatsd_normalize'] = 'yes'
 default['datadog']['statsd_forward_host'] = nil
 default['datadog']['statsd_forward_port'] = 8125
+default['datadog']['statsd_metric_namespace'] = nil
+
+# Histogram settings
+default['datadog']['histogram_aggregates'] = 'max, median, avg, count'
+default['datadog']['histogram_percentiles'] = '0.95'
 
 # For service-specific configuration, use the integration recipes included
 # in this cookbook, and apply them to the appropirate node's run list.

@@ -7,7 +7,7 @@ include_recipe 'datadog::dd-agent'
 #     {
 #       'server' => 'localhost',
 #       'port' => '6379',
-#       'password' 'somesecret',
+#       'password' => 'somesecret',
 #       'tags' => ['prod']
 #     }
 #   ]
