@@ -237,6 +237,28 @@ suites:
               - kitchen
               - sink
 
+- name: datadog_go_expvar
+  run_list:
+    - recipe[datadog::go_expvar]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      go_expvar:
+        instances:
+          - expvar_url: http://localhost:8080/debug/vars
+            tags: 
+            - "application:my_go_app"
+            metrics:
+            - path: test_metric_name_1
+              alias: go_expvar.test_metric_name_1
+              type: gauge
+            - path: test_metric_name_2
+              alias: go_expvar.test_metric_name_2
+              type: rate
+              tags:
+                - "category:customtag1"
+                - "customtag2"
+
 - name: datadog_haproxy
   run_list:
     - recipe[datadog::haproxy]
