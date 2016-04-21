@@ -230,4 +230,38 @@ describe 'datadog::dd-agent' do
       it_behaves_like 'debianoids'
     end
   end
+
+  context 'service action' do
+    describe 'default' do
+      cached(:chef_run) do
+        ChefSpec::SoloRunner.new do |node|
+          node.automatic['languages'] = { python: { version: '2.6.2' } }
+          node.set['datadog'] = { api_key: 'somethingnotnil' }
+        end.converge described_recipe
+      end
+
+      it_behaves_like 'datadog-agent service'
+    end
+
+    describe 'agent_enable & agent_start are set to disable, stop' do
+      cached(:chef_run) do
+        ChefSpec::SoloRunner.new do |node|
+          node.automatic['languages'] = { python: { version: '2.6.2' } }
+          node.set['datadog'] = {
+            api_key: 'somethingnotnil',
+            agent_enable: false,
+            agent_start: false
+          }
+        end.converge described_recipe
+      end
+
+      it 'disables the datadog-agent service' do
+        expect(chef_run).to disable_service 'datadog-agent'
+      end
+
+      it 'stops the datadog-agent service' do
+        expect(chef_run).to stop_service 'datadog-agent'
+      end
+    end
+  end
 end
