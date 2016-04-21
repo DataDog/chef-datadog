@@ -5,7 +5,7 @@ include_recipe 'datadog::dd-agent'
 # Assuming you have 2 clusters "test" and "prod",
 # one with and one without authentication
 # you need to set up the following attributes
-# node.datadog.activemq.instances = [
+# node['datadog']['activemq']['instances'] = [
 #                                     {
 #                                       :host => "localhost",
 #                                       :port => "1234",

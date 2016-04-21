@@ -70,19 +70,6 @@ suites:
       api_key: somethingnotnil
       application_key: alsonotnil
 
-- name: datadog_activemq
-  run_list:
-    - recipe[datadog::activemq]
-  attributes:
-    datadog:
-      <<: *DATADOG
-      activemq:
-        instances:
-          - host: localhost
-            port: 1099
-            user: someuser
-            password: somepass
-
 - name: datadog_apache
   run_list:
     - recipe[datadog::apache]
