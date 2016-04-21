@@ -90,7 +90,10 @@ log_level: <%= node['datadog']['log_level'] %>
 collector_log_file: <%= node['datadog']['log_file_directory'] %>/collector.log
 forwarder_log_file: <%= node['datadog']['log_file_directory'] %>/forwarder.log
 dogstatsd_log_file: <%= node['datadog']['log_file_directory'] %>/dogstatsd.log
-pup_log_file:       <%= node['datadog']['log_file_directory'] %>/pup.log
+jmxfetch_log_file: <%= node['datadog']['log_file_directory'] %>/jmxfetch.log
+<% unless node['platform_family'] == 'windows' -%>
+go-metro_log_file: <%= node['datadog']['log_file_directory'] %>/go-metro.log
+<% end -%>
 
 # if syslog is enabled but a host and port are not set, a local domain socket
 # connection will be attempted

@@ -46,6 +46,10 @@ shared_examples_for 'common windows resources' do
   it 'drops an agent config file' do
     expect(chef_run).to create_template 'C:\ProgramData/Datadog/datadog.conf'
   end
+
+  it 'does not render a go-metro log config' do
+    expect(chef_run).to_not render_file('C:\ProgramData/Datadog/datadog.conf').with_content(/^go-metro_log_file.*$/)
+  end
 end
 
 shared_examples_for 'windows Datadog Agent' do
