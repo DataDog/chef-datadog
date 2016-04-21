@@ -42,6 +42,8 @@ init_config:
     - include:
         domain: org.apache.cassandra.metrics
         type: ColumnFamily
+        bean_regex:
+          - .*keyspace=.*
         name:
           - TotalDiskSpaceUsed
           - BloomFilterDiskSpaceUsed
@@ -58,9 +60,11 @@ init_config:
           - MinRowSize
       exclude:
         keyspace:
+          - OpsCenter
           - system
           - system_auth
           - system_distributed
+          - system_schema
           - system_traces
     - include:
         domain: org.apache.cassandra.metrics
