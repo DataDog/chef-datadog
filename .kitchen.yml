@@ -71,6 +71,7 @@ suites:
       api_key_runstate_var: datadog_api_key
       application_key: alsonotnil
 
+
 - name: dd-handler
   run_list:
     - recipe[datadog::dd-handler]
