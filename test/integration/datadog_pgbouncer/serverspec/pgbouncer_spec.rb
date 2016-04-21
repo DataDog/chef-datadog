@@ -6,7 +6,7 @@ require 'yaml'
 set :backend, :exec
 set :path, '/sbin:/usr/local/sbin:$PATH'
 
-AGENT_CONFIG = '/etc/dd-agent/conf.d/pgbouncer.yaml'
+AGENT_CONFIG = '/etc/dd-agent/conf.d/pgbouncer.yaml'.freeze
 
 describe service('datadog-agent') do
   it { should be_running }

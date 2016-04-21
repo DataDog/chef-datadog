@@ -50,6 +50,10 @@ agent_checks_interval: <%= node['datadog']['agent_checks_interval'] %>
 graphite_listen_port: <%= node['datadog']['graphite_port'] %>
 <% end -%>
 
+## Histogram settings
+histogram_aggregates: <%= node['datadog']['histogram_aggregates'] %>
+histogram_percentiles: <%= node['datadog']['histogram_percentiles'] %>
+
 <% if node['datadog']['dogstatsd'] -%>
 # ========================================================================== #
 # DogStatsd configuration                                                    #
@@ -70,6 +74,10 @@ dogstatsd_normalize: <%= node['datadog']['dogstatsd_normalize'] %>
 <% if node['datadog']['statsd_forward_host'] -%>
 statsd_forward_host: <%= node['datadog']['statsd_forward_host'] %>
 statsd_forward_port: <%= node['datadog']['statsd_forward_port'] %>
+<% end -%>
+
+<% if node['datadog']['statsd_metric_namespace'] -%>
+statsd_metric_namespace: <%= node['datadog']['statsd_metric_namespace'] %>
 <% end -%>
 <% end -%>
 

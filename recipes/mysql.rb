@@ -17,6 +17,14 @@ include_recipe 'datadog::dd-agent'
 #     'options' => [
 #       "replication: 0",
 #       "galera_cluster: 1"
+#     ],
+#     'queries' => [
+#       {
+#         'type' => 'gauge',
+#         'field' => 'users_count'
+#         'metric' => 'my_app.my_users.count',
+#         'query' => 'SELECT COUNT(1) AS users_count FROM users'
+#       },
 #     ]
 #   },
 # ]

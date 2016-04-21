@@ -6,7 +6,7 @@ require 'yaml'
 set :backend, :exec
 set :path, '/sbin:/usr/local/sbin:$PATH'
 
-AGENT_CONFIG = '/etc/dd-agent/conf.d/etcd.yaml'.freeze
+AGENT_CONFIG = '/etc/dd-agent/conf.d/ssh_check.yaml'.freeze
 
 describe service('datadog-agent') do
   it { should be_running }
@@ -21,12 +21,19 @@ describe file(AGENT_CONFIG) do
     expected = {
       'instances' => [
         {
-          'url' => 'http://localhost:2379',
-          'timeout' => 5,
-          'ssl_keyfile' => '/etc/etcd/ssl.key',
-          'ssl_certfile' => '/etc/etcd/ssl.crt',
-          'ssl_cert_validation' => true,
-          'ssl_ca_certs' => '/etc/etcd/ca-certs.crt'
+          'host' => 'localhost',
+          'username' => 'root',
+          'password' => 'password',
+          'add_missing_keys' => false,
+          'tags' => ['tag1', 'tag2']
+        },
+        {
+          'host' => 'sftp_server.example.com',
+          'username' => 'test',
+          'port' => 2323,
+          'sftp_check' => true,
+          'private_key_file' => '/path/to/key',
+          'tags' => ['tag1', 'tag3']
         }
       ],
       'init_config' => nil
