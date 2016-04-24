@@ -1,6 +1,34 @@
 Changes
 =======
 
+# 2.3.0 / 2016-04-25
+
+* [FEATURE] Add support for `go_expvar` check, [#298][] [@hartfordfive][]
+* [FEATURE] Allow a String or Hash when configuring Agent tags, [#296][] [@martinisoft][]
+* [FEATURE] Allow passing a `tag_prefix` to the handler, [#285][] [@mstepniowski][]
+* [FEATURE] Allow Agent config to control service behavior, [#280][] [@hydrant25][] & [@miketheman][]
+* [FEATURE] Add `collect_function_metrics` to `postgres` check, [#278][] [@isaacdd][]
+* [FEATURE] Add logging configuration overrides, [#273][] [@SupermanScott][] & [@miketheman][]
+* [FEATURE] Add `cassandra` template versions, [#263][] [@yannmh][] [@sethrosenblum][] & [@miketheman][]
+* [FEATURE] Add `sites` options to `iis` check, [#261][], [@cobusbernard][] & [@miketheman][]
+* [FEATURE] Add missing options to `rabbitmq` check, [#232][] [@mattrobenolt][] & [@miketheman][]
+* [FEATURE] Add Agent config option for `histogram_*`, [#272][], [@SupermanScott][]
+* [FEATURE] Add support for `commandstats` in redis check, [#266][] [@sethrosenblum][]
+* [FEATURE] Add support for `ssh_check` check, [#262][] [@wk8][]
+* [FEATURE] Add support for custom MySQL queries, [#259][] [@wk8][]
+* [FEATURE] Add PHP-FPM recipe, [#253][] [@jridgewell][]
+* [FEATURE] Allow `yum_repository` resource to receive proxy options, [#251][] [@RedWhiteMiko][]
+* [FEATURE] Add Agent config option for `statsd_metric_namespace`, [#250][] [@MiguelMoll][]
+* [FEATURE] Allow use of Agent `web_proxy` config for Handler, [#208][] [@datwiz][]
+* [OPTIMIZE] Allow `tags` to be `nil` during Windows Agent install, [#286][] [@rlaveycal][]
+* [OPTIMIZE] Apply `sensitive` filter to template renders, [#274][] [@martinisoft][]
+* [DOCS] Correct `redisdb` example, [#281][] [@iashwash][]
+* [DOCS] Correct `docker_daemon` example, [#276][] [@dlackty][]
+* [MISC] Remove `knife.rb` file from repo, [#299][] [@miketheman][]
+* [MISC] Convert Kitchen Test to ChefSpec test for `activemq`, [#295][] [@miketheman][]
+* [MISC] Add Kitchen tests via CircleCI & kitchen-docker, [@miketheman][]
+* [MISC] Update Travis lint/spec tests to use ChefDK-supplied packages, [@miketheman][]
+
 # 2.2.0 / 2015-10-27
 
 * This release deserves a specific callout for a feature that has been finally
@@ -314,6 +342,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#203]: https://github.com/DataDog/chef-datadog/issues/203
 [#204]: https://github.com/DataDog/chef-datadog/issues/204
 [#205]: https://github.com/DataDog/chef-datadog/issues/205
+[#208]: https://github.com/DataDog/chef-datadog/issues/208
 [#209]: https://github.com/DataDog/chef-datadog/issues/209
 [#210]: https://github.com/DataDog/chef-datadog/issues/210
 [#212]: https://github.com/DataDog/chef-datadog/issues/212
@@ -330,6 +359,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#227]: https://github.com/DataDog/chef-datadog/issues/227
 [#229]: https://github.com/DataDog/chef-datadog/issues/229
 [#231]: https://github.com/DataDog/chef-datadog/issues/231
+[#232]: https://github.com/DataDog/chef-datadog/issues/232
 [#235]: https://github.com/DataDog/chef-datadog/issues/235
 [#237]: https://github.com/DataDog/chef-datadog/issues/237
 [#238]: https://github.com/DataDog/chef-datadog/issues/238
@@ -341,13 +371,37 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#247]: https://github.com/DataDog/chef-datadog/issues/247
 [#248]: https://github.com/DataDog/chef-datadog/issues/248
 [#249]: https://github.com/DataDog/chef-datadog/issues/249
+[#250]: https://github.com/DataDog/chef-datadog/issues/250
+[#251]: https://github.com/DataDog/chef-datadog/issues/251
+[#253]: https://github.com/DataDog/chef-datadog/issues/253
+[#259]: https://github.com/DataDog/chef-datadog/issues/259
+[#261]: https://github.com/DataDog/chef-datadog/issues/261
+[#262]: https://github.com/DataDog/chef-datadog/issues/262
+[#263]: https://github.com/DataDog/chef-datadog/issues/263
+[#266]: https://github.com/DataDog/chef-datadog/issues/266
+[#272]: https://github.com/DataDog/chef-datadog/issues/272
+[#273]: https://github.com/DataDog/chef-datadog/issues/273
+[#274]: https://github.com/DataDog/chef-datadog/issues/274
+[#276]: https://github.com/DataDog/chef-datadog/issues/276
+[#278]: https://github.com/DataDog/chef-datadog/issues/278
+[#280]: https://github.com/DataDog/chef-datadog/issues/280
+[#281]: https://github.com/DataDog/chef-datadog/issues/281
+[#285]: https://github.com/DataDog/chef-datadog/issues/285
+[#286]: https://github.com/DataDog/chef-datadog/issues/286
+[#295]: https://github.com/DataDog/chef-datadog/issues/295
+[#296]: https://github.com/DataDog/chef-datadog/issues/296
+[#298]: https://github.com/DataDog/chef-datadog/issues/298
+[#299]: https://github.com/DataDog/chef-datadog/issues/299
 [@ABrehm264]: https://github.com/ABrehm264
 [@DorianZaccaria]: https://github.com/DorianZaccaria
 [@EasyAsABC123]: https://github.com/EasyAsABC123
 [@JoeDeVries]: https://github.com/JoeDeVries
 [@LeoCavaille]: https://github.com/LeoCavaille
+[@MiguelMoll]: https://github.com/MiguelMoll
 [@NathanielMichael]: https://github.com/NathanielMichael
+[@RedWhiteMiko]: https://github.com/RedWhiteMiko
 [@SelerityMichael]: https://github.com/SelerityMichael
+[@SupermanScott]: https://github.com/SupermanScott
 [@alexism]: https://github.com/alexism
 [@alq]: https://github.com/alq
 [@antonio-osorio]: https://github.com/antonio-osorio
@@ -356,9 +410,12 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@bitmonk]: https://github.com/bitmonk
 [@chrissnell]: https://github.com/chrissnell
 [@clofresh]: https://github.com/clofresh
+[@cobusbernard]: https://github.com/cobusbernard
 [@coosh]: https://github.com/coosh
 [@ctrlok]: https://github.com/ctrlok
 [@darron]: https://github.com/darron
+[@datwiz]: https://github.com/datwiz
+[@dlackty]: https://github.com/dlackty
 [@dominicchan]: https://github.com/dominicchan
 [@donaldguy]: https://github.com/donaldguy
 [@drewrothstein]: https://github.com/drewrothstein
@@ -369,20 +426,28 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@flah00]: https://github.com/flah00
 [@graemej]: https://github.com/graemej
 [@gregf]: https://github.com/gregf
+[@hartfordfive]: https://github.com/hartfordfive
 [@hilli]: https://github.com/hilli
+[@hydrant25]: https://github.com/hydrant25
+[@iashwash]: https://github.com/iashwash
 [@inokappa]: https://github.com/inokappa
+[@isaacdd]: https://github.com/isaacdd
 [@jblancett]: https://github.com/jblancett
 [@jedi4ever]: https://github.com/jedi4ever
 [@jeffbyrnes]: https://github.com/jeffbyrnes
 [@jmanero-r7]: https://github.com/jmanero-r7
 [@jpcallanta]: https://github.com/jpcallanta
+[@jridgewell]: https://github.com/jridgewell
 [@jtimberman]: https://github.com/jtimberman
 [@juliandunn]: https://github.com/juliandunn
 [@khouse]: https://github.com/khouse
 [@kurochan]: https://github.com/kurochan
+[@martinisoft]: https://github.com/martinisoft
+[@mattrobenolt]: https://github.com/mattrobenolt
 [@mfischer-zd]: https://github.com/mfischer-zd
 [@miketheman]: https://github.com/miketheman
 [@mirceal]: https://github.com/mirceal
+[@mstepniowski]: https://github.com/mstepniowski
 [@mtougeron]: https://github.com/mtougeron
 [@nkts]: https://github.com/nkts
 [@olivielpeau]: https://github.com/olivielpeau
@@ -393,10 +458,12 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@rlaveycal]: https://github.com/rlaveycal
 [@ryandjurovich]: https://github.com/ryandjurovich
 [@schisamo]: https://github.com/schisamo
+[@sethrosenblum]: https://github.com/sethrosenblum
 [@takus]: https://github.com/takus
 [@tejom]: https://github.com/tejom
 [@thisismana]: https://github.com/thisismana
 [@timusg]: https://github.com/timusg
 [@uzyexe]: https://github.com/uzyexe
 [@wk8]: https://github.com/wk8
+[@yannmh]: https://github.com/yannmh
 [@zshenker]: https://github.com/zshenker
