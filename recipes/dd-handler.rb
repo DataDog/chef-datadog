@@ -50,7 +50,7 @@ end
 chef_handler 'Chef::Handler::Datadog' do
   source 'chef/handler/datadog'
   arguments [
-    :api_key => node['datadog']['api_key'],
+    :api_key => (!node['datadog']['api_key_runstate_var'].nil? ? node.run_state[node['datadog']['api_key_runstate_var']] : node['datadog']['api_key']),
     :application_key => node['datadog']['application_key'],
     :use_ec2_instance_id => node['datadog']['use_ec2_instance_id'],
     :tag_prefix => node['datadog']['tag_prefix']
