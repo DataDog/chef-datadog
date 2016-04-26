@@ -1,5 +1,4 @@
 describe 'datadog::directory' do
-
   expected_yaml = <<-EOF
     init_config:
     instances:
@@ -27,7 +26,7 @@ EOF
               filetagname: 'tag_filename',
               filegauges: false,
               pattern: '*.log',
-              recursive: true,
+              recursive: true
             }
           ]
         }
@@ -48,5 +47,4 @@ EOF
       expect(YAML.load(content).to_json).to be_json_eql(YAML.load(expected_yaml).to_json)
     }
   end
-
 end
