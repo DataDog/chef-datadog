@@ -1,6 +1,10 @@
 Changes
 =======
 
+# 2.4.0 / Unreleased
+
+* [FEATURE] Add support for `directory` check, [#277][] [@kindlyseth][]
+
 # 2.3.0 / 2016-04-25
 
 * [FEATURE] Add support for `go_expvar` check, [#298][] [@hartfordfive][]
@@ -383,6 +387,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#273]: https://github.com/DataDog/chef-datadog/issues/273
 [#274]: https://github.com/DataDog/chef-datadog/issues/274
 [#276]: https://github.com/DataDog/chef-datadog/issues/276
+[#277]: https://github.com/DataDog/chef-datadog/issues/277
 [#278]: https://github.com/DataDog/chef-datadog/issues/278
 [#280]: https://github.com/DataDog/chef-datadog/issues/280
 [#281]: https://github.com/DataDog/chef-datadog/issues/281
@@ -441,6 +446,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@jtimberman]: https://github.com/jtimberman
 [@juliandunn]: https://github.com/juliandunn
 [@khouse]: https://github.com/khouse
+[@kindlyseth]: https://github.com/kindlyseth
 [@kurochan]: https://github.com/kurochan
 [@martinisoft]: https://github.com/martinisoft
 [@mattrobenolt]: https://github.com/mattrobenolt
