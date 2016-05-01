@@ -25,7 +25,7 @@ instances:
       - <%= r %>
         <% end -%>
     <% end -%>
-    <% if i.keys?("collect_function_metrics") -%>
+    <% if i.key?("collect_function_metrics") -%>
     collect_function_metrics: i["collect_function_metrics"]
     <% end -%>
 <% end -%>
