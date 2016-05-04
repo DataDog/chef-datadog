@@ -3,7 +3,9 @@ Changes
 
 # 2.4.0 / Unreleased
 
+* [FEATURE] Add support for `dns_check`, [#294][] [@nickmarden][]
 * [FEATURE] Add support for `directory` check, [#277][] [@kindlyseth][]
+* [BUGFIX] Template error in `postgres.yaml`, [#300][], [#304][] [@miketheman][]
 
 # 2.3.0 / 2016-04-25
 
@@ -393,10 +395,13 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#281]: https://github.com/DataDog/chef-datadog/issues/281
 [#285]: https://github.com/DataDog/chef-datadog/issues/285
 [#286]: https://github.com/DataDog/chef-datadog/issues/286
+[#294]: https://github.com/DataDog/chef-datadog/issues/294
 [#295]: https://github.com/DataDog/chef-datadog/issues/295
 [#296]: https://github.com/DataDog/chef-datadog/issues/296
 [#298]: https://github.com/DataDog/chef-datadog/issues/298
 [#299]: https://github.com/DataDog/chef-datadog/issues/299
+[#300]: https://github.com/DataDog/chef-datadog/issues/300
+[#304]: https://github.com/DataDog/chef-datadog/issues/304
 [@ABrehm264]: https://github.com/ABrehm264
 [@DorianZaccaria]: https://github.com/DorianZaccaria
 [@EasyAsABC123]: https://github.com/EasyAsABC123
@@ -455,6 +460,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@mirceal]: https://github.com/mirceal
 [@mstepniowski]: https://github.com/mstepniowski
 [@mtougeron]: https://github.com/mtougeron
+[@nickmarden]: https://github.com/nickmarden
 [@nkts]: https://github.com/nkts
 [@olivielpeau]: https://github.com/olivielpeau
 [@opsline-radek]: https://github.com/opsline-radek
