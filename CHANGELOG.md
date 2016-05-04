@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 2.4.0 / Unreleased
+# 2.4.0 / 2016-05-04
 
 * [FEATURE] Add support for `dns_check`, [#294][] [@nickmarden][]
 * [FEATURE] Add support for `directory` check, [#277][] [@kindlyseth][]
