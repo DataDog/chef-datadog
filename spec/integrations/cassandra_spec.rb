@@ -220,6 +220,8 @@ describe 'datadog::cassandra' do
               - MemtableLiveDataSize
               - MemtableSwitchCount
               - MinRowSize
+              - ReadLatency
+              - WriteLatency
           exclude:
             keyspace:
               - OpsCenter
