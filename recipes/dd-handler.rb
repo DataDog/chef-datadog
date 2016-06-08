@@ -46,16 +46,21 @@ unless web_proxy['host'].nil?
   ENV['DATADOG_PROXY'] = proxy_url.to_s
 end
 
+handler_config = {
+  :api_key => node['datadog']['api_key'],
+  :application_key => node['datadog']['application_key'],
+  :use_ec2_instance_id => node['datadog']['use_ec2_instance_id'],
+  :tag_prefix => node['datadog']['tag_prefix']
+}
+
+unless node['datadog']['use_ec2_instance_id']
+  handler_config[:hostname] = node['datadog']['hostname']
+end
+
 # Create the handler to run at the end of the Chef execution
 chef_handler 'Chef::Handler::Datadog' do
   source 'chef/handler/datadog'
-  arguments [
-    :api_key => node['datadog']['api_key'],
-    :application_key => node['datadog']['application_key'],
-    :use_ec2_instance_id => node['datadog']['use_ec2_instance_id'],
-    :tag_prefix => node['datadog']['tag_prefix'],
-    :hostname => node['datadog']['hostname']
-  ]
+  arguments [handler_config]
   supports :report => true, :exception => true
   action :nothing
 end.run_action(:enable) if node['datadog']['chef_handler_enable']
