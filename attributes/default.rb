@@ -173,6 +173,7 @@ default['datadog']['dogstatsd'] = true
 default['datadog']['dogstatsd_port'] = 8125
 default['datadog']['dogstatsd_interval'] = 10
 default['datadog']['dogstatsd_normalize'] = 'yes'
+default['datadog']['dogstatsd_target'] = 'http://localhost:17123'
 default['datadog']['statsd_forward_host'] = nil
 default['datadog']['statsd_forward_port'] = 8125
 default['datadog']['statsd_metric_namespace'] = nil
