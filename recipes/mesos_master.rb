@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: datadog
-# Recipe:: mesos
+# Recipe:: mesos_master
 #
 # Copyright 2011-2015, Datadog
 #
@@ -20,20 +20,15 @@ include_recipe 'datadog::dd-agent'
 
 # Build a data structure with configuration.
 # @example
-#   node.override['datadog']['mesos'] =
+#   node.override['datadog']['mesos_master'] =
 #     instances: [{
 #       url: 'https://server:port',
-#       timeout: 8,
-#       tags: [
-#         'optional_tag1',
-#         'optional_tag2'
-#       ]
 #     }],
 #     init_config: {
 #       default_timeout: 10
 #     }
 
-datadog_monitor 'mesos' do
-  init_config node['datadog']['mesos']['init_config']
-  instances node['datadog']['mesos']['instances']
+datadog_monitor 'mesos_master' do
+  init_config node['datadog']['mesos_master']['init_config']
+  instances node['datadog']['mesos_master']['instances']
 end
