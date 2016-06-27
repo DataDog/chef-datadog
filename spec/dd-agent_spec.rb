@@ -296,6 +296,30 @@ describe 'datadog::dd-agent' do
           .with_content(/^tags: datacenter:us-foo$/)
       end
     end
+
+    context 'does accept other_api_keys' do
+      cached(:chef_run) do
+        ChefSpec::SoloRunner.new(
+          platform: 'ubuntu',
+          version: '12.04'
+        ) do |node|
+          node.set['datadog'] = {
+            'api_key' => 'somethingnotnil',
+            'other_dd_urls' => ['http://app.example.com', 'http://app.datadoghq.com'],
+            'other_api_keys' => ['something1', 'something2']
+          }
+          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+        end.converge described_recipe
+      end
+
+      it_behaves_like 'common linux resources'
+
+      it 'sets tags from the tags attribute' do
+        expect(chef_run).to render_file('/etc/dd-agent/datadog.conf')
+          .with_content(/^other_api_keys: something1,something2$/)
+          .with_content(/^other_dd_urls: http:\/\/app.example.com,http:\/\/app.datadoghq.com$/)
+      end
+    end
   end
 
   context 'service action' do
