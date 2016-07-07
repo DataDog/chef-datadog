@@ -6,6 +6,12 @@ instances:
     <% if i['ssl_certfile'] -%>ssl_certfile: <%= i['ssl_certfile'] %><% end -%>
     <% if i['ssl_cert_validation'] -%>ssl_cert_validation: <%= i['ssl_cert_validation'] %><% end -%>
     <% if i['ssl_ca_certs'] -%>ssl_ca_certs: <%= i['ssl_ca_certs'] %><% end -%>
+    <% if i.key?('tags') -%>
+    tags:
+    <% i['tags'].each do |t| -%>
+    - <%= t %>
+    <% end -%>
+    <% end -%>
 <% end -%>
 
 # Nothing to configure here
