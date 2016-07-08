@@ -13,4 +13,6 @@ Chef::Log.warn 'Datadog network check only supports one `instance`, please check
 
 datadog_monitor 'network' do
   instances node['datadog']['network']['instances']
+  action :add
+  notifies :restart, 'service[datadog-agent]'
 end

@@ -23,4 +23,6 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'varnish' do
   instances node['datadog']['varnish']['instances']
+  action :add
+  notifies :restart, 'service[datadog-agent]'
 end

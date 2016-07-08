@@ -26,4 +26,6 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'hdfs' do
   instances node['datadog']['hdfs']['instances']
+  action :add
+  notifies :restart, 'service[datadog-agent]'
 end

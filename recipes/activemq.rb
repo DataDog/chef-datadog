@@ -22,4 +22,6 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'activemq' do
   instances node['datadog']['activemq']['instances']
+  action :add
+  notifies :restart, 'service[datadog-agent]'
 end

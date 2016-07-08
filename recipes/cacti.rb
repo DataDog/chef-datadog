@@ -40,4 +40,6 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'cacti' do
   instances node['datadog']['cacti']['instances']
+  action :add
+  notifies :restart, 'service[datadog-agent]'
 end

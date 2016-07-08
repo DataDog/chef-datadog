@@ -31,4 +31,6 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'mysql' do
   instances node['datadog']['mysql']['instances']
+  action :add
+  notifies :restart, 'service[datadog-agent]'
 end

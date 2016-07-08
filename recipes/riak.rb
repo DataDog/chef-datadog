@@ -10,4 +10,6 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'riak' do
   instances node['datadog']['riak']['instances']
+  action :add
+  notifies :restart, 'service[datadog-agent]'
 end

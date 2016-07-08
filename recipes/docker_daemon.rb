@@ -52,4 +52,6 @@ include_recipe 'datadog::dd-agent'
 datadog_monitor 'docker_daemon' do
   init_config node['datadog']['docker_daemon']['init_config']
   instances node['datadog']['docker_daemon']['instances']
+  action :add
+  notifies :restart, 'service[datadog-agent]'
 end

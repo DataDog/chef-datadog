@@ -20,4 +20,6 @@ include_recipe 'datadog::dd-agent'
 datadog_monitor 'couch' do
   init_config nil
   instances node['datadog']['couch']['instances']
+  action :add
+  notifies :restart, 'service[datadog-agent]'
 end

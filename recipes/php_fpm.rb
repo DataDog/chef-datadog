@@ -15,4 +15,6 @@ include_recipe 'datadog::dd-agent'
 #   ]
 datadog_monitor 'php_fpm' do
   instances node['datadog']['php_fpm']['instances']
+  action :add
+  notifies :restart, 'service[datadog-agent]'
 end
