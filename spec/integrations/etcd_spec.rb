@@ -7,7 +7,7 @@ describe 'datadog::etcd' do
       ssl_cert_validation: true
       ssl_ca_certs: ca_path
       tags:
-      - mytag 
+      - mytag
     init_config:
   EOF
 
