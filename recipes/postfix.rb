@@ -40,5 +40,5 @@ end
 datadog_monitor 'postfix' do
   instances postfix_instances
   action :add
-  notifies :restart, 'service[datadog-agent]'
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

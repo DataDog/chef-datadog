@@ -37,5 +37,5 @@ include_recipe 'datadog::dd-agent'
 datadog_monitor 'pgbouncer' do
   instances node['datadog']['pgbouncer']['instances']
   action :add
-  notifies :restart, 'service[datadog-agent]'
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

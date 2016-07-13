@@ -21,5 +21,5 @@ datadog_monitor 'couch' do
   init_config nil
   instances node['datadog']['couch']['instances']
   action :add
-  notifies :restart, 'service[datadog-agent]'
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

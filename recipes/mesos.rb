@@ -37,5 +37,5 @@ datadog_monitor 'mesos' do
   init_config node['datadog']['mesos']['init_config']
   instances node['datadog']['mesos']['instances']
   action :add
-  notifies :restart, 'service[datadog-agent]'
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

@@ -22,5 +22,5 @@ datadog_monitor 'go_expvar' do
   init_config node['datadog']['go_expvar']['init_config']
   instances node['datadog']['go_expvar']['instances']
   action :add
-  notifies :restart, 'service[datadog-agent]'
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

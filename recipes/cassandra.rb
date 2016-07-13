@@ -39,5 +39,5 @@ datadog_monitor 'cassandra' do
   instances node['datadog']['cassandra']['instances']
   version node['datadog']['cassandra']['version']
   action :add
-  notifies :restart, 'service[datadog-agent]'
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

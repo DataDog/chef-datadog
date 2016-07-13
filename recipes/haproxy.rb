@@ -17,5 +17,5 @@ include_recipe 'datadog::dd-agent'
 datadog_monitor 'haproxy' do
   instances node['datadog']['haproxy']['instances']
   action :add
-  notifies :restart, 'service[datadog-agent]'
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end
