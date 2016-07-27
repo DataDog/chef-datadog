@@ -47,6 +47,6 @@ init_config:
 instances:
 <% @instances.each do |i| -%>
   - host: <%= i['host'] %>,<%= i['port'] %>
-    username: <%= i['user'] %>
-    password: <%= i['pass'] %>
+    username: <%= i['username'] %>
+    password: <%= i['password'] %>
 <% end -%>
