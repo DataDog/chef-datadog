@@ -37,10 +37,10 @@ init_config:
       - name: <%= metric['name'] %>
         type: <%= metric['type'] %>
         counter_name: <%= metric['counter_name'] %>
-        <% if i.key?('instance_name') -%>
+        <% if metric.key?('instance_name') -%>
         instance_name: <%= metric['instance_name'] %>
         <% end -%>
-        <% if i.key?('tag_by') -%>
+        <% if metric.key?('tag_by') -%>
         tag_by: <%= metric['tag_by'] %>
         <% end -%>
     <% end -%>
