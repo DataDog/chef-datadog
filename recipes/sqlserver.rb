@@ -20,4 +20,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'sqlserver' do
   instances node['datadog']['sqlserver']['instances']
+  custom_metrics node['datadog']['sqlserver']['custom_metrics']
 end
