@@ -40,12 +40,12 @@ when 'rhel', 'fedora'
   yum_repository 'datadog' do
     name 'datadog'
     description 'datadog'
-    url node['datadog']['yumrepo']
+    # Older versions of yum embed M2Crypto with SSL that doesn't support TLS1.2
+    prefix = node['platform_version'].to_i < 6 ? 'http' : 'https'
+    url "#{prefix}://#{node['datadog']['yumrepo']}"
     proxy node['datadog']['yumrepo_proxy']
     proxy_username node['datadog']['yumrepo_proxy_username']
     proxy_password node['datadog']['yumrepo_proxy_password']
-    # Older versions of yum embed M2Crypto with SSL that doesn't support TLS1.2
-    prefix = node['platform_version'].to_i < 6 ? 'http' : 'https'
     gpgkey "#{prefix}://yum.datadoghq.com/DATADOG_RPM_KEY.public"
     action :add
   end
