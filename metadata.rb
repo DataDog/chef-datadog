@@ -22,7 +22,7 @@ issues_url       'https://github.com/DataDog/chef-datadog/issues' if respond_to?
 end
 
 depends          'apt' # We recommend '>= 2.1.0'. See CHANGELOG.md for details
-depends          'chef_handler', '~> 1.1.0'
+depends          'chef_handler', '~> 1.1'
 depends          'windows'
 depends          'yum'
 
