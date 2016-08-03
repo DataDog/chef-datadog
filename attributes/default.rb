@@ -65,10 +65,19 @@ architecture_map = {
 }
 architecture_map.default = 'x86_64'
 
+# Older versions of yum embed M2Crypto with SSL that doesn't support TLS1.2
+yum_protocol =
+  if node['platform_family'] == 'rhel' && node['platform_version'].to_i < 6
+    'http'
+  else
+    'https'
+  end
+
 default['datadog']['installrepo'] = true
 default['datadog']['aptrepo'] = 'http://apt.datadoghq.com'
 default['datadog']['aptrepo_dist'] = 'stable'
 default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/"
+default['datadog']['yumrepo_gpgkey'] = "#{yum_protocol}://yum.datadoghq.com/DATADOG_RPM_KEY.public"
 default['datadog']['yumrepo_proxy'] = nil
 default['datadog']['yumrepo_proxy_username'] = nil
 default['datadog']['yumrepo_proxy_password'] = nil
