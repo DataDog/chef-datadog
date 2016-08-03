@@ -32,8 +32,21 @@ init_config:
     #        counter_name: Log Flushes/sec
     #        instance_name: ALL
     #        tag_by: db
-
+    custom_metrics:
+    <% @custom_metrics.each do |metric| -%>
+      - name: <%= metric['name'] %>
+        type: <%= metric['type'] %>
+        counter_name: <%= metric['counter_name'] %>
+        <% if metric.key?('instance_name') -%>
+        instance_name: <%= metric['instance_name'] %>
+        <% end -%>
+        <% if metric.key?('tag_by') -%>
+        tag_by: <%= metric['tag_by'] %>
+        <% end -%>
+    <% end -%>
 instances:
-    -   host: HOST,PORT
-        username: my_username
-        password: my_password
+<% @instances.each do |i| -%>
+  - host: <%= i['host'] %>,<%= i['port'] %>
+    username: <%= i['username'] %>
+    password: <%= i['password'] %>
+<% end -%>
