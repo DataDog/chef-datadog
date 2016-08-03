@@ -14,6 +14,9 @@ autorestart: <%= node['datadog']['autorestart'] %>
 <% if node['datadog']['web_proxy']['skip_ssl_validation'] -%>
 skip_ssl_validation: <%= node['datadog']['web_proxy']['skip_ssl_validation'] %>
 <% end -%>
+<% if node['datadog']['developer_mode'] -%>
+developer_mode: <%= node['datadog']['developer_mode'] %>
+<% end -%>
 
 <% if node['datadog']['tags'].respond_to?(:each_pair) -%>
 tags: <%= node['datadog']['tags'].reject{ |_k,v| v.empty? }.map{ |k,v| "#{k}:#{v}" }.join(',') %>

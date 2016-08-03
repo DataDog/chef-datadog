@@ -54,6 +54,9 @@ default['datadog']['collect_ec2_tags'] = nil
 # Autorestart agent
 default['datadog']['autorestart'] = false
 
+# Run the agent in developer mode
+default['datadog']['developer_mode'] = false
+
 # Repository configuration
 architecture_map = {
   'i686' => 'i386',
