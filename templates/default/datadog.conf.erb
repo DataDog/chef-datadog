@@ -72,6 +72,9 @@ dogstatsd_port: <%= node['datadog']['dogstatsd_port'] %>
 ## The dogstatsd flush period.
 dogstatsd_interval: <%= node['datadog']['dogstatsd_interval'] %>
 
+## The target location to send the data
+dogstatsd_target: <%= node['datadog']['dogstatsd_target'] %>
+
 ## If 'yes', counters and rates will be normalized to 1 second (that is divided
 ## by the dogstatsd_interval) before being sent to the server. Defaults to 'yes'
 dogstatsd_normalize: <%= node['datadog']['dogstatsd_normalize'] %>
