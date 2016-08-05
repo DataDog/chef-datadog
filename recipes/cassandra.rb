@@ -35,6 +35,8 @@ include_recipe 'datadog::dd-agent'
 # }
 # ```
 
+node.default['datadog']['cassandra']['version'] = 1
+
 datadog_monitor 'cassandra' do
   instances node['datadog']['cassandra']['instances']
   version node['datadog']['cassandra']['version']
