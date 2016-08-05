@@ -25,9 +25,7 @@ describe file(AGENT_CONFIG) do
     expect(generated.to_json).to be_json_eql expected.to_json
   end
 
-  if @agent_check_dir
-    describe file('/opt/datadog-agent/3rd-party/twemproxy/check.py') do
-      it { should be_a_file }
-    end
+  describe package('dd-check-twemproxy') do
+    it { should be_installed.with_version('0.1.0-1') }
   end
 end

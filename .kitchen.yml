@@ -505,6 +505,7 @@ suites:
 - name: datadog_integrations
   run_list:
     - recipe[datadog::dd-agent]
+  excludes: *WINDOWS_PLATFORMS
   attributes:
     datadog:
       <<: *DATADOG
