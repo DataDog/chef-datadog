@@ -1,6 +1,25 @@
 Changes
 =======
 
+# 2.5.0 / Unreleased
+
+* [FEATURE] Add support for `extra_packages` agent checks, #271 @tmichelet
+* [FEATURE] Add Windows support to `remove-dd-agent` recipe (Chef >= 12.6 only), #332 @raycrawford
+* [FEATURE] Make yum repo GPG key an attribute, #326 @iancward
+* [FEATURE] Add support for `provider` option in `iis` check, #324 @clmoreno
+* [FEATURE] Add support for tags in `etcd` check, #322 @stensonb
+* [FEATURE] Add `developer_mode` option to `datadog.conf`, #315 @olivielpeau
+* [FEATURE] Add support for `win32_event_log` check, #314 @olivielpeau
+* [FEATURE] Add `dogstatsd_target` option to `datadog.conf`, #313 @jcftang-r7
+* [FEATURE] Add support for`custom_metrics` in `postgres` check, #284 @flah00
+* [OPTIMIZE] Update windows support with many improvements, #334 @brentm5
+* [OPTIMIZE] Pass the `hostname` attribute to the handler, #308 @gmmeyer
+* [MISC] Allow non-breaking updates of `chef_handler`, #291 @eherot
+
+  **NOTE** The strict version constraint on `chef_handler` had been introduced because the `1.2` minor release
+  of `chef_handler` broke compatibility with Chef 11. Chef 11 compatibility has been re-introduced in the `1.3`
+  release, we recommend using that version or higher if you use Chef 11.
+
 # 2.4.0 / 2016-05-04
 
 * [FEATURE] Add support for `dns_check`, [#294][] [@nickmarden][]

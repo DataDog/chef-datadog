@@ -52,6 +52,11 @@ dd-agent
 --------
 Installs the Datadog agent on the target system, sets the API key, and start the service to report on the local system metrics
 
+**Note for Windows**: With Chef >= 12.6 _and_ the `windows` cookbook >= 1.39.0, Agent upgrades are known to fail.
+For Chef>=12.6 users on Windows, we recommend pinning the `windows` cookbook to a lower version (`~> 1.38.0` for instance).
+If that's not an option, a known workaround is to use the `remove-dd-agent` recipe (since the `2.5.0` version of the present cookbook) to uninstall the Agent
+prior to any Agent upgrade.
+
 dd-handler
 ----------
 Installs the [chef-handler-datadog](https://rubygems.org/gems/chef-handler-datadog) gem and invokes the handler at the end of a Chef run to report the details back to the newsfeed.
