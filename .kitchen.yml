@@ -30,8 +30,11 @@ platforms:
 <% end
 
 windows_platform = 'windows-2012r2'
+windows_chef_versions = %w(
+  12.2.1
+)
 
-chef_versions.each do |chef_version|
+windows_chef_versions.each do |chef_version|
 %>
 
 - name: <%= windows_platform %>-<%= chef_version %>

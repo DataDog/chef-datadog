@@ -83,6 +83,10 @@ default['datadog']['yumrepo_proxy_username'] = nil
 default['datadog']['yumrepo_proxy_password'] = nil
 default['datadog']['windows_agent_url'] = 'https://s3.amazonaws.com/ddagent-windows-stable/'
 
+# Agent installer checksum
+# Expected checksum to validate correct agent installer is downloaded (Windows only)
+default['datadog']['windows_agent_checksum'] = nil
+
 # Values that differ on Windows
 # The location of the config folder (containing conf.d)
 # The name of the dd agent service
