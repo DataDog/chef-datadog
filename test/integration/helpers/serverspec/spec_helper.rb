@@ -13,14 +13,11 @@ if ENV['OS'] == 'Windows_NT'
   @agent_package_name = 'Datadog Agent'
   @agent_service_name = 'DatadogAgent'
   @agent_config_dir = "#{ENV['ProgramData']}/Datadog"
-  @agent_check_dir = ''
 else
   set :backend, :exec
   @agent_package_name = 'datadog-agent'
   @agent_service_name = 'datadog-agent'
   @agent_config_dir = '/etc/dd-agent'
-  @agent_check_dir = '/opt/datadog-agent/agent/checks.d'
-
 end
 
 set :path, '/sbin:/usr/local/sbin:$PATH' unless os[:family] == 'windows'
