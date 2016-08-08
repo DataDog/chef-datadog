@@ -3,18 +3,18 @@ Changes
 
 # 2.5.0 / Unreleased
 
-* [FEATURE] Add support for `extra_packages` agent checks, #271 @tmichelet
-* [FEATURE] Add Windows support to `remove-dd-agent` recipe (Chef >= 12.6 only), #332 @raycrawford
-* [FEATURE] Make yum repo GPG key an attribute, #326 @iancward
-* [FEATURE] Add support for `provider` option in `iis` check, #324 @clmoreno
-* [FEATURE] Add support for tags in `etcd` check, #322 @stensonb
-* [FEATURE] Add `developer_mode` option to `datadog.conf`, #315 @olivielpeau
-* [FEATURE] Add support for `win32_event_log` check, #314 @olivielpeau
-* [FEATURE] Add `dogstatsd_target` option to `datadog.conf`, #313 @jcftang-r7
-* [FEATURE] Add support for`custom_metrics` in `postgres` check, #284 @flah00
-* [OPTIMIZE] Update windows support with many improvements, #334 @brentm5
-* [OPTIMIZE] Pass the `hostname` attribute to the handler, #308 @gmmeyer
-* [MISC] Allow non-breaking updates of `chef_handler`, #291 @eherot
+* [FEATURE] Add support for `extra_packages` agent checks, [#271][] [@tmichelet][]
+* [FEATURE] Add Windows support to `remove-dd-agent` recipe (Chef >= 12.6 only), [#332][] [@raycrawford][]
+* [FEATURE] Make yum repo GPG key an attribute, [#326][] [@iancward][]
+* [FEATURE] Add support for `provider` option in `iis` check, [#324][] [@clmoreno][]
+* [FEATURE] Add support for tags in `etcd` check, [#322][] [@stensonb][]
+* [FEATURE] Add `developer_mode` option to `datadog.conf`, [#315][] [@olivielpeau][]
+* [FEATURE] Add support for `win32_event_log` check, [#314][] [@olivielpeau][]
+* [FEATURE] Add `dogstatsd_target` option to `datadog.conf`, [#313][] [@jcftang-r7][]
+* [FEATURE] Add support for`custom_metrics` in `postgres` check, [#284][] [@flah00][]
+* [OPTIMIZE] Update windows support with many improvements, [#334][] [@brentm5][]
+* [OPTIMIZE] Pass the `hostname` attribute to the handler, [#308][] [@gmmeyer][]
+* [MISC] Allow non-breaking updates of `chef_handler`, [#291][] [@eherot][]
 
   **NOTE** The strict version constraint on `chef_handler` had been introduced because the `1.2` minor release
   of `chef_handler` broke compatibility with Chef 11. Chef 11 compatibility has been re-introduced in the `1.3`
@@ -404,6 +404,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#262]: https://github.com/DataDog/chef-datadog/issues/262
 [#263]: https://github.com/DataDog/chef-datadog/issues/263
 [#266]: https://github.com/DataDog/chef-datadog/issues/266
+[#271]: https://github.com/DataDog/chef-datadog/issues/271
 [#272]: https://github.com/DataDog/chef-datadog/issues/272
 [#273]: https://github.com/DataDog/chef-datadog/issues/273
 [#274]: https://github.com/DataDog/chef-datadog/issues/274
@@ -412,8 +413,10 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#278]: https://github.com/DataDog/chef-datadog/issues/278
 [#280]: https://github.com/DataDog/chef-datadog/issues/280
 [#281]: https://github.com/DataDog/chef-datadog/issues/281
+[#284]: https://github.com/DataDog/chef-datadog/issues/284
 [#285]: https://github.com/DataDog/chef-datadog/issues/285
 [#286]: https://github.com/DataDog/chef-datadog/issues/286
+[#291]: https://github.com/DataDog/chef-datadog/issues/291
 [#294]: https://github.com/DataDog/chef-datadog/issues/294
 [#295]: https://github.com/DataDog/chef-datadog/issues/295
 [#296]: https://github.com/DataDog/chef-datadog/issues/296
@@ -421,6 +424,15 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#299]: https://github.com/DataDog/chef-datadog/issues/299
 [#300]: https://github.com/DataDog/chef-datadog/issues/300
 [#304]: https://github.com/DataDog/chef-datadog/issues/304
+[#308]: https://github.com/DataDog/chef-datadog/issues/308
+[#313]: https://github.com/DataDog/chef-datadog/issues/313
+[#314]: https://github.com/DataDog/chef-datadog/issues/314
+[#315]: https://github.com/DataDog/chef-datadog/issues/315
+[#322]: https://github.com/DataDog/chef-datadog/issues/322
+[#324]: https://github.com/DataDog/chef-datadog/issues/324
+[#326]: https://github.com/DataDog/chef-datadog/issues/326
+[#332]: https://github.com/DataDog/chef-datadog/issues/332
+[#334]: https://github.com/DataDog/chef-datadog/issues/334
 [@ABrehm264]: https://github.com/ABrehm264
 [@DorianZaccaria]: https://github.com/DorianZaccaria
 [@EasyAsABC123]: https://github.com/EasyAsABC123
@@ -437,7 +449,9 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@arthurnn]: https://github.com/arthurnn
 [@babbottscott]: https://github.com/babbottscott
 [@bitmonk]: https://github.com/bitmonk
+[@brentm5]: https://github.com/brentm5
 [@chrissnell]: https://github.com/chrissnell
+[@clmoreno]: https://github.com/clmoreno
 [@clofresh]: https://github.com/clofresh
 [@cobusbernard]: https://github.com/cobusbernard
 [@coosh]: https://github.com/coosh
@@ -449,19 +463,23 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@donaldguy]: https://github.com/donaldguy
 [@drewrothstein]: https://github.com/drewrothstein
 [@dwradcliffe]: https://github.com/dwradcliffe
+[@eherot]: https://github.com/eherot
 [@elafarge]: https://github.com/elafarge
 [@elijahandrews]: https://github.com/elijahandrews
 [@evan2645]: https://github.com/evan2645
 [@flah00]: https://github.com/flah00
+[@gmmeyer]: https://github.com/gmmeyer
 [@graemej]: https://github.com/graemej
 [@gregf]: https://github.com/gregf
 [@hartfordfive]: https://github.com/hartfordfive
 [@hilli]: https://github.com/hilli
 [@hydrant25]: https://github.com/hydrant25
+[@iancward]: https://github.com/iancward
 [@iashwash]: https://github.com/iashwash
 [@inokappa]: https://github.com/inokappa
 [@isaacdd]: https://github.com/isaacdd
 [@jblancett]: https://github.com/jblancett
+[@jcftang-r7]: https://github.com/jcftang-r7
 [@jedi4ever]: https://github.com/jedi4ever
 [@jeffbyrnes]: https://github.com/jeffbyrnes
 [@jmanero-r7]: https://github.com/jmanero-r7
@@ -485,15 +503,18 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@opsline-radek]: https://github.com/opsline-radek
 [@phlipper]: https://github.com/phlipper
 [@qqfr2507]: https://github.com/qqfr2507
+[@raycrawford]: https://github.com/raycrawford
 [@remh]: https://github.com/remh
 [@rlaveycal]: https://github.com/rlaveycal
 [@ryandjurovich]: https://github.com/ryandjurovich
 [@schisamo]: https://github.com/schisamo
 [@sethrosenblum]: https://github.com/sethrosenblum
+[@stensonb]: https://github.com/stensonb
 [@takus]: https://github.com/takus
 [@tejom]: https://github.com/tejom
 [@thisismana]: https://github.com/thisismana
 [@timusg]: https://github.com/timusg
+[@tmichelet]: https://github.com/tmichelet
 [@uzyexe]: https://github.com/uzyexe
 [@wk8]: https://github.com/wk8
 [@yannmh]: https://github.com/yannmh
