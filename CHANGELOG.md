@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 2.5.0 / Unreleased
+# 2.5.0 / 2016-08-08
 
 * [FEATURE] Add support for `extra_packages` agent checks, [#271][] [@tmichelet][]
 * [FEATURE] Add Windows support to `remove-dd-agent` recipe (Chef >= 12.6 only), [#332][] [@raycrawford][]
