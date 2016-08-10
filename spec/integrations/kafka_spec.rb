@@ -1,39 +1,205 @@
+describe 'datadog::kafka' do
+  context 'version 1 (default)' do
+    expected_yaml = <<-EOF
 instances:
-  <% @instances.each do |i| -%>
-  - host: <%= i['host'] %>
-    port: <%= i['port'] %>
-    <% if i['name'] -%>
-    name: <%= i['name'] %>
-    <% end -%>
-    <% if i['user'] -%>
-    user: <%= i['user'] %>
-    <% end -%>
-    <% if i['password'] -%>
-    password: <%= i['password'] %>
-    <% end -%>
-    <% if i['process_name_regex'] and i['tools_jar_path'] -%>
-    process_name_regex: <%= i['process_name_regex'] %> # Instead of specifying a host, and port. The agent can connect using the attach api.
-                                                       # This requires the JDK to be installed and the path to tools.jar to be set below.
-    tools_jar_path: <%= i['tools_jar_path'] %>
-    <% end -%>
-    <% if i['java_bin_path'] -%>
-    java_bin_path: <%= i['java_bin_path'] %> #Optional, should be set if the agent cannot find your java executable
-    <% end -%>
-    <% if i['trust_store_path'] -%>
-    trust_store_path: <%= i['trust_store_path'] %> # Optional, should be set if ssl is enabled
-    <% end -%>
-    <% if i['trust_store_password'] -%>
-    trust_store_password: <%= i['trust_store_password'] %>
-    <% end -%>
-    <% if i.key?('tags') -%>
+  - host: localhost
+    port: 7199
+    name: fasdfas
+    user: someuser
+    password: somepass
     tags:
-      <% i['tags'].each do |k, v| -%>
-      <%= k %>: <%= v %>
-      <% end -%>
-    <% end -%>
-  <% end -%>
+      key: value
 
-<% if @version == 2 %>
+init_config:
+  is_jmx: true
+
+  # Metrics collected by this check. You should not have to modify this.
+  conf:
+    #
+    # Aggregate cluster stats
+    #
+    - include:
+        domain: '"kafka.server"'
+        bean: '"kafka.server":type="BrokerTopicMetrics",name="AllTopicsBytesOutPerSec"'
+        attribute:
+          MeanRate:
+            metric_type: gauge
+            alias: kafka.net.bytes_out
+    - include:
+        domain: '"kafka.server"'
+        bean: '"kafka.server":type="BrokerTopicMetrics",name="AllTopicsBytesInPerSec"'
+        attribute:
+          MeanRate:
+            metric_type: gauge
+            alias: kafka.net.bytes_in
+    - include:
+        domain: '"kafka.server"'
+        bean: '"kafka.server":type="BrokerTopicMetrics",name="AllTopicsMessagesInPerSec"'
+        attribute:
+          MeanRate:
+            metric_type: gauge
+            alias: kafka.messages_in
+
+    #
+    # Request timings
+    #
+    - include:
+        domain: '"kafka.server"'
+        bean: '"kafka.server":type="BrokerTopicMetrics",name="AllTopicsFailedFetchRequestsPerSec"'
+        attribute:
+          MeanRate:
+            metric_type: gauge
+            alias: kafka.request.fetch.failed
+    - include:
+        domain: '"kafka.server"'
+        bean: '"kafka.server":type="BrokerTopicMetrics",name="AllTopicsFailedProduceRequestsPerSec"'
+        attribute:
+          MeanRate:
+            metric_type: gauge
+            alias: kafka.request.produce.failed
+    - include:
+        domain: '"kafka.network"'
+        bean: '"kafka.network":type="RequestMetrics",name="Produce-TotalTimeMs"'
+        attribute:
+          Mean:
+            metric_type: gauge
+            alias: kafka.request.produce.time.avg
+          99thPercentile:
+            metric_type: gauge
+            alias: kafka.request.produce.time.99percentile
+    - include:
+        domain: '"kafka.network"'
+        bean: '"kafka.network":type="RequestMetrics",name="Fetch-TotalTimeMs"'
+        attribute:
+          Mean:
+            metric_type: gauge
+            alias: kafka.request.fetch.time.avg
+          99thPercentile:
+            metric_type: gauge
+            alias: kafka.request.fetch.time.99percentile
+    - include:
+        domain: '"kafka.network"'
+        bean: '"kafka.network":type="RequestMetrics",name="UpdateMetadata-TotalTimeMs"'
+        attribute:
+          Mean:
+            metric_type: gauge
+            alias: kafka.request.update_metadata.time.avg
+          99thPercentile:
+            metric_type: gauge
+            alias: kafka.request.update_metadata.time.99percentile
+    - include:
+        domain: '"kafka.network"'
+        bean: '"kafka.network":type="RequestMetrics",name="Metadata-TotalTimeMs"'
+        attribute:
+          Mean:
+            metric_type: gauge
+            alias: kafka.request.metadata.time.avg
+          99thPercentile:
+            metric_type: gauge
+            alias: kafka.request.metadata.time.99percentile
+    - include:
+        domain: '"kafka.network"'
+        bean: '"kafka.network":type="RequestMetrics",name="Offsets-TotalTimeMs"'
+        attribute:
+          Mean:
+            metric_type: gauge
+            alias: kafka.request.offsets.time.avg
+          99thPercentile:
+            metric_type: gauge
+            alias: kafka.request.offsets.time.99percentile
+
+    #
+    # Replication stats
+    #
+    - include:
+        domain: '"kafka.server"'
+        bean: '"kafka.server":type="ReplicaManager",name="ISRShrinksPerSec"'
+        attribute:
+          MeanRate:
+            metric_type: gauge
+            alias: kafka.replication.isr_shrinks
+    - include:
+        domain: '"kafka.server"'
+        bean: '"kafka.server":type="ReplicaManager",name="ISRExpandsPerSec"'
+        attribute:
+          MeanRate:
+            metric_type: gauge
+            alias: kafka.replication.isr_expands
+    - include:
+        domain: '"kafka.server"'
+        bean: '"kafka.server":type="ControllerStats",name="LeaderElectionRateAndTimeMs"'
+        attribute:
+          MeanRate:
+            metric_type: gauge
+            alias: kafka.replication.leader_elections
+    - include:
+        domain: '"kafka.server"'
+        bean: '"kafka.server":type="ControllerStats",name="UncleanLeaderElectionsPerSec"'
+        attribute:
+          MeanRate:
+            metric_type: gauge
+            alias: kafka.replication.unclean_leader_elections
+
+    #
+    # Log flush stats
+    #
+    - include:
+        domain: '"kafka.log"'
+        bean: '"kafka.log":type="LogFlushStats",name="LogFlushRateAndTimeMs"'
+        attribute:
+          MeanRate:
+            metric_type: gauge
+            alias: kafka.log.flush_rate
+    EOF
+
+    cached(:chef_run) do
+      ChefSpec::SoloRunner.new(step_into: ['datadog_monitor']) do |node|
+        node.automatic['languages'] = { python: { version: '2.7.2' } }
+
+        node.set['datadog'] = {
+          api_key: 'someapikey',
+          kafka: {
+            instances: [
+              {
+                host: 'localhost',
+                port: 7199,
+                name: 'fasdfas',
+                user: 'someuser',
+                password: 'somepass',
+                tags: { key: 'value' }
+              }
+            ]
+          }
+        }
+      end.converge(described_recipe)
+    end
+
+    subject { chef_run }
+
+    it_behaves_like 'datadog-agent'
+
+    it { is_expected.to include_recipe('datadog::dd-agent') }
+
+    it { is_expected.to add_datadog_monitor('kafka') }
+
+    it 'renders expected YAML config file' do
+      expect(chef_run).to render_file('/etc/dd-agent/conf.d/kafka.yaml').with_content { |content|
+        expect(YAML.load(content).to_json).to be_json_eql(YAML.load(expected_yaml).to_json)
+      }
+    end
+  end
+
+  context 'version 2' do
+    expected_yaml = <<-EOF
+instances:
+        - host: localhost
+          port: 7199
+          name: fasdfas
+          user: someuser
+          password: somepass
+          tags:
+            key: value
+
 init_config:
   is_jmx: true
 
@@ -42,28 +208,28 @@ init_config:
     # v0.8.2.x Producers
     - include:
         domain: 'kafka.producer'
-        bean_regex: 'kafka\.producer:type=ProducerRequestMetrics,name=ProducerRequestRateAndTimeMs,clientId=.*'
+        bean_regex: 'kafka\\.producer:type=ProducerRequestMetrics,name=ProducerRequestRateAndTimeMs,clientId=.*'
         attribute:
           Count:
             metric_type: rate
             alias: kafka.producer.request_rate
     - include:
         domain: 'kafka.producer'
-        bean_regex: 'kafka\.producer:type=ProducerRequestMetrics,name=ProducerRequestRateAndTimeMs,clientId=.*'
+        bean_regex: 'kafka\\.producer:type=ProducerRequestMetrics,name=ProducerRequestRateAndTimeMs,clientId=.*'
         attribute:
           Mean:
             metric_type: gauge
             alias: kafka.producer.request_latency_avg
     - include:
         domain: 'kafka.producer'
-        bean_regex: 'kafka\.producer:type=ProducerTopicMetrics,name=BytesPerSec,clientId=.*'
+        bean_regex: 'kafka\\.producer:type=ProducerTopicMetrics,name=BytesPerSec,clientId=.*'
         attribute:
           Count:
             metric_type: rate
             alias: kafka.producer.bytes_out
     - include:
         domain: 'kafka.producer'
-        bean_regex: 'kafka\.producer:type=ProducerTopicMetrics,name=MessagesPerSec,clientId=.*'
+        bean_regex: 'kafka\\.producer:type=ProducerTopicMetrics,name=MessagesPerSec,clientId=.*'
         attribute:
           Count:
             metric_type: rate
@@ -73,35 +239,35 @@ init_config:
     # v0.9.0.x Producers
     - include:
         domain: 'kafka.producer'
-        bean_regex: 'kafka\.producer:type=producer-metrics,client-id=.*'
+        bean_regex: 'kafka\\.producer:type=producer-metrics,client-id=.*'
         attribute:
           response-rate:
             metric_type: gauge
             alias: kafka.producer.response_rate
     - include:
         domain: 'kafka.producer'
-        bean_regex: 'kafka\.producer:type=producer-metrics,client-id=.*'
+        bean_regex: 'kafka\\.producer:type=producer-metrics,client-id=.*'
         attribute:
           request-rate:
             metric_type: gauge
             alias: kafka.producer.request_rate
     - include:
         domain: 'kafka.producer'
-        bean_regex: 'kafka\.producer:type=producer-metrics,client-id=.*'
+        bean_regex: 'kafka\\.producer:type=producer-metrics,client-id=.*'
         attribute:
           request-latency-avg:
             metric_type: gauge
             alias: kafka.producer.request_latency_avg
     - include:
         domain: 'kafka.producer'
-        bean_regex: 'kafka\.producer:type=producer-metrics,client-id=.*'
+        bean_regex: 'kafka\\.producer:type=producer-metrics,client-id=.*'
         attribute:
           outgoing-byte-rate:
             metric_type: gauge
             alias: kafka.producer.bytes_out
     - include:
         domain: 'kafka.producer'
-        bean_regex: 'kafka\.producer:type=producer-metrics,client-id=.*'
+        bean_regex: 'kafka\\.producer:type=producer-metrics,client-id=.*'
         attribute:
           io-wait-time-ns-avg:
             metric_type: gauge
@@ -111,28 +277,28 @@ init_config:
     # v0.8.2.x Consumers
     - include:
         domain: 'kafka.consumer'
-        bean_regex: 'kafka\.consumer:type=ConsumerFetcherManager,name=MaxLag,clientId=.*'
+        bean_regex: 'kafka\\.consumer:type=ConsumerFetcherManager,name=MaxLag,clientId=.*'
         attribute:
           Value:
             metric_type: gauge
             alias: kafka.consumer.max_lag
     - include:
         domain: 'kafka.consumer'
-        bean_regex: 'kafka\.consumer:type=ConsumerFetcherManager,name=MinFetchRate,clientId=.*'
+        bean_regex: 'kafka\\.consumer:type=ConsumerFetcherManager,name=MinFetchRate,clientId=.*'
         attribute:
           Value:
             metric_type: gauge
             alias: kafka.consumer.fetch_rate
     - include:
         domain: 'kafka.consumer'
-        bean_regex: 'kafka\.consumer:type=ConsumerTopicMetrics,name=BytesPerSec,clientId=.*'
+        bean_regex: 'kafka\\.consumer:type=ConsumerTopicMetrics,name=BytesPerSec,clientId=.*'
         attribute:
           Count:
             metric_type: rate
             alias: kafka.consumer.bytes_in
     - include:
         domain: 'kafka.consumer'
-        bean_regex: 'kafka\.consumer:type=ConsumerTopicMetrics,name=MessagesPerSec,clientId=.*'
+        bean_regex: 'kafka\\.consumer:type=ConsumerTopicMetrics,name=MessagesPerSec,clientId=.*'
         attribute:
           Count:
             metric_type: rate
@@ -141,7 +307,7 @@ init_config:
     # Offsets committed to ZooKeeper
     - include:
         domain: 'kafka.consumer'
-        bean_regex: 'kafka\.consumer:type=ZookeeperConsumerConnector,name=ZooKeeperCommitsPerSec,clientId=.*'
+        bean_regex: 'kafka\\.consumer:type=ZookeeperConsumerConnector,name=ZooKeeperCommitsPerSec,clientId=.*'
         attribute:
           Count:
             metric_type: rate
@@ -149,7 +315,7 @@ init_config:
     # Offsets committed to Kafka
     - include:
         domain: 'kafka.consumer'
-        bean_regex: 'kafka\.consumer:type=ZookeeperConsumerConnector,name=KafkaCommitsPerSec,clientId=.*'
+        bean_regex: 'kafka\\.consumer:type=ZookeeperConsumerConnector,name=KafkaCommitsPerSec,clientId=.*'
         attribute:
           Count:
             metric_type: rate
@@ -158,14 +324,14 @@ init_config:
     # v0.9.0.x Consumers
     - include:
         domain: 'kafka.consumer'
-        bean_regex: 'kafka\.consumer:type=consumer-fetch-manager-metrics,client-id=.*'
+        bean_regex: 'kafka\\.consumer:type=consumer-fetch-manager-metrics,client-id=.*'
         attribute:
           bytes-consumed-rate:
             metric_type: gauge
             alias: kafka.consumer.bytes_in
     - include:
         domain: 'kafka.consumer'
-        bean_regex: 'kafka\.consumer:type=consumer-fetch-manager-metrics,client-id=.*'
+        bean_regex: 'kafka\\.consumer:type=consumer-fetch-manager-metrics,client-id=.*'
         attribute:
           records-consumed-rate:
             metric_type: gauge
@@ -407,145 +573,43 @@ init_config:
           Count:
             metric_type: rate
             alias: kafka.log.flush_rate.rate
-<% else %>
-init_config:
-  is_jmx: true
+    EOF
 
-  # Metrics collected by this check. You should not have to modify this.
-  conf:
-    #
-    # Aggregate cluster stats
-    #
-    - include:
-        domain: '"kafka.server"'
-        bean: '"kafka.server":type="BrokerTopicMetrics",name="AllTopicsBytesOutPerSec"'
-        attribute:
-          MeanRate:
-            metric_type: gauge
-            alias: kafka.net.bytes_out
-    - include:
-        domain: '"kafka.server"'
-        bean: '"kafka.server":type="BrokerTopicMetrics",name="AllTopicsBytesInPerSec"'
-        attribute:
-          MeanRate:
-            metric_type: gauge
-            alias: kafka.net.bytes_in
-    - include:
-        domain: '"kafka.server"'
-        bean: '"kafka.server":type="BrokerTopicMetrics",name="AllTopicsMessagesInPerSec"'
-        attribute:
-          MeanRate:
-            metric_type: gauge
-            alias: kafka.messages_in
+    cached(:chef_run) do
+      ChefSpec::SoloRunner.new(step_into: ['datadog_monitor']) do |node|
+        node.automatic['languages'] = { python: { version: '2.7.2' } }
 
-    #
-    # Request timings
-    #
-    - include:
-        domain: '"kafka.server"'
-        bean: '"kafka.server":type="BrokerTopicMetrics",name="AllTopicsFailedFetchRequestsPerSec"'
-        attribute:
-          MeanRate:
-            metric_type: gauge
-            alias: kafka.request.fetch.failed
-    - include:
-        domain: '"kafka.server"'
-        bean: '"kafka.server":type="BrokerTopicMetrics",name="AllTopicsFailedProduceRequestsPerSec"'
-        attribute:
-          MeanRate:
-            metric_type: gauge
-            alias: kafka.request.produce.failed
-    - include:
-        domain: '"kafka.network"'
-        bean: '"kafka.network":type="RequestMetrics",name="Produce-TotalTimeMs"'
-        attribute:
-          Mean:
-            metric_type: gauge
-            alias: kafka.request.produce.time.avg
-          99thPercentile:
-            metric_type: gauge
-            alias: kafka.request.produce.time.99percentile
-    - include:
-        domain: '"kafka.network"'
-        bean: '"kafka.network":type="RequestMetrics",name="Fetch-TotalTimeMs"'
-        attribute:
-          Mean:
-            metric_type: gauge
-            alias: kafka.request.fetch.time.avg
-          99thPercentile:
-            metric_type: gauge
-            alias: kafka.request.fetch.time.99percentile
-    - include:
-        domain: '"kafka.network"'
-        bean: '"kafka.network":type="RequestMetrics",name="UpdateMetadata-TotalTimeMs"'
-        attribute:
-          Mean:
-            metric_type: gauge
-            alias: kafka.request.update_metadata.time.avg
-          99thPercentile:
-            metric_type: gauge
-            alias: kafka.request.update_metadata.time.99percentile
-    - include:
-        domain: '"kafka.network"'
-        bean: '"kafka.network":type="RequestMetrics",name="Metadata-TotalTimeMs"'
-        attribute:
-          Mean:
-            metric_type: gauge
-            alias: kafka.request.metadata.time.avg
-          99thPercentile:
-            metric_type: gauge
-            alias: kafka.request.metadata.time.99percentile
-    - include:
-        domain: '"kafka.network"'
-        bean: '"kafka.network":type="RequestMetrics",name="Offsets-TotalTimeMs"'
-        attribute:
-          Mean:
-            metric_type: gauge
-            alias: kafka.request.offsets.time.avg
-          99thPercentile:
-            metric_type: gauge
-            alias: kafka.request.offsets.time.99percentile
+        node.set['datadog'] = {
+          api_key: 'someapikey',
+          kafka: {
+            version: 2,
+            instances: [
+              {
+                host: 'localhost',
+                port: 7199,
+                name: 'fasdfas',
+                user: 'someuser',
+                password: 'somepass',
+                tags: { key: 'value' }
+              }
+            ]
+          }
+        }
+      end.converge(described_recipe)
+    end
 
-    #
-    # Replication stats
-    #
-    - include:
-        domain: '"kafka.server"'
-        bean: '"kafka.server":type="ReplicaManager",name="ISRShrinksPerSec"'
-        attribute:
-          MeanRate:
-            metric_type: gauge
-            alias: kafka.replication.isr_shrinks
-    - include:
-        domain: '"kafka.server"'
-        bean: '"kafka.server":type="ReplicaManager",name="ISRExpandsPerSec"'
-        attribute:
-          MeanRate:
-            metric_type: gauge
-            alias: kafka.replication.isr_expands
-    - include:
-        domain: '"kafka.server"'
-        bean: '"kafka.server":type="ControllerStats",name="LeaderElectionRateAndTimeMs"'
-        attribute:
-          MeanRate:
-            metric_type: gauge
-            alias: kafka.replication.leader_elections
-    - include:
-        domain: '"kafka.server"'
-        bean: '"kafka.server":type="ControllerStats",name="UncleanLeaderElectionsPerSec"'
-        attribute:
-          MeanRate:
-            metric_type: gauge
-            alias: kafka.replication.unclean_leader_elections
+    subject { chef_run }
 
-    #
-    # Log flush stats
-    #
-    - include:
-        domain: '"kafka.log"'
-        bean: '"kafka.log":type="LogFlushStats",name="LogFlushRateAndTimeMs"'
-        attribute:
-          MeanRate:
-            metric_type: gauge
-            alias: kafka.log.flush_rate
-<% end %>
+    it_behaves_like 'datadog-agent'
+
+    it { is_expected.to include_recipe('datadog::dd-agent') }
+
+    it { is_expected.to add_datadog_monitor('kafka') }
+
+    it 'renders expected YAML config file' do
+      expect(chef_run).to render_file('/etc/dd-agent/conf.d/kafka.yaml').with_content { |content|
+        expect(YAML.load(content).to_json).to be_json_eql(YAML.load(expected_yaml).to_json)
+      }
+    end
+  end
+end
