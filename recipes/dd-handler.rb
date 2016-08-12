@@ -46,32 +46,40 @@ unless web_proxy['host'].nil?
   ENV['DATADOG_PROXY'] = proxy_url.to_s
 end
 
-extra_endpoints = []
-node['datadog']['extra_endpoints'].each do |_, endpoint|
-  next unless endpoint['enabled']
-  endpoint = Mash.new(endpoint)
-  endpoint.delete('enabled')
-  extra_endpoints << endpoint
-end
-
-handler_config = {
-  :api_key => node['datadog']['api_key'],
-  :application_key => node['datadog']['application_key'],
-  :use_ec2_instance_id => node['datadog']['use_ec2_instance_id'],
-  :tag_prefix => node['datadog']['tag_prefix'],
-  :url => node['datadog']['url'],
-  :extra_endpoints => extra_endpoints,
-  :tags_blacklist_regex => node['datadog']['tags_blacklist_regex']
-}
-
-unless node['datadog']['use_ec2_instance_id']
-  handler_config[:hostname] = node['datadog']['hostname']
-end
-
 # Create the handler to run at the end of the Chef execution
 chef_handler 'Chef::Handler::Datadog' do
+  def handler_config # rubocop:disable Metrics/AbcSize
+    extra_endpoints = []
+    node['datadog']['extra_endpoints'].each do |_, endpoint|
+      next unless endpoint['enabled']
+      endpoint = Mash.new(endpoint)
+      endpoint.delete('enabled')
+      extra_endpoints << endpoint
+    end
+
+    config = {
+      :api_key => node['datadog']['api_key'],
+      :application_key => node['datadog']['application_key'],
+      :use_ec2_instance_id => node['datadog']['use_ec2_instance_id'],
+      :tag_prefix => node['datadog']['tag_prefix'],
+      :url => node['datadog']['url'],
+      :extra_endpoints => extra_endpoints,
+      :tags_blacklist_regex => node['datadog']['tags_blacklist_regex']
+    }
+
+    unless node['datadog']['use_ec2_instance_id']
+      config[:hostname] = node['datadog']['hostname']
+    end
+    config
+  end
   source 'chef/handler/datadog'
-  arguments [handler_config]
+  arguments(
+    if respond_to?(:lazy)
+      lazy { [handler_config] }
+    else
+      [handler_config]
+    end
+  )
   supports :report => true, :exception => true
   action :nothing
   only_if { node['datadog']['chef_handler_enable'] }

@@ -51,27 +51,32 @@ end
 # To add integration-specific configurations, add 'datadog::config_name' to
 # the node's run_list and set the relevant attributes
 #
-raise "Add a ['datadog']['api_key'] attribute to configure this node's Datadog Agent." if node['datadog'] && node['datadog']['api_key'].nil?
 
-api_keys = [node['datadog']['api_key']]
-dd_urls = [node['datadog']['url']]
-node['datadog']['extra_endpoints'].each do |_, endpoint|
-  next unless endpoint['enabled']
-  api_keys << endpoint['api_key']
-  dd_urls << if endpoint['url']
-               endpoint['url']
-             else
-               node['datadog']['url']
-             end
-end
-
-extra_config = {}
-node['datadog']['extra_config'].each do |option, value|
-  next if value.nil?
-  extra_config[option] = value
-end
 
 template agent_config_file do
+  def template_vars
+    api_keys = [node['datadog']['api_key']]
+    dd_urls = [node['datadog']['url']]
+    node['datadog']['extra_endpoints'].each do |_, endpoint|
+      next unless endpoint['enabled']
+      api_keys << endpoint['api_key']
+      dd_urls << if endpoint['url']
+                   endpoint['url']
+                 else
+                   node['datadog']['url']
+                 end
+    end
+    extra_config = {}
+    node['datadog']['extra_config'].each do |option, value|
+      next if value.nil?
+      extra_config[option] = value
+    end
+    {
+      :api_keys => api_keys,
+      :dd_urls => dd_urls,
+      :extra_config => extra_config
+    }
+  end
   if is_windows
     owner 'Administrators'
     rights :full_control, 'Administrators'
@@ -82,9 +87,11 @@ template agent_config_file do
     mode '640'
   end
   variables(
-    :api_keys => api_keys,
-    :dd_urls => dd_urls,
-    :extra_config => extra_config
+    if respond_to?(:lazy)
+      lazy { template_vars }
+    else
+      template_vars
+    end
   )
   sensitive true if Chef::Resource.instance_methods(false).include?(:sensitive)
 end
