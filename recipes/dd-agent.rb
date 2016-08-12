@@ -55,7 +55,7 @@ end
 
 template agent_config_file do
   def template_vars
-    api_keys = [node['datadog']['api_key']]
+    api_keys = [Chef::Datadog.api_key(node)]
     dd_urls = [node['datadog']['url']]
     node['datadog']['extra_endpoints'].each do |_, endpoint|
       next unless endpoint['enabled']
