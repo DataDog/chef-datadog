@@ -32,10 +32,7 @@ ENV['DATADOG_HOST'] = node['datadog']['url']
 chef_gem 'chef-handler-datadog' do # ~FC009
   action :install
   version node['datadog']['chef_handler_version']
-  # Chef 12 introduced `compile_time` - remove when Chef 11 is EOL.
-  compile_time true if respond_to?(:compile_time)
 end
-require 'chef/handler/datadog'
 
 # add web proxy from config support
 web_proxy = node['datadog']['web_proxy']
@@ -60,6 +57,8 @@ chef_handler 'Chef::Handler::Datadog' do
     end
     config
   end
+
+  require 'chef/handler/datadog'
   source 'chef/handler/datadog'
   arguments(
     if respond_to?(:lazy)
@@ -69,5 +68,11 @@ chef_handler 'Chef::Handler::Datadog' do
     end
   )
   supports :report => true, :exception => true
-  action :nothing
-end.run_action(:enable) if node['datadog']['chef_handler_enable']
+  action(
+    if node['datadog']['chef_handler_enable']
+      :enable
+    else
+      :nothing
+    end
+  )
+end
