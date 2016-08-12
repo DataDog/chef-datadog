@@ -59,6 +59,14 @@ default['datadog']['create_dd_check_tags'] = nil
 # Collect EC2 tags, set to 'yes' to collect
 default['datadog']['collect_ec2_tags'] = nil
 
+# A regex used to blacklist the tags that the host sends to datadog.
+# https://github.com/DataDog/chef-handler-datadog/issues/85
+# This affects not only event tags but also the host-level tags.
+# This means that all the metrics and service checks coming from the
+#  host/Agent would also stop being tagged with these excluded tags.
+# EX: 'APP_.*' allows all tags except those which look like APP_.*
+default['datadog']['tags_blacklist_regex'] = nil
+
 # Autorestart agent
 default['datadog']['autorestart'] = false
 
