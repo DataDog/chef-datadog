@@ -50,8 +50,8 @@ end
 chef_handler 'Chef::Handler::Datadog' do
   def handler_config # rubocop:disable Metrics/AbcSize
     config = {
-      :api_key => node['datadog']['api_key'],
-      :application_key => node['datadog']['application_key'],
+      :api_key => Chef::Datadog.api_key(node),
+      :application_key => Chef::Datadog.application_key(node),
       :use_ec2_instance_id => node['datadog']['use_ec2_instance_id'],
       :tag_prefix => node['datadog']['tag_prefix']
     }

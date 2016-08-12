@@ -55,7 +55,7 @@ end
 template agent_config_file do
   def template_vars
     {
-      :api_key => node['datadog']['api_key'],
+      :api_key => Chef::Datadog.api_key(node),
       :dd_url => node['datadog']['url']
     }
   end
