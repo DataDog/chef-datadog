@@ -51,7 +51,6 @@ describe 'datadog::dd-agent' do
   include EnvVar
 
   context 'no version set' do
-    # This recipe needs to have an api_key, otherwise `raise` is called.
     # It also depends on the version of Python present on the platform:
     #   2.6 and up => datadog-agent is installed
     #   below 2.6 => datadog-agent-base is installed
