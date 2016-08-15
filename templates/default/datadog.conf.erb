@@ -89,6 +89,9 @@ statsd_forward_port: <%= node['datadog']['statsd_forward_port'] %>
 <% if node['datadog']['statsd_metric_namespace'] -%>
 statsd_metric_namespace: <%= node['datadog']['statsd_metric_namespace'] %>
 <% end -%>
+<% else -%>
+use_dogstatsd: no
+<% end -%>
 <% end -%>
 
 # ========================================================================== #
