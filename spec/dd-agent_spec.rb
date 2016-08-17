@@ -317,7 +317,7 @@ describe 'datadog::dd-agent' do
       it 'sets tags from the tags attribute' do
         expect(chef_run).to render_file('/etc/dd-agent/datadog.conf')
           .with_content(/^other_api_keys: something1,something2$/)
-          .with_content(/^other_dd_urls: http:\/\/app.example.com,http:\/\/app.datadoghq.com$/)
+          .with_content(%r{^other_dd_urls: http://app.example.com,http://app.datadoghq.com$})
       end
     end
   end
