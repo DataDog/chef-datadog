@@ -297,16 +297,22 @@ describe 'datadog::dd-agent' do
       end
     end
 
-    context 'does accept other_api_keys' do
+    context 'does accept extra endpoints' do
       cached(:chef_run) do
         ChefSpec::SoloRunner.new(
           platform: 'ubuntu',
           version: '12.04'
         ) do |node|
           node.set['datadog'] = {
-            'api_key' => 'somethingnotnil',
-            'other_dd_urls' => ['http://app.example.com', 'http://app.datadoghq.com'],
-            'other_api_keys' => ['something1', 'something2']
+            'api_key' => 'something1',
+            'url' => 'https://app.example.com',
+            'extra_endpoints' => {
+              'example' => {
+                'enabled' => true,
+                'api_key' => 'something2',
+                'url' => 'https://app.datadoghq.com'
+              }
+            }
           }
           node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
         end.converge described_recipe
@@ -314,10 +320,39 @@ describe 'datadog::dd-agent' do
 
       it_behaves_like 'common linux resources'
 
-      it 'sets tags from the tags attribute' do
+      it 'uses the multiples apikeys and urls' do
         expect(chef_run).to render_file('/etc/dd-agent/datadog.conf')
-          .with_content(/^other_api_keys: something1,something2$/)
-          .with_content(%r{^other_dd_urls: http://app.example.com,http://app.datadoghq.com$})
+          .with_content(/^api_key: something1,something2$/)
+          .with_content(%r{^dd_url: https://app.example.com,https://app.datadoghq.com$})
+      end
+    end
+
+    context 'does accept extra api_key' do
+      cached(:chef_run) do
+        ChefSpec::SoloRunner.new(
+          platform: 'ubuntu',
+          version: '12.04'
+        ) do |node|
+          node.set['datadog'] = {
+            'api_key' => 'something1',
+            'url' => 'https://app.example.com',
+            'extra_endpoints' => {
+              'example' => {
+                'enabled' => true,
+                'api_key' => 'something2'
+              }
+            }
+          }
+          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+        end.converge described_recipe
+      end
+
+      it_behaves_like 'common linux resources'
+
+      it 'uses the multiples apikeys and urls' do
+        expect(chef_run).to render_file('/etc/dd-agent/datadog.conf')
+          .with_content(/^api_key: something1,something2$/)
+          .with_content(%r{^dd_url: https://app.example.com,https://app.example.com$})
       end
     end
   end
