@@ -19,7 +19,10 @@ action :add do
       mode 00600
     end
 
-    source 'integration.yaml.erb' if new_resource.use_integration_template
+    if new_resource.use_integration_template ||
+       new_resource.cookbook == 'datadog'
+      source 'integration.yaml.erb'
+    end
 
     variables(
       init_config: new_resource.init_config,
