@@ -1,6 +1,13 @@
 Changes
 =======
 
+# 2.6.0 / Unreleased
+
+* [FEATURE] Allow multiple enpoints/api_keys conf on Agent and handler, [#317][] [@degemer][]
+* [FEATURE] Add `kafka` template versioning, [#340][] [@degemer][]
+* [OPTIMIZE] Fully disable dogstatsd when attribute is set to false/nil, [#348][] [@ccannell67][]
+* [OPTIMIZE] Use HTTPS for `yumrepo` when applicable, [#351][] [@aknarts][]
+
 # 2.5.0 / 2016-08-08
 
 * [FEATURE] Add support for `extra_packages` agent checks, [#271][] [@tmichelet][]
@@ -428,11 +435,15 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#313]: https://github.com/DataDog/chef-datadog/issues/313
 [#314]: https://github.com/DataDog/chef-datadog/issues/314
 [#315]: https://github.com/DataDog/chef-datadog/issues/315
+[#317]: https://github.com/DataDog/chef-datadog/issues/317
 [#322]: https://github.com/DataDog/chef-datadog/issues/322
 [#324]: https://github.com/DataDog/chef-datadog/issues/324
 [#326]: https://github.com/DataDog/chef-datadog/issues/326
 [#332]: https://github.com/DataDog/chef-datadog/issues/332
 [#334]: https://github.com/DataDog/chef-datadog/issues/334
+[#340]: https://github.com/DataDog/chef-datadog/issues/340
+[#348]: https://github.com/DataDog/chef-datadog/issues/348
+[#351]: https://github.com/DataDog/chef-datadog/issues/351
 [@ABrehm264]: https://github.com/ABrehm264
 [@DorianZaccaria]: https://github.com/DorianZaccaria
 [@EasyAsABC123]: https://github.com/EasyAsABC123
@@ -443,6 +454,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@RedWhiteMiko]: https://github.com/RedWhiteMiko
 [@SelerityMichael]: https://github.com/SelerityMichael
 [@SupermanScott]: https://github.com/SupermanScott
+[@aknarts]: https://github.com/aknarts
 [@alexism]: https://github.com/alexism
 [@alq]: https://github.com/alq
 [@antonio-osorio]: https://github.com/antonio-osorio
@@ -450,6 +462,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@babbottscott]: https://github.com/babbottscott
 [@bitmonk]: https://github.com/bitmonk
 [@brentm5]: https://github.com/brentm5
+[@ccannell67]: https://github.com/ccannell67
 [@chrissnell]: https://github.com/chrissnell
 [@clmoreno]: https://github.com/clmoreno
 [@clofresh]: https://github.com/clofresh
@@ -458,6 +471,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@ctrlok]: https://github.com/ctrlok
 [@darron]: https://github.com/darron
 [@datwiz]: https://github.com/datwiz
+[@degemer]: https://github.com/degemer
 [@dlackty]: https://github.com/dlackty
 [@dominicchan]: https://github.com/dominicchan
 [@donaldguy]: https://github.com/donaldguy
