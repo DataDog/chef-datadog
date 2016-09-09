@@ -1,5 +1,10 @@
 sudo: false
 
+branches:
+  only:
+    - master
+    - /^\d+\.\d+\.x$/ # release forked patches branch
+
 addons:
   apt:
     sources:
