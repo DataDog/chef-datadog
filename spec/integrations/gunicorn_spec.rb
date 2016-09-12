@@ -3,7 +3,7 @@ describe 'datadog::gunicorn' do
     init_config:
 
     instances:
-    - proc_name: my_web_app    
+    - proc_name: my_web_app
   EOF
 
   cached(:chef_run) do
