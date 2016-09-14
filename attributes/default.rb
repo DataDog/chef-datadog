@@ -127,6 +127,10 @@ default['datadog']['agent_version'] = nil
 # Allow override with `upgrade` to get latest (Linux only)
 default['datadog']['agent_package_action'] = 'install'
 
+# Allow downgrades of the agent (Linux only)
+# Note: on apt-based platforms, this will use the `--force-yes` option on the apt-get command. Use with caution.
+default['datadog']['agent_allow_downgrade'] = false
+
 # Chef handler version
 default['datadog']['chef_handler_version'] = nil
 
