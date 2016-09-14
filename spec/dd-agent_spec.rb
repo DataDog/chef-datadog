@@ -169,7 +169,7 @@ describe 'datadog::dd-agent' do
       ) do |node|
         node.set['datadog'] = {
           'api_key' => 'somethingnotnil',
-          'agent_version' => '5.1.0-440'
+          'agent_version' => '1:5.1.0-440'
         }
         node.set['languages'] = { 'python' => { 'version' => '2.4' } }
       end.converge described_recipe
