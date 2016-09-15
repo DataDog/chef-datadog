@@ -365,6 +365,98 @@ describe 'datadog::dd-agent' do
     end
   end
 
+  context 'package downgrade' do
+    context 'left to default' do
+      context 'on debianoids' do
+        cached(:chef_run) do
+          ChefSpec::SoloRunner.new(
+            platform: 'ubuntu',
+            version: '12.04'
+          ) do |node|
+            node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
+            node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+          end.converge described_recipe
+        end
+
+        it_behaves_like 'common linux resources'
+        it_behaves_like 'debianoids no version set'
+
+        it 'does not allow downgrade' do
+          expect(chef_run).to install_apt_package('datadog-agent')
+            .with(options: nil)
+        end
+      end
+
+      context 'on rhellions' do
+        cached(:chef_run) do
+          ChefSpec::SoloRunner.new(
+            platform: 'centos',
+            version: '6.6'
+          ) do |node|
+            node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
+            node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+          end.converge described_recipe
+        end
+
+        it_behaves_like 'common linux resources'
+        it_behaves_like 'rhellions no version set'
+
+        it 'does not allow downgrade' do
+          expect(chef_run).to install_yum_package('datadog-agent')
+            .with(allow_downgrade: false)
+        end
+      end
+    end
+
+    context 'set to true' do
+      context 'on debianoids' do
+        cached(:chef_run) do
+          ChefSpec::SoloRunner.new(
+            platform: 'ubuntu',
+            version: '12.04'
+          ) do |node|
+            node.set['datadog'] = {
+              'api_key' => 'somethingnotnil',
+              'agent_allow_downgrade' => true
+            }
+            node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+          end.converge described_recipe
+        end
+
+        it_behaves_like 'common linux resources'
+        it_behaves_like 'debianoids no version set'
+
+        it 'allows downgrade' do
+          expect(chef_run).to install_apt_package('datadog-agent')
+            .with(options: '--force-yes')
+        end
+      end
+
+      context 'on rhellions' do
+        cached(:chef_run) do
+          ChefSpec::SoloRunner.new(
+            platform: 'centos',
+            version: '6.6'
+          ) do |node|
+            node.set['datadog'] = {
+              'api_key' => 'somethingnotnil',
+              'agent_allow_downgrade' => true
+            }
+            node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+          end.converge described_recipe
+        end
+
+        it_behaves_like 'common linux resources'
+        it_behaves_like 'rhellions no version set'
+
+        it 'allows downgrade' do
+          expect(chef_run).to install_yum_package('datadog-agent')
+            .with(allow_downgrade: true)
+        end
+      end
+    end
+  end
+
   context 'service action' do
     describe 'default' do
       cached(:chef_run) do
