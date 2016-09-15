@@ -39,10 +39,18 @@ else
     not_if 'apt-cache policy datadog-agent-base | grep "Installed: (none)"' if node['platform_family'] == 'debian'
   end
   # Install the regular package
-  package 'datadog-agent' do
-    version dd_agent_version
-    action node['datadog']['agent_package_action'] # default is :install
-    allow_downgrade node['datadog']['agent_allow_downgrade'] if %w(rhel fedora).include?(node['platform_family'])
-    options '--force-yes' if node['datadog']['agent_allow_downgrade'] && node['platform_family'] == 'debian'
+  case node['platform_family']
+  when 'debian'
+    apt_package 'datadog-agent' do
+      version dd_agent_version
+      action node['datadog']['agent_package_action'] # default is :install
+      options '--force-yes' if node['datadog']['agent_allow_downgrade']
+    end
+  when 'rhel', 'fedora'
+    yum_package 'datadog-agent' do
+      version dd_agent_version
+      action node['datadog']['agent_package_action'] # default is :install
+      allow_downgrade node['datadog']['agent_allow_downgrade']
+    end
   end
 end
