@@ -32,10 +32,7 @@ ENV['DATADOG_HOST'] = node['datadog']['url']
 chef_gem 'chef-handler-datadog' do # ~FC009
   action :install
   version node['datadog']['chef_handler_version']
-  # Chef 12 introduced `compile_time` - remove when Chef 11 is EOL.
-  compile_time true if respond_to?(:compile_time)
 end
-require 'chef/handler/datadog'
 
 # add web proxy from config support
 web_proxy = node['datadog']['web_proxy']
@@ -46,21 +43,36 @@ unless web_proxy['host'].nil?
   ENV['DATADOG_PROXY'] = proxy_url.to_s
 end
 
-handler_config = {
-  :api_key => node['datadog']['api_key'],
-  :application_key => node['datadog']['application_key'],
-  :use_ec2_instance_id => node['datadog']['use_ec2_instance_id'],
-  :tag_prefix => node['datadog']['tag_prefix']
-}
-
-unless node['datadog']['use_ec2_instance_id']
-  handler_config[:hostname] = node['datadog']['hostname']
-end
-
 # Create the handler to run at the end of the Chef execution
 chef_handler 'Chef::Handler::Datadog' do
+  def handler_config # rubocop:disable Metrics/AbcSize
+    config = {
+      :api_key => Chef::Datadog.api_key(node),
+      :application_key => Chef::Datadog.application_key(node),
+      :use_ec2_instance_id => node['datadog']['use_ec2_instance_id'],
+      :tag_prefix => node['datadog']['tag_prefix']
+    }
+    unless node['datadog']['use_ec2_instance_id']
+      config[:hostname] = node['datadog']['hostname']
+    end
+    config
+  end
+
+  require 'chef/handler/datadog'
   source 'chef/handler/datadog'
-  arguments [handler_config]
+  arguments(
+    if respond_to?(:lazy)
+      lazy { [handler_config] }
+    else
+      [handler_config]
+    end
+  )
   supports :report => true, :exception => true
-  action :nothing
-end.run_action(:enable) if node['datadog']['chef_handler_enable']
+  action(
+    if node['datadog']['chef_handler_enable']
+      :enable
+    else
+      :nothing
+    end
+  )
+end
