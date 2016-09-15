@@ -5,8 +5,12 @@ Changes
 
 * [FEATURE] Allow multiple enpoints/api_keys conf on Agent and handler, [#317][] [@degemer][]
 * [FEATURE] Add `kafka` template versioning, [#340][] [@degemer][]
+* [FEATURE] Add `gunicorn` support, [#355][] [@mlcooper][]
+* [FEATURE] Add attribute to allow agent downgrade, [#359][] [@olivielpeau][]
 * [OPTIMIZE] Fully disable dogstatsd when attribute is set to false/nil, [#348][] [@ccannell67][]
 * [OPTIMIZE] Use HTTPS for `yumrepo` when applicable, [#351][] [@aknarts][]
+* [BUGFIX] Fix agent version test when version contains an epoch, [#357][] [@olivielpeau][]
+* [BUGFIX] Fix `datadog-agent-base` removal guard logic on rhellions, [#358][] [@olivielpeau][]
 
 # 2.5.0 / 2016-08-08
 
@@ -444,6 +448,10 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#340]: https://github.com/DataDog/chef-datadog/issues/340
 [#348]: https://github.com/DataDog/chef-datadog/issues/348
 [#351]: https://github.com/DataDog/chef-datadog/issues/351
+[#355]: https://github.com/DataDog/chef-datadog/issues/355
+[#357]: https://github.com/DataDog/chef-datadog/issues/357
+[#358]: https://github.com/DataDog/chef-datadog/issues/358
+[#359]: https://github.com/DataDog/chef-datadog/issues/359
 [@ABrehm264]: https://github.com/ABrehm264
 [@DorianZaccaria]: https://github.com/DorianZaccaria
 [@EasyAsABC123]: https://github.com/EasyAsABC123
@@ -509,6 +517,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@mfischer-zd]: https://github.com/mfischer-zd
 [@miketheman]: https://github.com/miketheman
 [@mirceal]: https://github.com/mirceal
+[@mlcooper]: https://github.com/mlcooper
 [@mstepniowski]: https://github.com/mstepniowski
 [@mtougeron]: https://github.com/mtougeron
 [@nickmarden]: https://github.com/nickmarden
