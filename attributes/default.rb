@@ -26,6 +26,14 @@ default['datadog']['api_key'] = nil
 # Create an application key on the Account Settings page
 default['datadog']['application_key'] = nil
 
+# Use this attribute to send data to additional accounts
+# (agent and handler if enabled)
+# The key can be anything you want, 'prod' is used there as an example
+default['datadog']['extra_endpoints']['prod']['enabled'] = nil
+default['datadog']['extra_endpoints']['prod']['api_key'] = nil
+default['datadog']['extra_endpoints']['prod']['application_key'] = nil
+default['datadog']['extra_endpoints']['prod']['url'] = nil # optional
+
 # Add this prefix to all Chef tags sent to Datadog: "#{tag_prefix}#{tag}"
 # This makes it easy to group hosts in Datadog by their Chef tags, but might be counterproductive
 # if your Chef tags are already in the "#{tag_group}:#{value}" form.

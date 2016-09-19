@@ -46,11 +46,21 @@ unless web_proxy['host'].nil?
   ENV['DATADOG_PROXY'] = proxy_url.to_s
 end
 
+extra_endpoints = []
+node['datadog']['extra_endpoints'].each do |_, endpoint|
+  next unless endpoint['enabled']
+  endpoint = Mash.new(endpoint)
+  endpoint.delete('enabled')
+  extra_endpoints << endpoint
+end
+
 handler_config = {
   :api_key => node['datadog']['api_key'],
   :application_key => node['datadog']['application_key'],
   :use_ec2_instance_id => node['datadog']['use_ec2_instance_id'],
-  :tag_prefix => node['datadog']['tag_prefix']
+  :tag_prefix => node['datadog']['tag_prefix'],
+  :url => node['datadog']['url'],
+  :extra_endpoints => extra_endpoints
 }
 
 unless node['datadog']['use_ec2_instance_id']

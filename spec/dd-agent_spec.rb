@@ -296,6 +296,65 @@ describe 'datadog::dd-agent' do
           .with_content(/^tags: datacenter:us-foo$/)
       end
     end
+
+    context 'does accept extra endpoints' do
+      cached(:chef_run) do
+        ChefSpec::SoloRunner.new(
+          platform: 'ubuntu',
+          version: '12.04'
+        ) do |node|
+          node.set['datadog'] = {
+            'api_key' => 'something1',
+            'url' => 'https://app.example.com',
+            'extra_endpoints' => {
+              'example' => {
+                'enabled' => true,
+                'api_key' => 'something2',
+                'url' => 'https://app.datadoghq.com'
+              }
+            }
+          }
+          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+        end.converge described_recipe
+      end
+
+      it_behaves_like 'common linux resources'
+
+      it 'uses the multiples apikeys and urls' do
+        expect(chef_run).to render_file('/etc/dd-agent/datadog.conf')
+          .with_content(/^api_key: something1,something2$/)
+          .with_content(%r{^dd_url: https://app.example.com,https://app.datadoghq.com$})
+      end
+    end
+
+    context 'does accept extra api_key' do
+      cached(:chef_run) do
+        ChefSpec::SoloRunner.new(
+          platform: 'ubuntu',
+          version: '12.04'
+        ) do |node|
+          node.set['datadog'] = {
+            'api_key' => 'something1',
+            'url' => 'https://app.example.com',
+            'extra_endpoints' => {
+              'example' => {
+                'enabled' => true,
+                'api_key' => 'something2'
+              }
+            }
+          }
+          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+        end.converge described_recipe
+      end
+
+      it_behaves_like 'common linux resources'
+
+      it 'uses the multiples apikeys and urls' do
+        expect(chef_run).to render_file('/etc/dd-agent/datadog.conf')
+          .with_content(/^api_key: something1,something2$/)
+          .with_content(%r{^dd_url: https://app.example.com,https://app.example.com$})
+      end
+    end
   end
 
   context 'service action' do
