@@ -27,12 +27,24 @@ end
 shared_examples_for 'datadog-agent' do
   it_behaves_like 'common linux resources'
 
-  it 'installs the datadog-agent' do
-    expect(chef_run).to install_package 'datadog-agent'
+  it 'removes the datadog-agent-base package' do
+    expect(chef_run).to remove_package 'datadog-agent-base'
   end
+end
 
-  it 'does not install the datadog-agent-base package' do
-    expect(chef_run).not_to install_package 'datadog-agent-base'
+shared_examples_for 'debianoids datadog-agent' do
+  it_behaves_like 'datadog-agent'
+
+  it 'installs the datadog-agent' do
+    expect(chef_run).to install_apt_package 'datadog-agent'
+  end
+end
+
+shared_examples_for 'rhellions datadog-agent' do
+  it_behaves_like 'datadog-agent'
+
+  it 'installs the datadog-agent' do
+    expect(chef_run).to install_yum_package 'datadog-agent'
   end
 end
 

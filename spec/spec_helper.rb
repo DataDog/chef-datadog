@@ -20,8 +20,8 @@ RSpec.configure do |config|
   config.log_level = :error
 
   config.before do
-    stub_command('rpm -q datadog-agent-base')
-    stub_command('apt-cache policy datadog-agent-base | grep "Installed: (none)"')
+    stub_command('rpm -q datadog-agent-base').and_return(true)
+    stub_command('apt-cache policy datadog-agent-base | grep "Installed: (none)"').and_return(false)
   end
 end
 
