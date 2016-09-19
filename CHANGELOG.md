@@ -11,6 +11,7 @@ Changes
 * [OPTIMIZE] Use HTTPS for `yumrepo` when applicable, [#351][] [@aknarts][]
 * [BUGFIX] Fix agent version test when version contains an epoch, [#357][] [@olivielpeau][]
 * [BUGFIX] Fix `datadog-agent-base` removal guard logic on rhellions, [#358][] [@olivielpeau][]
+* [BUGFIX] Replace deprecated properties of `yum_repository`, [#361][] & [#362][] [@historus][] & [@olivielpeau][]
 
 # 2.5.0 / 2016-08-08
 
@@ -452,6 +453,8 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#357]: https://github.com/DataDog/chef-datadog/issues/357
 [#358]: https://github.com/DataDog/chef-datadog/issues/358
 [#359]: https://github.com/DataDog/chef-datadog/issues/359
+[#361]: https://github.com/DataDog/chef-datadog/issues/361
+[#362]: https://github.com/DataDog/chef-datadog/issues/362
 [@ABrehm264]: https://github.com/ABrehm264
 [@DorianZaccaria]: https://github.com/DorianZaccaria
 [@EasyAsABC123]: https://github.com/EasyAsABC123
@@ -495,6 +498,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@gregf]: https://github.com/gregf
 [@hartfordfive]: https://github.com/hartfordfive
 [@hilli]: https://github.com/hilli
+[@historus]: https://github.com/historus
 [@hydrant25]: https://github.com/hydrant25
 [@iancward]: https://github.com/iancward
 [@iashwash]: https://github.com/iashwash
