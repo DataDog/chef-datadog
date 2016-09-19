@@ -45,6 +45,6 @@ when 'rhel', 'fedora'
     proxy_username node['datadog']['yumrepo_proxy_username']
     proxy_password node['datadog']['yumrepo_proxy_password']
     gpgkey node['datadog']['yumrepo_gpgkey']
-    action :add
+    action :create
   end
 end

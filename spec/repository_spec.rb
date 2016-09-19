@@ -11,7 +11,7 @@ describe 'datadog::repository' do
       end
 
       it 'sets up a yum repo' do
-        expect(chef_run).to add_yum_repository('datadog').with(
+        expect(chef_run).to create_yum_repository('datadog').with(
           gpgkey: 'http://yum.datadoghq.com/DATADOG_RPM_KEY.public'
         )
       end
@@ -28,7 +28,7 @@ describe 'datadog::repository' do
       end
 
       it 'sets up a yum repo' do
-        expect(chef_run).to add_yum_repository('datadog').with(
+        expect(chef_run).to create_yum_repository('datadog').with(
           gpgkey: 'https://yum.datadoghq.com/DATADOG_RPM_KEY.public'
         )
       end
