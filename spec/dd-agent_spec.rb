@@ -33,7 +33,7 @@ end
 
 shared_examples_for 'rhellions repo' do
   it 'sets up a yum repo' do
-    expect(chef_run).to add_yum_repository('datadog')
+    expect(chef_run).to create_yum_repository('datadog')
   end
 end
 
