@@ -22,6 +22,12 @@ shared_examples_for 'datadog-agent-base' do
 end
 
 shared_examples_for 'debianoids repo' do
+  it 'installs new apt key' do
+    expect(chef_run).to run_execute('apt-key import key 382E94DE').with(
+      command: 'apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 A2923DFF56EDA6E76E55E492D3A80E30382E94DE'
+    )
+  end
+
   it 'sets up an apt repo' do
     expect(chef_run).to add_apt_repository('datadog')
   end

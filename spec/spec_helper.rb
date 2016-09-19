@@ -22,6 +22,7 @@ RSpec.configure do |config|
   config.before do
     stub_command('rpm -q datadog-agent-base').and_return(true)
     stub_command('apt-cache policy datadog-agent-base | grep "Installed: (none)"').and_return(false)
+    stub_command('apt-key list | grep 382E94DE').and_return(false)
   end
 end
 

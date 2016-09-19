@@ -13,3 +13,8 @@ describe command('/etc/init.d/datadog-agent info'), :if => os[:family] != 'windo
   its(:stdout) { should contain 'OK' }
   its(:stdout) { should_not contain 'ERROR' }
 end
+
+describe command('apt-key list'), :if => ['debian', 'ubuntu'].include?(os[:family]) do
+  its(:exit_status) { should eq 0 }
+  its(:stdout) { should contain '382E94DE' }
+end
