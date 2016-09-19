@@ -40,7 +40,7 @@ when 'rhel', 'fedora'
   yum_repository 'datadog' do
     name 'datadog'
     description 'datadog'
-    url node['datadog']['yumrepo']
+    baseurl node['datadog']['yumrepo']
     proxy node['datadog']['yumrepo_proxy']
     proxy_username node['datadog']['yumrepo_proxy_username']
     proxy_password node['datadog']['yumrepo_proxy_password']
