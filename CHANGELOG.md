@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 2.6.0 / Unreleased
+# 2.6.0 / 2016-09-20
 
 * [FEATURE] Allow multiple enpoints/api_keys conf on Agent and handler, [#317][] [@degemer][]
 * [FEATURE] Add `kafka` template versioning, [#340][] [@degemer][]
