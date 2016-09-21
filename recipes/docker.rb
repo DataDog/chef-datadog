@@ -36,6 +36,12 @@ include_recipe 'datadog::dd-agent'
 #     }
 #   ]
 
+group 'docker' do
+  action :manage
+  append true
+  members 'dd-agent'
+end
+
 datadog_monitor 'docker' do
   init_config node['datadog']['docker']['init_config']
   instances node['datadog']['docker']['instances']
