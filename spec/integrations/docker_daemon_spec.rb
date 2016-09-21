@@ -102,6 +102,8 @@ describe 'datadog::docker_daemon' do
 
   it { is_expected.to add_datadog_monitor('docker_daemon') }
 
+  it { is_expected.to manage_group('docker').with(append: true, members: ['dd-agent']) }
+
   it 'renders expected YAML config file' do
     expect(chef_run).to render_file('/etc/dd-agent/conf.d/docker_daemon.yaml').with_content { |content|
       expect(YAML.load(content).to_json).to be_json_eql(YAML.load(expected_yaml).to_json)
