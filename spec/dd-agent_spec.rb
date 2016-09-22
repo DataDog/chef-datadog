@@ -38,6 +38,17 @@ shared_examples_for 'debianoids repo' do
 end
 
 shared_examples_for 'rhellions repo' do
+  it 'installs gnupg' do
+    expect(chef_run).to install_package('gnupg')
+  end
+
+  it 'downloads and imports the new RPM key' do
+    expect(chef_run).to create_remote_file('DATADOG_RPM_KEY_E09422B3.public').with(path: '/var/chef/cache/DATADOG_RPM_KEY_E09422B3.public')
+    expect(chef_run).to run_execute('rpm-import datadog key e09422b3').with(
+      command: 'rpm --import /var/chef/cache/DATADOG_RPM_KEY_E09422B3.public'
+    )
+  end
+
   it 'sets up a yum repo' do
     expect(chef_run).to create_yum_repository('datadog')
   end
