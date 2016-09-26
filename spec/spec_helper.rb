@@ -32,6 +32,8 @@ RSpec.configure do |config|
     " | grep 'A4C0 B90D 7443 CF6E 4E8A  A341 F106 8E14 E094 22B3'").and_return(true)
     stub_command('rpm -q gpg-pubkey-e09422b3').and_return(false)
   end
+
+  Ohai::Config[:log_level] = :warn
 end
 
 ChefSpec::Coverage.start!
