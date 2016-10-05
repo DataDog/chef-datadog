@@ -10,7 +10,7 @@ include_recipe 'datadog::dd-agent'
 #       'name' 'prod_jmx_app',
 #       'conf' => [
 #         'include' => {
-#           'attributes' => ['Capacity', 'Used'],
+#           'attribute' => ['Capacity', 'Used'],
 #           'bean_name' => 'com.datadoghq.test:type=BeanType,tag1=my_bean_name',
 #           'domain' => 'com.datadoghq.test'
 #         }
