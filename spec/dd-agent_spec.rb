@@ -266,8 +266,13 @@ describe 'datadog::dd-agent' do
 
       temp_file = ::File.join('/tmp', 'ddagent-cli.msi')
 
+      # remote_file source gets converted to an array, so we need to do
+      # some tricky things to be able to regex against it
+      # Relevant: http://stackoverflow.com/a/12325983
+      # But we should probably assert the full default attribute somewhere...
       it 'installs agent 4.4.0' do
-        expect(chef_run.remote_file(temp_file).source).to match(/.+ddagent-cli-4.4.0.msi/)
+        expect(chef_run.remote_file(temp_file).source.to_s)
+          .to match(/ddagent-cli-4.4.0.msi/)
       end
     end
 
