@@ -26,6 +26,14 @@ default['datadog']['api_key'] = nil
 # Create an application key on the Account Settings page
 default['datadog']['application_key'] = nil
 
+# Use this attribute to send data to additional accounts
+# (agent and handler if enabled)
+# The key can be anything you want, 'prod' is used there as an example
+default['datadog']['extra_endpoints']['prod']['enabled'] = nil
+default['datadog']['extra_endpoints']['prod']['api_key'] = nil
+default['datadog']['extra_endpoints']['prod']['application_key'] = nil
+default['datadog']['extra_endpoints']['prod']['url'] = nil # optional
+
 # Add this prefix to all Chef tags sent to Datadog: "#{tag_prefix}#{tag}"
 # This makes it easy to group hosts in Datadog by their Chef tags, but might be counterproductive
 # if your Chef tags are already in the "#{tag_group}:#{value}" form.
@@ -76,7 +84,7 @@ yum_protocol =
 default['datadog']['installrepo'] = true
 default['datadog']['aptrepo'] = 'http://apt.datadoghq.com'
 default['datadog']['aptrepo_dist'] = 'stable'
-default['datadog']['yumrepo'] = "http://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/"
+default['datadog']['yumrepo'] = "#{yum_protocol}://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/"
 default['datadog']['yumrepo_gpgkey'] = "#{yum_protocol}://yum.datadoghq.com/DATADOG_RPM_KEY.public"
 default['datadog']['yumrepo_proxy'] = nil
 default['datadog']['yumrepo_proxy_username'] = nil
@@ -118,6 +126,10 @@ default['datadog']['agent_version'] = nil
 # Agent package action
 # Allow override with `upgrade` to get latest (Linux only)
 default['datadog']['agent_package_action'] = 'install'
+
+# Allow downgrades of the agent (Linux only)
+# Note: on apt-based platforms, this will use the `--force-yes` option on the apt-get command. Use with caution.
+default['datadog']['agent_allow_downgrade'] = false
 
 # Chef handler version
 default['datadog']['chef_handler_version'] = nil

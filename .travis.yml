@@ -1,5 +1,10 @@
 sudo: false
 
+branches:
+  only:
+    - master
+    - /^\d+\.\d+\.x$/ # release forked patches branch
+
 addons:
   apt:
     sources:
@@ -15,6 +20,7 @@ before_script:
   - eval "$(/opt/chefdk/bin/chef shell-init bash)"
   - chef gem install coveralls -v '~> 0.8.13'
   - chef gem install json_spec -v '~> 1.1.4'
+  - chef gem install chef-handler-datadog
 
 script:
   - chef --version

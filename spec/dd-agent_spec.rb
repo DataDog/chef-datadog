@@ -16,10 +16,12 @@ shared_examples_for 'datadog-agent-base' do
 
   it 'does not install the datadog-agent package' do
     expect(chef_run).not_to install_package 'datadog-agent'
+    expect(chef_run).not_to install_apt_package 'datadog-agent'
+    expect(chef_run).not_to install_yum_package 'datadog-agent'
   end
 end
 
-shared_examples_for 'debianoids' do
+shared_examples_for 'debianoids repo' do
   it 'sets up an apt repo' do
     expect(chef_run).to add_apt_repository('datadog')
   end
@@ -29,16 +31,22 @@ shared_examples_for 'debianoids' do
   end
 end
 
-shared_examples_for 'rhellions' do
+shared_examples_for 'rhellions repo' do
   it 'sets up a yum repo' do
-    expect(chef_run).to add_yum_repository('datadog')
+    expect(chef_run).to create_yum_repository('datadog')
   end
 end
 
-shared_examples_for 'no version set' do
+shared_examples_for 'debianoids no version set' do
   it_behaves_like 'common linux resources'
 
-  it_behaves_like 'datadog-agent'
+  it_behaves_like 'debianoids datadog-agent'
+end
+
+shared_examples_for 'rhellions no version set' do
+  it_behaves_like 'common linux resources'
+
+  it_behaves_like 'rhellions datadog-agent'
 end
 
 shared_examples_for 'version set below 4.x' do
@@ -66,8 +74,8 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      it_behaves_like 'debianoids'
-      it_behaves_like 'no version set'
+      it_behaves_like 'debianoids repo'
+      it_behaves_like 'debianoids no version set'
     end
 
     context 'on debian-family w/non-numeric python version string' do
@@ -81,8 +89,8 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      it_behaves_like 'debianoids'
-      it_behaves_like 'no version set'
+      it_behaves_like 'debianoids repo'
+      it_behaves_like 'debianoids no version set'
     end
 
     context 'on debian-family with older python' do
@@ -96,8 +104,8 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      it_behaves_like 'debianoids'
-      it_behaves_like 'no version set'
+      it_behaves_like 'debianoids repo'
+      it_behaves_like 'debianoids no version set'
     end
 
     context 'on RedHat-family distro above 6.x' do
@@ -111,8 +119,8 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      it_behaves_like 'rhellions'
-      it_behaves_like 'no version set'
+      it_behaves_like 'rhellions repo'
+      it_behaves_like 'rhellions no version set'
     end
 
     context 'on CentOS 5.8 distro' do
@@ -126,8 +134,8 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      it_behaves_like 'rhellions'
-      it_behaves_like 'no version set'
+      it_behaves_like 'rhellions repo'
+      it_behaves_like 'rhellions no version set'
     end
 
     context 'on Fedora distro' do
@@ -141,8 +149,8 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      it_behaves_like 'rhellions'
-      it_behaves_like 'no version set'
+      it_behaves_like 'rhellions repo'
+      it_behaves_like 'rhellions no version set'
     end
 
     context 'on Windows' do
@@ -169,14 +177,14 @@ describe 'datadog::dd-agent' do
       ) do |node|
         node.set['datadog'] = {
           'api_key' => 'somethingnotnil',
-          'agent_version' => '5.1.0-440'
+          'agent_version' => '1:5.1.0-440'
         }
         node.set['languages'] = { 'python' => { 'version' => '2.4' } }
       end.converge described_recipe
     end
 
-    it_behaves_like 'debianoids'
-    it_behaves_like 'no version set'
+    it_behaves_like 'debianoids repo'
+    it_behaves_like 'debianoids no version set'
   end
 
   context 'version 4.x is set' do
@@ -193,7 +201,7 @@ describe 'datadog::dd-agent' do
       end.converge described_recipe
     end
 
-    it_behaves_like 'debianoids'
+    it_behaves_like 'debianoids repo'
     it_behaves_like 'version set below 4.x'
   end
 
@@ -209,8 +217,8 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      it_behaves_like 'debianoids'
-      it_behaves_like 'no version set'
+      it_behaves_like 'debianoids repo'
+      it_behaves_like 'debianoids no version set'
     end
 
     context 'override with :upgrade' do
@@ -225,10 +233,10 @@ describe 'datadog::dd-agent' do
       end
 
       it 'upgrades the datadog-agent package' do
-        expect(chef_run).to upgrade_package('datadog-agent')
+        expect(chef_run).to upgrade_apt_package('datadog-agent')
       end
 
-      it_behaves_like 'debianoids'
+      it_behaves_like 'debianoids repo'
     end
 
     context 'allows a string for tags' do
@@ -294,6 +302,157 @@ describe 'datadog::dd-agent' do
       it 'sets tags from the tags attribute' do
         expect(chef_run).to render_file('/etc/dd-agent/datadog.conf')
           .with_content(/^tags: datacenter:us-foo$/)
+      end
+    end
+
+    context 'does accept extra endpoints' do
+      cached(:chef_run) do
+        ChefSpec::SoloRunner.new(
+          platform: 'ubuntu',
+          version: '12.04'
+        ) do |node|
+          node.set['datadog'] = {
+            'api_key' => 'something1',
+            'url' => 'https://app.example.com',
+            'extra_endpoints' => {
+              'example' => {
+                'enabled' => true,
+                'api_key' => 'something2',
+                'url' => 'https://app.datadoghq.com'
+              }
+            }
+          }
+          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+        end.converge described_recipe
+      end
+
+      it_behaves_like 'common linux resources'
+
+      it 'uses the multiples apikeys and urls' do
+        expect(chef_run).to render_file('/etc/dd-agent/datadog.conf')
+          .with_content(/^api_key: something1,something2$/)
+          .with_content(%r{^dd_url: https://app.example.com,https://app.datadoghq.com$})
+      end
+    end
+
+    context 'does accept extra api_key' do
+      cached(:chef_run) do
+        ChefSpec::SoloRunner.new(
+          platform: 'ubuntu',
+          version: '12.04'
+        ) do |node|
+          node.set['datadog'] = {
+            'api_key' => 'something1',
+            'url' => 'https://app.example.com',
+            'extra_endpoints' => {
+              'example' => {
+                'enabled' => true,
+                'api_key' => 'something2'
+              }
+            }
+          }
+          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+        end.converge described_recipe
+      end
+
+      it_behaves_like 'common linux resources'
+
+      it 'uses the multiples apikeys and urls' do
+        expect(chef_run).to render_file('/etc/dd-agent/datadog.conf')
+          .with_content(/^api_key: something1,something2$/)
+          .with_content(%r{^dd_url: https://app.example.com,https://app.example.com$})
+      end
+    end
+  end
+
+  context 'package downgrade' do
+    context 'left to default' do
+      context 'on debianoids' do
+        cached(:chef_run) do
+          ChefSpec::SoloRunner.new(
+            platform: 'ubuntu',
+            version: '12.04'
+          ) do |node|
+            node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
+            node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+          end.converge described_recipe
+        end
+
+        it_behaves_like 'common linux resources'
+        it_behaves_like 'debianoids no version set'
+
+        it 'does not allow downgrade' do
+          expect(chef_run).to install_apt_package('datadog-agent')
+            .with(options: nil)
+        end
+      end
+
+      context 'on rhellions' do
+        cached(:chef_run) do
+          ChefSpec::SoloRunner.new(
+            platform: 'centos',
+            version: '6.6'
+          ) do |node|
+            node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
+            node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+          end.converge described_recipe
+        end
+
+        it_behaves_like 'common linux resources'
+        it_behaves_like 'rhellions no version set'
+
+        it 'does not allow downgrade' do
+          expect(chef_run).to install_yum_package('datadog-agent')
+            .with(allow_downgrade: false)
+        end
+      end
+    end
+
+    context 'set to true' do
+      context 'on debianoids' do
+        cached(:chef_run) do
+          ChefSpec::SoloRunner.new(
+            platform: 'ubuntu',
+            version: '12.04'
+          ) do |node|
+            node.set['datadog'] = {
+              'api_key' => 'somethingnotnil',
+              'agent_allow_downgrade' => true
+            }
+            node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+          end.converge described_recipe
+        end
+
+        it_behaves_like 'common linux resources'
+        it_behaves_like 'debianoids no version set'
+
+        it 'allows downgrade' do
+          expect(chef_run).to install_apt_package('datadog-agent')
+            .with(options: '--force-yes')
+        end
+      end
+
+      context 'on rhellions' do
+        cached(:chef_run) do
+          ChefSpec::SoloRunner.new(
+            platform: 'centos',
+            version: '6.6'
+          ) do |node|
+            node.set['datadog'] = {
+              'api_key' => 'somethingnotnil',
+              'agent_allow_downgrade' => true
+            }
+            node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+          end.converge described_recipe
+        end
+
+        it_behaves_like 'common linux resources'
+        it_behaves_like 'rhellions no version set'
+
+        it 'allows downgrade' do
+          expect(chef_run).to install_yum_package('datadog-agent')
+            .with(allow_downgrade: true)
+        end
       end
     end
   end

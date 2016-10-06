@@ -4,7 +4,7 @@ maintainer_email 'package@datadoghq.com'
 license          'Apache 2.0'
 description      'Installs/Configures datadog components'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '2.5.0'
+version          '2.6.0'
 source_url       'https://github.com/DataDog/chef-datadog' if respond_to? :source_url
 issues_url       'https://github.com/DataDog/chef-datadog/issues' if respond_to? :issues_url
 
@@ -24,7 +24,7 @@ end
 depends          'apt' # We recommend '>= 2.1.0'. See CHANGELOG.md for details
 depends          'chef_handler', '~> 1.1' # We recommend '~> 1.3' with Chef < 12. See CHANGELOG.md for details
 depends          'windows' # We recommend '< 1.39.0' if running Chef >= 12.6. See README.md for details
-depends          'yum'
+depends          'yum', '>= 3.0' # Use '~> 3.0' with Chef < 12
 
 suggests         'sudo' # ~FC052
 
