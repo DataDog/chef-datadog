@@ -7,10 +7,12 @@ instances:
       <% Array(instance['queues']).each do |queue| -%>
       - <%= queue %>
       <% end -%>
+    <% if instance.key?('tags') -%>
     tags:
       <% Array(instance['tags']).each do |tag| -%>
       - <%= tag %>
       <% end -%>
+    <% end -%>
   <% end -%>
 
 # Postfix check does not require any init_config
