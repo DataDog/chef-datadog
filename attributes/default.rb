@@ -218,6 +218,11 @@ default['datadog']['statsd_metric_namespace'] = nil
 default['datadog']['histogram_aggregates'] = 'max, median, avg, count'
 default['datadog']['histogram_percentiles'] = '0.95'
 
+# extra config options
+# If an agent is released with a new config option which is not yet supported by this cookbook
+# you can use this attribute to set it. Will be ignored if nil.
+default['datadog']['extra_config']['forwarder_timeout'] = nil
+
 # extra_packages to install
 default['datadog']['extra_packages'] = {}
 

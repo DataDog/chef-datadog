@@ -131,7 +131,6 @@ if node['datadog']['legacy_integrations']
 -%>
 <%= description %>
 <%
-    ## Todo: add guardrails against other valid config directives
       int_hash['config'].each do |k,v|
 -%>
 <%= k %>: <%= v %>
@@ -141,3 +140,12 @@ if node['datadog']['legacy_integrations']
   end
 end
 -%>
+
+<% if ! @extra_config.empty? -%>
+# ========================================================================== #
+# Other config options
+# ========================================================================== #
+  <% @extra_config.each do |k, v| -%>
+<%= k %>: <%= v %>
+  <% end -%>
+<% end -%>

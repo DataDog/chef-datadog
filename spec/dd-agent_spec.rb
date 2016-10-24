@@ -483,6 +483,38 @@ describe 'datadog::dd-agent' do
     end
   end
 
+  context 'does accept extra config options' do
+    cached(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        platform: 'ubuntu',
+        version: '12.04'
+      ) do |node|
+        node.set['datadog'] = {
+          'api_key' => 'something1',
+          'url' => 'https://app.example.com',
+          'extra_config' => {
+            'example_key' => 'example_value',
+            'false_key' => false,
+            'no_example_key' => nil
+          }
+        }
+        node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+      end.converge described_recipe
+    end
+
+    it_behaves_like 'common linux resources'
+
+    it 'uses the multiples apikeys and urls' do
+      expect(chef_run).to render_file('/etc/dd-agent/datadog.conf')
+        .with_content(/^example_key: example_value$/)
+        .with_content(/^false_key: false$/)
+        .with_content(/^# Other config options$/)
+
+      expect(chef_run).to_not render_file('/etc/dd-agent/datadog.conf')
+        .with_content(/^no_example_key:/)
+    end
+  end
+
   context 'package downgrade' do
     context 'left to default' do
       context 'on debianoids' do
