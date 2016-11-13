@@ -106,3 +106,189 @@ describe 'datadog::postgres' do
     }
   end
 end
+
+describe 'datadog::postgres' do
+  context 'default settings' do
+    expected_yaml = <<-EOF
+      instances:
+      - host: localhost
+        port: 5432
+        dbname: default_settings
+      init_config:
+    EOF
+
+    cached(:chef_run) do
+      ChefSpec::SoloRunner.new(step_into: ['datadog_monitor']) do |node|
+        node.automatic['languages'] = { python: { version: '2.7.2' } }
+
+        node.set['datadog'] = {
+          api_key: 'someapikey',
+          postgres: {
+            instances: [
+              {
+                dbname: 'default_settings',
+                server: 'localhost'
+              }
+            ]
+          }
+        }
+      end.converge(described_recipe)
+    end
+
+    subject { chef_run }
+
+    it_behaves_like 'datadog-agent'
+
+    it { is_expected.to include_recipe('datadog::dd-agent') }
+
+    it { is_expected.to add_datadog_monitor('postgres') }
+
+    it 'renders expected YAML config file' do
+      expect(chef_run).to render_file('/etc/dd-agent/conf.d/postgres.yaml').with_content { |content|
+        expect(YAML.load(content).to_json).to be_json_eql(YAML.load(expected_yaml).to_json)
+      }
+    end
+  end
+
+  context 'relations' do
+    expected_yaml = <<-EOF
+      instances:
+      - host: localhost
+        port: 5432
+        dbname: relations_settings
+        relations:
+          - my_table
+          - my_other_table
+          - relation_name: another_table
+            schemas:
+            - public
+            - prod
+      init_config:
+    EOF
+
+    cached(:chef_run) do
+      ChefSpec::SoloRunner.new(step_into: ['datadog_monitor']) do |node|
+        node.automatic['languages'] = { python: { version: '2.7.2' } }
+
+        node.set['datadog'] = {
+          api_key: 'someapikey',
+          postgres: {
+            instances: [
+              {
+                dbname: 'relations_settings',
+                host: 'localhost',
+                relations: [
+                  'my_table',
+                  'my_other_table',
+                  relation_name: 'another_table', schemas: ['public', 'prod']
+                ]
+              }
+            ]
+          }
+        }
+      end.converge(described_recipe)
+    end
+
+    subject { chef_run }
+
+    it_behaves_like 'datadog-agent'
+
+    it { is_expected.to include_recipe('datadog::dd-agent') }
+
+    it { is_expected.to add_datadog_monitor('postgres') }
+
+    it 'renders expected YAML config file' do
+      expect(chef_run).to render_file('/etc/dd-agent/conf.d/postgres.yaml').with_content { |content|
+        expect(YAML.load(content).to_json).to be_json_eql(YAML.load(expected_yaml).to_json)
+      }
+    end
+  end
+
+  context 'descriptors' do
+    expected_yaml = <<-EOF
+      instances:
+      - host: localhost
+        port: 5432
+        dbname: descriptors_settings
+        custom_metrics:
+          - descriptors:
+              - ['query_column1', 'tag1']
+              - ['query_column2', 'tag2']
+            metrics:
+              field1:
+                - postgresql.field1
+                - GAUGE
+              field2:
+                - postgresql.field2
+                - MONOTONIC
+            query: SELECT query_column1, query_column2, %s FROM foo
+            relation: true
+          - descriptors: []
+            metrics:
+              field3:
+                - postgresql.field3
+                - GAUGE
+              field4:
+                - postgresql.field4
+                - MONOTONIC
+            query: SELECT three, four, %s FROM foo
+            relation: false
+      init_config:
+    EOF
+
+    cached(:chef_run) do
+      ChefSpec::SoloRunner.new(step_into: ['datadog_monitor']) do |node|
+        node.automatic['languages'] = { python: { version: '2.7.2' } }
+
+        node.set['datadog'] = {
+          api_key: 'someapikey',
+          postgres: {
+            instances: [
+              {
+                dbname: 'descriptors_settings',
+                host: 'localhost',
+                'custom_metrics' => [
+                  {
+                    'descriptors' => [
+                      ['query_column1', 'tag1'],
+                      ['query_column2', 'tag2']
+                    ],
+                    'metrics' => {
+                      'field1' => ['postgresql.field1', 'GAUGE'],
+                      'field2' => ['postgresql.field2', 'MONOTONIC']
+                    },
+                    'query' => 'SELECT query_column1, query_column2, %s FROM foo',
+                    'relation' => true
+                  },
+                  {
+                    'descriptors' => [],
+                    'metrics' => {
+                      'field3' => ['postgresql.field3', 'GAUGE'],
+                      'field4' => ['postgresql.field4', 'MONOTONIC']
+                    },
+                    'query' => 'SELECT three, four, %s FROM foo',
+                    'relation' => false
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      end.converge(described_recipe)
+    end
+
+    subject { chef_run }
+
+    it_behaves_like 'datadog-agent'
+
+    it { is_expected.to include_recipe('datadog::dd-agent') }
+
+    it { is_expected.to add_datadog_monitor('postgres') }
+
+    it 'renders expected YAML config file' do
+      expect(chef_run).to render_file('/etc/dd-agent/conf.d/postgres.yaml').with_content { |content|
+        expect(YAML.load(content).to_json).to be_json_eql(YAML.load(expected_yaml).to_json)
+      }
+    end
+  end
+end
