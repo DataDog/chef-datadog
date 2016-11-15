@@ -1,6 +1,16 @@
 Changes
 =======
 
+# 2.7.0 / Unreleased
+
+* [FEATURE] Add `dd-agent` user to `docker` group in `docker`/`docker_daemon` recipes, [#364][] [@jvrplmlmn][]
+* [FEATURE] Add support for `system_swap` check, [#372][] [@iancward][]
+* [FEATURE] Add ability to pin datadog-agent versions per platform, [#368][] [@mlcooper][]
+* [FEATURE] Add support for any config option in `datadog.conf`, [#375][] [@degemer][]
+* [FEATURE] Trust new APT and RPM keys, [#365][] [@olivielpeau][]
+* [OPTIMIZE] Simplify `postgres.yaml` template, [#380][] [@miketheman][]
+* [BUGFIX] Allow instances with no `tags` in `postfix` template, [#374][] [@nyanshak][]
+
 # 2.6.0 / 2016-09-20
 
 * [FEATURE] Allow multiple enpoints/api_keys conf on Agent and handler, [#317][] [@degemer][]
@@ -455,6 +465,13 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#359]: https://github.com/DataDog/chef-datadog/issues/359
 [#361]: https://github.com/DataDog/chef-datadog/issues/361
 [#362]: https://github.com/DataDog/chef-datadog/issues/362
+[#364]: https://github.com/DataDog/chef-datadog/issues/364
+[#365]: https://github.com/DataDog/chef-datadog/issues/365
+[#368]: https://github.com/DataDog/chef-datadog/issues/368
+[#372]: https://github.com/DataDog/chef-datadog/issues/372
+[#374]: https://github.com/DataDog/chef-datadog/issues/374
+[#375]: https://github.com/DataDog/chef-datadog/issues/375
+[#380]: https://github.com/DataDog/chef-datadog/issues/380
 [@ABrehm264]: https://github.com/ABrehm264
 [@DorianZaccaria]: https://github.com/DorianZaccaria
 [@EasyAsABC123]: https://github.com/EasyAsABC123
@@ -513,6 +530,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@jridgewell]: https://github.com/jridgewell
 [@jtimberman]: https://github.com/jtimberman
 [@juliandunn]: https://github.com/juliandunn
+[@jvrplmlmn]: https://github.com/jvrplmlmn
 [@khouse]: https://github.com/khouse
 [@kindlyseth]: https://github.com/kindlyseth
 [@kurochan]: https://github.com/kurochan
@@ -526,6 +544,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@mtougeron]: https://github.com/mtougeron
 [@nickmarden]: https://github.com/nickmarden
 [@nkts]: https://github.com/nkts
+[@nyanshak]: https://github.com/nyanshak
 [@olivielpeau]: https://github.com/olivielpeau
 [@opsline-radek]: https://github.com/opsline-radek
 [@phlipper]: https://github.com/phlipper
