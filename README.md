@@ -41,6 +41,16 @@ The following Opscode cookbooks are dependencies:
 * `windows`
 * `yum`
 
+**Note for Chef 11 users**: please use these additional dependency version contraints for compatibility with Chef 11:
+
+```
+cookbook 'apt', '< 4.0'
+cookbook 'chef_handler', '< 2.0'
+cookbook 'windows', '< 2.0'
+cookbook 'yum', '~> 3.0'
+```
+
+(in Berkshelf/Librarian format)
 
 Recipes
 =======
