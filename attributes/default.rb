@@ -91,6 +91,10 @@ default['datadog']['yumrepo_proxy_username'] = nil
 default['datadog']['yumrepo_proxy_password'] = nil
 default['datadog']['windows_agent_url'] = 'https://s3.amazonaws.com/ddagent-windows-stable/'
 
+# Location of additional rpm gpgkey to import (with signature `e09422b3`). In the future the rpm packages
+# of the Agent will be signed with this key.
+default['datadog']['yumrepo_gpgkey_new'] = "#{yum_protocol}://yum.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public"
+
 # Agent installer checksum
 # Expected checksum to validate correct agent installer is downloaded (Windows only)
 default['datadog']['windows_agent_checksum'] = nil
