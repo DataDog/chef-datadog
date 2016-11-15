@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 2.7.0 / Unreleased
+# 2.7.0 / 2016-11-15
 
 * [FEATURE] Add `dd-agent` user to `docker` group in `docker`/`docker_daemon` recipes, [#364][] [@jvrplmlmn][]
 * [FEATURE] Add support for `system_swap` check, [#372][] [@iancward][]
