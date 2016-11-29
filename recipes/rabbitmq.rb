@@ -6,13 +6,15 @@ include_recipe 'datadog::dd-agent'
 # If you are running multiple rabbitmq instances on the same machine
 # list them all as hashes.
 #
-# node.datadog.rabbitmq.instances = [
-#                                    {
-#                                      "api_url" => "http://localhost:15672/api/",
-#                                      "user" => "guest",
-#                                      "pass" => "guest"
-#                                    }
-#                                   ]
+# node.datadog.rabbitmq.instances =
+#   [
+#     {
+#       "api_url" => "http://localhost:15672/api/",
+#       "user" => "guest",
+#       "pass" => "guest",
+#       "ssl_verify" => "true"
+#     }
+#   ]
 
 datadog_monitor 'rabbitmq' do
   instances node['datadog']['rabbitmq']['instances']
