@@ -6,6 +6,7 @@ describe 'datadog::rabbitmq' do
       - rabbitmq_api_url: http://localhost:15672/api/
         rabbitmq_user: guest
         rabbitmq_pass: guest
+        ssl_verify: true
         tags:
           - optional_tag1
           - optional_tag2
