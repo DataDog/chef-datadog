@@ -29,6 +29,12 @@ create_dd_check_tags: <%= node['datadog']['create_dd_check_tags'] %>
 <% if node['datadog']['collect_ec2_tags'] -%>
 collect_ec2_tags: <%= node['datadog']['collect_ec2_tags'] %>
 <% end -%>
+<% if node['datadog']['collect_instance_metadata'] -%>
+collect_instance_metadata: <%= node['datadog']['collect_instance_metadata'] %>
+<% end -%>
+<% if node['datadog']['collect_security_groups'] -%>
+collect_security_groups: <%= node['datadog']['collect_security_groups'] %>
+<% end -%>
 
 <% if node['datadog']['web_proxy']['host'] -%>
 proxy_host: <%= node['datadog']['web_proxy']['host'] %>
