@@ -42,7 +42,7 @@ directory node['datadog']['config_dir'] do
   else
     owner 'dd-agent'
     group 'root'
-    mode 0755
+    mode 0o755
   end
 end
 
@@ -79,7 +79,7 @@ template agent_config_file do
   else
     owner 'dd-agent'
     group 'root'
-    mode 0640
+    mode 0o640
   end
   variables(
     :api_keys => api_keys,
