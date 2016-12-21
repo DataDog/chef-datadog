@@ -91,6 +91,10 @@ default['datadog']['yumrepo_proxy_username'] = nil
 default['datadog']['yumrepo_proxy_password'] = nil
 default['datadog']['windows_agent_url'] = 'https://s3.amazonaws.com/ddagent-windows-stable/'
 
+# Location of additional rpm gpgkey to import (with signature `e09422b3`). In the future the rpm packages
+# of the Agent will be signed with this key.
+default['datadog']['yumrepo_gpgkey_new'] = "#{yum_protocol}://yum.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public"
+
 # Agent installer checksum
 # Expected checksum to validate correct agent installer is downloaded (Windows only)
 default['datadog']['windows_agent_checksum'] = nil
@@ -121,6 +125,14 @@ end
 
 # Agent Version
 # Default of `nil` will install latest version. On Windows, this will also upgrade to latest
+# This attribute accepts either a `string` or `hash` with the key as platform_name and value of package version
+# In the case of fedora use platform_name of rhel
+# Example:
+# default['datadog']['agent_version'] = {
+#  'rhel' => '5.9.0-1',
+#  'windows' => '5.9.0',
+#  'debian' => '1:5.9.0-1'
+# }
 default['datadog']['agent_version'] = nil
 
 # Agent package action
@@ -209,6 +221,11 @@ default['datadog']['statsd_metric_namespace'] = nil
 # Histogram settings
 default['datadog']['histogram_aggregates'] = 'max, median, avg, count'
 default['datadog']['histogram_percentiles'] = '0.95'
+
+# extra config options
+# If an agent is released with a new config option which is not yet supported by this cookbook
+# you can use this attribute to set it. Will be ignored if nil.
+default['datadog']['extra_config']['forwarder_timeout'] = nil
 
 # extra_packages to install
 default['datadog']['extra_packages'] = {}

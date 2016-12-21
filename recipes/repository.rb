@@ -25,6 +25,13 @@ when 'debian'
     action :install
   end
 
+  # Trust new APT key
+  execute 'apt-key import key 382E94DE' do
+    command 'apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 A2923DFF56EDA6E76E55E492D3A80E30382E94DE'
+    not_if 'apt-key list | grep 382E94DE'
+  end
+
+  # Add APT repository
   apt_repository 'datadog' do
     keyserver 'hkp://keyserver.ubuntu.com:80'
     key 'C7A7DA52'
@@ -37,6 +44,30 @@ when 'debian'
 when 'rhel', 'fedora'
   include_recipe 'yum'
 
+  # Import new RPM key
+  if node['datadog']['yumrepo_gpgkey_new']
+    # gnupg is required to check the downloaded key's fingerprint
+    package 'gnupg' do
+      action :install
+    end
+
+    # Download new RPM key
+    key_local_path = ::File.join(Chef::Config[:file_cache_path], 'DATADOG_RPM_KEY_E09422B3.public')
+    remote_file 'DATADOG_RPM_KEY_E09422B3.public' do
+      path key_local_path
+      source node['datadog']['yumrepo_gpgkey_new']
+    end
+
+    # Import key if fingerprint matches
+    execute 'rpm-import datadog key e09422b3' do
+      command "rpm --import #{key_local_path}"
+      not_if 'rpm -q gpg-pubkey-e09422b3' # (key already imported)
+      only_if "gpg --dry-run --quiet --with-fingerprint #{key_local_path} | grep 'A4C0 B90D 7443 CF6E 4E8A  A341 F106 8E14 E094 22B3'"
+      action :run
+    end
+  end
+
+  # Add YUM repository
   yum_repository 'datadog' do
     name 'datadog'
     description 'datadog'

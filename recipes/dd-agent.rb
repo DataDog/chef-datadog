@@ -65,6 +65,12 @@ node['datadog']['extra_endpoints'].each do |_, endpoint|
              end
 end
 
+extra_config = {}
+node['datadog']['extra_config'].each do |option, value|
+  next if value.nil?
+  extra_config[option] = value
+end
+
 template agent_config_file do
   if is_windows
     owner 'Administrators'
@@ -77,7 +83,8 @@ template agent_config_file do
   end
   variables(
     :api_keys => api_keys,
-    :dd_urls => dd_urls
+    :dd_urls => dd_urls,
+    :extra_config => extra_config
   )
   sensitive true if Chef::Resource.instance_methods(false).include?(:sensitive)
 end

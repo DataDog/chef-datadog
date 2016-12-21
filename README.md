@@ -9,6 +9,7 @@ The code is licensed under the Apache License 2.0 (see  LICENSE for details).
 [![Coverage Status](https://coveralls.io/repos/DataDog/chef-datadog/badge.svg?branch=master)](https://coveralls.io/r/DataDog/chef-datadog?branch=master)
 [![GitHub forks](https://img.shields.io/github/forks/DataDog/chef-datadog.svg)](https://github.com/DataDog/chef-datadog/network)
 [![GitHub stars](https://img.shields.io/github/stars/DataDog/chef-datadog.svg)](https://github.com/DataDog/chef-datadog/stargazers)
+[![Build Status](https://jenkins-01.eastus.cloudapp.azure.com/job/datadog-cookbook/badge/icon)](https://jenkins-01.eastus.cloudapp.azure.com/job/datadog-cookbook/)
 
 Datadog Cookbook
 ================
@@ -40,6 +41,16 @@ The following Opscode cookbooks are dependencies:
 * `windows`
 * `yum`
 
+**Note for Chef 11 users**: please use these additional dependency version contraints for compatibility with Chef 11:
+
+```
+cookbook 'apt', '< 4.0'
+cookbook 'chef_handler', '< 2.0'
+cookbook 'windows', '< 2.0'
+cookbook 'yum', '~> 3.0'
+```
+
+(in Berkshelf/Librarian format)
 
 Recipes
 =======

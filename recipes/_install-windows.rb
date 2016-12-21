@@ -17,7 +17,12 @@
 # limitations under the License.
 #
 
-dd_agent_version = node['datadog']['agent_version']
+dd_agent_version =
+  if node['datadog']['agent_version'].respond_to?(:each_pair)
+    node['datadog']['agent_version']['windows']
+  else
+    node['datadog']['agent_verison']
+  end
 
 # If no version is specified, select the latest package
 dd_agent_msi = dd_agent_version ? "ddagent-cli-#{dd_agent_version}.msi" : 'ddagent-cli.msi'

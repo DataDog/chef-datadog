@@ -5,7 +5,7 @@ include_recipe 'datadog::dd-agent'
 # @example
 #   node.override['datadog']['postgres']['instances'] = [
 #     {
-#       'server' => "localhost",
+#       'host' => "localhost",
 #       'port' => "5432",
 #       'username' => "datadog",
 #       'tags' => ["test"]
@@ -20,8 +20,8 @@ include_recipe 'datadog::dd-agent'
 #       'relations' => ["apple_table", "orange_table"]
 #     }
 #   ]
+# @note While you can use either `server` or `host` values, prefer `host`.
 # @todo Breaking, major version, convert `server` to `host` to match the check input.
-# @todo Breaking, major version, convert template to yaml-style
 
 datadog_monitor 'postgres' do
   instances node['datadog']['postgres']['instances']

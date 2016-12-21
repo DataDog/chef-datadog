@@ -22,6 +22,12 @@ shared_examples_for 'datadog-agent-base' do
 end
 
 shared_examples_for 'debianoids repo' do
+  it 'installs new apt key' do
+    expect(chef_run).to run_execute('apt-key import key 382E94DE').with(
+      command: 'apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 A2923DFF56EDA6E76E55E492D3A80E30382E94DE'
+    )
+  end
+
   it 'sets up an apt repo' do
     expect(chef_run).to add_apt_repository('datadog')
   end
@@ -32,6 +38,17 @@ shared_examples_for 'debianoids repo' do
 end
 
 shared_examples_for 'rhellions repo' do
+  it 'installs gnupg' do
+    expect(chef_run).to install_package('gnupg')
+  end
+
+  it 'downloads and imports the new RPM key' do
+    expect(chef_run).to create_remote_file('DATADOG_RPM_KEY_E09422B3.public').with(path: '/var/chef/cache/DATADOG_RPM_KEY_E09422B3.public')
+    expect(chef_run).to run_execute('rpm-import datadog key e09422b3').with(
+      command: 'rpm --import /var/chef/cache/DATADOG_RPM_KEY_E09422B3.public'
+    )
+  end
+
   it 'sets up a yum repo' do
     expect(chef_run).to create_yum_repository('datadog')
   end
@@ -205,6 +222,124 @@ describe 'datadog::dd-agent' do
     it_behaves_like 'version set below 4.x'
   end
 
+  context 'allows a string for agent version' do
+    cached(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        :platform => 'ubuntu',
+        :version => '14.10'
+      ) do |node|
+        node.set['datadog'] = {
+          'api_key' => 'somethingnotnil',
+          'agent_version' => '1:5.9.0-1'
+        }
+      end.converge described_recipe
+    end
+
+    it 'installs agent 1:5.9.0-1' do
+      expect(chef_run).to install_apt_package('datadog-agent').with(version: '1:5.9.0-1')
+    end
+  end
+
+  context 'allows a hash for agent version' do
+    context 'when ubuntu' do
+      cached(:chef_run) do
+        ChefSpec::SoloRunner.new(
+          :platform => 'ubuntu',
+          :version => '14.10'
+        ) do |node|
+          node.set['datadog'] = {
+            'api_key' => 'somethingnotnil',
+            'agent_version' => {
+              'debian' => '1:5.9.0-1',
+              'rhel' => '4.4.0-200',
+              'windows' => '4.4.0'
+            }
+          }
+        end.converge described_recipe
+      end
+
+      it 'installs agent 1:5.9.0-1' do
+        expect(chef_run).to install_apt_package('datadog-agent').with(version: '1:5.9.0-1')
+      end
+    end
+
+    context 'when windows' do
+      cached(:chef_run) do
+        set_env_var('ProgramData', 'C:\ProgramData')
+        ChefSpec::SoloRunner.new(
+          :platform => 'windows',
+          :version => '2012R2',
+          :file_cache_path => 'C:/chef/cache'
+        ) do |node|
+          node.set['datadog'] = {
+            'api_key' => 'somethingnotnil',
+            'agent_version' => {
+              'debian' => '1:5.9.0-1',
+              'rhel' => '4.4.0-200',
+              'windows' => '4.4.0'
+            }
+          }
+        end.converge described_recipe
+      end
+
+      temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+
+      it_behaves_like 'windows Datadog Agent'
+      # remote_file source gets converted to an array, so we need to do
+      # some tricky things to be able to regex against it
+      # Relevant: http://stackoverflow.com/a/12325983
+      # But we should probably assert the full default attribute somewhere...
+      it 'installs agent 4.4.0' do
+        expect(chef_run.remote_file(temp_file).source.to_s)
+          .to match(/ddagent-cli-4.4.0.msi/)
+      end
+    end
+
+    context 'when fedora' do
+      cached(:chef_run) do
+        ChefSpec::SoloRunner.new(
+          :platform => 'fedora',
+          :version => '23'
+        ) do |node|
+          node.set['datadog'] = {
+            'api_key' => 'somethingnotnil',
+            'agent_version' => {
+              'debian' => '1:5.9.0-1',
+              'rhel' => '4.4.0-200',
+              'windows' => '4.4.0'
+            }
+          }
+        end.converge described_recipe
+      end
+
+      it 'installs agent 4.4.0-200' do
+        expect(chef_run).to install_package('datadog-agent').with(version: '4.4.0-200')
+      end
+    end
+
+    context 'when rhel' do
+      cached(:chef_run) do
+        ChefSpec::SoloRunner.new(
+          :platform => 'redhat',
+          :version => '6.6'
+        ) do |node|
+          node.set['datadog'] = {
+            'api_key' => 'somethingnotnil',
+            'agent_version' => {
+              'debian' => '1:5.9.0-1',
+              'rhel' => '4.4.0-200',
+              'windows' => '4.4.0'
+            }
+          }
+        end.converge described_recipe
+      end
+
+      it 'installs agent 4.4.0-200' do
+        expect(chef_run).to install_package('datadog-agent').with(version: '4.4.0-200')
+      end
+    end
+  end
+
   context 'package action' do
     context 'default :install' do
       cached(:chef_run) do
@@ -362,6 +497,38 @@ describe 'datadog::dd-agent' do
           .with_content(/^api_key: something1,something2$/)
           .with_content(%r{^dd_url: https://app.example.com,https://app.example.com$})
       end
+    end
+  end
+
+  context 'does accept extra config options' do
+    cached(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        platform: 'ubuntu',
+        version: '12.04'
+      ) do |node|
+        node.set['datadog'] = {
+          'api_key' => 'something1',
+          'url' => 'https://app.example.com',
+          'extra_config' => {
+            'example_key' => 'example_value',
+            'false_key' => false,
+            'no_example_key' => nil
+          }
+        }
+        node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+      end.converge described_recipe
+    end
+
+    it_behaves_like 'common linux resources'
+
+    it 'uses the multiples apikeys and urls' do
+      expect(chef_run).to render_file('/etc/dd-agent/datadog.conf')
+        .with_content(/^example_key: example_value$/)
+        .with_content(/^false_key: false$/)
+        .with_content(/^# Other config options$/)
+
+      expect(chef_run).to_not render_file('/etc/dd-agent/datadog.conf')
+        .with_content(/^no_example_key:/)
     end
   end
 
