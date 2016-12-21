@@ -4,7 +4,7 @@
 #
 
 # Example windows_service.yaml file:
-
+#
 # init_config:
 #
 # instances:
@@ -29,8 +29,32 @@
 #  services:
 #    - wmiApSrv # service names are not case-sensitive
 
+# Example attributes for monitoring local Windows service:
+#
+# node['datadog']['windows_service']['instances'] = {
+#   "instances": [
+#     {
+#       "services": ["RemoteServiceName"],
+#       "host": "."
+#     }
+#   ]
+# }
+
+# Example attributes for monitoring remote Windows service:
+#
+# node['datadog']['windows_service']['instances'] = {
+#   "instances": [
+#     {
+#       "username": "RemoteHostname\thomas",
+#       "services": ["RemoteServiceName1", "RemoteServiceName2"],
+#       "host": "RemoteHostName",
+#       "password": "secretpw"
+#     }
+#   ]
+# }
+
 include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'windows_service' do
-  instances node['datadog']['gunicorn']['instances']
+  instances node['datadog']['windows_service']['instances']
 end
