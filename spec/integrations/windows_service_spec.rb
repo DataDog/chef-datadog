@@ -1,4 +1,4 @@
-describe 'datadog::windows_service'  do
+describe 'datadog::windows_service' do
   expected_yaml = <<-EOF
     instances:
     - host: REMOTEHOSTNAME
@@ -47,7 +47,7 @@ describe 'datadog::windows_service'  do
   end
 end
 
-describe 'datadog::windows_service'  do
+describe 'datadog::windows_service' do
   expected_yaml = <<-EOF
     instances:
     - host: .
