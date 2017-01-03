@@ -16,7 +16,7 @@ action :add do
       inherits false
     else
       owner 'dd-agent'
-      mode 00600
+      mode '600'
     end
 
     source 'integration.yaml.erb' if new_resource.use_integration_template

@@ -73,4 +73,5 @@ chef_handler 'Chef::Handler::Datadog' do
   arguments [handler_config]
   supports :report => true, :exception => true
   action :nothing
-end.run_action(:enable) if node['datadog']['chef_handler_enable']
+  only_if { node['datadog']['chef_handler_enable'] }
+end.run_action(:enable)
