@@ -47,6 +47,26 @@ describe 'datadog::dd-handler' do
     it_behaves_like 'a chef-handler-datadog runner'
   end
 
+  context 'handler disabled' do
+    cached(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        platform: 'ubuntu',
+        version: '14.04'
+      ) do |node|
+        node.set['datadog']['api_key'] = 'somethingnotnil'
+        node.set['datadog']['application_key'] = 'somethingnotnil2'
+        node.set['datadog']['chef_handler_enable'] = false
+        node.set['datadog']['use_ec2_instance_id'] = true
+      end.converge described_recipe
+    end
+
+    it_behaves_like 'a chef-handler-datadog installer'
+
+    it "doesn't enable the datadog handler" do
+      expect(chef_run).not_to enable_chef_handler 'Chef::Handler::Datadog'
+    end
+  end
+
   context 'multiple endpoints' do
     cached(:chef_run) do
       ChefSpec::SoloRunner.new(

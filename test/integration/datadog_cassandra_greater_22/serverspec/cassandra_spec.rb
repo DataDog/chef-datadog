@@ -85,7 +85,8 @@ describe file(AGENT_CONFIG) do
                 MemtableColumnsCount
                 MemtableLiveDataSize
                 MemtableSwitchCount
-                MinRowSize)
+                MinRowSize
+              )
             },
             exclude: {
               keyspace: [
