@@ -230,6 +230,10 @@ default['datadog']['extra_config']['forwarder_timeout'] = nil
 # extra_packages to install
 default['datadog']['extra_packages'] = {}
 
+# Custom check files, sourced from other cookbooks
+# See the datadog::custom_checks recipe for example usage
+default['datadog']['custom_checks'] = {}
+
 # For service-specific configuration, use the integration recipes included
 # in this cookbook, and apply them to the appropirate node's run list.
 # Read more at http://docs.datadoghq.com/

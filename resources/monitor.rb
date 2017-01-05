@@ -16,3 +16,7 @@ attribute :instances, :kind_of => Array, :required => false, :default => []
 attribute :version, :kind_of => Integer, :required => false, :default => nil
 
 attribute :use_integration_template, :kind_of => [TrueClass, FalseClass], :required => false, :default => false
+
+attribute :custom_check, :kind_of => [TrueClass, FalseClass], :default => false
+attribute :check_cookbook, :kind_of => String, :default => nil
+attribute :check_source, :kind_of => [String, Array], :default => nil

@@ -112,3 +112,18 @@ Usage
 We are not making use of data_bags in this recipe at this time, as it is unlikely that you will have more than one API key and one application key.
 
 For more deployment details, visit the [Datadog Documentation site](http://docs.datadoghq.com/).
+
+Custom checks
+-------------
+To install your own custom checks with this cookbook, please follow the examples in the related [recipe](https://github.com/DataDog/chef-datadog/tree/master/recipes/custom_checks.rb).
+The python check needs to live as a cookbook file in one of your cookbooks.
+
+Alternatively, you can use the `datadog_monitor` resource from your own cookbooks:
+
+```ruby
+datadog_monitor 'my_custom_check' do
+  init_config {}
+  instances [{'parameter1': 'value1'}]
+  custom_check true
+end
+```

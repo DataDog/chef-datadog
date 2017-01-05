@@ -1,0 +1,6 @@
+name             'datadog_test'
+maintainer       'Datadog'
+maintainer_email 'package@datadoghq.com'
+license          'Apache 2.0'
+description      'This cookbook is used with ChefSpec to test the parent cookbook, datadog'
+version          '1.0.0'

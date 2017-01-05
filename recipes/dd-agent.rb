@@ -103,3 +103,6 @@ end
 
 # Install integration packages
 include_recipe 'datadog::integrations' unless is_windows
+
+# Install custom checks
+include_recipe 'datadog::custom_checks' unless is_windows # FIXME: implement this on windows?
