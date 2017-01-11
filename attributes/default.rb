@@ -139,6 +139,11 @@ default['datadog']['agent_version'] = nil
 # Allow override with `upgrade` to get latest (Linux only)
 default['datadog']['agent_package_action'] = 'install'
 
+# Agent package options
+# retries and retry_delay for package download/install
+default['datadog']['agent_package_retries'] = nil
+default['datadog']['agent_package_retry_delay'] = nil
+
 # Allow downgrades of the agent (Linux only)
 # Note: on apt-based platforms, this will use the `--force-yes` option on the apt-get command. Use with caution.
 default['datadog']['agent_allow_downgrade'] = false
