@@ -103,7 +103,7 @@ task :circle do
       # TODO: This could likely be pulled from kitchen_config.instances somehow
       name = platform.name.delete('.')
 
-      # Execute a suite that installs the handler and the Agent.
+      # Scope the suites to only execute against the Agent+handler installer suites.
       commands.push "kitchen verify dd-agent-handler-#{name}"
     end
 
