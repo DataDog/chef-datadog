@@ -31,10 +31,6 @@ shared_examples_for 'debianoids repo' do
   it 'sets up an apt repo' do
     expect(chef_run).to add_apt_repository('datadog')
   end
-
-  it 'installs apt-transport-https' do
-    expect(chef_run).to install_package('apt-transport-https')
-  end
 end
 
 shared_examples_for 'rhellions repo' do
