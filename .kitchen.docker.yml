@@ -12,3 +12,13 @@ platforms:
   - name: centos-6.6
   - name: centos-5.11
   - name: debian-7.7
+
+suites:
+- name: dd-agent-handler
+  run_list:
+    - recipe[datadog::dd-handler]
+    - recipe[datadog::dd-agent]
+  attributes:
+    datadog:
+      api_key: somethingnotnil
+      application_key: alsonotnil

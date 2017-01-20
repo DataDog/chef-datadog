@@ -103,7 +103,7 @@ task :circle do
       name = platform.name.delete('.')
 
       # Scope the suites to only execute against the Agent installer suites.
-      commands.push "kitchen verify dd-agent-#{name}"
+      commands.push "kitchen verify dd-agent-handler-#{name}"
     end
 
     commands.join(' && ')
