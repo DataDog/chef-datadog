@@ -9,5 +9,5 @@ instances:
   <% if @init_config.key?('instances') -%>
   - url: <%= @init_config['instances'] %>
   <% else %>
-  - url: "http://<%= @node['ipaddress'] %>:5051"
+  - url: "http://<%= @node['ipaddress'] %>:5050"
   <% end -%>

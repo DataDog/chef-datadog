@@ -20,7 +20,7 @@ include_recipe 'datadog::dd-agent'
 
 # Build a data structure with configuration.
 # @example
-#   node.override['datadog']['mesos_slave'] =
+#   node.override['datadog']['mesos_master'] =
 #     instances: [{
 #       url: 'http://server:port',
 #       timeout: 8
@@ -29,9 +29,9 @@ include_recipe 'datadog::dd-agent'
 #       default_timeout: 10
 #     }
 
-datadog_monitor 'mesos_slave' do
-  if node['datadog'].has_key?('mesos_slave') then
-    init_config node['datadog']['mesos_slave']['init_config']
-    instances node['datadog']['mesos_slave']['instances']
+datadog_monitor 'mesos_master' do
+  if node['datadog'].has_key?('mesos_master') then
+    init_config node['datadog']['mesos_master']['init_config']
+    instances node['datadog']['mesos_master']['instances']
   end
 end
