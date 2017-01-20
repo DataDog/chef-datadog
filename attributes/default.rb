@@ -17,13 +17,15 @@
 # limitations under the License.
 #
 
-# Place your API Key here, or set it on the role/environment/node
+# Place your API Key here, or set it on the role/environment/node, or set it on your
+# node `run_state` under the key `['datadog']['api_key']`.
 # The Datadog api key to associate your agent's data with your organization.
 # Can be found here:
 # https://app.datadoghq.com/account/settings
 default['datadog']['api_key'] = nil
 
-# Create an application key on the Account Settings page
+# Create an application key on the Account Settings page.
+# Set it as an attribute, or on your node `run_state` under the key `['datadog']['application_key']`
 default['datadog']['application_key'] = nil
 
 # Use this attribute to send data to additional accounts

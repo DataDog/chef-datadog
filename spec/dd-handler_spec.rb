@@ -68,6 +68,48 @@ describe 'datadog::dd-handler' do
     end
   end
 
+  context 'with api and app keys set as node attributes and on node run_state' do
+    cached(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        platform: 'ubuntu',
+        version: '14.04'
+      ) do |node|
+        node.set['datadog']['api_key'] = 'api_overriden_by_run_state'
+        node.set['datadog']['application_key'] = 'app_overriden_by_run_state'
+        node.set['datadog']['chef_handler_enable'] = true
+        node.set['datadog']['use_ec2_instance_id'] = true
+        node.run_state['datadog'] = {
+          'api_key' => 'somethingnotnil',
+          'application_key' => 'somethingnotnil2'
+        }
+      end.converge described_recipe
+    end
+
+    it_behaves_like 'a chef-handler-datadog installer'
+
+    it_behaves_like 'a chef-handler-datadog runner'
+  end
+
+  context 'with keys set on node run_state only' do
+    cached(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        platform: 'ubuntu',
+        version: '14.04'
+      ) do |node|
+        node.set['datadog']['chef_handler_enable'] = true
+        node.set['datadog']['use_ec2_instance_id'] = true
+        node.run_state['datadog'] = {
+          'api_key' => 'somethingnotnil',
+          'application_key' => 'somethingnotnil2'
+        }
+      end.converge described_recipe
+    end
+
+    it_behaves_like 'a chef-handler-datadog installer'
+
+    it_behaves_like 'a chef-handler-datadog runner'
+  end
+
   context 'multiple endpoints' do
     cached(:chef_run) do
       ChefSpec::SoloRunner.new(
@@ -93,6 +135,7 @@ describe 'datadog::dd-handler' do
 
     it_behaves_like 'a chef-handler-datadog runner', extra_endpoints, nil
   end
+
   context 'multiple endpoints disabled' do
     cached(:chef_run) do
       ChefSpec::SoloRunner.new(

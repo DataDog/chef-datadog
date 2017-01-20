@@ -17,6 +17,14 @@
 # limitations under the License.
 #
 
+# Fail here at converge time if no api_key is set
+ruby_block 'datadog-api-key-unset' do
+  block do
+    raise "Set ['datadog']['api_key'] as an attribute or on the node's run_state to configure this node's Datadog Agent."
+  end
+  only_if { Chef::Datadog.api_key(node).nil? }
+end
+
 is_windows = node['platform_family'] == 'windows'
 
 # Install the agent
@@ -52,9 +60,8 @@ end
 # the node's run_list and set the relevant attributes
 #
 
-
-template agent_config_file do
-  def template_vars
+template agent_config_file do # rubocop:disable Metrics/BlockLength
+  def template_vars # rubocop:disable Metrics/AbcSize
     api_keys = [Chef::Datadog.api_key(node)]
     dd_urls = [node['datadog']['url']]
     node['datadog']['extra_endpoints'].each do |_, endpoint|
@@ -66,15 +73,9 @@ template agent_config_file do
                    node['datadog']['url']
                  end
     end
-    extra_config = {}
-    node['datadog']['extra_config'].each do |option, value|
-      next if value.nil?
-      extra_config[option] = value
-    end
     {
       :api_keys => api_keys,
-      :dd_urls => dd_urls,
-      :extra_config => extra_config
+      :dd_urls => dd_urls
     }
   end
   if is_windows

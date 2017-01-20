@@ -47,8 +47,8 @@ unless web_proxy['host'].nil?
 end
 
 # Create the handler to run at the end of the Chef execution
-chef_handler 'Chef::Handler::Datadog' do
-  def handler_config # rubocop:disable Metrics/AbcSize
+chef_handler 'Chef::Handler::Datadog' do # rubocop:disable Metrics/BlockLength
+  def extra_endpoints
     extra_endpoints = []
     node['datadog']['extra_endpoints'].each do |_, endpoint|
       next unless endpoint['enabled']
@@ -56,7 +56,10 @@ chef_handler 'Chef::Handler::Datadog' do
       endpoint.delete('enabled')
       extra_endpoints << endpoint
     end
+    extra_endpoints
+  end
 
+  def handler_config # rubocop:disable Metrics/AbcSize
     config = {
       :api_key => Chef::Datadog.api_key(node),
       :application_key => Chef::Datadog.application_key(node),

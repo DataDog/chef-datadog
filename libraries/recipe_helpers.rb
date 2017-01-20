@@ -12,11 +12,11 @@ class Chef
 
       private
 
-      def run_state_or_attribute(node, attr)
-        if node.run_state.key?('datadog') && node.run_state['datadog'].key?(attr)
-          node.run_state['datadog'][attr]
+      def run_state_or_attribute(node, attribute)
+        if node.run_state.key?('datadog') && node.run_state['datadog'].key?(attribute)
+          node.run_state['datadog'][attribute]
         else
-          node['datadog'][attr]
+          node['datadog'][attribute]
         end
       end
     end
