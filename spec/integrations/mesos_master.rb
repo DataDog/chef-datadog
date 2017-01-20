@@ -15,7 +15,7 @@ describe 'datadog::mesos_master' do
         mesos_master: {
           instances: [
             {
-              url: 'http://localhost:5050',
+              url: 'http://localhost:5050'
             }
           ],
           init_config: {

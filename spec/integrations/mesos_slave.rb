@@ -15,7 +15,7 @@ describe 'datadog::mesos_slave' do
         mesos_slave: {
           instances: [
             {
-              url: 'http://localhost:5051',
+              url: 'http://localhost:5051'
             }
           ],
           init_config: {

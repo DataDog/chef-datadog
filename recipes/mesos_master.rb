@@ -30,7 +30,7 @@ include_recipe 'datadog::dd-agent'
 #     }
 
 datadog_monitor 'mesos_master' do
-  if node['datadog'].has_key?('mesos_master') then
+  if node['datadog'].key?('mesos_master')
     init_config node['datadog']['mesos_master']['init_config']
     instances node['datadog']['mesos_master']['instances']
   end
