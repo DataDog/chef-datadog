@@ -60,7 +60,8 @@ handler_config = {
   :use_ec2_instance_id => node['datadog']['use_ec2_instance_id'],
   :tag_prefix => node['datadog']['tag_prefix'],
   :url => node['datadog']['url'],
-  :extra_endpoints => extra_endpoints
+  :extra_endpoints => extra_endpoints,
+  :tags_blacklist_regex => node['datadog']['tags_blacklist_regex']
 }
 
 unless node['datadog']['use_ec2_instance_id']
