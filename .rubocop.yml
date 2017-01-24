@@ -19,6 +19,11 @@ Metrics/BlockLength:
     - 'spec/**/*.rb'
     - 'test/**/*.rb'
 
+
+# Slightly longer methods are fine
+Metrics/MethodLength:
+  Max: 15
+
 # TODO: add encoding headers
 Style/Encoding:
   Enabled: false

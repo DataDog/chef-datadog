@@ -373,7 +373,9 @@ describe 'datadog::dd-agent' do
 
       it_behaves_like 'debianoids repo'
     end
+  end
 
+  context 'datadog.conf configuration' do
     context 'allows a string for tags' do
       cached(:chef_run) do
         ChefSpec::SoloRunner.new(
@@ -496,6 +498,67 @@ describe 'datadog::dd-agent' do
         expect(chef_run).to render_file('/etc/dd-agent/datadog.conf')
           .with_content(/^api_key: something1,something2$/)
           .with_content(%r{^dd_url: https://app.example.com,https://app.example.com$})
+      end
+    end
+
+    context 'with no api_key set' do
+      cached(:chef_run) do
+        ChefSpec::SoloRunner.new(
+          platform: 'ubuntu',
+          version: '12.04'
+        ) do |node|
+          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+        end.converge described_recipe
+      end
+
+      it 'raises an error' do
+        expect(chef_run).to run_ruby_block('datadog-api-key-unset')
+        expect { chef_run.ruby_block('datadog-api-key-unset').old_run_action(:run) }.to raise_error(RuntimeError)
+      end
+    end
+
+    context 'with api_key set as node attribute and on node run_state' do
+      cached(:chef_run) do
+        ChefSpec::SoloRunner.new(
+          platform: 'ubuntu',
+          version: '12.04'
+        ) do |node|
+          node.set['datadog'] = {
+            'api_key' => 'as_node_attribute',
+            'url' => 'https://app.example.com'
+          }
+          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+          node.run_state['datadog'] = { 'api_key' => 'on_run_state' }
+        end.converge described_recipe
+      end
+
+      it_behaves_like 'common linux resources'
+
+      it 'uses the api_key from the run_state' do
+        expect(chef_run).to render_file('/etc/dd-agent/datadog.conf')
+          .with_content(/^api_key: on_run_state$/)
+
+        expect(chef_run).not_to render_file('/etc/dd-agent/datadog.conf')
+          .with_content(/api_key: as_node_attribute/)
+      end
+    end
+
+    context 'with api_key set on node run_state only' do
+      cached(:chef_run) do
+        ChefSpec::SoloRunner.new(
+          platform: 'ubuntu',
+          version: '12.04'
+        ) do |node|
+          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+          node.run_state['datadog'] = { 'api_key' => 'on_run_state' }
+        end.converge described_recipe
+      end
+
+      it_behaves_like 'common linux resources'
+
+      it 'uses the api_key from the run_state' do
+        expect(chef_run).to render_file('/etc/dd-agent/datadog.conf')
+          .with_content(/^api_key: on_run_state$/)
       end
     end
   end
