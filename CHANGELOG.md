@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 2.8.0 / Unreleased
+# 2.8.0 / 2017-01-25
 
 * [FEATURE] Add `ssl_verify` option to RabbitMQ template, [#383][] [@iancward][]
 * [FEATURE] Add correct sudo commands to Postfix recipe, [#384][] [@BrentOnRails][] & [@degemer][]
