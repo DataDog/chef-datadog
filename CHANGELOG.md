@@ -1,6 +1,10 @@
 Changes
 =======
 
+# 2.8.1 / Unreleased
+
+* [BUGFIX] Fix agent version pinning on Windows, [#400][] [@olivielpeau][]
+
 # 2.8.0 / 2017-01-25
 
 * [FEATURE] Add `ssl_verify` option to RabbitMQ template, [#383][] [@iancward][]
@@ -487,6 +491,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#390]: https://github.com/DataDog/chef-datadog/issues/390
 [#395]: https://github.com/DataDog/chef-datadog/issues/395
 [#397]: https://github.com/DataDog/chef-datadog/issues/397
+[#400]: https://github.com/DataDog/chef-datadog/issues/400
 [@ABrehm264]: https://github.com/ABrehm264
 [@BrentOnRails]: https://github.com/BrentOnRails
 [@DorianZaccaria]: https://github.com/DorianZaccaria
