@@ -68,6 +68,9 @@ default['datadog']['collect_ec2_tags'] = nil
 # EX: 'app_.*' allows all tags except those which look like app_.*
 default['datadog']['tags_blacklist_regex'] = nil
 
+# Set to `true` if you want the handler to send the Chef policy name and group as host tags
+default['datadog']['send_policy_tags'] = false
+
 # Autorestart agent
 default['datadog']['autorestart'] = false
 
