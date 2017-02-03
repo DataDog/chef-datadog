@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 2.8.1 / Unreleased
+# 2.8.1 / 2017-02-03
 
 * [BUGFIX] Fix agent version pinning on Windows, [#400][] [@olivielpeau][]
 
