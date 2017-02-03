@@ -223,20 +223,49 @@ describe 'datadog::dd-agent' do
   end
 
   context 'allows a string for agent version' do
-    cached(:chef_run) do
-      ChefSpec::SoloRunner.new(
-        :platform => 'ubuntu',
-        :version => '14.10'
-      ) do |node|
-        node.set['datadog'] = {
-          'api_key' => 'somethingnotnil',
-          'agent_version' => '1:5.9.0-1'
-        }
-      end.converge described_recipe
+    context 'on linux' do
+      cached(:chef_run) do
+        ChefSpec::SoloRunner.new(
+          :platform => 'ubuntu',
+          :version => '14.10'
+        ) do |node|
+          node.set['datadog'] = {
+            'api_key' => 'somethingnotnil',
+            'agent_version' => '1:5.9.0-1'
+          }
+        end.converge described_recipe
+      end
+
+      it 'installs agent 1:5.9.0-1' do
+        expect(chef_run).to install_apt_package('datadog-agent').with(version: '1:5.9.0-1')
+      end
     end
 
-    it 'installs agent 1:5.9.0-1' do
-      expect(chef_run).to install_apt_package('datadog-agent').with(version: '1:5.9.0-1')
+    context 'on windows' do
+      cached(:chef_run) do
+        set_env_var('ProgramData', 'C:\ProgramData')
+        ChefSpec::SoloRunner.new(
+          :platform => 'windows',
+          :version => '2012R2',
+          :file_cache_path => 'C:/chef/cache'
+        ) do |node|
+          node.set['datadog'] = {
+            'api_key' => 'somethingnotnil',
+            'agent_version' => '5.10.1'
+          }
+        end.converge described_recipe
+      end
+
+      temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+
+      it_behaves_like 'windows Datadog Agent'
+      # remote_file source gets converted to an array, so we need to do
+      # some tricky things to be able to regex against it
+      # Relevant: http://stackoverflow.com/a/12325983
+      it 'installs agent 5.10.1' do
+        expect(chef_run.remote_file(temp_file).source.to_s)
+          .to match(/ddagent-cli-5.10.1.msi/)
+      end
     end
   end
 

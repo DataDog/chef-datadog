@@ -21,7 +21,7 @@ dd_agent_version =
   if node['datadog']['agent_version'].respond_to?(:each_pair)
     node['datadog']['agent_version']['windows']
   else
-    node['datadog']['agent_verison']
+    node['datadog']['agent_version']
   end
 
 # If no version is specified, select the latest package
