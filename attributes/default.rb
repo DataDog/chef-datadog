@@ -17,13 +17,15 @@
 # limitations under the License.
 #
 
-# Place your API Key here, or set it on the role/environment/node
+# Place your API Key here, or set it on the role/environment/node, or set it on your
+# node `run_state` under the key `['datadog']['api_key']`.
 # The Datadog api key to associate your agent's data with your organization.
 # Can be found here:
 # https://app.datadoghq.com/account/settings
 default['datadog']['api_key'] = nil
 
-# Create an application key on the Account Settings page
+# Create an application key on the Account Settings page.
+# Set it as an attribute, or on your node `run_state` under the key `['datadog']['application_key']`
 default['datadog']['application_key'] = nil
 
 # Use this attribute to send data to additional accounts
@@ -58,6 +60,13 @@ default['datadog']['create_dd_check_tags'] = nil
 
 # Collect EC2 tags, set to 'yes' to collect
 default['datadog']['collect_ec2_tags'] = nil
+
+# Set this regex to exclude some Chef node tags from the host tags that the datadog handler sends to Datadog
+# https://github.com/DataDog/chef-handler-datadog/issues/85
+# This means that all the metrics and service checks coming from the
+#  host/Agent would also stop being tagged with these excluded tags.
+# EX: 'app_.*' allows all tags except those which look like app_.*
+default['datadog']['tags_blacklist_regex'] = nil
 
 # Autorestart agent
 default['datadog']['autorestart'] = false
@@ -138,6 +147,11 @@ default['datadog']['agent_version'] = nil
 # Agent package action
 # Allow override with `upgrade` to get latest (Linux only)
 default['datadog']['agent_package_action'] = 'install'
+
+# Agent package options
+# retries and retry_delay for package download/install
+default['datadog']['agent_package_retries'] = nil
+default['datadog']['agent_package_retry_delay'] = nil
 
 # Allow downgrades of the agent (Linux only)
 # Note: on apt-based platforms, this will use the `--force-yes` option on the apt-get command. Use with caution.

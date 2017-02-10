@@ -8,8 +8,15 @@ shared_examples_for 'datadog-agent service' do
   end
 end
 
+shared_examples_for 'datadog conf' do
+  it 'does not complain about a missing api key' do
+    expect(chef_run).not_to run_ruby_block('datadog-api-key-unset')
+  end
+end
+
 shared_examples_for 'common linux resources' do
   it_behaves_like 'datadog-agent service'
+  it_behaves_like 'datadog conf'
 
   it 'includes the repository recipe' do
     expect(chef_run).to include_recipe('datadog::repository')
@@ -50,6 +57,7 @@ end
 
 shared_examples_for 'common windows resources' do
   it_behaves_like 'datadog-agent service'
+  it_behaves_like 'datadog conf'
 
   it 'ensures the Datadog config directory exists' do
     expect(chef_run).to create_directory 'C:\ProgramData/Datadog'

@@ -1,6 +1,19 @@
 Changes
 =======
 
+# 2.8.1 / 2017-02-03
+
+* [BUGFIX] Fix agent version pinning on Windows, [#400][] [@olivielpeau][]
+
+# 2.8.0 / 2017-01-25
+
+* [FEATURE] Add `ssl_verify` option to RabbitMQ template, [#383][] [@iancward][]
+* [FEATURE] Add correct sudo commands to Postfix recipe, [#384][] [@BrentOnRails][] & [@degemer][]
+* [FEATURE] Add support for `windows_service` integration, [#387][] [@mlcooper][]
+* [FEATURE] Add attributes for package download retries, [#390][] [@degemer][]
+* [FEATURE] Add tags blacklist regex attribute for handler, [#397][] [@ABrehm264][] & [@degemer][]
+* [FEATURE] Defer evaluation of api and app keys and read from `run_state`, [#395][] [@mfischer-zd][]
+
 # 2.7.0 / 2016-11-15
 
 * [FEATURE] Add `dd-agent` user to `docker` group in `docker`/`docker_daemon` recipes, [#364][] [@jvrplmlmn][]
@@ -472,7 +485,15 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#374]: https://github.com/DataDog/chef-datadog/issues/374
 [#375]: https://github.com/DataDog/chef-datadog/issues/375
 [#380]: https://github.com/DataDog/chef-datadog/issues/380
+[#383]: https://github.com/DataDog/chef-datadog/issues/383
+[#384]: https://github.com/DataDog/chef-datadog/issues/384
+[#387]: https://github.com/DataDog/chef-datadog/issues/387
+[#390]: https://github.com/DataDog/chef-datadog/issues/390
+[#395]: https://github.com/DataDog/chef-datadog/issues/395
+[#397]: https://github.com/DataDog/chef-datadog/issues/397
+[#400]: https://github.com/DataDog/chef-datadog/issues/400
 [@ABrehm264]: https://github.com/ABrehm264
+[@BrentOnRails]: https://github.com/BrentOnRails
 [@DorianZaccaria]: https://github.com/DorianZaccaria
 [@EasyAsABC123]: https://github.com/EasyAsABC123
 [@JoeDeVries]: https://github.com/JoeDeVries

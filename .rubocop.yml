@@ -10,6 +10,20 @@ AllCops:
 Metrics/LineLength:
   Max: 160
 
+# Exclude Rakefile and tests since there are long blocks that aren't worth shortening there
+# Also, slightly longer blocks are fine
+Metrics/BlockLength:
+  Max: 30
+  Exclude:
+    - 'Rakefile'
+    - 'spec/**/*.rb'
+    - 'test/**/*.rb'
+
+
+# Slightly longer methods are fine
+Metrics/MethodLength:
+  Max: 15
+
 # TODO: add encoding headers
 Style/Encoding:
   Enabled: false
