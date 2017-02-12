@@ -259,3 +259,9 @@ default['datadog']['extra_sample_rate'] = 1
 default['datadog']['max_traces_per_second'] = 10
 default['datadog']['receiver_port'] = 7777
 default['datadog']['connection_limit'] = 2000
+
+# ddtrace python version
+default['datadog']['ddtrace_python_ver'] = nil
+
+# ddtrace ruby gem version
+default['datadog']['ddtrace_gem_ver'] = nil
