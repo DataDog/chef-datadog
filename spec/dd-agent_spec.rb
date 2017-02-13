@@ -21,36 +21,9 @@ shared_examples_for 'datadog-agent-base' do
   end
 end
 
-shared_examples_for 'debianoids repo' do
-  it 'installs new apt key' do
-    expect(chef_run).to run_execute('apt-key import key 382E94DE').with(
-      command: 'apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 A2923DFF56EDA6E76E55E492D3A80E30382E94DE'
-    )
-  end
-
-  it 'sets up an apt repo' do
-    expect(chef_run).to add_apt_repository('datadog')
-  end
-
-  it 'installs apt-transport-https' do
-    expect(chef_run).to install_package('apt-transport-https')
-  end
-end
-
-shared_examples_for 'rhellions repo' do
-  it 'installs gnupg' do
-    expect(chef_run).to install_package('gnupg')
-  end
-
-  it 'downloads and imports the new RPM key' do
-    expect(chef_run).to create_remote_file('DATADOG_RPM_KEY_E09422B3.public').with(path: '/var/chef/cache/DATADOG_RPM_KEY_E09422B3.public')
-    expect(chef_run).to run_execute('rpm-import datadog key e09422b3').with(
-      command: 'rpm --import /var/chef/cache/DATADOG_RPM_KEY_E09422B3.public'
-    )
-  end
-
-  it 'sets up a yum repo' do
-    expect(chef_run).to create_yum_repository('datadog')
+shared_examples_for 'repo recipe' do
+  it 'includes the repository recipe' do
+    expect(chef_run).to include_recipe('dd-agent::repository')
   end
 end
 
@@ -91,7 +64,7 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      it_behaves_like 'debianoids repo'
+      it_behaves_like 'repo recipe'
       it_behaves_like 'debianoids no version set'
     end
 
@@ -106,7 +79,7 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      it_behaves_like 'debianoids repo'
+      it_behaves_like 'repo recipe'
       it_behaves_like 'debianoids no version set'
     end
 
@@ -121,7 +94,7 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      it_behaves_like 'debianoids repo'
+      it_behaves_like 'repo recipe'
       it_behaves_like 'debianoids no version set'
     end
 
@@ -136,7 +109,7 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      it_behaves_like 'rhellions repo'
+      it_behaves_like 'repo recipe'
       it_behaves_like 'rhellions no version set'
     end
 
@@ -151,7 +124,7 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      it_behaves_like 'rhellions repo'
+      it_behaves_like 'repo recipe'
       it_behaves_like 'rhellions no version set'
     end
 
@@ -166,7 +139,7 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      it_behaves_like 'rhellions repo'
+      it_behaves_like 'repo recipe'
       it_behaves_like 'rhellions no version set'
     end
 
@@ -200,7 +173,7 @@ describe 'datadog::dd-agent' do
       end.converge described_recipe
     end
 
-    it_behaves_like 'debianoids repo'
+    it_behaves_like 'repo recipe'
     it_behaves_like 'debianoids no version set'
   end
 
@@ -218,7 +191,7 @@ describe 'datadog::dd-agent' do
       end.converge described_recipe
     end
 
-    it_behaves_like 'debianoids repo'
+    it_behaves_like 'repo recipe'
     it_behaves_like 'version set below 4.x'
   end
 
@@ -381,7 +354,7 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      it_behaves_like 'debianoids repo'
+      it_behaves_like 'repo recipe'
       it_behaves_like 'debianoids no version set'
     end
 
@@ -400,7 +373,7 @@ describe 'datadog::dd-agent' do
         expect(chef_run).to upgrade_apt_package('datadog-agent')
       end
 
-      it_behaves_like 'debianoids repo'
+      it_behaves_like 'repo recipe'
     end
   end
 

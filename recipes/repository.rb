@@ -56,14 +56,15 @@ when 'rhel', 'fedora'
     remote_file 'DATADOG_RPM_KEY_E09422B3.public' do
       path key_local_path
       source node['datadog']['yumrepo_gpgkey_new']
+      not_if 'rpm -q gpg-pubkey-e09422b3' # (key already imported)
+      notifies :run, 'execute[rpm-import datadog key e09422b3]', :immediately
     end
 
     # Import key if fingerprint matches
     execute 'rpm-import datadog key e09422b3' do
       command "rpm --import #{key_local_path}"
-      not_if 'rpm -q gpg-pubkey-e09422b3' # (key already imported)
       only_if "gpg --dry-run --quiet --with-fingerprint #{key_local_path} | grep 'A4C0 B90D 7443 CF6E 4E8A  A341 F106 8E14 E094 22B3'"
-      action :run
+      action :nothing
     end
   end
 
