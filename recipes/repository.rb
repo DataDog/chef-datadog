@@ -21,7 +21,8 @@ case node['platform_family']
 when 'debian'
   include_recipe 'apt'
 
-  package 'apt-transport-https' do
+  package 'install-apt-transport-https' do
+    package_name 'apt-transport-https'
     action :install
   end
 
