@@ -23,7 +23,7 @@ end
 
 shared_examples_for 'repo recipe' do
   it 'includes the repository recipe' do
-    expect(chef_run).to include_recipe('dd-agent::repository')
+    expect(chef_run).to include_recipe('datadog::repository')
   end
 end
 
