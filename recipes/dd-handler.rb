@@ -67,7 +67,8 @@ chef_handler 'Chef::Handler::Datadog' do # rubocop:disable Metrics/BlockLength
       :tag_prefix => node['datadog']['tag_prefix'],
       :url => node['datadog']['url'],
       :extra_endpoints => extra_endpoints,
-      :tags_blacklist_regex => node['datadog']['tags_blacklist_regex']
+      :tags_blacklist_regex => node['datadog']['tags_blacklist_regex'],
+      :send_policy_tags => node['datadog']['send_policy_tags']
     }
 
     unless node['datadog']['use_ec2_instance_id']
