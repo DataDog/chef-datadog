@@ -74,6 +74,9 @@ default['datadog']['send_policy_tags'] = false
 # Autorestart agent
 default['datadog']['autorestart'] = false
 
+# Enable the apm
+default['datadog']['apm_enabled'] = false
+
 # Run the agent in developer mode
 default['datadog']['developer_mode'] = false
 
