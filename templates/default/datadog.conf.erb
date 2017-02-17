@@ -37,8 +37,8 @@ proxy_user: <%= node['datadog']['web_proxy']['user'] %>
 proxy_password: <%= node['datadog']['web_proxy']['password'] %>
 <% end -%>
 
-<% if node['datadog']['apm_enable'] == true %>
-  apm_enable: true
+<% if node['datadog']['apm_enabled'] == true %>
+  apm_enabled: true
 <% end -%>
 
 <% if node['datadog']['non_local_traffic'] == true %>
