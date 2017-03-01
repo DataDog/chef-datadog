@@ -394,6 +394,19 @@ suites:
               my_consumer:
                 my_topic: [0, 1, 4, 12]
 
+- name: datadog_kubernetes
+  run_list:
+    - recipe[datadog::kubernetes]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      consul:
+        instances:
+          - host: localhost
+            port: 4194
+            kubelet_port: 10255
+            enabled_rates: ['cpu.*', 'network.*']
+
 - name: datadog_mesos
   run_list:
     - recipe[datadog::mesos]
