@@ -61,8 +61,8 @@ graphite_listen_port: <%= node['datadog']['graphite_port'] %>
 histogram_aggregates: <%= node['datadog']['histogram_aggregates'] %>
 histogram_percentiles: <%= node['datadog']['histogram_percentiles'] %>
 
-## Trace settings
 <% if node['datadog']['enable_trace_agent'] == true -%>
+## Trace settings
 apm_enabled: true
 
 [trace.sampler]

@@ -257,7 +257,7 @@ default['datadog']['legacy_integrations']['nagios']['config']['nagios_log'] = '/
 default['datadog']['enable_trace_agent'] = false
 default['datadog']['extra_sample_rate'] = 1
 default['datadog']['max_traces_per_second'] = 10
-default['datadog']['receiver_port'] = 7777
+default['datadog']['receiver_port'] = 8126
 default['datadog']['connection_limit'] = 2000
 
 # ddtrace python version
