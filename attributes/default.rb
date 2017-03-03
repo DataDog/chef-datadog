@@ -255,3 +255,6 @@ default['datadog']['extra_packages'] = {}
 default['datadog']['legacy_integrations']['nagios']['enabled'] = false
 default['datadog']['legacy_integrations']['nagios']['description'] = 'Nagios integration'
 default['datadog']['legacy_integrations']['nagios']['config']['nagios_log'] = '/var/log/nagios3/nagios.log'
+
+# For custom gem servers on restricted networks
+default['datadog']['gem_server'] = false
