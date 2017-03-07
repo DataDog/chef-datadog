@@ -155,7 +155,25 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      it_behaves_like 'windows Datadog Agent'
+      it_behaves_like 'windows Datadog Agent', :msi
+    end
+
+    context 'on Windows with EXE installer' do
+      cached(:chef_run)  do
+        set_env_var('ProgramData', 'C:\ProgramData')
+        ChefSpec::SoloRunner.new(
+          :platform => 'windows',
+          :version => '2012R2',
+          :file_cache_path => 'C:/chef/cache'
+        ) do |node|
+          node.set['datadog'] = {
+            'api_key' => 'somethingnotnil',
+            'windows_agent_use_exe' => true
+          }
+        end.converge described_recipe
+      end
+
+      it_behaves_like 'windows Datadog Agent', :exe
     end
   end
 
@@ -231,7 +249,7 @@ describe 'datadog::dd-agent' do
 
       temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
 
-      it_behaves_like 'windows Datadog Agent'
+      it_behaves_like 'windows Datadog Agent', :msi
       # remote_file source gets converted to an array, so we need to do
       # some tricky things to be able to regex against it
       # Relevant: http://stackoverflow.com/a/12325983
@@ -286,7 +304,7 @@ describe 'datadog::dd-agent' do
 
       temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
 
-      it_behaves_like 'windows Datadog Agent'
+      it_behaves_like 'windows Datadog Agent', :msi
       # remote_file source gets converted to an array, so we need to do
       # some tricky things to be able to regex against it
       # Relevant: http://stackoverflow.com/a/12325983

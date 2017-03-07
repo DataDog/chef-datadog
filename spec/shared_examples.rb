@@ -72,20 +72,25 @@ shared_examples_for 'common windows resources' do
   end
 end
 
-shared_examples_for 'windows Datadog Agent' do
+shared_examples_for 'windows Datadog Agent' do |installer_extension|
   it_behaves_like 'common windows resources'
 
-  agent_installer = 'C:/chef/cache/ddagent-cli.msi'
+  agent_installer = "C:/chef/cache/ddagent-cli.#{installer_extension}"
 
   it 'downloads the remote file only if it\'s changed' do
     expect(chef_run).to create_remote_file(agent_installer)
   end
 
-  it 'notifies the removal of the Datadog Agent' do
-    expect(chef_run.remote_file(agent_installer)).to notify('windows_package[Datadog Agent]').to(:remove)
+  it 'doesn\'t remove existing version of the Datadog Agent by default' do
+    expect(chef_run.windows_package('Datadog Agent removal')).to do_nothing
+  end
+
+  it 'notifies the removal of the Datadog Agent when a remote file is downloaded' do
+    expect(chef_run.remote_file(agent_installer)).to notify('windows_package[Datadog Agent removal]').to(:remove)
   end
 
   it 'installs Datadog Agent' do
-    expect(chef_run).to install_windows_package('Datadog Agent')
+    installer_type = installer_extension == :msi ? :msi : :custom
+    expect(chef_run).to install_windows_package('Datadog Agent').with(installer_type: installer_type)
   end
 end
