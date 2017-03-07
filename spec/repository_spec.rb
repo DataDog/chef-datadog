@@ -11,7 +11,7 @@ describe 'datadog::repository' do
     end
 
     it 'installs apt-transport-https' do
-      expect(chef_run).to install_package('apt-transport-https')
+      expect(chef_run).to install_package('install-apt-transport-https')
     end
 
     it 'installs new apt key' do
