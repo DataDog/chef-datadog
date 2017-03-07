@@ -79,6 +79,10 @@ dogstatsd-(python|ruby)
 -----------------------
 Installs the language-specific libraries to interact with `dogstatsd`.
 
+ddtrace-(python|ruby)
+---------------------
+Installs the language-specific libraries for application Traces (APM).
+
 other
 -----
 There are many other integration-specific recipes, that are meant to assist in deploying the correct agent configuration files and dependencies for a given integration.
