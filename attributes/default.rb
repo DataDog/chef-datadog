@@ -261,7 +261,7 @@ default['datadog']['receiver_port'] = 8126
 default['datadog']['connection_limit'] = 2000
 
 # ddtrace python version
-default['datadog']['ddtrace_python_ver'] = nil
+default['datadog']['ddtrace_python_version'] = nil
 
 # ddtrace ruby gem version
-default['datadog']['ddtrace_gem_ver'] = nil
+default['datadog']['ddtrace_gem_version'] = nil
