@@ -144,7 +144,7 @@ describe 'datadog::dd-agent' do
     end
 
     context 'on Windows' do
-      cached(:chef_run)  do
+      cached(:chef_run) do
         set_env_var('ProgramData', 'C:\ProgramData')
         ChefSpec::SoloRunner.new(
           :platform => 'windows',
@@ -159,7 +159,7 @@ describe 'datadog::dd-agent' do
     end
 
     context 'on Windows with EXE installer' do
-      cached(:chef_run)  do
+      cached(:chef_run) do
         set_env_var('ProgramData', 'C:\ProgramData')
         ChefSpec::SoloRunner.new(
           :platform => 'windows',
