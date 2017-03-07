@@ -34,6 +34,8 @@ chef_gem 'chef-handler-datadog' do # ~FC009
   version node['datadog']['chef_handler_version']
   # Chef 12 introduced `compile_time` - remove when Chef 11 is EOL.
   compile_time true if respond_to?(:compile_time)
+  clear_sources true if node['datadog']['gem_server']
+  source node['datadog']['gem_server'] if node['datadog']['gem_server']
 end
 require 'chef/handler/datadog'
 
