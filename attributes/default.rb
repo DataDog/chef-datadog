@@ -112,7 +112,7 @@ default['datadog']['yumrepo_gpgkey_new'] = "#{yum_protocol}://yum.datadoghq.com/
 default['datadog']['windows_agent_checksum'] = nil
 
 # Set to `true` to use the EXE installer on Windows, recommended to gracefully handle upgrades from per-user
-# to per-machine installs for all known use cases. We recommend setting this option to `true` for Agent upgrades from
+# to per-machine installs on most environments. We recommend setting this option to `true` for Agent upgrades from
 # versions <= 5.10.1 to versions >= 5.12.0.
 # The EXE installer exists since Agent release 5.12.0
 # If you're already using version >= 5.12.0 of the Agent, leave this to false.
