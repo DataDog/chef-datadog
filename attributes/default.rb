@@ -256,7 +256,6 @@ default['datadog']['legacy_integrations']['nagios']['enabled'] = false
 default['datadog']['legacy_integrations']['nagios']['description'] = 'Nagios integration'
 default['datadog']['legacy_integrations']['nagios']['config']['nagios_log'] = '/var/log/nagios3/nagios.log'
 
-<<<<<<< HEAD
 # Trace functionality settings
 default['datadog']['enable_trace_agent'] = false
 default['datadog']['extra_sample_rate'] = 1
