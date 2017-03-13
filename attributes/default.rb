@@ -268,3 +268,8 @@ default['datadog']['ddtrace_python_version'] = nil
 
 # ddtrace ruby gem version
 default['datadog']['ddtrace_gem_version'] = nil
+
+# For custom gem servers on restricted networks
+# This attribute only works on Chef >= 12.3
+# Change flase to the URL of your custom gem server
+default{'datadog']['gem_server'] = false
