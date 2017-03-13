@@ -95,13 +95,11 @@ Usage
   * as a node attribute via an `environment` or `role`, or
   * as a node attribute by declaring it in another cookbook at a higher precedence level, or
   * in the node `run_state` by setting `node.run_state['datadog']['api_key']` in another cookbook preceding `datadog`'s recipes in the run_list. This approach has the benefit of not storing the credential in clear text on the Chef Server.
-3. If you require a private gem server to install the chef-handler-datadog gem, set a node attribute:
-  * e.g. ```default['datadog']['gem_server'] = 'http://custom.gem_server.org'```
-4. Create an 'application key' for `chef_handler` [here](https://app.datadoghq.com/account/settings#api), and add it as a node attribute or in the run state, as in Step #2.
+3. Create an 'application key' for `chef_handler` [here](https://app.datadoghq.com/account/settings#api), and add it as a node attribute or in the run state, as in Step #2.
 
    NB: if you're using the run state to store the api and app keys you need to set them at compile time before `datadog::dd-handler` in the run list.
 
-5. Associate the recipes with the desired `roles`, i.e. "role:chef-client" should contain "datadog::dd-handler" and a "role:base" should start the agent with "datadog::dd-agent".  Here's an example role with both recipes:
+4. Associate the recipes with the desired `roles`, i.e. "role:chef-client" should contain "datadog::dd-handler" and a "role:base" should start the agent with "datadog::dd-agent".  Here's an example role with both recipes:
   ```
   name 'example'
   description 'Example role using DataDog'
@@ -118,7 +116,7 @@ Usage
     recipe[datadog::dd-handler]
   )
   ```
-6. Wait until `chef-client` runs on the target node (or trigger chef-client manually if you're impatient)
+5. Wait until `chef-client` runs on the target node (or trigger chef-client manually if you're impatient)
 
 We are not making use of data_bags in this recipe at this time, as it is unlikely that you will have more than one API key and one application key.
 
