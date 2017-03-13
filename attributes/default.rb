@@ -256,7 +256,19 @@ default['datadog']['legacy_integrations']['nagios']['enabled'] = false
 default['datadog']['legacy_integrations']['nagios']['description'] = 'Nagios integration'
 default['datadog']['legacy_integrations']['nagios']['config']['nagios_log'] = '/var/log/nagios3/nagios.log'
 
+# Trace functionality settings
+default['datadog']['enable_trace_agent'] = false
+default['datadog']['extra_sample_rate'] = 1
+default['datadog']['max_traces_per_second'] = 10
+default['datadog']['receiver_port'] = 8126
+default['datadog']['connection_limit'] = 2000
+
+# ddtrace python version
+default['datadog']['ddtrace_python_version'] = nil
+
+# ddtrace ruby gem version
+default['datadog']['ddtrace_gem_version'] = nil
+
 # For custom gem servers on restricted networks
-# This attribute only works on Chef >= 12.3
 # Change false to the URL of your custom gem server
 default['datadog']['gem_server'] = false
