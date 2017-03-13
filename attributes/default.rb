@@ -257,5 +257,6 @@ default['datadog']['legacy_integrations']['nagios']['description'] = 'Nagios int
 default['datadog']['legacy_integrations']['nagios']['config']['nagios_log'] = '/var/log/nagios3/nagios.log'
 
 # For custom gem servers on restricted networks
+# This attribute only works on Chef >= 12.3
 # Change false to the URL of your custom gem server
 default['datadog']['gem_server'] = false
