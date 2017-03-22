@@ -79,6 +79,8 @@ Installs the Datadog agent on the target system, sets the API key, and start the
 
   Once the upgrade is complete, you can leave the attribute to its default value (`false`).
 
+  For more information on these Windows packaging changes, see the related [docs on the dd-agent wiki](https://github.com/DataDog/dd-agent/wiki/Windows-Agent-Installation).
+
 dd-handler
 ----------
 Installs the [chef-handler-datadog](https://rubygems.org/gems/chef-handler-datadog) gem and invokes the handler at the end of a Chef run to report the details back to the newsfeed.
