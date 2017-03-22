@@ -24,8 +24,9 @@ dd_agent_version =
     node['datadog']['agent_version']
   end
 
-# If no version is specified, select the latest package
-dd_agent_installer_basename = dd_agent_version ? "ddagent-cli-#{dd_agent_version}" : 'ddagent-cli'
+# If no version is specified, select the latest package.
+# The latest package basename is `ddagent-cli-latest` since Agent version 5.12.0
+dd_agent_installer_basename = dd_agent_version ? "ddagent-cli-#{dd_agent_version}" : 'ddagent-cli-latest'
 temp_file_basename = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli')
 
 if node['datadog']['windows_agent_use_exe']
