@@ -1,6 +1,22 @@
 Changes
 =======
 
+# 2.9.0 / Unreleased
+
+This release should be fully compatible with Chef 13.
+
+**Note for Windows users**: Upgrading to Agent versions >= 5.12.0 should be done using the EXE installer
+(see README)
+
+* [FEATURE] Allow configuration of Traces settings in datadog.conf, [#402][] [@mlcooper][]
+* [FEATURE] Support upgrades to Windows Agents >= 5.12.0 (EXE installer option), [#410][] [@olivielpeau][]
+* [FEATURE] Add `send_policy_tags` option for handler, [#398][] [@olivielpeau][]
+* [FEATURE] Add attribute to customize the gem server of the handler, [#413][] [@dsalvador-dsalvador][]
+* [OPTIMIZE] Rename `package[apt-transport-https]` resource for Chef 13 compatibility, [#388][] [@bai][]
+* [OPTIMIZE] Guard new GPG key from always being downloaded, [#404][] [@iancward][]
+* [MISC] Loosen constraint on `chef_handler` cookbook version, [#414][] [@olivielpeau][]
+* [MISC] Add constraint on `windows` cookbook version, [#415][] [@olivielpeau][]
+
 # 2.8.1 / 2017-02-03
 
 * [BUGFIX] Fix agent version pinning on Windows, [#400][] [@olivielpeau][]
@@ -488,10 +504,18 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#383]: https://github.com/DataDog/chef-datadog/issues/383
 [#384]: https://github.com/DataDog/chef-datadog/issues/384
 [#387]: https://github.com/DataDog/chef-datadog/issues/387
+[#388]: https://github.com/DataDog/chef-datadog/issues/388
 [#390]: https://github.com/DataDog/chef-datadog/issues/390
 [#395]: https://github.com/DataDog/chef-datadog/issues/395
 [#397]: https://github.com/DataDog/chef-datadog/issues/397
+[#398]: https://github.com/DataDog/chef-datadog/issues/398
 [#400]: https://github.com/DataDog/chef-datadog/issues/400
+[#402]: https://github.com/DataDog/chef-datadog/issues/402
+[#404]: https://github.com/DataDog/chef-datadog/issues/404
+[#410]: https://github.com/DataDog/chef-datadog/issues/410
+[#413]: https://github.com/DataDog/chef-datadog/issues/413
+[#414]: https://github.com/DataDog/chef-datadog/issues/414
+[#415]: https://github.com/DataDog/chef-datadog/issues/415
 [@ABrehm264]: https://github.com/ABrehm264
 [@BrentOnRails]: https://github.com/BrentOnRails
 [@DorianZaccaria]: https://github.com/DorianZaccaria
@@ -509,6 +533,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@antonio-osorio]: https://github.com/antonio-osorio
 [@arthurnn]: https://github.com/arthurnn
 [@babbottscott]: https://github.com/babbottscott
+[@bai]: https://github.com/bai
 [@bitmonk]: https://github.com/bitmonk
 [@brentm5]: https://github.com/brentm5
 [@ccannell67]: https://github.com/ccannell67
@@ -525,6 +550,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@dominicchan]: https://github.com/dominicchan
 [@donaldguy]: https://github.com/donaldguy
 [@drewrothstein]: https://github.com/drewrothstein
+[@dsalvador-dsalvador]: https://github.com/dsalvador-dsalvador
 [@dwradcliffe]: https://github.com/dwradcliffe
 [@eherot]: https://github.com/eherot
 [@elafarge]: https://github.com/elafarge
