@@ -44,9 +44,21 @@ end
 
 # Use a separate resource without a `source` so that it looks in the Registry to find the MSI to use
 # for the package removal
-windows_package 'Datadog Agent removal' do
-  package_name 'Datadog Agent'
-  action :nothing
+# On Chef >= 12.6, we have to use the `package` resource instead of `windows_package` to allow not specifying a source
+# (this is related to the way the windows cookbook changes the provider of `windows_package` depending on the
+# version of Chef, and to improvements on the `package` resource made in Chef 12.6)
+# FIXME: when we remove Chef < 12.6 support on Windows, which should allow using core resources only
+use_windows_package_resource = Gem::Version.new(Chef::VERSION) < Gem::Version.new('12.6.0')
+if use_windows_package_resource
+  windows_package 'Datadog Agent removal' do
+    package_name 'Datadog Agent'
+    action :nothing
+  end
+else
+  package 'Datadog Agent removal' do
+    package_name 'Datadog Agent'
+    action :nothing
+  end
 end
 
 package_retries = node['datadog']['agent_package_retries']
@@ -60,7 +72,11 @@ remote_file temp_file do
   retry_delay package_retry_delay unless package_retry_delay.nil?
   # As of v1.37, the windows cookbook doesn't upgrade the package if a newer version is downloaded
   # As a workaround uninstall the package first if a new MSI is downloaded
-  notifies :remove, 'windows_package[Datadog Agent removal]', :immediately
+  if use_windows_package_resource
+    notifies :remove, 'windows_package[Datadog Agent removal]', :immediately
+  else
+    notifies :remove, 'package[Datadog Agent removal]', :immediately
+  end
 end
 
 # Install the package

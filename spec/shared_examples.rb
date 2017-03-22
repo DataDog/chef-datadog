@@ -82,11 +82,11 @@ shared_examples_for 'windows Datadog Agent' do |installer_extension|
   end
 
   it 'doesn\'t remove existing version of the Datadog Agent by default' do
-    expect(chef_run.windows_package('Datadog Agent removal')).to do_nothing
+    expect(chef_run.package('Datadog Agent removal')).to do_nothing
   end
 
   it 'notifies the removal of the Datadog Agent when a remote file is downloaded' do
-    expect(chef_run.remote_file(agent_installer)).to notify('windows_package[Datadog Agent removal]').to(:remove)
+    expect(chef_run.remote_file(agent_installer)).to notify('package[Datadog Agent removal]').to(:remove)
   end
 
   it 'installs Datadog Agent' do
