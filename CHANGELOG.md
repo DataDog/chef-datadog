@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 2.9.0 / Unreleased
+# 2.9.0 / 2017-03-24
 
 This release should be fully compatible with Chef 13.
 
