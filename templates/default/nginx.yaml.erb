@@ -1,6 +1,12 @@
 instances:
 <% @instances.each do |i| -%>
   - nginx_status_url: <%= i['nginx_status_url'] %>
+    <%= "ssl_validation: #{i['ssl_validation']}" unless i['ssl_validation'].nil? -%>
+  <%# don't print user/password if either is nil -%>
+  <% unless i['user'].nil? || i['password'].nil? -%>
+    user: <%= i['user'] %>
+    password: <%= i['password'] %>
+  <% end -%>
   <% if i.key?('tags') -%>
     tags:
     <% i['tags'].each do |t| -%>
