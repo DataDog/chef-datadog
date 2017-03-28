@@ -72,6 +72,8 @@ max_traces_per_second: <%= node['datadog']['max_traces_per_second'] %>
 [trace.receiver]
 receiver_port: <%= node['datadog']['receiver_port'] %>
 connection_limit: <%= node['datadog']['connection_limit'] %>
+
+[Main]
 <% end -%>
 
 <% if node['datadog']['dogstatsd'] -%>
