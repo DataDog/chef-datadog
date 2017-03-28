@@ -1,6 +1,10 @@
 Changes
 =======
 
+# 2.9.1 / 2017-03-28
+
+* [BUGFIX] Keep main agent config in `Main` section when `enable_trace_agent` is true, [#419][] [@bflad][]
+
 # 2.9.0 / 2017-03-24
 
 This release should be fully compatible with Chef 13.
@@ -516,6 +520,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#413]: https://github.com/DataDog/chef-datadog/issues/413
 [#414]: https://github.com/DataDog/chef-datadog/issues/414
 [#415]: https://github.com/DataDog/chef-datadog/issues/415
+[#419]: https://github.com/DataDog/chef-datadog/issues/419
 [@ABrehm264]: https://github.com/ABrehm264
 [@BrentOnRails]: https://github.com/BrentOnRails
 [@DorianZaccaria]: https://github.com/DorianZaccaria
@@ -534,6 +539,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@arthurnn]: https://github.com/arthurnn
 [@babbottscott]: https://github.com/babbottscott
 [@bai]: https://github.com/bai
+[@bflad]: https://github.com/bflad
 [@bitmonk]: https://github.com/bitmonk
 [@brentm5]: https://github.com/brentm5
 [@ccannell67]: https://github.com/ccannell67
