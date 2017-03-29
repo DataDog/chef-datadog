@@ -87,19 +87,6 @@ sd_backend_port: <%= node['datadog']['sd_backend_port'] %>
 sd_template_dir: <%= node['datadog']['sd_template_dir'] %>
 <% end -%>
 
-<% if node['datadog']['enable_trace_agent'] == true -%>
-## Trace settings
-apm_enabled: true
-
-[trace.sampler]
-extra_sample_rate: <%= node['datadog']['extra_sample_rate'] %>
-max_traces_per_second: <%= node['datadog']['max_traces_per_second'] %>
-
-[trace.receiver]
-receiver_port: <%= node['datadog']['receiver_port'] %>
-connection_limit: <%= node['datadog']['connection_limit'] %>
-<% end -%>
-
 <% if node['datadog']['dogstatsd'] -%>
 # ========================================================================== #
 # DogStatsd configuration                                                    #
@@ -189,4 +176,17 @@ end
 <%= k %>: <%= v %>
     <% end -%>
   <% end -%>
+<% end -%>
+
+<% if node['datadog']['enable_trace_agent'] == true -%>
+## Trace settings
+apm_enabled: true
+
+[trace.sampler]
+extra_sample_rate: <%= node['datadog']['extra_sample_rate'] %>
+max_traces_per_second: <%= node['datadog']['max_traces_per_second'] %>
+
+[trace.receiver]
+receiver_port: <%= node['datadog']['receiver_port'] %>
+connection_limit: <%= node['datadog']['connection_limit'] %>
 <% end -%>
