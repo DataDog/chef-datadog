@@ -263,6 +263,14 @@ default['datadog']['legacy_integrations']['nagios']['enabled'] = false
 default['datadog']['legacy_integrations']['nagios']['description'] = 'Nagios integration'
 default['datadog']['legacy_integrations']['nagios']['config']['nagios_log'] = '/var/log/nagios3/nagios.log'
 
+# Service discovery settings
+# Enable with service_discovery_backend ('docker' is only valid option currently)
+default['datadog']['sd_backend_host'] = '127.0.0.1'
+default['datadog']['sd_backend_port'] = 4001
+default['datadog']['sd_config_backend'] = 'etcd'
+default['datadog']['sd_template_dir'] = '/datadog/check_configs'
+default['datadog']['service_discovery_backend'] = nil
+
 # Trace functionality settings
 default['datadog']['enable_trace_agent'] = false
 default['datadog']['extra_sample_rate'] = 1
