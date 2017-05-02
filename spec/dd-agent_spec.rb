@@ -199,7 +199,7 @@ describe 'datadog::dd-agent' do
     cached(:chef_run) do
       ChefSpec::SoloRunner.new(
         :platform => 'ubuntu',
-        :version => '10.04'
+        :version => '14.04'
       ) do |node|
         node.set['datadog'] = {
           'api_key' => 'somethingnotnil',
@@ -218,7 +218,7 @@ describe 'datadog::dd-agent' do
       cached(:chef_run) do
         ChefSpec::SoloRunner.new(
           :platform => 'ubuntu',
-          :version => '14.10'
+          :version => '14.04'
         ) do |node|
           node.set['datadog'] = {
             'api_key' => 'somethingnotnil',
@@ -265,7 +265,7 @@ describe 'datadog::dd-agent' do
       cached(:chef_run) do
         ChefSpec::SoloRunner.new(
           :platform => 'ubuntu',
-          :version => '14.10'
+          :version => '14.04'
         ) do |node|
           node.set['datadog'] = {
             'api_key' => 'somethingnotnil',
