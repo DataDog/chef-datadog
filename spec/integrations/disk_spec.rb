@@ -3,16 +3,16 @@ describe 'datadog::disk' do
   init_config: {}
 
   instances:
-    - use_mount: 'yes'
+    - use_mount: true
       excluded_filesystems:
         - tmpfs
       excluded_disks:
         - /dev/sda1
         - /dev/sda2
       excluded_disk_re: '/dev/sde.*'
-      tag_by_filesystem: 'no'
+      tag_by_filesystem: false
       excluded_mountpoint_re: '/mnt/somebody-elses-problem.*'
-      all_partitions: 'no'
+      all_partitions: false
   EOF
 
   cached(:chef_run) do
@@ -23,13 +23,13 @@ describe 'datadog::disk' do
         disk: {
           instances: [
             {
-              use_mount: 'yes',
+              use_mount: true,
               excluded_filesystems: ['tmpfs'],
               excluded_disks: ['/dev/sda1', '/dev/sda2'],
               excluded_disk_re: '/dev/sde.*',
-              tag_by_filesystem: 'no',
+              tag_by_filesystem: false,
               excluded_mountpoint_re: '/mnt/somebody-elses-problem.*',
-              all_partitions: 'no'
+              all_partitions: false
             }
           ]
         }

@@ -14,7 +14,7 @@ include_recipe 'datadog::dd-agent'
 # example configuration:
 # node['datadog']['disk']['instances'] = [
 #   {
-#     'use_mount' => 'yes',
+#     'use_mount' => true,
 #     'excluded_filesystems' => [
 #       'tmpfs'
 #     ],
@@ -23,9 +23,9 @@ include_recipe 'datadog::dd-agent'
 #       '/dev/sda2'
 #     ],
 #     'excluded_disk_re' => '/dev/sde.*',
-#     'tag_by_filesystem' => 'no',
+#     'tag_by_filesystem' => false,
 #     'excluded_mountpoint_re' => '/mnt/somebody-elses-problem.*',
-#     'all_partitions' => 'no'
+#     'all_partitions' => false
 #   }
 # ]
 
