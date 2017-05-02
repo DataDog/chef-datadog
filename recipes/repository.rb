@@ -42,6 +42,24 @@ when 'debian'
     action :add
   end
 
+  apt_repository 'datadog-beta' do
+    keyserver 'hkp://keyserver.ubuntu.com:80'
+    key 'C7A7DA52'
+    uri node['datadog']['agent6_aptrepo']
+    distribution node['datadog']['agent6_aptrepo_dist']
+    components ['main']
+    if node['datadog']['agent6'] &&
+       (node['datadog']['agent6_aptrepo'] != node['datadog']['aptrepo'] ||
+       node['datadog']['agent6_aptrepo_dist'] != node['datadog']['aptrepo_dist'])
+      # add the beta repo iff:
+      # * agent6 is selected (avoid automatic upgrades to agent6 if it's not), and
+      # * the node is configured to use a different repo than the agent5 (avoid duplicate repos)
+      action :add
+    else
+      action :remove
+    end
+  end
+
 when 'rhel', 'fedora'
   # Import new RPM key
   if node['datadog']['yumrepo_gpgkey_new']

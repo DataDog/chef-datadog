@@ -28,6 +28,43 @@ default['datadog']['api_key'] = nil
 # Set it as an attribute, or on your node `run_state` under the key `['datadog']['application_key']`
 default['datadog']['application_key'] = nil
 
+########################################################################
+###            Beta-Agent6-only attributes, experimental             ###
+### These attributes are not part of the stable API of the cookbook  ###
+###   Subject to breaking changes between bugfix/minor versions      ###
+###                Only works on debianoids for now                  ###
+
+# Set to true to install an agent6 instead of agent5.
+# To upgrade from agent5 to agent6, you need to:
+# * set node['datadog']['agent6'] to true, and
+# * either set node['datadog']['agent6_version'] to an existing agent6 version (recommended), or
+#   set node['datadog']['agent6_package_action'] to 'upgrade'
+# To downgrade from agent6 to agent5, you need to:
+# * set node['datadog']['agent6'] to false, and
+# * pin node['datadog']['agent_version'] to an existing agent5 version, and
+# * set node['datadog']['agent_allow_downgrade'] to true
+default['datadog']['agent6'] = false
+# Default of `nil` will install latest version, applies to agent6 only.
+# See documentation of `agent_version` attribute for allowed configuration format.
+default['datadog']['agent6_version'] = nil
+default['datadog']['agent6_package_action'] = 'install' # set to `upgrade` to always upgrade to latest
+
+# beta APT repo where datadog-agent v6 packages are available
+default['datadog']['agent6_aptrepo'] = 'http://apt.datadoghq.com'
+default['datadog']['agent6_aptrepo_dist'] = 'beta'
+
+# Values that differ on Windows
+# The location of the config folder (containing conf.d)
+default['datadog']['agent6_config_dir'] = '/etc/datadog-agent'
+
+# Set a key to true to make the agent6 use the v2 api on that endpoint, false otherwise.
+# Leave key value to nil to use agent6 default for that endpoint.
+# Supported keys: "series", "events", "service checks"
+default['datadog']['use_v2_api'] = {}
+
+###           End of Beta-Agent6-only experimental attributes        ###
+########################################################################
+
 # Use this attribute to send data to additional accounts
 # (agent and handler if enabled)
 # The key can be anything you want, 'prod' is used there as an example
@@ -93,6 +130,8 @@ yum_protocol =
     'https'
   end
 
+# NB: if you're not using the default repos and/or distributions, make sure
+# to pin the version you're installing with node['datadog']['agent_version']
 default['datadog']['installrepo'] = true
 default['datadog']['aptrepo'] = 'http://apt.datadoghq.com'
 default['datadog']['aptrepo_dist'] = 'stable'
