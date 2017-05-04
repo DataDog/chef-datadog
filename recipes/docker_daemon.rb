@@ -19,7 +19,7 @@
 include_recipe 'datadog::dd-agent'
 
 # Build a data structure with configuration.
-# @see https://www.datadoghq.com/2014/06/monitor-docker-datadog/
+# @see http://docs.datadoghq.com/integrations/docker/
 # @example
 #   node.override['datadog']['docker_daemon']['init_config'] = {
 #     docker_root: '/',

@@ -2,7 +2,7 @@ include_recipe 'datadog::dd-agent'
 
 # Monitor network
 #
-# node.datadog.network.instances = [
+# node.override['datadog']['network']['instances'] = [
 #   {
 #     :collect_connection_state => "false",
 #     :excluded_interfaces => ["lo","lo0"]

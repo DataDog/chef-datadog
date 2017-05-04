@@ -18,8 +18,9 @@
 #
 include_recipe 'datadog::dd-agent'
 
+# The docker check is deprecated, please use the docker_daemon check instead.
 # Build a data structure with configuration.
-# @see https://www.datadoghq.com/2014/06/monitor-docker-datadog/
+# @see http://docs.datadoghq.com/integrations/docker/
 # @example
 #   node.override['datadog']['docker']['instances'] = [
 #     {
