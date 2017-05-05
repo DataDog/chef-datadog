@@ -183,6 +183,11 @@ end
 apm_enabled: <%= node['datadog']['enable_trace_agent'] %>
 <% end -%>
 
+[trace.config]
+<% unless node['datadog']['trace_env'].nil? -%>
+env: <%= node['datadog']['trace_env'] %>
+<% end -%>
+
 [trace.sampler]
 <% unless node['datadog']['extra_sample_rate'].nil? -%>
 extra_sample_rate: <%= node['datadog']['extra_sample_rate'] %>
