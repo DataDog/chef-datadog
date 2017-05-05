@@ -178,17 +178,23 @@ end
   <% end -%>
 <% end -%>
 
-<% if node['datadog']['enable_trace_agent'] == true -%>
 ## Trace settings
-apm_enabled: true
+<% if node['datadog']['enable_trace_agent'].is_a?(TrueClass) || node['datadog']['enable_trace_agent'].is_a?(FalseClass) -%>
+apm_enabled: <%= node['datadog']['enable_trace_agent'] %>
+<% end -%>
 
 [trace.sampler]
+<% unless node['datadog']['extra_sample_rate'].nil? -%>
 extra_sample_rate: <%= node['datadog']['extra_sample_rate'] %>
+<% end -%>
+<% unless node['datadog']['max_traces_per_second'].nil? -%>
 max_traces_per_second: <%= node['datadog']['max_traces_per_second'] %>
+<% end -%>
 
 [trace.receiver]
+<% unless node['datadog']['receiver_port'].nil? -%>
 receiver_port: <%= node['datadog']['receiver_port'] %>
+<% end -%>
+<% unless node['datadog']['connection_limit'].nil? -%>
 connection_limit: <%= node['datadog']['connection_limit'] %>
-<% else -%>
-apm_enabled: false
 <% end -%>

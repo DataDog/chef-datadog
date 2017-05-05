@@ -272,11 +272,15 @@ default['datadog']['sd_template_dir'] = '/datadog/check_configs'
 default['datadog']['service_discovery_backend'] = nil
 
 # Trace functionality settings
-default['datadog']['enable_trace_agent'] = false
-default['datadog']['extra_sample_rate'] = 1
-default['datadog']['max_traces_per_second'] = 10
-default['datadog']['receiver_port'] = 8126
-default['datadog']['connection_limit'] = 2000
+# Set `enable_trace_agent` to:
+# * `true` to explicitly enable the trace agent
+# * `false` to explicitly disable it
+# Leave it to `nil` to let the agent's default behavior decide whether to run the trace-agent
+default['datadog']['enable_trace_agent'] = nil
+default['datadog']['extra_sample_rate'] = nil
+default['datadog']['max_traces_per_second'] = nil
+default['datadog']['receiver_port'] = nil
+default['datadog']['connection_limit'] = nil
 
 # ddtrace python version
 default['datadog']['ddtrace_python_version'] = nil
