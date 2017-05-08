@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 2.10.0 / Unreleased
+# 2.10.0 / 2017-05-08
 
 * [FEATURE] Update nginx configuration template, [#417][] [@iancward][]
 * [FEATURE] Add service discovery attributes to `datadog.conf`, [#420][] [@bflad][]
