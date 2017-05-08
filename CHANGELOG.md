@@ -1,6 +1,18 @@
 Changes
 =======
 
+# 2.10.0 / Unreleased
+
+* [FEATURE] Update nginx configuration template, [#417][] [@iancward][]
+* [FEATURE] Add service discovery attributes to `datadog.conf`, [#420][] [@bflad][]
+* [FEATURE] Add Kubernetes recipe, [#409][] [@xt99][]
+* [FEATURE] Add SQLServer recipe, [#425][] [@mlcooper][]
+* [FEATURE] Add disk integration recipe, [#430][] [@iancward][]
+* [FEATURE] Add more options to Mongo & Elasticsearch templates, [#424][] [@gkze][]
+* [FEATURE] Allow disabling `apm_enabled` in `datadog.conf`, [#428][] [@ed-flanagan][]
+* [FEATURE] Let the trace-agent use its own default settings, [#433][] [@olivielpeau][]
+* [FEATURE] Allow specifying trace env, [#435][] [@krasnoukhov][]
+
 # 2.9.1 / 2017-03-28
 
 * [BUGFIX] Keep main agent config in `Main` section when `enable_trace_agent` is true, [#419][] [@bflad][]
@@ -516,11 +528,20 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#400]: https://github.com/DataDog/chef-datadog/issues/400
 [#402]: https://github.com/DataDog/chef-datadog/issues/402
 [#404]: https://github.com/DataDog/chef-datadog/issues/404
+[#409]: https://github.com/DataDog/chef-datadog/issues/409
 [#410]: https://github.com/DataDog/chef-datadog/issues/410
 [#413]: https://github.com/DataDog/chef-datadog/issues/413
 [#414]: https://github.com/DataDog/chef-datadog/issues/414
 [#415]: https://github.com/DataDog/chef-datadog/issues/415
+[#417]: https://github.com/DataDog/chef-datadog/issues/417
 [#419]: https://github.com/DataDog/chef-datadog/issues/419
+[#420]: https://github.com/DataDog/chef-datadog/issues/420
+[#424]: https://github.com/DataDog/chef-datadog/issues/424
+[#425]: https://github.com/DataDog/chef-datadog/issues/425
+[#428]: https://github.com/DataDog/chef-datadog/issues/428
+[#430]: https://github.com/DataDog/chef-datadog/issues/430
+[#433]: https://github.com/DataDog/chef-datadog/issues/433
+[#435]: https://github.com/DataDog/chef-datadog/issues/435
 [@ABrehm264]: https://github.com/ABrehm264
 [@BrentOnRails]: https://github.com/BrentOnRails
 [@DorianZaccaria]: https://github.com/DorianZaccaria
@@ -558,11 +579,13 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@drewrothstein]: https://github.com/drewrothstein
 [@dsalvador-dsalvador]: https://github.com/dsalvador-dsalvador
 [@dwradcliffe]: https://github.com/dwradcliffe
+[@ed-flanagan]: https://github.com/ed-flanagan
 [@eherot]: https://github.com/eherot
 [@elafarge]: https://github.com/elafarge
 [@elijahandrews]: https://github.com/elijahandrews
 [@evan2645]: https://github.com/evan2645
 [@flah00]: https://github.com/flah00
+[@gkze]: https://github.com/gkze
 [@gmmeyer]: https://github.com/gmmeyer
 [@graemej]: https://github.com/graemej
 [@gregf]: https://github.com/gregf
@@ -586,6 +609,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@jvrplmlmn]: https://github.com/jvrplmlmn
 [@khouse]: https://github.com/khouse
 [@kindlyseth]: https://github.com/kindlyseth
+[@krasnoukhov]: https://github.com/krasnoukhov
 [@kurochan]: https://github.com/kurochan
 [@martinisoft]: https://github.com/martinisoft
 [@mattrobenolt]: https://github.com/mattrobenolt
@@ -616,5 +640,6 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@tmichelet]: https://github.com/tmichelet
 [@uzyexe]: https://github.com/uzyexe
 [@wk8]: https://github.com/wk8
+[@xt99]: https://github.com/xt99
 [@yannmh]: https://github.com/yannmh
 [@zshenker]: https://github.com/zshenker
