@@ -13,6 +13,7 @@ include_recipe 'datadog::dd-agent'
 #       "user" => "guest",
 #       "pass" => "guest",
 #       "ssl_verify" => "true"
+#       "tag_families" => "false"
 #     }
 #   ]
 
