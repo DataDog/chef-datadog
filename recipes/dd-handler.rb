@@ -26,6 +26,19 @@ if Chef::Config[:why_run]
   return
 end
 
+# Chef 12 sets the SSL_CERT_FILE env var internally so that it works for Chef code
+# but Datadog doesn't pick it up. It's set using / as the path separator
+# we'll use this to detect that it isn't set in Windows and set it so that DD works
+if platform_family?('windows') && ENV['SSL_CERT_FILE'].include?('/')
+	env 'SSL_CERT_FILE' do
+		value	ENV['SSL_CERT_FILE'].gsub('/', '\\')
+	end
+	
+	# we can't run the handler on this run as the env change doesn't take effect
+	Chef::Log.warn 'Disabling datadog handler on this run as SSL cert file won''t exist yet'
+	node.default['datadog']['chef_handler_enable'] = false
+end
+
 include_recipe 'chef_handler'
 ENV['DATADOG_HOST'] = node['datadog']['url']
 
