@@ -531,8 +531,8 @@ init_config:
             metric_type: gauge
             alias: kafka.replication.leader_elections
     - include:
-        domain: '"kafka.server"'
-        bean: '"kafka.server":type="ControllerStats",name="UncleanLeaderElectionsPerSec"'
+        domain: '"kafka.controller"'
+        bean: '"kafka.controller":type="ControllerStats",name="UncleanLeaderElectionsPerSec"'
         attribute:
           MeanRate:
             metric_type: gauge
