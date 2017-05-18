@@ -203,3 +203,8 @@ receiver_port: <%= node['datadog']['receiver_port'] %>
 <% unless node['datadog']['connection_limit'].nil? -%>
 connection_limit: <%= node['datadog']['connection_limit'] %>
 <% end -%>
+
+<% if node['datadog']['nagios_log'] -%>
+# Nagios log file integration
+nagios_log: <%= node['datadog']['nagios_log'] %>
+<% end -%>

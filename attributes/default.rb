@@ -254,6 +254,9 @@ default['datadog']['extra_config']['forwarder_timeout'] = nil
 # extra_packages to install
 default['datadog']['extra_packages'] = {}
 
+# Nagios log file integration
+default['datadog']['nagios_log'] = nil
+
 # For service-specific configuration, use the integration recipes included
 # in this cookbook, and apply them to the appropirate node's run list.
 # Read more at http://docs.datadoghq.com/
