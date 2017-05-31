@@ -1,6 +1,10 @@
 Changes
 =======
 
+# 2.10.1 / 2017-05-31
+
+* [OPTIMIZE] Add compatibility with `windows` cookbook `3.0`, [#438][] [@olivielpeau][]
+
 # 2.10.0 / 2017-05-08
 
 * [FEATURE] Update nginx configuration template, [#417][] [@iancward][]
@@ -542,6 +546,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#430]: https://github.com/DataDog/chef-datadog/issues/430
 [#433]: https://github.com/DataDog/chef-datadog/issues/433
 [#435]: https://github.com/DataDog/chef-datadog/issues/435
+[#438]: https://github.com/DataDog/chef-datadog/issues/438
 [@ABrehm264]: https://github.com/ABrehm264
 [@BrentOnRails]: https://github.com/BrentOnRails
 [@DorianZaccaria]: https://github.com/DorianZaccaria
