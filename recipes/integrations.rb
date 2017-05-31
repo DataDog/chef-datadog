@@ -30,7 +30,7 @@ include_recipe 'datadog::repository' if node['datadog']['installrepo']
 #   'url' => 'http://localhost:22222'
 # }
 node['datadog']['extra_packages'].each do |name, options|
-  package options['name'] do
+  package options['name'].sub('_', '-') do
     version options['version']
     action :install
   end
