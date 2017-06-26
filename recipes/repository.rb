@@ -43,8 +43,6 @@ when 'debian'
   end
 
 when 'rhel', 'fedora'
-  include_recipe 'yum'
-
   # Import new RPM key
   if node['datadog']['yumrepo_gpgkey_new']
     # gnupg is required to check the downloaded key's fingerprint
