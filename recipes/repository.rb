@@ -42,7 +42,7 @@ when 'debian'
     action :add
   end
 
-when 'rhel', 'fedora'
+when 'rhel', 'fedora', 'amazon'
   include_recipe 'yum'
 
   # Import new RPM key
