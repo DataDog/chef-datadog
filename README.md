@@ -27,7 +27,7 @@ git tag/the gem version you're using for your version's documentation**
 
 Requirements
 ============
-- chef >= 10.14
+- chef-client >= 12.5
 
 Platforms
 ---------
