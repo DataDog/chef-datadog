@@ -15,8 +15,8 @@ platforms:
       debian-7.7
     )
     chef_versions = %w(
-      12.2.1
-      11.18.6
+      12.5.1
+      13.2.20
     )
 
     test_platforms.product(chef_versions).each do |platform_version, chef_version|
