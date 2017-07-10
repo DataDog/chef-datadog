@@ -8,8 +8,8 @@ property :cookbook, String, default: 'datadog'
 # checks have 2 sections: init_config and instances
 # we mimic these here, no validation is performed until the template
 # is evaluated.
-property :init_config, Hash, required: false, default: lazy { {} }
-property :instances, Array, required: false, default: lazy { [] }
+property :init_config, Hash, required: false, default: {}
+property :instances, Array, required: false, default: []
 property :version, Integer, required: false, default: nil
 property :use_integration_template, [TrueClass, FalseClass], required: false, default: false
 
