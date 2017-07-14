@@ -5,7 +5,7 @@ include_recipe 'datadog::dd-agent'
 # @example
 #   node.override['datadog']['redisdb']['instances'] = [
 #     {
-#       'server' => 'localhost',
+#       'host' => 'localhost',
 #       'port' => '6379',
 #       'password' => 'somesecret',
 #       'tags' => ['prod']
