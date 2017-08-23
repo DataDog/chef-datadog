@@ -23,16 +23,16 @@ instances:
     timeout: <%= i["timeout"] %>
     <% end %>
     <% unless i["pending_task_stats"].nil? %>
-    pshard_stats: <%= i["pending_task_stats"] %>
+    pending_task_stats: <%= i["pending_task_stats"] %>
     <% end %>
     <% unless i["ssl_verify"].nil? %>
-    pshard_stats: <%= i["ssl_verify"] %>
+    ssl_verify: <%= i["ssl_verify"] %>
     <% end %>
     <% unless i["ssl_cert"].nil? %>
-    pshard_stats: <%= i["ssl_cert"] %>
+    ssl_cert: <%= i["ssl_cert"] %>
     <% end %>
     <% unless i["ssl_key"].nil? %>
-    pshard_stats: <%= i["ssl_key"] %>
+    ssl_key: <%= i["ssl_key"] %>
     <% end %>
     <% if i.key?('tags') -%>
     tags:
