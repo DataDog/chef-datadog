@@ -14,6 +14,18 @@ instances:
     ssl_certfile: <%= i['ssl_certfile'] %>
     ssl_keyfile: <%= i['ssl_keyfile'] %>
     <% end %>
+    <% if i.key?('additional_metrics') -%>
+    additional_metrics:
+      <% i['additional_metrics'].each do |t| %>
+    - <%= t %>
+      <%end -%>
+    <% end %>
+    <% if i.key?('collections') -%>
+    collections:
+      <% i['collections'].each do |t| %>
+    - <%= t %>
+      <%end -%>
+    <% end %>
   <% end -%>
 
 init_config:
