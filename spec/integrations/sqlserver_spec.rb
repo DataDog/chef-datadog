@@ -85,7 +85,7 @@ end
 describe 'datadog::sqlserver' do
   context 'config 2' do
     expected_yaml = <<-EOF
-    init_config: {}
+    init_config: ~
 
     instances:
       - host: fakehostname,1433

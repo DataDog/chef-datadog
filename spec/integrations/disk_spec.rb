@@ -1,6 +1,6 @@
 describe 'datadog::disk' do
   expected_yaml = <<-EOF
-  init_config: {}
+  init_config: ~
 
   instances:
     - use_mount: true

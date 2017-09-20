@@ -2,7 +2,7 @@ describe 'datadog::integrations' do
   expected_yaml = <<-EOF
     instances:
     - url: 'http://localhost:22222'
-    init_config: {}
+    init_config: ~
   EOF
 
   cached(:chef_run) do
