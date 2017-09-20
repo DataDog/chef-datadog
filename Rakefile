@@ -8,13 +8,13 @@ require 'rake/clean'
 require 'rspec/core/rake_task'
 require 'rubocop/rake_task'
 
-task :default => [
-  :style,
-  :spec
+task :default => %i[
+  style
+  spec
 ]
 
-CLEAN.include %w(.kitchen/ .yardoc/ coverage/)
-CLOBBER.include %w(doc/ Berksfile.lock Gemfile.lock)
+CLEAN.include %w[.kitchen/ .yardoc/ coverage/]
+CLOBBER.include %w[doc/ Berksfile.lock Gemfile.lock]
 
 # Style tests. Rubocop and Foodcritic
 namespace :style do
