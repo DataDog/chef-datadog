@@ -8,7 +8,7 @@ version          '2.10.1'
 source_url       'https://github.com/DataDog/chef-datadog' if respond_to? :source_url
 issues_url       'https://github.com/DataDog/chef-datadog/issues' if respond_to? :issues_url
 
-%w(
+%w[
   amazon
   centos
   debian
@@ -17,7 +17,7 @@ issues_url       'https://github.com/DataDog/chef-datadog/issues' if respond_to?
   scientific
   ubuntu
   windows
-).each do |os|
+].each do |os|
   supports os
 end
 
