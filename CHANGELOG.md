@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 2.11.0 / Unreleased
+# 2.11.0 / 2017-09-21
 
 * [FEATURE] Add configuration for the process-agent, [#465][] [@conorbranagan][]
 * [FEATURE] Add SNMP recipe, [#436][] [@mlcooper][]
