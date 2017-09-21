@@ -1,6 +1,13 @@
 Changes
 =======
 
+# 2.11.0 / Unreleased
+
+* [FEATURE] Add configuration for the process-agent, [#465][] [@conorbranagan][]
+* [FEATURE] Add SNMP recipe, [#436][] [@mlcooper][]
+* [OPTIMIZE] Do not include `yum` recipe to avoid overwriting main yum config, [#446][] [@olivielpeau][]
+* [BUGFIX] Avoid failures of agent `service` resource with frequent restarts on systemd, [#469][] [@olivielpeau][]
+
 # 2.10.1 / 2017-05-31
 
 * [OPTIMIZE] Add compatibility with `windows` cookbook `3.0`, [#438][] [@olivielpeau][]
@@ -546,7 +553,11 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#430]: https://github.com/DataDog/chef-datadog/issues/430
 [#433]: https://github.com/DataDog/chef-datadog/issues/433
 [#435]: https://github.com/DataDog/chef-datadog/issues/435
+[#436]: https://github.com/DataDog/chef-datadog/issues/436
 [#438]: https://github.com/DataDog/chef-datadog/issues/438
+[#446]: https://github.com/DataDog/chef-datadog/issues/446
+[#465]: https://github.com/DataDog/chef-datadog/issues/465
+[#469]: https://github.com/DataDog/chef-datadog/issues/469
 [@ABrehm264]: https://github.com/ABrehm264
 [@BrentOnRails]: https://github.com/BrentOnRails
 [@DorianZaccaria]: https://github.com/DorianZaccaria
@@ -573,6 +584,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@clmoreno]: https://github.com/clmoreno
 [@clofresh]: https://github.com/clofresh
 [@cobusbernard]: https://github.com/cobusbernard
+[@conorbranagan]: https://github.com/conorbranagan
 [@coosh]: https://github.com/coosh
 [@ctrlok]: https://github.com/ctrlok
 [@darron]: https://github.com/darron
