@@ -33,6 +33,10 @@ action :add do
 
   service 'datadog-agent' do
     service_name node['datadog']['agent_name']
+    # HACK: the restart can fail when we hit systemd's restart limits (by default, 5 starts every 10 seconds)
+    # To workaround this, retry once after 5 seconds, and a second time after 10 seconds
+    retries 2
+    retry_delay 5
   end
 end
 
