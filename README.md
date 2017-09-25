@@ -27,7 +27,7 @@ git tag/the gem version you're using for your version's documentation**
 
 Requirements
 ============
-- chef-client >= 12.5
+- chef-client >= 12.7
 
 Platforms
 ---------
@@ -38,7 +38,7 @@ Platforms
 * RedHat
 * Scientific Linux
 * Ubuntu
-* Windows (requires chef >= 12.0)
+* Windows
 
 Cookbooks
 ---------
