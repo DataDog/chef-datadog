@@ -2,7 +2,7 @@ describe 'datadog::repository' do
   context 'on debianoids' do
     cached(:chef_run) do
       ChefSpec::SoloRunner.new(
-        platform: 'debian', version: '8.5'
+        platform: 'debian', version: '8.9'
       ).converge(described_recipe)
     end
 
@@ -29,7 +29,7 @@ describe 'datadog::repository' do
     context 'version 6' do
       cached(:chef_run) do
         ChefSpec::SoloRunner.new(
-          platform: 'centos', version: '6.5'
+          platform: 'centos', version: '6.9'
         ).converge(described_recipe)
       end
 

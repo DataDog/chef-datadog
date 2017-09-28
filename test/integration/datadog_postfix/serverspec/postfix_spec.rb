@@ -1,4 +1,5 @@
 # Encoding: utf-8
+
 require 'json_spec'
 require 'serverspec'
 require 'yaml'

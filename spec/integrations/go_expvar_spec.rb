@@ -1,6 +1,6 @@
 describe 'datadog::go_expvar' do
   expected_yaml = <<-EOF
-    init_config: {}
+    init_config: ~
     instances:
     - expvar_url: http://localhost:8080/debug/vars
       tags:
@@ -24,7 +24,6 @@ describe 'datadog::go_expvar' do
       node.set['datadog'] = {
         'api_key' => 'someapikey',
         'go_expvar' => {
-          init_config: nil,
           instances: [
             {
               'expvar_url' => 'http://localhost:8080/debug/vars',
@@ -53,8 +52,8 @@ describe 'datadog::go_expvar' do
   it { is_expected.to add_datadog_monitor('go_expvar') }
 
   it 'renders expected YAML config file' do
-    expect(chef_run).to render_file('/etc/dd-agent/conf.d/go_expvar.yaml').with_content { |content|
+    expect(chef_run).to(render_file('/etc/dd-agent/conf.d/go_expvar.yaml').with_content { |content|
       expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-    }
+    })
   end
 end

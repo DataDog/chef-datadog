@@ -178,6 +178,10 @@ end
   <% end -%>
 <% end -%>
 
+<% if node['datadog']['enabled_process_agent'].is_a?(TrueClass) || node['datadog']['enabled_process_agent'].is_a?(FalseClass) -%>
+process_agent_enabled: <%= node['datadog']['enabled_process_agent'] %>
+<% end -%>
+
 ## Trace settings
 <% if node['datadog']['enable_trace_agent'].is_a?(TrueClass) || node['datadog']['enable_trace_agent'].is_a?(FalseClass) -%>
 apm_enabled: <%= node['datadog']['enable_trace_agent'] %>
@@ -202,4 +206,32 @@ receiver_port: <%= node['datadog']['receiver_port'] %>
 <% end -%>
 <% unless node['datadog']['connection_limit'].nil? -%>
 connection_limit: <%= node['datadog']['connection_limit'] %>
+<% end -%>
+
+## Process settings
+
+[process.config]
+<% unless node['datadog']['process_agent']['blacklist'].nil? -%>
+blacklist: <%= node['datadog']['process_agent']['blacklist'] %>
+<% end -%>
+<% unless node['datadog']['process_agent']['container_blacklist'].nil? -%>
+container_blacklist: <%= node['datadog']['process_agent']['container_blacklist'] %>
+<% end -%>
+<% unless node['datadog']['process_agent']['container_whitelist'].nil? -%>
+container_whitelist: <%= node['datadog']['process_agent']['container_whitelist'] %>
+<% end -%>
+<% unless node['datadog']['process_agent']['process_interval'].nil? -%>
+process_interval = <%= node['datadog']['process_agent']['process_interval'] %>
+<% end -%>
+<% unless node['datadog']['process_agent']['rtprocess_interval'].nil? -%>
+rtprocess_interval = <%= node['datadog']['process_agent']['rtprocess_interval'] %>
+<% end -%>
+<% unless node['datadog']['process_agent']['container_interval'].nil? -%>
+container_interval = <%= node['datadog']['process_agent']['container_interval'] %>
+<% end -%>
+<% unless node['datadog']['process_agent']['rtcontainer_interval'].nil? -%>
+rtcontainer_interval = <%= node['datadog']['process_agent']['rtcontainer_interval'] %>
+<% end -%>
+<% unless node['datadog']['process_agent']['log_file'].nil? -%>
+log_file: <%= node['datadog']['process_agent']['log_file'] %>
 <% end -%>

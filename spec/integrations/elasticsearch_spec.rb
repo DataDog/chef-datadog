@@ -1,15 +1,15 @@
-describe 'datadog::iis' do
+describe 'datadog::elasticsearch' do
   expected_yaml = <<-EOF
     init_config:
 
     instances:
-      - host: .
-        username: MYREMOTESERVER\\fred
-        password: mysecretpassword
-        sites:
-          - Default Web Site
+      - url: http://localhost:9200
+        username: testuser
+        password: testpassword
+        pshard_stats: true
         tags:
-          - myapp1
+          - 'env:test'
+
   EOF
 
   cached(:chef_run) do
@@ -17,14 +17,14 @@ describe 'datadog::iis' do
       node.automatic['languages'] = { 'python' => { 'version' => '2.7.2' } }
       node.set['datadog'] = {
         api_key: 'someapikey',
-        iis: {
+        elasticsearch: {
           instances: [
             {
-              host: '.',
-              password: 'mysecretpassword',
-              sites: ['Default Web Site'],
-              tags: ['myapp1'],
-              username: 'MYREMOTESERVER\fred'
+              url: 'http://localhost:9200',
+              username: 'testuser',
+              password: 'testpassword',
+              pshard_stats: true,
+              tags: ['env:test']
             }
           ]
         }
@@ -38,10 +38,10 @@ describe 'datadog::iis' do
 
   it { is_expected.to include_recipe('datadog::dd-agent') }
 
-  it { is_expected.to add_datadog_monitor('iis') }
+  it { is_expected.to add_datadog_monitor('elastic') }
 
   it 'renders expected YAML config file' do
-    expect(chef_run).to(render_file('/etc/dd-agent/conf.d/iis.yaml').with_content { |content|
+    expect(chef_run).to(render_file('/etc/dd-agent/conf.d/elastic.yaml').with_content { |content|
       expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
     })
   end
