@@ -42,7 +42,7 @@ when 'debian'
     action :add
   end
 
-when 'rhel', 'fedora'
+when 'rhel', 'fedora', 'amazon'
   # Import new RPM key
   if node['datadog']['yumrepo_gpgkey_new']
     # gnupg is required to check the downloaded key's fingerprint

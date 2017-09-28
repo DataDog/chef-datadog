@@ -60,7 +60,7 @@ else
       action node['datadog']['agent_package_action'] # default is :install
       options '--force-yes' if node['datadog']['agent_allow_downgrade']
     end
-  when 'rhel', 'fedora'
+  when 'rhel', 'fedora', 'amazon'
     yum_package 'datadog-agent' do
       version dd_agent_version
       retries package_retries unless package_retries.nil?
