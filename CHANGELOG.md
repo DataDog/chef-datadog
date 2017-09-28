@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 2.12.0 / Unreleased
+# 2.12.0 / 2017-09-28
 
 * [FEATURE] Support of Agent 6 beta for debianoids, [#472][] [@olivielpeau][]
 * [FEATURE] Add `tag_families` option to RabbitMQ template, [#437][] & [#460][] [@lefthand][] & [@foobarto][]
