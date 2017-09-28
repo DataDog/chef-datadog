@@ -9,6 +9,8 @@ require 'yaml'
 require 'shared_examples'
 
 RSpec.configure do |config|
+  config.berkshelf_options = { except: :integration }
+
   # Use color not only in STDOUT but also in pagers and files
   config.tty = true
 

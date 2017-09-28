@@ -7,8 +7,19 @@ def whyrun_supported?
   true
 end
 
+def install_custom_check(name, cookbook, source)
+  cookbook_file ::File.join(node['datadog']['config_dir'], 'checks.d', "#{name}.py") do
+    cookbook cookbook unless cookbook.nil?
+    source source unless source.nil?
+    owner 'dd-agent'
+    mode '644'
+  end
+end
+
 action :add do
   Chef::Log.debug "Adding monitoring for #{new_resource.name}"
+  install_custom_check(new_resource.name, new_resource.check_cookbook, new_resource.check_source) if new_resource.custom_check
+
   template ::File.join(node['datadog']['config_dir'], 'conf.d', "#{new_resource.name}.yaml") do
     if node['platform_family'] == 'windows'
       owner 'Administrators'
@@ -19,7 +30,7 @@ action :add do
       mode '600'
     end
 
-    source 'integration.yaml.erb' if new_resource.use_integration_template
+    source 'integration.yaml.erb' if new_resource.use_integration_template || new_resource.custom_check
 
     variables(
       init_config: new_resource.init_config,
