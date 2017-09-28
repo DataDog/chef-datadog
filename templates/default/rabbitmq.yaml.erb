@@ -8,7 +8,7 @@ instances:
   - rabbitmq_api_url: <%= i['api_url'] %>
     rabbitmq_user: <%= i['user'] || 'guest' %>
     rabbitmq_pass: <%= i['pass'] || 'guest' %>
-    ssl_verify: <%= i['ssl_verify'] || 'true' %>
+    ssl_verify: <%= i.key?('ssl_verify') ? i['ssl_verify'] : 'true' %>
   <% if i.key?('tags') -%>
     tags:
     <% i['tags'].each do |x| -%>
