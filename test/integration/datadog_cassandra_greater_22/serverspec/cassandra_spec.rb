@@ -1,4 +1,5 @@
 # Encoding: utf-8
+
 require 'spec_helper'
 
 AGENT_CONFIG = File.join(@agent_config_dir, 'conf.d/cassandra.yaml')
@@ -72,7 +73,7 @@ describe file(AGENT_CONFIG) do
             include: {
               domain: 'org.apache.cassandra.metrics',
               type: 'ColumnFamily',
-              name: %w(
+              name: %w[
                 TotalDiskSpaceUsed
                 BloomFilterDiskSpaceUsed
                 BloomFilterFalsePositives
@@ -86,7 +87,7 @@ describe file(AGENT_CONFIG) do
                 MemtableLiveDataSize
                 MemtableSwitchCount
                 MinRowSize
-              )
+              ]
             },
             exclude: {
               keyspace: [
