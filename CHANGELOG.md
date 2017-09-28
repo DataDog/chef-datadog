@@ -1,6 +1,17 @@
 Changes
 =======
 
+# 2.12.0 / Unreleased
+
+* [FEATURE] Support of Agent 6 beta for debianoids, [#472][] [@olivielpeau][]
+* [FEATURE] Add `tag_families` option to RabbitMQ template, [#437][] & [#460][] [@lefthand][] & [@foobarto][]
+* [FEATURE] Bring elasticsearch template up-to-date, [#445][] & [#462][] [@AlexBevan][] & [@kylegoch][]
+* [FEATURE] Add `additional_metrics` and `collections` to mongo template , [#463][] [@otterdude97][]
+* [OPTIMIZE] Explicitly set `gpgcheck` to true for `yum_repository`, [#458][] [@dafyddcrosby][]
+* [BUGFIX] Adding support for amazon linux based images with recent versions of ohai, [#448][] [@frezbo][]
+* [BUGFIX] Fix `ssl_verify` option of rabbitmq template, [#474][] [@iancward][]
+* [DOCS] Fix missing array braces in supervisord example, [#454][] [@benmanns][]
+
 # 2.11.0 / 2017-09-21
 
 * [FEATURE] Add configuration for the process-agent, [#465][] [@conorbranagan][]
@@ -554,11 +565,22 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#433]: https://github.com/DataDog/chef-datadog/issues/433
 [#435]: https://github.com/DataDog/chef-datadog/issues/435
 [#436]: https://github.com/DataDog/chef-datadog/issues/436
+[#437]: https://github.com/DataDog/chef-datadog/issues/437
 [#438]: https://github.com/DataDog/chef-datadog/issues/438
+[#445]: https://github.com/DataDog/chef-datadog/issues/445
 [#446]: https://github.com/DataDog/chef-datadog/issues/446
+[#448]: https://github.com/DataDog/chef-datadog/issues/448
+[#454]: https://github.com/DataDog/chef-datadog/issues/454
+[#458]: https://github.com/DataDog/chef-datadog/issues/458
+[#460]: https://github.com/DataDog/chef-datadog/issues/460
+[#462]: https://github.com/DataDog/chef-datadog/issues/462
+[#463]: https://github.com/DataDog/chef-datadog/issues/463
 [#465]: https://github.com/DataDog/chef-datadog/issues/465
 [#469]: https://github.com/DataDog/chef-datadog/issues/469
+[#472]: https://github.com/DataDog/chef-datadog/issues/472
+[#474]: https://github.com/DataDog/chef-datadog/issues/474
 [@ABrehm264]: https://github.com/ABrehm264
+[@AlexBevan]: https://github.com/AlexBevan
 [@BrentOnRails]: https://github.com/BrentOnRails
 [@DorianZaccaria]: https://github.com/DorianZaccaria
 [@EasyAsABC123]: https://github.com/EasyAsABC123
@@ -576,6 +598,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@arthurnn]: https://github.com/arthurnn
 [@babbottscott]: https://github.com/babbottscott
 [@bai]: https://github.com/bai
+[@benmanns]: https://github.com/benmanns
 [@bflad]: https://github.com/bflad
 [@bitmonk]: https://github.com/bitmonk
 [@brentm5]: https://github.com/brentm5
@@ -587,6 +610,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@conorbranagan]: https://github.com/conorbranagan
 [@coosh]: https://github.com/coosh
 [@ctrlok]: https://github.com/ctrlok
+[@dafyddcrosby]: https://github.com/dafyddcrosby
 [@darron]: https://github.com/darron
 [@datwiz]: https://github.com/datwiz
 [@degemer]: https://github.com/degemer
@@ -602,6 +626,8 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@elijahandrews]: https://github.com/elijahandrews
 [@evan2645]: https://github.com/evan2645
 [@flah00]: https://github.com/flah00
+[@foobarto]: https://github.com/foobarto
+[@frezbo]: https://github.com/frezbo
 [@gkze]: https://github.com/gkze
 [@gmmeyer]: https://github.com/gmmeyer
 [@graemej]: https://github.com/graemej
@@ -628,6 +654,8 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@kindlyseth]: https://github.com/kindlyseth
 [@krasnoukhov]: https://github.com/krasnoukhov
 [@kurochan]: https://github.com/kurochan
+[@kylegoch]: https://github.com/kylegoch
+[@lefthand]: https://github.com/lefthand
 [@martinisoft]: https://github.com/martinisoft
 [@mattrobenolt]: https://github.com/mattrobenolt
 [@mfischer-zd]: https://github.com/mfischer-zd
@@ -641,6 +669,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@nyanshak]: https://github.com/nyanshak
 [@olivielpeau]: https://github.com/olivielpeau
 [@opsline-radek]: https://github.com/opsline-radek
+[@otterdude97]: https://github.com/otterdude97
 [@phlipper]: https://github.com/phlipper
 [@qqfr2507]: https://github.com/qqfr2507
 [@raycrawford]: https://github.com/raycrawford
