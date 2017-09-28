@@ -59,8 +59,7 @@ when 'debian'
       action :remove
     end
   end
-
-when 'rhel', 'fedora'
+when 'rhel', 'fedora', 'amazon'
   # Import new RPM key
   if node['datadog']['yumrepo_gpgkey_new']
     # gnupg is required to check the downloaded key's fingerprint
@@ -94,6 +93,7 @@ when 'rhel', 'fedora'
     proxy_username node['datadog']['yumrepo_proxy_username']
     proxy_password node['datadog']['yumrepo_proxy_password']
     gpgkey node['datadog']['yumrepo_gpgkey']
+    gpgcheck true
     action :create
   end
 end

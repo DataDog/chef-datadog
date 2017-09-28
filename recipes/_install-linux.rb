@@ -23,7 +23,7 @@ include_recipe 'datadog::repository' if node['datadog']['installrepo']
 dd_agent5_version =
   if node['datadog']['agent_version'].respond_to?(:each_pair)
     case node['platform_family']
-    when 'rhel', 'fedora'
+    when 'rhel', 'fedora', 'amazon'
       node['datadog']['agent_version']['rhel']
     else
       node['datadog']['agent_version'][node['platform_family']]
@@ -81,7 +81,7 @@ else
       action package_action # default is :install
       options '--force-yes' if node['datadog']['agent_allow_downgrade']
     end
-  when 'rhel', 'fedora'
+  when 'rhel', 'fedora', 'amazon'
     yum_package 'datadog-agent' do
       version dd_agent_version
       retries package_retries unless package_retries.nil?
