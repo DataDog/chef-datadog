@@ -145,7 +145,7 @@ end
 # Agent Version
 # Default of `nil` will install latest version. On Windows, this will also upgrade to latest
 # This attribute accepts either a `string` or `hash` with the key as platform_name and value of package version
-# In the case of fedora use platform_name of rhel
+# In the case of fedora and amazon linux, use platform_name of rhel
 # Example:
 # default['datadog']['agent_version'] = {
 #  'rhel' => '5.9.0-1',

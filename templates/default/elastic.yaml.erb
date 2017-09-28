@@ -22,6 +22,18 @@ instances:
     <% unless i["timeout"].nil? %>
     timeout: <%= i["timeout"] %>
     <% end %>
+    <% unless i["pending_task_stats"].nil? %>
+    pending_task_stats: <%= i["pending_task_stats"] %>
+    <% end %>
+    <% unless i["ssl_verify"].nil? %>
+    ssl_verify: <%= i["ssl_verify"] %>
+    <% end %>
+    <% unless i["ssl_cert"].nil? %>
+    ssl_cert: <%= i["ssl_cert"] %>
+    <% end %>
+    <% unless i["ssl_key"].nil? %>
+    ssl_key: <%= i["ssl_key"] %>
+    <% end %>
     <% if i.key?('tags') -%>
     tags:
       <% i['tags'].each do |t| -%>

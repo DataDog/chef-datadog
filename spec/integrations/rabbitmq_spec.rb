@@ -7,6 +7,7 @@ describe 'datadog::rabbitmq' do
         rabbitmq_user: guest
         rabbitmq_pass: guest
         ssl_verify: true
+        tag_families: false
         tags:
           - optional_tag1
           - optional_tag2
