@@ -25,9 +25,9 @@ describe 'datadog::system_swap' do
   it { is_expected.to add_datadog_monitor('system_swap') }
 
   it 'renders expected YAML config file' do
-    expect(chef_run).to render_file('/etc/dd-agent/conf.d/system_swap.yaml')
+    expect(chef_run).to(render_file('/etc/dd-agent/conf.d/system_swap.yaml')
       .with_content { |content|
         expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-      }
+      })
   end
 end

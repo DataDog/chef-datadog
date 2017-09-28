@@ -6,6 +6,10 @@ AllCops:
     - 'vendor/**/*' # ignore non-local files
     - Guardfile
 
+# We enjoy parameters lining up for visual comprehension
+Layout/SpaceBeforeFirstArg:
+  Enabled: false
+
 # We like longer lines
 Metrics/LineLength:
   Max: 160
@@ -23,6 +27,10 @@ Metrics/BlockLength:
 # Slightly longer methods are fine
 Metrics/MethodLength:
   Max: 15
+
+# We're fine with multi-line blocks defined with `{...}` instead of `do...end`
+Style/BlockDelimiters:
+  Enabled: false
 
 # TODO: add encoding headers
 Style/Encoding:
@@ -42,10 +50,6 @@ Style/NumericLiterals:
 
 # TODO: see if this should be replaced by Chef::Application.fatal!
 Style/SignalException:
-  Enabled: false
-
-# We enjoy parameters lining up for visual comprehension
-Style/SpaceBeforeFirstArg:
   Enabled: false
 
 # Only enforce a wordlist for 5 or longer lists.

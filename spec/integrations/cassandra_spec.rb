@@ -63,7 +63,7 @@ describe 'datadog::cassandra' do
 
     cached(:chef_run) do
       ChefSpec::SoloRunner.new(step_into: ['datadog_monitor']) do |node|
-        node.automatic['languages'] = { python: { version: '2.7.2' } }
+        node.automatic['languages'] = { python: { version: '2.7.11' } }
 
         node.set['datadog'] = {
           api_key: 'someapikey',
@@ -82,7 +82,7 @@ describe 'datadog::cassandra' do
                 {
                   include: {
                     domain: 'org.apache.cassandra.db',
-                    attribute: %w(
+                    attribute: %w[
                       BloomFilterDiskSpaceUsed
                       BloomFilterFalsePositives
                       BloomFilterFalseRatio
@@ -115,7 +115,7 @@ describe 'datadog::cassandra' do
                       TotalWriteLatencyMicros
                       UpdateInterval
                       WriteCount
-                    )
+                    ]
                   },
                   exclude: {
                     keyspace: 'system'
@@ -156,9 +156,9 @@ describe 'datadog::cassandra' do
     it { is_expected.to add_datadog_monitor('cassandra') }
 
     it 'renders expected YAML config file' do
-      expect(chef_run).to render_file('/etc/dd-agent/conf.d/cassandra.yaml').with_content { |content|
+      expect(chef_run).to(render_file('/etc/dd-agent/conf.d/cassandra.yaml').with_content { |content|
         expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-      }
+      })
     end
   end
 
@@ -281,7 +281,7 @@ describe 'datadog::cassandra' do
                 {
                   include: {
                     domain: 'org.apache.cassandra.db',
-                    attribute: %w(
+                    attribute: %w[
                       BloomFilterDiskSpaceUsed
                       BloomFilterFalsePositives
                       BloomFilterFalseRatio
@@ -314,7 +314,7 @@ describe 'datadog::cassandra' do
                       TotalWriteLatencyMicros
                       UpdateInterval
                       WriteCount
-                    )
+                    ]
                   },
                   exclude: {
                     keyspace: 'system'
@@ -355,9 +355,9 @@ describe 'datadog::cassandra' do
     it { is_expected.to add_datadog_monitor('cassandra') }
 
     it 'renders expected YAML config file' do
-      expect(chef_run).to render_file('/etc/dd-agent/conf.d/cassandra.yaml').with_content { |content|
+      expect(chef_run).to(render_file('/etc/dd-agent/conf.d/cassandra.yaml').with_content { |content|
         expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-      }
+      })
     end
   end
 end
