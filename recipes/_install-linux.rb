@@ -23,7 +23,7 @@ include_recipe 'datadog::repository' if node['datadog']['installrepo']
 dd_agent_version =
   if node['datadog']['agent_version'].respond_to?(:each_pair)
     case node['platform_family']
-    when 'rhel', 'fedora'
+    when 'rhel', 'fedora', 'amazon'
       node['datadog']['agent_version']['rhel']
     else
       node['datadog']['agent_version'][node['platform_family']]
