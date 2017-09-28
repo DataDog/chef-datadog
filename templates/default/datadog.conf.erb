@@ -167,6 +167,14 @@ if node['datadog']['legacy_integrations']
 end
 -%>
 
+<% if node['datadog']['enable_process_agent'].is_a?(TrueClass) || node['datadog']['enable_process_agent'].is_a?(FalseClass) -%>
+process_agent_enabled: <%= node['datadog']['enable_process_agent'] %>
+<% end -%>
+
+<% if node['datadog']['enable_trace_agent'].is_a?(TrueClass) || node['datadog']['enable_trace_agent'].is_a?(FalseClass) -%>
+apm_enabled: <%= node['datadog']['enable_trace_agent'] %>
+<% end -%>
+
 <% if ! node['datadog']['extra_config'].empty? -%>
 # ========================================================================== #
 # Other config options
@@ -178,14 +186,7 @@ end
   <% end -%>
 <% end -%>
 
-<% if node['datadog']['enabled_process_agent'].is_a?(TrueClass) || node['datadog']['enabled_process_agent'].is_a?(FalseClass) -%>
-process_agent_enabled: <%= node['datadog']['enabled_process_agent'] %>
-<% end -%>
-
 ## Trace settings
-<% if node['datadog']['enable_trace_agent'].is_a?(TrueClass) || node['datadog']['enable_trace_agent'].is_a?(FalseClass) -%>
-apm_enabled: <%= node['datadog']['enable_trace_agent'] %>
-<% end -%>
 
 [trace.config]
 <% unless node['datadog']['trace_env'].nil? -%>
