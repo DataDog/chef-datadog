@@ -37,11 +37,6 @@ action :add do
     )
     cookbook new_resource.cookbook
     sensitive true
-    notifies :restart, 'service[datadog-agent]', :delayed if node['datadog']['agent_start']
-  end
-
-  service 'datadog-agent' do
-    service_name node['datadog']['agent_name']
   end
 end
 
@@ -55,10 +50,5 @@ action :remove do
   file ::File.join(confd_dir, "#{new_resource.name}.yaml") do
     action :delete
     sensitive true
-    notifies :restart, 'service[datadog-agent]', :delayed if node['datadog']['agent_start']
-  end
-
-  service 'datadog-agent' do
-    service_name node['datadog']['agent_name']
   end
 end
