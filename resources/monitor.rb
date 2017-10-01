@@ -10,7 +10,7 @@ property :cookbook, String, default: 'datadog'
 # is evaluated.
 property :init_config, Hash, required: false, default: {}
 property :instances, Array, required: false, default: []
-property :version, Integer, required: false, default: nil
+property :version, [Integer, nil], required: false, default: nil
 property :use_integration_template, [TrueClass, FalseClass], required: false, default: false
 
 action :add do
