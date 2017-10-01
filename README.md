@@ -47,19 +47,7 @@ The following Opscode cookbooks are dependencies:
 
 * `apt`
 * `chef_handler`
-* `windows`
 * `yum`
-
-**Note for Chef 11 users**: please use these additional dependency version contraints for compatibility with Chef 11:
-
-```
-cookbook 'apt', '< 4.0'
-cookbook 'chef_handler', '< 2.0'
-cookbook 'windows', '< 2.0'
-cookbook 'yum', '~> 3.0'
-```
-
-(in Berkshelf/Librarian format)
 
 Recipes
 =======
@@ -75,8 +63,6 @@ Installs the Datadog agent on the target system, sets the API key, and start the
 **Notes for Windows**:
 
 * With Chef >= 12.6 _and_ the `windows` cookbook >= 1.39.0, Agent upgrades are known to fail.
-  For Chef>=12.6 users on Windows, we recommend pinning the `windows` cookbook to a lower version (`~> 1.38.0` for instance).
-
   If that's not an option, a known workaround is to use the `remove-dd-agent` recipe (since the `2.5.0` version of the present cookbook) to uninstall the Agent
   prior to any Agent upgrade.
 
