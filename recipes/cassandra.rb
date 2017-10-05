@@ -5,14 +5,14 @@ include_recipe 'datadog::dd-agent'
 # Set the following attributes
 # * `instances` (required)
 #   List of Cassandra clusters to monitor. Each cluster is generally a dictionary with a `host`, `port` and a `name`.
-#   More attributes are available. For more information, please refer to : https://github.com/DataDog/dd-agent/blob/master/conf.d/cassandra.yaml.example
+#   More attributes are available. For more information, please refer to : https://github.com/DataDog/integrations-core/blob/master/cassandra/conf.yaml.example
 # * `version` (optional)
 #   Select the appropriate configuration file template. Available options are:
 #   * `1` (Default, recommended for Cassandra < 2.2).
 #     Use Cassandra legacy metrics, i.e. https://github.com/DataDog/dd-agent/blob/5.6.x/conf.d/cassandra.yaml.example#L23-L74
 #   * `2` (recommended for Cassandra >= 2.2).
 #     Use Cassandra expanded metrics (CASSANDRA-4009) introduced in 1.2 (https://wiki.apache.org/cassandra/Metrics),
-#     i.e. https://github.com/DataDog/dd-agent/blob/master/conf.d/cassandra.yaml.example#L23-L102
+#     i.e. https://github.com/DataDog/integrations-core/blob/master/cassandra/conf.yaml.example#L23-L102
 
 # Example:
 

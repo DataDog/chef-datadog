@@ -1,7 +1,7 @@
 include_recipe 'datadog::dd-agent'
 
 # Build a data structure with configuration.
-# @see https://github.com/DataDog/dd-agent/blob/master/conf.d/php_fpm.yaml.example PHP-FPM Example
+# @see https://github.com/DataDog/integrations-core/blob/master/php_fpm/conf.yaml.example PHP-FPM Example
 # @example
 #   node.override['datadog']['php_fpm']['instances'] = [
 #     {
