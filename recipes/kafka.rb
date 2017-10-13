@@ -5,7 +5,7 @@ include_recipe 'datadog::dd-agent'
 # Set the following attributes
 # * `instances` (required)
 #   List of Kafka clusters to monitor. Each cluster is generally a dictionary with a `host`, `port` and a `name`.
-#   More attributes are available. For more information, please refer to : https://github.com/DataDog/dd-agent/blob/master/conf.d/kafka.yaml.example
+#   More attributes are available. For more information, please refer to : https://github.com/DataDog/integrations-core/blob/master/kafka/conf.yaml.example
 # * `version` (optional)
 #   Select the appropriate configuration file template. Available options are:
 #   * `1` (Default, Kafka < 0.8.2).
