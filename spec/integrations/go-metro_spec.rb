@@ -58,7 +58,7 @@ describe 'datadog::go-metro' do
     end
 
     before(:each) do
-      stub_command("setcap -v cap_net_raw+ep /opt/datadog-agent/bin/go-metro")
+      stub_command('setcap -v cap_net_raw+ep /opt/datadog-agent/bin/go-metro')
     end
 
     subject { chef_run }
@@ -121,6 +121,10 @@ describe 'datadog::go-metro' do
         node.set['datadog'] = {
           api_key: 'someapikey',
           'go-metro' => {
+            libcap_package: {
+              package_name: 'libcap2-bin',
+              version: '123'
+            },
             init_config: {
               snaplen: 1024,
               idle_ttl: 300,
@@ -142,7 +146,7 @@ describe 'datadog::go-metro' do
     end
 
     before(:each) do
-      stub_command("setcap -v cap_net_raw+ep /opt/datadog-agent/bin/go-metro")
+      stub_command('setcap -v cap_net_raw+ep /opt/datadog-agent/bin/go-metro')
     end
 
     subject { chef_run }
@@ -151,7 +155,12 @@ describe 'datadog::go-metro' do
 
     it { is_expected.to include_recipe('datadog::dd-agent') }
 
-    it { is_expected.to install_package('libcap') }
+    it {
+      is_expected.to install_package('libcap').with(
+        package_name: 'libcap2-bin',
+        version: '123'
+      )
+    }
 
     it {
       is_expected.to run_execute('setcap go-metro').with(
