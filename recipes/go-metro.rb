@@ -50,7 +50,7 @@ if node['kernel']['machine'] != 'x86_64' || node['os'] != 'linux'
     )
   else
     Chef::Log.fatal(
-      "And Chef thinks this machine is #{node['os']}, not 'liunx'"
+      "And Chef thinks this machine is #{node['os']}, not 'linux'"
     )
   end
   raise

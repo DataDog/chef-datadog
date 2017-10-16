@@ -197,7 +197,7 @@ describe 'datadog::go-metro' do
 
     it 'bails out with a fatal log message' do
       allow(Chef::Log).to receive(:fatal).and_call_original
-      expect(Chef::Log).to receive(:fatal).with("And Chef thinks this machine is windows, not 'liunx'")
+      expect(Chef::Log).to receive(:fatal).with("And Chef thinks this machine is windows, not 'linux'")
       expect { chef_run.converge(described_recipe) }.to raise_error(RuntimeError)
     end
   end
