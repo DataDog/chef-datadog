@@ -11,7 +11,6 @@
 # valid values for Debian-based systems are: libcap, libcap2-bin
 default['datadog']['go-metro']['libcap_package']['package_name'] = 'libcap'
 
-
 # init config
 default['datadog']['go-metro']['init_config'] = {
   'snaplen' => 512,

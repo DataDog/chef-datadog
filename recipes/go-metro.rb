@@ -60,10 +60,14 @@ end
 # This implementation allows you to set any valid package resourece property
 # as an attribute underneath node['datadog']['go-metro']['libcap-package']
 package 'libcap' do
-  node['datadog']['go-metro']['libcap_package'].each do |prop, value|
-    send(prop.to_sym, value) unless value.nil?
-  end unless node['datadog']['go-metro']['libcap_package'].nil?
-end # ^^ handle scenario when entire attribute is nil
+  # handle scenario when entire attribute is nil
+  unless node['datadog']['go-metro']['libcap_package'].nil?
+    # send each attribute as a property to the resource
+    node['datadog']['go-metro']['libcap_package'].each do |prop, value|
+      send(prop.to_sym, value) unless value.nil?
+    end
+  end
+end
 
 # add cap_net_raw+ep to the go-metro binary
 execute 'setcap go-metro' do
