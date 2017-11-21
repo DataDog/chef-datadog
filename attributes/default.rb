@@ -360,6 +360,13 @@ default['datadog']['process_agent']['rtprocess_interval'] = nil
 default['datadog']['process_agent']['container_interval'] = nil
 default['datadog']['process_agent']['rtcontainer_interval'] = nil
 
+# Logs functionality settings
+# Set `enable_log_agent` to:
+# * `true` to explicitly enable the log agent
+# * `false` to explicitly disable it
+# Leave it to `nil` to let the agent's default behavior decide whether to run the log-agent
+default['datadog']['enable_logs_agent'] = nil
+
 # For custom gem servers on restricted networks
 # This attribute only works on Chef >= 12.3
 # Change false to the URL of your custom gem server
