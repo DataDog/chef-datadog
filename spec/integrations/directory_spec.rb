@@ -1,5 +1,6 @@
 describe 'datadog::directory' do
   expected_yaml = <<-EOF
+    logs: ~
     init_config:
     instances:
       - directory: "/path/to/directory"

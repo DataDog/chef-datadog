@@ -1,6 +1,7 @@
 describe 'datadog::kafka' do
   context 'version 1 (default)' do
     expected_yaml = <<-EOF
+    logs: ~
     instances:
       - host: localhost
         port: 7199
@@ -191,6 +192,7 @@ describe 'datadog::kafka' do
 
   context 'version 2' do
     expected_yaml = <<-EOF
+    logs: ~
     instances:
             - host: localhost
               port: 7199

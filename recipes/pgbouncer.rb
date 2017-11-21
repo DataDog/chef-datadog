@@ -36,4 +36,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'pgbouncer' do
   instances node['datadog']['pgbouncer']['instances']
+  logs node['datadog']['pgbouncer']['logs']
 end

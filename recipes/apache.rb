@@ -19,4 +19,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'apache' do
   instances node['datadog']['apache']['instances']
+  logs node['datadog']['apache']['logs']
 end

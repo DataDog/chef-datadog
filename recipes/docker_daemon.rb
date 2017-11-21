@@ -76,4 +76,5 @@ end
 datadog_monitor 'docker_daemon' do
   init_config node['datadog']['docker_daemon']['init_config']
   instances node['datadog']['docker_daemon']['instances']
+  logs node['datadog']['docker_daemon']['logs']
 end

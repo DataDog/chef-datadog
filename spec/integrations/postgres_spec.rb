@@ -1,5 +1,6 @@
 describe 'datadog::postgres' do
   expected_yaml = <<-EOF
+    logs: ~
     instances:
     - host: localhost
       port: 5432
@@ -110,6 +111,7 @@ end
 describe 'datadog::postgres' do
   context 'default settings' do
     expected_yaml = <<-EOF
+      logs: ~
       instances:
       - host: localhost
         port: 5432
@@ -152,6 +154,7 @@ describe 'datadog::postgres' do
 
   context 'relations' do
     expected_yaml = <<-EOF
+      logs: ~
       instances:
       - host: localhost
         port: 5432
@@ -206,6 +209,7 @@ describe 'datadog::postgres' do
 
   context 'descriptors' do
     expected_yaml = <<-EOF
+      logs: ~
       instances:
       - host: localhost
         port: 5432

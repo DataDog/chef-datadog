@@ -21,4 +21,5 @@ include_recipe 'datadog::dd-agent'
 datadog_monitor 'go_expvar' do
   init_config node['datadog']['go_expvar']['init_config']
   instances node['datadog']['go_expvar']['instances']
+  logs node['datadog']['go_expvar']['logs']
 end

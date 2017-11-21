@@ -20,4 +20,5 @@ include_recipe 'datadog::dd-agent'
 datadog_monitor 'win32_event_log' do
   init_config node['datadog']['win32_event_log']['init_config']
   instances node['datadog']['win32_event_log']['instances']
+  logs node['datadog']['win32_event_log']['logs']
 end

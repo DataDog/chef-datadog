@@ -27,4 +27,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'kubernetes' do
   instances node['datadog']['kubernetes']['instances']
+  logs node['datadog']['kubernetes']['logs']
 end

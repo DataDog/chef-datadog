@@ -19,4 +19,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'rabbitmq' do
   instances node['datadog']['rabbitmq']['instances']
+  logs node['datadog']['rabbitmq']['logs']
 end

@@ -15,4 +15,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'tcp_check' do
   instances node['datadog']['tcp_check']['instances']
+  logs node['datadog']['tcp_check']['logs']
 end

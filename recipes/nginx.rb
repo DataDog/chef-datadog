@@ -22,4 +22,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'nginx' do
   instances node['datadog']['nginx']['instances']
+  logs node['datadog']['nginx']['logs']
 end

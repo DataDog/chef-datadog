@@ -22,4 +22,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'tomcat' do
   instances node['datadog']['tomcat']['instances']
+  logs node['datadog']['tomcat']['logs']
 end

@@ -21,4 +21,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'etcd' do
   instances node['datadog']['etcd']['instances']
+  logs node['datadog']['etcd']['logs']
 end

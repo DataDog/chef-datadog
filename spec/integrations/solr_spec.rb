@@ -1,5 +1,6 @@
 describe 'datadog::solr' do
   expected_yaml = <<-EOF
+  logs: ~
   instances:
     - host: localhost
       port: 9999

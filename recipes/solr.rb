@@ -7,4 +7,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'solr' do
   instances node['datadog']['solr']['instances']
+  logs node['datadog']['solr']['logs']
 end

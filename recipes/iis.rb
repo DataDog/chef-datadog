@@ -21,4 +21,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'iis' do
   instances node['datadog']['iis']['instances']
+  logs node['datadog']['iis']['logs']
 end
