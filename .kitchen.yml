@@ -153,18 +153,6 @@ suites:
             password: somepass
             process_name_regex: .*cassandra.*
 
-- name: datadog_couchbase
-  run_list:
-    - recipe[datadog::couchbase]
-  attributes:
-    datadog:
-     <<: *DATADOG
-     couchbase:
-       instances:
-         - server: http://localhost:8091
-           username: Administrator
-           password: default
-
 - name: datadog_couchdb
   run_list:
     - recipe[datadog::couchdb]

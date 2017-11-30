@@ -16,7 +16,7 @@ describe 'datadog::couchbase' do
         couchbase: {
           instances: [
             {
-              server: 'http://localhost:8091'
+              server: 'http://localhost:8091',
               username: 'Administrator',
               password: 'default'
             }
