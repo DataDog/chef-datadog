@@ -32,7 +32,7 @@ default['datadog']['application_key'] = nil
 ###            Beta-Agent6-only attributes, experimental             ###
 ### These attributes are not part of the stable API of the cookbook  ###
 ###   Subject to breaking changes between bugfix/minor versions      ###
-###                Only works on debianoids for now                  ###
+###              Only works on Linux (DEB/RPM) for now               ###
 
 # Set to true to install an agent6 instead of agent5.
 # To upgrade from agent5 to agent6, you need to:
@@ -49,9 +49,11 @@ default['datadog']['agent6'] = false
 default['datadog']['agent6_version'] = nil
 default['datadog']['agent6_package_action'] = 'install' # set to `upgrade` to always upgrade to latest
 
-# beta APT repo where datadog-agent v6 packages are available
+# beta repos where datadog-agent v6 packages are available
 default['datadog']['agent6_aptrepo'] = 'http://apt.datadoghq.com'
 default['datadog']['agent6_aptrepo_dist'] = 'beta'
+# RPMs are only available for RHEL >= 6 (-> use https protocol) and x86_64 arch
+default['datadog']['agent6_yumrepo'] = 'https://yum.datadoghq.com/beta/x86_64/'
 
 # Values that differ on Windows
 # The location of the config folder (containing conf.d)

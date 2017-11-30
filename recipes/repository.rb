@@ -88,7 +88,11 @@ when 'rhel', 'fedora', 'amazon'
   yum_repository 'datadog' do
     name 'datadog'
     description 'datadog'
-    baseurl node['datadog']['yumrepo']
+    if node['datadog']['agent6']
+      baseurl node['datadog']['agent6_yumrepo']
+    else
+      baseurl node['datadog']['yumrepo']
+    end
     proxy node['datadog']['yumrepo_proxy']
     proxy_username node['datadog']['yumrepo_proxy_username']
     proxy_password node['datadog']['yumrepo_proxy_password']
