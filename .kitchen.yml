@@ -321,17 +321,6 @@ suites:
           - host: localhost
             port: 27017
 
-- name: datadog_tokumx
-  run_list:
-    - recipe[datadog::tokumx]
-  attributes:
-    datadog:
-      <<: *DATADOG
-      tokumx:
-        instances:
-          - host: localhost
-            port: 27017
-
 - name: datadog_mysql
   run_list:
     - recipe[datadog::mysql]
