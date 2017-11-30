@@ -160,6 +160,7 @@ default['datadog']['windows_agent_use_exe'] = false
 # Values that differ on Windows
 # The location of the config folder (containing conf.d)
 # The name of the dd agent service
+# The log file directory (see logging section below)
 if node['platform_family'] == 'windows'
   default['datadog']['config_dir'] = "#{ENV['ProgramData']}/Datadog"
   default['datadog']['agent_name'] = 'DatadogAgent'
@@ -262,7 +263,11 @@ default['datadog']['syslog']['active'] = false
 default['datadog']['syslog']['udp'] = false
 default['datadog']['syslog']['host'] = nil
 default['datadog']['syslog']['port'] = nil
-default['datadog']['log_file_directory'] = '/var/log/datadog'
+if node['platform_family'] == 'windows'
+  default['datadog']['log_file_directory'] = nil  # let the agent use a default log file dir
+else
+  default['datadog']['log_file_directory'] = '/var/log/datadog'
+end
 
 # Web proxy configuration
 default['datadog']['web_proxy']['host'] = nil
