@@ -20,5 +20,5 @@ suites:
     - recipe[datadog::dd-agent]
   attributes:
     datadog:
-      api_key: somethingnotnil
+      api_key: somenonnullapikeythats32charlong
       application_key: alsonotnil
