@@ -263,11 +263,12 @@ default['datadog']['syslog']['active'] = false
 default['datadog']['syslog']['udp'] = false
 default['datadog']['syslog']['host'] = nil
 default['datadog']['syslog']['port'] = nil
-if node['platform_family'] == 'windows'
-  default['datadog']['log_file_directory'] = nil  # let the agent use a default log file dir
-else
-  default['datadog']['log_file_directory'] = '/var/log/datadog'
-end
+default['datadog']['log_file_directory'] =
+  if node['platform_family'] == 'windows'
+    nil # let the agent use a default log file dir
+  else
+    '/var/log/datadog'
+  end
 
 # Web proxy configuration
 default['datadog']['web_proxy']['host'] = nil
