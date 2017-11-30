@@ -1,5 +1,6 @@
 describe 'datadog::redisdb' do
   expected_yaml = <<-EOF
+    logs: ~
     init_config:
 
     instances:

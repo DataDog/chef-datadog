@@ -42,4 +42,5 @@ end
 
 datadog_monitor 'postfix' do
   instances postfix_instances
+  logs node['datadog']['postfix']['logs']
 end

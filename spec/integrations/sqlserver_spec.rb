@@ -1,6 +1,7 @@
 describe 'datadog::sqlserver' do
   context 'config 1' do
     expected_yaml = <<-EOF
+    logs: ~
     init_config:
       custom_metrics:
         - name: sqlserver.clr.execution
@@ -86,6 +87,7 @@ describe 'datadog::sqlserver' do
   context 'config 2' do
     expected_yaml = <<-EOF
     init_config: ~
+    logs: ~
 
     instances:
       - host: fakehostname,1433

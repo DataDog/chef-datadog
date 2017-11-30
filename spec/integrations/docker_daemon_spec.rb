@@ -1,5 +1,6 @@
 describe 'datadog::docker_daemon' do
   expected_yaml = <<-EOF
+    logs: ~
     init_config:
       docker_root: /
       timeout: 10

@@ -15,7 +15,7 @@
     instance['port'] = 5432 if instance['port'].nil?
   end
 -%>
-<%= JSON.parse(({'instances' => instances}).to_json).to_yaml %>
+<%= JSON.parse(({ 'instances' => instances, 'logs' => @logs }).to_json).to_yaml %>
 
 init_config:
 # Nothing to configure here

@@ -3,6 +3,7 @@ describe 'datadog::win32_event_log' do
   init_config:
     tag_event_id: yes
 
+  logs: ~
   instances:
     - log_file:
         - Application

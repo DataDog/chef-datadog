@@ -22,4 +22,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'activemq' do
   instances node['datadog']['activemq']['instances']
+  logs node['datadog']['activemq']['logs']
 end

@@ -1,4 +1,4 @@
-<%= JSON.parse(({ 'instances' => @instances }).to_json).to_yaml %>
+<%= JSON.parse(({ 'instances' => @instances, 'logs' => @logs }).to_json).to_yaml %>
 
 # Nothing to configure here
 init_config:

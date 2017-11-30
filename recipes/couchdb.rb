@@ -20,4 +20,5 @@ include_recipe 'datadog::dd-agent'
 datadog_monitor 'couch' do
   init_config nil
   instances node['datadog']['couch']['instances']
+  logs node['datadog']['couch']['logs']
 end

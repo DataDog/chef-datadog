@@ -15,4 +15,5 @@ include_recipe 'datadog::dd-agent'
 #   ]
 datadog_monitor 'php_fpm' do
   instances node['datadog']['php_fpm']['instances']
+  logs node['datadog']['php_fpm']['logs']
 end

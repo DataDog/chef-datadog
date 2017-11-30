@@ -25,4 +25,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'postgres' do
   instances node['datadog']['postgres']['instances']
+  logs node['datadog']['postgres']['logs']
 end

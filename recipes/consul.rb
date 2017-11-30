@@ -30,4 +30,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'consul' do
   instances node['datadog']['consul']['instances']
+  logs node['datadog']['consul']['logs']
 end

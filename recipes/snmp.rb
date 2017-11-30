@@ -112,4 +112,5 @@ include_recipe 'datadog::dd-agent'
 datadog_monitor 'snmp' do
   init_config node['datadog']['snmp']['init_config']
   instances node['datadog']['snmp']['instances']
+  logs node['datadog']['snmp']['logs']
 end

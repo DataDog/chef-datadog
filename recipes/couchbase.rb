@@ -18,4 +18,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'couchbase' do
   instances node['datadog']['couchbase']['instances']
+  logs node['datadog']['couchbase']['logs']
 end

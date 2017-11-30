@@ -25,7 +25,8 @@ action :add do
     variables(
       init_config: new_resource.init_config,
       instances:   new_resource.instances,
-      version:     new_resource.version
+      version:     new_resource.version,
+      logs:        new_resource.logs
     )
     cookbook new_resource.cookbook
     sensitive true if Chef::Resource.instance_methods(false).include?(:sensitive)

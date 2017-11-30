@@ -10,4 +10,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'riak' do
   instances node['datadog']['riak']['instances']
+  logs node['datadog']['riak']['logs']
 end

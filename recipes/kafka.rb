@@ -38,4 +38,5 @@ include_recipe 'datadog::dd-agent'
 datadog_monitor 'kafka' do
   instances node['datadog']['kafka']['instances']
   version node['datadog']['kafka']['version']
+  logs node['datadog']['kafka']['logs']
 end

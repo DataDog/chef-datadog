@@ -20,4 +20,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'jenkins' do
   instances node['datadog']['jenkins']['instances']
+  logs node['datadog']['jenkins']['logs']
 end

@@ -44,6 +44,7 @@ describe 'datadog::snmp' do
         metric_tags:
         - tag: ipversion
           index: 1
+    logs: ~
   EOF
 
     cached(:chef_run) do
@@ -168,6 +169,7 @@ describe 'datadog::snmp' do
           symbol: udpInDatagrams
         - MIB: TCP-MIB
           symbol: tcpActiveOpens
+    logs: ~
   EOF
 
     cached(:chef_run) do
