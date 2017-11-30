@@ -78,4 +78,5 @@ end
 datadog_monitor 'go-metro' do
   init_config node['datadog']['go-metro']['init_config']
   instances node['datadog']['go-metro']['instances']
+  logs node['datadog']['go-metro']['logs']
 end

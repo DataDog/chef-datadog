@@ -11,4 +11,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'tokumx' do
   instances node['datadog']['tokumx']['instances']
+  logs node['datadog']['tokumx']['logs']
 end

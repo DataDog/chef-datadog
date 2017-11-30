@@ -1,6 +1,7 @@
 describe 'datadog::go-metro' do
   context 'with default init_config and libcap package on RHEL7' do
     expected_yaml = <<-EOF
+      logs: ~
       init_config:
         snaplen: 512
         idle_ttl: 300
@@ -91,6 +92,7 @@ describe 'datadog::go-metro' do
 
   context 'with modified init_config, libcap package on Ubuntu 16.04' do
     expected_yaml = <<-EOF
+      logs: ~
       init_config:
         snaplen: 1024
         idle_ttl: 300

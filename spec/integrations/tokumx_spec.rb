@@ -1,5 +1,6 @@
 describe 'datadog::tokumx' do
   expected_yaml = <<-EOF
+    logs: ~
     init_config:
 
     instances:
