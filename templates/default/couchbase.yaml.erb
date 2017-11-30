@@ -1,0 +1,7 @@
+instances:
+<% @instances.each do |i| -%>
+  - server: <%= i['server'] %>
+    user: <%= @node.fetch('couchbase', {}).fetch('server', {}).fetch('username', i.fetch('username', 'Administrator')) %>
+    password: <%= @node.fetch('couchbase', {}).fetch('server', {}).fetch('password', i.fetch('password', '')) %>
+<% end %>
+init_config:
