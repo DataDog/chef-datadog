@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 2.13.0 / Unreleased
+# 2.13.0 / 2017-12-01
 
 * [FEATURE] Add support for Logs, See [#490][] [@tmichelet][]
 * [FEATURE] Add go-metro recipe, [#484][] [@iancward][]
