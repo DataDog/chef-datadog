@@ -26,7 +26,7 @@ describe 'datadog::process' do
             {
               'name' => 'myprocess',
               'search_string' => ['myprocess'],
-              'tags' => [ 'foo', 'monitor:myprocess' ],
+              'tags' => ['foo', 'monitor:myprocess'],
               'thresholds' => { 'critical' => [8, 15] }
             }
           ]
