@@ -15,7 +15,7 @@ describe 'datadog::redisdb' do
         keys:
           - key1
           - key2
-        warn_on_missing_keys: True
+        warn_on_missing_keys: False
         slowlog-max-len: 128
         command_stats: True
   EOF
@@ -41,7 +41,7 @@ describe 'datadog::redisdb' do
                 'optional_tag1',
                 'optional_tag2'
               ],
-              warn_on_missing_keys: true
+              warn_on_missing_keys: false
             }
           ]
         }
