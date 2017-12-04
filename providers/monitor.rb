@@ -9,7 +9,8 @@ end
 
 action :add do
   Chef::Log.debug "Adding monitoring for #{new_resource.name}"
-  config_dir = node['datadog']['agent6'] ? node['datadog']['agent6_config_dir'] : node['datadog']['config_dir']
+
+  config_dir = Chef::Datadog.is_agent6(node) ? node['datadog']['agent6_config_dir'] : node['datadog']['config_dir']
   template ::File.join(config_dir, 'conf.d', "#{new_resource.name}.yaml") do
     if node['platform_family'] == 'windows'
       owner 'Administrators'
@@ -43,7 +44,7 @@ action :add do
 end
 
 action :remove do
-  config_dir = node['datadog']['agent6'] ? node['datadog']['agent6_config_dir'] : node['datadog']['config_dir']
+  config_dir = Chef::Datadog.is_agent6(node) ? node['datadog']['agent6_config_dir'] : node['datadog']['config_dir']
   confd_dir = ::File.join(config_dir, 'conf.d')
   Chef::Log.debug "Removing #{new_resource.name} from #{confd_dir}"
   file ::File.join(confd_dir, "#{new_resource.name}.yaml") do
