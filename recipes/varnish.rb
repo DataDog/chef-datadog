@@ -23,4 +23,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'varnish' do
   instances node['datadog']['varnish']['instances']
+  logs node['datadog']['varnish']['logs']
 end

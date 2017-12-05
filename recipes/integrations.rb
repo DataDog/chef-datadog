@@ -38,6 +38,7 @@ node['datadog']['extra_packages'].each do |name, options|
   datadog_monitor name do
     init_config node['datadog'][name]['init_config']
     instances node['datadog'][name]['instances']
+    logs node['datadog'][name]['logs']
     use_integration_template true
   end
 end

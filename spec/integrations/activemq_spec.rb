@@ -1,5 +1,6 @@
 describe 'datadog::activemq' do
   expected_yaml = <<-EOF
+    logs: ~
     instances:
     - host: localhost
       port: 1099

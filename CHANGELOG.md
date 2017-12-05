@@ -1,6 +1,18 @@
 Changes
 =======
 
+# 2.13.0 / 2017-12-01
+
+* [FEATURE] Add support for Logs, See [#490][] [@tmichelet][]
+* [FEATURE] Add go-metro recipe, [#484][] [@iancward][]
+* [FEATURE] Add tokumx recipe, [#486][] [@gswallow][]
+* [FEATURE] Add couchbase recipe, [#487][] [@gswallow][]
+* [FEATURE] Add experimental support of Agent 6 beta RPMs, [#493][] [@olivielpeau][]
+* [FEATURE] Allow `disable_ssl_validation` in the apache conf, [#480][] [@stolfi][]
+* [BUGFIX] Fix `warn_on_missing_keys` option of redis integration, [#495][] [@iancward][] & [@olivielpeau][]
+* [BUGFIX] Fix default log file directory on Windows, [#492][] [@borgilb][] & [@olivielpeau][]
+* [BUGFIX] Add check to consul template for `tags` key, [#479][] [@grogancolin][]
+
 # 2.12.0 / 2017-09-28
 
 * [FEATURE] Support of Agent 6 beta for debianoids, [#472][] [@olivielpeau][]
@@ -579,6 +591,15 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#469]: https://github.com/DataDog/chef-datadog/issues/469
 [#472]: https://github.com/DataDog/chef-datadog/issues/472
 [#474]: https://github.com/DataDog/chef-datadog/issues/474
+[#479]: https://github.com/DataDog/chef-datadog/issues/479
+[#480]: https://github.com/DataDog/chef-datadog/issues/480
+[#484]: https://github.com/DataDog/chef-datadog/issues/484
+[#486]: https://github.com/DataDog/chef-datadog/issues/486
+[#487]: https://github.com/DataDog/chef-datadog/issues/487
+[#490]: https://github.com/DataDog/chef-datadog/issues/490
+[#492]: https://github.com/DataDog/chef-datadog/issues/492
+[#493]: https://github.com/DataDog/chef-datadog/issues/493
+[#495]: https://github.com/DataDog/chef-datadog/issues/495
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@BrentOnRails]: https://github.com/BrentOnRails
@@ -601,6 +622,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@benmanns]: https://github.com/benmanns
 [@bflad]: https://github.com/bflad
 [@bitmonk]: https://github.com/bitmonk
+[@borgilb]: https://github.com/borgilb
 [@brentm5]: https://github.com/brentm5
 [@ccannell67]: https://github.com/ccannell67
 [@chrissnell]: https://github.com/chrissnell
@@ -632,6 +654,8 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@gmmeyer]: https://github.com/gmmeyer
 [@graemej]: https://github.com/graemej
 [@gregf]: https://github.com/gregf
+[@grogancolin]: https://github.com/grogancolin
+[@gswallow]: https://github.com/gswallow
 [@hartfordfive]: https://github.com/hartfordfive
 [@hilli]: https://github.com/hilli
 [@historus]: https://github.com/historus
@@ -679,6 +703,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@schisamo]: https://github.com/schisamo
 [@sethrosenblum]: https://github.com/sethrosenblum
 [@stensonb]: https://github.com/stensonb
+[@stolfi]: https://github.com/stolfi
 [@takus]: https://github.com/takus
 [@tejom]: https://github.com/tejom
 [@thisismana]: https://github.com/thisismana

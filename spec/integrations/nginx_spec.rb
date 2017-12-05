@@ -1,5 +1,6 @@
 describe 'datadog::nginx' do
   expected_yaml = <<-EOF
+    logs: ~
     init_config:
 
     instances:

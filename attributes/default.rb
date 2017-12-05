@@ -32,7 +32,7 @@ default['datadog']['application_key'] = nil
 ###            Beta-Agent6-only attributes, experimental             ###
 ### These attributes are not part of the stable API of the cookbook  ###
 ###   Subject to breaking changes between bugfix/minor versions      ###
-###                Only works on debianoids for now                  ###
+###              Only works on Linux (DEB/RPM) for now               ###
 
 # Set to true to install an agent6 instead of agent5.
 # To upgrade from agent5 to agent6, you need to:
@@ -49,9 +49,11 @@ default['datadog']['agent6'] = false
 default['datadog']['agent6_version'] = nil
 default['datadog']['agent6_package_action'] = 'install' # set to `upgrade` to always upgrade to latest
 
-# beta APT repo where datadog-agent v6 packages are available
+# beta repos where datadog-agent v6 packages are available
 default['datadog']['agent6_aptrepo'] = 'http://apt.datadoghq.com'
 default['datadog']['agent6_aptrepo_dist'] = 'beta'
+# RPMs are only available for RHEL >= 6 (-> use https protocol) and x86_64 arch
+default['datadog']['agent6_yumrepo'] = 'https://yum.datadoghq.com/beta/x86_64/'
 
 # Values that differ on Windows
 # The location of the config folder (containing conf.d)
@@ -160,6 +162,7 @@ default['datadog']['windows_agent_use_exe'] = false
 # Values that differ on Windows
 # The location of the config folder (containing conf.d)
 # The name of the dd agent service
+# The log file directory (see logging section below)
 if node['platform_family'] == 'windows'
   default['datadog']['config_dir'] = "#{ENV['ProgramData']}/Datadog"
   default['datadog']['agent_name'] = 'DatadogAgent'
@@ -262,7 +265,12 @@ default['datadog']['syslog']['active'] = false
 default['datadog']['syslog']['udp'] = false
 default['datadog']['syslog']['host'] = nil
 default['datadog']['syslog']['port'] = nil
-default['datadog']['log_file_directory'] = '/var/log/datadog'
+default['datadog']['log_file_directory'] =
+  if node['platform_family'] == 'windows'
+    nil # let the agent use a default log file dir
+  else
+    '/var/log/datadog'
+  end
 
 # Web proxy configuration
 default['datadog']['web_proxy']['host'] = nil
@@ -359,6 +367,13 @@ default['datadog']['process_agent']['rtprocess_interval'] = nil
 # overrides the collection intervals for the full and real-time check.
 default['datadog']['process_agent']['container_interval'] = nil
 default['datadog']['process_agent']['rtcontainer_interval'] = nil
+
+# Logs functionality settings
+# Set `enable_log_agent` to:
+# * `true` to explicitly enable the log agent
+# * `false` to explicitly disable it
+# Leave it to `nil` to let the agent's default behavior decide whether to run the log-agent
+default['datadog']['enable_logs_agent'] = nil
 
 # For custom gem servers on restricted networks
 # This attribute only works on Chef >= 12.3

@@ -1,7 +1,7 @@
 include_recipe 'datadog::dd-agent'
 
 # Monitor the Windows Event Log
-# @see https://github.com/DataDog/dd-agent/blob/master/conf.d/win32_event_log.yaml.example for details
+# @see https://github.com/DataDog/integrations-core/blob/master/win32_event_log/conf.yaml.example for details
 #
 # @example
 #   node['datadog']['win32_event_log']['init_config'] = {
@@ -20,4 +20,5 @@ include_recipe 'datadog::dd-agent'
 datadog_monitor 'win32_event_log' do
   init_config node['datadog']['win32_event_log']['init_config']
   instances node['datadog']['win32_event_log']['instances']
+  logs node['datadog']['win32_event_log']['logs']
 end

@@ -13,4 +13,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'directory' do
   instances node['datadog']['directory']['instances']
+  logs node['datadog']['directory']['logs']
 end

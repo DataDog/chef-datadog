@@ -1,3 +1,5 @@
+<%= JSON.parse(({'logs' => @logs }).to_json).to_yaml %>
+
 instances:
 <% @instances.each do |i| -%>
   <% if i.key?("unix_socket_path") -%>
@@ -19,8 +21,8 @@ instances:
       <% end -%>
     <% end -%>
     <% if i.key?("keys") -%>
-        <% if i.key?("warn_on_missing_keys") and i["warn_on_missing_keys"]-%>
-    warn_on_missing_keys: True
+        <% if i.key?("warn_on_missing_keys") -%>
+    warn_on_missing_keys: <%= i['warn_on_missing_keys'] %>
         <% end -%>
     keys:
       <% i["keys"].each do |k| -%>

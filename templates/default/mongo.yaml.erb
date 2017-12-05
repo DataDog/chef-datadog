@@ -1,3 +1,5 @@
+<%= JSON.parse(({'logs' => @logs }).to_json).to_yaml %>
+
 instances:
   <% @instances.each do |i| -%>
   - server: mongodb://<%= i['host']%>:<%= i['port'] %>
@@ -30,3 +32,4 @@ instances:
 
 init_config:
 # No init_config details needed
+

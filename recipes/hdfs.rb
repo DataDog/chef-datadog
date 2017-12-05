@@ -26,4 +26,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'hdfs' do
   instances node['datadog']['hdfs']['instances']
+  logs node['datadog']['hdfs']['logs']
 end

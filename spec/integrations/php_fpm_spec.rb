@@ -1,5 +1,6 @@
 describe 'datadog::php_fpm' do
   expected_yaml = <<-EOF
+  logs: ~
   init_config:
 
   instances:

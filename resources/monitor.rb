@@ -5,7 +5,7 @@ default_action :add
 property :name, String, name_attribute: true
 property :cookbook, String, default: 'datadog'
 
-# checks have 2 sections: init_config and instances
+# checks have 3 sections: init_config, instances, logs
 # we mimic these here, no validation is performed until the template
 # is evaluated.
 property :init_config, [Hash, nil], required: false, default: {}

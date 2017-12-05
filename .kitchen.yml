@@ -62,7 +62,7 @@ suites:
     - recipe[datadog::dd-agent]
   attributes:
     datadog: &DATADOG
-      api_key: somethingnotnil
+      api_key: somenonnullapikeythats32charlong
       application_key: alsonotnil
 
 - name: dd-handler
@@ -70,7 +70,7 @@ suites:
     - recipe[datadog::dd-handler]
   attributes:
     datadog: &DATADOG
-      api_key: somethingnotnil
+      api_key: somenonnullapikeythats32charlong
       application_key: alsonotnil
 
 - name: datadog_apache

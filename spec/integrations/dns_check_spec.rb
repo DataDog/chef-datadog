@@ -1,5 +1,6 @@
 describe 'datadog::dns_check' do
   expected_yaml = <<-EOF
+  logs: ~
   init_config:
     default_timeout: 4
 

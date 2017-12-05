@@ -63,4 +63,5 @@ include_recipe 'datadog::dd-agent'
 datadog_monitor 'sqlserver' do
   init_config node['datadog']['sqlserver']['init_config']
   instances node['datadog']['sqlserver']['instances']
+  logs node['datadog']['sqlserver']['logs']
 end

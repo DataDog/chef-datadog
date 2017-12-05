@@ -32,4 +32,5 @@ include_recipe 'datadog::dd-agent'
 datadog_monitor 'disk' do
   instances node['datadog']['disk']['instances']
   init_config nil
+  logs node['datadog']['disk']['logs']
 end

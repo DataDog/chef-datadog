@@ -3,6 +3,7 @@ describe 'datadog::integrations' do
     instances:
     - url: 'http://localhost:22222'
     init_config: ~
+    logs: ~
   EOF
 
   cached(:chef_run) do

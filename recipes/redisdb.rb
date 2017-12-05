@@ -1,7 +1,7 @@
 include_recipe 'datadog::dd-agent'
 
 # Build a data structure with configuration.
-# @see https://github.com/DataDog/dd-agent/blob/master/conf.d/redisdb.yaml.example RedisDB Example
+# @see https://github.com/DataDog/integrations-core/blob/master/redisdb/conf.yaml.example RedisDB Example
 # @example
 #   node.override['datadog']['redisdb']['instances'] = [
 #     {
@@ -13,4 +13,5 @@ include_recipe 'datadog::dd-agent'
 #   ]
 datadog_monitor 'redisdb' do
   instances node['datadog']['redisdb']['instances']
+  logs node['datadog']['redisdb']['logs']
 end

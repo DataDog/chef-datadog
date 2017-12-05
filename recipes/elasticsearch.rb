@@ -57,4 +57,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'elastic' do
   instances node['datadog']['elasticsearch']['instances']
+  logs node['datadog']['elasticsearch']['logs']
 end

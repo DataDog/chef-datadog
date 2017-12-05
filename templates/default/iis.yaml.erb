@@ -8,6 +8,8 @@
 # instance per host. Note: If you also want to check the counters on the
 # current machine, you will have to create an instance with empty params.
 
+<%= JSON.parse(({'logs' => @logs }).to_json).to_yaml %>
+
 instances:
   <% @instances.each do |i| -%>
     <% if i['host'] == 'localhost' -%>

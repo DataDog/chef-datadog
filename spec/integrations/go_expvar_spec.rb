@@ -1,5 +1,6 @@
 describe 'datadog::go_expvar' do
   expected_yaml = <<-EOF
+    logs: ~
     init_config: ~
     instances:
     - expvar_url: http://localhost:8080/debug/vars

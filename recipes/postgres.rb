@@ -1,7 +1,7 @@
 include_recipe 'datadog::dd-agent'
 
 # Build a data structure with configuration.
-# @see https://github.com/DataDog/dd-agent/blob/master/conf.d/postgres.yaml.example PostgreSQL Example
+# @see https://github.com/DataDog/integrations-core/blob/master/postgres/conf.yaml.example PostgreSQL Example
 # @example
 #   node.override['datadog']['postgres']['instances'] = [
 #     {
@@ -25,4 +25,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'postgres' do
   instances node['datadog']['postgres']['instances']
+  logs node['datadog']['postgres']['logs']
 end

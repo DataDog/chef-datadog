@@ -1,5 +1,6 @@
 describe 'datadog::postfix' do
   expected_yaml = <<-EOF
+    logs: ~
     instances:
     - directory: /var/spool/postfix
       queues:

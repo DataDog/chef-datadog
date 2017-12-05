@@ -1,5 +1,6 @@
 describe 'datadog::etcd' do
   expected_yaml = <<-EOF
+    logs: ~
     instances:
     - url: localhost
       ssl_keyfile: key_path

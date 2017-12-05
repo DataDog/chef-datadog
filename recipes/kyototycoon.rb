@@ -19,4 +19,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'kyototycoon' do
   instances node['datadog']['kyototycoon']['instances']
+  logs node['datadog']['kyototycoon']['logs']
 end

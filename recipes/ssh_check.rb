@@ -21,4 +21,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'ssh_check' do
   instances node['datadog']['ssh_check']['instances']
+  logs node['datadog']['ssh_check']['logs']
 end

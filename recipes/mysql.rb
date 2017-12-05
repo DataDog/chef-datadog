@@ -31,4 +31,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'mysql' do
   instances node['datadog']['mysql']['instances']
+  logs node['datadog']['mysql']['logs']
 end

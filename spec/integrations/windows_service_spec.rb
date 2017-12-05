@@ -8,6 +8,7 @@ describe 'datadog::windows_service' do
         - RemoteService1
         - RemoteService2
 
+    logs: ~
     init_config:
 
   EOF
@@ -56,6 +57,7 @@ describe 'datadog::windows_service' do
         - LocalService2
 
     init_config:
+    logs: ~
 
   EOF
 

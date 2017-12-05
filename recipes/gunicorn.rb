@@ -27,4 +27,5 @@ include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'gunicorn' do
   instances node['datadog']['gunicorn']['instances']
+  logs node['datadog']['gunicorn']['logs']
 end
