@@ -44,7 +44,7 @@ dd_agent6_version =
     node['datadog']['agent6_version']
   end
 
-if Chef::Datadog.is_agent6(node)
+if Chef::Datadog.agent6?(node)
   dd_agent_version = dd_agent6_version
   package_action = node['datadog']['agent6_package_action']
 else

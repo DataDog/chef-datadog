@@ -46,8 +46,8 @@ agent_start = node['datadog']['agent_start'] ? :start : :stop
 #
 Chef::Log.warn("node[datadog][agent6] set to #{node['datadog']['agent6']}")
 Chef::Log.warn("node[datadog][hybrid] set to #{node['datadog']['hybrid']}")
-Chef::Log.warn("node computed to be agent6: #{Chef::Datadog.is_agent6(node)}")
-if Chef::Datadog.is_agent6(node)
+Chef::Log.warn("node computed to be agent6: #{Chef::Datadog.agent6?(node)}")
+if Chef::Datadog.agent6?(node)
   include_recipe 'datadog::_agent6_config'
 else
   # Agent 5 and lower

@@ -10,15 +10,15 @@ class Chef
         run_state_or_attribute(node, 'application_key')
       end
 
-      def is_agent6(node)
+      def agent6?(node)
         if run_state_or_attribute(node, 'agent6') == true
           if run_state_or_attribute(node, 'hybrid') == true
-            return (node['ipaddress'].split('.')[-1].to_i % 2) == 0
+            return node['ipaddress'].split('.')[-1].to_i.even?
           end
           return true
         end
 
-        return false
+        false
       end
 
       private
