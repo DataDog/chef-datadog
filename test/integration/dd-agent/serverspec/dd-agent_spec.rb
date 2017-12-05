@@ -17,7 +17,7 @@ end
 # The new APT key is imported
 describe command('apt-key list'), :if => ['debian', 'ubuntu'].include?(os[:family]) do
   its(:exit_status) { should eq 0 }
-  its(:stdout) { should contain '382E94DE' }
+  its(:stdout) { should contain '382E 94DE' }
 end
 
 # The new RPM key is imported
