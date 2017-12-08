@@ -12,6 +12,7 @@ property :init_config, [Hash, nil], required: false, default: {}
 property :instances, Array, required: false, default: []
 property :version, [Integer, nil], required: false, default: nil
 property :use_integration_template, [TrueClass, FalseClass], required: false, default: false
+property :logs, Array, required: false, default: []
 
 action :add do
   log "Adding monitoring for #{new_resource.name}" do
@@ -33,7 +34,8 @@ action :add do
     variables(
       init_config: new_resource.init_config,
       instances:   new_resource.instances,
-      version:     new_resource.version
+      version:     new_resource.version,
+      logs:        new_resource.logs
     )
     cookbook new_resource.cookbook
     sensitive true
