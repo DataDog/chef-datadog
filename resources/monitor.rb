@@ -12,7 +12,7 @@ property :init_config, [Hash, nil], required: false, default: {}
 property :instances, Array, required: false, default: []
 property :version, [Integer, nil], required: false, default: nil
 property :use_integration_template, [TrueClass, FalseClass], required: false, default: false
-property :logs, Array, required: false, default: []
+property :logs, [Array, nil], required: false, default: []
 
 action :add do
   log "Adding monitoring for #{new_resource.name}" do
