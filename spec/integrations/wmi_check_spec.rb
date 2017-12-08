@@ -42,7 +42,6 @@ describe 'datadog::wmi_check' do
         node.set['datadog'] = {
           api_key: 'someapikey',
           wmi_check: {
-            init_config: nil,
             instances: [
               {
                 class: 'Win32_OperatingSystem',

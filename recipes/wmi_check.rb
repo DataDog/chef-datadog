@@ -5,7 +5,6 @@ include_recipe 'datadog::dd-agent'
 
 # node['datadog']['wmi_check'] =
 # {
-#   "init_config": null,
 #   "instances": [
 #     {
 #       "class": "Win32_OperatingSystem",
