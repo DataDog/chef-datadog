@@ -78,8 +78,8 @@ describe 'datadog::wmi_check' do
                     Name: 'myapp'
                   }
                 ],
-              constant_tags: [
-                'role:test'
+                constant_tags: [
+                  'role:test'
                 ]
               },
               {
