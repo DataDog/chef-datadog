@@ -18,7 +18,7 @@
 #
 include_recipe 'datadog::dd-agent'
 
-# The docker check is deprecated in agent version 5.x. 
+# The docker check is deprecated in agent version 5.x.
 # Please use the docker_daemon check instead.
 # Build a data structure with configuration.
 # @see http://docs.datadoghq.com/integrations/docker/

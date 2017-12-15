@@ -18,7 +18,7 @@
 #
 include_recipe 'datadog::dd-agent'
 
-# The docker_daemon check no longer exists in agent version 6.x. 
+# The docker_daemon check no longer exists in agent version 6.x.
 # Please use the docker check instead.
 
 # Build a data structure with configuration.
