@@ -84,4 +84,52 @@ when 'rhel', 'fedora', 'amazon'
     gpgcheck true
     action :create
   end
+when 'suse'
+  # Import new RPM key
+  if node['datadog']['yumrepo_gpgkey_new']
+    # Download new RPM key
+    new_key_local_path = ::File.join(Chef::Config[:file_cache_path], 'DATADOG_RPM_KEY_E09422B3.public')
+    remote_file 'DATADOG_RPM_KEY_E09422B3.public' do
+      path new_key_local_path
+      source node['datadog']['yumrepo_gpgkey_new']
+      not_if 'rpm -q gpg-pubkey-e09422b3' # (key already imported)
+      notifies :run, 'execute[rpm-import datadog key e09422b3]', :immediately
+    end
+
+    # Import key if fingerprint matches
+    execute 'rpm-import datadog key e09422b3' do
+      command "rpm --import #{new_key_local_path}"
+      only_if "gpg --dry-run --quiet --with-fingerprint #{new_key_local_path} | grep 'A4C0 B90D 7443 CF6E 4E8A  A341 F106 8E14 E094 22B3'"
+      action :nothing
+    end
+  end
+
+  old_key_local_path = ::File.join(Chef::Config[:file_cache_path], 'DATADOG_RPM_KEY.public')
+  remote_file 'DATADOG_RPM_KEY.public' do
+    path old_key_local_path
+    source node['datadog']['yumrepo_gpgkey']
+    # not_if 'rpm -q gpg-pubkey-4172a230' # (key already imported)
+    notifies :run, 'execute[rpm-import datadog key 4172a230]', :immediately
+  end
+
+  # Import key if fingerprint matches
+  execute 'rpm-import datadog key 4172a230' do
+    command "rpm --import #{old_key_local_path}"
+    only_if "gpg --dry-run --quiet --with-fingerprint #{old_key_local_path} | grep '60A3 89A4 4A0C 32BA E3C0  3F0B 069B 56F5 4172 A230'"
+    action :nothing
+  end
+
+  # Add YUM repository
+  zypper_repository 'datadog' do
+    name 'datadog'
+    description 'datadog'
+    if node['datadog']['agent6']
+      baseurl node['datadog']['agent6_yumrepo_suse']
+    else
+      baseurl node['datadog']['yumrepo_suse']
+    end
+    gpgkey node['datadog']['yumrepo_gpgkey']
+    gpgcheck false
+    action :create
+  end
 end
