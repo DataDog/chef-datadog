@@ -89,5 +89,13 @@ else
       action package_action # default is :install
       allow_downgrade node['datadog']['agent_allow_downgrade']
     end
+  when 'suse'
+    zypper_package 'datadog-agent' do
+      version dd_agent_version
+      retries package_retries unless package_retries.nil?
+      retry_delay package_retry_delay unless package_retry_delay.nil?
+      action package_action # default is :install
+      allow_downgrade node['datadog']['agent_allow_downgrade']
+    end
   end
 end
