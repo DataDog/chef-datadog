@@ -44,7 +44,10 @@ agent_start = node['datadog']['agent_start'] ? :start : :stop
 # To add integration-specific configurations, add 'datadog::config_name' to
 # the node's run_list and set the relevant attributes
 #
-if node['datadog']['agent6']
+Chef::Log.info("node[datadog][agent6] set to #{node['datadog']['agent6']}")
+Chef::Log.info("node[datadog][hybrid] set to #{node['datadog']['hybrid']}")
+Chef::Log.info("node computed to be agent6: #{Chef::Datadog.agent6?(node)}")
+if Chef::Datadog.agent6?(node)
   include_recipe 'datadog::_agent6_config'
 else
   # Agent 5 and lower

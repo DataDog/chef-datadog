@@ -44,6 +44,7 @@ default['datadog']['application_key'] = nil
 # * pin node['datadog']['agent_version'] to an existing agent5 version, and
 # * set node['datadog']['agent_allow_downgrade'] to true
 default['datadog']['agent6'] = false
+default['datadog']['hybrid'] = false
 # Default of `nil` will install latest version, applies to agent6 only.
 # See documentation of `agent_version` attribute for allowed configuration format.
 default['datadog']['agent6_version'] = nil

@@ -48,7 +48,7 @@ when 'debian'
     uri node['datadog']['agent6_aptrepo']
     distribution node['datadog']['agent6_aptrepo_dist']
     components ['main']
-    if node['datadog']['agent6'] &&
+    if Chef::Datadog.agent6?(node) &&
        (node['datadog']['agent6_aptrepo'] != node['datadog']['aptrepo'] ||
        node['datadog']['agent6_aptrepo_dist'] != node['datadog']['aptrepo_dist'])
       # add the beta repo iff:
@@ -88,7 +88,7 @@ when 'rhel', 'fedora', 'amazon'
   yum_repository 'datadog' do
     name 'datadog'
     description 'datadog'
-    if node['datadog']['agent6']
+    if Chef::Datadog.agent6?(node)
       baseurl node['datadog']['agent6_yumrepo']
     else
       baseurl node['datadog']['yumrepo']
