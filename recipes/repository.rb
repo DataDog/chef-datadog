@@ -145,7 +145,7 @@ when 'suse'
       baseurl node['datadog']['yumrepo_suse']
     end
     gpgkey node['datadog']['yumrepo_gpgkey']
-    gpgcheck true
+    gpgcheck false
     action :create
   end
 end
