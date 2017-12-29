@@ -103,11 +103,6 @@ when 'rhel', 'fedora', 'amazon'
 when 'suse'
   # Import new RPM key
   if node['datadog']['yumrepo_gpgkey_new']
-    # gnupg is required to check the downloaded key's fingerprint
-    package 'gnupg' do
-      action :install
-    end
-
     # Download new RPM key
     key_local_path = ::File.join(Chef::Config[:file_cache_path], 'DATADOG_RPM_KEY_E09422B3.public')
     remote_file 'DATADOG_RPM_KEY_E09422B3.public' do
