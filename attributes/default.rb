@@ -110,6 +110,11 @@ default['datadog']['tags_blacklist_regex'] = nil
 # Set to `true` if you want the handler to send the Chef policy name and group as host tags
 default['datadog']['send_policy_tags'] = false
 
+# Set to an integer if you want the handler to retry submitting tags if the host isn't yet present
+# on Datadog. The handler will retry evey 2 seconds until this number of retries is reached or the tags are
+# submitted successfully.
+default['datadog']['tags_submission_retries'] = nil
+
 # Autorestart agent
 default['datadog']['autorestart'] = false
 
