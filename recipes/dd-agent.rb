@@ -106,7 +106,7 @@ service 'datadog-agent' do
   service_name node['datadog']['agent_name']
   action [agent_enable, agent_start]
   if node['datadog']['agent6'] &&
-    (node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7 || node['platform_family'] == 'amazon')
+    (node['platform'] == 'amazon' || node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7 || node['platform_family'] == 'amazon')
     provider Chef::Provider::Service::Upstart
   end
   if is_windows
