@@ -36,7 +36,7 @@ action :add do
   service 'datadog-agent' do
     service_name node['datadog']['agent_name']
     if node['datadog']['agent6'] &&
-      (node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7 || node['platform_family'] == 'amazon')
+      (node['platform'] == 'amazon' || node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7 || node['platform_family'] == 'amazon')
       provider Chef::Provider::Service::Upstart
     end
     # HACK: the restart can fail when we hit systemd's restart limits (by default, 5 starts every 10 seconds)
@@ -58,7 +58,7 @@ action :remove do
 
   service 'datadog-agent' do
     if node['datadog']['agent6'] &&
-      (node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7 || node['platform_family'] == 'amazon')
+      (node['platform'] == 'amazon' || node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7 || node['platform_family'] == 'amazon')
       provider Chef::Provider::Service::Upstart
     end
     service_name node['datadog']['agent_name']
