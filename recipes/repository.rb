@@ -38,7 +38,7 @@ when 'debian'
     key 'C7A7DA52'
     uri node['datadog']['aptrepo']
     distribution node['datadog']['aptrepo_dist']
-    components ['main']
+    components node['datadog']['agent_aptrepo_components']
     action :add
   end
 
@@ -51,7 +51,7 @@ when 'debian'
     if node['datadog']['agent6'] &&
        (node['datadog']['agent6_aptrepo'] != node['datadog']['aptrepo'] ||
        node['datadog']['agent6_aptrepo_dist'] != node['datadog']['aptrepo_dist'] ||
-       node['datadog']['agent6_aptrepo_components'] != ['main'])
+       node['datadog']['agent6_aptrepo_components'] != node['datadog']['agent_aptrepo_components'])
       # add the beta repo iff:
       # * agent6 is selected (avoid automatic upgrades to agent6 if it's not), and
       # * the node is configured to use a different repo than the agent5 (avoid duplicate repos)
