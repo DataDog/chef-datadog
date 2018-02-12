@@ -47,7 +47,7 @@ when 'debian'
     key 'C7A7DA52'
     uri node['datadog']['agent6_aptrepo']
     distribution node['datadog']['agent6_aptrepo_dist']
-    components ['main']
+    components node['datadog']['agent6_aptrepo_components']
     if node['datadog']['agent6'] &&
        (node['datadog']['agent6_aptrepo'] != node['datadog']['aptrepo'] ||
        node['datadog']['agent6_aptrepo_dist'] != node['datadog']['aptrepo_dist'])

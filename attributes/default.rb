@@ -52,6 +52,7 @@ default['datadog']['agent6_package_action'] = 'install' # set to `upgrade` to al
 # beta repos where datadog-agent v6 packages are available
 default['datadog']['agent6_aptrepo'] = 'http://apt.datadoghq.com'
 default['datadog']['agent6_aptrepo_dist'] = 'beta'
+default['datadog']['agent6_aptrepo_components'] = ['main']
 # RPMs are only available for RHEL >= 6 (-> use https protocol) and x86_64 arch
 default['datadog']['agent6_yumrepo'] = 'https://yum.datadoghq.com/beta/x86_64/'
 
