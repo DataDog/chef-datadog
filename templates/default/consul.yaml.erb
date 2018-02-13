@@ -6,6 +6,12 @@ instances:
     <% unless i['new_leader_checks'].nil? %>
     new_leader_checks: <%= i['new_leader_checks'] %>
     <% end %>
+    <% unless i['self_leader_check'].nil? %>
+    self_leader_check: <%= i['self_leader_check'] %>
+    <% end %>
+    <% unless i['network_latency_checks'].nil? %>
+    network_latency_checks: <%= i['network_latency_checks'] %>
+    <% end %>
     <% unless i['catalog_checks'].nil? %>
     catalog_checks: <%= i['catalog_checks'] %>
     <% end %>
