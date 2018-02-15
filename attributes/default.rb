@@ -342,18 +342,11 @@ default['datadog']['ddtrace_gem_version'] = nil
 # * `false` to explicitly disable it
 # Leave it to `nil` to let the agent's default behavior decide whether to run the process-agent
 default['datadog']['enable_process_agent'] = nil
+default['datadog']['process_agent']['url'] = 'https://process.datadoghq.com'
 
-# Comma-separated list of regex patterns matching process commands to blacklist.
-# Example: 'my-secret-app,dbpass'
-default['datadog']['process_agent']['blacklist'] = nil
-
-# Comma-separated list of regex patterns of containers to include or skip.
-# Each pattern should be in the form of "field:pattern" where 'field' is either
-# 'image' or 'name'.
-# Example: 'image:redis,image:nginx'
-default['datadog']['process_agent']['container_blacklist'] = nil
-# Whitelist is applied after the blacklist.
-default['datadog']['process_agent']['container_whitelist'] = nil
+# A list of regex patterns matching process commands to blacklist.
+# Example: ['my-secret-app', 'dbpass']
+default['datadog']['process_agent']['blacklist'] = []
 
 # Full path to store process-agent logs to override the default.
 default['datadog']['process_agent']['log_file'] = nil

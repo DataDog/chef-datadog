@@ -217,12 +217,6 @@ connection_limit: <%= node['datadog']['connection_limit'] %>
 <% unless node['datadog']['process_agent']['blacklist'].nil? -%>
 blacklist: <%= node['datadog']['process_agent']['blacklist'] %>
 <% end -%>
-<% unless node['datadog']['process_agent']['container_blacklist'].nil? -%>
-container_blacklist: <%= node['datadog']['process_agent']['container_blacklist'] %>
-<% end -%>
-<% unless node['datadog']['process_agent']['container_whitelist'].nil? -%>
-container_whitelist: <%= node['datadog']['process_agent']['container_whitelist'] %>
-<% end -%>
 <% unless node['datadog']['process_agent']['process_interval'].nil? -%>
 process_interval = <%= node['datadog']['process_agent']['process_interval'] %>
 <% end -%>
