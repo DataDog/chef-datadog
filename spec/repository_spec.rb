@@ -23,6 +23,10 @@ describe 'datadog::repository' do
     it 'sets up an apt repo' do
       expect(chef_run).to add_apt_repository('datadog')
     end
+
+    it 'removes the datadog-beta repo' do
+      expect(chef_run).to remove_apt_repository('datadog-beta')
+    end
   end
 
   context 'rhellions' do
