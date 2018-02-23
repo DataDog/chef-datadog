@@ -33,8 +33,18 @@ action :add do
     notifies :restart, 'service[datadog-agent]', :delayed if node['datadog']['agent_start']
   end
 
+  service_provider = nil
+  if node['datadog']['agent6'] &&
+    (((node['platform'] == 'amazon' || node['platform_family'] == 'amazon') && node['platform_version'].to_i < 2) ||
+     (node['platform'] != 'amazon' && node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7))
+    # use Upstart provider explicitly for Agent 6 on Amazon Linux < 2.0 and RHEL < 7
+    service_provider = Chef::Provider::Service::Upstart
+  end
   service 'datadog-agent' do
     service_name node['datadog']['agent_name']
+    unless service_provider.nil?
+      provider service_provider
+    end
     # HACK: the restart can fail when we hit systemd's restart limits (by default, 5 starts every 10 seconds)
     # To workaround this, retry once after 5 seconds, and a second time after 10 seconds
     retries 2
@@ -52,7 +62,17 @@ action :remove do
     notifies :restart, 'service[datadog-agent]', :delayed if node['datadog']['agent_start']
   end
 
+  service_provider = nil
+  if node['datadog']['agent6'] &&
+    (((node['platform'] == 'amazon' || node['platform_family'] == 'amazon') && node['platform_version'].to_i < 2) ||
+     (node['platform'] != 'amazon' && node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7))
+    # use Upstart provider explicitly for Agent 6 on Amazon Linux < 2.0 and RHEL < 7
+    service_provider = Chef::Provider::Service::Upstart
+  end
   service 'datadog-agent' do
     service_name node['datadog']['agent_name']
+    unless service_provider.nil?
+      provider service_provider
+    end
   end
 end
