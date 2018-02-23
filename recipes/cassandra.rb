@@ -10,9 +10,12 @@ include_recipe 'datadog::dd-agent'
 #   Select the appropriate configuration file template. Available options are:
 #   * `1` (Default, recommended for Cassandra < 2.2).
 #     Use Cassandra legacy metrics, i.e. https://github.com/DataDog/dd-agent/blob/5.6.x/conf.d/cassandra.yaml.example#L23-L74
-#   * `2` (recommended for Cassandra >= 2.2).
+#   * `2` (recommended for existing Agent installs for Cassandra >= 2.2 and < 3.0).
 #     Use Cassandra expanded metrics (CASSANDRA-4009) introduced in 1.2 (https://wiki.apache.org/cassandra/Metrics),
 #     i.e. https://github.com/DataDog/integrations-core/blob/master/cassandra/conf.yaml.example#L23-L102
+#   * `3` (recommended for Cassandra >= 3.0, and for new Agent installs for Cassandra >= 2.2).
+#     Collect most Cassandra metrics to fully populate the default Cassandra dashboard on Datadog,
+#     i.e. https://github.com/DataDog/integrations-core/blob/5.22.0/cassandra/conf.yaml.example#L35-L460
 
 # Example:
 
