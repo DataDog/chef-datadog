@@ -816,7 +816,7 @@ describe 'datadog::cassandra' do
                 password: 'somepass',
                 process_name_regex: '.*cassandra.*'
               }
-            ],
+            ]
           }
         }
       end.converge(described_recipe)
