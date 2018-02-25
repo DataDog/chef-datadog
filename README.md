@@ -142,3 +142,16 @@ Usage
 We are not making use of data_bags in this recipe at this time, as it is unlikely that you will have more than one API key and one application key.
 
 For more deployment details, visit the [Datadog Documentation site](http://docs.datadoghq.com/).
+
+AWS OpsWorks Chef Deployment
+----------------------------
+
+1. Add Chef Custom JSON:
+  ```json
+  {"datadog":{"api_key": "<API_KEY>", "application_key": "<APP_KEY>"}}
+  ```
+
+2. Include the recipe in install-lifecycle recipe:
+  ```ruby
+  include_recipe 'datadog::dd-agent'
+  ```
