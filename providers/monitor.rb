@@ -7,7 +7,7 @@ def whyrun_supported?
   true
 end
 
-action :add do
+action :add do # rubocop:disable Metrics/BlockLength
   Chef::Log.debug "Adding monitoring for #{new_resource.name}"
   config_dir = node['datadog']['agent6'] ? node['datadog']['agent6_config_dir'] : node['datadog']['config_dir']
   template ::File.join(config_dir, 'conf.d', "#{new_resource.name}.yaml") do
@@ -35,16 +35,14 @@ action :add do
 
   service_provider = nil
   if node['datadog']['agent6'] &&
-    (((node['platform'] == 'amazon' || node['platform_family'] == 'amazon') && node['platform_version'].to_i < 2) ||
+     (((node['platform'] == 'amazon' || node['platform_family'] == 'amazon') && node['platform_version'].to_i < 2) ||
      (node['platform'] != 'amazon' && node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7))
     # use Upstart provider explicitly for Agent 6 on Amazon Linux < 2.0 and RHEL < 7
     service_provider = Chef::Provider::Service::Upstart
   end
   service 'datadog-agent' do
     service_name node['datadog']['agent_name']
-    unless service_provider.nil?
-      provider service_provider
-    end
+    provider service_provider unless service_provider.nil?
     # HACK: the restart can fail when we hit systemd's restart limits (by default, 5 starts every 10 seconds)
     # To workaround this, retry once after 5 seconds, and a second time after 10 seconds
     retries 2
@@ -64,15 +62,13 @@ action :remove do
 
   service_provider = nil
   if node['datadog']['agent6'] &&
-    (((node['platform'] == 'amazon' || node['platform_family'] == 'amazon') && node['platform_version'].to_i < 2) ||
+     (((node['platform'] == 'amazon' || node['platform_family'] == 'amazon') && node['platform_version'].to_i < 2) ||
      (node['platform'] != 'amazon' && node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7))
     # use Upstart provider explicitly for Agent 6 on Amazon Linux < 2.0 and RHEL < 7
     service_provider = Chef::Provider::Service::Upstart
   end
   service 'datadog-agent' do
     service_name node['datadog']['agent_name']
-    unless service_provider.nil?
-      provider service_provider
-    end
+    provider service_provider unless service_provider.nil?
   end
 end
