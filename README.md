@@ -108,7 +108,8 @@ There are many other integration-specific recipes, that are meant to assist in d
 Usage
 =====
 
-0. Please note that the cookbook now supports installing both Agent5 and Agent6 of the datadog agent on debian, RHEL based linux distributions (not yet supported on windows). By default versions <=2.x of the cookbook will default to install Agent5, you may however override this behavior with the `node['datadog']['agent6']` attribute.
+### Agent6 Note
+Please note the cookbook now supports installing both Agent5 and Agent6 of the datadog agent on debian and RHEL based linux distributions (not yet supported on windows). By default versions `<=1.x` of the cookbook will default to install Agent5, you may however override this behavior with the `node['datadog']['agent6']` attribute.
   ```
   default_attributes(
     'datadog' => {
@@ -117,7 +118,7 @@ Usage
   )
   ```
 
-Additional attributes are available to have finer control over how you install agent6. These are agent6 counterparts to several well known agent5 attributes:
+Additional attributes are available to have finer control over how you install agent6. These are agent6 counterparts to several well known agent5 attributes (code [here](https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb#L31-L69)):
  * `agent6_version`: should allow you to pin the agent version.
  * `agent6_package_action`: defaults to `'install'`, may be set to `'upgrade'` to always upgrade to latest.
  * `agent6_aptrepo`: desired APT repo for the agent. Defaults to `http://apt.datadoghq.com`
@@ -136,6 +137,26 @@ Should wish to add additional elements to the agent6 configuration file, typical
     }
   )
   ```
+
+or to enable both process agent and apm:
+  ```
+  default_attributes(
+    'datadog' => {
+      'extra_config' => {
+        'apm_config' => {
+          'enabled' => true
+        },
+        'process_config' => {
+          'enabled' => 'disabled'
+        }
+      }
+    }
+  )
+  ```
+  NB: please take a look at the process and apm agents for more details regarding configuration options. [APM Trace Agent](https://github.com/DataDog/datadog-trace-agent) and [Process Agent](https://github.com/DataDog/datadog-process-agent)
+
+
+### Instructions
 
 1. Add this cookbook to your Chef Server, either by installing with knife or by adding it to your Berksfile:
   ```
