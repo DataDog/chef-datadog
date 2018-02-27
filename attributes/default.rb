@@ -29,9 +29,7 @@ default['datadog']['api_key'] = nil
 default['datadog']['application_key'] = nil
 
 ########################################################################
-###            Agent6-only attributes, experimental                  ###
-### These attributes are not part of the stable API of the cookbook  ###
-###   Subject to breaking changes between bugfix/minor versions      ###
+###                  Agent6-only attributes                          ###
 ###              Only works on Linux (DEB/RPM) for now               ###
 
 # If you're installing a pre-release version of Agent 6 (beta or RC), you need to:
@@ -68,7 +66,7 @@ default['datadog']['agent6_config_dir'] = '/etc/datadog-agent'
 # Supported keys: "series", "events", "service checks"
 default['datadog']['use_v2_api'] = {}
 
-###           End of Beta-Agent6-only experimental attributes        ###
+###                 End of Agent6-only attributes                    ###
 ########################################################################
 
 # Use this attribute to send data to additional accounts

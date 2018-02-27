@@ -16,10 +16,10 @@ Datadog Cookbook
 
 Chef recipes to deploy Datadog's components and configuration automatically.
 
-This cookbook includes experimental support of the beta version of the Datadog Agent 6.0, please refer to
-the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.13.0/attributes/default.rb#L31-L68)
+This cookbook includes new support for Datadog Agent version 6.0, please refer to
+the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.14.0/attributes/default.rb#L31-L68)
 for more details on the supported platforms and how to use it.
-Log collection is now available with agent 6.0, please refer to the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.13.0/attributes/default.rb#L371-L376) to enable it.
+Log collection is now available with agent 6.0, please refer to the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.14.0/attributes/default.rb#L371-L376) to enable it.
 
 For general information on the Datadog Agent 6, please refer to the [datadog-agent](https://github.com/DataDog/datadog-agent/) repo.
 
@@ -108,9 +108,59 @@ There are many other integration-specific recipes, that are meant to assist in d
 Usage
 =====
 
+### Agent6 Note
+Please note the cookbook now supports installing both Agent5 and Agent6 of the datadog agent on debian and RHEL based linux distributions (not yet supported on windows). By default versions `<=1.x` of the cookbook will default to install Agent5, you may however override this behavior with the `node['datadog']['agent6']` attribute.
+  ```
+  default_attributes(
+    'datadog' => {
+      'agent6' => true
+    }
+  )
+  ```
+
+Additional attributes are available to have finer control over how you install agent6. These are agent6 counterparts to several well known agent5 attributes (code [here](https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb#L31-L69)):
+ * `agent6_version`: should allow you to pin the agent version.
+ * `agent6_package_action`: defaults to `'install'`, may be set to `'upgrade'` to always upgrade to latest.
+ * `agent6_aptrepo`: desired APT repo for the agent. Defaults to `http://apt.datadoghq.com`
+ * `agent6_aptrepo_dist`: desired distribution for the APT repo. Defaults to `stable`
+ * `agent6_yumrepo`: desired YUM repo for the agent. Defaults to `https://yum.datadoghq.com/stable/6/x86_64/`
+
+Should wish to add additional elements to the agent6 configuration file, typically `/etc/datadog/datadog.yaml` you may use the `node['datadog']['extra_config']` attribute. This attribute is a hash and will be marshaled into the configuration file accordingly. For instance, to enable the `apm` tracing agent bundled with agent6:
+  ```
+  default_attributes(
+    'datadog' => {
+      'extra_config' => {
+        'apm_config' => {
+          'enabled' => true
+        }
+      }
+    }
+  )
+  ```
+
+or to enable both process agent and apm:
+  ```
+  default_attributes(
+    'datadog' => {
+      'extra_config' => {
+        'apm_config' => {
+          'enabled' => true
+        },
+        'process_config' => {
+          'enabled' => 'disabled'
+        }
+      }
+    }
+  )
+  ```
+  NB: please take a look at the process and apm agents for more details regarding configuration options. [APM Trace Agent](https://github.com/DataDog/datadog-trace-agent) and [Process Agent](https://github.com/DataDog/datadog-process-agent)
+
+
+### Instructions
+
 1. Add this cookbook to your Chef Server, either by installing with knife or by adding it to your Berksfile:
   ```
-  cookbook 'datadog', '~> 2.7.0'
+  cookbook 'datadog', '~> 2.14.0'
   ```
 2. Add your API Key either:
   * as a node attribute via an `environment` or `role`, or
@@ -137,6 +187,8 @@ Usage
     recipe[datadog::dd-handler]
   )
   ```
+  NB: remember to set `agent6` attribute in the `datadog` hash if you'd like to install agent6.
+
 5. Wait until `chef-client` runs on the target node (or trigger chef-client manually if you're impatient)
 
 We are not making use of data_bags in this recipe at this time, as it is unlikely that you will have more than one API key and one application key.

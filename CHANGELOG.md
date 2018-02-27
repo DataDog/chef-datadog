@@ -1,6 +1,15 @@
 Changes
 =======
 
+# 2.14.0 / 2018-02-27
+* [FEATURE] Enable log collection with chef. See [#498][] [@NBParis][]
+* [FEATURE] Support process agent configuration in datadog.yaml. See [#511][] [@conorbranagan][]
+* [FEATURE] Add recipe for WMI check. See [#499][] [@mlcooper][]
+* [FEATURE] Add updated metrics for Cassandra 2.x and 3.x. See [#516][] [@olivielpeau][]
+* [FEATURE] Update component for APT repo, and URL for YUM for Agent6. See [#515][] [@olivielpeau][]
+* [FEATURE] Consul: support self leader check and network latency checks. See [#501][] [@azuretek][]
+* [BUGFIX] RHEL/Amazon linux: add service provider hint for Agent6 + upstart. See [#518][] [@olivielpeau][]
+
 # 2.13.0 / 2017-12-01
 
 * [FEATURE] Add support for Logs, See [#490][] [@tmichelet][]
@@ -600,6 +609,13 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#492]: https://github.com/DataDog/chef-datadog/issues/492
 [#493]: https://github.com/DataDog/chef-datadog/issues/493
 [#495]: https://github.com/DataDog/chef-datadog/issues/495
+[#498]: https://github.com/DataDog/chef-datadog/issues/498
+[#499]: https://github.com/DataDog/chef-datadog/issues/499
+[#501]: https://github.com/DataDog/chef-datadog/issues/501
+[#511]: https://github.com/DataDog/chef-datadog/issues/511
+[#515]: https://github.com/DataDog/chef-datadog/issues/515
+[#516]: https://github.com/DataDog/chef-datadog/issues/516
+[#518]: https://github.com/DataDog/chef-datadog/issues/518
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@BrentOnRails]: https://github.com/BrentOnRails
@@ -608,6 +624,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@JoeDeVries]: https://github.com/JoeDeVries
 [@LeoCavaille]: https://github.com/LeoCavaille
 [@MiguelMoll]: https://github.com/MiguelMoll
+[@NBParis]: https://github.com/NBParis
 [@NathanielMichael]: https://github.com/NathanielMichael
 [@RedWhiteMiko]: https://github.com/RedWhiteMiko
 [@SelerityMichael]: https://github.com/SelerityMichael
@@ -617,6 +634,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@alq]: https://github.com/alq
 [@antonio-osorio]: https://github.com/antonio-osorio
 [@arthurnn]: https://github.com/arthurnn
+[@azuretek]: https://github.com/azuretek
 [@babbottscott]: https://github.com/babbottscott
 [@bai]: https://github.com/bai
 [@benmanns]: https://github.com/benmanns
