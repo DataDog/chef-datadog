@@ -16,10 +16,10 @@ Datadog Cookbook
 
 Chef recipes to deploy Datadog's components and configuration automatically.
 
-This cookbook includes experimental support of the beta version of the Datadog Agent 6.0, please refer to
-the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.13.0/attributes/default.rb#L31-L68)
+This cookbook includes new support for Datadog Agent version 6.0, please refer to
+the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.14.0/attributes/default.rb#L31-L68)
 for more details on the supported platforms and how to use it.
-Log collection is now available with agent 6.0, please refer to the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.13.0/attributes/default.rb#L371-L376) to enable it.
+Log collection is now available with agent 6.0, please refer to the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.14.0/attributes/default.rb#L371-L376) to enable it.
 
 For general information on the Datadog Agent 6, please refer to the [datadog-agent](https://github.com/DataDog/datadog-agent/) repo.
 
@@ -160,7 +160,7 @@ or to enable both process agent and apm:
 
 1. Add this cookbook to your Chef Server, either by installing with knife or by adding it to your Berksfile:
   ```
-  cookbook 'datadog', '~> 2.13.0'
+  cookbook 'datadog', '~> 2.14.0'
   ```
 2. Add your API Key either:
   * as a node attribute via an `environment` or `role`, or
