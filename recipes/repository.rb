@@ -21,11 +21,6 @@ case node['platform_family']
 when 'debian'
   include_recipe 'apt'
 
-  package 'install-apt-transport-https' do
-    package_name 'apt-transport-https'
-    action :install
-  end
-
   # Trust new APT key
   execute 'apt-key import key 382E94DE' do
     command 'apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 A2923DFF56EDA6E76E55E492D3A80E30382E94DE'
