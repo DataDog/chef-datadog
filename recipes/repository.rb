@@ -29,7 +29,7 @@ when 'debian'
   # Trust new APT key
   execute 'apt-key import key 382E94DE' do
     command 'apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 A2923DFF56EDA6E76E55E492D3A80E30382E94DE'
-    not_if 'apt-key list | grep 382E94DE'
+    not_if 'apt-key list | grep "382E 94DE"'
   end
 
   uri = node['datadog']['agent6'] ? node['datadog']['agent6_aptrepo'] : node['datadog']['aptrepo']
