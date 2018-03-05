@@ -27,9 +27,6 @@ RSpec.configure do |config|
     stub_command('apt-cache policy datadog-agent-base | grep "Installed: (none)"').and_return(false)
 
     # recipes/repository.rb
-    stub_command('apt-key list | grep 382E94DE').and_return(false)
-    stub_command('gpg --dry-run --quiet --with-fingerprint /var/chef/cache/DATADOG_RPM_KEY_E09422B3.public'\
-    " | grep 'A4C0 B90D 7443 CF6E 4E8A  A341 F106 8E14 E094 22B3'").and_return(true)
     stub_command('rpm -q gpg-pubkey-e09422b3').and_return(false)
   end
 
