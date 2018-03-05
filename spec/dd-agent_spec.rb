@@ -739,4 +739,60 @@ describe 'datadog::dd-agent' do
       end
     end
   end
+
+  context 'agent6 set to true' do
+    describe 'the datadog-agent service' do
+      context 'on Amazon Linux < 2.0' do
+        cached(:chef_run) do
+          ChefSpec::SoloRunner.new(
+            :platform => 'amazon',
+            :version => '2017.09'
+          ) do |node|
+            node.set['datadog'] = { 'api_key' => 'somethingnotnil', 'agent6' => true }
+          end.converge described_recipe
+        end
+
+        it 'is enabled with Upstart provider' do
+          expect(chef_run).to enable_service('datadog-agent').with(
+            provider: Chef::Provider::Service::Upstart
+          )
+        end
+      end
+
+      context 'on RHEL 6' do
+        cached(:chef_run) do
+          ChefSpec::SoloRunner.new(
+            :platform => 'redhat',
+            :version => '6.8'
+          ) do |node|
+            node.set['datadog'] = { 'api_key' => 'somethingnotnil', 'agent6' => true }
+          end.converge described_recipe
+        end
+
+        it 'is enabled with Upstart provider' do
+          expect(chef_run).to enable_service('datadog-agent').with(
+            provider: Chef::Provider::Service::Upstart
+          )
+        end
+      end
+
+      context 'on RHEL 7' do
+        cached(:chef_run) do
+          ChefSpec::SoloRunner.new(
+            :platform => 'redhat',
+            :version => '7.4'
+          ) do |node|
+            node.set['datadog'] = { 'api_key' => 'somethingnotnil', 'agent6' => true }
+          end.converge described_recipe
+        end
+
+        it 'is enabled _without_ Upstart provider' do
+          expect(chef_run).to enable_service('datadog-agent')
+          expect(chef_run).to_not enable_service('datadog-agent').with(
+            provider: Chef::Provider::Service::Upstart
+          )
+        end
+      end
+    end
+  end
 end
