@@ -1,6 +1,10 @@
 Changes
 =======
 
+# 2.14.1 / 2018-03-05
+* [BUGFIX] Fix service provider on Amazon Linux < 2.0. See [#523][] [@olivielpeau][]
+* [OPTIMIZE] Remove reference to old expired APT key, keep only newer key. See [#522][] [@olivielpeau][]
+
 # 2.14.0 / 2018-02-27
 * [FEATURE] Enable log collection with chef. See [#498][] [@NBParis][]
 * [FEATURE] Support process agent configuration in datadog.yaml. See [#511][] [@conorbranagan][]
@@ -616,6 +620,8 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#515]: https://github.com/DataDog/chef-datadog/issues/515
 [#516]: https://github.com/DataDog/chef-datadog/issues/516
 [#518]: https://github.com/DataDog/chef-datadog/issues/518
+[#522]: https://github.com/DataDog/chef-datadog/issues/522
+[#523]: https://github.com/DataDog/chef-datadog/issues/523
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@BrentOnRails]: https://github.com/BrentOnRails
