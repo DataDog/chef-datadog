@@ -133,9 +133,15 @@ template agent6_config_file do # rubocop:disable Metrics/BlockLength
     }
   end
 
-  owner 'dd-agent'
-  group 'dd-agent'
-  mode '640'
+  if is_windows
+    owner 'Administrators'
+    rights :full_control, 'Administrators'
+    inherits false
+  else
+    owner 'dd-agent'
+    group 'dd-agent'
+    mode '640'
+  end
   variables(
     if respond_to?(:lazy)
       lazy { template_vars }
