@@ -109,7 +109,7 @@ Usage
 =====
 
 ### Agent6 Note
-Please note the cookbook now supports installing both Agent5 and Agent6 of the datadog agent on debian and RHEL based linux distributions (not yet supported on windows). By default versions `<=1.x` of the cookbook will default to install Agent5, you may however override this behavior with the `node['datadog']['agent6']` attribute.
+Please note the cookbook now supports installing both Agent5 and Agent6 of the datadog agent on debian and RHEL based linux distributions (not yet supported on windows). By default versions `<=2.x` of the cookbook will default to install Agent5, you may however override this behavior with the `node['datadog']['agent6']` attribute.
   ```
   default_attributes(
     'datadog' => {
