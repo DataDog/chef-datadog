@@ -746,7 +746,7 @@ describe 'datadog::dd-agent' do
         cached(:chef_run) do
           ChefSpec::SoloRunner.new(
             :platform => 'amazon',
-            :version => '2017.09'
+            :version => '2017.03'
           ) do |node|
             node.set['datadog'] = { 'api_key' => 'somethingnotnil', 'agent6' => true }
           end.converge described_recipe
@@ -780,7 +780,7 @@ describe 'datadog::dd-agent' do
         cached(:chef_run) do
           ChefSpec::SoloRunner.new(
             :platform => 'redhat',
-            :version => '7.4'
+            :version => '7.3'
           ) do |node|
             node.set['datadog'] = { 'api_key' => 'somethingnotnil', 'agent6' => true }
           end.converge described_recipe
