@@ -59,11 +59,12 @@ default['datadog']['agent6_yumrepo'] = 'https://yum.datadoghq.com/stable/6/x86_6
 
 # Values that differ on Windows
 # The location of the config folder (containing conf.d)
-if node['platform_family'] == 'windows'
-  default['datadog']['agent6_config_dir'] = "#{ENV['ProgramData']}/Datadog"
-else
-  default['datadog']['agent6_config_dir'] = '/etc/datadog-agent'
-end
+default['datadog']['agent6_config_dir'] =
+  if node['platform_family'] == 'windows'
+    "#{ENV['ProgramData']}/Datadog"
+  else
+    '/etc/datadog-agent'
+  end
 
 # Set a key to true to make the agent6 use the v2 api on that endpoint, false otherwise.
 # Leave key value to nil to use agent6 default for that endpoint.
