@@ -75,7 +75,7 @@ private
 
 def yaml_dir
   if node['datadog']['agent6']
-    ::File.join(node['datadog']['agent6_config_dir'], 'conf.d', "#{new_resource.name}.d")
+    ::File.join(node['datadog']['agent6_config_dir'], 'conf.d')
   else
     ::File.join(node['datadog']['config_dir'], 'conf.d')
   end
