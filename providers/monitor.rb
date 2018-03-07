@@ -9,8 +9,7 @@ end
 
 action :add do # rubocop:disable Metrics/BlockLength
   Chef::Log.debug "Adding monitoring for #{new_resource.name}"
-  config_dir = node['datadog']['agent6'] ? node['datadog']['agent6_config_dir'] : node['datadog']['config_dir']
-  template ::File.join(config_dir, 'conf.d', "#{new_resource.name}.yaml") do
+  template ::File.join(yaml_dir, "#{new_resource.name}.yaml") do
     if node['platform_family'] == 'windows'
       owner 'Administrators'
       rights :full_control, 'Administrators'
@@ -51,8 +50,7 @@ action :add do # rubocop:disable Metrics/BlockLength
 end
 
 action :remove do
-  config_dir = node['datadog']['agent6'] ? node['datadog']['agent6_config_dir'] : node['datadog']['config_dir']
-  confd_dir = ::File.join(config_dir, 'conf.d')
+  confd_dir = yaml_dir
   Chef::Log.debug "Removing #{new_resource.name} from #{confd_dir}"
   file ::File.join(confd_dir, "#{new_resource.name}.yaml") do
     action :delete
@@ -70,5 +68,15 @@ action :remove do
   service 'datadog-agent' do
     service_name node['datadog']['agent_name']
     provider service_provider unless service_provider.nil?
+  end
+end
+
+private
+
+def yaml_dir
+  if node['datadog']['agent6']
+    ::File.join(node['datadog']['agent6_config_dir'], 'conf.d')
+  else
+    ::File.join(node['datadog']['config_dir'], 'conf.d')
   end
 end
