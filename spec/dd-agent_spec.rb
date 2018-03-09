@@ -794,5 +794,54 @@ describe 'datadog::dd-agent' do
         end
       end
     end
+
+    describe 'the datadog.yaml config file' do
+      context 'with default attribute values' do
+        cached(:chef_run) do
+          ChefSpec::SoloRunner.new(
+            platform: 'ubuntu',
+            version: '14.04'
+          ) do |node|
+            node.name "chef-nodename"  # should be used as datadog.yaml hostname
+            node.set['datadog'] = { 'api_key' => 'somethingnotnil', 'agent6' => true }
+          end.converge described_recipe
+        end
+
+        it 'is created' do
+          expect(chef_run).to create_template('/etc/datadog-agent/datadog.yaml')
+        end
+
+        it 'contains expected YAML configuration' do
+          expected_yaml = <<-EOF
+api_key: somethingnotnil
+dd_url: https://app.datadoghq.com
+tags: []
+use_dogstatsd: true
+additional_endpoints: {}
+histogram_aggregates:
+  - "max"
+  - "median"
+  - "avg"
+  - "count"
+histogram_percentiles:
+  - "0.95"
+hostname: "chef-nodename"
+log_file: "/var/log/datadog/agent.log"
+log_level: "INFO"
+non_local_traffic: false
+apm_config: {}
+process_config:
+  enabled: "false"
+  blacklist_patterns: []
+  intervals: {}
+  process_dd_url: "https://process.datadoghq.com"
+EOF
+
+          expect(chef_run).to(render_file('/etc/datadog-agent/datadog.yaml').with_content { |content|
+            expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
+          })
+        end
+      end
+    end
   end
 end
