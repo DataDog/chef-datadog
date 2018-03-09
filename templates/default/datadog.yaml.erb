@@ -92,11 +92,7 @@ agent_config = @extra_config.merge({
   log_file: ::File.join(node['datadog']['log_file_directory'], "agent.log"),
 
   # log agent options
-  if node['datadog']['agent6']
-    logs_enabled: node['datadog']['enable_logs_agent'],
-  else
-    log_enabled: node['datadog']['enable_logs_agent'],
-  end
+  logs_enabled: node['datadog']['enable_logs_agent'],
 
   # process agent options
   process_config: {

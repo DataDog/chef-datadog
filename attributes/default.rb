@@ -368,7 +368,7 @@ default['datadog']['process_agent']['rtprocess_interval'] = nil
 default['datadog']['process_agent']['container_interval'] = nil
 default['datadog']['process_agent']['rtcontainer_interval'] = nil
 
-# Logs functionality settings
+# Logs functionality settings (Agent 6 only)
 # Set `enable_log_agent` to:
 # * `true` to explicitly enable the log agent
 # * `false` to explicitly disable it
