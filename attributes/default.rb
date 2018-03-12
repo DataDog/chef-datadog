@@ -335,6 +335,7 @@ default['datadog']['trace_env'] = nil
 default['datadog']['extra_sample_rate'] = nil
 default['datadog']['max_traces_per_second'] = nil
 default['datadog']['receiver_port'] = nil
+# `connection_limit` is ignored in Agent 6
 default['datadog']['connection_limit'] = nil
 
 # ddtrace python version
