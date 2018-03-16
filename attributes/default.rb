@@ -30,13 +30,13 @@ default['datadog']['application_key'] = nil
 
 ########################################################################
 ###                  Agent6-only attributes                          ###
-###              Only works on Linux (DEB/RPM) for now               ###
 
 # If you're installing a pre-release version of Agent 6 (beta or RC), you need to:
 # * on debian: set node['datadog']['agent6_aptrepo_dist'] to 'beta' instead of 'stable'
 # * on RHEL: set node['datadog']['agent6_yumrepo'] to 'https://yum.datadoghq.com/beta/x86_64/'
+# In all cases, follow the instructions below:
 
-# Set to true to install an agent6 instead of agent5.
+# Set node['datadog']['agent6'] to true to install an agent6 instead of agent5.
 # To upgrade from agent5 to agent6, you need to:
 # * set node['datadog']['agent6'] to true, and
 # * either set node['datadog']['agent6_version'] to an existing agent6 version (recommended), or
@@ -191,7 +191,8 @@ rescue ArgumentError
   Chef::Log.warn "could not parse python version string: #{node['languages']['python']['version']}"
 end
 
-# Agent Version
+# Agent Version for v5 Agents
+# To pin the version of v6 Agents, use the `agent6_version` attribute instead.
 # Default of `nil` will install latest version. On Windows, this will also upgrade to latest
 # This attribute accepts either a `string` or `hash` with the key as platform_name and value of package version
 # In the case of fedora and amazon linux, use platform_name of rhel
@@ -203,7 +204,8 @@ end
 # }
 default['datadog']['agent_version'] = nil
 
-# Agent package action
+# Agent package action for v5 Agents
+# For v6 Agents, use the agent6_package_action attribute instead
 # Allow override with `upgrade` to get latest (Linux only)
 default['datadog']['agent_package_action'] = 'install'
 
@@ -225,8 +227,7 @@ default['datadog']['chef_handler_enable'] = true
 # Log level. Should be a valid python log level https://docs.python.org/2/library/logging.html#logging-levels
 default['datadog']['log_level'] = 'INFO'
 
-# Default to false to non_local_traffic
-# See: https://github.com/DataDog/dd-agent/wiki/Network-Traffic-and-Proxy-Configuration
+# Set to true to allow non local traffic to Dogstatsd (and, in Agent 5, to the Forwarder)
 default['datadog']['non_local_traffic'] = false
 
 # The loopback address the Forwarder and Dogstatsd will bind.
