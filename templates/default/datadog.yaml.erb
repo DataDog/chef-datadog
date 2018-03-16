@@ -89,7 +89,6 @@ agent_config = @extra_config.merge({
   histogram_percentiles: string_list_to_array(node['datadog']['histogram_percentiles']),
   use_dogstatsd: node['datadog']['dogstatsd'],
   log_level: node['datadog']['log_level'],  # TODO: make sure it's a seelog-compatible log level
-  log_file: ::File.join(node['datadog']['log_file_directory'], "agent.log"),
 
   # log agent options
   logs_enabled: node['datadog']['enable_logs_agent'],
@@ -108,6 +107,10 @@ agent_config = @extra_config.merge({
     process_dd_url: node['datadog']['process_agent']['url']
   }
 })
+
+if node['datadog']['log_file_directory']
+  agent_config['log_file'] = ::File.join(node['datadog']['log_file_directory'], "agent.log")
+end
 
 if !node['datadog']['use_v2_api'].nil? && !node['datadog']['use_v2_api'].empty?
   agent_config['use_v2_api'] = node['datadog']['use_v2_api']
