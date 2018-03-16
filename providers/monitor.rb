@@ -42,6 +42,8 @@ action :add do # rubocop:disable Metrics/BlockLength
   service 'datadog-agent' do
     service_name node['datadog']['agent_name']
     provider service_provider unless service_provider.nil?
+    restart_command "powershell restart-service #{node['datadog']['agent_name']} -Force" if node['platform_family'] == 'windows'
+    stop_command "powershell stop-service #{node['datadog']['agent_name']} -Force" if node['platform_family'] == 'windows'
     # HACK: the restart can fail when we hit systemd's restart limits (by default, 5 starts every 10 seconds)
     # To workaround this, retry once after 5 seconds, and a second time after 10 seconds
     retries 2
@@ -68,6 +70,8 @@ action :remove do
   service 'datadog-agent' do
     service_name node['datadog']['agent_name']
     provider service_provider unless service_provider.nil?
+    restart_command "powershell restart-service #{node['datadog']['agent_name']} -Force" if node['platform_family'] == 'windows'
+    stop_command "powershell stop-service #{node['datadog']['agent_name']} -Force" if node['platform_family'] == 'windows'
   end
 end
 

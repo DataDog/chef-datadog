@@ -116,6 +116,8 @@ service 'datadog-agent' do
   provider service_provider unless service_provider.nil?
   if is_windows
     supports :restart => true, :start => true, :stop => true
+    restart_command "powershell restart-service #{node['datadog']['agent_name']} -Force"
+    stop_command "powershell stop-service #{node['datadog']['agent_name']} -Force"
   else
     supports :restart => true, :status => true, :start => true, :stop => true
   end
