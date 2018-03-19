@@ -117,7 +117,9 @@ Please note the cookbook now supports installing both Agent v5 and Agent v6 of t
   )
   ```
 
-Additional attributes are available to have finer control over how you install agent6. These are agent6 counterparts to several well known agent5 attributes (code [here](https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb#L31-L69)):
+Note: to _upgrade_ to Agent 6 on a node with Agent 5 already installed, you also have to pin `agent6_version` to a v6 version (recommended), or set `agent6_package_action` to `'upgrade'`.
+
+Additional attributes are available to have finer control over how you install Agent 6. These are Agent 6 counterparts to several well known Agent 5 attributes (code [here](https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb#L31-L69)):
  * `agent6_version`: allows you to pin the agent version (recommended).
  * `agent6_package_action`: defaults to `'install'`, may be set to `'upgrade'` to automatically upgrade to latest (not recommended, we recommend pinning to a version with `agent6_version` and change that version to upgrade).
  * `agent6_aptrepo`: desired APT repo for the agent. Defaults to `http://apt.datadoghq.com`
