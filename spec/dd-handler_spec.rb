@@ -20,7 +20,8 @@ shared_examples 'a chef-handler-datadog runner' do |extra_endpoints, tags_blackl
       url: 'https://app.datadoghq.com',
       extra_endpoints: extra_endpoints || [],
       tags_blacklist_regex: tags_blacklist_regex,
-      send_policy_tags: false
+      send_policy_tags: false,
+      tags_submission_retries: nil
     }
 
     expect(chef_run).to enable_chef_handler('Chef::Handler::Datadog').with(
