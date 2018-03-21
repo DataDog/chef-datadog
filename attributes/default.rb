@@ -122,6 +122,11 @@ default['datadog']['send_policy_tags'] = false
 # submitted successfully.
 default['datadog']['tags_submission_retries'] = nil
 
+# Additional handler config options
+# If the Chef Datadog handler supports a config option that's not available directly in this cookbook
+# you can set it as a key/value of this hash attribute. `nil` values will be ignored.
+default['datadog']['handler_extra_config'] = {}
+
 # Autorestart agent
 default['datadog']['autorestart'] = false
 
