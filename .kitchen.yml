@@ -12,9 +12,11 @@ platforms:
       ubuntu-12.04
       centos-6.6
       centos-5.11
+      centos-7.1
       debian-7.7
     )
     chef_versions = %w(
+      13
       12.2.1
       11.18.6
     )
