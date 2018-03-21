@@ -227,10 +227,10 @@ default['datadog']['chef_handler_enable'] = true
 # Log level. Should be a valid python log level https://docs.python.org/2/library/logging.html#logging-levels
 default['datadog']['log_level'] = 'INFO'
 
-# Set to true to allow non local traffic to Dogstatsd (and, in Agent 5, to the Forwarder)
+# Set to true to allow non local traffic to Dogstatsd and the trace agent (and, in Agent 5, to the Forwarder)
 default['datadog']['non_local_traffic'] = false
 
-# The loopback address the Forwarder and Dogstatsd will bind.
+# The loopback address Dogstatsd will bind (in Agent 5, the Forwarder also uses this address)
 default['datadog']['bind_host'] = 'localhost'
 
 # How often you want the agent to collect data, in seconds. Any value between

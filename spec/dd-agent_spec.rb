@@ -818,6 +818,7 @@ describe 'datadog::dd-agent' do
             dd_url: https://app.datadoghq.com
             tags: []
             use_dogstatsd: true
+            bind_host: localhost
             additional_endpoints: {}
             histogram_aggregates:
               - "max"
@@ -829,8 +830,9 @@ describe 'datadog::dd-agent' do
             hostname: "chef-nodename"
             log_file: "/var/log/datadog/agent.log"
             log_level: "INFO"
-            non_local_traffic: false
-            apm_config: {}
+            dogstatsd_non_local_traffic: false
+            apm_config:
+              apm_non_local_traffic: false
             process_config:
               enabled: "false"
               blacklist_patterns: []
@@ -866,6 +868,7 @@ describe 'datadog::dd-agent' do
             dd_url: https://app.datadoghq.com
             tags: []
             use_dogstatsd: true
+            bind_host: localhost
             additional_endpoints: {}
             histogram_aggregates:
               - "max"
@@ -876,8 +879,9 @@ describe 'datadog::dd-agent' do
               - "0.95"
             hostname: "chef-nodename"
             log_level: "INFO"
-            non_local_traffic: false
-            apm_config: {}
+            dogstatsd_non_local_traffic: false
+            apm_config:
+              apm_non_local_traffic: false
             process_config:
               enabled: "false"
               blacklist_patterns: []
