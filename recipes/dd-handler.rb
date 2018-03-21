@@ -62,8 +62,8 @@ chef_handler 'Chef::Handler::Datadog' do # rubocop:disable Metrics/BlockLength
   end
 
   def handler_config # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    extra_config = node['datadog']['handler_extra_config'].reject{ |k,v| v.nil? }
-    config = extra_config.merge({
+    extra_config = node['datadog']['handler_extra_config'].reject { |_, v| v.nil? }
+    config = extra_config.merge(
       :api_key => Chef::Datadog.api_key(node),
       :application_key => Chef::Datadog.application_key(node),
       :use_ec2_instance_id => node['datadog']['use_ec2_instance_id'],
@@ -73,7 +73,7 @@ chef_handler 'Chef::Handler::Datadog' do # rubocop:disable Metrics/BlockLength
       :tags_blacklist_regex => node['datadog']['tags_blacklist_regex'],
       :send_policy_tags => node['datadog']['send_policy_tags'],
       :tags_submission_retries => node['datadog']['tags_submission_retries']
-    })
+    )
 
     unless node['datadog']['use_ec2_instance_id']
       config[:hostname] = node['datadog']['hostname']

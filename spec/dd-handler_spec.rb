@@ -200,6 +200,6 @@ describe 'datadog::dd-handler' do
 
     it_behaves_like 'a chef-handler-datadog installer'
 
-    it_behaves_like 'a chef-handler-datadog runner', nil, nil, {'foo' => 'bar'}
+    it_behaves_like 'a chef-handler-datadog runner', nil, nil, 'foo' => 'bar'
   end
 end
