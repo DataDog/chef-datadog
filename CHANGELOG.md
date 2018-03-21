@@ -1,6 +1,20 @@
 Changes
 =======
 
+# 2.15.0 / 2018-03-21
+
+This release adds full support of Agent 6 on Windows.
+
+* [FEATURE] Support passing arbitrary config options to Datadog handler. See [#532][] [@olivielpeau][]
+* [FEATURE] Update version logic for Agent 6 on Windows. See [#530][] [@olivielpeau][]
+* [FEATURE] Add support of APM options for Agent 6.0 and clean up beta workarounds. See [#527][] [@olivielpeau][]
+* [FEATURE] Set windows values for agent 6. See [#525][] [@rlaveycal][]
+* [OPTIMIZE] Update Agent 6 configuration for v6.0.0 stable and higher. See [#531][] [@olivielpeau][]
+* [OPTIMIZE] Update deprecated `logs_enabled` attribute. See [#513][] & [#526][] [@eplanet][]
+* [OPTIMIZE] Allow configuring `tags_submission_retries` option on handler. See [#508][] [@olivielpeau][]
+* [BUGFIX] Force `windows_service` to restart in order to cope with restart error. See [#520][] [@stefanwb][]
+* [BUGFIX] Fix default `datadog.yaml` template for Windows. See [#528][] [@olivielpeau][]
+
 # 2.14.1 / 2018-03-05
 * [BUGFIX] Fix service provider on Amazon Linux < 2.0. See [#523][] [@olivielpeau][]
 * [OPTIMIZE] Remove reference to old expired APT key, keep only newer key. See [#522][] [@olivielpeau][]
@@ -616,12 +630,22 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#498]: https://github.com/DataDog/chef-datadog/issues/498
 [#499]: https://github.com/DataDog/chef-datadog/issues/499
 [#501]: https://github.com/DataDog/chef-datadog/issues/501
+[#508]: https://github.com/DataDog/chef-datadog/issues/508
 [#511]: https://github.com/DataDog/chef-datadog/issues/511
+[#513]: https://github.com/DataDog/chef-datadog/issues/513
 [#515]: https://github.com/DataDog/chef-datadog/issues/515
 [#516]: https://github.com/DataDog/chef-datadog/issues/516
 [#518]: https://github.com/DataDog/chef-datadog/issues/518
+[#520]: https://github.com/DataDog/chef-datadog/issues/520
 [#522]: https://github.com/DataDog/chef-datadog/issues/522
 [#523]: https://github.com/DataDog/chef-datadog/issues/523
+[#525]: https://github.com/DataDog/chef-datadog/issues/525
+[#526]: https://github.com/DataDog/chef-datadog/issues/526
+[#527]: https://github.com/DataDog/chef-datadog/issues/527
+[#528]: https://github.com/DataDog/chef-datadog/issues/528
+[#530]: https://github.com/DataDog/chef-datadog/issues/530
+[#531]: https://github.com/DataDog/chef-datadog/issues/531
+[#532]: https://github.com/DataDog/chef-datadog/issues/532
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@BrentOnRails]: https://github.com/BrentOnRails
@@ -670,6 +694,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@eherot]: https://github.com/eherot
 [@elafarge]: https://github.com/elafarge
 [@elijahandrews]: https://github.com/elijahandrews
+[@eplanet]: https://github.com/eplanet
 [@evan2645]: https://github.com/evan2645
 [@flah00]: https://github.com/flah00
 [@foobarto]: https://github.com/foobarto
@@ -726,6 +751,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@ryandjurovich]: https://github.com/ryandjurovich
 [@schisamo]: https://github.com/schisamo
 [@sethrosenblum]: https://github.com/sethrosenblum
+[@stefanwb]: https://github.com/stefanwb
 [@stensonb]: https://github.com/stensonb
 [@stolfi]: https://github.com/stolfi
 [@takus]: https://github.com/takus
