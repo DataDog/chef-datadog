@@ -11,17 +11,11 @@
 # - dogstatsd_interval
 # - dogstatsd_normalize
 # - legacy_integrations
-# - bind_host
 # - listen_port (`agent_port` attribute)
 
 # TODO: options not supported yet:
 # - agent_checks_interval
 # - Autodiscovery (aka Service Discovery) related options
-# - statsd_forward_host
-# - statsd_forward_port
-# - statsd_metric_namespace
-# - enable_trace_agent: always enabled
-# - all trace-related options are written to an INI file
 
 def string_list_to_array(string_list)
   # return an array from a comma-separated list in a string
@@ -79,16 +73,18 @@ agent_config = @extra_config.merge({
   api_key: @api_key,
   dd_url: node['datadog']['url'],
   hostname: node['datadog']['hostname'],
+  bind_host: node['datadog']['bind_host'],
   additional_endpoints: @additional_endpoints,
   skip_ssl_validation: node['datadog']['web_proxy']['skip_ssl_validation'],
   tags: tags,
   create_dd_check_tags: node['datadog']['create_dd_check_tags'],
   collect_ec2_tags: node['datadog']['collect_ec2_tags'],
-  non_local_traffic: node['datadog']['non_local_traffic'],
+  dogstatsd_non_local_traffic: node['datadog']['non_local_traffic'],
   histogram_aggregates: string_list_to_array(node['datadog']['histogram_aggregates']),
   histogram_percentiles: string_list_to_array(node['datadog']['histogram_percentiles']),
   use_dogstatsd: node['datadog']['dogstatsd'],
-  log_level: node['datadog']['log_level'],  # TODO: make sure it's a seelog-compatible log level
+  statsd_metric_namespace: node['datadog']['statsd_metric_namespace'],
+  log_level: node['datadog']['log_level'],
 
   # log agent options
   logs_enabled: node['datadog']['enable_logs_agent'],
@@ -107,6 +103,12 @@ agent_config = @extra_config.merge({
     process_dd_url: node['datadog']['process_agent']['url']
   }
 })
+
+if node['datadog']['statsd_forward_host']
+  # TODO: in next major, make `nil` the default value of `statsd_forward_port` to normalize handling
+  agent_config['statsd_forward_host'] = node['datadog']['statsd_forward_host']
+  agent_config['statsd_forward_port'] = node['datadog']['statsd_forward_port']
+end
 
 if node['datadog']['log_file_directory']
   agent_config['log_file'] = ::File.join(node['datadog']['log_file_directory'], "agent.log")
@@ -138,7 +140,8 @@ apm_config = {
   env: node['datadog']['trace_env'],
   extra_sample_rate: node['datadog']['extra_sample_rate'],
   max_traces_per_second: node['datadog']['max_traces_per_second'],
-  receiver_port: node['datadog']['receiver_port']
+  receiver_port: node['datadog']['receiver_port'],
+  apm_non_local_traffic: node['datadog']['non_local_traffic']
 }
 apm_config.reject!{ |k,v| v.nil? }
 # Take into account options defined under ['extra_config']['apm_config']
