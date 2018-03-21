@@ -61,7 +61,7 @@ chef_handler 'Chef::Handler::Datadog' do # rubocop:disable Metrics/BlockLength
     extra_endpoints
   end
 
-  def handler_config # rubocop:disable Metrics/AbcSize
+  def handler_config # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     config = {
       :api_key => Chef::Datadog.api_key(node),
       :application_key => Chef::Datadog.application_key(node),
