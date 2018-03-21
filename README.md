@@ -17,10 +17,10 @@ Datadog Cookbook
 Chef recipes to deploy Datadog's components and configuration automatically.
 
 This cookbook includes new support for Datadog Agent version 6.0, please refer to
-the [dedicated section](#agent-6-support) and the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.14.0/attributes/default.rb#L31-L68)
+the [dedicated section](#agent-6-support) and the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.15.0/attributes/default.rb#L31-L75)
 for more details on the supported platforms and how to use it.
 
-Log collection is now available with agent 6.0, please refer to the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.14.0/attributes/default.rb#L371-L376) to enable it.
+Log collection is now available with agent 6.0, please refer to the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.15.0/attributes/default.rb#L383-L388) to enable it.
 
 **NB: This README may refer to features that are not released yet. Please check the README of the
 git tag/the gem version you're using for your version's documentation**
@@ -119,7 +119,7 @@ Please note the cookbook now supports installing both Agent v5 and Agent v6 of t
 
 Note: to _upgrade_ to Agent 6 on a node with Agent 5 already installed, you also have to pin `agent6_version` to a v6 version (recommended), or set `agent6_package_action` to `'upgrade'`.
 
-Additional attributes are available to have finer control over how you install Agent 6. These are Agent 6 counterparts to several well known Agent 5 attributes (code [here](https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb#L31-L69)):
+Additional attributes are available to have finer control over how you install Agent 6. These are Agent 6 counterparts to several well known Agent 5 attributes (code [here](https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb#L31-L75)):
  * `agent6_version`: allows you to pin the agent version (recommended).
  * `agent6_package_action`: defaults to `'install'`, may be set to `'upgrade'` to automatically upgrade to latest (not recommended, we recommend pinning to a version with `agent6_version` and change that version to upgrade).
  * `agent6_aptrepo`: desired APT repo for the agent. Defaults to `http://apt.datadoghq.com`
