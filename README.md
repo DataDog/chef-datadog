@@ -95,9 +95,23 @@ dogstatsd-(python|ruby)
 -----------------------
 Installs the language-specific libraries to interact with `dogstatsd`.
 
+* Note for Chef >= 13 users: the `datadog::dogstatsd-python` recipe is not compatible with Chef >= 13, as it relies on a resource that was removed in Chef 13.0.
+  To install the `dogstatsd-python` library with Chef, please add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the following resource:
+  ```ruby
+  python_package 'dogstatsd-python' # assumes that python and pip are installed
+  ```
+  For more advanced usage, please refer to the [`poise-python` cookbook documentation](https://github.com/poise/poise-python)
+
 ddtrace-(python|ruby)
 ---------------------
 Installs the language-specific libraries for application Traces (APM).
+
+* Note for Chef >= 13 users: the `datadog::ddtrace-python` recipe is not compatible with Chef >= 13, as it relies on a resource that was removed in Chef 13.0.
+  To install the `ddtrace-python` library with Chef, please add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the following resource:
+  ```ruby
+  python_package 'ddtrace' # assumes that python and pip are installed
+  ```
+  For more advanced usage, please refer to the [`poise-python` cookbook documentation](https://github.com/poise/poise-python)
 
 other
 -----
