@@ -313,6 +313,22 @@ suites:
                   bean_regex:
                     - regex_on_excluded_bean
 
+- name: datadog_logstash
+  run_list:
+    - recipe[datadog::logstash]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      logstash:
+        instances:
+          - url: http://localhost:9600
+            ssl_verify: true
+            ssl_cert: /path/to/cert.pem
+            ssl_key: /path/to/cert.key
+            tags:
+              - 'tag1:key1'
+              - 'tag2:key2'
+
 - name: datadog_mongo
   run_list:
     - recipe[datadog::mongo]
