@@ -9,8 +9,8 @@ attribute :cookbook, :kind_of => String, :default => 'datadog'
 # checks have 3 sections: init_config, instances, logs
 # we mimic these here, no validation is performed until the template
 # is evaluated.
-attribute :init_config, :kind_of => Hash, :required => false, :default => {}
-attribute :instances, :kind_of => Array, :required => false, :default => []
-attribute :logs, :kind_of => Array, :required => false, :default => []
-attribute :version, :kind_of => Integer, :required => false, :default => nil
+attribute :init_config, :kind_of => Hash, :required => false
+attribute :instances, :kind_of => Array, :required => false
+attribute :logs, :kind_of => Array, :required => false
+attribute :version, :kind_of => Integer, :required => false
 attribute :use_integration_template, :kind_of => [TrueClass, FalseClass], :required => false, :default => false
