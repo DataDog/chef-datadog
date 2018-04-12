@@ -221,7 +221,7 @@ blacklist: <%= node['datadog']['process_agent']['blacklist'] %>
 scrub_args: <%= node['datadog']['process_agent']['scrub_args'] %>
 <% end -%>
 <% unless node['datadog']['process_agent']['custom_sensitive_words'].nil? -%>
-custom_sensitive_words: <%= node['datadog']['process_agent']['custom_sensitive_words'] %>
+custom_sensitive_words: <%= node['datadog']['process_agent']['custom_sensitive_words'].join(',') %>
 <% end -%>
 <% unless node['datadog']['process_agent']['process_interval'].nil? -%>
 process_interval = <%= node['datadog']['process_agent']['process_interval'] %>
