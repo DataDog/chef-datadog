@@ -367,9 +367,13 @@ default['datadog']['process_agent']['url'] = 'https://process.datadoghq.com'
 # Example: ['my-secret-app', 'dbpass']
 default['datadog']['process_agent']['blacklist'] = []
 
-# Controls the behavior of the cmdline dataScrubber
-# Example for custom sensitive words: ['consul_token', 'token', 'dd_api_key']
+# Controls the behavior of the cmdline data scrubber
+# If enabled, hides every cmdline argument value whose key matches one of the default
+# or custom sensitive words
+# Default sensitive words: ['password', 'passwd', 'mysql_pwd', 'access_token', 'auth_token',
+# 'api_key', 'apikey', 'secret', 'credentials', 'stripetoken']
 default['datadog']['process_agent']['scrub_args'] = true
+# Example for custom sensitive words: ['consul_token', 'token', 'dd_api_key']
 default['datadog']['process_agent']['custom_sensitive_words'] = []
 
 # Full path to store process-agent logs to override the default.
