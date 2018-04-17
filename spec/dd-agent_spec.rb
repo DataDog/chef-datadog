@@ -836,6 +836,8 @@ describe 'datadog::dd-agent' do
             process_config:
               enabled: "false"
               blacklist_patterns: []
+              scrub_args: true
+              custom_sensitive_words: []
               intervals: {}
               process_dd_url: "https://process.datadoghq.com"
             EOF
@@ -885,6 +887,8 @@ describe 'datadog::dd-agent' do
             process_config:
               enabled: "false"
               blacklist_patterns: []
+              scrub_args: true
+              custom_sensitive_words: []
               intervals: {}
               process_dd_url: "https://process.datadoghq.com"
             EOF
