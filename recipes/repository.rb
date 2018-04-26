@@ -108,7 +108,7 @@ when 'suse'
   remote_file 'DATADOG_RPM_KEY.public' do
     path old_key_local_path
     source node['datadog']['yumrepo_gpgkey']
-    # not_if 'rpm -q gpg-pubkey-4172a230' # (key already imported)
+    not_if 'rpm -q gpg-pubkey-4172a230' # (key already imported)
     notifies :run, 'execute[rpm-import datadog key 4172a230]', :immediately
   end
 
