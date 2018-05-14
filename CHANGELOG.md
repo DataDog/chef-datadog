@@ -1,6 +1,11 @@
 Changes
 =======
 
+# 2.16.0 / 2018-05-14
+
+* [FEATURE] Support data scrubber config fields for process agent. See [#540][] [@moisesbotarro][]
+* [MISC] Document `easy_install_package` removal from Chef 13+. See [#533][] [@olivielpeau][]
+
 # 2.15.0 / 2018-03-21
 
 This release adds full support of Agent 6 on Windows.
@@ -646,6 +651,8 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#530]: https://github.com/DataDog/chef-datadog/issues/530
 [#531]: https://github.com/DataDog/chef-datadog/issues/531
 [#532]: https://github.com/DataDog/chef-datadog/issues/532
+[#533]: https://github.com/DataDog/chef-datadog/issues/533
+[#540]: https://github.com/DataDog/chef-datadog/issues/540
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@BrentOnRails]: https://github.com/BrentOnRails
@@ -735,6 +742,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@miketheman]: https://github.com/miketheman
 [@mirceal]: https://github.com/mirceal
 [@mlcooper]: https://github.com/mlcooper
+[@moisesbotarro]: https://github.com/moisesbotarro
 [@mstepniowski]: https://github.com/mstepniowski
 [@mtougeron]: https://github.com/mtougeron
 [@nickmarden]: https://github.com/nickmarden
