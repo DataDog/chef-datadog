@@ -20,10 +20,10 @@ This cookbook includes new support for Datadog Agent version 6.0, please refer t
 the [dedicated section](#agent-6-support) and the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.15.0/attributes/default.rb#L31-L75)
 for more details on the supported platforms and how to use it.
 
-Log collection is now available with agent 6.0, please refer to the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.15.0/attributes/default.rb#L383-L388) to enable it.
+**Log collection is now available with agent 6.0, please refer to the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.15.0/attributes/default.rb#L383-L388) to enable it.**
 
-**NB: This README may refer to features that are not released yet. Please check the README of the
-git tag/the gem version you're using for your version's documentation**
+*Note: This README may refer to features that are not released yet. Please check the README of the
+git tag/the gem version you're using for your version's documentation*
 
 Requirements
 ============
