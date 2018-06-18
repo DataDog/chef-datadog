@@ -39,6 +39,7 @@ Platforms
 * Scientific Linux
 * Ubuntu
 * Windows (requires chef >= 12.0)
+* SUSE (requires chef >= 13.0)
 
 Cookbooks
 ---------
