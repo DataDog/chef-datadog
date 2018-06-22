@@ -70,6 +70,8 @@ default['datadog']['agent6_config_dir'] =
 # Leave key value to nil to use agent6 default for that endpoint.
 # Supported keys: "series", "events", "service checks"
 default['datadog']['use_v2_api'] = {}
+# set path to dogstatsd unix socket - https://docs.datadoghq.com/developers/dogstatsd/unix_socket/
+default['datadog']['dogstatsd_socket'] = false
 
 ###                 End of Agent6-only attributes                    ###
 ########################################################################
