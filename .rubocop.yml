@@ -32,6 +32,12 @@ Metrics/MethodLength:
 Style/BlockDelimiters:
   Enabled: false
 
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/SafeNavigation:
+  Enabled: false
+
 # TODO: add encoding headers
 Style/Encoding:
   Enabled: false

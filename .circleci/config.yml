@@ -1,0 +1,29 @@
+version: 2
+jobs:
+  test:
+    docker:  
+      - image: circleci/ruby:2.4.4-stretch-browsers
+    environment:
+      KITCHEN_LOCAL_YAML: .kitchen.docker.yml
+    steps:
+      - checkout
+      - restore_cache:
+          key: chefdk-0.12.0
+      - run: test -e /opt/chefdk || curl -L https://www.chef.io/chef/install.sh | sudo bash -s -- -P chefdk -v 2.3.1
+      - run: test -e /home/circleci/.chefdk || chef gem install kitchen-docker -v '~> 2.3.0'
+      - run: eval "$(/opt/chefdk/bin/chef shell-init bash)"
+      - run: chef --version
+      - run: chef gem query -d chefspec rubocop foodcritic rake kitchen-docker
+      - setup_remote_docker
+      - run: chef exec rake circle
+      - save_cache:
+          key: chefdk-2.3.1
+          paths:
+            - /opt/chefdk   
+            - ~/.chefdk   
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - test 
