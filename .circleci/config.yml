@@ -1,8 +1,9 @@
 version: 2
 jobs:
   test:
-    docker:  
-      - image: circleci/ruby:2.4.4-stretch-browsers
+    machine: true
+    # docker:  
+    #   - image: circleci/ruby:2.4.4-stretch-browsers
     environment:
       KITCHEN_LOCAL_YAML: .kitchen.docker.yml
     steps:
