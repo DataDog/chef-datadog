@@ -31,6 +31,7 @@ end
 
 # TODO: support the more complete proxy settings that the agent6 supports
 http_proxy = nil
+no_proxy = nil
 if node['datadog']['web_proxy']['host']
   host = node['datadog']['web_proxy']['host']
   port = node['datadog']['web_proxy']['port']
@@ -135,10 +136,7 @@ if !http_proxy.nil?
     http: http_proxy,
     https: http_proxy
   }
-end
-
-if !no_proxy.nil?
-  agent_config['proxy']['no_proxy'] = no_proxy
+  agent_config['proxy']['no_proxy'] = no_proxy if !no_proxy.nil?
 end
 
 ## Trace agent options ##
