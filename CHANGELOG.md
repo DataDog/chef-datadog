@@ -1,6 +1,11 @@
 Changes
 =======
 
+# 2.16.1 / 2018-07-16
+
+* [FEATURE] Add support for `no_proxy` Agent v6 option. See [#549][] [@stonith][]
+* [MISC] Fix typo in documentation of `enable_logs_agent` option. See [#544][] [@rsheyd][]
+
 # 2.16.0 / 2018-05-14
 
 * [FEATURE] Support data scrubber config fields for process agent. See [#540][] [@moisesbotarro][]
@@ -653,6 +658,8 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#532]: https://github.com/DataDog/chef-datadog/issues/532
 [#533]: https://github.com/DataDog/chef-datadog/issues/533
 [#540]: https://github.com/DataDog/chef-datadog/issues/540
+[#544]: https://github.com/DataDog/chef-datadog/issues/544
+[#549]: https://github.com/DataDog/chef-datadog/issues/549
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@BrentOnRails]: https://github.com/BrentOnRails
@@ -756,12 +763,14 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@raycrawford]: https://github.com/raycrawford
 [@remh]: https://github.com/remh
 [@rlaveycal]: https://github.com/rlaveycal
+[@rsheyd]: https://github.com/rsheyd
 [@ryandjurovich]: https://github.com/ryandjurovich
 [@schisamo]: https://github.com/schisamo
 [@sethrosenblum]: https://github.com/sethrosenblum
 [@stefanwb]: https://github.com/stefanwb
 [@stensonb]: https://github.com/stensonb
 [@stolfi]: https://github.com/stolfi
+[@stonith]: https://github.com/stonith
 [@takus]: https://github.com/takus
 [@tejom]: https://github.com/tejom
 [@thisismana]: https://github.com/thisismana
