@@ -296,6 +296,7 @@ default['datadog']['web_proxy']['port'] = nil
 default['datadog']['web_proxy']['user'] = nil
 default['datadog']['web_proxy']['password'] = nil
 default['datadog']['web_proxy']['skip_ssl_validation'] = nil # accepted values 'yes' or 'no'
+default['datadog']['web_proxy']['no_proxy'] = nil # only used for agent v6.0+
 
 # dogstatsd
 default['datadog']['dogstatsd'] = true
