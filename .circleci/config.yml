@@ -11,7 +11,10 @@ jobs:
       - run: eval "$(/opt/chefdk/bin/chef shell-init bash)"
       - run: chef --version
       - run: chef gem query -d chefspec rubocop foodcritic rake kitchen-docker
-      - run: chef exec rake circle
+      - run: 
+          command: chef exec rake circle
+          no_output_timeout: 900 
+
 
 workflows:
   version: 2
