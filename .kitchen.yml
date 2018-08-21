@@ -548,3 +548,18 @@ suites:
           - bounce
           tags:
           - test
+
+- name: datadog_vault
+  run_list:
+    - recipe[datadog::vault]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      vault:
+        instances:
+          - api_url: http://localhost:8200/v1
+            detect_leader: false
+            skip_proxy: false
+            ssl_verify: true
+            tags: ['_default']
+            timeout: 20
