@@ -9,7 +9,7 @@ end
 
 action :add do # rubocop:disable Metrics/BlockLength
   Chef::Log.debug "Adding monitoring for #{new_resource.name}"
-  template ::File.join(yaml_dir, "#{new_resource.name}.yaml") do
+  template conf_yaml_path(new_resource.name) do
     if node['platform_family'] == 'windows'
       owner 'Administrators'
       rights :full_control, 'Administrators'
@@ -52,9 +52,8 @@ action :add do # rubocop:disable Metrics/BlockLength
 end
 
 action :remove do
-  confd_dir = yaml_dir
-  Chef::Log.debug "Removing #{new_resource.name} from #{confd_dir}"
-  file ::File.join(confd_dir, "#{new_resource.name}.yaml") do
+  Chef::Log.debug "Removing monitoring for #{new_resource.name}"
+  file conf_yaml_path(new_resource.name) do
     action :delete
     sensitive true if Chef::Resource.instance_methods(false).include?(:sensitive)
     notifies :restart, 'service[datadog-agent]', :delayed if node['datadog']['agent_start']
@@ -77,10 +76,12 @@ end
 
 private
 
-def yaml_dir
+def conf_yaml_path(resource_name)
   if node['datadog']['agent6']
-    ::File.join(node['datadog']['agent6_config_dir'], 'conf.d')
+    ::File.join(node['datadog']['agent6_config_dir'], 'conf.d',
+                "#{resource_name}.yaml")
   else
-    ::File.join(node['datadog']['config_dir'], 'conf.d')
+    ::File.join(node['datadog']['config_dir'], 'conf.d',
+                "#{resource_name}.d", 'conf.yaml')
   end
 end
