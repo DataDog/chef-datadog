@@ -78,10 +78,10 @@ private
 
 def conf_yaml_path(resource_name)
   if node['datadog']['agent6']
-    ::File.join(node['datadog']['agent6_config_dir'], 'conf.d',
-                "#{resource_name}.yaml")
-  else
     ::File.join(node['datadog']['config_dir'], 'conf.d',
                 "#{resource_name}.d", 'conf.yaml')
+  else
+    ::File.join(node['datadog']['agent6_config_dir'], 'conf.d',
+                "#{resource_name}.yaml")
   end
 end
