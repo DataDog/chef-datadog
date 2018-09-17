@@ -37,6 +37,7 @@ when 'debian'
     distribution distribution
     components components
     action :add
+    retries 4
   end
 
   # Previous versions of the cookbook could create this repo file, make sure we remove it now
