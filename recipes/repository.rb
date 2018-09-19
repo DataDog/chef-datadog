@@ -29,6 +29,7 @@ when 'debian'
   uri = node['datadog']['agent6'] ? node['datadog']['agent6_aptrepo'] : node['datadog']['aptrepo']
   distribution = node['datadog']['agent6'] ? node['datadog']['agent6_aptrepo_dist'] : node['datadog']['aptrepo_dist']
   components = node['datadog']['agent6'] ? ['main', '6'] : ['main']
+  retries = node['datadog']['aptrepo_retries']
   # Add APT repository
   apt_repository 'datadog' do
     keyserver 'hkp://keyserver.ubuntu.com:80'
@@ -37,7 +38,7 @@ when 'debian'
     distribution distribution
     components components
     action :add
-    retries 4
+    retries retries
   end
 
   # Previous versions of the cookbook could create this repo file, make sure we remove it now
