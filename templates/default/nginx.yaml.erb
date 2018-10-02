@@ -4,7 +4,19 @@ instances:
 <% @instances.each do |i| -%>
   - nginx_status_url: <%= i['nginx_status_url'] %>
   <% unless i['ssl_validation'].nil? -%>
-    ssl_validation:  <%= i['ssl_validation'] %>
+    ssl_validation: <%= i['ssl_validation'] %>
+  <% end -%>
+  <% unless i['skip_proxy'].nil? -%>
+    skip_proxy: <%= i['skip_proxy'] %>
+  <% end -%>
+  <% unless i['use_plus_api'].nil? -%>
+    use_plus_api: <%= i['use_plus_api'] %>
+  <% end -%>
+  <% unless i['plus_api_version'].nil? -%>
+    plus_api_version: <%= i['plus_api_version'] %>
+  <% end -%>
+  <% unless i['use_vts'].nil? -%>
+    use_vts: <%= i['use_vts'] %>
   <% end -%>
   <%# don't print user/password if either is nil -%>
   <% unless i['user'].nil? || i['password'].nil? -%>
