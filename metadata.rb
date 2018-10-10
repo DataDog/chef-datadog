@@ -5,7 +5,7 @@ license          'Apache-2.0'
 description      'Installs/Configures datadog components'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '2.16.1'
-chef_version     '>= 10.14' if respond_to? :chef_version
+chef_version     '>= 12.7' if respond_to? :chef_version
 source_url       'https://github.com/DataDog/chef-datadog' if respond_to? :source_url
 issues_url       'https://github.com/DataDog/chef-datadog/issues' if respond_to? :issues_url
 
