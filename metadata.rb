@@ -24,6 +24,7 @@ end
 
 depends          'apt' # We recommend '>= 2.1.0'. See CHANGELOG.md for details
 depends          'chef_handler', '>= 1.1' # We recommend '~> 1.3' with Chef < 12. See CHANGELOG.md for details
+depends          'poise-python', '~> 1.7'
 depends          'windows' # We recommend '< 1.39.0' if running Chef >= 12.6. See README.md for details
 depends          'yum', '>= 3.0' # Use '~> 3.0' with Chef < 12
 

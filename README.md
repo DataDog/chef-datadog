@@ -106,12 +106,7 @@ ddtrace-(python|ruby)
 ---------------------
 Installs the language-specific libraries for application Traces (APM).
 
-* Note for Chef >= 13 users: the `datadog::ddtrace-python` recipe is not compatible with Chef >= 13, as it relies on a resource that was removed in Chef 13.0.
-  To install the `ddtrace-python` library with Chef, please add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the following resource:
-  ```ruby
-  python_package 'ddtrace' # assumes that python and pip are installed
-  ```
-  For more advanced usage, please refer to the [`poise-python` cookbook documentation](https://github.com/poise/poise-python)
+The `ddtrace-python` recipe assumes you have Python and Pip installed already, using the [`poise-python` cookbook](https://github.com/poise/poise-python).
 
 other
 -----
