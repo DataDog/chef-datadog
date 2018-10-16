@@ -12,6 +12,9 @@ instances:
     <% unless i["cluster_stats"].nil? %>
     cluster_stats: <%= i["cluster_stats"] %>
     <% end %>
+    <% unless i["index_stats"].nil? %>
+    index_stats: <%= i["index_stats"] %>
+    <% end %> 
     <% unless i["is_external"].nil? %>
     is_external: <%= i["is_external"] %>
     <% end %>
