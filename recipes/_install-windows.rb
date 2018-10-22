@@ -17,16 +17,31 @@
 # limitations under the License.
 #
 
-dd_agent_version =
+dd_agent5_version =
   if node['datadog']['agent_version'].respond_to?(:each_pair)
     node['datadog']['agent_version']['windows']
   else
     node['datadog']['agent_version']
   end
 
+dd_agent6_version =
+  if node['datadog']['agent6_version'].respond_to?(:each_pair)
+    node['datadog']['agent6_version']['windows']
+  else
+    node['datadog']['agent6_version']
+  end
+
+if node['datadog']['agent6']
+  dd_agent_version = dd_agent6_version
+  dd_agent_latest = 'datadog-agent-6-latest.amd64'
+else
+  dd_agent_version = dd_agent5_version
+  # The latest package basename is `ddagent-cli-latest` for '~> 5.12' versions
+  dd_agent_latest = 'ddagent-cli-latest'
+end
+
 # If no version is specified, select the latest package.
-# The latest package basename is `ddagent-cli-latest` since Agent version 5.12.0
-dd_agent_installer_basename = dd_agent_version ? "ddagent-cli-#{dd_agent_version}" : 'ddagent-cli-latest'
+dd_agent_installer_basename = dd_agent_version ? "ddagent-cli-#{dd_agent_version}" : dd_agent_latest
 temp_file_basename = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli')
 
 if node['datadog']['windows_agent_use_exe']

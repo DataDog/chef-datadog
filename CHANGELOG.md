@@ -1,6 +1,43 @@
 Changes
 =======
 
+# 2.16.1 / 2018-07-16
+
+* [FEATURE] Add support for `no_proxy` Agent v6 option. See [#549][] [@stonith][]
+* [MISC] Fix typo in documentation of `enable_logs_agent` option. See [#544][] [@rsheyd][]
+
+# 2.16.0 / 2018-05-14
+
+* [FEATURE] Support data scrubber config fields for process agent. See [#540][] [@moisesbotarro][]
+* [MISC] Document `easy_install_package` removal from Chef 13+. See [#533][] [@olivielpeau][]
+
+# 2.15.0 / 2018-03-21
+
+This release adds full support of Agent 6 on Windows.
+
+* [FEATURE] Support passing arbitrary config options to Datadog handler. See [#532][] [@olivielpeau][]
+* [FEATURE] Update version logic for Agent 6 on Windows. See [#530][] [@olivielpeau][]
+* [FEATURE] Add support of APM options for Agent 6.0 and clean up beta workarounds. See [#527][] [@olivielpeau][]
+* [FEATURE] Set windows values for agent 6. See [#525][] [@rlaveycal][]
+* [OPTIMIZE] Update Agent 6 configuration for v6.0.0 stable and higher. See [#531][] [@olivielpeau][]
+* [OPTIMIZE] Update deprecated `logs_enabled` attribute. See [#513][] & [#526][] [@eplanet][]
+* [OPTIMIZE] Allow configuring `tags_submission_retries` option on handler. See [#508][] [@olivielpeau][]
+* [BUGFIX] Force `windows_service` to restart in order to cope with restart error. See [#520][] [@stefanwb][]
+* [BUGFIX] Fix default `datadog.yaml` template for Windows. See [#528][] [@olivielpeau][]
+
+# 2.14.1 / 2018-03-05
+* [BUGFIX] Fix service provider on Amazon Linux < 2.0. See [#523][] [@olivielpeau][]
+* [OPTIMIZE] Remove reference to old expired APT key, keep only newer key. See [#522][] [@olivielpeau][]
+
+# 2.14.0 / 2018-02-27
+* [FEATURE] Enable log collection with chef. See [#498][] [@NBParis][]
+* [FEATURE] Support process agent configuration in datadog.yaml. See [#511][] [@conorbranagan][]
+* [FEATURE] Add recipe for WMI check. See [#499][] [@mlcooper][]
+* [FEATURE] Add updated metrics for Cassandra 2.x and 3.x. See [#516][] [@olivielpeau][]
+* [FEATURE] Update component for APT repo, and URL for YUM for Agent6. See [#515][] [@olivielpeau][]
+* [FEATURE] Consul: support self leader check and network latency checks. See [#501][] [@azuretek][]
+* [BUGFIX] RHEL/Amazon linux: add service provider hint for Agent6 + upstart. See [#518][] [@olivielpeau][]
+
 # 2.13.0 / 2017-12-01
 
 * [FEATURE] Add support for Logs, See [#490][] [@tmichelet][]
@@ -600,6 +637,29 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#492]: https://github.com/DataDog/chef-datadog/issues/492
 [#493]: https://github.com/DataDog/chef-datadog/issues/493
 [#495]: https://github.com/DataDog/chef-datadog/issues/495
+[#498]: https://github.com/DataDog/chef-datadog/issues/498
+[#499]: https://github.com/DataDog/chef-datadog/issues/499
+[#501]: https://github.com/DataDog/chef-datadog/issues/501
+[#508]: https://github.com/DataDog/chef-datadog/issues/508
+[#511]: https://github.com/DataDog/chef-datadog/issues/511
+[#513]: https://github.com/DataDog/chef-datadog/issues/513
+[#515]: https://github.com/DataDog/chef-datadog/issues/515
+[#516]: https://github.com/DataDog/chef-datadog/issues/516
+[#518]: https://github.com/DataDog/chef-datadog/issues/518
+[#520]: https://github.com/DataDog/chef-datadog/issues/520
+[#522]: https://github.com/DataDog/chef-datadog/issues/522
+[#523]: https://github.com/DataDog/chef-datadog/issues/523
+[#525]: https://github.com/DataDog/chef-datadog/issues/525
+[#526]: https://github.com/DataDog/chef-datadog/issues/526
+[#527]: https://github.com/DataDog/chef-datadog/issues/527
+[#528]: https://github.com/DataDog/chef-datadog/issues/528
+[#530]: https://github.com/DataDog/chef-datadog/issues/530
+[#531]: https://github.com/DataDog/chef-datadog/issues/531
+[#532]: https://github.com/DataDog/chef-datadog/issues/532
+[#533]: https://github.com/DataDog/chef-datadog/issues/533
+[#540]: https://github.com/DataDog/chef-datadog/issues/540
+[#544]: https://github.com/DataDog/chef-datadog/issues/544
+[#549]: https://github.com/DataDog/chef-datadog/issues/549
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@BrentOnRails]: https://github.com/BrentOnRails
@@ -608,6 +668,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@JoeDeVries]: https://github.com/JoeDeVries
 [@LeoCavaille]: https://github.com/LeoCavaille
 [@MiguelMoll]: https://github.com/MiguelMoll
+[@NBParis]: https://github.com/NBParis
 [@NathanielMichael]: https://github.com/NathanielMichael
 [@RedWhiteMiko]: https://github.com/RedWhiteMiko
 [@SelerityMichael]: https://github.com/SelerityMichael
@@ -617,6 +678,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@alq]: https://github.com/alq
 [@antonio-osorio]: https://github.com/antonio-osorio
 [@arthurnn]: https://github.com/arthurnn
+[@azuretek]: https://github.com/azuretek
 [@babbottscott]: https://github.com/babbottscott
 [@bai]: https://github.com/bai
 [@benmanns]: https://github.com/benmanns
@@ -646,6 +708,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@eherot]: https://github.com/eherot
 [@elafarge]: https://github.com/elafarge
 [@elijahandrews]: https://github.com/elijahandrews
+[@eplanet]: https://github.com/eplanet
 [@evan2645]: https://github.com/evan2645
 [@flah00]: https://github.com/flah00
 [@foobarto]: https://github.com/foobarto
@@ -686,6 +749,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@miketheman]: https://github.com/miketheman
 [@mirceal]: https://github.com/mirceal
 [@mlcooper]: https://github.com/mlcooper
+[@moisesbotarro]: https://github.com/moisesbotarro
 [@mstepniowski]: https://github.com/mstepniowski
 [@mtougeron]: https://github.com/mtougeron
 [@nickmarden]: https://github.com/nickmarden
@@ -699,11 +763,14 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@raycrawford]: https://github.com/raycrawford
 [@remh]: https://github.com/remh
 [@rlaveycal]: https://github.com/rlaveycal
+[@rsheyd]: https://github.com/rsheyd
 [@ryandjurovich]: https://github.com/ryandjurovich
 [@schisamo]: https://github.com/schisamo
 [@sethrosenblum]: https://github.com/sethrosenblum
+[@stefanwb]: https://github.com/stefanwb
 [@stensonb]: https://github.com/stensonb
 [@stolfi]: https://github.com/stolfi
+[@stonith]: https://github.com/stonith
 [@takus]: https://github.com/takus
 [@tejom]: https://github.com/tejom
 [@thisismana]: https://github.com/thisismana

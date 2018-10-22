@@ -102,11 +102,22 @@ else
 end
 
 # Common configuration
+service_provider = nil
+if node['datadog']['agent6'] &&
+   (((node['platform'] == 'amazon' || node['platform_family'] == 'amazon') && node['platform_version'].to_i != 2) ||
+   (node['platform'] != 'amazon' && node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7))
+  # use Upstart provider explicitly for Agent 6 on Amazon Linux < 2.0 and RHEL < 7
+  service_provider = Chef::Provider::Service::Upstart
+end
+
 service 'datadog-agent' do
   service_name node['datadog']['agent_name']
   action [agent_enable, agent_start]
+  provider service_provider unless service_provider.nil?
   if is_windows
     supports :restart => true, :start => true, :stop => true
+    restart_command "powershell restart-service #{node['datadog']['agent_name']} -Force"
+    stop_command "powershell stop-service #{node['datadog']['agent_name']} -Force"
   else
     supports :restart => true, :status => true, :start => true, :stop => true
   end

@@ -17,4 +17,7 @@
 # limitations under the License.
 #
 
+# NB: This recipe is compatible with Chef <= 12 only. If you're using Chef 13 or higher
+# please refer to the README of the cookbook.
+
 easy_install_package 'dogstatsd-python'

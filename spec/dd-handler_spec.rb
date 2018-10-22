@@ -10,7 +10,7 @@ shared_examples 'a chef-handler-datadog installer' do |version|
   end
 end
 
-shared_examples 'a chef-handler-datadog runner' do |extra_endpoints, tags_blacklist_regex|
+shared_examples 'a chef-handler-datadog runner' do |extra_endpoints, tags_blacklist_regex, override_config|
   it 'runs the handler' do
     handler_config = {
       api_key: 'somethingnotnil',
@@ -20,8 +20,15 @@ shared_examples 'a chef-handler-datadog runner' do |extra_endpoints, tags_blackl
       url: 'https://app.datadoghq.com',
       extra_endpoints: extra_endpoints || [],
       tags_blacklist_regex: tags_blacklist_regex,
-      send_policy_tags: false
+      send_policy_tags: false,
+      tags_submission_retries: nil
     }
+
+    unless override_config.nil?
+      override_config.each do |k, v|
+        handler_config[k] = v
+      end
+    end
 
     expect(chef_run).to enable_chef_handler('Chef::Handler::Datadog').with(
       source: 'chef/handler/datadog',
@@ -134,7 +141,7 @@ describe 'datadog::dd-handler' do
 
     it_behaves_like 'a chef-handler-datadog installer'
 
-    it_behaves_like 'a chef-handler-datadog runner', extra_endpoints, nil
+    it_behaves_like 'a chef-handler-datadog runner', extra_endpoints, nil, nil
   end
 
   context 'multiple endpoints disabled' do
@@ -174,6 +181,25 @@ describe 'datadog::dd-handler' do
 
     it_behaves_like 'a chef-handler-datadog installer'
 
-    it_behaves_like 'a chef-handler-datadog runner', nil, 'tags.*'
+    it_behaves_like 'a chef-handler-datadog runner', nil, 'tags.*', nil
+  end
+
+  context 'handler_extra_config set' do
+    cached(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        platform: 'ubuntu',
+        version: '14.04'
+      ) do |node|
+        node.set['datadog']['api_key'] = 'somethingnotnil'
+        node.set['datadog']['application_key'] = 'somethingnotnil2'
+        node.set['datadog']['chef_handler_enable'] = true
+        node.set['datadog']['use_ec2_instance_id'] = true
+        node.set['datadog']['handler_extra_config']['foo'] = 'bar'
+      end.converge described_recipe
+    end
+
+    it_behaves_like 'a chef-handler-datadog installer'
+
+    it_behaves_like 'a chef-handler-datadog runner', nil, nil, 'foo' => 'bar'
   end
 end

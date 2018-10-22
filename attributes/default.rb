@@ -29,12 +29,14 @@ default['datadog']['api_key'] = nil
 default['datadog']['application_key'] = nil
 
 ########################################################################
-###            Beta-Agent6-only attributes, experimental             ###
-### These attributes are not part of the stable API of the cookbook  ###
-###   Subject to breaking changes between bugfix/minor versions      ###
-###              Only works on Linux (DEB/RPM) for now               ###
+###                  Agent6-only attributes                          ###
 
-# Set to true to install an agent6 instead of agent5.
+# If you're installing a pre-release version of Agent 6 (beta or RC), you need to:
+# * on debian: set node['datadog']['agent6_aptrepo_dist'] to 'beta' instead of 'stable'
+# * on RHEL: set node['datadog']['agent6_yumrepo'] to 'https://yum.datadoghq.com/beta/x86_64/'
+# In all cases, follow the instructions below:
+
+# Set node['datadog']['agent6'] to true to install an agent6 instead of agent5.
 # To upgrade from agent5 to agent6, you need to:
 # * set node['datadog']['agent6'] to true, and
 # * either set node['datadog']['agent6_version'] to an existing agent6 version (recommended), or
@@ -49,22 +51,27 @@ default['datadog']['agent6'] = false
 default['datadog']['agent6_version'] = nil
 default['datadog']['agent6_package_action'] = 'install' # set to `upgrade` to always upgrade to latest
 
-# beta repos where datadog-agent v6 packages are available
+# repos where datadog-agent v6 packages are available
 default['datadog']['agent6_aptrepo'] = 'http://apt.datadoghq.com'
-default['datadog']['agent6_aptrepo_dist'] = 'beta'
+default['datadog']['agent6_aptrepo_dist'] = 'stable'
 # RPMs are only available for RHEL >= 6 (-> use https protocol) and x86_64 arch
-default['datadog']['agent6_yumrepo'] = 'https://yum.datadoghq.com/beta/x86_64/'
+default['datadog']['agent6_yumrepo'] = 'https://yum.datadoghq.com/stable/6/x86_64/'
 
 # Values that differ on Windows
 # The location of the config folder (containing conf.d)
-default['datadog']['agent6_config_dir'] = '/etc/datadog-agent'
+default['datadog']['agent6_config_dir'] =
+  if node['platform_family'] == 'windows'
+    "#{ENV['ProgramData']}/Datadog"
+  else
+    '/etc/datadog-agent'
+  end
 
 # Set a key to true to make the agent6 use the v2 api on that endpoint, false otherwise.
 # Leave key value to nil to use agent6 default for that endpoint.
 # Supported keys: "series", "events", "service checks"
 default['datadog']['use_v2_api'] = {}
 
-###           End of Beta-Agent6-only experimental attributes        ###
+###                 End of Agent6-only attributes                    ###
 ########################################################################
 
 # Use this attribute to send data to additional accounts
@@ -110,6 +117,16 @@ default['datadog']['tags_blacklist_regex'] = nil
 # Set to `true` if you want the handler to send the Chef policy name and group as host tags
 default['datadog']['send_policy_tags'] = false
 
+# Set to an integer if you want the handler to retry submitting tags if the host isn't yet present
+# on Datadog. The handler will retry evey 2 seconds until this number of retries is reached or the tags are
+# submitted successfully.
+default['datadog']['tags_submission_retries'] = nil
+
+# Additional handler config options
+# If the Chef Datadog handler supports a config option that's not available directly in this cookbook
+# you can set it as a key/value of this hash attribute. `nil` values will be ignored.
+default['datadog']['handler_extra_config'] = {}
+
 # Autorestart agent
 default['datadog']['autorestart'] = false
 
@@ -137,6 +154,7 @@ yum_protocol =
 default['datadog']['installrepo'] = true
 default['datadog']['aptrepo'] = 'http://apt.datadoghq.com'
 default['datadog']['aptrepo_dist'] = 'stable'
+default['datadog']['aptrepo_retries'] = 4
 default['datadog']['yumrepo'] = "#{yum_protocol}://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/"
 default['datadog']['yumrepo_gpgkey'] = "#{yum_protocol}://yum.datadoghq.com/DATADOG_RPM_KEY.public"
 default['datadog']['yumrepo_proxy'] = nil
@@ -155,7 +173,7 @@ default['datadog']['windows_agent_checksum'] = nil
 # Set to `true` to use the EXE installer on Windows, recommended to gracefully handle upgrades from per-user
 # to per-machine installs on most environments. We recommend setting this option to `true` for Agent upgrades from
 # versions <= 5.10.1 to versions >= 5.12.0.
-# The EXE installer exists since Agent release 5.12.0
+# The EXE installer exists since Agent release 5.12.0. It is not provided for >= 6.0.0 versions.
 # If you're already using version >= 5.12.0 of the Agent, leave this to false.
 default['datadog']['windows_agent_use_exe'] = false
 
@@ -184,7 +202,8 @@ rescue ArgumentError
   Chef::Log.warn "could not parse python version string: #{node['languages']['python']['version']}"
 end
 
-# Agent Version
+# Agent Version for v5 Agents
+# To pin the version of v6 Agents, use the `agent6_version` attribute instead.
 # Default of `nil` will install latest version. On Windows, this will also upgrade to latest
 # This attribute accepts either a `string` or `hash` with the key as platform_name and value of package version
 # In the case of fedora and amazon linux, use platform_name of rhel
@@ -196,7 +215,8 @@ end
 # }
 default['datadog']['agent_version'] = nil
 
-# Agent package action
+# Agent package action for v5 Agents
+# For v6 Agents, use the agent6_package_action attribute instead
 # Allow override with `upgrade` to get latest (Linux only)
 default['datadog']['agent_package_action'] = 'install'
 
@@ -218,11 +238,10 @@ default['datadog']['chef_handler_enable'] = true
 # Log level. Should be a valid python log level https://docs.python.org/2/library/logging.html#logging-levels
 default['datadog']['log_level'] = 'INFO'
 
-# Default to false to non_local_traffic
-# See: https://github.com/DataDog/dd-agent/wiki/Network-Traffic-and-Proxy-Configuration
+# Set to true to allow non local traffic to Dogstatsd and the trace agent (and, in Agent 5, to the Forwarder)
 default['datadog']['non_local_traffic'] = false
 
-# The loopback address the Forwarder and Dogstatsd will bind.
+# The loopback address Dogstatsd will bind (in Agent 5, the Forwarder also uses this address)
 default['datadog']['bind_host'] = 'localhost'
 
 # How often you want the agent to collect data, in seconds. Any value between
@@ -278,6 +297,7 @@ default['datadog']['web_proxy']['port'] = nil
 default['datadog']['web_proxy']['user'] = nil
 default['datadog']['web_proxy']['password'] = nil
 default['datadog']['web_proxy']['skip_ssl_validation'] = nil # accepted values 'yes' or 'no'
+default['datadog']['web_proxy']['no_proxy'] = nil # only used for agent v6.0+
 
 # dogstatsd
 default['datadog']['dogstatsd'] = true
@@ -328,6 +348,7 @@ default['datadog']['trace_env'] = nil
 default['datadog']['extra_sample_rate'] = nil
 default['datadog']['max_traces_per_second'] = nil
 default['datadog']['receiver_port'] = nil
+# `connection_limit` is ignored in Agent 6
 default['datadog']['connection_limit'] = nil
 
 # ddtrace python version
@@ -342,18 +363,20 @@ default['datadog']['ddtrace_gem_version'] = nil
 # * `false` to explicitly disable it
 # Leave it to `nil` to let the agent's default behavior decide whether to run the process-agent
 default['datadog']['enable_process_agent'] = nil
+default['datadog']['process_agent']['url'] = 'https://process.datadoghq.com'
 
-# Comma-separated list of regex patterns matching process commands to blacklist.
-# Example: 'my-secret-app,dbpass'
-default['datadog']['process_agent']['blacklist'] = nil
+# A list of regex patterns matching process commands to blacklist.
+# Example: ['my-secret-app', 'dbpass']
+default['datadog']['process_agent']['blacklist'] = []
 
-# Comma-separated list of regex patterns of containers to include or skip.
-# Each pattern should be in the form of "field:pattern" where 'field' is either
-# 'image' or 'name'.
-# Example: 'image:redis,image:nginx'
-default['datadog']['process_agent']['container_blacklist'] = nil
-# Whitelist is applied after the blacklist.
-default['datadog']['process_agent']['container_whitelist'] = nil
+# Controls the behavior of the cmdline data scrubber
+# If enabled, hides every cmdline argument value whose key matches one of the default
+# or custom sensitive words
+# Default sensitive words: ['password', 'passwd', 'mysql_pwd', 'access_token', 'auth_token',
+# 'api_key', 'apikey', 'secret', 'credentials', 'stripetoken']
+default['datadog']['process_agent']['scrub_args'] = true
+# Example for custom sensitive words: ['consul_token', 'token', 'dd_api_key']
+default['datadog']['process_agent']['custom_sensitive_words'] = []
 
 # Full path to store process-agent logs to override the default.
 default['datadog']['process_agent']['log_file'] = nil
@@ -368,8 +391,8 @@ default['datadog']['process_agent']['rtprocess_interval'] = nil
 default['datadog']['process_agent']['container_interval'] = nil
 default['datadog']['process_agent']['rtcontainer_interval'] = nil
 
-# Logs functionality settings
-# Set `enable_log_agent` to:
+# Logs functionality settings (Agent 6 only)
+# Set `enable_logs_agent` to:
 # * `true` to explicitly enable the log agent
 # * `false` to explicitly disable it
 # Leave it to `nil` to let the agent's default behavior decide whether to run the log-agent

@@ -11,15 +11,11 @@
 # - dogstatsd_interval
 # - dogstatsd_normalize
 # - legacy_integrations
+# - listen_port (`agent_port` attribute)
 
 # TODO: options not supported yet:
 # - agent_checks_interval
 # - Autodiscovery (aka Service Discovery) related options
-# - statsd_forward_host
-# - statsd_forward_port
-# - statsd_metric_namespace
-# - enable_trace_agent: always enabled
-# - all trace-related options are written to an INI file
 
 def string_list_to_array(string_list)
   # return an array from a comma-separated list in a string
@@ -35,12 +31,14 @@ end
 
 # TODO: support the more complete proxy settings that the agent6 supports
 http_proxy = nil
+no_proxy = nil
 if node['datadog']['web_proxy']['host']
   host = node['datadog']['web_proxy']['host']
   port = node['datadog']['web_proxy']['port']
   user = node['datadog']['web_proxy']['user']
   password = node['datadog']['web_proxy']['password']
   scheme = ""
+  no_proxy = node['datadog']['web_proxy']['no_proxy']
 
   unless host.start_with?('http://') or host.start_with?('https://')
     scheme = 'http://'
@@ -61,30 +59,66 @@ if node['datadog']['web_proxy']['host']
   http_proxy = scheme + http_proxy
 end
 
+# In the default case we will start and run with only container collection.
+process_agent_enabled = 'false'
+
+if node['datadog']['enable_process_agent'].is_a?(TrueClass)
+  # Collect processes if enabled.
+  process_agent_enabled = 'true'
+elsif node['datadog']['enable_process_agent'].is_a?(FalseClass)
+  # Disable the Agent altogether if false.
+  process_agent_enabled = 'disabled'
+end
+
 ## Populate agent_config ##
 agent_config = @extra_config.merge({
   api_key: @api_key,
   dd_url: node['datadog']['url'],
   hostname: node['datadog']['hostname'],
-  additional_endpoints: @additional_endpoints,
-  listen_port: node['datadog']['agent_port'],
   bind_host: node['datadog']['bind_host'],
+  additional_endpoints: @additional_endpoints,
   skip_ssl_validation: node['datadog']['web_proxy']['skip_ssl_validation'],
   tags: tags,
   create_dd_check_tags: node['datadog']['create_dd_check_tags'],
   collect_ec2_tags: node['datadog']['collect_ec2_tags'],
-  non_local_traffic: node['datadog']['non_local_traffic'],
+  dogstatsd_non_local_traffic: node['datadog']['non_local_traffic'],
   histogram_aggregates: string_list_to_array(node['datadog']['histogram_aggregates']),
-  histogram_percentiles: string_list_to_array(node['datadog']['histogram_percentiles']),  # TODO: check that the value works with agent6
+  histogram_percentiles: string_list_to_array(node['datadog']['histogram_percentiles']),
   use_dogstatsd: node['datadog']['dogstatsd'],
-  log_level: node['datadog']['log_level'],  # TODO: make sure it's a seelog-compatible log level
-  log_file: ::File.join(node['datadog']['log_file_directory'], "agent.log"),
+  statsd_metric_namespace: node['datadog']['statsd_metric_namespace'],
+  log_level: node['datadog']['log_level'],
 
   # log agent options
-  log_enabled: node['datadog']['enable_logs_agent']
+  logs_enabled: node['datadog']['enable_logs_agent'],
+
+  # process agent options
+  process_config: {
+    enabled: process_agent_enabled,
+    log_file: node['datadog']['process_agent']['log_file'],
+    intervals: {
+      container: node['datadog']['process_agent']['container_interval'],
+      container_realtime: node['datadog']['process_agent']['rtcontainer_interval'],
+      process: node['datadog']['process_agent']['rtcontainer_interval'],
+      process_realtime: node['datadog']['process_agent']['rtprocess_interval'],
+    },
+    blacklist_patterns: node['datadog']['process_agent']['blacklist'],
+    scrub_args: node['datadog']['process_agent']['scrub_args'],
+    custom_sensitive_words: node['datadog']['process_agent']['custom_sensitive_words'],
+    process_dd_url: node['datadog']['process_agent']['url']
+  }
 })
 
-if node['datadog']['use_v2_api']
+if node['datadog']['statsd_forward_host']
+  # TODO: in next major, make `nil` the default value of `statsd_forward_port` to normalize handling
+  agent_config['statsd_forward_host'] = node['datadog']['statsd_forward_host']
+  agent_config['statsd_forward_port'] = node['datadog']['statsd_forward_port']
+end
+
+if node['datadog']['log_file_directory']
+  agent_config['log_file'] = ::File.join(node['datadog']['log_file_directory'], "agent.log")
+end
+
+if !node['datadog']['use_v2_api'].nil? && !node['datadog']['use_v2_api'].empty?
   agent_config['use_v2_api'] = node['datadog']['use_v2_api']
 end
 
@@ -102,9 +136,27 @@ if !http_proxy.nil?
     http: http_proxy,
     https: http_proxy
   }
+  agent_config['proxy']['no_proxy'] = no_proxy if !no_proxy.nil?
 end
 
+## Trace agent options ##
+apm_config = {
+  enabled: node['datadog']['enable_trace_agent'],
+  env: node['datadog']['trace_env'],
+  extra_sample_rate: node['datadog']['extra_sample_rate'],
+  max_traces_per_second: node['datadog']['max_traces_per_second'],
+  receiver_port: node['datadog']['receiver_port'],
+  apm_non_local_traffic: node['datadog']['non_local_traffic']
+}
+apm_config.reject!{ |k,v| v.nil? }
+# Take into account options defined under ['extra_config']['apm_config']
+apm_config = @extra_config['apm_config'].merge(apm_config) unless @extra_config['apm_config'].nil?
+agent_config[:apm_config] = apm_config
+
+
 # Remove nil values
+agent_config[:process_config][:intervals].reject!{ |k,v| v.nil? }
+agent_config[:process_config].reject!{ |k,v| v.nil? }
 agent_config.reject!{ |k,v| v.nil? }
 
 -%>

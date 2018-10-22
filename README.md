@@ -16,14 +16,14 @@ Datadog Cookbook
 
 Chef recipes to deploy Datadog's components and configuration automatically.
 
-This cookbook includes experimental support of the beta version of the Datadog Agent 6.0, please refer to
-the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.12.0/attributes/default.rb#L31-L66)
+This cookbook includes new support for Datadog Agent version 6.0, please refer to
+the [dedicated section](#agent-6-support) and the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.15.0/attributes/default.rb#L31-L75)
 for more details on the supported platforms and how to use it.
 
-For general information on the Datadog Agent 6, please refer to the [datadog-agent](https://github.com/DataDog/datadog-agent/) repo.
+**Log collection is now available with agent 6.0, please refer to the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.15.0/attributes/default.rb#L383-L388) to enable it.**
 
-**NB: This README may refer to features that are not released yet. Please check the README of the
-git tag/the gem version you're using for your version's documentation**
+*Note: This README may refer to features that are not released yet. Please check the README of the
+git tag/the gem version you're using for your version's documentation*
 
 Requirements
 ============
@@ -81,9 +81,23 @@ dogstatsd-(python|ruby)
 -----------------------
 Installs the language-specific libraries to interact with `dogstatsd`.
 
+* Note for Chef >= 13 users: the `datadog::dogstatsd-python` recipe is not compatible with Chef >= 13, as it relies on a resource that was removed in Chef 13.0.
+  To install the `dogstatsd-python` library with Chef, please add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the following resource:
+  ```ruby
+  python_package 'dogstatsd-python' # assumes that python and pip are installed
+  ```
+  For more advanced usage, please refer to the [`poise-python` cookbook documentation](https://github.com/poise/poise-python)
+
 ddtrace-(python|ruby)
 ---------------------
 Installs the language-specific libraries for application Traces (APM).
+
+* Note for Chef >= 13 users: the `datadog::ddtrace-python` recipe is not compatible with Chef >= 13, as it relies on a resource that was removed in Chef 13.0.
+  To install the `ddtrace-python` library with Chef, please add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the following resource:
+  ```ruby
+  python_package 'ddtrace' # assumes that python and pip are installed
+  ```
+  For more advanced usage, please refer to the [`poise-python` cookbook documentation](https://github.com/poise/poise-python)
 
 other
 -----
@@ -93,9 +107,36 @@ There are many other integration-specific recipes, that are meant to assist in d
 Usage
 =====
 
+### Agent 6 Support
+Please note the cookbook now supports installing both Agent v5 and Agent v6 of the Datadog Agent on Linux (since v2.14.0) and Windows (since v2.15.0). By default versions `<=2.x` of the cookbook will default to install Agent5, you may however override this behavior with the `node['datadog']['agent6']` attribute.
+  ```
+  default_attributes(
+    'datadog' => {
+      'agent6' => true
+    }
+  )
+  ```
+
+Note: to _upgrade_ to Agent 6 on a node with Agent 5 already installed, you also have to pin `agent6_version` to a v6 version (recommended), or set `agent6_package_action` to `'upgrade'`.
+
+Additional attributes are available to have finer control over how you install Agent 6. These are Agent 6 counterparts to several well known Agent 5 attributes (code [here](https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb#L31-L75)):
+ * `agent6_version`: allows you to pin the agent version (recommended).
+ * `agent6_package_action`: defaults to `'install'`, may be set to `'upgrade'` to automatically upgrade to latest (not recommended, we recommend pinning to a version with `agent6_version` and change that version to upgrade).
+ * `agent6_aptrepo`: desired APT repo for the agent. Defaults to `http://apt.datadoghq.com`
+ * `agent6_aptrepo_dist`: desired distribution for the APT repo. Defaults to `stable`
+ * `agent6_yumrepo`: desired YUM repo for the agent. Defaults to `https://yum.datadoghq.com/stable/6/x86_64/`
+
+Please review the [attributes/default.rb](https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb) file (at the version of the cookbook you use) for the list and usage of the attributes used by the cookbook.
+
+Should you wish to add additional elements to the agent6 configuration file (typically `/etc/datadog-agent/datadog.yaml`) that are not directly available as attributes of the cookbook, you may use the `node['datadog']['extra_config']` attribute. This attribute is a hash and will be marshaled into the configuration file accordingly.
+
+For general information on the Datadog Agent 6, please refer to the [datadog-agent](https://github.com/DataDog/datadog-agent/) repo.
+
+### Instructions
+
 1. Add this cookbook to your Chef Server, either by installing with knife or by adding it to your Berksfile:
   ```
-  cookbook 'datadog', '~> 2.7.0'
+  cookbook 'datadog', '~> 2.14.0'
   ```
 2. Add your API Key either:
   * as a node attribute via an `environment` or `role`, or
@@ -122,8 +163,23 @@ Usage
     recipe[datadog::dd-handler]
   )
   ```
+  NB: remember to set `agent6` attribute in the `datadog` hash if you'd like to install agent6.
+
 5. Wait until `chef-client` runs on the target node (or trigger chef-client manually if you're impatient)
 
 We are not making use of data_bags in this recipe at this time, as it is unlikely that you will have more than one API key and one application key.
 
 For more deployment details, visit the [Datadog Documentation site](http://docs.datadoghq.com/).
+
+AWS OpsWorks Chef Deployment
+----------------------------
+
+1. Add Chef Custom JSON:
+  ```json
+  {"datadog":{"api_key": "<API_KEY>", "application_key": "<APP_KEY>"}}
+  ```
+
+2. Include the recipe in install-lifecycle recipe:
+  ```ruby
+  include_recipe 'datadog::dd-agent'
+  ```

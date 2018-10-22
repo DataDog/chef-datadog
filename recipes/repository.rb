@@ -26,38 +26,24 @@ when 'debian'
     action :install
   end
 
-  # Trust new APT key
-  execute 'apt-key import key 382E94DE' do
-    command 'apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 A2923DFF56EDA6E76E55E492D3A80E30382E94DE'
-    not_if 'apt-key list | grep 382E94DE'
-  end
-
+  uri = node['datadog']['agent6'] ? node['datadog']['agent6_aptrepo'] : node['datadog']['aptrepo']
+  distribution = node['datadog']['agent6'] ? node['datadog']['agent6_aptrepo_dist'] : node['datadog']['aptrepo_dist']
+  components = node['datadog']['agent6'] ? ['main', '6'] : ['main']
+  retries = node['datadog']['aptrepo_retries']
   # Add APT repository
   apt_repository 'datadog' do
     keyserver 'hkp://keyserver.ubuntu.com:80'
-    key 'C7A7DA52'
-    uri node['datadog']['aptrepo']
-    distribution node['datadog']['aptrepo_dist']
-    components ['main']
+    key 'A2923DFF56EDA6E76E55E492D3A80E30382E94DE'
+    uri uri
+    distribution distribution
+    components components
     action :add
+    retries retries
   end
 
+  # Previous versions of the cookbook could create this repo file, make sure we remove it now
   apt_repository 'datadog-beta' do
-    keyserver 'hkp://keyserver.ubuntu.com:80'
-    key 'C7A7DA52'
-    uri node['datadog']['agent6_aptrepo']
-    distribution node['datadog']['agent6_aptrepo_dist']
-    components ['main']
-    if node['datadog']['agent6'] &&
-       (node['datadog']['agent6_aptrepo'] != node['datadog']['aptrepo'] ||
-       node['datadog']['agent6_aptrepo_dist'] != node['datadog']['aptrepo_dist'])
-      # add the beta repo iff:
-      # * agent6 is selected (avoid automatic upgrades to agent6 if it's not), and
-      # * the node is configured to use a different repo than the agent5 (avoid duplicate repos)
-      action :add
-    else
-      action :remove
-    end
+    action :remove
   end
 when 'rhel', 'fedora', 'amazon'
   # Import new RPM key

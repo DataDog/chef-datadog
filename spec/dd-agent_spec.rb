@@ -739,4 +739,200 @@ describe 'datadog::dd-agent' do
       end
     end
   end
+
+  context 'agent6 set to true' do
+    describe 'the datadog-agent service' do
+      context 'on Amazon Linux < 2.0' do
+        cached(:chef_run) do
+          ChefSpec::SoloRunner.new(
+            :platform => 'amazon',
+            :version => '2017.03'
+          ) do |node|
+            node.set['datadog'] = { 'api_key' => 'somethingnotnil', 'agent6' => true }
+          end.converge described_recipe
+        end
+
+        it 'is enabled with Upstart provider' do
+          expect(chef_run).to enable_service('datadog-agent').with(
+            provider: Chef::Provider::Service::Upstart
+          )
+        end
+      end
+
+      context 'on RHEL 6' do
+        cached(:chef_run) do
+          ChefSpec::SoloRunner.new(
+            :platform => 'redhat',
+            :version => '6.8'
+          ) do |node|
+            node.set['datadog'] = { 'api_key' => 'somethingnotnil', 'agent6' => true }
+          end.converge described_recipe
+        end
+
+        it 'is enabled with Upstart provider' do
+          expect(chef_run).to enable_service('datadog-agent').with(
+            provider: Chef::Provider::Service::Upstart
+          )
+        end
+      end
+
+      context 'on RHEL 7' do
+        cached(:chef_run) do
+          ChefSpec::SoloRunner.new(
+            :platform => 'redhat',
+            :version => '7.3'
+          ) do |node|
+            node.set['datadog'] = { 'api_key' => 'somethingnotnil', 'agent6' => true }
+          end.converge described_recipe
+        end
+
+        it 'is enabled _without_ Upstart provider' do
+          expect(chef_run).to enable_service('datadog-agent')
+          expect(chef_run).to_not enable_service('datadog-agent').with(
+            provider: Chef::Provider::Service::Upstart
+          )
+        end
+      end
+    end
+
+    describe 'the datadog.yaml config file' do
+      context 'with default attribute values' do
+        context 'on Ubuntu' do
+          cached(:chef_run) do
+            ChefSpec::SoloRunner.new(
+              platform: 'ubuntu',
+              version: '14.04'
+            ) do |node|
+              node.name 'chef-nodename' # expected to be used as the hostname in `datadog.yaml`
+              node.set['datadog'] = { 'api_key' => 'somethingnotnil', 'agent6' => true }
+            end.converge described_recipe
+          end
+
+          it 'is created' do
+            expect(chef_run).to create_template('/etc/datadog-agent/datadog.yaml')
+          end
+
+          it 'contains expected YAML configuration' do
+            expected_yaml = <<-EOF
+            api_key: somethingnotnil
+            dd_url: https://app.datadoghq.com
+            tags: []
+            use_dogstatsd: true
+            bind_host: localhost
+            additional_endpoints: {}
+            histogram_aggregates:
+              - "max"
+              - "median"
+              - "avg"
+              - "count"
+            histogram_percentiles:
+              - "0.95"
+            hostname: "chef-nodename"
+            log_file: "/var/log/datadog/agent.log"
+            log_level: "INFO"
+            dogstatsd_non_local_traffic: false
+            apm_config:
+              apm_non_local_traffic: false
+            process_config:
+              enabled: "false"
+              blacklist_patterns: []
+              scrub_args: true
+              custom_sensitive_words: []
+              intervals: {}
+              process_dd_url: "https://process.datadoghq.com"
+            EOF
+
+            expect(chef_run).to(render_file('/etc/datadog-agent/datadog.yaml').with_content { |content|
+              expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
+            })
+          end
+        end
+
+        context 'on Windows' do
+          cached(:chef_run) do
+            set_env_var('ProgramData', 'C:\ProgramData')
+            ChefSpec::SoloRunner.new(
+              platform: 'windows',
+              version: '2012R2'
+            ) do |node|
+              node.name 'chef-nodename' # expected to be used as the hostname in `datadog.yaml`
+              node.set['datadog'] = { 'api_key' => 'somethingnotnil', 'agent6' => true }
+            end.converge described_recipe
+          end
+
+          it 'is created' do
+            expect(chef_run).to create_template('C:\ProgramData/Datadog/datadog.yaml')
+          end
+
+          it 'contains expected YAML configuration' do
+            expected_yaml = <<-EOF
+            api_key: somethingnotnil
+            dd_url: https://app.datadoghq.com
+            tags: []
+            use_dogstatsd: true
+            bind_host: localhost
+            additional_endpoints: {}
+            histogram_aggregates:
+              - "max"
+              - "median"
+              - "avg"
+              - "count"
+            histogram_percentiles:
+              - "0.95"
+            hostname: "chef-nodename"
+            log_level: "INFO"
+            dogstatsd_non_local_traffic: false
+            apm_config:
+              apm_non_local_traffic: false
+            process_config:
+              enabled: "false"
+              blacklist_patterns: []
+              scrub_args: true
+              custom_sensitive_words: []
+              intervals: {}
+              process_dd_url: "https://process.datadoghq.com"
+            EOF
+
+            expect(chef_run).to(render_file('C:\ProgramData/Datadog/datadog.yaml').with_content { |content|
+              expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
+            })
+          end
+        end
+      end
+    end
+
+    describe 'agent version set' do
+      context 'on windows' do
+        cached(:chef_run) do
+          set_env_var('ProgramData', 'C:\ProgramData')
+          ChefSpec::SoloRunner.new(
+            :platform => 'windows',
+            :version => '2012R2',
+            :file_cache_path => 'C:/chef/cache'
+          ) do |node|
+            node.set['datadog'] = {
+              'api_key' => 'somethingnotnil',
+              'agent6' => true,
+              'agent_version' => '5.22.0',
+              'agent6_version' => '6.0.3'
+            }
+          end.converge described_recipe
+        end
+
+        temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+
+        it 'installs Datadog Agent' do
+          expect(chef_run).to install_windows_package('Datadog Agent').with(installer_type: :msi)
+        end
+
+        # remote_file source gets converted to an array, so we need to do
+        # some tricky things to be able to regex against it
+        # Relevant: http://stackoverflow.com/a/12325983
+        it 'installs agent 6.0.3' do
+          expect(chef_run.remote_file(temp_file).source.to_s)
+            .to match(/ddagent-cli-6.0.3.msi/)
+        end
+      end
+    end
+  end
 end
