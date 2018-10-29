@@ -30,9 +30,10 @@ when 'debian'
   distribution = node['datadog']['agent6'] ? node['datadog']['agent6_aptrepo_dist'] : node['datadog']['aptrepo_dist']
   components = node['datadog']['agent6'] ? ['main', '6'] : ['main']
   retries = node['datadog']['aptrepo_retries']
+  keyserver = node['datadog']['aptrepo_use_backup_keyserver'] ? node['datadog']['aptrepo_backup_keyserver'] : node['datadog']['aptrepo_keyserver']
   # Add APT repository
   apt_repository 'datadog' do
-    keyserver 'hkp://keyserver.ubuntu.com:80'
+    keyserver keyserver
     key 'A2923DFF56EDA6E76E55E492D3A80E30382E94DE'
     uri uri
     distribution distribution
