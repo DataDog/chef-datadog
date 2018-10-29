@@ -16,11 +16,14 @@ Datadog Cookbook
 
 Chef recipes to deploy Datadog's components and configuration automatically.
 
-This cookbook includes new support for Datadog Agent version 6.0, please refer to
-the [dedicated section](#agent-6-support) and the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.15.0/attributes/default.rb#L31-L75)
-for more details on the supported platforms and how to use it.
+This cookbook includes support for:
 
-**Log collection is now available with agent 6.0, please refer to the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.15.0/attributes/default.rb#L383-L388) to enable it.**
+* Datadog Agent version 6.0 and up: please refer to
+the [dedicated section](#agent-6-support) and the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.15.0/attributes/default.rb#L31-L75)
+for more details on how to use it
+* Datadog Agent version 5.x
+
+**Log collection is now available with Agent v6, please refer to the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.15.0/attributes/default.rb#L383-L388) to enable it.**
 
 *Note: This README may refer to features that are not released yet. Please check the README of the
 git tag/the gem version you're using for your version's documentation*
@@ -167,6 +170,7 @@ For general information on the Datadog Agent 6, please refer to the [datadog-age
 
   default_attributes(
     'datadog' => {
+      'agent6' => true,
       'api_key' => 'api_key',
       'application_key' => 'app_key'
     }
@@ -177,7 +181,7 @@ For general information on the Datadog Agent 6, please refer to the [datadog-age
     recipe[datadog::dd-handler]
   )
   ```
-  NB: remember to set `agent6` attribute in the `datadog` hash if you'd like to install agent6.
+  NB: set the `agent6` attribute to `false` in the `datadog` hash if you'd like to install Agent v5.
 
 5. Wait until `chef-client` runs on the target node (or trigger chef-client manually if you're impatient)
 
@@ -190,7 +194,7 @@ AWS OpsWorks Chef Deployment
 
 1. Add Chef Custom JSON:
   ```json
-  {"datadog":{"api_key": "<API_KEY>", "application_key": "<APP_KEY>"}}
+  {"datadog":{"agent6": true, "api_key": "<API_KEY>", "application_key": "<APP_KEY>"}}
   ```
 
 2. Include the recipe in install-lifecycle recipe:
