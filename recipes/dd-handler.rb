@@ -49,7 +49,7 @@ unless web_proxy['host'].nil?
 end
 
 # Create the handler to run at the end of the Chef execution
-chef_handler 'Chef::Handler::Datadog' do # rubocop:disable Metrics/BlockLength
+chef_handler 'Chef::Handler::Datadog' do
   def extra_endpoints
     extra_endpoints = []
     node['datadog']['extra_endpoints'].each do |_, endpoint|
@@ -61,7 +61,7 @@ chef_handler 'Chef::Handler::Datadog' do # rubocop:disable Metrics/BlockLength
     extra_endpoints
   end
 
-  def handler_config # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def handler_config
     extra_config = node['datadog']['handler_extra_config'].reject { |_, v| v.nil? }
     config = extra_config.merge(
       :api_key => Chef::Datadog.api_key(node),

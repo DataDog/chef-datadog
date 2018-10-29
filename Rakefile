@@ -6,6 +6,7 @@ require 'foodcritic'
 require 'kitchen/rake_tasks'
 require 'rake/clean'
 require 'rspec/core/rake_task'
+require 'cookstyle'
 require 'rubocop/rake_task'
 
 task :default => %i[
