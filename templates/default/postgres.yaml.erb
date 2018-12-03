@@ -11,8 +11,8 @@
     # using `host` as their key.
     instance['host'] = instance.delete 'server' if instance['server']
 
-    # If `port` is unspecified, set to 5432
-    instance['port'] = 5432 if instance['port'].nil?
+    # If `port` is unspecified and host is not a domain socket, set to 5432
+    instance['port'] = 5432 if (instance['port'].nil? and !instance['host'].start_with?('/'))
   end
 -%>
 <%= JSON.parse(({ 'instances' => instances, 'logs' => @logs }).to_json).to_yaml %>
