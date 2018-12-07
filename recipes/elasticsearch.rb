@@ -28,6 +28,10 @@ include_recipe 'datadog::dd-agent'
 # documents in your indexes WITHOUT counting duplicates due to the existence
 # of replica shards in your ES cluster
 #
+# If you enable the "index_stats" flag, the agent will send index level metrics.
+# This means that you will be able to get the "elasticsearch.index.*" metrics. For
+# more details, visit https://docs.datadoghq.com/integrations/elastic/
+#
 # The "shard_level_metrics" flag enables metrics and service checks on a per-
 # shard basis (all the information is fetched under the /_stats?level=shards
 # endpoint). The metrics and service check sent for each shard are named as
@@ -50,6 +54,7 @@ include_recipe 'datadog::dd-agent'
 #     :url => 'http://localhost:9200',
 #     :tags => ['env:test'],
 #     :pshard_stats => true,
+#     :index_stats => true,
 #     :shard_level_metrics: true
 #   }
 # ]

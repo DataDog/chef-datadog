@@ -154,6 +154,7 @@ yum_protocol =
 default['datadog']['installrepo'] = true
 default['datadog']['aptrepo'] = 'http://apt.datadoghq.com'
 default['datadog']['aptrepo_dist'] = 'stable'
+default['datadog']['aptrepo_retries'] = 4
 default['datadog']['yumrepo'] = "#{yum_protocol}://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/"
 default['datadog']['yumrepo_gpgkey'] = "#{yum_protocol}://yum.datadoghq.com/DATADOG_RPM_KEY.public"
 default['datadog']['yumrepo_proxy'] = nil
@@ -296,6 +297,7 @@ default['datadog']['web_proxy']['port'] = nil
 default['datadog']['web_proxy']['user'] = nil
 default['datadog']['web_proxy']['password'] = nil
 default['datadog']['web_proxy']['skip_ssl_validation'] = nil # accepted values 'yes' or 'no'
+default['datadog']['web_proxy']['no_proxy'] = nil # only used for agent v6.0+
 
 # dogstatsd
 default['datadog']['dogstatsd'] = true
@@ -390,7 +392,7 @@ default['datadog']['process_agent']['container_interval'] = nil
 default['datadog']['process_agent']['rtcontainer_interval'] = nil
 
 # Logs functionality settings (Agent 6 only)
-# Set `enable_log_agent` to:
+# Set `enable_logs_agent` to:
 # * `true` to explicitly enable the log agent
 # * `false` to explicitly disable it
 # Leave it to `nil` to let the agent's default behavior decide whether to run the log-agent

@@ -7,7 +7,7 @@ def whyrun_supported?
   true
 end
 
-action :add do # rubocop:disable Metrics/BlockLength
+action :add do
   Chef::Log.debug "Adding monitoring for #{new_resource.name}"
   template ::File.join(yaml_dir, "#{new_resource.name}.yaml") do
     if node['platform_family'] == 'windows'
