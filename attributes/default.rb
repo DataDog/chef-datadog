@@ -66,6 +66,16 @@ default['datadog']['agent6_config_dir'] =
     '/etc/datadog-agent'
   end
 
+# The port on which the IPC api listens
+# cmd_port: 5001
+default['datadog']['agent6_cmd_port'] = nil
+
+# The port for the browser GUI to be served
+# Setting 'GUI_port: -1' turns off the GUI completely
+# Default is '5002' on Windows and macOS ; turned off on Linux
+# GUI_port: -1
+default['datadog']['agent6_gui_port'] = nil
+
 # Set a key to true to make the agent6 use the v2 api on that endpoint, false otherwise.
 # Leave key value to nil to use agent6 default for that endpoint.
 # Supported keys: "series", "events", "service checks"
