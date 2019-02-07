@@ -201,3 +201,54 @@ AWS OpsWorks Chef Deployment
   ```ruby
   include_recipe 'datadog::dd-agent'
   ```
+
+Datadog Monitor resource
+==========================
+
+The `datadog_monitor` resource will help you to set up integrations which do not have a recipe yet.
+
+The default action `:add` of this resource will automatically setup the integration by filling values in the configuration template file and set the correct permissions after having written the configuration on the filesystem. Also, it will take care of restarting the Agent.
+
+The `:remove` action exists to remove an integration from a node.
+
+We ourselves use it a lot in our recipes: see `recipes/cassandra.rb` or `recipes/haproxy.rb` for examples.
+
+Definitions
+-------------
+
+```ruby
+include_recipe 'datadog::dd-agent'
+
+datadog_monitor 'integration_name' do
+  instances                         Array
+  init_config                       Hash
+  logs                              Hash
+  version                           Integer
+  use_integration_template          true, false
+  action                            Symbol
+end
+```
+
+Actions
+-------------
+
+There is two available actions in this resource:
+        * `:add` Default. Setup the integration.
+        * `:remove` Use this action to remove an integration.
+
+Properties
+-------------
+
+where:
+        * `datadog_monitor` tells the chef-client to use the Datadog Monitor resource to setup an integration
+        * `'integration_name'` is the name of the integration to configure and setup
+        * `instances` are the fields used to fill values under the `instances` section in the configuration template file.
+        * `init_config` are the fields used to fill values under the the `init_config` section in the configuration template file.
+        * `logs` to configure the logs section in the configuration template file.
+        * `version` the version is a field mainly used to indicate which version of the configuration template to use. See `templates/default/kafka.yaml.erb` for an example.
+        * `use_integration_template` to use the default integration template `templates/default/integration.yaml.erb`. If set to false, the template in `templates/default/<integration_name>.yaml.erb` will be used.
+        * `action` see `Actions` chapter.
+
+See `recipes/` for many examples using the `datadog_monitor` resource.
+
+Learn more about the Chef Custom Resources in the [Chef documentation](https://docs.chef.io/custom_resources.html).
