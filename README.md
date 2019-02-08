@@ -120,6 +120,59 @@ other
 -----
 There are many other integration-specific recipes, that are meant to assist in deploying the correct agent configuration files and dependencies for a given integration.
 
+Resources
+=========
+
+datadog_monitor
+---------------
+
+The `datadog_monitor` resource will help you to enable Agent integrations.
+
+The default action `:add` enables the integration by filling a configuration file for the integration with the values provided to the resource, setting the correct permissions on that file, and restarting the Agent.
+
+The `:remove` action disables an integration.
+
+### Syntax
+
+```ruby
+datadog_monitor 'name' do
+  init_config                       Hash # default value: {}
+  instances                         Array # default value: []
+  logs                              Array # default value: []
+  use_integration_template          true, false # default value: false
+  action                            Symbol # defaults to :add if not specified
+end
+```
+
+#### Actions
+
+* `:add` Default. Enable the integration.
+* `:remove` Use this action to disable the integration.
+
+#### Properties
+
+* `'name'` is the name of the Agent integration to configure and enable
+* `instances` are the fields used to fill values under the `instances` section in the integration configuration file.
+* `init_config` are the fields used to fill values under the the `init_config` section in the integration configuration file.
+* `logs` are the fields used to fill values under the the `logs` section in the integration configuration file.
+* `use_integration_template`: set to `true` (recommended) to use a default template that simply writes the values of `instances`, `init_config`and `logs` in YAML under their respective YAML keys. (defaults to `false` for backward compatibility, will default to `true` in a future major version of the cookbook)
+
+### Example
+
+This example enables the ElasticSearch integration by using the `datadog_monitor` resource. It provides the instance configuration (in this case: the url to connect to ElasticSearch) and set the `use_integration_template` flag to use the default configuration template.
+
+Note that the Agent installation needs to be earlier in the run list.
+
+```ruby
+include_recipe 'datadog::dd-agent'
+
+datadog_monitor 'elastic'
+  instances  [{'url' => 'http://localhost:9200'}]
+  use_integration_template true
+end
+```
+
+See `recipes/` for many examples using the `datadog_monitor` resource.
 
 Usage
 =====
@@ -163,7 +216,9 @@ For general information on the Datadog Agent 6, please refer to the [datadog-age
 
    NB: if you're using the run state to store the api and app keys you need to set them at compile time before `datadog::dd-handler` in the run list.
 
-4. Associate the recipes with the desired `roles`, i.e. "role:chef-client" should contain "datadog::dd-handler" and a "role:base" should start the agent with "datadog::dd-agent".  Here's an example role with both recipes:
+4. Enable Agent integrations by including their recipes and configuration details in your role’s run-list and attributes.
+   Note that you can also create additional integrations recipes by using the `datadog_monitor` resource.
+5. Associate the recipes with the desired `roles`, i.e. "role:chef-client" should contain "datadog::dd-handler" and a "role:base" should start the agent with "datadog::dd-agent". Here's an example role with both recipes plus the MongoDB integration enabled.
   ```
   name 'example'
   description 'Example role using DataDog'
@@ -172,18 +227,24 @@ For general information on the Datadog Agent 6, please refer to the [datadog-age
     'datadog' => {
       'agent6' => true,
       'api_key' => 'api_key',
-      'application_key' => 'app_key'
+      'application_key' => 'app_key',
+      'mongo' => {
+        'instances' => [
+          {'host' => 'localhost', 'port' => '27017'}
+        ]
+      }
     }
   )
 
   run_list %w(
     recipe[datadog::dd-agent]
     recipe[datadog::dd-handler]
+    recipe[datadog::mongo]
   )
   ```
   NB: set the `agent6` attribute to `false` in the `datadog` hash if you'd like to install Agent v5.
 
-5. Wait until `chef-client` runs on the target node (or trigger chef-client manually if you're impatient)
+6. Wait until `chef-client` runs on the target node (or trigger chef-client manually if you're impatient)
 
 We are not making use of data_bags in this recipe at this time, as it is unlikely that you will have more than one API key and one application key.
 
@@ -202,57 +263,3 @@ AWS OpsWorks Chef Deployment
   include_recipe 'datadog::dd-agent'
   ```
 
-Resources
-=========
-
-datadog_monitor
----------------
-
-The `datadog_monitor` resource will help you to enable Agent integrations.
-
-The default action `:add` of this resource will automatically enable the integration by filling values in the configuration template file and set the correct permissions after having written the configuration on the filesystem. Also, it will take care of restarting the Agent.
-
-The `:remove` action disables an integration from a node.
-
-
-### Syntax
-
-```ruby
-datadog_monitor 'name' do
-  init_config                       Hash, default: {}
-  instances                         Array, default: []
-  logs                              Array, default: []
-  use_integration_template          true, false, default: false
-  action                            Symbol, default: :add
-end
-```
-
-#### Actions
-
-There is two available actions in this resource:
-
-* `:add` Default. Enable the integration.
-* `:remove` Use this action to disable the integration.
-
-#### Properties
-
-* `'name'` is the name of the Agent integration to configure and enable
-* `instances` are the fields used to fill values under the `instances` section in the integration configuration file.
-* `init_config` are the fields used to fill values under the the `init_config` section in the integration configuration file.
-* `logs` to configure the logs section in the integration configuration file.
-* `use_integration_template`: set to `true` (recommended) to use a default template that simply writes the values of `instances`, `init_config`and `logs` in YAML under their respective YAML keys. (defaults to `false` for backward compatibility, will default to `true` in a future major version of the cookbook)
-
-### Example
-
-```ruby
-include_recipe 'datadog::dd-agent'
-
-datadog_monitor 'elastic'
-  instances  [{'url' => 'http://localhost:9200'}]
-  use_integration_template true
-end
-```
-
-Note that the Agent installation needs to be earlier in the run list.
-
-See `recipes/` for many examples using the `datadog_monitor` resource.
