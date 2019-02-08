@@ -202,53 +202,57 @@ AWS OpsWorks Chef Deployment
   include_recipe 'datadog::dd-agent'
   ```
 
-Datadog Monitor resource
-==========================
+Resources
+=========
 
-The `datadog_monitor` resource will help you to set up integrations which do not have a recipe yet.
+datadog_monitor
+---------------
 
-The default action `:add` of this resource will automatically setup the integration by filling values in the configuration template file and set the correct permissions after having written the configuration on the filesystem. Also, it will take care of restarting the Agent.
+The `datadog_monitor` resource will help you to enable Agent integrations.
 
-The `:remove` action exists to remove an integration from a node.
+The default action `:add` of this resource will automatically enable the integration by filling values in the configuration template file and set the correct permissions after having written the configuration on the filesystem. Also, it will take care of restarting the Agent.
 
-We ourselves use it a lot in our recipes: see `recipes/cassandra.rb` or `recipes/haproxy.rb` for examples.
+The `:remove` action disables an integration from a node.
 
-Definitions
--------------
+
+### Syntax
+
+```ruby
+datadog_monitor 'name' do
+  init_config                       Hash, default: {}
+  instances                         Array, default: []
+  logs                              Array, default: []
+  use_integration_template          true, false, default: false
+  action                            Symbol, default: :add
+end
+```
+
+#### Actions
+
+There is two available actions in this resource:
+
+* `:add` Default. Enable the integration.
+* `:remove` Use this action to disable the integration.
+
+#### Properties
+
+* `'name'` is the name of the Agent integration to configure and enable
+* `instances` are the fields used to fill values under the `instances` section in the integration configuration file.
+* `init_config` are the fields used to fill values under the the `init_config` section in the integration configuration file.
+* `logs` to configure the logs section in the integration configuration file.
+* `use_integration_template`: set to `true` (recommended) to use a default template that simply writes the values of `instances`, `init_config`and `logs` in YAML under their respective YAML keys. (defaults to `false` for backward compatibility, will default to `true` in a future major version of the cookbook)
+
+### Example
 
 ```ruby
 include_recipe 'datadog::dd-agent'
 
-datadog_monitor 'integration_name' do
-  instances                         Array
-  init_config                       Hash
-  logs                              Hash
-  version                           Integer
-  use_integration_template          true, false
-  action                            Symbol
+datadog_monitor 'elastic'
+  instances  [{'url' => 'http://localhost:9200'}]
+  use_integration_template true
 end
 ```
 
-Actions
--------------
-
-There is two available actions in this resource:
-        * `:add` Default. Setup the integration.
-        * `:remove` Use this action to remove an integration.
-
-Properties
--------------
-
-where:
-        * `datadog_monitor` tells the chef-client to use the Datadog Monitor resource to setup an integration
-        * `'integration_name'` is the name of the integration to configure and setup
-        * `instances` are the fields used to fill values under the `instances` section in the configuration template file.
-        * `init_config` are the fields used to fill values under the the `init_config` section in the configuration template file.
-        * `logs` to configure the logs section in the configuration template file.
-        * `version` the version is a field mainly used to indicate which version of the configuration template to use. See `templates/default/kafka.yaml.erb` for an example.
-        * `use_integration_template` to use the default integration template `templates/default/integration.yaml.erb`. If set to false, the template in `templates/default/<integration_name>.yaml.erb` will be used.
-        * `action` see `Actions` chapter.
+Note that the Agent installation needs to be earlier in the run list.
 
 See `recipes/` for many examples using the `datadog_monitor` resource.
-
-Learn more about the Chef Custom Resources in the [Chef documentation](https://docs.chef.io/custom_resources.html).
