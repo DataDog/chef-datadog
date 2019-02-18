@@ -815,7 +815,7 @@ describe 'datadog::dd-agent' do
           it 'contains expected YAML configuration' do
             expected_yaml = <<-EOF
             api_key: somethingnotnil
-            dd_url: https://app.datadoghq.com
+            site: datadoghq.com
             tags: []
             use_dogstatsd: true
             bind_host: localhost
@@ -867,7 +867,7 @@ describe 'datadog::dd-agent' do
           it 'contains expected YAML configuration' do
             expected_yaml = <<-EOF
             api_key: somethingnotnil
-            dd_url: https://app.datadoghq.com
+            site: datadoghq.com
             tags: []
             use_dogstatsd: true
             bind_host: localhost
