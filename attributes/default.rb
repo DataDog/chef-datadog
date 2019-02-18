@@ -66,6 +66,10 @@ default['datadog']['agent6_config_dir'] =
     '/etc/datadog-agent'
   end
 
+# The site of the Datadog intake to send Agent data to.
+# Defaults to 'datadoghq.com', set to 'datadoghq.eu' to send data to the EU site.
+default['datadog']['site'] = 'datadoghq.com'
+
 # Set a key to true to make the agent6 use the v2 api on that endpoint, false otherwise.
 # Leave key value to nil to use agent6 default for that endpoint.
 # Supported keys: "series", "events", "service checks"
@@ -88,9 +92,16 @@ default['datadog']['extra_endpoints']['prod']['url'] = nil # optional
 # Set prefix to '' if you want Chef tags to be sent without prefix.
 default['datadog']['tag_prefix'] = 'tag:'
 
-# Don't change these
-# The host of the Datadog intake server to send agent data to
-default['datadog']['url'] = 'https://app.datadoghq.com'
+# Don't change these.
+# The host of the Datadog intake server to send Agent data to, only set this option
+# if you need the Agent to send data to a custom URL.
+# For Agent 6, defaults to nil because "url" overrides the site setting defined in "site".
+default['datadog']['url'] =
+  if node['datadog']['agent6'] == true
+    nil
+  else
+    'https://app.datadoghq.com'
+  end
 
 # Add tags as override attributes in your role
 # This can be a string of comma separated tags or a hash in this format:
