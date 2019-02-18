@@ -85,6 +85,9 @@ sd_backend_port: <%= node['datadog']['sd_backend_port'] %>
 # `/datadog/check_configs` key in the back-end. If you wish otherwise, uncomment this option
 # and modify its value.
 sd_template_dir: <%= node['datadog']['sd_template_dir'] %>
+
+# Enable JMX checks for service discovery
+sd_jmx_enable: <%= node['datadog']['sd_jmx_enable'] %>
 <% end -%>
 
 <% if node['datadog']['dogstatsd'] -%>

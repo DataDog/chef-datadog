@@ -339,6 +339,7 @@ default['datadog']['sd_backend_host'] = '127.0.0.1'
 default['datadog']['sd_backend_port'] = 4001
 default['datadog']['sd_config_backend'] = 'etcd'
 default['datadog']['sd_template_dir'] = '/datadog/check_configs'
+default['datadog']['sd_jmx_enable'] = 'no'
 default['datadog']['service_discovery_backend'] = nil
 
 # Trace functionality settings
