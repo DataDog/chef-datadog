@@ -19,6 +19,15 @@
 
 is_windows = node['platform_family'] == 'windows'
 
+# use either the site option or the url one, the latter having priority.
+dd_url = 'https://app.datadoghq.com'
+if node['datadog']['site']
+  dd_url = 'https://app.' + node['datadog']['site']
+end
+if node['datadog']['url']
+  dd_url = node['datadog']['url']
+end
+
 agent6_config_file = ::File.join(node['datadog']['agent6_config_dir'], 'datadog.yaml')
 template agent6_config_file do
   def template_vars
@@ -28,7 +37,7 @@ template agent6_config_file do
       url = if endpoint['url']
               endpoint['url']
             else
-              node['datadog']['url']
+              dd_url
             end
       if additional_endpoints.key?(url)
         additional_endpoints[url] << endpoint['api_key']

@@ -39,6 +39,15 @@ agent_enable = node['datadog']['agent_enable'] ? :enable : :disable
 # Set the correct Agent startup action
 agent_start = node['datadog']['agent_start'] ? :start : :stop
 
+# use either the site option or the url one, the latter having priority.
+dd_url = 'https://app.datadoghq.com'
+if node['datadog']['site']
+  dd_url = 'https://app.' + node['datadog']['site']
+end
+if node['datadog']['url']
+  dd_url = node['datadog']['url']
+end
+
 #
 # Configures a basic agent
 # To add integration-specific configurations, add 'datadog::config_name' to
@@ -66,14 +75,14 @@ else
   template agent_config_file do
     def template_vars
       api_keys = [Chef::Datadog.api_key(node)]
-      dd_urls = [node['datadog']['url']]
+      dd_urls = [dd_url]
       node['datadog']['extra_endpoints'].each do |_, endpoint|
         next unless endpoint['enabled']
         api_keys << endpoint['api_key']
         dd_urls << if endpoint['url']
                      endpoint['url']
                    else
-                     node['datadog']['url']
+                     dd_url
                    end
       end
       {

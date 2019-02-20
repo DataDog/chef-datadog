@@ -26,7 +26,17 @@ if Chef::Config[:why_run]
 end
 
 include_recipe 'chef_handler'
-ENV['DATADOG_HOST'] = node['datadog']['url']
+
+# use either the site option or the url one, the latter having priority.
+node.run_state['dd_url'] = 'https://app.datadoghq.com'
+if node['datadog']['site']
+  node.run_state['dd_url'] = 'https://app.' + node['datadog']['site']
+end
+if node['datadog']['url']
+  node.run_state['dd_url'] = node['datadog']['url']
+end
+
+ENV['DATADOG_HOST'] = node.run_state['dd_url']
 
 chef_gem 'chef-handler-datadog' do # ~FC009
   action :install
@@ -61,12 +71,13 @@ chef_handler 'Chef::Handler::Datadog' do
 
   def handler_config
     extra_config = node['datadog']['handler_extra_config'].reject { |_, v| v.nil? }
+
     config = extra_config.merge(
       :api_key => Chef::Datadog.api_key(node),
       :application_key => Chef::Datadog.application_key(node),
       :use_ec2_instance_id => node['datadog']['use_ec2_instance_id'],
       :tag_prefix => node['datadog']['tag_prefix'],
-      :url => node['datadog']['url'],
+      :url => node.run_state['dd_url'],
       :extra_endpoints => extra_endpoints,
       :tags_blacklist_regex => node['datadog']['tags_blacklist_regex'],
       :send_policy_tags => node['datadog']['send_policy_tags'],

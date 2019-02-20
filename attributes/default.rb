@@ -67,8 +67,9 @@ default['datadog']['agent6_config_dir'] =
   end
 
 # The site of the Datadog intake to send Agent data to.
+# This configuration option is supported since Agent 6.6
 # Defaults to 'datadoghq.com', set to 'datadoghq.eu' to send data to the EU site.
-default['datadog']['site'] = 'datadoghq.com'
+default['datadog']['site'] = nil
 
 # Set a key to true to make the agent6 use the v2 api on that endpoint, false otherwise.
 # Leave key value to nil to use agent6 default for that endpoint.
