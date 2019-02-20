@@ -41,12 +41,8 @@ agent_start = node['datadog']['agent_start'] ? :start : :stop
 
 # use either the site option or the url one, the latter having priority.
 node.run_state['dd_url'] = 'https://app.datadoghq.com'
-if node['datadog']['site']
-  node.run_state['dd_url'] = 'https://app.' + node['datadog']['site']
-end
-if node['datadog']['url']
-  node.run_state['dd_url'] = node['datadog']['url']
-end
+node.run_state['dd_url'] = 'https://app.' + node['datadog']['site'] unless node['datadog']['site'].nil?
+node.run_state['dd_url'] = node['datadog']['url'] unless node['datadog']['url'].nil?
 
 #
 # Configures a basic agent
