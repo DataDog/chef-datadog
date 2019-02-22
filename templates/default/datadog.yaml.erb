@@ -23,9 +23,9 @@ def string_list_to_array(string_list)
 end
 
 ## Normalize complex config values for agent6 format ##
-if node['datadog']['tags'].is_a?(Hash)
+if node['datadog']['tags'].respond_to?(:each_pair)
   tags = node['datadog']['tags'].reject{ |_k,v| v.empty? }.map{ |k,v| "#{k.strip}:#{v.strip}" }
-elsif node['datadog']['tags'].is_a?(Array)
+elsif node['datadog']['tags'].respond_to?(:each)
   tags = node['datadog']['tags']
 else
   tags = string_list_to_array(node['datadog']['tags'])
