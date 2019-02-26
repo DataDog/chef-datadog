@@ -19,21 +19,22 @@
 
 is_windows = node['platform_family'] == 'windows'
 
-# use either the site option or the url one, the latter having priority.
-node.run_state['dd_url'] = 'https://app.datadoghq.com'
-node.run_state['dd_url'] = 'https://app.' + node['datadog']['site'] unless node['datadog']['site'].nil?
-node.run_state['dd_url'] = node['datadog']['url'] unless node['datadog']['url'].nil?
-
 agent6_config_file = ::File.join(node['datadog']['agent6_config_dir'], 'datadog.yaml')
 template agent6_config_file do
   def template_vars
+    # we need to always provide an URL value for additional endpoints.
+    # use either the site option or the url one, the latter having priority.
+    dd_url = 'https://app.datadoghq.com'
+    dd_url = 'https://app.' + node['datadog']['site'] unless node['datadog']['site'].nil?
+    dd_url = node['datadog']['url'] unless node['datadog']['url'].nil?
+
     additional_endpoints = {}
     node['datadog']['extra_endpoints'].each do |_, endpoint|
       next unless endpoint['enabled']
       url = if endpoint['url']
               endpoint['url']
             else
-              node.run_state['dd_url']
+              dd_url
             end
       if additional_endpoints.key?(url)
         additional_endpoints[url] << endpoint['api_key']

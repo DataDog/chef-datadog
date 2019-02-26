@@ -96,13 +96,10 @@ default['datadog']['tag_prefix'] = 'tag:'
 # Don't change these.
 # The host of the Datadog intake server to send Agent data to, only set this option
 # if you need the Agent to send data to a custom URL.
-# For Agent 6, defaults to nil because "url" overrides the site setting defined in "site".
-default['datadog']['url'] =
-  if node['datadog']['agent6'] == true
-    nil
-  else
-    'https://app.datadoghq.com'
-  end
+# The nil value will let the Agent 6 select the URL to send the data.
+# For Agent 5, the Agent 5 recipe will fallback on https://app.datadoghq.com
+# (see recipes/dd-agent.rb).
+default['datadog']['url'] = nil
 
 # Add tags as override attributes in your role
 # This can be a string of comma separated tags or a hash in this format:

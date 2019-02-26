@@ -27,12 +27,16 @@ end
 
 include_recipe 'chef_handler'
 
-# use either the site option or the url one, the latter having priority.
-node.run_state['dd_url'] = 'https://app.datadoghq.com'
-node.run_state['dd_url'] = 'https://app.' + node['datadog']['site'] unless node['datadog']['site'].nil?
-node.run_state['dd_url'] = node['datadog']['url'] unless node['datadog']['url'].nil?
+# Since Agent 6 supports node['datadog']['url'] = nil, we need to fallback
+# on a default value here.
+# FIXME(remy): this logic has been duplicated below in this file, moreover,
+# the DATADOG_HOST is needed only until v0.9.0 of chef-agent-handler, we should
+# think of removing it in a major release. See
+# https://github.com/DataDog/chef-datadog/pull/582#discussion_r260004814
+dd_url = 'https://app.datadoghq.com'
+dd_url = node['datadog']['url'] unless node['datadog']['url'].nil?
 
-ENV['DATADOG_HOST'] = node.run_state['dd_url']
+ENV['DATADOG_HOST'] = dd_url
 
 chef_gem 'chef-handler-datadog' do # ~FC009
   action :install
@@ -68,12 +72,17 @@ chef_handler 'Chef::Handler::Datadog' do
   def handler_config
     extra_config = node['datadog']['handler_extra_config'].reject { |_, v| v.nil? }
 
+    # Since Agent 6 supports node['datadog']['url'] = nil, we need to fallback
+    # on a default value here.
+    dd_url = 'https://app.datadoghq.com'
+    dd_url = node['datadog']['url'] unless node['datadog']['url'].nil?
+
     config = extra_config.merge(
       :api_key => Chef::Datadog.api_key(node),
       :application_key => Chef::Datadog.application_key(node),
       :use_ec2_instance_id => node['datadog']['use_ec2_instance_id'],
       :tag_prefix => node['datadog']['tag_prefix'],
-      :url => node.run_state['dd_url'],
+      :url => dd_url,
       :extra_endpoints => extra_endpoints,
       :tags_blacklist_regex => node['datadog']['tags_blacklist_regex'],
       :send_policy_tags => node['datadog']['send_policy_tags'],
