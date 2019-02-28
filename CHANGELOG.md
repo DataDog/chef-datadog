@@ -1,8 +1,9 @@
 Changes
 =======
 
-# 2.17.0 / 2019-02-28
+# 2.17.0 / 2019-03-01
 
+* [FEATURE] Add support for SLES. See [#505][] [@gmmeyer][]
 * [FEATURE] Add `index_stats` parameter for ElasticSearch. See [#568][] [@aymen-chetoui][]
 * [FEATURE] Add configuration flag for JMX service discovery in Agent 5. See [#563][] [@wolf31o2][]
 * [FEATURE] Add support for list of tags in v6 configuration file. See [#557][] [@skarlupka][]
