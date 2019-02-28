@@ -607,6 +607,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#388]: https://github.com/DataDog/chef-datadog/issues/388
 [#390]: https://github.com/DataDog/chef-datadog/issues/390
 [#395]: https://github.com/DataDog/chef-datadog/issues/395
+[#396]: https://github.com/DataDog/chef-datadog/issues/396
 [#397]: https://github.com/DataDog/chef-datadog/issues/397
 [#398]: https://github.com/DataDog/chef-datadog/issues/398
 [#400]: https://github.com/DataDog/chef-datadog/issues/400
@@ -653,6 +654,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#498]: https://github.com/DataDog/chef-datadog/issues/498
 [#499]: https://github.com/DataDog/chef-datadog/issues/499
 [#501]: https://github.com/DataDog/chef-datadog/issues/501
+[#505]: https://github.com/DataDog/chef-datadog/issues/505
 [#508]: https://github.com/DataDog/chef-datadog/issues/508
 [#511]: https://github.com/DataDog/chef-datadog/issues/511
 [#513]: https://github.com/DataDog/chef-datadog/issues/513
@@ -672,7 +674,15 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#533]: https://github.com/DataDog/chef-datadog/issues/533
 [#540]: https://github.com/DataDog/chef-datadog/issues/540
 [#544]: https://github.com/DataDog/chef-datadog/issues/544
+[#548]: https://github.com/DataDog/chef-datadog/issues/548
 [#549]: https://github.com/DataDog/chef-datadog/issues/549
+[#555]: https://github.com/DataDog/chef-datadog/issues/555
+[#557]: https://github.com/DataDog/chef-datadog/issues/557
+[#561]: https://github.com/DataDog/chef-datadog/issues/561
+[#563]: https://github.com/DataDog/chef-datadog/issues/563
+[#565]: https://github.com/DataDog/chef-datadog/issues/565
+[#568]: https://github.com/DataDog/chef-datadog/issues/568
+[#583]: https://github.com/DataDog/chef-datadog/issues/583
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@BrentOnRails]: https://github.com/BrentOnRails
