@@ -18,6 +18,7 @@ issues_url       'https://github.com/DataDog/chef-datadog/issues' if respond_to?
   scientific
   ubuntu
   windows
+  suse
 ].each do |os|
   supports os
 end
