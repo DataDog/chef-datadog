@@ -56,7 +56,7 @@ default['datadog']['agent6_aptrepo'] = 'http://apt.datadoghq.com'
 default['datadog']['agent6_aptrepo_dist'] = 'stable'
 # RPMs are only available for RHEL >= 6 (-> use https protocol) and x86_64 arch
 default['datadog']['agent6_yumrepo'] = 'https://yum.datadoghq.com/stable/6/x86_64/'
-default['datadog']['agent6_yumrepo_suse'] = 'https://yum.datadoghq.com/stable/6/x86_64/'
+default['datadog']['agent6_yumrepo_suse'] = 'https://yum.datadoghq.com/suse/stable/6/x86_64/'
 
 # Values that differ on Windows
 # The location of the config folder (containing conf.d)
