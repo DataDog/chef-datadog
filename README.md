@@ -65,6 +65,8 @@ cookbook 'yum', '~> 3.0'
 
 (in Berkshelf/Librarian format)
 
+**Chef 14 users**: depending on your Chef 14 version, a warning about the `chef_handler` dependency could be seen due to this cookbook being dependant of the `chef_handler` recipe which is now shipped with Chef. This is only a warning and will be resolved in version 3.0.0.
+
 Recipes
 =======
 
