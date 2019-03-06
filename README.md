@@ -65,10 +65,14 @@ cookbook 'yum', '~> 3.0'
 
 (in Berkshelf/Librarian format)
 
-**Note for Chef 14 users**: depending on your Chef 14 version, a warning about the
-`chef_handler` dependency could be seen due to this cookbook being dependant
-of the `chef_handler` recipe which is now shipped as part of Chef 14. This is
-only a warning and will be resolved in version 3.0.0.
+**Note for Chef 14 users**: you won't be able to use the command
+`knife supermarket install datadog` if you use Chef 14: the datadog cookbook
+is dependant of `chef_handler` for `Chef < 14`. A known workaround is to
+install the cookbook without its dependencies using the command:
+`knife supermarket install datadog -D` and to later setup the few dependencies
+of the cookbook (which are listed in `metadata.rb`).
+
+This will be resolved in version 3.0.0.
 
 Recipes
 =======
