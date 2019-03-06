@@ -19,7 +19,7 @@ include_recipe 'datadog::dd-agent'
 #     'ssl_validation' => false,
 #     'skip_proxy' => false,
 #     'use_plus_api' => false,
-#     'plus_api_version' => "2"
+#     'plus_api_version' => 2,
 #     'use_vts' => false
 #   }
 # ]
