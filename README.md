@@ -204,7 +204,7 @@ For general information on the Datadog Agent 6, please refer to the [datadog-age
 ### Extra configuration
 
 Should you wish to add additional elements to the Agent v6 configuration file
-(typically `/etc/datadog-agent/datadog.yaml`) that are not directly available
+(typically `datadog.yaml`) that are not directly available
 as attributes of the cookbook, you may use the `node['datadog']['extra_config']`
 attribute. This attribute is a hash and will be marshaled into the configuration
 file accordingly.
@@ -222,7 +222,7 @@ E.g.
  ```
 
 This example will set the field `secret_backend_command` in the configuration
-file `/etc/datadog-agent/datadog.yaml`.
+file `datadog.yaml`.
 
 ### Instructions
 
