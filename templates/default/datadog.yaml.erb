@@ -25,6 +25,8 @@ end
 ## Normalize complex config values for agent6 format ##
 if node['datadog']['tags'].respond_to?(:each_pair)
   tags = node['datadog']['tags'].reject{ |_k,v| v.empty? }.map{ |k,v| "#{k.strip}:#{v.strip}" }
+elsif node['datadog']['tags'].respond_to?(:each)
+  tags = node['datadog']['tags']
 else
   tags = string_list_to_array(node['datadog']['tags'])
 end

@@ -11,6 +11,9 @@ instances:
     <% if i.key?('sock') -%>
     sock: <%= i['sock'] %>
     <% end -%>
+    <% if i.key?('min_collection_interval') -%>
+    min_collection_interval: <%= i['min_collection_interval'] %>
+    <% end -%>
   <% if i.key?('tags') -%>
     tags:
     <% i['tags'].each do |t| -%>

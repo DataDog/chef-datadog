@@ -8,6 +8,7 @@ describe 'datadog::elasticsearch' do
         username: testuser
         password: testpassword
         pshard_stats: true
+        index_stats: true
         tags:
           - 'env:test'
 
@@ -25,6 +26,7 @@ describe 'datadog::elasticsearch' do
               username: 'testuser',
               password: 'testpassword',
               pshard_stats: true,
+              index_stats: true,
               tags: ['env:test']
             }
           ]

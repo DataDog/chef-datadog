@@ -19,9 +19,8 @@
 require 'uri'
 
 if Chef::Config[:why_run]
-  # chef_handler 1.1 needs us to require datadog handler's file,
-  # which makes why-run runs fail when chef-handler-datadog is not installed,
-  # so skip the recipe when in why-run mode until we can use chef_handler 1.2
+  # chef_handler 1.4 doesn't support why-run mode
+  # see https://github.com/chef-cookbooks/chef_handler/issues/41
   Chef::Log.warn('Running in why-run mode, skipping dd-handler')
   return
 end
@@ -32,12 +31,11 @@ ENV['DATADOG_HOST'] = node['datadog']['url']
 chef_gem 'chef-handler-datadog' do # ~FC009
   action :install
   version node['datadog']['chef_handler_version']
-  # Chef 12 introduced `compile_time` - remove when Chef 11 is EOL.
+  # Chef 12 introduced `compile_time` - remove respond_to? when Chef 11 is EOL.
   compile_time true if respond_to?(:compile_time)
   clear_sources true if node['datadog']['gem_server']
   source node['datadog']['gem_server'] if node['datadog']['gem_server']
 end
-require 'chef/handler/datadog'
 
 # add web proxy from config support
 web_proxy = node['datadog']['web_proxy']
@@ -49,7 +47,7 @@ unless web_proxy['host'].nil?
 end
 
 # Create the handler to run at the end of the Chef execution
-chef_handler 'Chef::Handler::Datadog' do # rubocop:disable Metrics/BlockLength
+chef_handler 'Chef::Handler::Datadog' do
   def extra_endpoints
     extra_endpoints = []
     node['datadog']['extra_endpoints'].each do |_, endpoint|
@@ -61,7 +59,7 @@ chef_handler 'Chef::Handler::Datadog' do # rubocop:disable Metrics/BlockLength
     extra_endpoints
   end
 
-  def handler_config # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def handler_config
     extra_config = node['datadog']['handler_extra_config'].reject { |_, v| v.nil? }
     config = extra_config.merge(
       :api_key => Chef::Datadog.api_key(node),

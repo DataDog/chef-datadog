@@ -20,7 +20,9 @@ developer_mode: <%= node['datadog']['developer_mode'] %>
 
 <% if node['datadog']['tags'].respond_to?(:each_pair) -%>
 tags: <%= node['datadog']['tags'].reject{ |_k,v| v.empty? }.map{ |k,v| "#{k}:#{v}" }.join(',') %>
-<% else -%>
+<% elsif node['datadog']['tags'].respond_to?(:join) %>
+tags: <%= node['datadog']['tags'].join(',') %>
+<% else %>
 tags: <%= node['datadog']['tags'] %>
 <% end -%>
 <% if node['datadog']['create_dd_check_tags'] -%>
@@ -85,6 +87,9 @@ sd_backend_port: <%= node['datadog']['sd_backend_port'] %>
 # `/datadog/check_configs` key in the back-end. If you wish otherwise, uncomment this option
 # and modify its value.
 sd_template_dir: <%= node['datadog']['sd_template_dir'] %>
+
+# Enable JMX checks for service discovery
+sd_jmx_enable: <%= node['datadog']['sd_jmx_enable'] %>
 <% end -%>
 
 <% if node['datadog']['dogstatsd'] -%>

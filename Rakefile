@@ -6,6 +6,7 @@ require 'foodcritic'
 require 'kitchen/rake_tasks'
 require 'rake/clean'
 require 'rspec/core/rake_task'
+require 'cookstyle'
 require 'rubocop/rake_task'
 
 task :default => %i[
@@ -102,7 +103,7 @@ task :circle do
       # TODO: This could likely be pulled from kitchen_config.instances somehow
       name = platform.name.delete('.')
 
-      # Execute a suite that installs the handler and the Agent.
+      # Scope the suites to only execute against the Agent+handler installer suites.
       commands.push "kitchen verify dd-agent-handler-#{name}"
     end
 

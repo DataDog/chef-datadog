@@ -4,7 +4,7 @@ To submit issues and patches please visit https://github.com/DataDog/chef-datado
 The code is licensed under the Apache License 2.0 (see  LICENSE for details).
 
 [![Chef cookbook](https://img.shields.io/cookbook/v/datadog.svg?style=flat)](https://github.com/DataDog/chef-datadog)
-[![Build Status](https://travis-ci.org/DataDog/chef-datadog.svg?branch=master)](https://travis-ci.org/DataDog/chef-datadog)
+[![Build Status](https://travis-ci.com/DataDog/chef-datadog.svg?branch=master)](https://travis-ci.com/DataDog/chef-datadog)
 [![Circle CI](https://circleci.com/gh/DataDog/chef-datadog.svg?style=shield)](https://circleci.com/gh/DataDog/chef-datadog)
 [![Coverage Status](https://coveralls.io/repos/DataDog/chef-datadog/badge.svg?branch=master)](https://coveralls.io/r/DataDog/chef-datadog?branch=master)
 [![GitHub forks](https://img.shields.io/github/forks/DataDog/chef-datadog.svg)](https://github.com/DataDog/chef-datadog/network)
@@ -16,11 +16,14 @@ Datadog Cookbook
 
 Chef recipes to deploy Datadog's components and configuration automatically.
 
-This cookbook includes new support for Datadog Agent version 6.0, please refer to
-the [dedicated section](#agent-6-support) and the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.15.0/attributes/default.rb#L31-L75)
-for more details on the supported platforms and how to use it.
+This cookbook includes support for:
 
-**Log collection is now available with agent 6.0, please refer to the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.15.0/attributes/default.rb#L383-L388) to enable it.**
+* Datadog Agent version 6.0 and up: please refer to
+the [dedicated section](#agent-6-support) and the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.15.0/attributes/default.rb#L31-L75)
+for more details on how to use it
+* Datadog Agent version 5.x
+
+**Log collection is now available with Agent v6, please refer to the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.15.0/attributes/default.rb#L383-L388) to enable it.**
 
 *Note: This README may refer to features that are not released yet. Please check the README of the
 git tag/the gem version you're using for your version's documentation*
@@ -39,6 +42,7 @@ Platforms
 * Scientific Linux
 * Ubuntu
 * Windows
+* SUSE (requires chef >= 13.3)
 
 Cookbooks
 ---------
@@ -103,6 +107,59 @@ other
 -----
 There are many other integration-specific recipes, that are meant to assist in deploying the correct agent configuration files and dependencies for a given integration.
 
+Resources
+=========
+
+datadog_monitor
+---------------
+
+The `datadog_monitor` resource will help you to enable Agent integrations.
+
+The default action `:add` enables the integration by filling a configuration file for the integration with the values provided to the resource, setting the correct permissions on that file, and restarting the Agent.
+
+The `:remove` action disables an integration.
+
+### Syntax
+
+```ruby
+datadog_monitor 'name' do
+  init_config                       Hash # default value: {}
+  instances                         Array # default value: []
+  logs                              Array # default value: []
+  use_integration_template          true, false # default value: false
+  action                            Symbol # defaults to :add if not specified
+end
+```
+
+#### Actions
+
+* `:add` Default. Enable the integration.
+* `:remove` Use this action to disable the integration.
+
+#### Properties
+
+* `'name'` is the name of the Agent integration to configure and enable
+* `instances` are the fields used to fill values under the `instances` section in the integration configuration file.
+* `init_config` are the fields used to fill values under the the `init_config` section in the integration configuration file.
+* `logs` are the fields used to fill values under the the `logs` section in the integration configuration file.
+* `use_integration_template`: set to `true` (recommended) to use a default template that simply writes the values of `instances`, `init_config`and `logs` in YAML under their respective YAML keys. (defaults to `false` for backward compatibility, will default to `true` in a future major version of the cookbook)
+
+### Example
+
+This example enables the ElasticSearch integration by using the `datadog_monitor` resource. It provides the instance configuration (in this case: the url to connect to ElasticSearch) and set the `use_integration_template` flag to use the default configuration template.
+
+Note that the Agent installation needs to be earlier in the run list.
+
+```ruby
+include_recipe 'datadog::dd-agent'
+
+datadog_monitor 'elastic'
+  instances  [{'url' => 'http://localhost:9200'}]
+  use_integration_template true
+end
+```
+
+See `recipes/` for many examples using the `datadog_monitor` resource.
 
 Usage
 =====
@@ -128,9 +185,30 @@ Additional attributes are available to have finer control over how you install A
 
 Please review the [attributes/default.rb](https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb) file (at the version of the cookbook you use) for the list and usage of the attributes used by the cookbook.
 
-Should you wish to add additional elements to the agent6 configuration file (typically `/etc/datadog-agent/datadog.yaml`) that are not directly available as attributes of the cookbook, you may use the `node['datadog']['extra_config']` attribute. This attribute is a hash and will be marshaled into the configuration file accordingly.
-
 For general information on the Datadog Agent 6, please refer to the [datadog-agent](https://github.com/DataDog/datadog-agent/) repo.
+
+### Extra configuration
+
+Should you wish to add additional elements to the Agent v6 configuration file
+(typically `datadog.yaml`) that are not directly available
+as attributes of the cookbook, you may use the `node['datadog']['extra_config']`
+attribute. This attribute is a hash and will be marshaled into the configuration
+file accordingly.
+
+E.g.
+
+ ```
+ default_attributes(
+   'datadog' => {
+     'extra_config' => {
+        'secret_backend_command' => '/sbin/local-secrets'
+     }
+   }
+ )
+ ```
+
+This example will set the field `secret_backend_command` in the configuration
+file `datadog.yaml`.
 
 ### Instructions
 
@@ -146,26 +224,35 @@ For general information on the Datadog Agent 6, please refer to the [datadog-age
 
    NB: if you're using the run state to store the api and app keys you need to set them at compile time before `datadog::dd-handler` in the run list.
 
-4. Associate the recipes with the desired `roles`, i.e. "role:chef-client" should contain "datadog::dd-handler" and a "role:base" should start the agent with "datadog::dd-agent".  Here's an example role with both recipes:
+4. Enable Agent integrations by including their recipes and configuration details in your role’s run-list and attributes.
+   Note that you can also create additional integrations recipes by using the `datadog_monitor` resource.
+5. Associate the recipes with the desired `roles`, i.e. "role:chef-client" should contain "datadog::dd-handler" and a "role:base" should start the agent with "datadog::dd-agent". Here's an example role with both recipes plus the MongoDB integration enabled.
   ```
   name 'example'
   description 'Example role using DataDog'
 
   default_attributes(
     'datadog' => {
+      'agent6' => true,
       'api_key' => 'api_key',
-      'application_key' => 'app_key'
+      'application_key' => 'app_key',
+      'mongo' => {
+        'instances' => [
+          {'host' => 'localhost', 'port' => '27017'}
+        ]
+      }
     }
   )
 
   run_list %w(
     recipe[datadog::dd-agent]
     recipe[datadog::dd-handler]
+    recipe[datadog::mongo]
   )
   ```
-  NB: remember to set `agent6` attribute in the `datadog` hash if you'd like to install agent6.
+  NB: set the `agent6` attribute to `false` in the `datadog` hash if you'd like to install Agent v5.
 
-5. Wait until `chef-client` runs on the target node (or trigger chef-client manually if you're impatient)
+6. Wait until `chef-client` runs on the target node (or trigger chef-client manually if you're impatient)
 
 We are not making use of data_bags in this recipe at this time, as it is unlikely that you will have more than one API key and one application key.
 
@@ -176,10 +263,11 @@ AWS OpsWorks Chef Deployment
 
 1. Add Chef Custom JSON:
   ```json
-  {"datadog":{"api_key": "<API_KEY>", "application_key": "<APP_KEY>"}}
+  {"datadog":{"agent6": true, "api_key": "<API_KEY>", "application_key": "<APP_KEY>"}}
   ```
 
 2. Include the recipe in install-lifecycle recipe:
   ```ruby
   include_recipe 'datadog::dd-agent'
   ```
+

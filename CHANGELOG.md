@@ -1,6 +1,19 @@
 Changes
 =======
 
+# 2.17.0 / 2019-03-01
+
+* [FEATURE] Add support for SLES. See [#505][] [@gmmeyer][]
+* [FEATURE] Add `index_stats` parameter for ElasticSearch. See [#568][] [@aymen-chetoui][]
+* [FEATURE] Add configuration flag for JMX service discovery in Agent 5. See [#563][] [@wolf31o2][]
+* [FEATURE] Add support for list of tags in v6 configuration file. See [#557][] [@skarlupka][]
+* [FEATURE] Add vault recipe. See [#555][] [@skarlupka][]
+* [FEATURE] Add `min_collection_interval` to mysql template. See [#548][] [@mhebbar1][]
+* [OPTIMIZE] Retry on failure when pulling the gpg key. See [#561][] [@remicalixte][]
+* [BUGFIX] Fix beans description in tomcat config template. See [#583][] [@remeh][]
+* [MISC] Switch to cookstyle. See [#565][] [@jeffbyrnes][]
+* [MISC] Bump requirement on `chef_handler`. See [#396][] [@olivielpeau][]
+
 # 2.16.1 / 2018-07-16
 
 * [FEATURE] Add support for `no_proxy` Agent v6 option. See [#549][] [@stonith][]
@@ -594,6 +607,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#388]: https://github.com/DataDog/chef-datadog/issues/388
 [#390]: https://github.com/DataDog/chef-datadog/issues/390
 [#395]: https://github.com/DataDog/chef-datadog/issues/395
+[#396]: https://github.com/DataDog/chef-datadog/issues/396
 [#397]: https://github.com/DataDog/chef-datadog/issues/397
 [#398]: https://github.com/DataDog/chef-datadog/issues/398
 [#400]: https://github.com/DataDog/chef-datadog/issues/400
@@ -640,6 +654,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#498]: https://github.com/DataDog/chef-datadog/issues/498
 [#499]: https://github.com/DataDog/chef-datadog/issues/499
 [#501]: https://github.com/DataDog/chef-datadog/issues/501
+[#505]: https://github.com/DataDog/chef-datadog/issues/505
 [#508]: https://github.com/DataDog/chef-datadog/issues/508
 [#511]: https://github.com/DataDog/chef-datadog/issues/511
 [#513]: https://github.com/DataDog/chef-datadog/issues/513
@@ -659,7 +674,15 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#533]: https://github.com/DataDog/chef-datadog/issues/533
 [#540]: https://github.com/DataDog/chef-datadog/issues/540
 [#544]: https://github.com/DataDog/chef-datadog/issues/544
+[#548]: https://github.com/DataDog/chef-datadog/issues/548
 [#549]: https://github.com/DataDog/chef-datadog/issues/549
+[#555]: https://github.com/DataDog/chef-datadog/issues/555
+[#557]: https://github.com/DataDog/chef-datadog/issues/557
+[#561]: https://github.com/DataDog/chef-datadog/issues/561
+[#563]: https://github.com/DataDog/chef-datadog/issues/563
+[#565]: https://github.com/DataDog/chef-datadog/issues/565
+[#568]: https://github.com/DataDog/chef-datadog/issues/568
+[#583]: https://github.com/DataDog/chef-datadog/issues/583
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@BrentOnRails]: https://github.com/BrentOnRails
@@ -678,6 +701,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@alq]: https://github.com/alq
 [@antonio-osorio]: https://github.com/antonio-osorio
 [@arthurnn]: https://github.com/arthurnn
+[@aymen-chetoui]: https://github.com/aymen-chetoui
 [@azuretek]: https://github.com/azuretek
 [@babbottscott]: https://github.com/babbottscott
 [@bai]: https://github.com/bai
@@ -748,6 +772,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@mfischer-zd]: https://github.com/mfischer-zd
 [@miketheman]: https://github.com/miketheman
 [@mirceal]: https://github.com/mirceal
+[@mhebbar1]: https://github.com/mhebbar1
 [@mlcooper]: https://github.com/mlcooper
 [@moisesbotarro]: https://github.com/moisesbotarro
 [@mstepniowski]: https://github.com/mstepniowski
@@ -761,12 +786,15 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@phlipper]: https://github.com/phlipper
 [@qqfr2507]: https://github.com/qqfr2507
 [@raycrawford]: https://github.com/raycrawford
+[@remeh]: https://github.com/remeh
 [@remh]: https://github.com/remh
+[@remicalixte]: https://github.com/remicalixte
 [@rlaveycal]: https://github.com/rlaveycal
 [@rsheyd]: https://github.com/rsheyd
 [@ryandjurovich]: https://github.com/ryandjurovich
 [@schisamo]: https://github.com/schisamo
 [@sethrosenblum]: https://github.com/sethrosenblum
+[@skarlupka]: https://github.com/skarlupka
 [@stefanwb]: https://github.com/stefanwb
 [@stensonb]: https://github.com/stensonb
 [@stolfi]: https://github.com/stolfi
@@ -778,6 +806,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@tmichelet]: https://github.com/tmichelet
 [@uzyexe]: https://github.com/uzyexe
 [@wk8]: https://github.com/wk8
+[@wolf31o2]: https://github.com/wolf31o2
 [@xt99]: https://github.com/xt99
 [@yannmh]: https://github.com/yannmh
 [@zshenker]: https://github.com/zshenker

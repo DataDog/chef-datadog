@@ -56,6 +56,7 @@ default['datadog']['agent6_aptrepo'] = 'http://apt.datadoghq.com'
 default['datadog']['agent6_aptrepo_dist'] = 'stable'
 # RPMs are only available for RHEL >= 6 (-> use https protocol) and x86_64 arch
 default['datadog']['agent6_yumrepo'] = 'https://yum.datadoghq.com/stable/6/x86_64/'
+default['datadog']['agent6_yumrepo_suse'] = 'https://yum.datadoghq.com/suse/stable/6/x86_64/'
 
 # Values that differ on Windows
 # The location of the config folder (containing conf.d)
@@ -93,9 +94,11 @@ default['datadog']['tag_prefix'] = 'tag:'
 default['datadog']['url'] = 'https://app.datadoghq.com'
 
 # Add tags as override attributes in your role
-# This can be a string of comma separated tags or a hash in this format:
+# This can be a string of comma separated tags, a hash in this format:
 # default['datadog']['tags'] = { 'datacenter' => 'us-east' }
-# Thie above outputs a string: 'datacenter:us-east'
+# or an array in this format:
+# default['datadog']['tags'] = ['datacenter:us-east']
+# Examples above output a string: 'datacenter:us-east'
 # When using the Datadog Chef Handler, tags are set on the node with preset prefixes:
 # `env:node.chef_environment`, `role:node.node.run_list.role`, `tag:somecheftag`
 default['datadog']['tags'] = ''
@@ -155,7 +158,11 @@ default['datadog']['installrepo'] = true
 default['datadog']['aptrepo'] = 'http://apt.datadoghq.com'
 default['datadog']['aptrepo_dist'] = 'stable'
 default['datadog']['aptrepo_retries'] = 4
+default['datadog']['aptrepo_use_backup_keyserver'] = false
+default['datadog']['aptrepo_keyserver'] = 'hkp://keyserver.ubuntu.com:80'
+default['datadog']['aptrepo_backup_keyserver'] = 'hkp://pool.sks-keyservers.net:80'
 default['datadog']['yumrepo'] = "#{yum_protocol}://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/"
+default['datadog']['yumrepo_suse'] = "https://yum.datadoghq.com/suse/rpm/#{architecture_map[node['kernel']['machine']]}/"
 default['datadog']['yumrepo_gpgkey'] = "#{yum_protocol}://yum.datadoghq.com/DATADOG_RPM_KEY.public"
 default['datadog']['yumrepo_proxy'] = nil
 default['datadog']['yumrepo_proxy_username'] = nil
@@ -336,6 +343,7 @@ default['datadog']['sd_backend_host'] = '127.0.0.1'
 default['datadog']['sd_backend_port'] = 4001
 default['datadog']['sd_config_backend'] = 'etcd'
 default['datadog']['sd_template_dir'] = '/datadog/check_configs'
+default['datadog']['sd_jmx_enable'] = 'no'
 default['datadog']['service_discovery_backend'] = nil
 
 # Trace functionality settings

@@ -12,7 +12,7 @@ include_recipe 'datadog::dd-agent'
 #       "api_url" => "http://localhost:15672/api/",
 #       "user" => "guest",
 #       "pass" => "guest",
-#       "ssl_verify" => "true"
+#       "ssl_verify" => "true",
 #       "tag_families" => "false"
 #     }
 #   ]

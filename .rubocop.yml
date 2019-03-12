@@ -1,61 +1,27 @@
 # inherit_from: .rubocop_todo.yml
 # Stylistic choices of this cookbook.
 
-AllCops:
-  Exclude:
-    - 'vendor/**/*' # ignore non-local files
-    - Guardfile
-
-# We enjoy parameters lining up for visual comprehension
-Layout/SpaceBeforeFirstArg:
+# We still have HashRockets in a lot of places, ignore them.
+Style/HashSyntax:
   Enabled: false
-
-# We like longer lines
-Metrics/LineLength:
-  Max: 160
-
-# Exclude Rakefile and tests since there are long blocks that aren't worth shortening there
-# Also, slightly longer blocks are fine
-Metrics/BlockLength:
-  Max: 30
-  Exclude:
-    - 'Rakefile'
-    - 'spec/**/*.rb'
-    - 'test/**/*.rb'
-
-
-# Slightly longer methods are fine
-Metrics/MethodLength:
-  Max: 15
 
 # We're fine with multi-line blocks defined with `{...}` instead of `do...end`
 Style/BlockDelimiters:
   Enabled: false
 
-Style/FrozenStringLiteralComment:
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: '[]'
+    '%i': '[]'
+    '%w': '[]'
+
+Style/TrailingCommaInArrayLiteral:
   Enabled: false
 
-Style/SafeNavigation:
+Style/TrailingCommaInHashLiteral:
   Enabled: false
 
-# TODO: add encoding headers
-Style/Encoding:
-  Enabled: false
-
-# Our code has names with dashes.
-Style/FileName:
-  Enabled: false
-
-# We still have HashRockets in a lot of places, ignore them.
-Style/HashSyntax:
-  Enabled: false
-
-# Increase readability of large numbers after 5 digits (ports) only.
-Style/NumericLiterals:
-  MinDigits: 6
-
-# TODO: see if this should be replaced by Chef::Application.fatal!
-Style/SignalException:
+Style/TrailingCommaInLiteral:
   Enabled: false
 
 # Only enforce a wordlist for 5 or longer lists.

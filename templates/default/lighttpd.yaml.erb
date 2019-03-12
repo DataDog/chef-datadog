@@ -5,8 +5,8 @@ instances:
   - lighttpd_status_url: <%= i['status_url'] %>
     <% if i.key?('tags') -%>
     tags:
-      <% i['tags'].each_pair do |k, v| -%>
-      - <%= k %>: <%= v %>
+      <% i['tags'].each do |t| -%>
+      - <%= t %>
       <% end -%>
     <% end -%>
   <% end -%>
