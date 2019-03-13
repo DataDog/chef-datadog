@@ -65,6 +65,11 @@ cookbook 'yum', '~> 3.0'
 
 (in Berkshelf/Librarian format)
 
+Please note that the `chef_handler` dependency **will be removed in chef-datadog
+4.0** because it has been included in Chef 14 itself.
+Thus, to continue using the datadog cookbook with Chef < 14, you will need
+to manually add the `chef_handler` cookbook in your dependencies.
+
 Recipes
 =======
 
