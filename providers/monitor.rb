@@ -10,11 +10,7 @@ end
 action :add do
   Chef::Log.debug "Adding monitoring for #{new_resource.name}"
   template ::File.join(yaml_dir, "#{new_resource.name}.yaml") do
-    if node['platform_family'] == 'windows'
-      owner 'Administrators'
-      rights :full_control, 'Administrators'
-      inherits false
-    else
+    unless node['platform_family'] == 'windows'
       owner 'dd-agent'
       mode '600'
     end
