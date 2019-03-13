@@ -3,6 +3,9 @@ Changes
 
 # 2.18.0 / 2019-03-12
 
+**Note for Windows users**: since Agent v6.11, chef-datadog `>= 2.18.0` is
+necessary (see README)
+
 * [FEATURE] Let the Windows installer set the permissions on Agent directories and files. [#588][] [@remeh][]
 * [BUGFIX] Use Upstart service manager for Ubuntu <15.04. See [#551][] [@rposborne][]
 * [MISC] Deprecation log for recipes using easy_install. See [#585][] [@remeh][]
