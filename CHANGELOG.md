@@ -10,7 +10,7 @@ necessary (see README)
 * [BUGFIX] Use Upstart service manager for Ubuntu <15.04. See [#551][] [@rposborne][]
 * [MISC] Deprecation log for recipes using easy_install. See [#585][] [@remeh][]
 * [MISC] Add optional NGINX monitor attributes. See [#564][] [@spencermpeterson][]
-* [DOCS] Add an example for the `extra_config` field. See [#586][]
+* [DOCS] Add an example for the `extra_config` field. See [#586][] [@remeh][]
 
 # 2.17.0 / 2019-03-01
 
