@@ -203,6 +203,19 @@ Should you wish to add additional elements to the agent6 configuration file (typ
 
 For general information on the Datadog Agent 6, please refer to the [datadog-agent](https://github.com/DataDog/datadog-agent/) repo.
 
+#### Windows Agent v6 installation
+
+Starting with version `>= 6.11`, the Agent v6 must be installed with a chef-datadog
+cookbook version `>= 2.18.0`.
+
+For Agent v6 versions `< 6.11`, previous versions of the datadog cookbook
+could still be used, even if we recommend in most of the case to use the
+latest one.
+
+This is due to the Agent v6 running with an unprivileged user on Windows
+since 6.11. However, prior to chef-datadog 2.18.0, the datadog cookbook was
+enforcing Administrators privileges to the Datadog Agent directories and files.
+
 ### Instructions
 
 1. Add this cookbook to your Chef Server, either by installing with knife or by adding it to your Berksfile:
