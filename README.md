@@ -95,7 +95,7 @@ dd-handler
 ----------
 Installs the [chef-handler-datadog](https://rubygems.org/gems/chef-handler-datadog) gem and invokes the handler at the end of a Chef run to report the details back to the newsfeed.
 
-dogstatsd-(python|ruby)
+dogstatsd-ruby
 -----------------------
 Installs the language-specific libraries to interact with `dogstatsd`.
 
@@ -107,7 +107,7 @@ For Python, please add a dependency on the `poise-python` cookbook to your custo
   ```
   For more advanced usage, please refer to the [`poise-python` cookbook documentation](https://github.com/poise/poise-python)
 
-ddtrace-(python|ruby)
+ddtrace-ruby
 ---------------------
 Installs the language-specific libraries for application Traces (APM).
 
