@@ -258,6 +258,24 @@ We are not making use of data_bags in this recipe at this time, as it is unlikel
 
 For more deployment details, visit the [Datadog Documentation site](http://docs.datadoghq.com/).
 
+### Chef 12
+
+Depending of the Chef 12 version you're using, you will have to add some extra
+dependency constraint.
+
+#### Chef < 12.14
+
+```ruby
+depends 'yum', '< 5.0'
+```
+
+#### Chef < 12.9
+
+```ruby
+depends 'apt', '< 6.0.0'
+depends 'yum', '< 5.0'
+```
+
 AWS OpsWorks Chef Deployment
 ----------------------------
 

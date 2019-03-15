@@ -23,15 +23,9 @@ issues_url       'https://github.com/DataDog/chef-datadog/issues'
   supports os
 end
 
-depends    'chef_handler'
-# In order to support Chef < 12.9, we need apt_repository which is available
-# in apt < 6.0.0. This will be removed for chef-datadog 4.0 while dropping the support
-# of Chef 12.
-depends    'apt', '< 6.0.0'
-# In order to support Chef < 12.14, we need yum_repository which is available
-# in yum < 5.0. This will be removed for chef-datadog 4.0 while dropping the support
-# of Chef 12.
-depends    'yum', '< 5.0'
+depends    'chef_handler', '>= 1.2'
+depends    'apt' # Use '< 6.0.0' with Chef < 12.9
+depends    'yum', '>= 3.0' # Use '< 5.0' with Chef < 12.14
 
 recipe 'datadog::default', 'Default'
 recipe 'datadog::dd-agent', 'Installs the Datadog Agent'
