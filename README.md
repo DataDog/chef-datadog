@@ -194,9 +194,9 @@ Attributes are available to have finer control over how you install Agent v6:
 
  * `agent6_version`: allows you to pin the agent version (recommended).
  * `agent6_package_action`: defaults to `'install'`, may be set to `'upgrade'` to automatically upgrade to latest (not recommended, we recommend pinning to a version with `agent6_version` and change that version to upgrade).
- * `agent6_aptrepo`: desired APT repo for the agent. Defaults to `http://apt.datadoghq.com`
- * `agent6_aptrepo_dist`: desired distribution for the APT repo. Defaults to `stable`
- * `agent6_yumrepo`: desired YUM repo for the agent. Defaults to `https://yum.datadoghq.com/stable/6/x86_64/`
+ * `aptrepo`: desired APT repo for the agent. Defaults to `http://apt.datadoghq.com`
+ * `aptrepo_dist`: desired distribution for the APT repo. Defaults to `stable`
+ * `yumrepo`: desired YUM repo for the agent. Defaults to `https://yum.datadoghq.com/stable/6/x86_64/`
 
 Please review the [attributes/default.rb](https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb) file (at the version of the cookbook you use) for the list and usage of the attributes used by the cookbook.
 
@@ -206,7 +206,7 @@ For general information on the Datadog Agent v6, please refer to the [datadog-ag
 
 ### Agent v5
 
-Since `3.0.0`, this cookbook defaults installing Agent v6. You can still setup the Agent v5 by setting `node['datadog']['agent6']` to false.
+Since `3.0.0`, the cookbook defaults installing Agent v6. You can still setup the Agent v5 by setting `node['datadog']['agent6']` to false.
 
 ```
   default_attributes(
@@ -218,11 +218,9 @@ Since `3.0.0`, this cookbook defaults installing Agent v6. You can still setup t
 
 ### Agent v5 transitions
 
-Note that there are Agent v6 counterparts to several well known Agent v5 attributes (code [here](https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb#L31-L75))
-
 #### Upgrade from Agent v5 to Agent v6
 
-To upgrade from an already installed Agent 5 to Agent 6, you'll have to set the `agent6_package_action` to `upgrade` and we recommend to pin to a specific version:
+To upgrade from an already installed Agent v5 to Agent v6, you'll have to set the `agent6_package_action` to `upgrade` and we recommend to pin to a specific version:
 
 ```ruby
   default_attributes(
@@ -233,6 +231,8 @@ To upgrade from an already installed Agent 5 to Agent 6, you'll have to set the 
     }
   )
 ```
+
+Note that there are Agent v6 counterparts to several well known Agent v5 attributes (code [here](https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb#L31-L75))
 
 #### Downgrade from an installed Agent v6 to an Agent v5
 
