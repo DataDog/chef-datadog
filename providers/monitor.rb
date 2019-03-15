@@ -10,7 +10,14 @@ end
 action :add do
   Chef::Log.debug "Adding monitoring for #{new_resource.name}"
   template ::File.join(yaml_dir, "#{new_resource.name}.yaml") do
-    unless node['platform_family'] == 'windows'
+    # On Windows Agent v5, set the permissions on files an dirs to Administrators.
+    if node['platform_family'] == 'windows'
+      unless node['datadog']['agent6']
+        owner 'Administrators'
+        rights :full_control, 'Administrators'
+        inherits false
+      end
+    else
       owner 'dd-agent'
       mode '600'
     end
