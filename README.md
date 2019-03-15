@@ -203,16 +203,12 @@ For general information on the Datadog Agent 6, please refer to the [datadog-age
 
 #### Windows Agent v6 installation
 
-Starting with version `>= 6.11`, the Agent v6 must be installed with a chef-datadog
+Starting with version `>= 6.11`, the Windows Agent v6 must be installed with datadog
 cookbook version `>= 2.18.0`.
 
-For Agent v6 versions `< 6.11`, previous versions of the datadog cookbook
-could still be used, even if we recommend in most of the case to use the
-latest one.
-
 This is due to the Agent v6 running with an unprivileged user on Windows
-since 6.11. However, prior to chef-datadog 2.18.0, the datadog cookbook was
-enforcing Administrators privileges to the Datadog Agent directories and files.
+since 6.11. However, prior to 2.18.0, the datadog cookbook was enforcing
+Administrators privileges to the Datadog Agent directories and files.
 
 ### Extra configuration
 
