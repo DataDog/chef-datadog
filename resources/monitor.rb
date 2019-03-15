@@ -19,11 +19,14 @@ action :add do
     level :debug
   end
 
-  template ::File.join(node['datadog']['config_dir'], 'conf.d', "#{new_resource.name}.yaml") do
+  template ::File.join(yaml_dir, "#{new_resource.name}.yaml") do
+    # On Windows Agent v5, set the permissions on conf files to Administrators.
     if node['platform_family'] == 'windows'
-      owner 'Administrators'
-      rights :full_control, 'Administrators'
-      inherits false
+      unless node['datadog']['agent6']
+        owner 'Administrators'
+        rights :full_control, 'Administrators'
+        inherits false
+      end
     else
       owner 'dd-agent'
       mode '600'
@@ -43,14 +46,20 @@ action :add do
 end
 
 action :remove do
-  confd_dir = ::File.join(node['datadog']['config_dir'], 'conf.d')
-
-  log "Removing #{new_resource.name} from #{confd_dir}" do
+  log "Removing #{new_resource.name} from #{yaml_dir}" do
     level :debug
   end
 
-  file ::File.join(confd_dir, "#{new_resource.name}.yaml") do
+  file ::File.join(yaml_dir, "#{new_resource.name}.yaml") do
     action :delete
     sensitive true
+  end
+end
+
+def yaml_dir
+  if node['datadog']['agent6']
+    ::File.join(node['datadog']['agent6_config_dir'], 'conf.d')
+  else
+    ::File.join(node['datadog']['config_dir'], 'conf.d')
   end
 end
