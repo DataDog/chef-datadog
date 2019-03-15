@@ -3,7 +3,7 @@ Changes
 
 # 2.18.0 / 2019-03-12
 
-**Note for Windows users**: since Agent v6.11, chef-datadog `>= 2.18.0` is
+**Note for Windows users**: since Agent v6.11, `datadog >= 2.18.0` is
 necessary (see README)
 
 * [FEATURE] Let the Windows installer set the permissions on Agent directories and files. [#588][] [@remeh][]
