@@ -4,16 +4,12 @@ driver:
   use_sudo: false
 
 platforms:
-  - name: ubuntu-16.04
   - name: ubuntu-14.04
   # Exclude this OS for now, due to some odd behavior with the NTP check on CircleCI systems.
   # See https://circleci.com/gh/DataDog/chef-datadog/19
   # and http://support.ntp.org/bin/view/Support/KnownOsIssues#Section_9.2.4.2.5.3.
   # - name: ubuntu-12.04
-  # Had to remove this one because the recipe tries to restart
-  # the Agent with Upstart (and that's correct) but Upstart is not supported
-  # in Docker containers.
-  # - name: centos-6.6
+  - name: centos-6.6
   - name: centos-7.7
   - name: debian-7.7
 
