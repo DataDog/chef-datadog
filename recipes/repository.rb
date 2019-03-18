@@ -17,28 +17,6 @@
 # limitations under the License.
 #
 
-# agent6_aptrepo is not mentioned in the default attributes or in the README anymore
-# but it was a documented field prior to chef-datadog 3.0.0 so we have to support it
-# for a while.
-# The same goes for agent6_aptrepo_dist, agent6_yumrepo and agent6_yumrepo_suse.
-# Change done for chef-datadog 3.0.0
-apturi = node['datadog']['agent6_aptrepo'] ?
-                node['datadog']['agent6_aptrepo'] : node['datadog']['aptrepo']
-aptdist = node['datadog']['agent6_aptrepo_dist'] ?
-                node['datadog']['agent6_aptrepo_dist'] : node['datadog']['aptrepo_dist']
-
-yumrepo = node['datadog']['agent6'] ?
-                'https://yum.datadoghq.com/stable/6/x86_64/' :
-                '#{yum_protocol}://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/'
-yumrepo = node['datadog']['yumrepo'] unless node['datadog']['yumrepo'].nil?
-yumrepo = node['datadog']['agent6_yumrepo'] unless node['datadog']['agent6_yumrepo'].nil?
-
-yumrepo_suse = node['datadog']['agent6'] ?
-                'https://yum.datadoghq.com/suse/stable/6/x86_64/' :
-                '#{yum_protocol}://yum.datadoghq.com/suse/rpm/#{architecture_map[node['kernel']['machine']]}/'
-yumrepo_suse = node['datadog']['yumrepo_suse'] unless node['datadog']['yumrepo_suse'].nil?
-yumrepo_suse = node['datadog']['agent6_yumrepo_suse'] unless node['datadog']['agent6_yumrepo_suse'].nil?
-
 case node['platform_family']
 when 'debian'
   include_recipe 'apt'
@@ -48,8 +26,8 @@ when 'debian'
     action :install
   end
 
-  uri = apturi
-  distribution = aptdist
+  uri = node['datadog']['agent6'] ? node['datadog']['agent6_aptrepo'] : node['datadog']['aptrepo']
+  distribution = node['datadog']['agent6'] ? node['datadog']['agent6_aptrepo_dist'] : node['datadog']['aptrepo_dist']
   components = node['datadog']['agent6'] ? ['main', '6'] : ['main']
   retries = node['datadog']['aptrepo_retries']
   keyserver = node['datadog']['aptrepo_use_backup_keyserver'] ? node['datadog']['aptrepo_backup_keyserver'] : node['datadog']['aptrepo_keyserver']
@@ -97,7 +75,11 @@ when 'rhel', 'fedora', 'amazon'
   yum_repository 'datadog' do
     name 'datadog'
     description 'datadog'
-    baseurl yumrepo
+    if node['datadog']['agent6']
+      baseurl node['datadog']['agent6_yumrepo']
+    else
+      baseurl node['datadog']['yumrepo']
+    end
     proxy node['datadog']['yumrepo_proxy']
     proxy_username node['datadog']['yumrepo_proxy_username']
     proxy_password node['datadog']['yumrepo_proxy_password']
@@ -144,7 +126,11 @@ when 'suse'
   zypper_repository 'datadog' do
     name 'datadog'
     description 'datadog'
-    baseurl yumrepo_suse
+    if node['datadog']['agent6']
+      baseurl node['datadog']['agent6_yumrepo_suse']
+    else
+      baseurl node['datadog']['yumrepo_suse']
+    end
     gpgkey node['datadog']['yumrepo_gpgkey']
     gpgcheck false
     action :create
