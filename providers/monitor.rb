@@ -10,10 +10,13 @@ end
 action :add do
   Chef::Log.debug "Adding monitoring for #{new_resource.name}"
   template ::File.join(yaml_dir, "#{new_resource.name}.yaml") do
+    # On Windows Agent v5, set the permissions on conf files to Administrators.
     if node['platform_family'] == 'windows'
-      owner 'Administrators'
-      rights :full_control, 'Administrators'
-      inherits false
+      unless node['datadog']['agent6']
+        owner 'Administrators'
+        rights :full_control, 'Administrators'
+        inherits false
+      end
     else
       owner 'dd-agent'
       mode '600'
@@ -35,6 +38,7 @@ action :add do
   service_provider = nil
   if node['datadog']['agent6'] &&
      (((node['platform'] == 'amazon' || node['platform_family'] == 'amazon') && node['platform_version'].to_i != 2) ||
+     (node['platform'] == 'ubuntu' && node['platform_version'].to_f < 15.04) || # chef <11.14 doesn't use the correct service provider
      (node['platform'] != 'amazon' && node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7))
     # use Upstart provider explicitly for Agent 6 on Amazon Linux < 2.0 and RHEL < 7
     service_provider = Chef::Provider::Service::Upstart

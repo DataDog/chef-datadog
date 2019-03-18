@@ -248,6 +248,38 @@ You will need to indicate that you want to setup an Agent v5 instead of v6, pin 
   )
 ```
 
+#### Windows Agent v6 installation
+
+Starting with version `>= 6.11`, the Windows Agent v6 must be installed with datadog
+cookbook version `>= 2.18.0`.
+
+This is due to the Agent v6 running with an unprivileged user on Windows
+since 6.11. However, prior to 2.18.0, the datadog cookbook was enforcing
+Administrators privileges to the Datadog Agent directories and files.
+
+### Extra configuration
+
+Should you wish to add additional elements to the Agent v6 configuration file
+(typically `datadog.yaml`) that are not directly available
+as attributes of the cookbook, you may use the `node['datadog']['extra_config']`
+attribute. This attribute is a hash and will be marshaled into the configuration
+file accordingly.
+
+E.g.
+
+ ```
+ default_attributes(
+   'datadog' => {
+     'extra_config' => {
+        'secret_backend_command' => '/sbin/local-secrets'
+     }
+   }
+ )
+ ```
+
+This example will set the field `secret_backend_command` in the configuration
+file `datadog.yaml`.
+
 ### Instructions
 
 1. Add this cookbook to your Chef Server, either by installing with knife or by adding it to your Berksfile:

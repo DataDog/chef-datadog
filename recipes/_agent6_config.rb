@@ -48,11 +48,7 @@ template agent6_config_file do
     }
   end
 
-  if is_windows
-    owner 'Administrators'
-    rights :full_control, 'Administrators'
-    inherits false
-  else
+  unless is_windows
     owner 'dd-agent'
     group 'dd-agent'
     mode '640'
