@@ -194,9 +194,9 @@ Attributes are available to have finer control over how you install Agent v6:
 
  * `agent6_version`: allows you to pin the agent version (recommended).
  * `agent6_package_action`: defaults to `'install'`, may be set to `'upgrade'` to automatically upgrade to latest (not recommended, we recommend pinning to a version with `agent6_version` and change that version to upgrade).
- * `aptrepo`: desired APT repo for the agent. Defaults to `http://apt.datadoghq.com`
- * `aptrepo_dist`: desired distribution for the APT repo. Defaults to `stable`
- * `yumrepo`: desired YUM repo for the agent. Defaults to `https://yum.datadoghq.com/stable/6/x86_64/`
+ * `agent6_aptrepo`: desired APT repo for the agent. Defaults to `http://apt.datadoghq.com`
+ * `agent6_aptrepo_dist`: desired distribution for the APT repo. Defaults to `stable`
+ * `agent6_yumrepo`: desired YUM repo for the agent. Defaults to `https://yum.datadoghq.com/stable/6/x86_64/`
 
 Please review the [attributes/default.rb](https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb) file (at the version of the cookbook you use) for the list and usage of the attributes used by the cookbook.
 
