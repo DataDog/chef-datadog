@@ -19,7 +19,7 @@ Chef recipes to deploy Datadog's components and configuration automatically.
 This cookbook includes support for:
 
 * Datadog Agent version 6.0 and up: please refer to
-the [dedicated section](#agent-v6) and the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.15.0/attributes/default.rb#L31-L75)
+the [dedicated section](#agent-v6) and the [inline docs](https://github.com/DataDog/chef-datadog/blob/v3.0.0/attributes/default.rb#L42-L76)
 for more details on how to use it
 * Datadog Agent version 5.x
 
