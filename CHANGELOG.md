@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 2.18.0 / 2019-03-12
+# 2.18.0 / 2019-03-18
 
 **Note for Windows users**: since Agent v6.11, `datadog >= 2.18.0` is
 necessary (see README)
