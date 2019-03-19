@@ -264,7 +264,7 @@ describe 'datadog::dd-agent' do
     end
   end
 
-  # TODO(remy): remove Agent v4 occurrences + needs some clean-up
+  # TODO(remy): something to do here?
   context 'allows a hash for agent version' do
     context 'when ubuntu' do
       cached(:chef_run) do
@@ -277,12 +277,9 @@ describe 'datadog::dd-agent' do
             'api_key' => 'somethingnotnil',
             'agent_version' => {
               'debian' => '1:5.9.0-1',
+              'rhel' => '4.4.0-200',
               'windows' => '4.4.0'
-            },
-            'agent6_version' => {
-              'rhel' => '1:6.9.0-1'
             }
-
           }
         end.converge described_recipe
       end
@@ -305,12 +302,9 @@ describe 'datadog::dd-agent' do
             'api_key' => 'somethingnotnil',
             'agent_version' => {
               'debian' => '1:5.9.0-1',
+              'rhel' => '4.4.0-200',
               'windows' => '4.4.0'
-            },
-            'agent6_version' => {
-              'rhel' => '1:6.9.0-1'
             }
-
           }
         end.converge described_recipe
       end
@@ -335,21 +329,19 @@ describe 'datadog::dd-agent' do
           :version => '25'
         ) do |node|
           node.set['datadog'] = {
-            'agent6' => true,
+            'agent6' => false,
             'api_key' => 'somethingnotnil',
             'agent_version' => {
               'debian' => '1:5.9.0-1',
+              'rhel' => '4.4.0-200',
               'windows' => '4.4.0'
-            },
-            'agent6_version' => {
-              'rhel' => '1:6.9.0-1'
             }
           }
         end.converge described_recipe
       end
 
       it 'installs agent 4.4.0-200' do
-        expect(chef_run).to install_package('datadog-agent').with(version: '1:6.9.0-1')
+        expect(chef_run).to install_package('datadog-agent').with(version: '4.4.0-200')
       end
     end
 
@@ -360,22 +352,19 @@ describe 'datadog::dd-agent' do
           :version => '6.9'
         ) do |node|
           node.set['datadog'] = {
-            'agent6' => true,
+            'agent6' => false,
             'api_key' => 'somethingnotnil',
             'agent_version' => {
               'debian' => '1:5.9.0-1',
+              'rhel' => '4.4.0-200',
               'windows' => '4.4.0'
-            },
-            'agent6_version' => {
-              'rhel' => '1:6.9.0-1'
             }
-
           }
         end.converge described_recipe
       end
 
       it 'installs agent 4.4.0-200' do
-        expect(chef_run).to install_package('datadog-agent').with(version: '1:6.9.0-1')
+        expect(chef_run).to install_package('datadog-agent').with(version: '4.4.0-200')
       end
     end
   end
