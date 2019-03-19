@@ -46,14 +46,8 @@ shared_examples_for 'common linux resources' do
   end
 end
 
-
 shared_examples_for 'datadog-agent' do
   it_behaves_like 'common linux resources'
-
-  # TODO(remy): should we test this?
-  #it 'removes the datadog-agent-base package' do
-  #  expect(chef_run).to remove_package 'datadog-agent-base'
-  #end
 end
 
 shared_examples_for 'debianoids datadog-agent' do

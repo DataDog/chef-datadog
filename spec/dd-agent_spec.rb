@@ -8,19 +8,17 @@ module EnvVar
 end
 
 # TODO(remy): remove this
-#shared_examples_for 'datadog-agent-base' do
-#  it_behaves_like 'common linux resources'
-#
-#  it 'installs the datadog-agent-base package' do
-#    expect(chef_run).to install_package 'datadog-agent-base'
+#  shared_examples_for 'datadog-agent-base' do
+#    it_behaves_like 'common linux resources'
+#    it 'installs the datadog-agent-base package' do
+#      expect(chef_run).to install_package 'datadog-agent-base'
+#    end
+#    it 'does not install the datadog-agent package' do
+#      expect(chef_run).not_to install_package 'datadog-agent'
+#      expect(chef_run).not_to install_apt_package 'datadog-agent'
+#      expect(chef_run).not_to install_yum_package 'datadog-agent'
+#    end
 #  end
-#
-#  it 'does not install the datadog-agent package' do
-#    expect(chef_run).not_to install_package 'datadog-agent'
-#    expect(chef_run).not_to install_apt_package 'datadog-agent'
-#    expect(chef_run).not_to install_yum_package 'datadog-agent'
-#  end
-#end
 
 shared_examples_for 'repo recipe' do
   it 'includes the repository recipe' do
@@ -42,10 +40,6 @@ end
 
 shared_examples_for 'version set below 4.x' do
   it_behaves_like 'common linux resources v5'
-
-  # TODO(remy): remove this, we don't want to support Agent v4 for chef-d 3.0
-
-  # it_behaves_like 'datadog-agent-base'
 end
 
 describe 'datadog::dd-agent' do
@@ -382,7 +376,7 @@ describe 'datadog::dd-agent' do
           platform: 'ubuntu',
           version: '14.04'
         ) do |node|
-          node.set['datadog'] = { 
+          node.set['datadog'] = {
             'agent6_version' => '1:6.8.0-1',
             'api_key' => 'somethingnotnil'
           }
