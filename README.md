@@ -200,8 +200,6 @@ Attributes are available to have finer control over how you install Agent v6:
 
 Please review the [attributes/default.rb](https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb) file (at the version of the cookbook you use) for the list and usage of the attributes used by the cookbook.
 
-Should you wish to add additional elements to the agent6 configuration file (typically `/etc/datadog-agent/datadog.yaml`) that are not directly available as attributes of the cookbook, you may use the `node['datadog']['extra_config']` attribute. This attribute is a hash and will be marshaled into the configuration file accordingly.
-
 For general information on the Datadog Agent v6, please refer to the [datadog-agent](https://github.com/DataDog/datadog-agent/) repo.
 
 ### Agent v5
