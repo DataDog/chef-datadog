@@ -25,7 +25,14 @@ if Chef::Config[:why_run]
   return
 end
 
-include_recipe 'chef_handler'
+unless respond_to?(:chef_handler)
+  # Chef 14 has included the community chef_handler cookbook to its resources.
+  # However, versions of Chef < 14 still need to include the chef_handler cookbook
+  # in their dependencies:
+  Chef::Log.warn('To use dd-handler, you need to add chef_handler >= 1.2 to your depencies. See datadog/metadata.rb for more info.')
+  return
+end
+
 ENV['DATADOG_HOST'] = node['datadog']['url']
 
 chef_gem 'chef-handler-datadog' do # ~FC009
