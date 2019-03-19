@@ -7,19 +7,6 @@ module EnvVar
   end
 end
 
-# TODO(remy): remove this
-#  shared_examples_for 'datadog-agent-base' do
-#    it_behaves_like 'common linux resources'
-#    it 'installs the datadog-agent-base package' do
-#      expect(chef_run).to install_package 'datadog-agent-base'
-#    end
-#    it 'does not install the datadog-agent package' do
-#      expect(chef_run).not_to install_package 'datadog-agent'
-#      expect(chef_run).not_to install_apt_package 'datadog-agent'
-#      expect(chef_run).not_to install_yum_package 'datadog-agent'
-#    end
-#  end
-
 shared_examples_for 'repo recipe' do
   it 'includes the repository recipe' do
     expect(chef_run).to include_recipe('datadog::repository')
@@ -264,7 +251,7 @@ describe 'datadog::dd-agent' do
     end
   end
 
-  # TODO(remy): something to do here?
+  # TODO(remy): removes occurrences of Agent V4 + add some tests for Agent v6
   context 'allows a hash for agent version' do
     context 'when ubuntu' do
       cached(:chef_run) do
