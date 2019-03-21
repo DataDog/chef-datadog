@@ -189,6 +189,15 @@ Please review the [attributes/default.rb](https://github.com/DataDog/chef-datado
 
 For general information on the Datadog Agent 6, please refer to the [datadog-agent](https://github.com/DataDog/datadog-agent/) repo.
 
+#### Windows Agent v6 installation
+
+Starting with version `>= 6.11`, the Windows Agent v6 must be installed with datadog
+cookbook version `>= 2.18.0`.
+
+This is due to the Agent v6 running with an unprivileged user on Windows
+since 6.11. However, prior to 2.18.0, the datadog cookbook was enforcing
+Administrators privileges to the Datadog Agent directories and files.
+
 ### Extra configuration
 
 Should you wish to add additional elements to the Agent v6 configuration file
