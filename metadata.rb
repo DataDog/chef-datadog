@@ -23,13 +23,8 @@ issues_url       'https://github.com/DataDog/chef-datadog/issues' if respond_to?
   supports os
 end
 
-# Chef 14 has included the community chef_handler cookbook to its resources.
-# However, versions of Chef < 14 still need to include the chef_handler cookbook
-# in their dependencies:
-#
-# depends    'chef_handler', '>= 1.2' # chef_handler >= 1.2 is needed for Chef < 14
-
 depends          'apt' # We recommend '>= 2.1.0'. See CHANGELOG.md for details
+depends          'chef_handler', '>= 1.2' # We recommend '~> 1.3' with Chef < 12. See CHANGELOG.md for details
 depends          'windows' # We recommend '< 1.39.0' if running Chef >= 12.6. See README.md for details
 depends          'yum', '>= 3.0' # Use '~> 3.0' with Chef < 12
 
