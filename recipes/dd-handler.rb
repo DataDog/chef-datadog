@@ -25,7 +25,6 @@ if Chef::Config[:why_run]
   return
 end
 
-include_recipe 'chef_handler'
 ENV['DATADOG_HOST'] = node['datadog']['url']
 
 chef_gem 'chef-handler-datadog' do # ~FC009

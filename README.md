@@ -56,6 +56,10 @@ The following Opscode cookbooks are dependencies:
 
 **Note for Chef 11 users**: please use these additional dependency version contraints for compatibility with Chef 11:
 
+**Note for Chef 13 users**: if you're using Chef 13 and chef_handler 1.x, you may
+have trouble using the dd-handler recipe. The known workaround is to update your
+dependency to `chef_handler >= 2.1`.
+
 ```
 cookbook 'apt', '< 4.0'
 cookbook 'chef_handler', '< 2.0'
