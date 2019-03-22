@@ -160,7 +160,7 @@ end
 
 ### Example
 
-This example enables the ElasticSearch integration by using the `datadog_monitor` resource. It provides the instance configuration (in this case: the url to connect to ElasticSearch) and set the `use_integration_template` flag to use the default configuration template.
+This example enables the ElasticSearch integration by using the `datadog_monitor` resource. It provides the instance configuration (in this case: the url to connect to ElasticSearch) and set the `use_integration_template` flag to use the default configuration template. Also, it notifies the `service[datadog-agent]` resource in order to restart the Agent. If you use many times the resource `datadog_monitor` in your cookbook, for speed purpose, it's recommended to restart the Agent only with the last call.
 
 Note that the Agent installation needs to be earlier in the run list.
 
@@ -170,6 +170,7 @@ include_recipe 'datadog::dd-agent'
 datadog_monitor 'elastic'
   instances  [{'url' => 'http://localhost:9200'}]
   use_integration_template true
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end
 ```
 
