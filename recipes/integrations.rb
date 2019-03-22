@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-include_recipe 'datadog::repository' if node['datadog']['installrepo']
+include_recipe 'datadog::dd-agent'
 
 # Install all specified integrations
 # example:
