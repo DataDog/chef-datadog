@@ -32,26 +32,6 @@ action :add do
     )
     cookbook new_resource.cookbook
     sensitive true if Chef::Resource.instance_methods(false).include?(:sensitive)
-    notifies :restart, 'service[datadog-agent]', :delayed if node['datadog']['agent_start']
-  end
-
-  service_provider = nil
-  if node['datadog']['agent6'] &&
-     (((node['platform'] == 'amazon' || node['platform_family'] == 'amazon') && node['platform_version'].to_i != 2) ||
-     (node['platform'] == 'ubuntu' && node['platform_version'].to_f < 15.04) || # chef <11.14 doesn't use the correct service provider
-     (node['platform'] != 'amazon' && node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7))
-    # use Upstart provider explicitly for Agent 6 on Amazon Linux < 2.0 and RHEL < 7
-    service_provider = Chef::Provider::Service::Upstart
-  end
-  service 'datadog-agent' do
-    service_name node['datadog']['agent_name']
-    provider service_provider unless service_provider.nil?
-    restart_command "powershell restart-service #{node['datadog']['agent_name']} -Force" if node['platform_family'] == 'windows'
-    stop_command "powershell stop-service #{node['datadog']['agent_name']} -Force" if node['platform_family'] == 'windows'
-    # HACK: the restart can fail when we hit systemd's restart limits (by default, 5 starts every 10 seconds)
-    # To workaround this, retry once after 5 seconds, and a second time after 10 seconds
-    retries 2
-    retry_delay 5
   end
 end
 
@@ -61,21 +41,6 @@ action :remove do
   file ::File.join(confd_dir, "#{new_resource.name}.yaml") do
     action :delete
     sensitive true if Chef::Resource.instance_methods(false).include?(:sensitive)
-    notifies :restart, 'service[datadog-agent]', :delayed if node['datadog']['agent_start']
-  end
-
-  service_provider = nil
-  if node['datadog']['agent6'] &&
-     (((node['platform'] == 'amazon' || node['platform_family'] == 'amazon') && node['platform_version'].to_i != 2) ||
-     (node['platform'] != 'amazon' && node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7))
-    # use Upstart provider explicitly for Agent 6 on Amazon Linux < 2.0 and RHEL < 7
-    service_provider = Chef::Provider::Service::Upstart
-  end
-  service 'datadog-agent' do
-    service_name node['datadog']['agent_name']
-    provider service_provider unless service_provider.nil?
-    restart_command "powershell restart-service #{node['datadog']['agent_name']} -Force" if node['platform_family'] == 'windows'
-    stop_command "powershell stop-service #{node['datadog']['agent_name']} -Force" if node['platform_family'] == 'windows'
   end
 end
 

@@ -108,4 +108,6 @@ datadog_monitor 'wmi_check' do
   init_config node['datadog']['wmi_check']['init_config']
   instances node['datadog']['wmi_check']['instances']
   logs node['datadog']['wmi_check']['logs']
+  action :add
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

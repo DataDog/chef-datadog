@@ -21,4 +21,6 @@ datadog_monitor 'win32_event_log' do
   init_config node['datadog']['win32_event_log']['init_config']
   instances node['datadog']['win32_event_log']['instances']
   logs node['datadog']['win32_event_log']['logs']
+  action :add
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

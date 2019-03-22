@@ -22,4 +22,6 @@ include_recipe 'datadog::dd-agent'
 datadog_monitor 'etcd' do
   instances node['datadog']['etcd']['instances']
   logs node['datadog']['etcd']['logs']
+  action :add
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

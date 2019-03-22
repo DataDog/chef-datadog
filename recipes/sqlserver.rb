@@ -64,4 +64,6 @@ datadog_monitor 'sqlserver' do
   init_config node['datadog']['sqlserver']['init_config']
   instances node['datadog']['sqlserver']['instances']
   logs node['datadog']['sqlserver']['logs']
+  action :add
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

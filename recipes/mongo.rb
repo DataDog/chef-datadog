@@ -12,4 +12,6 @@ include_recipe 'datadog::dd-agent'
 datadog_monitor 'mongo' do
   instances node['datadog']['mongo']['instances']
   logs node['datadog']['mongo']['logs']
+  action :add
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

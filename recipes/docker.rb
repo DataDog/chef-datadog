@@ -48,4 +48,6 @@ datadog_monitor 'docker' do
   init_config node['datadog']['docker']['init_config']
   instances node['datadog']['docker']['instances']
   logs node['datadog']['docker']['logs']
+  action :add
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

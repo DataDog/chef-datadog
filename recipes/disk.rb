@@ -33,4 +33,6 @@ datadog_monitor 'disk' do
   instances node['datadog']['disk']['instances']
   init_config nil
   logs node['datadog']['disk']['logs']
+  action :add
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end
