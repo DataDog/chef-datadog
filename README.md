@@ -32,6 +32,9 @@ Requirements
 ============
 - chef >= 10.14
 
+If you need support for Chef < 12.7, please consider using a [release 2.x of the cookbook](https://github.com/DataDog/chef-datadog/releases/tag/v2.18.0).
+See the CHANGELOG for more info.
+
 Platforms
 ---------
 
