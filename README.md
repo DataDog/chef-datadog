@@ -135,7 +135,7 @@ The `:remove` action disables an integration.
 
 ### Syntax
 
-```ruby
+```
 datadog_monitor 'name' do
   init_config                       Hash # default value: {}
   instances                         Array # default value: []
@@ -164,7 +164,7 @@ This example enables the ElasticSearch integration by using the `datadog_monitor
 
 Note that the Agent installation needs to be earlier in the run list.
 
-```ruby
+```
 include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'elastic'
@@ -174,6 +174,56 @@ end
 ```
 
 See `recipes/` for many examples using the `datadog_monitor` resource.
+
+datadog_integration
+---------------
+
+The `datadog_integration` resource will help you to install specific versions
+of Datadog integrations.
+
+The default action `:install` installs the integration on the node using the
+`agent integration install` command.
+
+The `:remove` action removes an integration from the node using the `agent
+integration remove` command.
+
+### Syntax
+
+```
+datadog_integration 'name' do
+  version                           String # version to install for :install action.
+  action                            Symbol # defaults to :install if not specified
+end
+```
+
+#### Actions
+
+* `:install` Default. Installs an integration in the given version.
+* `:remove` Removes an integration.
+
+#### Properties
+
+* `'name'` is the name of the Agent integration to install, e.g. `datadog-apache`
+* `version` is the version of the integration that you want to install. Only needed
+with the `:install` action.
+
+### Example
+
+This example installs version `1.11.0` of the ElasticSearch integration by
+using the `datadog_integration` resource.
+
+Note that the Agent installation needs to be earlier in the run list.
+
+```
+include_recipe 'datadog::dd-agent'
+
+datadog_integration 'datadog-elastic'
+  version '1.11.0'
+end
+```
+
+In order to get the available versions of the integrations, please refer to
+their `CHANGELOG.md` file in the [integrations-core repository](https://github.com/DataDog/integrations-core).
 
 Usage
 =====
