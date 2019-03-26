@@ -7,7 +7,6 @@
 default_action :install
 
 property :name, String, name_attribute: true
-property :cookbook, String, default: 'datadog'
 
 property :version, String, required: true
 
