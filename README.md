@@ -225,6 +225,10 @@ end
 In order to get the available versions of the integrations, please refer to
 their `CHANGELOG.md` file in the [integrations-core repository](https://github.com/DataDog/integrations-core).
 
+**Note for Chef Windows users**: as the datadog-agent binary available on the
+node is used by this resource, the chef-client must have read access to the
+`datadog.yaml` file.
+
 Usage
 =====
 
