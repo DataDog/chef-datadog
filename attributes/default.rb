@@ -28,15 +28,7 @@ default['datadog']['api_key'] = nil
 # Set it as an attribute, or on your node `run_state` under the key `['datadog']['application_key']`
 default['datadog']['application_key'] = nil
 
-########################################################################
-###                  Agent6-only attributes                          ###
-
-# If you're installing a pre-release version of Agent 6 (beta or RC), you need to:
-# * on debian: set node['datadog']['agent6_aptrepo_dist'] to 'beta' instead of 'stable'
-# * on RHEL: set node['datadog']['agent6_yumrepo'] to 'https://yum.datadoghq.com/beta/x86_64/'
-# In all cases, follow the instructions below:
-
-# Set node['datadog']['agent6'] to true to install an agent6 instead of agent5.
+# Set node['datadog']['agent6'] to false to install an agent5 instead of agent6.
 # To upgrade from agent5 to agent6, you need to:
 # * set node['datadog']['agent6'] to true, and
 # * either set node['datadog']['agent6_version'] to an existing agent6 version (recommended), or
@@ -45,7 +37,14 @@ default['datadog']['application_key'] = nil
 # * set node['datadog']['agent6'] to false, and
 # * pin node['datadog']['agent_version'] to an existing agent5 version, and
 # * set node['datadog']['agent_allow_downgrade'] to true
-default['datadog']['agent6'] = false
+# If you're installing a pre-release version of Agent 6 (beta or RC), you need to:
+# * on debian: set node['datadog']['agent6_aptrepo_dist'] to 'beta' instead of 'stable'
+# * on RHEL: set node['datadog']['agent6_yumrepo'] to 'https://yum.datadoghq.com/beta/x86_64/'
+default['datadog']['agent6'] = true
+
+########################################################################
+###                  Agent6-only attributes                          ###
+
 # Default of `nil` will install latest version, applies to agent6 only.
 # See documentation of `agent_version` attribute for allowed configuration format.
 default['datadog']['agent6_version'] = nil

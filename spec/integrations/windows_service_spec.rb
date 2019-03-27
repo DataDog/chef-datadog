@@ -42,7 +42,7 @@ describe 'datadog::windows_service' do
   it { is_expected.to add_datadog_monitor('windows_service') }
 
   it 'renders expected YAML config file for remote host service monitoring' do
-    expect(chef_run).to(render_file('/etc/dd-agent/conf.d/windows_service.yaml').with_content { |content|
+    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/windows_service.yaml').with_content { |content|
       expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
     })
   end
@@ -88,7 +88,7 @@ describe 'datadog::windows_service' do
   it { is_expected.to add_datadog_monitor('windows_service') }
 
   it 'renders expected YAML config file for local host service monitoring' do
-    expect(chef_run).to(render_file('/etc/dd-agent/conf.d/windows_service.yaml').with_content { |content|
+    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/windows_service.yaml').with_content { |content|
       expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
     })
   end

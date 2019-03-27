@@ -11,7 +11,7 @@ platforms:
   # - name: ubuntu-12.04
   - name: centos-6.6
   - name: centos-7.7
-  - name: debian-7.7
+  - name: debian-8.11
 
 suites:
 - name: dd-agent-handler
@@ -20,5 +20,7 @@ suites:
     - recipe[datadog::dd-agent]
   attributes:
     datadog:
+      # TODO(remy): run those tests with Agent v6 recipe.
+      agent6: false
       api_key: somenonnullapikeythats32charlong
       application_key: alsonotnil

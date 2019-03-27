@@ -18,12 +18,10 @@ Chef recipes to deploy Datadog's components and configuration automatically.
 
 This cookbook includes support for:
 
-* Datadog Agent version 6.0 and up: please refer to
-the [dedicated section](#agent-6-support) and the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.15.0/attributes/default.rb#L31-L75)
-for more details on how to use it
+* Datadog Agent version 6.x
 * Datadog Agent version 5.x
 
-**Log collection is now available with Agent v6, please refer to the [inline docs](https://github.com/DataDog/chef-datadog/blob/v2.15.0/attributes/default.rb#L383-L388) to enable it.**
+**Log collection is available with Agent v6, please refer to the [inline docs](https://github.com/DataDog/chef-datadog/blob/v3.0.0/attributes/default.rb#L401-L406) to enable it.**
 
 *Note: This README may refer to features that are not released yet. Please check the README of the
 git tag/the gem version you're using for your version's documentation*
@@ -169,7 +167,7 @@ This example enables the ElasticSearch integration by using the `datadog_monitor
 
 Note that the Agent installation needs to be earlier in the run list.
 
-```ruby
+```
 include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'elastic'
@@ -183,19 +181,12 @@ See `recipes/` for many examples using the `datadog_monitor` resource.
 Usage
 =====
 
-### Agent 6 Support
-Please note the cookbook now supports installing both Agent v5 and Agent v6 of the Datadog Agent on Linux (since v2.14.0) and Windows (since v2.15.0). By default versions `<=2.x` of the cookbook will default to install Agent5, you may however override this behavior with the `node['datadog']['agent6']` attribute.
-  ```
-  default_attributes(
-    'datadog' => {
-      'agent6' => true
-    }
-  )
-  ```
+### Agent v6
 
-Note: to _upgrade_ to Agent 6 on a node with Agent 5 already installed, you also have to pin `agent6_version` to a v6 version (recommended), or set `agent6_package_action` to `'upgrade'`.
+By default, this cookbook installs Agent v6, if you want to install Agent v5, please refer to the Agent v5 section below.
 
-Additional attributes are available to have finer control over how you install Agent 6. These are Agent 6 counterparts to several well known Agent 5 attributes (code [here](https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb#L31-L75)):
+Attributes are available to have finer control over how you install Agent v6:
+
  * `agent6_version`: allows you to pin the agent version (recommended).
  * `agent6_package_action`: defaults to `'install'`, may be set to `'upgrade'` to automatically upgrade to latest (not recommended, we recommend pinning to a version with `agent6_version` and change that version to upgrade).
  * `agent6_aptrepo`: desired APT repo for the agent. Defaults to `http://apt.datadoghq.com`
@@ -204,7 +195,7 @@ Additional attributes are available to have finer control over how you install A
 
 Please review the [attributes/default.rb](https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb) file (at the version of the cookbook you use) for the list and usage of the attributes used by the cookbook.
 
-For general information on the Datadog Agent 6, please refer to the [datadog-agent](https://github.com/DataDog/datadog-agent/) repo.
+For general information on the Datadog Agent v6, please refer to the [datadog-agent](https://github.com/DataDog/datadog-agent/) repo.
 
 #### Windows Agent v6 installation
 
@@ -215,7 +206,7 @@ This is due to the Agent v6 running with an unprivileged user on Windows
 since 6.11. However, prior to 2.18.0, the datadog cookbook was enforcing
 Administrators privileges to the Datadog Agent directories and files.
 
-### Extra configuration
+#### Extra configuration
 
 Should you wish to add additional elements to the Agent v6 configuration file
 (typically `datadog.yaml`) that are not directly available
@@ -238,11 +229,55 @@ E.g.
 This example will set the field `secret_backend_command` in the configuration
 file `datadog.yaml`.
 
+### Agent v5
+
+Since `3.0.0`, the cookbook defaults installing Agent v6. You can still setup the Agent v5 by setting `node['datadog']['agent6']` to false.
+
+```
+  default_attributes(
+    'datadog' => {
+      'agent6' => false
+    }
+  )
+```
+
+### Agent v5 transitions
+
+#### Upgrade from Agent v5 to Agent v6
+
+To upgrade from an already installed Agent v5 to Agent v6, you'll have to set the `agent6_package_action` to `upgrade` and we recommend to pin to a specific version:
+
+```ruby
+  default_attributes(
+    'datadog' => {
+      'agent6' => true,
+      'agent6_version' => '1:6.10.0-1', # optional but recommended
+      'agent6_package_action' => 'install',
+    }
+  )
+```
+
+Note that there are Agent v6 counterparts to several well known Agent v5 attributes (code [here](https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb#L31-L75))
+
+#### Downgrade from an installed Agent v6 to an Agent v5
+
+You will need to indicate that you want to setup an Agent v5 instead of v6, pin the Agent v5 version that you want to install and allow downgrade:
+
+```
+  default_attributes(
+    'datadog' => {
+      'agent6' => false,
+      'agent_version' => '1:5.32.0-1',
+      'agent_allow_downgrade' => true
+    }
+  )
+```
+
 ### Instructions
 
 1. Add this cookbook to your Chef Server, either by installing with knife or by adding it to your Berksfile:
   ```
-  cookbook 'datadog', '~> 2.14.0'
+  cookbook 'datadog', '~> 3.0.0'
   ```
 2. Add your API Key either:
   * as a node attribute via an `environment` or `role`, or
