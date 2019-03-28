@@ -12,7 +12,7 @@ property :version, String, required: true
 
 action :install do
   unless node['datadog']['agent6']
-    log "The datadog_integration resource is only available with Agent v6." do
+    log 'The datadog_integration resource is only available with Agent v6.' do
       level :error
     end
     return
@@ -30,7 +30,7 @@ end
 
 action :remove do
   unless node['datadog']['agent6']
-    log "The datadog_integration resource is only available with Agent v6." do
+    log 'The datadog_integration resource is only available with Agent v6.' do
       level :error
     end
     return
