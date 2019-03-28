@@ -27,16 +27,11 @@ end
 
 include_recipe 'chef_handler'
 
-# Since Agent 6 supports node['datadog']['url'] = nil, we need to fallback
-# on a default value here.
-# FIXME(remy): this logic has been duplicated below in this file, moreover,
-# the DATADOG_HOST is needed only until v0.9.0 of chef-agent-handler, we should
-# think of removing it in a major release. See
-# https://github.com/DataDog/chef-datadog/pull/582#discussion_r260004814
-dd_url = 'https://app.datadoghq.com'
-dd_url = node['datadog']['url'] unless node['datadog']['url'].nil?
-
-ENV['DATADOG_HOST'] = dd_url
+if node['datadog']['chef_handler_version'] &&
+   Gem::Version.new(node['datadog']['chef_handler_version']) < Gem::Version.new('0.10.0')
+  Chef::Log.error('We do not support chef_handler_version < v0.10.0 anymore, please use a more recent version.')
+  return
+end
 
 chef_gem 'chef-handler-datadog' do # ~FC009
   action :install
