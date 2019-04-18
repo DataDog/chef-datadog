@@ -260,6 +260,8 @@ This is due to the Agent v6 running with an unprivileged user on Windows
 since 6.11. However, prior to 2.18.0, the datadog cookbook was enforcing
 Administrators privileges to the Datadog Agent directories and files.
 
+**Note**: downgrade of Agent 6 is not supported on Windows.
+
 #### Extra configuration
 
 Should you wish to add additional elements to the Agent v6 configuration file
