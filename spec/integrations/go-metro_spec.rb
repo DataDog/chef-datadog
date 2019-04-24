@@ -80,7 +80,7 @@ describe 'datadog::go-metro' do
 
     it 'renders expected YAML config file' do
       expect(chef_run).to(
-        render_file('/etc/dd-agent/conf.d/go-metro.yaml')
+        render_file('/etc/datadog-agent/conf.d/go-metro.yaml')
         .with_content { |content|
           expect(YAML.safe_load(content).to_json).to be_json_eql(
             YAML.safe_load(expected_yaml).to_json
@@ -174,7 +174,7 @@ describe 'datadog::go-metro' do
 
     it 'renders expected YAML config file' do
       expect(chef_run).to(
-        render_file('/etc/dd-agent/conf.d/go-metro.yaml')
+        render_file('/etc/datadog-agent/conf.d/go-metro.yaml')
         .with_content { |content|
           expect(YAML.safe_load(content).to_json).to be_json_eql(
             YAML.safe_load(expected_yaml).to_json
