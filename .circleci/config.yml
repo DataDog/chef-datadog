@@ -6,7 +6,7 @@ jobs:
       KITCHEN_LOCAL_YAML: .kitchen.docker.yml
     steps:
       - checkout
-      - run: curl -L https://www.chef.io/chef/install.sh | sudo bash -s -- -P chefdk -v 3.7
+      - run: curl -L https://www.chef.io/chef/install.sh | sudo bash -s -- -P chefdk -v 3.8
       - run: chef gem install kitchen-docker -v '~> 2.3.0'
       - run: eval "$(/opt/chefdk/bin/chef shell-init bash)"
       - run: chef --version
