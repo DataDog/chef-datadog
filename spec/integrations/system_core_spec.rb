@@ -15,7 +15,7 @@ describe 'datadog::system_core' do
   cached(:chef_run) do
     ChefSpec::SoloRunner.new(step_into: ['datadog_monitor']) do |node|
       node.automatic['languages'] = { 'python' => { 'version' => '2.7.2' } }
-      node.set['datadog'] = { 'api_key' => 'someapikey' }
+      node.normal['datadog'] = { 'api_key' => 'someapikey' }
     end.converge(described_recipe)
   end
 
