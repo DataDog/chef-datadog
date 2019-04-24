@@ -16,7 +16,7 @@ describe 'datadog::etcd' do
     ChefSpec::SoloRunner.new(step_into: ['datadog_monitor']) do |node|
       node.automatic['languages'] = { python: { version: '2.7.2' } }
 
-      node.set['datadog'] = {
+      node.normal['datadog'] = {
         api_key: 'someapikey',
         etcd: {
           instances: [

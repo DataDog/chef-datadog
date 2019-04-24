@@ -36,7 +36,7 @@ describe 'datadog::go-metro' do
       ) do |node|
         node.automatic['languages'] = { python: { version: '2.7.2' } }
 
-        node.set['datadog'] = {
+        node.normal['datadog'] = {
           api_key: 'someapikey',
           'go-metro' => {
             instances: [
@@ -120,7 +120,7 @@ describe 'datadog::go-metro' do
       ) do |node|
         node.automatic['languages'] = { python: { version: '2.7.2' } }
 
-        node.set['datadog'] = {
+        node.normal['datadog'] = {
           api_key: 'someapikey',
           'go-metro' => {
             libcap_package: {
@@ -191,7 +191,7 @@ describe 'datadog::go-metro' do
       ) do |node|
         node.automatic['languages'] = { python: { version: '2.7.2' } }
 
-        node.set['datadog'] = {
+        node.normal['datadog'] = {
           api_key: 'someapikey'
         }
       end
