@@ -90,6 +90,12 @@ sd_template_dir: <%= node['datadog']['sd_template_dir'] %>
 
 # Enable JMX checks for service discovery
 sd_jmx_enable: <%= node['datadog']['sd_jmx_enable'] %>
+
+<% if node['datadog']['jmx_custom_jars'] %>
+# If you require custom jars to be loaded for JMX checks, you can set their paths here
+# instead of setting them in the checks' custom_jar_paths option
+jmx_custom_jars: <%= node['datadog']['jmx_custom_jars'] %>
+<% end -%>
 <% end -%>
 
 <% if node['datadog']['dogstatsd'] -%>
