@@ -366,7 +366,7 @@ For more deployment details, visit the [Datadog Documentation site](http://docs.
 ### Chef 12
 
 Depending of the Chef 12 version you're using, you will have to add some extra
-dependency constraint.
+dependency contraints.
 
 #### Chef < 12.14
 
