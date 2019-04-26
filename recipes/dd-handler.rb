@@ -28,7 +28,7 @@ end
 include_recipe 'chef_handler'
 
 if node['datadog']['chef_handler_version'] &&
-   Gem::Version.new(node['datadog']['chef_handler_version']) < Gem::Version.new('0.10.0')
+  Gem::Version.new(node['datadog']['chef_handler_version']) < Gem::Version.new('0.10.0')
   Chef::Log.error('We do not support chef_handler_version < v0.10.0 anymore, please use a more recent version.')
   return
 end

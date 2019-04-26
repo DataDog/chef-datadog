@@ -93,10 +93,11 @@ default['datadog']['extra_endpoints']['prod']['url'] = nil # optional
 # Set prefix to '' if you want Chef tags to be sent without prefix.
 default['datadog']['tag_prefix'] = 'tag:'
 
-# Don't change these.
 # The host of the Datadog intake server to send Agent data to, only set this option
 # if you need the Agent to send data to a custom URL.
 # The nil value will let the Agent 6 select the URL to send the data.
+# Any non-nil value overrides the 'site' value, prefer using 'site' unless your
+# use case isn't covered by 'site'.
 # For Agent 5, the Agent 5 recipe will fallback on https://app.datadoghq.com
 # (see recipes/dd-agent.rb).
 default['datadog']['url'] = nil
