@@ -113,4 +113,6 @@ datadog_monitor 'snmp' do
   init_config node['datadog']['snmp']['init_config']
   instances node['datadog']['snmp']['instances']
   logs node['datadog']['snmp']['logs']
+  action :add
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

@@ -28,4 +28,6 @@ include_recipe 'datadog::dd-agent'
 datadog_monitor 'gunicorn' do
   instances node['datadog']['gunicorn']['instances']
   logs node['datadog']['gunicorn']['logs']
+  action :add
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

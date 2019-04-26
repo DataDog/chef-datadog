@@ -16,4 +16,6 @@ include_recipe 'datadog::dd-agent'
 datadog_monitor 'ntp' do
   instances node['datadog']['ntp']['instances']
   logs node['datadog']['ntp']['logs']
+  action :add
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

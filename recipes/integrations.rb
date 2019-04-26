@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-include_recipe 'datadog::repository' if node['datadog']['installrepo']
+include_recipe 'datadog::dd-agent'
 
 # Install all specified integrations
 # example:
@@ -40,5 +40,7 @@ node['datadog']['extra_packages'].each do |name, options|
     instances node['datadog'][name]['instances']
     logs node['datadog'][name]['logs']
     use_integration_template true
+    action :add
+    notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
   end
 end

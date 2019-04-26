@@ -31,4 +31,6 @@ include_recipe 'datadog::dd-agent'
 datadog_monitor 'dns_check' do
   instances node['datadog']['dns_check']['instances']
   logs node['datadog']['dns_check']['logs']
+  action :add
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

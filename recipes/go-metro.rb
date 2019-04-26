@@ -79,4 +79,6 @@ datadog_monitor 'go-metro' do
   init_config node['datadog']['go-metro']['init_config']
   instances node['datadog']['go-metro']['instances']
   logs node['datadog']['go-metro']['logs']
+  action :add
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end
