@@ -54,6 +54,19 @@ The following Opscode cookbooks are dependencies:
 * `chef_handler`
 * `yum`
 
+### Chef support
+
+**Chef 13 users**
+
+- If you're using Chef 13 and chef_handler 1.x, you may have trouble using the
+dd-handler recipe. The known workaround is to update your dependency to `chef_handler >= 2.1`.
+
+**Chef 14 and 15 users**:
+
+- In order to support Chef 12 and 13, the `datadog` cookbook has a dependency to
+the `chef_handler` cookbook which is now shipped as a resource in Chef 14.
+Unfortunately, it will display a deprecation message to Chef 14 and 15 users.
+
 Recipes
 =======
 

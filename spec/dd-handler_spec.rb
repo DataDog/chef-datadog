@@ -1,10 +1,6 @@
 require 'spec_helper'
 
 shared_examples 'a chef-handler-datadog installer' do |version|
-  it 'includes chef_handler recipe' do
-    expect(chef_run).to include_recipe('chef_handler')
-  end
-
   it 'installs the right version of chef-handler-datadog' do
     expect(chef_run).to install_chef_gem('chef-handler-datadog').with(version: version)
   end
