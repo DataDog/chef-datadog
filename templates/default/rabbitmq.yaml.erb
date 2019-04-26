@@ -12,6 +12,9 @@ instances:
     ssl_verify: <%= i.key?('ssl_verify') ? i['ssl_verify'] : 'true' %>
     # https://help.datadoghq.com/hc/en-us/articles/211590103-Tagging-RabbitMQ-queues-by-tag-family
     tag_families: <%= i['tag_families'] || 'false' %>
+  <% if i.key?('max_detailed_exchanges') -%>
+      max_detailed_exchanges: <%= i['max_detailed_exchanges'] %>
+  <% end -%>
   <% if i.key?('tags') -%>
     tags:
     <% i['tags'].each do |x| -%>
