@@ -28,7 +28,7 @@ git tag/the gem version you're using for your version's documentation*
 
 Requirements
 ============
-- chef >= 10.14
+- chef-client >= 12.7
 
 If you need support for Chef < 12.7, please consider using a [release 2.x of the cookbook](https://github.com/DataDog/chef-datadog/releases/tag/v2.18.0).
 See the CHANGELOG for more info.
@@ -42,7 +42,7 @@ Platforms
 * RedHat
 * Scientific Linux
 * Ubuntu
-* Windows (requires chef >= 12.0)
+* Windows
 * SUSE (requires chef >= 13.3)
 
 Cookbooks
@@ -52,19 +52,7 @@ The following Opscode cookbooks are dependencies:
 
 * `apt`
 * `chef_handler`
-* `windows`
 * `yum`
-
-**Note for Chef 11 users**: please use these additional dependency version contraints for compatibility with Chef 11:
-
-```
-cookbook 'apt', '< 4.0'
-cookbook 'chef_handler', '< 2.0'
-cookbook 'windows', '< 2.0'
-cookbook 'yum', '~> 3.0'
-```
-
-(in Berkshelf/Librarian format)
 
 Recipes
 =======
@@ -374,6 +362,24 @@ You will need to indicate that you want to setup an Agent v5 instead of v6, pin 
 We are not making use of data_bags in this recipe at this time, as it is unlikely that you will have more than one API key and one application key.
 
 For more deployment details, visit the [Datadog Documentation site](http://docs.datadoghq.com/).
+
+### Chef 12
+
+Depending of the Chef 12 version you're using, you will have to add some extra
+dependency contraints.
+
+#### Chef < 12.14
+
+```ruby
+depends 'yum', '< 5.0'
+```
+
+#### Chef < 12.9
+
+```ruby
+depends 'apt', '< 6.0.0'
+depends 'yum', '< 5.0'
+```
 
 AWS OpsWorks Chef Deployment
 ----------------------------

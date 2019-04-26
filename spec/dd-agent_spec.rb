@@ -43,8 +43,8 @@ describe 'datadog::dd-agent' do
           platform: 'ubuntu',
           version: '14.04'
         ) do |node|
-          node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
-          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+          node.normal['datadog'] = { 'api_key' => 'somethingnotnil' }
+          node.normal['languages'] = { 'python' => { 'version' => '2.6.2' } }
         end.converge described_recipe
       end
 
@@ -58,8 +58,8 @@ describe 'datadog::dd-agent' do
           :platform => 'debian',
           :version => '7.11'
         ) do |node|
-          node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
-          node.set['languages'] = { 'python' => { 'version' => '2.7.5+' } }
+          node.normal['datadog'] = { 'api_key' => 'somethingnotnil' }
+          node.normal['languages'] = { 'python' => { 'version' => '2.7.5+' } }
         end.converge described_recipe
       end
 
@@ -73,8 +73,8 @@ describe 'datadog::dd-agent' do
           :platform => 'ubuntu',
           :version => '14.04'
         ) do |node|
-          node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
-          node.set['languages'] = { 'python' => { 'version' => '2.4' } }
+          node.normal['datadog'] = { 'api_key' => 'somethingnotnil' }
+          node.normal['languages'] = { 'python' => { 'version' => '2.4' } }
         end.converge described_recipe
       end
 
@@ -88,8 +88,8 @@ describe 'datadog::dd-agent' do
           :platform => 'centos',
           :version => '6.9'
         ) do |node|
-          node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
-          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+          node.normal['datadog'] = { 'api_key' => 'somethingnotnil' }
+          node.normal['languages'] = { 'python' => { 'version' => '2.6.2' } }
         end.converge described_recipe
       end
 
@@ -103,8 +103,8 @@ describe 'datadog::dd-agent' do
           :platform => 'centos',
           :version => '5.11'
         ) do |node|
-          node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
-          node.set['languages'] = { 'python' => { 'version' => '2.4.3' } }
+          node.normal['datadog'] = { 'api_key' => 'somethingnotnil' }
+          node.normal['languages'] = { 'python' => { 'version' => '2.4.3' } }
         end.converge described_recipe
       end
 
@@ -118,8 +118,8 @@ describe 'datadog::dd-agent' do
           :platform => 'fedora',
           :version => '25'
         ) do |node|
-          node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
-          node.set['languages'] = { 'python' => { 'version' => '2.7.9' } }
+          node.normal['datadog'] = { 'api_key' => 'somethingnotnil' }
+          node.normal['languages'] = { 'python' => { 'version' => '2.7.9' } }
         end.converge described_recipe
       end
 
@@ -135,7 +135,7 @@ describe 'datadog::dd-agent' do
           :version => '2012R2',
           :file_cache_path => 'C:/chef/cache'
         ) do |node|
-          node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
+          node.normal['datadog'] = { 'api_key' => 'somethingnotnil' }
         end.converge described_recipe
       end
 
@@ -150,7 +150,7 @@ describe 'datadog::dd-agent' do
           :version => '2012R2',
           :file_cache_path => 'C:/chef/cache'
         ) do |node|
-          node.set['datadog'] = {
+          node.normal['datadog'] = {
             'api_key' => 'somethingnotnil',
             'windows_agent_use_exe' => true
           }
@@ -167,12 +167,12 @@ describe 'datadog::dd-agent' do
         :platform => 'ubuntu',
         :version => '14.04'
       ) do |node|
-        node.set['datadog'] = {
+        node.normal['datadog'] = {
           'agent6' => false,
           'api_key' => 'somethingnotnil',
           'agent_version' => '1:5.1.0-440'
         }
-        node.set['languages'] = { 'python' => { 'version' => '2.4' } }
+        node.normal['languages'] = { 'python' => { 'version' => '2.4' } }
       end.converge described_recipe
     end
 
@@ -189,12 +189,12 @@ describe 'datadog::dd-agent' do
         :platform => 'ubuntu',
         :version => '14.04'
       ) do |node|
-        node.set['datadog'] = {
+        node.normal['datadog'] = {
           'agent6' => false,
           'api_key' => 'somethingnotnil',
           'agent_version' => '4.4.0-200'
         }
-        node.set['languages'] = { 'python' => { 'version' => '2.4' } }
+        node.normal['languages'] = { 'python' => { 'version' => '2.4' } }
       end.converge described_recipe
     end
 
@@ -209,7 +209,7 @@ describe 'datadog::dd-agent' do
           :platform => 'ubuntu',
           :version => '14.04'
         ) do |node|
-          node.set['datadog'] = {
+          node.normal['datadog'] = {
             'agent6' => false,
             'api_key' => 'somethingnotnil',
             'agent_version' => '1:5.9.0-1'
@@ -230,7 +230,7 @@ describe 'datadog::dd-agent' do
           :version => '2012R2',
           :file_cache_path => 'C:/chef/cache'
         ) do |node|
-          node.set['datadog'] = {
+          node.normal['datadog'] = {
             'agent6' => false,
             'api_key' => 'somethingnotnil',
             'agent_version' => '5.10.1'
@@ -259,7 +259,7 @@ describe 'datadog::dd-agent' do
           :platform => 'ubuntu',
           :version => '14.04'
         ) do |node|
-          node.set['datadog'] = {
+          node.normal['datadog'] = {
             'agent6' => false,
             'api_key' => 'somethingnotnil',
             'agent_version' => {
@@ -284,7 +284,7 @@ describe 'datadog::dd-agent' do
           :version => '2012R2',
           :file_cache_path => 'C:/chef/cache'
         ) do |node|
-          node.set['datadog'] = {
+          node.normal['datadog'] = {
             'agent6' => false,
             'api_key' => 'somethingnotnil',
             'agent_version' => {
@@ -315,7 +315,7 @@ describe 'datadog::dd-agent' do
           :platform => 'fedora',
           :version => '25'
         ) do |node|
-          node.set['datadog'] = {
+          node.normal['datadog'] = {
             'agent6' => false,
             'api_key' => 'somethingnotnil',
             'agent_version' => {
@@ -338,7 +338,7 @@ describe 'datadog::dd-agent' do
           :platform => 'redhat',
           :version => '6.9'
         ) do |node|
-          node.set['datadog'] = {
+          node.normal['datadog'] = {
             'agent6' => false,
             'api_key' => 'somethingnotnil',
             'agent_version' => {
@@ -363,11 +363,11 @@ describe 'datadog::dd-agent' do
           platform: 'ubuntu',
           version: '14.04'
         ) do |node|
-          node.set['datadog'] = {
+          node.normal['datadog'] = {
             'agent6_version' => '1:6.8.0-1',
             'api_key' => 'somethingnotnil'
           }
-          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+          node.normal['languages'] = { 'python' => { 'version' => '2.6.2' } }
         end.converge described_recipe
       end
 
@@ -381,11 +381,11 @@ describe 'datadog::dd-agent' do
           platform: 'ubuntu',
           version: '14.04'
         ) do |node|
-          node.set['datadog'] = {
+          node.normal['datadog'] = {
             'api_key' => 'somethingnotnil',
             'agent6_package_action' => :upgrade
           }
-          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+          node.normal['languages'] = { 'python' => { 'version' => '2.6.2' } }
         end.converge described_recipe
       end
 
@@ -407,12 +407,12 @@ describe 'datadog::dd-agent' do
           platform: 'ubuntu',
           version: '14.04'
         ) do |node|
-          node.set['datadog'] = {
+          node.normal['datadog'] = {
             'agent6' => false,
             'api_key' => 'somethingnotnil',
             'tags' => 'datacenter:us-foo,database:bar'
           }
-          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+          node.normal['languages'] = { 'python' => { 'version' => '2.6.2' } }
         end.converge described_recipe
       end
 
@@ -430,12 +430,12 @@ describe 'datadog::dd-agent' do
           platform: 'ubuntu',
           version: '14.04'
         ) do |node|
-          node.set['datadog'] = {
+          node.normal['datadog'] = {
             'agent6' => false,
             'api_key' => 'somethingnotnil',
             'tags' => { 'datacenter' => 'us-foo', 'database' => 'bar' }
           }
-          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+          node.normal['languages'] = { 'python' => { 'version' => '2.6.2' } }
         end.converge described_recipe
       end
 
@@ -453,12 +453,12 @@ describe 'datadog::dd-agent' do
           platform: 'ubuntu',
           version: '14.04'
         ) do |node|
-          node.set['datadog'] = {
+          node.normal['datadog'] = {
             'agent6' => false,
             'api_key' => 'somethingnotnil',
             'tags' => { 'datacenter' => 'us-foo', 'database' => '' }
           }
-          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+          node.normal['languages'] = { 'python' => { 'version' => '2.6.2' } }
         end.converge described_recipe
       end
 
@@ -476,7 +476,7 @@ describe 'datadog::dd-agent' do
           platform: 'ubuntu',
           version: '14.04'
         ) do |node|
-          node.set['datadog'] = {
+          node.normal['datadog'] = {
             'agent6' => false,
             'api_key' => 'something1',
             'url' => 'https://app.example.com',
@@ -488,7 +488,7 @@ describe 'datadog::dd-agent' do
               }
             }
           }
-          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+          node.normal['languages'] = { 'python' => { 'version' => '2.6.2' } }
         end.converge described_recipe
       end
 
@@ -507,7 +507,7 @@ describe 'datadog::dd-agent' do
           platform: 'ubuntu',
           version: '14.04'
         ) do |node|
-          node.set['datadog'] = {
+          node.normal['datadog'] = {
             'agent6' => false,
             'api_key' => 'something1',
             'url' => 'https://app.example.com',
@@ -518,7 +518,7 @@ describe 'datadog::dd-agent' do
               }
             }
           }
-          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+          node.normal['languages'] = { 'python' => { 'version' => '2.6.2' } }
         end.converge described_recipe
       end
 
@@ -537,7 +537,7 @@ describe 'datadog::dd-agent' do
           platform: 'ubuntu',
           version: '14.04'
         ) do |node|
-          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+          node.normal['languages'] = { 'python' => { 'version' => '2.6.2' } }
         end.converge described_recipe
       end
 
@@ -552,12 +552,12 @@ describe 'datadog::dd-agent' do
           platform: 'ubuntu',
           version: '14.04'
         ) do |node|
-          node.set['datadog'] = {
+          node.normal['datadog'] = {
             'agent6' => false,
             'api_key' => 'as_node_attribute',
             'url' => 'https://app.example.com'
           }
-          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+          node.normal['languages'] = { 'python' => { 'version' => '2.6.2' } }
           node.run_state['datadog'] = { 'api_key' => 'on_run_state' }
         end.converge described_recipe
       end
@@ -579,8 +579,8 @@ describe 'datadog::dd-agent' do
           platform: 'ubuntu',
           version: '14.04'
         ) do |node|
-          node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
-          node.set['datadog'] = { 'agent6' => false }
+          node.normal['languages'] = { 'python' => { 'version' => '2.6.2' } }
+          node.normal['datadog'] = { 'agent6' => false }
           node.run_state['datadog'] = {
             'api_key' => 'on_run_state'
           }
@@ -602,7 +602,7 @@ describe 'datadog::dd-agent' do
         platform: 'ubuntu',
         version: '14.04'
       ) do |node|
-        node.set['datadog'] = {
+        node.normal['datadog'] = {
           'agent6' => false,
           'api_key' => 'something1',
           'url' => 'https://app.example.com',
@@ -612,7 +612,7 @@ describe 'datadog::dd-agent' do
             'no_example_key' => nil
           }
         }
-        node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+        node.normal['languages'] = { 'python' => { 'version' => '2.6.2' } }
       end.converge described_recipe
     end
 
@@ -640,8 +640,8 @@ describe 'datadog::dd-agent' do
             platform: 'ubuntu',
             version: '14.04'
           ) do |node|
-            node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
-            node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+            node.normal['datadog'] = { 'api_key' => 'somethingnotnil' }
+            node.normal['languages'] = { 'python' => { 'version' => '2.6.2' } }
           end.converge described_recipe
         end
 
@@ -660,8 +660,8 @@ describe 'datadog::dd-agent' do
             platform: 'centos',
             version: '6.9'
           ) do |node|
-            node.set['datadog'] = { 'api_key' => 'somethingnotnil' }
-            node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+            node.normal['datadog'] = { 'api_key' => 'somethingnotnil' }
+            node.normal['languages'] = { 'python' => { 'version' => '2.6.2' } }
           end.converge described_recipe
         end
 
@@ -682,11 +682,11 @@ describe 'datadog::dd-agent' do
             platform: 'ubuntu',
             version: '14.04'
           ) do |node|
-            node.set['datadog'] = {
+            node.normal['datadog'] = {
               'api_key' => 'somethingnotnil',
               'agent_allow_downgrade' => true
             }
-            node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+            node.normal['languages'] = { 'python' => { 'version' => '2.6.2' } }
           end.converge described_recipe
         end
 
@@ -705,11 +705,11 @@ describe 'datadog::dd-agent' do
             platform: 'centos',
             version: '6.9'
           ) do |node|
-            node.set['datadog'] = {
+            node.normal['datadog'] = {
               'api_key' => 'somethingnotnil',
               'agent_allow_downgrade' => true
             }
-            node.set['languages'] = { 'python' => { 'version' => '2.6.2' } }
+            node.normal['languages'] = { 'python' => { 'version' => '2.6.2' } }
           end.converge described_recipe
         end
 
@@ -729,7 +729,7 @@ describe 'datadog::dd-agent' do
       cached(:chef_run) do
         ChefSpec::SoloRunner.new do |node|
           node.automatic['languages'] = { python: { version: '2.6.2' } }
-          node.set['datadog'] = { api_key: 'somethingnotnil' }
+          node.normal['datadog'] = { api_key: 'somethingnotnil' }
         end.converge described_recipe
       end
 
@@ -740,7 +740,7 @@ describe 'datadog::dd-agent' do
       cached(:chef_run) do
         ChefSpec::SoloRunner.new do |node|
           node.automatic['languages'] = { python: { version: '2.6.2' } }
-          node.set['datadog'] = {
+          node.normal['datadog'] = {
             api_key: 'somethingnotnil',
             agent_enable: false,
             agent_start: false
@@ -766,7 +766,7 @@ describe 'datadog::dd-agent' do
             :platform => 'amazon',
             :version => '2017.03'
           ) do |node|
-            node.set['datadog'] = { 'api_key' => 'somethingnotnil', 'agent6' => true }
+            node.normal['datadog'] = { 'api_key' => 'somethingnotnil', 'agent6' => true }
           end.converge described_recipe
         end
 
@@ -783,7 +783,7 @@ describe 'datadog::dd-agent' do
             :platform => 'redhat',
             :version => '6.8'
           ) do |node|
-            node.set['datadog'] = { 'api_key' => 'somethingnotnil', 'agent6' => true }
+            node.normal['datadog'] = { 'api_key' => 'somethingnotnil', 'agent6' => true }
           end.converge described_recipe
         end
 
@@ -800,7 +800,7 @@ describe 'datadog::dd-agent' do
             :platform => 'redhat',
             :version => '7.3'
           ) do |node|
-            node.set['datadog'] = { 'api_key' => 'somethingnotnil', 'agent6' => true }
+            node.normal['datadog'] = { 'api_key' => 'somethingnotnil', 'agent6' => true }
           end.converge described_recipe
         end
 
@@ -822,7 +822,7 @@ describe 'datadog::dd-agent' do
               version: '14.04'
             ) do |node|
               node.name 'chef-nodename' # expected to be used as the hostname in `datadog.yaml`
-              node.set['datadog'] = { 'api_key' => 'somethingnotnil', 'agent6' => true }
+              node.normal['datadog'] = { 'api_key' => 'somethingnotnil', 'agent6' => true }
             end.converge described_recipe
           end
 
@@ -874,7 +874,7 @@ describe 'datadog::dd-agent' do
               version: '2012R2'
             ) do |node|
               node.name 'chef-nodename' # expected to be used as the hostname in `datadog.yaml`
-              node.set['datadog'] = { 'api_key' => 'somethingnotnil', 'agent6' => true }
+              node.normal['datadog'] = { 'api_key' => 'somethingnotnil', 'agent6' => true }
             end.converge described_recipe
           end
 
@@ -928,7 +928,7 @@ describe 'datadog::dd-agent' do
             :version => '2012R2',
             :file_cache_path => 'C:/chef/cache'
           ) do |node|
-            node.set['datadog'] = {
+            node.normal['datadog'] = {
               'api_key' => 'somethingnotnil',
               'agent6' => true,
               'agent_version' => '5.22.0',
