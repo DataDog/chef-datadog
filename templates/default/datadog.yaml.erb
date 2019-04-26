@@ -61,17 +61,6 @@ if node['datadog']['web_proxy']['host']
   http_proxy = scheme + http_proxy
 end
 
-# In the default case we will start and run with only container collection.
-process_agent_enabled = 'false'
-
-if node['datadog']['enable_process_agent'].is_a?(TrueClass)
-  # Collect processes if enabled.
-  process_agent_enabled = 'true'
-elsif node['datadog']['enable_process_agent'].is_a?(FalseClass)
-  # Disable the Agent altogether if false.
-  process_agent_enabled = 'disabled'
-end
-
 ## Populate agent_config ##
 agent_config = @extra_config.merge({
   api_key: @api_key,
@@ -92,22 +81,6 @@ agent_config = @extra_config.merge({
 
   # log agent options
   logs_enabled: node['datadog']['enable_logs_agent'],
-
-  # process agent options
-  process_config: {
-    enabled: process_agent_enabled,
-    log_file: node['datadog']['process_agent']['log_file'],
-    intervals: {
-      container: node['datadog']['process_agent']['container_interval'],
-      container_realtime: node['datadog']['process_agent']['rtcontainer_interval'],
-      process: node['datadog']['process_agent']['rtcontainer_interval'],
-      process_realtime: node['datadog']['process_agent']['rtprocess_interval'],
-    },
-    blacklist_patterns: node['datadog']['process_agent']['blacklist'],
-    scrub_args: node['datadog']['process_agent']['scrub_args'],
-    custom_sensitive_words: node['datadog']['process_agent']['custom_sensitive_words'],
-    process_dd_url: node['datadog']['process_agent']['url']
-  }
 })
 
 if node['datadog']['statsd_forward_host']
@@ -155,6 +128,35 @@ apm_config.reject!{ |k,v| v.nil? }
 apm_config = @extra_config['apm_config'].merge(apm_config) unless @extra_config['apm_config'].nil?
 agent_config[:apm_config] = apm_config
 
+# In the default case we will start and run with only container collection.
+process_agent_enabled = 'false'
+
+if node['datadog']['enable_process_agent'].is_a?(TrueClass)
+  # Collect processes if enabled.
+  process_agent_enabled = 'true'
+elsif node['datadog']['enable_process_agent'].is_a?(FalseClass)
+  # Disable the Agent altogether if false.
+  process_agent_enabled = 'disabled'
+end
+
+# process agent options
+process_config = {
+  enabled: process_agent_enabled,
+  log_file: node['datadog']['process_agent']['log_file'],
+  intervals: {
+    container: node['datadog']['process_agent']['container_interval'],
+    container_realtime: node['datadog']['process_agent']['rtcontainer_interval'],
+    process: node['datadog']['process_agent']['rtcontainer_interval'],
+    process_realtime: node['datadog']['process_agent']['rtprocess_interval'],
+  },
+  blacklist_patterns: node['datadog']['process_agent']['blacklist'],
+  scrub_args: node['datadog']['process_agent']['scrub_args'],
+  custom_sensitive_words: node['datadog']['process_agent']['custom_sensitive_words'],
+  process_dd_url: node['datadog']['process_agent']['url']
+}
+
+process_config = process_config.merge(@extra_config['process_config']) unless  @extra_config['process_config'].nil?
+agent_config[:process_config] = process_config
 
 # Remove nil values
 agent_config[:process_config][:intervals].reject!{ |k,v| v.nil? }
