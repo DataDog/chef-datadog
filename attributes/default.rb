@@ -66,6 +66,11 @@ default['datadog']['agent6_config_dir'] =
     '/etc/datadog-agent'
   end
 
+# The site of the Datadog intake to send Agent data to.
+# This configuration option is supported since Agent 6.6
+# Defaults to 'datadoghq.com', set to 'datadoghq.eu' to send data to the EU site.
+default['datadog']['site'] = nil
+
 # Set a key to true to make the agent6 use the v2 api on that endpoint, false otherwise.
 # Leave key value to nil to use agent6 default for that endpoint.
 # Supported keys: "series", "events", "service checks"
@@ -88,9 +93,14 @@ default['datadog']['extra_endpoints']['prod']['url'] = nil # optional
 # Set prefix to '' if you want Chef tags to be sent without prefix.
 default['datadog']['tag_prefix'] = 'tag:'
 
-# Don't change these
-# The host of the Datadog intake server to send agent data to
-default['datadog']['url'] = 'https://app.datadoghq.com'
+# The host of the Datadog intake server to send Agent data to, only set this option
+# if you need the Agent to send data to a custom URL.
+# The nil value will let the Agent 6 select the URL to send the data.
+# Any non-nil value overrides the 'site' value, prefer using 'site' unless your
+# use case isn't covered by 'site'.
+# For Agent 5, the Agent 5 recipe will fallback on https://app.datadoghq.com
+# (see recipes/dd-agent.rb).
+default['datadog']['url'] = nil
 
 # Add tags as override attributes in your role
 # This can be a string of comma separated tags, a hash in this format:

@@ -28,7 +28,10 @@ git tag/the gem version you're using for your version's documentation*
 
 Requirements
 ============
-- chef >= 10.14
+- chef-client >= 12.7
+
+If you need support for Chef < 12.7, please consider using a [release 2.x of the cookbook](https://github.com/DataDog/chef-datadog/releases/tag/v2.18.0).
+See the CHANGELOG for more info.
 
 Platforms
 ---------
@@ -39,7 +42,7 @@ Platforms
 * RedHat
 * Scientific Linux
 * Ubuntu
-* Windows (requires chef >= 12.0)
+* Windows
 * SUSE (requires chef >= 13.3)
 
 Cookbooks
@@ -49,19 +52,20 @@ The following Opscode cookbooks are dependencies:
 
 * `apt`
 * `chef_handler`
-* `windows`
 * `yum`
 
-**Note for Chef 11 users**: please use these additional dependency version contraints for compatibility with Chef 11:
+### Chef support
 
-```
-cookbook 'apt', '< 4.0'
-cookbook 'chef_handler', '< 2.0'
-cookbook 'windows', '< 2.0'
-cookbook 'yum', '~> 3.0'
-```
+**Chef 13 users**
 
-(in Berkshelf/Librarian format)
+- If you're using Chef 13 and chef_handler 1.x, you may have trouble using the
+dd-handler recipe. The known workaround is to update your dependency to `chef_handler >= 2.1`.
+
+**Chef 14 and 15 users**:
+
+- In order to support Chef 12 and 13, the `datadog` cookbook has a dependency to
+the `chef_handler` cookbook which is now shipped as a resource in Chef 14.
+Unfortunately, it will display a deprecation message to Chef 14 and 15 users.
 
 Recipes
 =======
@@ -93,23 +97,25 @@ dd-handler
 ----------
 Installs the [chef-handler-datadog](https://rubygems.org/gems/chef-handler-datadog) gem and invokes the handler at the end of a Chef run to report the details back to the newsfeed.
 
-dogstatsd-(python|ruby)
+dogstatsd-ruby
 -----------------------
 Installs the language-specific libraries to interact with `dogstatsd`.
 
-* Note for Chef >= 13 users: the `datadog::dogstatsd-python` recipe is not compatible with Chef >= 13, as it relies on a resource that was removed in Chef 13.0.
-  To install the `dogstatsd-python` library with Chef, please add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the following resource:
+For ruby, please use the `datadog::dogstatsd-ruby` recipe.
+
+For Python, please add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the following resource:
   ```ruby
   python_package 'dogstatsd-python' # assumes that python and pip are installed
   ```
   For more advanced usage, please refer to the [`poise-python` cookbook documentation](https://github.com/poise/poise-python)
 
-ddtrace-(python|ruby)
+ddtrace-ruby
 ---------------------
 Installs the language-specific libraries for application Traces (APM).
 
-* Note for Chef >= 13 users: the `datadog::ddtrace-python` recipe is not compatible with Chef >= 13, as it relies on a resource that was removed in Chef 13.0.
-  To install the `ddtrace-python` library with Chef, please add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the following resource:
+For ruby, please use the `datadog::ddtrace-ruby` recipe.
+
+For Python, please add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the following resource:
   ```ruby
   python_package 'ddtrace' # assumes that python and pip are installed
   ```
@@ -133,7 +139,7 @@ The `:remove` action disables an integration.
 
 ### Syntax
 
-```ruby
+```
 datadog_monitor 'name' do
   init_config                       Hash # default value: {}
   instances                         Array # default value: []
@@ -158,7 +164,7 @@ end
 
 ### Example
 
-This example enables the ElasticSearch integration by using the `datadog_monitor` resource. It provides the instance configuration (in this case: the url to connect to ElasticSearch) and set the `use_integration_template` flag to use the default configuration template.
+This example enables the ElasticSearch integration by using the `datadog_monitor` resource. It provides the instance configuration (in this case: the url to connect to ElasticSearch) and sets the `use_integration_template` flag to use the default configuration template. Also, it notifies the `service[datadog-agent]` resource in order to restart the Agent.
 
 Note that the Agent installation needs to be earlier in the run list.
 
@@ -168,10 +174,65 @@ include_recipe 'datadog::dd-agent'
 datadog_monitor 'elastic'
   instances  [{'url' => 'http://localhost:9200'}]
   use_integration_template true
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end
 ```
 
 See `recipes/` for many examples using the `datadog_monitor` resource.
+
+datadog_integration
+---------------
+
+The `datadog_integration` resource will help you to install specific versions
+of Datadog integrations.
+
+The default action `:install` installs the integration on the node using the
+`agent integration install` command.
+
+The `:remove` action removes an integration from the node using the `agent
+integration remove` command.
+
+### Syntax
+
+```
+datadog_integration 'name' do
+  version                           String # version to install for :install action.
+  action                            Symbol # defaults to :install if not specified
+end
+```
+
+#### Actions
+
+* `:install` Default. Installs an integration in the given version.
+* `:remove` Removes an integration.
+
+#### Properties
+
+* `'name'` is the name of the Agent integration to install, e.g. `datadog-apache`
+* `version` is the version of the integration that you want to install. Only needed
+with the `:install` action.
+
+### Example
+
+This example installs version `1.11.0` of the ElasticSearch integration by
+using the `datadog_integration` resource.
+
+Note that the Agent installation needs to be earlier in the run list.
+
+```
+include_recipe 'datadog::dd-agent'
+
+datadog_integration 'datadog-elastic'
+  version '1.11.0'
+end
+```
+
+In order to get the available versions of the integrations, please refer to
+their `CHANGELOG.md` file in the [integrations-core repository](https://github.com/DataDog/integrations-core).
+
+**Note for Chef Windows users**: as the datadog-agent binary available on the
+node is used by this resource, the chef-client must have read access to the
+`datadog.yaml` file.
 
 Usage
 =====
@@ -315,6 +376,24 @@ You will need to indicate that you want to setup an Agent v5 instead of v6, pin 
 We are not making use of data_bags in this recipe at this time, as it is unlikely that you will have more than one API key and one application key.
 
 For more deployment details, visit the [Datadog Documentation site](http://docs.datadoghq.com/).
+
+### Chef 12
+
+Depending of the Chef 12 version you're using, you will have to add some extra
+dependency contraints.
+
+#### Chef < 12.14
+
+```ruby
+depends 'yum', '< 5.0'
+```
+
+#### Chef < 12.9
+
+```ruby
+depends 'apt', '< 6.0.0'
+depends 'yum', '< 5.0'
+```
 
 AWS OpsWorks Chef Deployment
 ----------------------------

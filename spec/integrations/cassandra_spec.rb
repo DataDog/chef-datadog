@@ -66,7 +66,7 @@ describe 'datadog::cassandra' do
       ChefSpec::SoloRunner.new(step_into: ['datadog_monitor']) do |node|
         node.automatic['languages'] = { python: { version: '2.7.11' } }
 
-        node.set['datadog'] = {
+        node.normal['datadog'] = {
           api_key: 'someapikey',
           cassandra: {
             instances: [
@@ -265,7 +265,7 @@ describe 'datadog::cassandra' do
       ChefSpec::SoloRunner.new(step_into: ['datadog_monitor']) do |node|
         node.automatic['languages'] = { python: { version: '2.7.2' } }
 
-        node.set['datadog'] = {
+        node.normal['datadog'] = {
           api_key: 'someapikey',
           cassandra: {
             version: 2,
@@ -804,7 +804,7 @@ describe 'datadog::cassandra' do
       ChefSpec::SoloRunner.new(step_into: ['datadog_monitor']) do |node|
         node.automatic['languages'] = { python: { version: '2.7.2' } }
 
-        node.set['datadog'] = {
+        node.normal['datadog'] = {
           api_key: 'someapikey',
           cassandra: {
             version: 3,

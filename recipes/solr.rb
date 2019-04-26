@@ -8,4 +8,6 @@ include_recipe 'datadog::dd-agent'
 datadog_monitor 'solr' do
   instances node['datadog']['solr']['instances']
   logs node['datadog']['solr']['logs']
+  action :add
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

@@ -22,4 +22,6 @@ include_recipe 'datadog::dd-agent'
 datadog_monitor 'ssh_check' do
   instances node['datadog']['ssh_check']['instances']
   logs node['datadog']['ssh_check']['logs']
+  action :add
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end
