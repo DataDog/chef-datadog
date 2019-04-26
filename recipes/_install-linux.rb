@@ -52,20 +52,6 @@ else
   package_action = node['datadog']['agent_package_action']
 end
 
-if !dd_agent_version.nil? && dd_agent_version.split('.')[0].split(':').last.to_i < 5
-  # If version specified and lower than 5.x
-  Chef::Log.error 'Support for Agent pre 5.x has been removed. Please use a 2.x release of the cookbook.'
-  return
-end
-
-# default behavior, remove the `base` package as it is no longer needed
-# TODO(remy): we'll probably want to remove that for release 4.0 of the cookbook
-package 'datadog-agent-base' do
-  action :remove
-  only_if 'rpm -q datadog-agent-base' if %w[rhel fedora].include?(node['platform_family'])
-  not_if 'apt-cache policy datadog-agent-base | grep "Installed: (none)"' if node['platform_family'] == 'debian'
-end
-
 package_retries = node['datadog']['agent_package_retries']
 package_retry_delay = node['datadog']['agent_package_retry_delay']
 # Install the regular package
