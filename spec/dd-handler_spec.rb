@@ -40,10 +40,10 @@ describe 'datadog::dd-handler' do
         platform: 'ubuntu',
         version: '14.04'
       ) do |node|
-        node.set['datadog']['api_key'] = 'somethingnotnil'
-        node.set['datadog']['application_key'] = 'somethingnotnil2'
-        node.set['datadog']['chef_handler_enable'] = true
-        node.set['datadog']['use_ec2_instance_id'] = true
+        node.normal['datadog']['api_key'] = 'somethingnotnil'
+        node.normal['datadog']['application_key'] = 'somethingnotnil2'
+        node.normal['datadog']['chef_handler_enable'] = true
+        node.normal['datadog']['use_ec2_instance_id'] = true
       end.converge described_recipe
     end
 
@@ -58,10 +58,10 @@ describe 'datadog::dd-handler' do
         platform: 'ubuntu',
         version: '14.04'
       ) do |node|
-        node.set['datadog']['api_key'] = 'somethingnotnil'
-        node.set['datadog']['application_key'] = 'somethingnotnil2'
-        node.set['datadog']['chef_handler_enable'] = false
-        node.set['datadog']['use_ec2_instance_id'] = true
+        node.normal['datadog']['api_key'] = 'somethingnotnil'
+        node.normal['datadog']['application_key'] = 'somethingnotnil2'
+        node.normal['datadog']['chef_handler_enable'] = false
+        node.normal['datadog']['use_ec2_instance_id'] = true
       end.converge described_recipe
     end
 
@@ -78,10 +78,10 @@ describe 'datadog::dd-handler' do
         platform: 'ubuntu',
         version: '14.04'
       ) do |node|
-        node.set['datadog']['api_key'] = 'api_overriden_by_run_state'
-        node.set['datadog']['application_key'] = 'app_overriden_by_run_state'
-        node.set['datadog']['chef_handler_enable'] = true
-        node.set['datadog']['use_ec2_instance_id'] = true
+        node.normal['datadog']['api_key'] = 'api_overriden_by_run_state'
+        node.normal['datadog']['application_key'] = 'app_overriden_by_run_state'
+        node.normal['datadog']['chef_handler_enable'] = true
+        node.normal['datadog']['use_ec2_instance_id'] = true
         node.run_state['datadog'] = {
           'api_key' => 'somethingnotnil',
           'application_key' => 'somethingnotnil2'
@@ -100,8 +100,8 @@ describe 'datadog::dd-handler' do
         platform: 'ubuntu',
         version: '14.04'
       ) do |node|
-        node.set['datadog']['chef_handler_enable'] = true
-        node.set['datadog']['use_ec2_instance_id'] = true
+        node.normal['datadog']['chef_handler_enable'] = true
+        node.normal['datadog']['use_ec2_instance_id'] = true
         node.run_state['datadog'] = {
           'api_key' => 'somethingnotnil',
           'application_key' => 'somethingnotnil2'
@@ -120,13 +120,13 @@ describe 'datadog::dd-handler' do
         platform: 'ubuntu',
         version: '14.04'
       ) do |node|
-        node.set['datadog']['api_key'] = 'somethingnotnil'
-        node.set['datadog']['application_key'] = 'somethingnotnil2'
-        node.set['datadog']['chef_handler_enable'] = true
-        node.set['datadog']['use_ec2_instance_id'] = true
-        node.set['datadog']['extra_endpoints']['qqqq']['enabled'] = true
-        node.set['datadog']['extra_endpoints']['qqqq']['api_key'] = 'something'
-        node.set['datadog']['extra_endpoints']['qqqq']['application_key'] = 'something2'
+        node.normal['datadog']['api_key'] = 'somethingnotnil'
+        node.normal['datadog']['application_key'] = 'somethingnotnil2'
+        node.normal['datadog']['chef_handler_enable'] = true
+        node.normal['datadog']['use_ec2_instance_id'] = true
+        node.normal['datadog']['extra_endpoints']['qqqq']['enabled'] = true
+        node.normal['datadog']['extra_endpoints']['qqqq']['api_key'] = 'something'
+        node.normal['datadog']['extra_endpoints']['qqqq']['application_key'] = 'something2'
       end.converge described_recipe
     end
 
@@ -146,13 +146,13 @@ describe 'datadog::dd-handler' do
         platform: 'ubuntu',
         version: '14.04'
       ) do |node|
-        node.set['datadog']['api_key'] = 'somethingnotnil'
-        node.set['datadog']['application_key'] = 'somethingnotnil2'
-        node.set['datadog']['chef_handler_enable'] = true
-        node.set['datadog']['use_ec2_instance_id'] = true
-        node.set['datadog']['extra_endpoints']['qqqq']['enabled'] = false
-        node.set['datadog']['extra_endpoints']['qqqq']['api_key'] = 'something'
-        node.set['datadog']['extra_endpoints']['qqqq']['application_key'] = 'something2'
+        node.normal['datadog']['api_key'] = 'somethingnotnil'
+        node.normal['datadog']['application_key'] = 'somethingnotnil2'
+        node.normal['datadog']['chef_handler_enable'] = true
+        node.normal['datadog']['use_ec2_instance_id'] = true
+        node.normal['datadog']['extra_endpoints']['qqqq']['enabled'] = false
+        node.normal['datadog']['extra_endpoints']['qqqq']['api_key'] = 'something'
+        node.normal['datadog']['extra_endpoints']['qqqq']['application_key'] = 'something2'
       end.converge described_recipe
     end
 
@@ -167,11 +167,11 @@ describe 'datadog::dd-handler' do
         platform: 'ubuntu',
         version: '14.04'
       ) do |node|
-        node.set['datadog']['api_key'] = 'somethingnotnil'
-        node.set['datadog']['application_key'] = 'somethingnotnil2'
-        node.set['datadog']['chef_handler_enable'] = true
-        node.set['datadog']['use_ec2_instance_id'] = true
-        node.set['datadog']['tags_blacklist_regex'] = 'tags.*'
+        node.normal['datadog']['api_key'] = 'somethingnotnil'
+        node.normal['datadog']['application_key'] = 'somethingnotnil2'
+        node.normal['datadog']['chef_handler_enable'] = true
+        node.normal['datadog']['use_ec2_instance_id'] = true
+        node.normal['datadog']['tags_blacklist_regex'] = 'tags.*'
       end.converge described_recipe
     end
 
@@ -186,11 +186,11 @@ describe 'datadog::dd-handler' do
         platform: 'ubuntu',
         version: '14.04'
       ) do |node|
-        node.set['datadog']['api_key'] = 'somethingnotnil'
-        node.set['datadog']['application_key'] = 'somethingnotnil2'
-        node.set['datadog']['chef_handler_enable'] = true
-        node.set['datadog']['use_ec2_instance_id'] = true
-        node.set['datadog']['handler_extra_config']['foo'] = 'bar'
+        node.normal['datadog']['api_key'] = 'somethingnotnil'
+        node.normal['datadog']['application_key'] = 'somethingnotnil2'
+        node.normal['datadog']['chef_handler_enable'] = true
+        node.normal['datadog']['use_ec2_instance_id'] = true
+        node.normal['datadog']['handler_extra_config']['foo'] = 'bar'
       end.converge described_recipe
     end
 

@@ -75,6 +75,7 @@ end
 ## Populate agent_config ##
 agent_config = @extra_config.merge({
   api_key: @api_key,
+  site: node['datadog']['site'],
   dd_url: node['datadog']['url'],
   hostname: node['datadog']['hostname'],
   bind_host: node['datadog']['bind_host'],

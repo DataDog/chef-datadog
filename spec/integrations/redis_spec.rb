@@ -24,7 +24,7 @@ describe 'datadog::redisdb' do
     ChefSpec::SoloRunner.new(step_into: ['datadog_monitor']) do |node|
       node.automatic['languages'] = { python: { version: '2.7.2' } }
 
-      node.set['datadog'] = {
+      node.normal['datadog'] = {
         api_key: 'someapikey',
         redisdb: {
           instances: [
@@ -58,7 +58,7 @@ describe 'datadog::redisdb' do
   it { is_expected.to add_datadog_monitor('redisdb') }
 
   it 'renders expected YAML config file' do
-    expect(chef_run).to(render_file('/etc/dd-agent/conf.d/redisdb.yaml').with_content { |content|
+    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/redisdb.yaml').with_content { |content|
       expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
     })
   end

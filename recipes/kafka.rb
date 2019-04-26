@@ -39,4 +39,6 @@ datadog_monitor 'kafka' do
   instances node['datadog']['kafka']['instances']
   version node['datadog']['kafka']['version']
   logs node['datadog']['kafka']['logs']
+  action :add
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

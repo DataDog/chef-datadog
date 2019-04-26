@@ -28,15 +28,7 @@ default['datadog']['api_key'] = nil
 # Set it as an attribute, or on your node `run_state` under the key `['datadog']['application_key']`
 default['datadog']['application_key'] = nil
 
-########################################################################
-###                  Agent6-only attributes                          ###
-
-# If you're installing a pre-release version of Agent 6 (beta or RC), you need to:
-# * on debian: set node['datadog']['agent6_aptrepo_dist'] to 'beta' instead of 'stable'
-# * on RHEL: set node['datadog']['agent6_yumrepo'] to 'https://yum.datadoghq.com/beta/x86_64/'
-# In all cases, follow the instructions below:
-
-# Set node['datadog']['agent6'] to true to install an agent6 instead of agent5.
+# Set node['datadog']['agent6'] to false to install an agent5 instead of agent6.
 # To upgrade from agent5 to agent6, you need to:
 # * set node['datadog']['agent6'] to true, and
 # * either set node['datadog']['agent6_version'] to an existing agent6 version (recommended), or
@@ -45,7 +37,14 @@ default['datadog']['application_key'] = nil
 # * set node['datadog']['agent6'] to false, and
 # * pin node['datadog']['agent_version'] to an existing agent5 version, and
 # * set node['datadog']['agent_allow_downgrade'] to true
-default['datadog']['agent6'] = false
+# If you're installing a pre-release version of Agent 6 (beta or RC), you need to:
+# * on debian: set node['datadog']['agent6_aptrepo_dist'] to 'beta' instead of 'stable'
+# * on RHEL: set node['datadog']['agent6_yumrepo'] to 'https://yum.datadoghq.com/beta/x86_64/'
+default['datadog']['agent6'] = true
+
+########################################################################
+###                  Agent6-only attributes                          ###
+
 # Default of `nil` will install latest version, applies to agent6 only.
 # See documentation of `agent_version` attribute for allowed configuration format.
 default['datadog']['agent6_version'] = nil
@@ -66,6 +65,11 @@ default['datadog']['agent6_config_dir'] =
   else
     '/etc/datadog-agent'
   end
+
+# The site of the Datadog intake to send Agent data to.
+# This configuration option is supported since Agent 6.6
+# Defaults to 'datadoghq.com', set to 'datadoghq.eu' to send data to the EU site.
+default['datadog']['site'] = nil
 
 # Set a key to true to make the agent6 use the v2 api on that endpoint, false otherwise.
 # Leave key value to nil to use agent6 default for that endpoint.
@@ -89,9 +93,14 @@ default['datadog']['extra_endpoints']['prod']['url'] = nil # optional
 # Set prefix to '' if you want Chef tags to be sent without prefix.
 default['datadog']['tag_prefix'] = 'tag:'
 
-# Don't change these
-# The host of the Datadog intake server to send agent data to
-default['datadog']['url'] = 'https://app.datadoghq.com'
+# The host of the Datadog intake server to send Agent data to, only set this option
+# if you need the Agent to send data to a custom URL.
+# The nil value will let the Agent 6 select the URL to send the data.
+# Any non-nil value overrides the 'site' value, prefer using 'site' unless your
+# use case isn't covered by 'site'.
+# For Agent 5, the Agent 5 recipe will fallback on https://app.datadoghq.com
+# (see recipes/dd-agent.rb).
+default['datadog']['url'] = nil
 
 # Add tags as override attributes in your role
 # This can be a string of comma separated tags, a hash in this format:

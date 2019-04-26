@@ -20,4 +20,6 @@ include_recipe 'datadog::dd-agent'
 datadog_monitor 'kyototycoon' do
   instances node['datadog']['kyototycoon']['instances']
   logs node['datadog']['kyototycoon']['logs']
+  action :add
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

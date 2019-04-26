@@ -58,4 +58,6 @@ include_recipe 'datadog::dd-agent'
 datadog_monitor 'windows_service' do
   instances node['datadog']['windows_service']['instances']
   logs node['datadog']['windows_service']['logs']
+  action :add
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

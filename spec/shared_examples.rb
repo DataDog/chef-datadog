@@ -14,7 +14,8 @@ shared_examples_for 'datadog conf' do
   end
 end
 
-shared_examples_for 'common linux resources' do
+# Common linux resources for Agent v5, see 'common linux resources' for Agent v6
+shared_examples_for 'common linux resources v5' do
   it_behaves_like 'datadog-agent service'
   it_behaves_like 'datadog conf'
 
@@ -31,12 +32,22 @@ shared_examples_for 'common linux resources' do
   end
 end
 
+# Common linux resources for Agent v6, see 'common linux resource v5' for Agent v5
+shared_examples_for 'common linux resources' do
+  it_behaves_like 'datadog-agent service'
+  it_behaves_like 'datadog conf'
+
+  it 'includes the repository recipe' do
+    expect(chef_run).to include_recipe('datadog::repository')
+  end
+
+  it 'drops an agent config file' do
+    expect(chef_run).to create_template '/etc/datadog-agent/datadog.yaml'
+  end
+end
+
 shared_examples_for 'datadog-agent' do
   it_behaves_like 'common linux resources'
-
-  it 'removes the datadog-agent-base package' do
-    expect(chef_run).to remove_package 'datadog-agent-base'
-  end
 end
 
 shared_examples_for 'debianoids datadog-agent' do
@@ -59,6 +70,19 @@ shared_examples_for 'common windows resources' do
   it_behaves_like 'datadog-agent service'
   it_behaves_like 'datadog conf'
 
+  it 'drops an agent config file' do
+    expect(chef_run).to create_template 'C:\ProgramData/Datadog/datadog.yaml'
+  end
+
+  it 'does not render a go-metro log config' do
+    expect(chef_run).to_not render_file('C:\ProgramData/Datadog/datadog.yaml').with_content(/^go-metro_log_file.*$/)
+  end
+end
+
+shared_examples_for 'common windows resources v5' do
+  it_behaves_like 'datadog-agent service'
+  it_behaves_like 'datadog conf'
+
   it 'ensures the Datadog config directory exists' do
     expect(chef_run).to create_directory 'C:\ProgramData/Datadog'
   end
@@ -69,6 +93,29 @@ shared_examples_for 'common windows resources' do
 
   it 'does not render a go-metro log config' do
     expect(chef_run).to_not render_file('C:\ProgramData/Datadog/datadog.conf').with_content(/^go-metro_log_file.*$/)
+  end
+end
+
+shared_examples_for 'windows Datadog Agent v5' do |installer_extension|
+  it_behaves_like 'common windows resources v5'
+
+  agent_installer = "C:/chef/cache/ddagent-cli.#{installer_extension}"
+
+  it 'downloads the remote file only if it\'s changed' do
+    expect(chef_run).to create_remote_file(agent_installer)
+  end
+
+  it 'doesn\'t remove existing version of the Datadog Agent by default' do
+    expect(chef_run.package('Datadog Agent removal')).to do_nothing
+  end
+
+  it 'notifies the removal of the Datadog Agent when a remote file is downloaded' do
+    expect(chef_run.remote_file(agent_installer)).to notify('package[Datadog Agent removal]').to(:remove)
+  end
+
+  it 'installs Datadog Agent' do
+    installer_type = installer_extension == :msi ? :msi : :custom
+    expect(chef_run).to install_windows_package('Datadog Agent').with(installer_type: installer_type)
   end
 end
 

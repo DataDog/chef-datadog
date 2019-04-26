@@ -22,4 +22,6 @@ include_recipe 'datadog::dd-agent'
 datadog_monitor 'iis' do
   instances node['datadog']['iis']['instances']
   logs node['datadog']['iis']['logs']
+  action :add
+  notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end
