@@ -65,15 +65,21 @@ else
   agent_config_file = ::File.join(node['datadog']['config_dir'], 'datadog.conf')
   template agent_config_file do
     def template_vars
+      # Default value of node['datadog']['url'] is now nil for an Agent 6
+      # but for compatibility with Agent 5, we still need to have the value
+      # set. It's set here.
+      dd_url = 'https://app.datadoghq.com'
+      dd_url = node['datadog']['url'] unless node['datadog']['url'].nil?
+
       api_keys = [Chef::Datadog.api_key(node)]
-      dd_urls = [node['datadog']['url']]
+      dd_urls = [dd_url]
       node['datadog']['extra_endpoints'].each do |_, endpoint|
         next unless endpoint['enabled']
         api_keys << endpoint['api_key']
         dd_urls << if endpoint['url']
                      endpoint['url']
                    else
-                     node['datadog']['url']
+                     dd_url
                    end
       end
       {
