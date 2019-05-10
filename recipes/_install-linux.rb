@@ -79,6 +79,6 @@ when 'suse'
     retry_delay package_retry_delay unless package_retry_delay.nil?
     action package_action # default is :install
     # allow_downgrade is only suported for zypper_package since Chef Client 13.6
-    allow_downgrade node['datadog']['agent_allow_downgrade'] if respond_to?(:allow_downgrade)
+    allow_downgrade node['datadog']['agent_allow_downgrade'] if respond_to?(:allow_downgrade) # ~FC009
   end
 end
