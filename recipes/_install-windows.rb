@@ -66,8 +66,7 @@ package_retries = node['datadog']['agent_package_retries']
 package_retry_delay = node['datadog']['agent_package_retry_delay']
 
 # Build source URL to download the installer
-source_url = node['datadog']['windows_agent_url'] + dd_agent_installer
-source_url = node['datadog']['windows_agent_direct_url'] if node['datadog']['windows_agent_direct_url']
+source_url = node['datadog']['windows_agent_direct_url'] ? node['datadog']['windows_agent_direct_url'] : node['datadog']['windows_agent_url'] + dd_agent_installer
 
 # Download the installer to a temp location
 remote_file temp_file do
