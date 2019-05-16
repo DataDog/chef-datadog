@@ -86,5 +86,9 @@ windows_package 'Datadog Agent' do # ~FC009
   installer_type installer_type
   options install_options
   action :install
-  returns [0, 3010]
+  if respond_to?(:returns)
+    returns [0, 3010]
+  else
+    success_codes [0, 3010]
+  end
 end
