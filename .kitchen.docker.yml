@@ -4,14 +4,23 @@ driver:
   use_sudo: false
 
 platforms:
-  - name: ubuntu-14.04
   # Exclude this OS for now, due to some odd behavior with the NTP check on CircleCI systems.
   # See https://circleci.com/gh/DataDog/chef-datadog/19
   # and http://support.ntp.org/bin/view/Support/KnownOsIssues#Section_9.2.4.2.5.3.
   # - name: ubuntu-12.04
+
+  - name: ubuntu-14.04
+    driver_config:
+      require_chef_omnibus: 14.12
   - name: centos-6.6
+    driver_config:
+      require_chef_omnibus: 14.12
   - name: centos-7.7
+    driver_config:
+      require_chef_omnibus: 14.12
   - name: debian-8.11
+    driver_config:
+      require_chef_omnibus: 14.12
 
 suites:
 - name: dd-agent-handler
