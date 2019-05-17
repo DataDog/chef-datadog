@@ -46,8 +46,20 @@ shared_examples_for 'common linux resources' do
   end
 end
 
+shared_examples_for 'datadog-agent v5' do
+  it_behaves_like 'common linux resources v5'
+end
+
 shared_examples_for 'datadog-agent' do
   it_behaves_like 'common linux resources'
+end
+
+shared_examples_for 'debianoids datadog-agent v5' do
+  it_behaves_like 'datadog-agent v5'
+
+  it 'installs the datadog-agent' do
+    expect(chef_run).to install_apt_package 'datadog-agent'
+  end
 end
 
 shared_examples_for 'debianoids datadog-agent' do
@@ -55,6 +67,14 @@ shared_examples_for 'debianoids datadog-agent' do
 
   it 'installs the datadog-agent' do
     expect(chef_run).to install_apt_package 'datadog-agent'
+  end
+end
+
+shared_examples_for 'rhellions datadog-agent v5' do
+  it_behaves_like 'datadog-agent v5'
+
+  it 'installs the datadog-agent' do
+    expect(chef_run).to install_yum_package 'datadog-agent'
   end
 end
 
