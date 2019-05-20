@@ -82,6 +82,8 @@ windows_package 'Datadog Agent' do # ~FC009
   installer_type installer_type
   options install_options
   action :install
+  # Before 3.0.0, we adviced users to use the windows cookbook ~> 1.38.0,
+  # we should probably keep the compatibilty for some time.
   if respond_to?(:returns)
     returns [0, 3010]
   else
