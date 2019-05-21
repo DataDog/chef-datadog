@@ -55,6 +55,12 @@ else
   installer_type = :msi
   # Agent >= 5.12.0 installs per-machine by default, but specifying ALLUSERS=1 shouldn't affect the install
   install_options = '/norestart ALLUSERS=1'
+
+  # Since 6.11.0, the core and APM/trace components of the Windows Agent run under
+  # a specific user instead of LOCAL_SYSTEM, check whether the user has provided
+  # custom credentials and use them if that's the case.
+  install_options.concat(' DDAGENTUSER_NAME=').concat(Chef::Datadog.ddagentuser_name(node)) if Chef::Datadog.ddagentuser_name(node)
+  install_options.concat(' DDAGENTUSER_PASSWORD=').concat(Chef::Datadog.ddagentuser_password(node)) if Chef::Datadog.ddagentuser_password(node)
 end
 
 package 'Datadog Agent removal' do

@@ -190,6 +190,15 @@ else
   default['datadog']['agent_name'] = 'datadog-agent'
 end
 
+# Since 6.11.0, the Datadog Agent creates/uses a custom user to run on Windows.
+# Set `windows_ddagentuser_name` using the format `<domain>\<user>` to provide a
+# specific username and `windows_ddagentuser_password` to provide a specific password.
+# You can set those values here, in role/environment/node or set in your
+# node `run_state` under the keys `['datadog']['windows_ddagentuser_name']` and
+# `['datadog']['windows_ddagentuser_password']`.
+default['datadog']['windows_ddagentuser_name'] = nil
+default['datadog']['windows_ddagentuser_password'] = nil
+
 # Agent Version for v5 Agents
 # To pin the version of v6 Agents, use the `agent6_version` attribute instead.
 # Default of `nil` will install latest version. On Windows, this will also upgrade to latest

@@ -10,6 +10,14 @@ class Chef
         run_state_or_attribute(node, 'application_key')
       end
 
+      def ddagentuser_name(node)
+        run_state_or_attribute(node, 'windows_ddagentuser_name')
+      end
+
+      def ddagentuser_password(node)
+        run_state_or_attribute(node, 'windows_ddagentuser_password')
+      end
+
       private
 
       def run_state_or_attribute(node, attribute)
