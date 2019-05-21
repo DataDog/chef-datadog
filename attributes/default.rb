@@ -196,6 +196,15 @@ else
   default['datadog']['agent_name'] = 'datadog-agent'
 end
 
+# Since 6.11.0, the Datadog Agent creates/uses a custom user to run on Windows.
+# Set `windows_ddagentuser_name` using the format `<domain>\<user>` to provide a
+# specific username and `windows_ddagentuser_password` to provide a specific password.
+# You can set those values here, in role/environment/node or set in your
+# node `run_state` under the keys `['datadog']['windows_ddagentuser_name']` and
+# `['datadog']['windows_ddagentuser_password']`.
+default['datadog']['windows_ddagentuser_name'] = nil
+default['datadog']['windows_ddagentuser_password'] = nil
+
 # DEPRECATED, will be removed after the release of datadog-agent 6.0
 # Set to true to always install datadog-agent-base (usually only installed on
 # systems with a version of Python lower than 2.6) instead of datadog-agent
