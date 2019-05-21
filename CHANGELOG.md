@@ -1,6 +1,10 @@
 Changes
 =======
 
+# 2.19.0 / 2019-05-21
+
+* [FEATURE] Provide custom credentials for the Windows Datadog Agent service. [#618][] [@remeh][]
+
 # 2.18.0 / 2019-03-18
 
 **Note for Windows users**: since Agent v6.11, `datadog >= 2.18.0` is
@@ -699,6 +703,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#585]: https://github.com/DataDog/chef-datadog/issues/585
 [#586]: https://github.com/DataDog/chef-datadog/issues/586
 [#588]: https://github.com/DataDog/chef-datadog/issues/588
+[#618]: https://github.com/DataDog/chef-datadog/issues/618
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@BrentOnRails]: https://github.com/BrentOnRails
