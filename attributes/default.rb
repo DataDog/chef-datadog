@@ -71,11 +71,6 @@ default['datadog']['agent6_config_dir'] =
 # Defaults to 'datadoghq.com', set to 'datadoghq.eu' to send data to the EU site.
 default['datadog']['site'] = nil
 
-# Set a key to true to make the agent6 use the v2 api on that endpoint, false otherwise.
-# Leave key value to nil to use agent6 default for that endpoint.
-# Supported keys: "series", "events", "service checks"
-default['datadog']['use_v2_api'] = {}
-
 ###                 End of Agent6-only attributes                    ###
 ########################################################################
 
@@ -112,10 +107,6 @@ default['datadog']['url'] = nil
 # `env:node.chef_environment`, `role:node.node.run_list.role`, `tag:somecheftag`
 default['datadog']['tags'] = ''
 
-# Add one "dd_check:checkname" tag per running check. It makes it possible to slice
-# and dice per monitored app (= running Agent Check) on Datadog's backend.
-default['datadog']['create_dd_check_tags'] = nil
-
 # Collect EC2 tags, set to 'yes' to collect
 default['datadog']['collect_ec2_tags'] = nil
 
@@ -138,12 +129,6 @@ default['datadog']['tags_submission_retries'] = nil
 # If the Chef Datadog handler supports a config option that's not available directly in this cookbook
 # you can set it as a key/value of this hash attribute. `nil` values will be ignored.
 default['datadog']['handler_extra_config'] = {}
-
-# Autorestart agent
-default['datadog']['autorestart'] = false
-
-# Run the agent in developer mode
-default['datadog']['developer_mode'] = false
 
 # Repository configuration
 architecture_map = {
@@ -247,10 +232,6 @@ default['datadog']['non_local_traffic'] = false
 # The loopback address Dogstatsd will bind (in Agent 5, the Forwarder also uses this address)
 default['datadog']['bind_host'] = 'localhost'
 
-# How often you want the agent to collect data, in seconds. Any value between
-# 15 and 60 is a reasonable interval.
-default['datadog']['check_freq'] = 15
-
 # Specify agent hostname
 # More information available here: http://docs.datadoghq.com/hostnames/#agent
 default['datadog']['hostname'] = node.name
@@ -259,28 +240,11 @@ default['datadog']['hostname'] = node.name
 # rather than the hostname for chef-handler.
 default['datadog']['use_ec2_instance_id'] = false
 
-# Use mount points instead of volumes to track disk and fs metrics
-default['datadog']['use_mount'] = false
-
-# Change port the agent is listening to
-default['datadog']['agent_port'] = 17123
-
 # Enable the agent to start at boot
 default['datadog']['agent_enable'] = true
 
 # Start agent or not
 default['datadog']['agent_start'] = true
-
-# Start a graphite listener on this port
-# https://github.com/DataDog/dd-agent/wiki/Feeding-Datadog-with-Graphite
-default['datadog']['graphite'] = false
-default['datadog']['graphite_port'] = 17124
-
-# log-parsing configuration
-default['datadog']['dogstreams'] = []
-
-# custom emitter configuration
-default['datadog']['custom_emitters'] = []
 
 # Logging configuration
 default['datadog']['syslog']['active'] = false
@@ -305,9 +269,9 @@ default['datadog']['web_proxy']['no_proxy'] = nil # only used for agent v6.0+
 # dogstatsd
 default['datadog']['dogstatsd'] = true
 default['datadog']['dogstatsd_port'] = 8125
-default['datadog']['dogstatsd_interval'] = 10
-default['datadog']['dogstatsd_normalize'] = 'yes'
-default['datadog']['dogstatsd_target'] = 'http://localhost:17123'
+default['datadog']['dogstatsd_interval'] = 10 # Agent v5 only.
+default['datadog']['dogstatsd_normalize'] = 'yes' # Agent v5 only.
+default['datadog']['dogstatsd_target'] = 'http://localhost:17123' # Agent v5 only.
 default['datadog']['statsd_forward_host'] = nil
 default['datadog']['statsd_forward_port'] = 8125
 default['datadog']['statsd_metric_namespace'] = nil
@@ -327,11 +291,6 @@ default['datadog']['extra_packages'] = {}
 # For service-specific configuration, use the integration recipes included
 # in this cookbook, and apply them to the appropirate node's run list.
 # Read more at http://docs.datadoghq.com/
-
-# For older integrations that do not consume the conf.d yaml files
-default['datadog']['legacy_integrations']['nagios']['enabled'] = false
-default['datadog']['legacy_integrations']['nagios']['description'] = 'Nagios integration'
-default['datadog']['legacy_integrations']['nagios']['config']['nagios_log'] = '/var/log/nagios3/nagios.log'
 
 # Service discovery settings
 # Enable with service_discovery_backend ('docker' is only valid option currently)
@@ -354,9 +313,6 @@ default['datadog']['max_traces_per_second'] = nil
 default['datadog']['receiver_port'] = nil
 # `connection_limit` is ignored in Agent 6
 default['datadog']['connection_limit'] = nil
-
-# ddtrace python version
-default['datadog']['ddtrace_python_version'] = nil
 
 # ddtrace ruby gem version
 default['datadog']['ddtrace_gem_version'] = nil
@@ -406,3 +362,52 @@ default['datadog']['enable_logs_agent'] = nil
 # This attribute only works on Chef >= 12.3
 # Change false to the URL of your custom gem server
 default['datadog']['gem_server'] = false
+
+########################################################################
+###                  Agent5-only attributes                          ###
+
+# Add one "dd_check:checkname" tag per running check. It makes it possible to slice
+# and dice per monitored app (= running Agent Check) on Datadog's backend.
+# Agent v5 only.
+default['datadog']['create_dd_check_tags'] = nil
+
+# Autorestart agent
+# Agent v5 only.
+default['datadog']['autorestart'] = false
+
+# Run the agent in developer mode
+# Agent v5 only.
+default['datadog']['developer_mode'] = false
+
+# How often you want the agent to collect data, in seconds. Any value between
+# 15 and 60 is a reasonable interval.
+# Agent v5 only.
+default['datadog']['check_freq'] = 15
+
+# Use mount points instead of volumes to track disk and fs metrics
+# Agent v5 only.
+default['datadog']['use_mount'] = false
+
+# Change port the agent is listening to
+# Agent v5 only.
+default['datadog']['agent_port'] = 17123
+
+# Start a graphite listener on this port
+# https://github.com/DataDog/dd-agent/wiki/Feeding-Datadog-with-Graphite
+# Agent v5 only.
+default['datadog']['graphite'] = false
+default['datadog']['graphite_port'] = 17124
+
+# log-parsing configuration
+# Agent v5 only.
+default['datadog']['dogstreams'] = []
+
+# custom emitter configuration
+# Agent v5 only.
+default['datadog']['custom_emitters'] = []
+
+# For older integrations that do not consume the conf.d yaml files
+# Agent v5 only.
+default['datadog']['legacy_integrations']['nagios']['enabled'] = false
+default['datadog']['legacy_integrations']['nagios']['description'] = 'Nagios integration'
+default['datadog']['legacy_integrations']['nagios']['config']['nagios_log'] = '/var/log/nagios3/nagios.log'
