@@ -15,6 +15,9 @@ instances:
     <% unless i['timeout'].nil? %>
     timeout: <%= i['timeout'] %>
     <% end %>
+    <% unless i['ssl_ignore_warning'].nil? %>
+    ssl_ignore_warning: <%= i['ssl_ignore_warning'] %>
+    <% end %>
     <% if i.key?('tags') && !i['tags'].empty? -%>
     tags:
       <% i['tags'].each do |t| -%>

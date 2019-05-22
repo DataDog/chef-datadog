@@ -26,6 +26,7 @@ describe file(AGENT_CONFIG) do
           'detect_leader' => false,
           'skip_proxy' => false,
           'ssl_verify' => true,
+          'ssl_ignore_warning' => true, 
           'tags' => ['_default'],
           'timeout' => 20
         }
