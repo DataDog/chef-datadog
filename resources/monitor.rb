@@ -15,9 +15,7 @@ property :use_integration_template, [TrueClass, FalseClass], required: false, de
 property :logs, [Array, nil], required: false, default: []
 
 action :add do
-  log "Adding monitoring for #{new_resource.name}" do
-    level :debug
-  end
+  Chef::Log.debug("Adding monitoring for #{new_resource.name}")
 
   template ::File.join(yaml_dir, "#{new_resource.name}.yaml") do
     # On Windows Agent v5, set the permissions on conf files to Administrators.
