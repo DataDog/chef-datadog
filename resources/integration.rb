@@ -12,15 +12,11 @@ property :version, String, required: true
 
 action :install do
   unless node['datadog']['agent6']
-    log 'The datadog_integration resource is only available with Agent v6.' do
-      level :error
-    end
+    Chef::Log.error('The datadog_integration resource is only available with Agent v6.')
     return
   end
 
-  log "Getting integration #{new_resource.name}" do
-    level :debug
-  end
+  Chef::Log.debug("Getting integration #{new_resource.name}")
 
   execute 'integration install' do
     command   "\"#{agent_exe_filepath}\" integration install #{new_resource.name}==#{new_resource.version}"
@@ -30,15 +26,11 @@ end
 
 action :remove do
   unless node['datadog']['agent6']
-    log 'The datadog_integration resource is only available with Agent v6.' do
-      level :error
-    end
+    Chef::Log.error('The datadog_integration resource is only available with Agent v6.')
     return
   end
 
-  log "Removing integration #{new_resource.name}" do
-    level :debug
-  end
+  Chef::Log.debug("Removing integration #{new_resource.name}")
 
   execute 'integration remove' do
     command   "\"#{agent_exe_filepath}\" integration remove #{new_resource.name}"
