@@ -44,9 +44,7 @@ action :add do
 end
 
 action :remove do
-  log "Removing #{new_resource.name} from #{yaml_dir}" do
-    level :debug
-  end
+  Chef::Log.debug("Removing #{new_resource.name} from #{yaml_dir}")
 
   file ::File.join(yaml_dir, "#{new_resource.name}.yaml") do
     action :delete
