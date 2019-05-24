@@ -69,7 +69,7 @@ describe 'datadog::repository' do
     context 'version 5' do
       cached(:chef_run) do
         ChefSpec::SoloRunner.new(
-          platform: 'centos', version: '5.10'
+          platform: 'centos', version: '5.11'
         ).converge(described_recipe)
       end
 

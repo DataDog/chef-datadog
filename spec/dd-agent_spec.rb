@@ -116,7 +116,7 @@ describe 'datadog::dd-agent' do
       cached(:chef_run) do
         ChefSpec::SoloRunner.new(
           :platform => 'fedora',
-          :version => '25'
+          :version => '26'
         ) do |node|
           node.normal['datadog'] = { 'api_key' => 'somethingnotnil' }
           node.normal['languages'] = { 'python' => { 'version' => '2.7.9' } }
@@ -298,7 +298,7 @@ describe 'datadog::dd-agent' do
       cached(:chef_run) do
         ChefSpec::SoloRunner.new(
           :platform => 'fedora',
-          :version => '25'
+          :version => '26'
         ) do |node|
           node.normal['datadog'] = {
             'agent6' => true,
@@ -403,7 +403,7 @@ describe 'datadog::dd-agent' do
       cached(:chef_run) do
         ChefSpec::SoloRunner.new(
           :platform => 'fedora',
-          :version => '25'
+          :version => '26'
         ) do |node|
           node.normal['datadog'] = {
             'agent6' => false,
