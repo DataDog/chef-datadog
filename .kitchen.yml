@@ -18,6 +18,8 @@ platforms:
     chef_versions = %w(
       12.7.2
       13.11.3
+      14
+      15
     )
 
     test_platforms.product(chef_versions).each do |platform_version, chef_version|
@@ -34,6 +36,8 @@ windows_platform = 'windows-2012r2'
 windows_chef_versions = %w(
   12.7.2
   13.11.3
+  14
+  15
 )
 
 windows_chef_versions.each do |chef_version|
@@ -563,3 +567,12 @@ suites:
             ssl_verify: true
             tags: ['_default']
             timeout: 20
+
+# Integrations test of the datadog_integration resource
+- name: dd_integration_resource
+  run_list:
+    - recipe[datadog::dd-agent]
+    - recipe[test::dd_integration_resource]
+  attributes:
+    datadog:
+      <<: *DATADOG
