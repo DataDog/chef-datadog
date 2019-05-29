@@ -8,7 +8,7 @@ datadog_integration 'datadog-aerospike' do
 end
 datadog_integration 'datadog-aerospike' do
   action :install
-  version  '1.2.0'
+  version '1.2.0'
 end
 # This time Chef should mention "up to date"
 datadog_integration 'datadog-aerospike' do

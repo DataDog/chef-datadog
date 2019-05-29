@@ -25,11 +25,11 @@ action :install do
 
     not_if {
       output = shell_out("#{agent_exe_filepath} integration show #{new_resource.property_name}").stdout
-      if output.match(/Installed version/) then
+      if output =~ /Installed version/
         property_name = output.match(/Package (.+):$/)[1].strip
         version       = output.match(/Installed version: (.+)$/)[1].strip
         # Same version already installed? Do not reinstall.
-        property_name == new_resource.property_name and version == new_resource.version
+        property_name == new_resource.property_name && version == new_resource.version
       else
         # Nothing installed yet, we want to install/
         false
