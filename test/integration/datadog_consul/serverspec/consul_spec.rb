@@ -7,7 +7,7 @@ require 'yaml'
 set :backend, :exec
 set :path, '/sbin:/usr/local/sbin:$PATH'
 
-AGENT_CONFIG = '/etc/dd-agent/conf.d/consul.yaml'.freeze
+AGENT_CONFIG = '/etc/datadog-agent/conf.d/consul.yaml'.freeze
 
 describe service('datadog-agent') do
   it { should be_running }
@@ -29,6 +29,7 @@ describe file(AGENT_CONFIG) do
           'tags' => ['_default']
         }
       ],
+      'logs' => nil,
       'init_config' => nil
     }
 

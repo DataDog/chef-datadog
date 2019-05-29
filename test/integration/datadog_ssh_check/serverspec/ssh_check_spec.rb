@@ -7,7 +7,7 @@ require 'yaml'
 set :backend, :exec
 set :path, '/sbin:/usr/local/sbin:$PATH'
 
-AGENT_CONFIG = '/etc/dd-agent/conf.d/ssh_check.yaml'.freeze
+AGENT_CONFIG = '/etc/datadog-agent/conf.d/ssh_check.yaml'.freeze
 
 describe service('datadog-agent') do
   it { should be_running }
@@ -37,6 +37,7 @@ describe file(AGENT_CONFIG) do
           'tags' => ['tag1', 'tag3']
         }
       ],
+      'logs' => nil,
       'init_config' => nil
     }
 

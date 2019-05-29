@@ -27,6 +27,7 @@ describe file(AGENT_CONFIG) do
           user: 'username'
         }
       ],
+      'logs' => nil,
       init_config: {
         is_jmx: true,
         conf: [

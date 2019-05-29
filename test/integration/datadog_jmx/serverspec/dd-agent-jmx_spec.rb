@@ -15,6 +15,7 @@ describe file(JMX_CONFIG) do
     generated = YAML.load_file(JMX_CONFIG)
 
     EXPECTED = {
+      'logs' => nil,
       'init_config' => nil,
       'instances' => [
         {

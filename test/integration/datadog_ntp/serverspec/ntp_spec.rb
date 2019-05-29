@@ -24,6 +24,7 @@ describe file(AGENT_CONFIG) do
           'timeout' => 10
         }
       ],
+      'logs' => nil,
       'init_config' => nil
     }
 

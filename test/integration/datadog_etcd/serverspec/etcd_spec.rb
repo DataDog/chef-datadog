@@ -30,6 +30,7 @@ describe file(AGENT_CONFIG) do
           'ssl_ca_certs' => '/etc/etcd/ca-certs.crt'
         }
       ],
+      'logs' => nil,
       'init_config' => nil
     }
 

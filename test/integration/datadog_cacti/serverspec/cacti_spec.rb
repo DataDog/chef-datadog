@@ -25,6 +25,7 @@ describe file(AGENT_CONFIG) do
           rrd_whitelist: '/path/to/rrd_whitelist.txt'
         }
       ],
+      'logs' => nil,
       'init_config' => nil
     }
 

@@ -25,6 +25,7 @@ describe file(AGENT_CONFIG) do
           'username' => 'admin'
         }
       ],
+      'logs' => nil,
       'init_config' => nil
     }
 

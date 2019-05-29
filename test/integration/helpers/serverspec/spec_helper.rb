@@ -17,7 +17,7 @@ else
   set :backend, :exec
   @agent_package_name = 'datadog-agent'
   @agent_service_name = 'datadog-agent'
-  @agent_config_dir = '/etc/dd-agent'
+  @agent_config_dir = '/etc/datadog-agent'
 end
 
 set :path, '/sbin:/usr/local/sbin:$PATH' unless os[:family] == 'windows'

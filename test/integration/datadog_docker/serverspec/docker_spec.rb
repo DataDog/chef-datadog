@@ -37,6 +37,7 @@ describe file(AGENT_CONFIG) do
           collect_images_stats: false
         }
       ],
+      'logs' => nil,
       init_config: {
         docker_root: '/',
         socket_timeout: 10

@@ -25,6 +25,7 @@ describe file(AGENT_CONFIG) do
           cassandra_aliasing: true
         }
       ],
+      'logs' => nil,
       'init_config' => {
         conf: [
           {

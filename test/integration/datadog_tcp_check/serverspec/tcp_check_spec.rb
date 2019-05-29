@@ -27,6 +27,7 @@ describe file(AGENT_CONFIG) do
           'port' => 5678
         }
       ],
+      'logs' => nil,
       'init_config' => nil
     }
 

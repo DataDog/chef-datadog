@@ -7,7 +7,7 @@ require 'yaml'
 set :backend, :exec
 set :path, '/sbin:/usr/local/sbin:$PATH'
 
-AGENT_CONFIG = '/etc/dd-agent/conf.d/postfix.yaml'.freeze
+AGENT_CONFIG = '/etc/datadog-agent/conf.d/postfix.yaml'.freeze
 
 describe service('datadog-agent') do
   it { should be_running }
@@ -32,6 +32,7 @@ describe file(AGENT_CONFIG) do
           'tags' => ['test']
         }
       ],
+      'logs' => nil,
       'init_config' => nil
     }
 

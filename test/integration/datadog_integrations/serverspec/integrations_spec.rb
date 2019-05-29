@@ -20,6 +20,7 @@ describe file(AGENT_CONFIG) do
           url: 'http://localhost:22222'
         }
       ],
+      'logs' => nil,
       init_config: {}
     }
 
