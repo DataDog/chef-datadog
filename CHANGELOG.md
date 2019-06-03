@@ -5,14 +5,13 @@ Changes
 
 ## Breaking changes
 
-  * Agent v6 is now installed by default.
-  * This cookbook only supports Chef 12.7+. It means that if you want to continue
+  * **Agent v6 is now installed by default.** You can use `node['datadog']['agent6'] => false` to continue to use Agent v5. Please see the README for more details.
+  * **This cookbook only supports Chef 12.7+.** It means that if you want to continue
   to use this cookbook with a version of Chef `< 12.7`, you will have to use the datadog
   cookbook in a version `< 3.0`. However, we recommend to switch to the `3.x` version
   because there is no plan to update the `2.x` branch with new features for now.
   * Remove the dependency to the windows cookbook.
-  * The `datadog_monitor` resources doesn't automatically restart the Agent anymore. See `recipes/mongo.rb` for an example on how to restart the Agent
-  after `datadog_monitor` has been executed.
+  * The `datadog_monitor` resources doesn't automatically restart the Agent anymore. See `recipes/mongo.rb` for an example on how to restart the Agent after `datadog_monitor` has been executed.
   * A new attribute `node['datadog']['site']` will let you send the data to either
   the US or the EU site. Also, the `node['datadog']['url']` default value is now
   `nil`. If not overrided in your cookbook, the Agent will decide itself based
@@ -25,16 +24,16 @@ Changes
 
 ## Details
 
-* [FEATURE] Drop compatibility with Chef < 12.7, compatilibity with Chef 14 & 15. [#450][] [#597][] [@martinisoft][] [@remeh][]
-* [FEATURE] Agent 6 is now installed by default. [#594][] [@remeh][]
-* [FEATURE] Support jmx_custom_jars datadog.conf option [#595][] [@wolf31o2][]
-* [FEATURE] Add datadog_integration resource to install integrations. [#600][] [@remeh][]
-* [FEATURE] Add support for `site` option. [#582][] [@remeh][]
-* [FEATURE] Add support of `max_detailed_exchanges` for RabbitMQ. [#562][] [@asherf][]
-* [OPTIMIZE] `datadog_monitor` doesn't automatically restart the Agent [#596][] [@someara][] [@remeh][]
-* [OPTIMIZE] Remove deprecated attributes. [#613][] [@remeh][]
-* [MISC] Remove recipes using `easy_install` [#591][] [@stefanwb][] [@remeh][]
-* [MISC] Drops Agent v4 compatibility code. [#599][] [@remeh][]
+* [FEATURE] Drop compatibility with Chef < 12.7, compatilibity with Chef 14 & 15. See [#450][] [#597][] [@martinisoft][] [@remeh][]
+* [FEATURE] Agent 6 is now installed by default. See [#594][] [@remeh][]
+* [FEATURE] Support jmx_custom_jars datadog.conf option. See [#595][] [@wolf31o2][]
+* [FEATURE] Add datadog_integration resource to install integrations. See [#600][] [@remeh][]
+* [FEATURE] Add support for `site` option. See [#582][] [@remeh][]
+* [FEATURE] Add support of `max_detailed_exchanges` for RabbitMQ. See [#562][] [@asherf][]
+* [OPTIMIZE] `datadog_monitor` doesn't automatically restart the Agent. See [#596][] [@someara][] [@remeh][]
+* [OPTIMIZE] Remove deprecated attributes. See [#613][] [@remeh][]
+* [MISC] Remove recipes using `easy_install`. See [#591][] [@stefanwb][] [@remeh][]
+* [MISC] Drops Agent v4 compatibility code. See [#599][] [@remeh][]
 
 # 2.19.0 / 2019-05-21
 
