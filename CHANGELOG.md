@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 3.0.0 / Unrealeased
+# 3.0.0 / Unreleased
 
 ## Breaking changes
 
@@ -25,7 +25,16 @@ Changes
 
 ## Details
 
-  TODO
+* [FEATURE] Drop compatibility with Chef < 12.7, compatilibity with Chef 14 & 15. [#450][] [#597][] [@martinisoft][] [@remeh][]
+* [FEATURE] Agent 6 is now installed by default. [#594][] [@remeh][]
+* [FEATURE] Support jmx_custom_jars datadog.conf option [#595][] [@wolf31o2][]
+* [FEATURE] Add datadog_integration resource to install integrations. [#600][] [@remeh][]
+* [FEATURE] Add support for `site` option. [#582][] [@remeh][]
+* [FEATURE] Add support of `max_detailed_exchanges` for RabbitMQ. [#562][] [@asherf][]
+* [OPTIMIZE] `datadog_monitor` doesn't automatically restart the Agent [#596][] [@someara][] [@remeh][]
+* [OPTIMIZE] Remove deprecated attributes. [#613][] [@remeh][]
+* [MISC] Remove recipes using `easy_install` [#591][] [@stefanwb][] [@remeh][]
+* [MISC] Drops Agent v4 compatibility code. [#599][] [@remeh][]
 
 # 2.19.0 / 2019-05-21
 
@@ -674,6 +683,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#445]: https://github.com/DataDog/chef-datadog/issues/445
 [#446]: https://github.com/DataDog/chef-datadog/issues/446
 [#448]: https://github.com/DataDog/chef-datadog/issues/448
+[#450]: https://github.com/DataDog/chef-datadog/issues/450
 [#454]: https://github.com/DataDog/chef-datadog/issues/454
 [#458]: https://github.com/DataDog/chef-datadog/issues/458
 [#460]: https://github.com/DataDog/chef-datadog/issues/460
@@ -721,14 +731,24 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#555]: https://github.com/DataDog/chef-datadog/issues/555
 [#557]: https://github.com/DataDog/chef-datadog/issues/557
 [#561]: https://github.com/DataDog/chef-datadog/issues/561
+[#562]: https://github.com/DataDog/chef-datadog/issues/562
 [#563]: https://github.com/DataDog/chef-datadog/issues/563
 [#564]: https://github.com/DataDog/chef-datadog/issues/564
 [#565]: https://github.com/DataDog/chef-datadog/issues/565
 [#568]: https://github.com/DataDog/chef-datadog/issues/568
+[#582]: https://github.com/DataDog/chef-datadog/issues/582
 [#583]: https://github.com/DataDog/chef-datadog/issues/583
 [#585]: https://github.com/DataDog/chef-datadog/issues/585
 [#586]: https://github.com/DataDog/chef-datadog/issues/586
 [#588]: https://github.com/DataDog/chef-datadog/issues/588
+[#591]: https://github.com/DataDog/chef-datadog/issues/591
+[#594]: https://github.com/DataDog/chef-datadog/issues/594
+[#595]: https://github.com/DataDog/chef-datadog/issues/595
+[#596]: https://github.com/DataDog/chef-datadog/issues/596
+[#597]: https://github.com/DataDog/chef-datadog/issues/597
+[#599]: https://github.com/DataDog/chef-datadog/issues/599
+[#600]: https://github.com/DataDog/chef-datadog/issues/600
+[#613]: https://github.com/DataDog/chef-datadog/issues/613
 [#618]: https://github.com/DataDog/chef-datadog/issues/618
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
@@ -748,6 +768,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@alq]: https://github.com/alq
 [@antonio-osorio]: https://github.com/antonio-osorio
 [@arthurnn]: https://github.com/arthurnn
+[@asherf]: https://github.com/asherf
 [@aymen-chetoui]: https://github.com/aymen-chetoui
 [@azuretek]: https://github.com/azuretek
 [@babbottscott]: https://github.com/babbottscott
@@ -843,6 +864,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@schisamo]: https://github.com/schisamo
 [@sethrosenblum]: https://github.com/sethrosenblum
 [@skarlupka]: https://github.com/skarlupka
+[@someara]: https://github.com/someara
 [@spencermpeterson]: https://github.com/spencermpeterson
 [@stefanwb]: https://github.com/stefanwb
 [@stensonb]: https://github.com/stensonb
