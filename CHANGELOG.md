@@ -1,6 +1,32 @@
 Changes
 =======
 
+# 3.0.0 / Unrealeased
+
+## Breaking changes
+
+  * Agent v6 is now installed by default.
+  * This cookbook only supports Chef 12.7+. It means that if you want to continue
+  to use this cookbook with a version of Chef `< 12.7`, you will have to use the datadog
+  cookbook in a version `< 3.0`. However, we recommend to switch to the `3.x` version
+  because there is no plan to update the `2.x` branch with new features for now.
+  * Remove the dependency to the windows cookbook.
+  * The `datadog_monitor` resources doesn't automatically restart the Agent anymore. See `recipes/mongo.rb` for an example on how to restart the Agent
+  after `datadog_monitor` has been executed.
+  * A new attribute `node['datadog']['site']` will let you send the data to either
+  the US or the EU site. Also, the `node['datadog']['url']` default value is now
+  `nil`. If not overrided in your cookbook, the Agent will decide itself based
+  on those two fields to which site the data should be sent.
+  * Drop the support for the chef-handler-datadog < 0.10.0, please use a
+  more recent version.
+  * Add the `datadog_integration` resource to easily configure integration,
+  more info in the README.
+  * Drop Agent v4 compatibility code.
+
+## Details
+
+  TODO
+
 # 2.19.0 / 2019-05-21
 
 * [FEATURE] Provide custom credentials for the Windows Datadog Agent service. [#618][] [@remeh][]
