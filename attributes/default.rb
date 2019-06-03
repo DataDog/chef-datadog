@@ -359,6 +359,14 @@ default['datadog']['process_agent']['rtprocess_interval'] = nil
 default['datadog']['process_agent']['container_interval'] = nil
 default['datadog']['process_agent']['rtcontainer_interval'] = nil
 
+# System probe functionality settings
+default['datadog']['system_probe']['enabled'] = nil
+# sysprobe_socket defines the unix socket location
+default['datadog']['system_probe']['sysprobe_socket'] = nil
+# debug_port is the http port for expvar, it is disabled if not specified
+default['datadog']['system_probe']['debug_port'] = nil
+default['datadog']['system_probe']['bpf_debug'] = nil
+
 # Logs functionality settings (Agent 6 only)
 # Set `enable_logs_agent` to:
 # * `true` to explicitly enable the log agent

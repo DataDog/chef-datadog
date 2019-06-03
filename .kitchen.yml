@@ -67,6 +67,17 @@ suites:
       api_key: somenonnullapikeythats32charlong
       application_key: alsonotnil
 
+- name: system-probe
+  run_list:
+    - recipe[datadog::system-probe]
+  attributes:
+    datadog: &DATADOG
+      system-probe:
+        enabled: true
+        sysprobe_socket: /opt/datadog-agent/run/sysprobe.sock
+        debug_port: 7654
+        bpf_debug: true
+
 - name: dd-handler
   run_list:
     - recipe[datadog::dd-handler]
