@@ -1,3 +1,5 @@
+include_recipe 'datadog::dd-agent'
+
 # Set the system-probe agent service enable or disable
 agent_enable = node['datadog']['system_probe']['enabled'] ? :enable : :disable
 # Set the correct Agent startup action
