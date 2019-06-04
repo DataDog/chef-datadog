@@ -18,7 +18,8 @@ if node['datadog']['agent6']
       enabled: node['datadog']['system_probe']['enabled'],
       sysprobe_socket: node['datadog']['system_probe']['sysprobe_socket'],
       debug_port: node['datadog']['system_probe']['debug_port'],
-      bpf_debug: node['datadog']['system_probe']['bpf_debug']
+      bpf_debug: node['datadog']['system_probe']['bpf_debug'],
+      enable_conntrack: node['datadog']['system_probe']['enable_conntrack']
     )
     owner 'dd-agent'
     group 'root'
