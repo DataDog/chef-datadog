@@ -364,7 +364,7 @@ default['datadog']['system_probe']['enabled'] = false
 # sysprobe_socket defines the unix socket location
 default['datadog']['system_probe']['sysprobe_socket'] = '/opt/datadog-agent/run/sysprobe.sock'
 # debug_port is the http port for expvar, it is disabled if not specified
-default['datadog']['system_probe']['debug_port'] = nil
+default['datadog']['system_probe']['debug_port'] = 0
 default['datadog']['system_probe']['bpf_debug'] = false
 default['datadog']['system_probe']['enable_conntrack'] = false
 
