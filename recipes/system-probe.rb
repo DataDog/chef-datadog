@@ -28,7 +28,7 @@ if node['datadog']['agent6']
     notifies :restart, 'service[datadog-agent]', :delayed unless agent_start == false
   end
 else
-  raise "system-probe agent does not run in agent5 environment"
+  raise 'system-probe agent does not run in agent5 environment'
 end
 
 # Common configuration
