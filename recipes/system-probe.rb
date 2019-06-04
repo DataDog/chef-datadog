@@ -23,7 +23,7 @@ if node['datadog']['agent6']
     owner 'dd-agent'
     group 'root'
     mode '640'
-    notifies :restart, 'service[system-probe]', :delayed unless agent_start == false
+    notifies :restart, 'service[datadog-agent-sysprobe]', :delayed unless agent_start == false
   end
 else
   raise "system-probe agent does not run in agent5 environment"
@@ -39,7 +39,7 @@ if node['datadog']['agent6'] &&
   service_provider = Chef::Provider::Service::Upstart
 end
 
-service 'system-probe' do
+service 'datadog-agent-sysprobe' do
   action [agent_enable, agent_start]
   provider service_provider unless service_provider.nil?
   supports :restart => true, :status => true, :start => true, :stop => true
