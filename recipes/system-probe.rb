@@ -24,6 +24,8 @@ if node['datadog']['agent6']
     group 'root'
     mode '640'
     notifies :restart, 'service[datadog-agent-sysprobe]', :delayed unless agent_start == false
+    # since process-agent collects network info through system-probe, enabling system-probe should also restart process-agent
+    notifies :restart, 'service[datadog-agent]', :delayed unless agent_start == false
   end
 else
   raise "system-probe agent does not run in agent5 environment"
