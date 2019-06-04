@@ -73,6 +73,10 @@ suites:
     - recipe[datadog::system-probe]
   attributes:
     datadog: &DATADOG
+      agent6_aptrepo: 'http://apt.datad0g.com'
+      agent6_aptrepo_dist: 'beta'
+      agent6_package_action: 'install'
+      agent_allow_downgrade: true
       api_key: somenonnullapikeythats32charlong
       application_key: alsonotnil
       system_probe:
