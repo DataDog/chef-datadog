@@ -137,3 +137,5 @@ end
 
 # Install integration packages
 include_recipe 'datadog::integrations' unless is_windows
+
+include_recipe 'datadog::system-probe'
