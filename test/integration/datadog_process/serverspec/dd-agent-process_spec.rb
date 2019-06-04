@@ -24,6 +24,7 @@ describe file(PROCESS_CONFIG) do
           'search_string' => ['somepid', 'pidname']
         }
       ],
+      'logs' => nil,
       'init_config' => nil
     }
 

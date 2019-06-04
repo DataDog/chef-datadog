@@ -22,6 +22,7 @@ describe file(AGENT_CONFIG) do
           user: 'someuser'
         }
       ],
+      'logs' => nil,
       'init_config' => nil
     }
 

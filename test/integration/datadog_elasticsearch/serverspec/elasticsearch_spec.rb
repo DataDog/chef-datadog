@@ -27,6 +27,7 @@ describe file(AGENT_CONFIG) do
           'tags' => ['kitchen', 'sink']
         }
       ],
+      'logs' => nil,
       'init_config' => nil
     }
 

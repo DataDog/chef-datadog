@@ -25,6 +25,7 @@ describe file(AGENT_CONFIG) do
           'url' => 'http://localhost/'
         }
       ],
+      'logs' => nil,
       'init_config' => nil
     }
 

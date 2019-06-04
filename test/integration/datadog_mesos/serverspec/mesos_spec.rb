@@ -22,6 +22,7 @@ describe file(AGENT_CONFIG) do
           tags: ['toto', 'tata']
         }
       ],
+      'logs' => nil,
       init_config: {
         default_timeout: 10
       }
