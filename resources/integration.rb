@@ -24,16 +24,8 @@ action :install do
     user      'dd-agent' unless node['platform_family'] == 'windows'
 
     not_if {
-      output = shell_out("#{agent_exe_filepath} integration show #{new_resource.property_name}").stdout
-      if output =~ /Installed version/
-        property_name = output.match(/Package (.+):$/)[1].strip
-        version       = output.match(/Installed version: (.+)$/)[1].strip
-        # Same version already installed? Do not reinstall.
-        property_name == new_resource.property_name && version == new_resource.version
-      else
-        # Nothing installed yet, we want to install/
-        false
-      end
+      output = shell_out("#{agent_exe_filepath} integration show -q #{new_resource.property_name}").stdout
+      output.strip == new_resource.version
     }
   end
 end
@@ -50,9 +42,9 @@ action :remove do
     command   "\"#{agent_exe_filepath}\" integration remove #{new_resource.property_name}"
     user      'dd-agent' unless node['platform_family'] == 'windows'
 
-    only_if {
-      output = shell_out("#{agent_exe_filepath} integration show #{new_resource.property_name}").stdout
-      output.match(/Installed version/)
+    not_if {
+      output = shell_out("#{agent_exe_filepath} integration show -q #{new_resource.property_name}").stdout
+      output.empty?
     }
   end
 end
