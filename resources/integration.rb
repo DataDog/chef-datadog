@@ -44,7 +44,7 @@ action :remove do
 
     not_if {
       output = shell_out("#{agent_exe_filepath} integration show -q #{new_resource.property_name}").stdout
-      output.empty?
+      output.strip.empty?
     }
   end
 end
