@@ -9,22 +9,19 @@ Changes
   to use this cookbook with a version of Chef `< 12.7`, you will have to use the datadog
   cookbook in a version `< 3.0`. However, we recommend to switch to the `3.x` version
   because there is no plan to update the `2.x` branch with new features for now.
-  * **Agent v6 is now installed by default.** You can use `node['datadog']['agent6'] => false` to continue to use Agent v5. Please see the README for more details.
-  * Remove the dependency to the windows cookbook.
-  * The `datadog_monitor` resources doesn't automatically restart the Agent anymore. See `recipes/mongo.rb` for an example on how to restart the Agent after `datadog_monitor` has been executed.
+  * **Agent v6 is now installed by default.** You can set `node['datadog']['agent6'] => false` to continue to use Agent v5. Please see the README for more details.
+  * The `datadog_monitor` resource doesn't automatically restart the Agent anymore.
+  See `recipes/mongo.rb` for an example on how to restart the Agent after `datadog_monitor` has been executed. See the README for more details on the resource.
   * A new attribute `node['datadog']['site']` will let you send the data to either
-  the US or the EU site. Also, the `node['datadog']['url']` default value is now
-  `nil`. If not overrided in your cookbook, the Agent will decide itself based
-  on those two fields to which site the data should be sent.
-  * Drop the support for the chef-handler-datadog < 0.10.0, please use a
-  more recent version.
-  * Add the `datadog_integration` resource to easily configure integration,
-  more info in the README.
+  the US or the EU site (this applies to the Datadog handler as well). Also, `default['datadog']['url']` is now set to `nil`.
+  If not overriden in your cookbook, the Agent will pick which site to send data to based on these two attributes.
+  * Drop support for chef-handler-datadog < 0.10.0, please use a more recent version.
+  * Add the `datadog_integration` resource to easily control installed integration, more info in the README.
   * Drop Agent v4 compatibility code.
 
 ## Details
 
-* [FEATURE] Ensure compatilibity with Chef 14 & 15 (drop compatibility with Chef < 12.7). See [#450][] [#597][] [@martinisoft][] [@remeh][]
+* [FEATURE] Ensure compatibility with Chef 14 & 15 (drop compatibility with Chef < 12.7). See [#450][] [#597][] [@martinisoft][] [@remeh][]
 * [FEATURE] Agent 6 is now installed by default. See [#594][] [@remeh][]
 * [FEATURE] Support `jmx_custom_jars` option in Agent v5. See [#595][] [@wolf31o2][]
 * [FEATURE] Add `datadog_integration` resource to install integrations. See [#600][] [@remeh][]
