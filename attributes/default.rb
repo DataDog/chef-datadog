@@ -360,12 +360,12 @@ default['datadog']['process_agent']['container_interval'] = nil
 default['datadog']['process_agent']['rtcontainer_interval'] = nil
 
 # System probe functionality settings
-default['datadog']['system_probe']['enabled'] = nil
+default['datadog']['system_probe']['enabled'] = false
 # sysprobe_socket defines the unix socket location
-default['datadog']['system_probe']['sysprobe_socket'] = nil
+default['datadog']['system_probe']['sysprobe_socket'] = '/opt/datadog-agent/run/sysprobe.sock'
 # debug_port is the http port for expvar, it is disabled if not specified
 default['datadog']['system_probe']['debug_port'] = nil
-default['datadog']['system_probe']['bpf_debug'] = nil
+default['datadog']['system_probe']['bpf_debug'] = false
 
 # Logs functionality settings (Agent 6 only)
 # Set `enable_logs_agent` to:
