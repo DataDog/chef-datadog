@@ -23,7 +23,7 @@ if node['datadog']['agent6']
     owner 'dd-agent'
     group 'root'
     mode '640'
-    notifies :restart, 'service[sytem-probe]', :delayed unless agent_start == false
+    notifies :restart, 'service[system-probe]', :delayed unless agent_start == false
   end
 else
   raise "system-probe agent does not run in agent5 environment"

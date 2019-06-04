@@ -72,7 +72,9 @@ suites:
     - recipe[datadog::system-probe]
   attributes:
     datadog: &DATADOG
-      system-probe:
+      api_key: somenonnullapikeythats32charlong
+      application_key: alsonotnil
+      system_probe:
         enabled: true
         sysprobe_socket: /opt/datadog-agent/run/sysprobe.sock
         debug_port: 7654
