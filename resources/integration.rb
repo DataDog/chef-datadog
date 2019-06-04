@@ -4,10 +4,11 @@
 # The datadog_resource must be used on a system where the datadog-agent has
 # already been setup.
 
+require 'chef/mixin/shell_out'
+
 default_action :install
 
-property :name, String, name_attribute: true
-
+property :property_name, String, name_property: true
 property :version, String, required: true
 
 action :install do
@@ -16,11 +17,16 @@ action :install do
     return
   end
 
-  Chef::Log.debug("Getting integration #{new_resource.name}")
+  Chef::Log.debug("Getting integration #{new_resource.property_name}")
 
   execute 'integration install' do
-    command   "\"#{agent_exe_filepath}\" integration install #{new_resource.name}==#{new_resource.version}"
+    command   "\"#{agent_exe_filepath}\" integration install #{new_resource.property_name}==#{new_resource.version}"
     user      'dd-agent' unless node['platform_family'] == 'windows'
+
+    not_if {
+      output = shell_out("#{agent_exe_filepath} integration show -q #{new_resource.property_name}").stdout
+      output.strip == new_resource.version
+    }
   end
 end
 
@@ -30,11 +36,16 @@ action :remove do
     return
   end
 
-  Chef::Log.debug("Removing integration #{new_resource.name}")
+  Chef::Log.debug("Removing integration #{new_resource.property_name}")
 
   execute 'integration remove' do
-    command   "\"#{agent_exe_filepath}\" integration remove #{new_resource.name}"
+    command   "\"#{agent_exe_filepath}\" integration remove #{new_resource.property_name}"
     user      'dd-agent' unless node['platform_family'] == 'windows'
+
+    not_if {
+      output = shell_out("#{agent_exe_filepath} integration show -q #{new_resource.property_name}").stdout
+      output.strip.empty?
+    }
   end
 end
 
