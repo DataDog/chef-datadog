@@ -20,29 +20,24 @@
 # Set the correct agent startup action
 sysprobe_agent_start = node['datadog']['system_probe']['enabled'] ? :start : :stop
 
-system_probe_bin_dir = '/opt/datadog-agent/embedded/bin'
-agent_available = File.exist?("#{system_probe_bin_dir}/system-probe") and node['datadog']['agent6']
-
 #
 # Configures system-probe agent
-if agent_available
-  system_probe_config_file = ::File.join(node['datadog']['agent6_config_dir'], 'system-probe.yaml')
-  template system_probe_config_file do
-    source 'system_probe.yaml.erb'
-    variables(
-      enabled: node['datadog']['system_probe']['enabled'],
-      sysprobe_socket: node['datadog']['system_probe']['sysprobe_socket'],
-      debug_port: node['datadog']['system_probe']['debug_port'],
-      bpf_debug: node['datadog']['system_probe']['bpf_debug'],
-      enable_conntrack: node['datadog']['system_probe']['enable_conntrack']
-    )
-    owner 'dd-agent'
-    group 'root'
-    mode '640'
-    notifies :restart, 'service[datadog-agent-sysprobe]', :delayed unless sysprobe_agent_start == false
-    # since process-agent collects network info through system-probe, enabling system-probe should also restart process-agent
-    notifies :restart, 'service[datadog-agent]', :delayed unless sysprobe_agent_start == false
-  end
+system_probe_config_file = ::File.join(node['datadog']['agent6_config_dir'], 'system-probe.yaml')
+template system_probe_config_file do
+  source 'system_probe.yaml.erb'
+  variables(
+    enabled: node['datadog']['system_probe']['enabled'],
+    sysprobe_socket: node['datadog']['system_probe']['sysprobe_socket'],
+    debug_port: node['datadog']['system_probe']['debug_port'],
+    bpf_debug: node['datadog']['system_probe']['bpf_debug'],
+    enable_conntrack: node['datadog']['system_probe']['enable_conntrack']
+  )
+  owner 'dd-agent'
+  group 'root'
+  mode '640'
+  notifies :restart, 'service[datadog-agent-sysprobe]', :delayed unless sysprobe_agent_start == false
+  # since process-agent collects network info through system-probe, enabling system-probe should also restart process-agent
+  notifies :restart, 'service[datadog-agent]', :delayed unless sysprobe_agent_start == false
 end
 
 # Common configuration
@@ -55,11 +50,9 @@ if node['datadog']['agent6'] &&
   service_provider = Chef::Provider::Service::Upstart
 end
 
-if agent_available
-  service 'datadog-agent-sysprobe' do
-    action [sysprobe_agent_start]
-    provider service_provider unless service_provider.nil?
-    supports :restart => true, :status => true, :start => true, :stop => true
-    subscribes :restart, "template[#{system_probe_config_file}]", :delayed unless sysprobe_agent_start == false
-  end
+service 'datadog-agent-sysprobe' do
+  action [sysprobe_agent_start]
+  provider service_provider unless service_provider.nil?
+  supports :restart => true, :status => true, :start => true, :stop => true
+  subscribes :restart, "template[#{system_probe_config_file}]", :delayed unless sysprobe_agent_start == false
 end
