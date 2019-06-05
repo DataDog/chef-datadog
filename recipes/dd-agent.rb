@@ -136,10 +136,10 @@ service 'datadog-agent' do
 end
 
 # only load system-probe recipe if an agent6 installation comes with it
-ruby_block "include system-probe" do
+ruby_block 'include system-probe' do
   block do
-    if ::File.exist?('/opt/datadog-agent/embedded/bin/system-probe') and node['datadog']['agent6'] and !is_windows
-      run_context.include_recipe "datadog::system-probe"
+    if ::File.exist?('/opt/datadog-agent/embedded/bin/system-probe') && node['datadog']['agent6'] && !is_windows
+      run_context.include_recipe 'datadog::system-probe'
     end
   end
 end
