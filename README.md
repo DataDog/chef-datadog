@@ -295,7 +295,7 @@ Since `3.0.0`, the cookbook defaults installing Agent v6. You can still setup th
 
 #### Upgrade from Agent v5 to Agent v6
 
-To upgrade from an already installed Agent v5 to Agent v6, you'll have to set the `agent6_package_action` to `upgrade` and we recommend to pin to a specific version:
+To upgrade from an already installed Agent v5 to Agent v6, you'll have to set the `agent6_package_action` to `install` and we recommend to pin to a specific version:
 
 ```ruby
   default_attributes(
