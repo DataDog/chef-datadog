@@ -9,6 +9,7 @@ platforms:
 # fedora-20 needs kitchen-docker 1.7.0, but other bugs prevent that version from being used.
 <% test_platforms = %w(
       ubuntu-14.04
+      ubuntu-16.04
       ubuntu-12.04
       centos-6.6
       centos-5.11
@@ -70,6 +71,25 @@ suites:
     datadog: &DATADOG
       api_key: somenonnullapikeythats32charlong
       application_key: alsonotnil
+
+- name: system-probe
+  run_list:
+    - recipe[datadog::dd-agent]
+  attributes:
+    datadog: &DATADOG
+      agent6_aptrepo: 'http://apt.datad0g.com'
+      agent6_aptrepo_dist: 'beta'
+      # agent6_version: '1:6.11.3~rc.2-1'
+      agent6_package_action: 'install'
+      agent_allow_downgrade: true
+      api_key: somenonnullapikeythats32charlong
+      application_key: alsonotnil
+      system_probe:
+        enabled: true
+        sysprobe_socket: /opt/datadog-agent/run/sysprobe.sock
+        debug_port: 7654
+        bpf_debug: true
+        enable_conntrack: true
 
 - name: dd-handler
   run_list:
