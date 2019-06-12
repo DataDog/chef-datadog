@@ -145,6 +145,7 @@ process_config = {
 # Take into account options defined under ['extra_config']['process_config']
 process_config = @extra_config['process_config'].merge(process_config) unless @extra_config['process_config'].nil?
 agent_config[:process_config] = process_config
+# Remove nil values
 agent_config[:process_config][:intervals].reject!{ |k,v| v.nil? }
 agent_config[:process_config].reject!{ |k,v| v.nil? }
 
