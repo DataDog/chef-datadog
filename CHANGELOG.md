@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 3.0.0 / Unreleased
+# 3.0.0 / 2019-06-12
 
 ## Breaking changes
 
