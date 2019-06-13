@@ -93,22 +93,6 @@ agent_config = @extra_config.merge({
 
   # log agent options
   logs_enabled: node['datadog']['enable_logs_agent'],
-
-  # process agent options
-  process_config: {
-    enabled: process_agent_enabled,
-    log_file: node['datadog']['process_agent']['log_file'],
-    intervals: {
-      container: node['datadog']['process_agent']['container_interval'],
-      container_realtime: node['datadog']['process_agent']['rtcontainer_interval'],
-      process: node['datadog']['process_agent']['rtcontainer_interval'],
-      process_realtime: node['datadog']['process_agent']['rtprocess_interval'],
-    },
-    blacklist_patterns: node['datadog']['process_agent']['blacklist'],
-    scrub_args: node['datadog']['process_agent']['scrub_args'],
-    custom_sensitive_words: node['datadog']['process_agent']['custom_sensitive_words'],
-    process_dd_url: node['datadog']['process_agent']['url']
-  }
 })
 
 if node['datadog']['statsd_forward_host']
@@ -142,6 +126,29 @@ if !http_proxy.nil?
   agent_config['proxy']['no_proxy'] = no_proxy if !no_proxy.nil?
 end
 
+## Process agent options ##
+process_config = {
+  enabled: process_agent_enabled,
+  log_file: node['datadog']['process_agent']['log_file'],
+  intervals: {
+    container: node['datadog']['process_agent']['container_interval'],
+    container_realtime: node['datadog']['process_agent']['rtcontainer_interval'],
+    process: node['datadog']['process_agent']['process_interval'],
+    process_realtime: node['datadog']['process_agent']['rtprocess_interval'],
+  },
+  blacklist_patterns: node['datadog']['process_agent']['blacklist'],
+  scrub_args: node['datadog']['process_agent']['scrub_args'],
+  custom_sensitive_words: node['datadog']['process_agent']['custom_sensitive_words'],
+  process_dd_url: node['datadog']['process_agent']['url']
+}
+
+# Take into account options defined under ['extra_config']['process_config']
+process_config = @extra_config['process_config'].merge(process_config) unless @extra_config['process_config'].nil?
+agent_config[:process_config] = process_config
+# Remove nil values
+agent_config[:process_config][:intervals].reject!{ |k,v| v.nil? }
+agent_config[:process_config].reject!{ |k,v| v.nil? }
+
 ## Trace agent options ##
 apm_config = {
   enabled: node['datadog']['enable_trace_agent'],
@@ -156,10 +163,7 @@ apm_config.reject!{ |k,v| v.nil? }
 apm_config = @extra_config['apm_config'].merge(apm_config) unless @extra_config['apm_config'].nil?
 agent_config[:apm_config] = apm_config
 
-
 # Remove nil values
-agent_config[:process_config][:intervals].reject!{ |k,v| v.nil? }
-agent_config[:process_config].reject!{ |k,v| v.nil? }
 agent_config.reject!{ |k,v| v.nil? }
 
 -%>
