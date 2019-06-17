@@ -26,6 +26,12 @@ when 'debian'
     action :install
   end
 
+  package 'install-dirmngr' do
+    package_name 'dirmngr'
+    action :install
+    ignore_failure true # Can fail on older distros where the dirmngr package does not exist, but shouldn't prevent install.
+  end
+
   uri = node['datadog']['agent6'] ? node['datadog']['agent6_aptrepo'] : node['datadog']['aptrepo']
   distribution = node['datadog']['agent6'] ? node['datadog']['agent6_aptrepo_dist'] : node['datadog']['aptrepo_dist']
   components = node['datadog']['agent6'] ? ['main', '6'] : ['main']
