@@ -5,6 +5,10 @@ include_recipe 'datadog::dd-agent'
 # @example
 #   node.override['datadog']['postgres']['instances'] = [
 #     {
+#       'host' => "/var/run/postgresql/.s.PGSQL.5432",
+#       'username' => "datadog"
+#     },
+#     {
 #       'host' => "localhost",
 #       'port' => "5432",
 #       'username' => "datadog",
