@@ -1,6 +1,11 @@
 Changes
 =======
 
+# 3.1.0 / 2019-07-10
+
+* [FEATURE] Add support for the `system-probe` Agent. See [#626][] [@shang-wang][]
+* [OPTIMIZE] Add support of the `extra_config` field in the `process_config` section. See [#628][] [@p-lambert][]
+
 # 3.0.0 / 2019-06-12
 
 ## Breaking changes
@@ -746,6 +751,8 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#600]: https://github.com/DataDog/chef-datadog/issues/600
 [#613]: https://github.com/DataDog/chef-datadog/issues/613
 [#618]: https://github.com/DataDog/chef-datadog/issues/618
+[#626]: https://github.com/DataDog/chef-datadog/issues/626
+[#628]: https://github.com/DataDog/chef-datadog/issues/628
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@BrentOnRails]: https://github.com/BrentOnRails
@@ -847,6 +854,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@olivielpeau]: https://github.com/olivielpeau
 [@opsline-radek]: https://github.com/opsline-radek
 [@otterdude97]: https://github.com/otterdude97
+[@p-lambert]: https://github.com/p-lambert
 [@phlipper]: https://github.com/phlipper
 [@qqfr2507]: https://github.com/qqfr2507
 [@raycrawford]: https://github.com/raycrawford
@@ -859,6 +867,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@ryandjurovich]: https://github.com/ryandjurovich
 [@schisamo]: https://github.com/schisamo
 [@sethrosenblum]: https://github.com/sethrosenblum
+[@shang-wang]: https://github.com/shang-wang
 [@skarlupka]: https://github.com/skarlupka
 [@someara]: https://github.com/someara
 [@spencermpeterson]: https://github.com/spencermpeterson
