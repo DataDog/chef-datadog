@@ -3,7 +3,7 @@ Changes
 
 # 3.1.0 / 2019-07-10
 
-* [FEATURE] Add support for the `system-probe` Agent. See [#626][] [@shang-wang][]
+* [FEATURE] Add support of the `system-probe` Agent. See [#626][] [@shang-wang][]
 * [OPTIMIZE] Add support of the `extra_config` field in the `process_config` section. See [#628][] [@p-lambert][]
 
 # 3.0.0 / 2019-06-12
