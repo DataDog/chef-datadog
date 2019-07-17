@@ -273,7 +273,7 @@ describe 'datadog::dd-agent' do
             'agent6_version' => {
               'debian' => '1:6.9.0-1',
               'rhel' => '6.9.0-1',
-              'windows' => '6.9.0'
+              'windows' => '6.9.0',
             },
             'agent_version' => {
               'windows' => '5.4.0'
