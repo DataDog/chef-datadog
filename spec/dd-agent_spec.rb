@@ -282,6 +282,19 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
+      temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+
+      it_behaves_like 'windows Datadog Agent v6', :msi
+      # remote_file source gets converted to an array, so we need to do
+      # some tricky things to be able to regex against it
+      # Relevant: http://stackoverflow.com/a/12325983
+      # But we should probably assert the full default attribute somewhere...
+      it 'installs agent 6.9.0' do
+        expect(chef_run.remote_file(temp_file).source.to_s)
+          .to match(/ddagent-cli-6.9.0.msi/)
+      end
+    end
+
     context 'when windows and custom url+prefix' do
       cached(:chef_run) do
         set_env_var('ProgramData', 'C:\ProgramData')
@@ -306,19 +319,6 @@ describe 'datadog::dd-agent' do
           }
         end.converge described_recipe
       end
-
-      temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
-
-      it_behaves_like 'windows Datadog Agent v6', :msi
-      # remote_file source gets converted to an array, so we need to do
-      # some tricky things to be able to regex against it
-      # Relevant: http://stackoverflow.com/a/12325983
-      # But we should probably assert the full default attribute somewhere...
-      it 'installs agent 6.9.0' do
-        expect(chef_run.remote_file(temp_file).source.to_s)
-          .to match(/ddagent-cli-6.9.0.msi/)
-      end
-    end
 
       temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
 
