@@ -284,7 +284,7 @@ describe 'datadog::dd-agent' do
 
       temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
 
-      it_behaves_like 'windows Datadog Agent v6', :msi
+      it_behaves_like 'windows Datadog Agent', :msi
       # remote_file source gets converted to an array, so we need to do
       # some tricky things to be able to regex against it
       # Relevant: http://stackoverflow.com/a/12325983
@@ -322,7 +322,7 @@ describe 'datadog::dd-agent' do
 
       temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
 
-      it_behaves_like 'windows Datadog Agent v6', :msi
+      it_behaves_like 'windows Datadog Agent', :msi
       # remote_file source gets converted to an array, so we need to do
       # some tricky things to be able to regex against it
       # Relevant: http://stackoverflow.com/a/12325983
