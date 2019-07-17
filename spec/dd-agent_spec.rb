@@ -329,7 +329,7 @@ describe 'datadog::dd-agent' do
       # But we should probably assert the full default attribute somewhere...
       it 'installs agent 6.9.0' do
         expect(chef_run.remote_file(temp_file).source.to_s)
-          .to match(/ddagent-cli-6.9.0.msi/)
+          .to match(/datadog-agent-6.9.0-1-x86_64.msi/)
       end
     end
 
