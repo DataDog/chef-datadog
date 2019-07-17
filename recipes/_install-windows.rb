@@ -41,7 +41,7 @@ else
 end
 
 # If a different file prefix is specified, use that:
-dd_agent_installer_prefix = node['datadog']['windows_installer_prefix'] ? node['datadog']['windows_installer_prefix'] : 'ddagent-cli'
+dd_agent_installer_prefix = node['datadog']['windows_agent_installer_prefix'] ? node['datadog']['windows_agent_installer_prefix'] : 'ddagent-cli'
 
 # If no version is specified, select the latest package.
 dd_agent_installer_basename = dd_agent_version ? "#{dd_agent_installer_prefix}-#{dd_agent_version}" : dd_agent_latest

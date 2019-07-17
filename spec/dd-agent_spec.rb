@@ -307,7 +307,7 @@ describe 'datadog::dd-agent' do
             'agent6' => true,
             'api_key' => 'somethingnotnil',
             'windows_agent_url' => 'http://dd-agent-mstesting.s3.amazonaws.com/builds/tagged/',
-            'windows_installer_prefix' => 'datadog-agent',
+            'windows_agent_installer_prefix' => 'datadog-agent',
             'agent6_version' => {
               'debian' => '1:6.9.0-1',
               'rhel' => '6.9.0-1',
