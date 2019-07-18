@@ -268,11 +268,12 @@ describe 'datadog::dd-agent' do
           :file_cache_path => 'C:/chef/cache'
         ) do |node|
           node.normal['datadog'] = {
-            'agent6' => false,
+            'agent6' => true,
             'api_key' => 'somethingnotnil',
             'agent6_version' => {
               'debian' => '1:6.9.0-1',
               'rhel' => '6.9.0-1',
+              'windows' => '6.9.0',
             },
             'agent_version' => {
               'windows' => '5.4.0'
@@ -283,14 +284,52 @@ describe 'datadog::dd-agent' do
 
       temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
 
-      it_behaves_like 'windows Datadog Agent v5', :msi
+      it_behaves_like 'windows Datadog Agent', :msi
       # remote_file source gets converted to an array, so we need to do
       # some tricky things to be able to regex against it
       # Relevant: http://stackoverflow.com/a/12325983
       # But we should probably assert the full default attribute somewhere...
-      it 'installs agent 5.4.0' do
+      it 'installs agent 6.9.0' do
         expect(chef_run.remote_file(temp_file).source.to_s)
-          .to match(/ddagent-cli-5.4.0.msi/)
+          .to match(/ddagent-cli-6.9.0.msi/)
+      end
+    end
+
+    context 'when windows and custom url+prefix' do
+      cached(:chef_run) do
+        set_env_var('ProgramData', 'C:\ProgramData')
+        ChefSpec::SoloRunner.new(
+          :platform => 'windows',
+          :version => '2012R2',
+          :file_cache_path => 'C:/chef/cache'
+        ) do |node|
+          node.normal['datadog'] = {
+            'agent6' => true,
+            'api_key' => 'somethingnotnil',
+            'windows_agent_url' => 'http://dd-agent-mstesting.s3.amazonaws.com/builds/tagged/',
+            'windows_agent_installer_prefix' => 'datadog-agent',
+            'agent6_version' => {
+              'debian' => '1:6.9.0-1',
+              'rhel' => '6.9.0-1',
+              'windows' => '6.9.0-1-x86_64'
+            },
+            'agent_version' => {
+              'windows' => '5.4.0'
+            }
+          }
+        end.converge described_recipe
+      end
+
+      temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+
+      it_behaves_like 'windows Datadog Agent', :msi
+      # remote_file source gets converted to an array, so we need to do
+      # some tricky things to be able to regex against it
+      # Relevant: http://stackoverflow.com/a/12325983
+      # But we should probably assert the full default attribute somewhere...
+      it 'installs agent 6.9.0' do
+        expect(chef_run.remote_file(temp_file).source.to_s)
+          .to match(/datadog-agent-6.9.0-1-x86_64.msi/)
       end
     end
 

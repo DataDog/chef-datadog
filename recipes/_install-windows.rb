@@ -40,8 +40,11 @@ else
   dd_agent_latest = 'ddagent-cli-latest'
 end
 
+# If a different file prefix is specified, use that:
+dd_agent_installer_prefix = node['datadog']['windows_agent_installer_prefix'] ? node['datadog']['windows_agent_installer_prefix'] : 'ddagent-cli'
+
 # If no version is specified, select the latest package.
-dd_agent_installer_basename = dd_agent_version ? "ddagent-cli-#{dd_agent_version}" : dd_agent_latest
+dd_agent_installer_basename = dd_agent_version ? "#{dd_agent_installer_prefix}-#{dd_agent_version}" : dd_agent_latest
 temp_file_basename = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli')
 
 if node['datadog']['windows_agent_use_exe']
