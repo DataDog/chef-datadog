@@ -1132,7 +1132,7 @@ describe 'datadog::dd-agent' do
           debug_port: 7654
           bpf_debug: true
           enable_conntrack: false
-          max_conns_per_message: 1000
+          max_conns_per_message: 500
           EOF
 
         expect(chef_run).to(render_file('/etc/datadog-agent/system-probe.yaml').with_content { |content|
