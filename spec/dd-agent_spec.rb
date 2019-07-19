@@ -1103,6 +1103,45 @@ describe 'datadog::dd-agent' do
       end
     end
 
+    context 'system-probe with extra_config params set' do
+      cached(:chef_run) do
+        ChefSpec::SoloRunner.new(
+          platform: 'ubuntu',
+          version: '14.04'
+        ) do |node|
+          node.name 'chef-nodename'
+          node.normal['datadog'] = {
+            'api_key' => 'somethingnotnil',
+            'agent6' => true,
+            'system_probe_config' => {
+              'max_conns_per_message' => '1000'
+            }
+          }
+        end.converge described_recipe
+      end
+
+      it 'is created' do
+        expect(chef_run).to create_template('/etc/datadog-agent/system-probe.yaml')
+      end
+
+      it 'contains expected YAML configuration' do
+        expected_yaml = <<-EOF
+        system_probe_config:
+          enabled: true
+          sysprobe_socket: "/opt/datadog-agent/run/sysprobe.sock"
+          debug_port: 7654
+          bpf_debug: true
+          enable_conntrack: false
+          max_conns_per_message: 1000
+          EOF
+
+        expect(chef_run).to(render_file('/etc/datadog-agent/system-probe.yaml').with_content { |content|
+          expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
+        })
+      end
+    end
+  end
+
     describe 'agent version set' do
       context 'on windows' do
         cached(:chef_run) do
