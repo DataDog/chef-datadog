@@ -24,13 +24,22 @@ sysprobe_agent_start = node['datadog']['system_probe']['enabled'] ? :start : :st
 # Configures system-probe agent
 system_probe_config_file = ::File.join(node['datadog']['agent6_config_dir'], 'system-probe.yaml')
 template system_probe_config_file do
+  extra_config = {}
+  if node['datadog']['extra_config'] && node['datadog']['extra_config']['system_probe']
+    node['datadog']['extra_config']['system_probe'].each do |k, v|
+      next if v.nil?
+      extra_config[k] = v
+    end
+  end
+
   source 'system_probe.yaml.erb'
   variables(
     enabled: node['datadog']['system_probe']['enabled'],
     sysprobe_socket: node['datadog']['system_probe']['sysprobe_socket'],
     debug_port: node['datadog']['system_probe']['debug_port'],
     bpf_debug: node['datadog']['system_probe']['bpf_debug'],
-    enable_conntrack: node['datadog']['system_probe']['enable_conntrack']
+    enable_conntrack: node['datadog']['system_probe']['enable_conntrack'],
+    extra_config: extra_config
   )
   owner 'dd-agent'
   group 'root'
