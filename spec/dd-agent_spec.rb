@@ -1102,7 +1102,7 @@ describe 'datadog::dd-agent' do
         end
       end
     end
-      
+    
     describe 'agent version set' do
       context 'on windows' do
         cached(:chef_run) do
