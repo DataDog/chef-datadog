@@ -27,11 +27,11 @@ describe 'datadog::system-probe' do
     it 'contains expected YAML configuration' do
       expected_yaml = <<-EOF
       system_probe_config:
-      bpf_debug: true
-      debug_port: 123
-      enable_conntrack: false
-      enabled: false
-      sysprobe_socket: "/test/ing.sock"
+        bpf_debug: true
+        debug_port: 123
+        enable_conntrack: false
+        enabled: false
+        sysprobe_socket: "/test/ing.sock"
       EOF
 
       expect(chef_run).to(render_file('/etc/datadog-agent/system-probe.yaml').with_content { |content|
@@ -66,12 +66,12 @@ describe 'datadog::system-probe' do
     it 'contains expected YAML configuration' do
       expected_yaml = <<-EOF
       system_probe_config:
-      bpf_debug: false
-      debug_port: 0
-      enable_conntrack: false
-      enabled: false
-      sysprobe_socket: "/opt/datadog-agent/run/sysprobe.sock"
-      max_tracked_connections: 1000
+        bpf_debug: false
+        debug_port: 0
+        enable_conntrack: false
+        enabled: false
+        sysprobe_socket: "/opt/datadog-agent/run/sysprobe.sock"
+        max_tracked_connections: 1000
       EOF
 
       expect(chef_run).to(render_file('/etc/datadog-agent/system-probe.yaml').with_content { |content|
