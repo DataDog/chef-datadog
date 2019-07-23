@@ -54,6 +54,8 @@ The following Opscode cookbooks are dependencies:
 * `chef_handler`
 * `yum`
 
+Version `7.1` or later of the `apt` cookbook is needed to install the Agent on Debian 9 or later.
+
 ### Chef support
 
 **Chef 13 users**
