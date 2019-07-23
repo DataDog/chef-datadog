@@ -4,6 +4,7 @@ Changes
 # 3.1.1 / 2019-07-23
 
 * [FEATURE] Support the `extra_config` field in the system-probe recipe. See [#635][] [@kevinconaway][]
+* [BUGFIX] Fix the support of SLES 15 by supporting recent versions of `gpg` while importing the GPG key. See [#631][] [@KSerrania][]
 * [MISC] Allow custom prefix for Windows agent artifact. See [#634][] [@truthbk][]
 
 # 3.1.0 / 2019-07-10
@@ -758,12 +759,16 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#618]: https://github.com/DataDog/chef-datadog/issues/618
 [#626]: https://github.com/DataDog/chef-datadog/issues/626
 [#628]: https://github.com/DataDog/chef-datadog/issues/628
+[#631]: https://github.com/DataDog/chef-datadog/issues/631
+[#634]: https://github.com/DataDog/chef-datadog/issues/634
+[#635]: https://github.com/DataDog/chef-datadog/issues/635
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@BrentOnRails]: https://github.com/BrentOnRails
 [@DorianZaccaria]: https://github.com/DorianZaccaria
 [@EasyAsABC123]: https://github.com/EasyAsABC123
 [@JoeDeVries]: https://github.com/JoeDeVries
+[@KSerrania]: https://github.com/KSerrania
 [@LeoCavaille]: https://github.com/LeoCavaille
 [@MiguelMoll]: https://github.com/MiguelMoll
 [@NBParis]: https://github.com/NBParis
@@ -837,6 +842,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@jtimberman]: https://github.com/jtimberman
 [@juliandunn]: https://github.com/juliandunn
 [@jvrplmlmn]: https://github.com/jvrplmlmn
+[@kevinconaway]: https://github.com/kevinconaway
 [@khouse]: https://github.com/khouse
 [@kindlyseth]: https://github.com/kindlyseth
 [@krasnoukhov]: https://github.com/krasnoukhov
@@ -885,6 +891,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@thisismana]: https://github.com/thisismana
 [@timusg]: https://github.com/timusg
 [@tmichelet]: https://github.com/tmichelet
+[@truthbk]: https://github.com/truthbk
 [@uzyexe]: https://github.com/uzyexe
 [@wk8]: https://github.com/wk8
 [@wolf31o2]: https://github.com/wolf31o2
