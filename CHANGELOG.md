@@ -1,6 +1,11 @@
 Changes
 =======
 
+# 3.1.1 / 2019-07-23
+
+* [FEATURE] Support the `extra_config` field in the system-probe recipe. See [#635][] [@kevinconaway][]
+* [MISC] Allow custom prefix for Windows agent artifact. See [#634][] [@truthbk][]
+
 # 3.1.0 / 2019-07-10
 
 * [FEATURE] Add support of the `system-probe` Agent. See [#626][] [@shang-wang][]
