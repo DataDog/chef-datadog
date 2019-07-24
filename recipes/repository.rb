@@ -102,10 +102,7 @@ when 'suse'
     # Import key if fingerprint matches
     execute 'rpm-import datadog key e09422b3' do
       command "rpm --import #{new_key_local_path}"
-      only_if {
-        `gpg --dry-run --quiet --with-fingerprint #{new_key_local_path} | grep 'A4C0 B90D 7443 CF6E 4E8A  A341 F106 8E14 E094 22B3'` ||
-          `gpg --dry-run --import --import-options import-show #{new_key_local_path} | grep 'A4C0B90D7443CF6E4E8AA341F1068E14E09422B3'`
-      }
+      only_if "gpg --dry-run --quiet --with-fingerprint #{new_key_local_path} | grep 'A4C0 B90D 7443 CF6E 4E8A  A341 F106 8E14 E094 22B3' || gpg --dry-run --import --import-options import-show #{new_key_local_path} | grep 'A4C0B90D7443CF6E4E8AA341F1068E14E09422B3'"
       action :nothing
     end
   end
@@ -121,10 +118,7 @@ when 'suse'
   # Import key if fingerprint matches
   execute 'rpm-import datadog key 4172a230' do
     command "rpm --import #{old_key_local_path}"
-    only_if {
-      `gpg --dry-run --quiet --with-fingerprint #{old_key_local_path} | grep '60A3 89A4 4A0C 32BA E3C0  3F0B 069B 56F5 4172 A230'` ||
-        `gpg --dry-run --import --import-options import-show #{old_key_local_path} | grep '60A389A44A0C32BAE3C03F0B069B56F54172A230'`
-    }
+    only_if "gpg --dry-run --quiet --with-fingerprint #{old_key_local_path} | grep '60A3 89A4 4A0C 32BA E3C0  3F0B 069B 56F5 4172 A230' || gpg --dry-run --import --import-options import-show #{old_key_local_path} | grep '60A389A44A0C32BAE3C03F0B069B56F54172A230'"
     action :nothing
   end
 
