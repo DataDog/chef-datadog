@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 3.1.1 / 2019-07-23
+# 3.2.0 / 2019-07-25
 
 * [FEATURE] Support the `extra_config` field in the system-probe recipe. See [#635][] [@kevinconaway][]
 * [BUGFIX] Fix the support of SLES 15 by supporting recent versions of `gpg` while importing the GPG key. See [#631][] [@KSerrania][]
