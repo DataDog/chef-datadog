@@ -105,6 +105,7 @@ task :circle do
 
       # Scope the suites to only execute against the Agent+handler installer suites.
       commands.push "kitchen verify dd-agent-handler-#{name}"
+      commands.push "kitchen verify dd-agent-handler-agent6-#{name}"
     end
 
     commands.join(' && ')
