@@ -47,8 +47,8 @@ when 'debian'
     action :remove
   end
 when 'rhel', 'fedora', 'amazon'
-  # Import new RPM key
-  if node['datadog']['yumrepo_gpgkey_new']
+  # Import new RPM key if installing Agent 6
+  if node['datadog']['agent6']
     # gnupg is required to check the downloaded key's fingerprint
     package 'gnupg' do
       action :install
@@ -88,8 +88,8 @@ when 'rhel', 'fedora', 'amazon'
     action :create
   end
 when 'suse'
-  # Import new RPM key
-  if node['datadog']['yumrepo_gpgkey_new']
+  # Import new RPM key if installing Agent 6
+  if node['datadog']['agent6']
     # Download new RPM key
     new_key_local_path = ::File.join(Chef::Config[:file_cache_path], 'DATADOG_RPM_KEY_E09422B3.public')
     remote_file 'DATADOG_RPM_KEY_E09422B3.public' do
