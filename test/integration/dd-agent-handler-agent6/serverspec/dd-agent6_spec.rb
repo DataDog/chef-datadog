@@ -1,0 +1,1 @@
+../../dd-agent-agent6/serverspec/dd-agent6_spec.rb

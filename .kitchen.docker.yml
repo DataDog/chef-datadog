@@ -33,3 +33,13 @@ suites:
       agent6: false
       api_key: somenonnullapikeythats32charlong
       application_key: alsonotnil
+
+- name: dd-agent-handler-agent6
+  run_list:
+    - recipe[datadog::dd-handler]
+    - recipe[datadog::dd-agent]
+  attributes:
+    datadog:
+      agent6: true
+      api_key: somenonnullapikeythats32charlong
+      application_key: alsonotnil
