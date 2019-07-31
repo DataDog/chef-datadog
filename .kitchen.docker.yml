@@ -9,12 +9,12 @@ platforms:
   # and http://support.ntp.org/bin/view/Support/KnownOsIssues#Section_9.2.4.2.5.3.
   # - name: ubuntu-12.04
 
-  - name: ubuntu-14.04
-    driver_config:
-      require_chef_omnibus: 14.12
-  - name: centos-6.6
-    driver_config:
-      require_chef_omnibus: 14.12
+  #- name: ubuntu-14.04
+  #  driver_config:
+  #    require_chef_omnibus: 14.12
+  #- name: centos-6.6
+  #  driver_config:
+  #    require_chef_omnibus: 14.12
   - name: centos-7.7
     driver_config:
       require_chef_omnibus: 14.12
