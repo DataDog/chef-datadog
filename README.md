@@ -135,7 +135,7 @@ The `:remove` action disables an integration.
 
 ### Syntax
 
-```
+```ruby
 datadog_monitor 'name' do
   init_config                       Hash # default value: {}
   instances                         Array # default value: []
@@ -164,7 +164,7 @@ This example enables the ElasticSearch integration by using the `datadog_monitor
 
 Note that the Agent installation needs to be earlier in the run list.
 
-```
+```ruby
 include_recipe 'datadog::dd-agent'
 
 datadog_monitor 'elastic'
@@ -190,7 +190,7 @@ integration remove` command.
 
 ### Syntax
 
-```
+```ruby
 datadog_integration 'name' do
   version                           String # version to install for :install action.
   action                            Symbol # defaults to :install if not specified
@@ -215,7 +215,7 @@ using the `datadog_integration` resource.
 
 Note that the Agent installation needs to be earlier in the run list.
 
-```
+```ruby
 include_recipe 'datadog::dd-agent'
 
 datadog_integration 'datadog-elastic'
@@ -263,19 +263,35 @@ Administrators privileges to the Datadog Agent directories and files.
 Should you wish to add additional elements to the Agent v6 configuration file
 (typically `datadog.yaml`) that are not directly available
 as attributes of the cookbook, you may use the `node['datadog']['extra_config']`
-attribute. This attribute is a hash and will be marshaled into the configuration
+attribute. 
+
+E.g.
+
+```ruby
+default['datadog']['extra_config']['secret_backend_command'] = '/sbin/local-secrets'`
+```
+
+For nested attributes, use object syntax: 
+
+E.g.
+
+```ruby
+default['datadog']['extra_config']['logs_config'] = { 'use_port_443' => true }`
+```
+
+This attribute is a hash and will be marshaled into the configuration
 file accordingly.
 
 E.g.
 
- ```
- default_attributes(
-   'datadog' => {
-     'extra_config' => {
-        'secret_backend_command' => '/sbin/local-secrets'
-     }
-   }
- )
+```ruby
+default_attributes(
+  'datadog' => {
+    'extra_config' => {
+      'secret_backend_command' => '/sbin/local-secrets'
+    }
+  }
+)
  ```
 
 This example will set the field `secret_backend_command` in the configuration
@@ -285,7 +301,7 @@ file `datadog.yaml`.
 
 Since `3.0.0`, the cookbook defaults installing Agent v6. You can still setup the Agent v5 by setting `node['datadog']['agent6']` to false.
 
-```
+```ruby
   default_attributes(
     'datadog' => {
       'agent6' => false
@@ -315,7 +331,7 @@ Note that there are Agent v6 counterparts to several well known Agent v5 attribu
 
 You will need to indicate that you want to setup an Agent v5 instead of v6, pin the Agent v5 version that you want to install and allow downgrade:
 
-```
+```ruby
   default_attributes(
     'datadog' => {
       'agent6' => false,
@@ -342,7 +358,7 @@ You will need to indicate that you want to setup an Agent v5 instead of v6, pin 
 4. Enable Agent integrations by including their recipes and configuration details in your role’s run-list and attributes.
    Note that you can also create additional integrations recipes by using the `datadog_monitor` resource.
 5. Associate the recipes with the desired `roles`, i.e. "role:chef-client" should contain "datadog::dd-handler" and a "role:base" should start the agent with "datadog::dd-agent". Here's an example role with both recipes plus the MongoDB integration enabled.
-  ```
+  ```ruby
   name 'example'
   description 'Example role using DataDog'
 
