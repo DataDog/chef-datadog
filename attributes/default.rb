@@ -81,11 +81,6 @@ default['datadog']['agent6_cmd_port'] = nil
 # GUI_port: -1
 default['datadog']['agent6_gui_port'] = nil
 
-# Set a key to true to make the agent6 use the v2 api on that endpoint, false otherwise.
-# Leave key value to nil to use agent6 default for that endpoint.
-# Supported keys: "series", "events", "service checks"
-default['datadog']['use_v2_api'] = {}
-
 ###                 End of Agent6-only attributes                    ###
 ########################################################################
 
