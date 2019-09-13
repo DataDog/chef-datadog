@@ -65,12 +65,22 @@ when 'debian'
     options '--force-yes' if node['datadog']['agent_allow_downgrade']
   end
 when 'rhel', 'fedora', 'amazon'
-  yum_package 'datadog-agent' do
-    version dd_agent_version
-    retries package_retries unless package_retries.nil?
-    retry_delay package_retry_delay unless package_retry_delay.nil?
-    action package_action # default is :install
-    allow_downgrade node['datadog']['agent_allow_downgrade']
+  if node['platform_family'] == 'rhel' && node['platform_version'].to_i >= 8
+    # yum_package doesn't work on RHEL 8
+    dnf_package 'datadog-agent' do
+      version dd_agent_version
+      retries package_retries unless package_retries.nil?
+      retry_delay package_retry_delay unless package_retry_delay.nil?
+      action package_action # default is :install
+    end
+  else
+    yum_package 'datadog-agent' do
+      version dd_agent_version
+      retries package_retries unless package_retries.nil?
+      retry_delay package_retry_delay unless package_retry_delay.nil?
+      action package_action # default is :install
+      allow_downgrade node['datadog']['agent_allow_downgrade']
+    end
   end
 when 'suse'
   zypper_package 'datadog-agent' do # ~FC009
