@@ -65,8 +65,9 @@ when 'debian'
     options '--force-yes' if node['datadog']['agent_allow_downgrade']
   end
 when 'rhel', 'fedora', 'amazon'
-  if node['platform_family'] == 'rhel' && node['platform_version'].to_i >= 8
-    # yum_package doesn't work on RHEL 8
+  if node['platform_family'] == 'rhel' && node['platform_version'].to_i >= 8  ||
+    node['platform_family'] == 'fedora' && node['platform_version'].to_i >= 28
+    # yum_package doesn't work on RHEL 8 and Fedora >= 28
     dnf_package 'datadog-agent' do
       version dd_agent_version
       retries package_retries unless package_retries.nil?
