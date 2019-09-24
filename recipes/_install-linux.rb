@@ -68,6 +68,7 @@ when 'rhel', 'fedora', 'amazon'
   if node['platform_family'] == 'rhel' && node['platform_version'].to_i >= 8 ||
      node['platform_family'] == 'fedora' && node['platform_version'].to_i >= 28
     # yum_package doesn't work on RHEL 8 and Fedora >= 28
+    # dnf_package only works on RHEL 8 / Fedora >= 28 if Chef 15+ is used
     dnf_package 'datadog-agent' do
       version dd_agent_version
       retries package_retries unless package_retries.nil?

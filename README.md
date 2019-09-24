@@ -39,7 +39,7 @@ Platforms
 * Amazon Linux
 * CentOS
 * Debian
-* RedHat
+* RedHat (RHEL 8 requires chef >= 15)
 * Scientific Linux
 * Ubuntu
 * Windows
