@@ -71,6 +71,16 @@ default['datadog']['agent6_config_dir'] =
 # Defaults to 'datadoghq.com', set to 'datadoghq.eu' to send data to the EU site.
 default['datadog']['site'] = nil
 
+# The port on which the IPC api listens
+# cmd_port: 5001
+default['datadog']['cmd_port'] = nil
+
+# The port for the browser GUI to be served
+# Setting 'GUI_port: -1' turns off the GUI completely
+# Default is '5002' on Windows and macOS ; turned off on Linux
+# GUI_port: -1
+default['datadog']['gui_port'] = nil
+
 ###                 End of Agent6-only attributes                    ###
 ########################################################################
 
