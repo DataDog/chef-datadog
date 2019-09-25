@@ -3,9 +3,9 @@ Changes
 
 # 3.3.0 / 2019-09-25
 
-* [FEATURE] Add the support RHEL8/Fedora 28 (needs Chef >= 15). See [#641][] [@KSerrania][]
-* [OPTIMIZE] Add the support of the fields `cmd_port` and `gui_port` in Agent config template. See [#632][] [@iashwash][] [@MCKrab][]
-* [OPTIMIZE] Add the support of the field `ssl_ca_cert` in the vault template. See [#624][] [@jschirle73][]
+* [FEATURE] Add RHEL8/Fedora 28 support (needs Chef >= 15). See [#641][] [@KSerrania][]
+* [OPTIMIZE] Add support of the `cmd_port` and `gui_port` fields in Agent config template. See [#632][] [@iashwash][] [@MCKrab][]
+* [OPTIMIZE] Add support of the `ssl_ca_cert` field in the vault template. See [#624][] [@jschirle73][]
 * [OPTIMIZE] Improve the README examples for the `extra_config` field. See [#639][] [@nicholas-devlin][]
 
 # 3.2.0 / 2019-07-25
