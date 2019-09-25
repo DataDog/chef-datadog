@@ -1,6 +1,13 @@
 Changes
 =======
 
+# 3.3.0 / 2019-09-25
+
+* [FEATURE] Add RHEL8/Fedora 28 support (needs Chef >= 15). See [#641][] [@KSerrania][]
+* [OPTIMIZE] Add support of the `cmd_port` and `gui_port` fields in Agent config template. See [#632][] [@iashwash][] [@MCKrab][]
+* [OPTIMIZE] Add support of the `ssl_ca_cert` field in the vault template. See [#624][] [@jschirle73][]
+* [OPTIMIZE] Improve the README examples for the `extra_config` field. See [#639][] [@nicholas-devlin][]
+
 # 3.2.0 / 2019-07-25
 
 * [FEATURE] Support the `extra_config` field in the system-probe recipe. See [#635][] [@kevinconaway][]
@@ -757,11 +764,15 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#600]: https://github.com/DataDog/chef-datadog/issues/600
 [#613]: https://github.com/DataDog/chef-datadog/issues/613
 [#618]: https://github.com/DataDog/chef-datadog/issues/618
+[#624]: https://github.com/DataDog/chef-datadog/issues/624
 [#626]: https://github.com/DataDog/chef-datadog/issues/626
 [#628]: https://github.com/DataDog/chef-datadog/issues/628
 [#631]: https://github.com/DataDog/chef-datadog/issues/631
+[#632]: https://github.com/DataDog/chef-datadog/issues/632
 [#634]: https://github.com/DataDog/chef-datadog/issues/634
 [#635]: https://github.com/DataDog/chef-datadog/issues/635
+[#639]: https://github.com/DataDog/chef-datadog/issues/639
+[#641]: https://github.com/DataDog/chef-datadog/issues/641
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@BrentOnRails]: https://github.com/BrentOnRails
@@ -770,6 +781,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@JoeDeVries]: https://github.com/JoeDeVries
 [@KSerrania]: https://github.com/KSerrania
 [@LeoCavaille]: https://github.com/LeoCavaille
+[@MCKrab]: https://github.com/MCKrab
 [@MiguelMoll]: https://github.com/MiguelMoll
 [@NBParis]: https://github.com/NBParis
 [@NathanielMichael]: https://github.com/NathanielMichael
@@ -839,6 +851,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@jmanero-r7]: https://github.com/jmanero-r7
 [@jpcallanta]: https://github.com/jpcallanta
 [@jridgewell]: https://github.com/jridgewell
+[@jschirle73]: https://github.com/jschirle73
 [@jtimberman]: https://github.com/jtimberman
 [@juliandunn]: https://github.com/juliandunn
 [@jvrplmlmn]: https://github.com/jvrplmlmn
@@ -859,6 +872,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@moisesbotarro]: https://github.com/moisesbotarro
 [@mstepniowski]: https://github.com/mstepniowski
 [@mtougeron]: https://github.com/mtougeron
+[@nicholas-devlin]: https://github.com/nicholas-devlin
 [@nickmarden]: https://github.com/nickmarden
 [@nkts]: https://github.com/nkts
 [@nyanshak]: https://github.com/nyanshak
