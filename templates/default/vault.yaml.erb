@@ -13,7 +13,7 @@ instances:
     ssl_verify: <%= i['ssl_verify'] %>
     <% end %>
     <% unless i['ssl_ca_cert'].nil? %>
-    ssl_verify: <%= i['ssl_ca_cert'] %>
+    ssl_ca_cert: <%= i['ssl_ca_cert'] %>
     <% end %>
     <% unless i['timeout'].nil? %>
     timeout: <%= i['timeout'] %>
