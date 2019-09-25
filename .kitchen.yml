@@ -585,6 +585,7 @@ suites:
             detect_leader: false
             skip_proxy: false
             ssl_verify: true
+            ssl_ca_cert: /path/to/cert.crt
             tags: ['_default']
             timeout: 20
 
