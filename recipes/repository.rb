@@ -66,7 +66,7 @@ when 'rhel', 'fedora', 'amazon'
     # Import key if fingerprint matches
     execute 'rpm-import datadog key e09422b3' do
       command "rpm --import #{key_local_path}"
-      only_if "gpg --dry-run --quiet --with-fingerprint #{key_local_path} | grep 'A4C0 B90D 7443 CF6E 4E8A  A341 F106 8E14 E094 22B3'"
+      only_if "gpg --dry-run --quiet --with-fingerprint #{key_local_path} | grep 'A4C0 B90D 7443 CF6E 4E8A  A341 F106 8E14 E094 22B3' || gpg --dry-run --import --import-options import-show #{key_local_path} | grep 'A4C0B90D7443CF6E4E8AA341F1068E14E09422B3'"
       action :nothing
     end
   end
