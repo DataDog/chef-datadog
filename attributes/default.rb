@@ -73,13 +73,13 @@ default['datadog']['site'] = nil
 
 # The port on which the IPC api listens
 # cmd_port: 5001
-default['datadog']['agent6_cmd_port'] = nil
+default['datadog']['cmd_port'] = nil
 
 # The port for the browser GUI to be served
 # Setting 'GUI_port: -1' turns off the GUI completely
 # Default is '5002' on Windows and macOS ; turned off on Linux
 # GUI_port: -1
-default['datadog']['agent6_gui_port'] = nil
+default['datadog']['gui_port'] = nil
 
 ###                 End of Agent6-only attributes                    ###
 ########################################################################
