@@ -263,15 +263,29 @@ Administrators privileges to the Datadog Agent directories and files.
 Should you wish to add additional elements to the Agent v6 configuration file
 (typically `datadog.yaml`) that are not directly available
 as attributes of the cookbook, you may use the `node['datadog']['extra_config']`
-attribute. 
+attribute. This attribute is a hash and will be marshaled into the configuration
+file accordingly.
 
 E.g.
 
 ```ruby
+ default_attributes(
+   'datadog' => {
+     'extra_config' => {
+       'secret_backend_command' => '/sbin/local-secrets'
+     }
+   }
+ )
+```
+or
+```
 default['datadog']['extra_config']['secret_backend_command'] = '/sbin/local-secrets'`
 ```
 
-For nested attributes, use object syntax: 
+This example will set the field `secret_backend_command` in the configuration
+file `datadog.yaml`.
+
+For nested attributes, use object syntax:
 
 E.g.
 
@@ -279,23 +293,7 @@ E.g.
 default['datadog']['extra_config']['logs_config'] = { 'use_port_443' => true }`
 ```
 
-This attribute is a hash and will be marshaled into the configuration
-file accordingly.
-
-E.g.
-
-```ruby
-default_attributes(
-  'datadog' => {
-    'extra_config' => {
-      'secret_backend_command' => '/sbin/local-secrets'
-    }
-  }
-)
- ```
-
-This example will set the field `secret_backend_command` in the configuration
-file `datadog.yaml`.
+This example will set the field `logs_config` in the configuration file `datadog.yaml`.
 
 ### Agent v5
 
