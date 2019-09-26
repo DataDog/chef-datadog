@@ -9,12 +9,12 @@ platforms:
   # and http://support.ntp.org/bin/view/Support/KnownOsIssues#Section_9.2.4.2.5.3.
   # - name: ubuntu-12.04
 
-  - name: ubuntu-14.04
-    driver_config:
-      require_chef_omnibus: 14.12
-  - name: centos-6.6
-    driver_config:
-      require_chef_omnibus: 14.12
+  #- name: ubuntu-14.04
+  #  driver_config:
+  #    require_chef_omnibus: 14.12
+  #- name: centos-6.6
+  #  driver_config:
+  #    require_chef_omnibus: 14.12
   - name: centos-7.7
     driver_config:
       require_chef_omnibus: 14.12
@@ -31,5 +31,15 @@ suites:
     datadog:
       # TODO(remy): run those tests with Agent v6 recipe.
       agent6: false
+      api_key: somenonnullapikeythats32charlong
+      application_key: alsonotnil
+
+- name: dd-agent-handler-agent6
+  run_list:
+    - recipe[datadog::dd-handler]
+    - recipe[datadog::dd-agent]
+  attributes:
+    datadog:
+      agent6: true
       api_key: somenonnullapikeythats32charlong
       application_key: alsonotnil
