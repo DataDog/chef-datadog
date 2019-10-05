@@ -44,6 +44,8 @@ gemfiles/*
 spec/*
 spec/fixtures/*
 test/*
+kitchen.yml
+kitchen.docker.yml
 
 ## SCM
 .gitignore
