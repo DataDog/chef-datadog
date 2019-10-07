@@ -67,7 +67,7 @@ namespace :generate do
     puts <<-EOT.sub(/\n$/, '')
       New test suite created!
       Next steps:
-      - Add a new entry to .kitchen.yml
+      - Add a new entry to kitchen.yml
       - Modify #{spec_name} in #{sspec_dir}
       - Run `kitchen list #{suite_name}` to confirm suite added.
       - Run `kitchen test #{suite_name}` to run tests.

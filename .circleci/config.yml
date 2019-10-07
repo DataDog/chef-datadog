@@ -3,7 +3,7 @@ jobs:
   test:
     machine: true
     environment:
-      KITCHEN_LOCAL_YAML: .kitchen.docker.yml
+      KITCHEN_LOCAL_YAML: kitchen.docker.yml
     steps:
       - checkout
       - run: curl -L https://www.chef.io/chef/install.sh | sudo bash -s -- -P chefdk -v 3.8
