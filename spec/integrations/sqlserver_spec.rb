@@ -26,7 +26,11 @@ describe 'datadog::sqlserver' do
   EOF
 
     cached(:chef_run) do
-      ChefSpec::SoloRunner.new(step_into: ['datadog_monitor']) do |node|
+      ChefSpec::SoloRunner.new(
+        platform: 'ubuntu',
+        version: '16.04',
+        step_into: ['datadog_monitor']
+      ) do |node|
         node.automatic['languages'] = { 'python' => { 'version' => '2.7.2' } }
         node.normal['datadog'] = {
           api_key: 'someapikey',
@@ -102,7 +106,11 @@ describe 'datadog::sqlserver' do
   EOF
 
     cached(:chef_run) do
-      ChefSpec::SoloRunner.new(step_into: ['datadog_monitor']) do |node|
+      ChefSpec::SoloRunner.new(
+        platform: 'ubuntu',
+        version: '16.04',
+        step_into: ['datadog_monitor']
+      ) do |node|
         node.automatic['languages'] = { 'python' => { 'version' => '2.7.2' } }
         node.normal['datadog'] = {
           api_key: 'someapikey',

@@ -852,7 +852,10 @@ describe 'datadog::dd-agent' do
   context 'service action' do
     describe 'default' do
       cached(:chef_run) do
-        ChefSpec::SoloRunner.new do |node|
+        ChefSpec::SoloRunner.new(
+          platform: 'centos',
+          version: '6.9'
+        ) do |node|
           node.automatic['languages'] = { python: { version: '2.6.2' } }
           node.normal['datadog'] = { api_key: 'somethingnotnil' }
         end.converge described_recipe
@@ -863,7 +866,10 @@ describe 'datadog::dd-agent' do
 
     describe 'agent_enable & agent_start are set to disable, stop' do
       cached(:chef_run) do
-        ChefSpec::SoloRunner.new do |node|
+        ChefSpec::SoloRunner.new(
+          platform: 'centos',
+          version: '6.9'
+        ) do |node|
           node.automatic['languages'] = { python: { version: '2.6.2' } }
           node.normal['datadog'] = {
             api_key: 'somethingnotnil',

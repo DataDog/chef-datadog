@@ -116,7 +116,9 @@ describe 'datadog::go-metro' do
 
     cached(:chef_run) do
       ChefSpec::SoloRunner.new(
-        step_into: ['datadog_monitor'], platform: 'ubuntu', version: '16.04'
+        platform: 'ubuntu',
+        version: '16.04',
+        step_into: ['datadog_monitor']
       ) do |node|
         node.automatic['languages'] = { python: { version: '2.7.2' } }
 
