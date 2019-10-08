@@ -17,6 +17,10 @@
 # limitations under the License.
 #
 
+if node['datadog'].include? 'agent6'
+  Chef::Log.warn('The boolean "agent6" is no longer used by this cookbook. Use "agent_major_version" instead.')
+end
+
 # Fail here at converge time if no api_key is set
 ruby_block 'datadog-api-key-unset' do
   block do
