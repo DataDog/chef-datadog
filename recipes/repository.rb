@@ -26,9 +26,19 @@ when 'debian'
     action :install
   end
 
-  uri = node['datadog']['agent6'] ? node['datadog']['agent6_aptrepo'] : node['datadog']['aptrepo']
-  distribution = node['datadog']['agent6'] ? node['datadog']['agent6_aptrepo_dist'] : node['datadog']['aptrepo_dist']
-  components = node['datadog']['agent6'] ? ['main', '6'] : ['main']
+  case node['datadog']['agent_major_version'].to_i
+  when 6
+    uri = node['datadog']['agent6_aptrepo']
+    distribution = node['datadog']['agent6_aptrepo_dist']
+    components = ['main', '6']
+  when 5
+    uri = node['datadog']['agent5_aptrepo']
+    distribution = node['datadog']['agent5_aptrepo_dist']
+    components = ['main']
+  else
+    Chef::Log.error('agent_major_version not supported.')
+  end
+
   retries = node['datadog']['aptrepo_retries']
   keyserver = node['datadog']['aptrepo_use_backup_keyserver'] ? node['datadog']['aptrepo_backup_keyserver'] : node['datadog']['aptrepo_keyserver']
   # Add APT repository
@@ -71,14 +81,19 @@ when 'rhel', 'fedora', 'amazon'
     end
   end
 
+  case node['datadog']['agent_major_version'].to_i
+  when 6
+    baseurl = node['datadog']['agent6_yumrepo']
+  when 5
+    baseurl = node['datadog']['agent5_yumrepo']
+  else
+    Chef::Log.error('agent_major_version not supported.')
+  end
+
   # Add YUM repository
   yum_repository 'datadog' do
     description 'datadog'
-    if node['datadog']['agent6']
-      baseurl node['datadog']['agent6_yumrepo']
-    else
-      baseurl node['datadog']['yumrepo']
-    end
+    baseurl baseurl
     proxy node['datadog']['yumrepo_proxy']
     proxy_username node['datadog']['yumrepo_proxy_username']
     proxy_password node['datadog']['yumrepo_proxy_password']
@@ -121,14 +136,19 @@ when 'suse'
     action :nothing
   end
 
+  case node['datadog']['agent_major_version'].to_i
+  when 6
+    baseurl = node['datadog']['agent6_yumrepo_suse']
+  when 5
+    baseurl = node['datadog']['agent5_yumrepo_suse']
+  else
+    Chef::Log.error('agent_major_version not supported.')
+  end
+
   # Add YUM repository
   zypper_repository 'datadog' do
     description 'datadog'
-    if node['datadog']['agent6']
-      baseurl node['datadog']['agent6_yumrepo_suse']
-    else
-      baseurl node['datadog']['yumrepo_suse']
-    end
+    baseurl baseurl
     gpgkey node['datadog']['yumrepo_gpgkey']
     gpgautoimportkeys false
     gpgcheck false

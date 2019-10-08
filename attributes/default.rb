@@ -28,27 +28,13 @@ default['datadog']['api_key'] = nil
 # Set it as an attribute, or on your node `run_state` under the key `['datadog']['application_key']`
 default['datadog']['application_key'] = nil
 
-# Set node['datadog']['agent6'] to false to install an agent5 instead of agent6.
-# To upgrade from agent5 to agent6, you need to:
-# * set node['datadog']['agent6'] to true, and
-# * either set node['datadog']['agent6_version'] to an existing agent6 version (recommended), or
-#   set node['datadog']['agent6_package_action'] to 'upgrade'
-# To downgrade from agent6 to agent5, you need to:
-# * set node['datadog']['agent6'] to false, and
-# * pin node['datadog']['agent_version'] to an existing agent5 version, and
-# * set node['datadog']['agent_allow_downgrade'] to true
 # If you're installing a pre-release version of Agent 6 (beta or RC), you need to:
 # * on debian: set node['datadog']['agent6_aptrepo_dist'] to 'beta' instead of 'stable'
 # * on RHEL: set node['datadog']['agent6_yumrepo'] to 'https://yum.datadoghq.com/beta/x86_64/'
-default['datadog']['agent6'] = true
+default['datadog']['agent_major_version'] = 6
 
 ########################################################################
-###                  Agent6-only attributes                          ###
-
-# Default of `nil` will install latest version, applies to agent6 only.
-# See documentation of `agent_version` attribute for allowed configuration format.
-default['datadog']['agent6_version'] = nil
-default['datadog']['agent6_package_action'] = 'install' # set to `upgrade` to always upgrade to latest
+###                 Agent 6/7 only attributes                        ###
 
 # repos where datadog-agent v6 packages are available
 default['datadog']['agent6_aptrepo'] = 'http://apt.datadoghq.com'
@@ -56,15 +42,6 @@ default['datadog']['agent6_aptrepo_dist'] = 'stable'
 # RPMs are only available for RHEL >= 6 (-> use https protocol) and x86_64 arch
 default['datadog']['agent6_yumrepo'] = 'https://yum.datadoghq.com/stable/6/x86_64/'
 default['datadog']['agent6_yumrepo_suse'] = 'https://yum.datadoghq.com/suse/stable/6/x86_64/'
-
-# Values that differ on Windows
-# The location of the config folder (containing conf.d)
-default['datadog']['agent6_config_dir'] =
-  if node['platform_family'] == 'windows'
-    "#{ENV['ProgramData']}/Datadog"
-  else
-    '/etc/datadog-agent'
-  end
 
 # The site of the Datadog intake to send Agent data to.
 # This configuration option is supported since Agent 6.6
@@ -81,7 +58,7 @@ default['datadog']['cmd_port'] = nil
 # GUI_port: -1
 default['datadog']['gui_port'] = nil
 
-###                 End of Agent6-only attributes                    ###
+###                 End of Agent 6/7 only attributes                 ###
 ########################################################################
 
 # Use this attribute to send data to additional accounts
@@ -159,14 +136,14 @@ yum_protocol =
 # NB: if you're not using the default repos and/or distributions, make sure
 # to pin the version you're installing with node['datadog']['agent_version']
 default['datadog']['installrepo'] = true
-default['datadog']['aptrepo'] = 'http://apt.datadoghq.com'
-default['datadog']['aptrepo_dist'] = 'stable'
+default['datadog']['agent5_aptrepo'] = 'http://apt.datadoghq.com'
+default['datadog']['agent5_aptrepo_dist'] = 'stable'
 default['datadog']['aptrepo_retries'] = 4
 default['datadog']['aptrepo_use_backup_keyserver'] = false
 default['datadog']['aptrepo_keyserver'] = 'hkp://keyserver.ubuntu.com:80'
 default['datadog']['aptrepo_backup_keyserver'] = 'hkp://pool.sks-keyservers.net:80'
-default['datadog']['yumrepo'] = "#{yum_protocol}://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/"
-default['datadog']['yumrepo_suse'] = "https://yum.datadoghq.com/suse/rpm/#{architecture_map[node['kernel']['machine']]}/"
+default['datadog']['agent5_yumrepo'] = "#{yum_protocol}://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/"
+default['datadog']['agent5_yumrepo_suse'] = "https://yum.datadoghq.com/suse/rpm/#{architecture_map[node['kernel']['machine']]}/"
 default['datadog']['yumrepo_gpgkey'] = "#{yum_protocol}://yum.datadoghq.com/DATADOG_RPM_KEY.public"
 default['datadog']['yumrepo_proxy'] = nil
 default['datadog']['yumrepo_proxy_username'] = nil
@@ -197,11 +174,16 @@ default['datadog']['windows_agent_use_exe'] = false
 # The location of the config folder (containing conf.d)
 # The name of the dd agent service
 # The log file directory (see logging section below)
+
+# Values that differ on Windows
+# The location of the config folder (containing conf.d)
 if node['platform_family'] == 'windows'
-  default['datadog']['config_dir'] = "#{ENV['ProgramData']}/Datadog"
+  default['datadog']['agent5_config_dir'] = "#{ENV['ProgramData']}/Datadog"
+  default['datadog']['agent6_config_dir'] = "#{ENV['ProgramData']}/Datadog"
   default['datadog']['agent_name'] = 'DatadogAgent'
 else
-  default['datadog']['config_dir'] = '/etc/dd-agent'
+  default['datadog']['agent5_config_dir'] = '/etc/dd-agent'
+  default['datadog']['agent6_config_dir'] = '/etc/datadog-agent'
   default['datadog']['agent_name'] = 'datadog-agent'
 end
 
@@ -213,8 +195,7 @@ end
 default['datadog']['windows_ddagentuser_name'] = nil
 default['datadog']['windows_ddagentuser_password'] = nil
 
-# Agent Version for v5 Agents
-# To pin the version of v6 Agents, use the `agent6_version` attribute instead.
+# Agent Version
 # Default of `nil` will install latest version. On Windows, this will also upgrade to latest
 # This attribute accepts either a `string` or `hash` with the key as platform_name and value of package version
 # In the case of fedora and amazon linux, use platform_name of rhel
@@ -226,8 +207,6 @@ default['datadog']['windows_ddagentuser_password'] = nil
 # }
 default['datadog']['agent_version'] = nil
 
-# Agent package action for v5 Agents
-# For v6 Agents, use the agent6_package_action attribute instead
 # Allow override with `upgrade` to get latest (Linux only)
 default['datadog']['agent_package_action'] = 'install'
 

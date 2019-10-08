@@ -44,13 +44,11 @@ agent_start = node['datadog']['agent_start'] ? :start : :stop
 # To add integration-specific configurations, add 'datadog::config_name' to
 # the node's run_list and set the relevant attributes
 #
-if node['datadog']['agent6']
+if node['datadog']['agent_major_version'].to_i > 5
   include_recipe 'datadog::_agent6_config'
 else
-  # Agent 5 and lower
-
   # Make sure the config directory exists for Agent 5
-  directory node['datadog']['config_dir'] do
+  directory node['datadog']['agent5_config_dir'] do
     if is_windows
       owner 'Administrators'
       rights :full_control, 'Administrators'
@@ -62,7 +60,7 @@ else
     end
   end
 
-  agent_config_file = ::File.join(node['datadog']['config_dir'], 'datadog.conf')
+  agent_config_file = ::File.join(node['datadog']['agent5_config_dir'], 'datadog.conf')
   template agent_config_file do
     def template_vars
       # Default value of node['datadog']['url'] is now nil for an Agent 6
@@ -109,7 +107,7 @@ end
 
 # Common configuration
 service_provider = nil
-if node['datadog']['agent6'] &&
+if node['datadog']['agent_major_version'].to_i > 5 &&
    (((node['platform'] == 'amazon' || node['platform_family'] == 'amazon') && node['platform_version'].to_i != 2) ||
     (node['platform'] == 'ubuntu' && node['platform_version'].to_f < 15.04) || # chef <11.14 doesn't use the correct service provider
    (node['platform'] != 'amazon' && node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7))
@@ -135,10 +133,10 @@ service 'datadog-agent' do
   retry_delay 5
 end
 
-# only load system-probe recipe if an agent6 installation comes with it
+# only load system-probe recipe if an agent 6/7 installation comes with it
 ruby_block 'include system-probe' do
   block do
-    if ::File.exist?('/opt/datadog-agent/embedded/bin/system-probe') && node['datadog']['agent6'] && !is_windows
+    if ::File.exist?('/opt/datadog-agent/embedded/bin/system-probe') && node['datadog']['agent_major_version'].to_i > 5 && !is_windows
       run_context.include_recipe 'datadog::system-probe'
     end
   end

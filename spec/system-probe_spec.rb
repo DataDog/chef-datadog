@@ -10,7 +10,7 @@ describe 'datadog::system-probe' do
         node.name 'chef-nodename' # expected to be used as the hostname in `datadog.yaml`
         node.normal['datadog'] = {
           'api_key' => 'somethingnotnil',
-          'agent6' => true,
+          'agent_major_version' => 6,
           'system_probe' => {
             'debug_port' => 123,
             'bpf_debug' => true,
@@ -49,7 +49,7 @@ describe 'datadog::system-probe' do
         node.name 'chef-nodename' # expected to be used as the hostname in `datadog.yaml`
         node.normal['datadog'] = {
           'api_key' => 'somethingnotnil',
-          'agent6' => true,
+          'agent_major_version' => 6,
           'extra_config' => {
             'system_probe' => {
               'max_tracked_connections' => 1000

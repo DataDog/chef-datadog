@@ -17,34 +17,24 @@
 # limitations under the License.
 #
 
-dd_agent5_version =
-  if node['datadog']['agent_version'].respond_to?(:each_pair)
-    node['datadog']['agent_version']['windows']
-  else
-    node['datadog']['agent_version']
-  end
-
-dd_agent6_version =
-  if node['datadog']['agent6_version'].respond_to?(:each_pair)
-    node['datadog']['agent6_version']['windows']
-  else
-    node['datadog']['agent6_version']
-  end
-
-if node['datadog']['agent6']
-  dd_agent_version = dd_agent6_version
-  dd_agent_latest = 'datadog-agent-6-latest.amd64'
-else
-  dd_agent_version = dd_agent5_version
-  # The latest package basename is `ddagent-cli-latest` for '~> 5.12' versions
-  dd_agent_latest = 'ddagent-cli-latest'
+dd_agent_version = node['datadog']['agent_version']
+if dd_agent_version.respond_to?(:each_pair)
+  dd_agent_version = dd_agent_version['windows']
 end
 
-# If a different file prefix is specified, use that:
-dd_agent_installer_prefix = node['datadog']['windows_agent_installer_prefix'] ? node['datadog']['windows_agent_installer_prefix'] : 'ddagent-cli'
+if dd_agent_version.nil?
+  # Use latest
+  agent_major_version = node['datadog']['agent_major_version']
+  if agent_major_version.to_i == 5
+    dd_agent_installer_basename = 'ddagent-cli-latest'
+  else
+    dd_agent_installer_basename = "datadog-agent-#{agent_major_version}-latest.amd64"
+  end
+else
+  dd_agent_installer_prefix = (node['datadog']['windows_agent_installer_prefix'] or 'ddagent-cli')
+  dd_agent_installer_basename = "#{dd_agent_installer_prefix}-#{dd_agent_version}"
+end
 
-# If no version is specified, select the latest package.
-dd_agent_installer_basename = dd_agent_version ? "#{dd_agent_installer_prefix}-#{dd_agent_version}" : dd_agent_latest
 temp_file_basename = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli')
 
 if node['datadog']['windows_agent_use_exe']

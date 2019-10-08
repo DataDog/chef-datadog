@@ -79,7 +79,7 @@ suites:
     datadog: &DATADOG
       agent6_aptrepo: 'http://apt.datad0g.com'
       agent6_aptrepo_dist: 'beta'
-      # agent6_version: '1:6.11.3~rc.2-1'
+      # agent_version: '1:6.11.3~rc.2-1'
       agent6_package_action: 'install'
       agent_allow_downgrade: true
       api_key: somenonnullapikeythats32charlong

@@ -19,7 +19,7 @@ action :add do
   template ::File.join(yaml_dir, "#{new_resource.name}.yaml") do
     # On Windows Agent v5, set the permissions on conf files to Administrators.
     if node['platform_family'] == 'windows'
-      unless node['datadog']['agent6']
+      if node['datadog']['agent_major_version'].to_i == 5
         owner 'Administrators'
         rights :full_control, 'Administrators'
         inherits false
@@ -52,9 +52,9 @@ action :remove do
 end
 
 def yaml_dir
-  if node['datadog']['agent6']
+  if node['datadog']['agent_major_version'].to_i > 5
     ::File.join(node['datadog']['agent6_config_dir'], 'conf.d')
   else
-    ::File.join(node['datadog']['config_dir'], 'conf.d')
+    ::File.join(node['datadog']['agent5_config_dir'], 'conf.d')
   end
 end
