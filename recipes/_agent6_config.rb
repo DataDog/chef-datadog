@@ -31,7 +31,7 @@ template agent_config_file do
     additional_endpoints = {}
     node['datadog']['extra_endpoints'].each do |_, endpoint|
       next unless endpoint['enabled']
-      url = (endpoint['url'] or dd_url)
+      url = (endpoint['url'] || dd_url)
       if additional_endpoints.key?(url)
         additional_endpoints[url] << endpoint['api_key']
       else

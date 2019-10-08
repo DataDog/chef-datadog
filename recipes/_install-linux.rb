@@ -24,7 +24,7 @@ dd_agent_version = node['datadog']['agent_version']
 if dd_agent_version.respond_to?(:each_pair)
   platform_family = node['platform_family']
   # Unless explicitly listed, treat fedora and amazon as rhel
-  if not dd_agent_version.include? platform_family and ['fedora', 'amazon'].include? platform_family
+  if !dd_agent_version.include?(platform_family) && ['fedora', 'amazon'].include?(platform_family)
     platform_family = 'rhel'
   end
   dd_agent_version = dd_agent_version[platform_family]

@@ -25,13 +25,9 @@ end
 if dd_agent_version.nil?
   # Use latest
   agent_major_version = node['datadog']['agent_major_version']
-  if agent_major_version.to_i == 5
-    dd_agent_installer_basename = 'ddagent-cli-latest'
-  else
-    dd_agent_installer_basename = "datadog-agent-#{agent_major_version}-latest.amd64"
-  end
+  dd_agent_installer_basename = (agent_major_version.to_i == 5) ? 'ddagent-cli-latest' : "datadog-agent-#{agent_major_version}-latest.amd64"
 else
-  dd_agent_installer_prefix = (node['datadog']['windows_agent_installer_prefix'] or 'ddagent-cli')
+  dd_agent_installer_prefix = (node['datadog']['windows_agent_installer_prefix'] || 'ddagent-cli')
   dd_agent_installer_basename = "#{dd_agent_installer_prefix}-#{dd_agent_version}"
 end
 

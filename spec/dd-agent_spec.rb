@@ -239,10 +239,10 @@ describe 'datadog::dd-agent' do
           :version => '2012R2',
           :file_cache_path => 'C:/chef/cache'
         ) do |node|
-        node.normal['datadog'] = {
-          'api_key' => 'somethingnotnil',
-          'agent_major_version' => 5,
-        }
+          node.normal['datadog'] = {
+            'api_key' => 'somethingnotnil',
+            'agent_major_version' => 5,
+          }
         end.converge described_recipe
       end
 
