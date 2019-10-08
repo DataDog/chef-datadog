@@ -2,7 +2,6 @@
 
 default_action :add
 
-property :name, String, name_attribute: true
 property :cookbook, String, default: 'datadog'
 
 # checks have 3 sections: init_config, instances, logs

@@ -73,7 +73,6 @@ when 'rhel', 'fedora', 'amazon'
 
   # Add YUM repository
   yum_repository 'datadog' do
-    name 'datadog'
     description 'datadog'
     if node['datadog']['agent6']
       baseurl node['datadog']['agent6_yumrepo']
@@ -124,7 +123,6 @@ when 'suse'
 
   # Add YUM repository
   zypper_repository 'datadog' do
-    name 'datadog'
     description 'datadog'
     if node['datadog']['agent6']
       baseurl node['datadog']['agent6_yumrepo_suse']
