@@ -230,6 +230,36 @@ describe 'datadog::dd-agent' do
           .to match(/ddagent-cli-5.10.1.msi/)
       end
     end
+
+    context 'agent 5 latest on windows' do
+      cached(:chef_run) do
+        set_env_var('ProgramData', 'C:\ProgramData')
+        ChefSpec::SoloRunner.new(
+          :platform => 'windows',
+          :version => '2012R2',
+          :file_cache_path => 'C:/chef/cache'
+        ) do |node|
+        node.normal['datadog'] = {
+          'api_key' => 'somethingnotnil',
+          'agent_major_version' => 5,
+        }
+        end.converge described_recipe
+      end
+
+      temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+
+      it 'installs Datadog Agent' do
+        expect(chef_run).to install_windows_package('Datadog Agent').with(installer_type: :msi)
+      end
+
+      # remote_file source gets converted to an array, so we need to do
+      # some tricky things to be able to regex against it
+      # Relevant: http://stackoverflow.com/a/12325983
+      it 'installs agent latest' do
+        expect(chef_run.remote_file(temp_file).source.to_s)
+          .to match(/ddagent-cli-latest.msi/)
+      end
+    end
   end
 
   # Allow a hash for Agent version 6
@@ -1123,6 +1153,36 @@ describe 'datadog::dd-agent' do
         it 'installs agent 6.0.3' do
           expect(chef_run.remote_file(temp_file).source.to_s)
             .to match(/ddagent-cli-6.0.3.msi/)
+        end
+      end
+
+      context 'agent 6 latest on windows' do
+        cached(:chef_run) do
+          set_env_var('ProgramData', 'C:\ProgramData')
+          ChefSpec::SoloRunner.new(
+            :platform => 'windows',
+            :version => '2012R2',
+            :file_cache_path => 'C:/chef/cache'
+          ) do |node|
+            node.normal['datadog'] = {
+              'api_key' => 'somethingnotnil',
+              'agent_major_version' => 6,
+            }
+          end.converge described_recipe
+        end
+
+        temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+
+        it 'installs Datadog Agent' do
+          expect(chef_run).to install_windows_package('Datadog Agent').with(installer_type: :msi)
+        end
+
+        # remote_file source gets converted to an array, so we need to do
+        # some tricky things to be able to regex against it
+        # Relevant: http://stackoverflow.com/a/12325983
+        it 'installs agent latest' do
+          expect(chef_run.remote_file(temp_file).source.to_s)
+            .to match(/datadog-agent-6-latest.amd64.msi/)
         end
       end
     end
