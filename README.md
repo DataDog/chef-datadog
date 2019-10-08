@@ -239,11 +239,13 @@ By default, this cookbook installs Agent v6, if you want to install Agent v5, pl
 
 Attributes are available to have finer control over how you install Agent v6:
 
- * `agent6_version`: allows you to pin the agent version (recommended).
- * `agent6_package_action`: defaults to `'install'`, may be set to `'upgrade'` to automatically upgrade to latest (not recommended, we recommend pinning to a version with `agent6_version` and change that version to upgrade).
- * `agent6_aptrepo`: desired APT repo for the agent. Defaults to `http://apt.datadoghq.com`
- * `agent6_aptrepo_dist`: desired distribution for the APT repo. Defaults to `stable`
- * `agent6_yumrepo`: desired YUM repo for the agent. Defaults to `https://yum.datadoghq.com/stable/6/x86_64/`
+ * `agent_major_version`: allows you to pin the major release of the agent (recommended)
+ * `agent_version`: allows you to pin a specific agent version (recommended).
+ * `agent_package_action`: defaults to `'install'`, may be set to `'upgrade'` to automatically upgrade to latest (not recommended, we recommend pinning to a version with `agent_version` and change that version to upgrade).
+ * `aptrepo`: desired APT repo for the agent. Defaults to `http://apt.datadoghq.com`
+ * `aptrepo_dist`: desired distribution for the APT repo. Defaults to `stable`
+ * `yumrepo`: desired YUM repo for the agent. Defaults to `https://yum.datadoghq.com/stable/`
+ * `yumrepo_suse`: desired YUM repo for the agent in SUSE. Defaults to `https://yum.datadoghq.com/suse/stable/`
 
 Please review the [attributes/default.rb](https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb) file (at the version of the cookbook you use) for the list and usage of the attributes used by the cookbook.
 
@@ -297,12 +299,12 @@ This example will set the field `logs_config` in the configuration file `datadog
 
 ### Agent v5
 
-Since `3.0.0`, the cookbook defaults installing Agent v6. You can still setup the Agent v5 by setting `node['datadog']['agent6']` to false.
+Since `3.0.0`, the cookbook defaults installing Agent v6. You can still setup the Agent v5 by setting `node['datadog']['agent_major_version']` to 5.
 
 ```ruby
   default_attributes(
     'datadog' => {
-      'agent6' => false
+      'agent_major_version' => 5
     }
   )
 ```
@@ -311,14 +313,14 @@ Since `3.0.0`, the cookbook defaults installing Agent v6. You can still setup th
 
 #### Upgrade from Agent v5 to Agent v6
 
-To upgrade from an already installed Agent v5 to Agent v6, you'll have to set the `agent6_package_action` to `install` and we recommend to pin to a specific version:
+To upgrade from an already installed Agent v5 to Agent v6, you'll have to set the `agent_package_action` to `install` and we recommend to pin to a specific version:
 
 ```ruby
   default_attributes(
     'datadog' => {
-      'agent6' => true,
-      'agent6_version' => '1:6.10.0-1', # optional but recommended
-      'agent6_package_action' => 'install',
+      'agent_major_version' => 6,
+      'agent_version' => '1:6.10.0-1', # optional but recommended
+      'agent_package_action' => 'install',
     }
   )
 ```
@@ -332,7 +334,7 @@ You will need to indicate that you want to setup an Agent v5 instead of v6, pin 
 ```ruby
   default_attributes(
     'datadog' => {
-      'agent6' => false,
+      'agent_major_version' => 5,
       'agent_version' => '1:5.32.0-1',
       'agent_allow_downgrade' => true
     }
@@ -362,7 +364,7 @@ You will need to indicate that you want to setup an Agent v5 instead of v6, pin 
 
   default_attributes(
     'datadog' => {
-      'agent6' => true,
+      'agent_major_version' => 6,
       'api_key' => 'api_key',
       'application_key' => 'app_key',
       'mongo' => {
@@ -379,7 +381,6 @@ You will need to indicate that you want to setup an Agent v5 instead of v6, pin 
     recipe[datadog::mongo]
   )
   ```
-  NB: set the `agent6` attribute to `false` in the `datadog` hash if you'd like to install Agent v5.
 
 6. Wait until `chef-client` runs on the target node (or trigger chef-client manually if you're impatient)
 
@@ -410,7 +411,7 @@ AWS OpsWorks Chef Deployment
 
 1. Add Chef Custom JSON:
   ```json
-  {"datadog":{"agent6": true, "api_key": "<API_KEY>", "application_key": "<APP_KEY>"}}
+  {"datadog":{"agent_major_version": 6, "api_key": "<API_KEY>", "application_key": "<APP_KEY>"}}
   ```
 
 2. Include the recipe in install-lifecycle recipe:
