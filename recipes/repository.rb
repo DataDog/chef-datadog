@@ -27,13 +27,11 @@ when 'debian'
   end
 
   case node['datadog']['agent_major_version'].to_i
+  when 7
+    components = ['main', '7']
   when 6
-    uri = node['datadog']['agent6_aptrepo']
-    distribution = node['datadog']['agent6_aptrepo_dist']
     components = ['main', '6']
   when 5
-    uri = node['datadog']['agent5_aptrepo']
-    distribution = node['datadog']['agent5_aptrepo_dist']
     components = ['main']
   else
     Chef::Log.error('agent_major_version not supported.')
@@ -45,8 +43,8 @@ when 'debian'
   apt_repository 'datadog' do
     keyserver keyserver
     key 'A2923DFF56EDA6E76E55E492D3A80E30382E94DE'
-    uri uri
-    distribution distribution
+    uri node['datadog']['aptrepo']
+    distribution node['datadog']['aptrepo_dist']
     components components
     action :add
     retries retries
@@ -82,8 +80,8 @@ when 'rhel', 'fedora', 'amazon'
   end
 
   case node['datadog']['agent_major_version'].to_i
-  when 6
-    baseurl = node['datadog']['agent6_yumrepo']
+  when 6, 7
+    baseurl = URI::join(node['datadog']['yumrepo'], node['datadog']['agent_major_version'].to_s, 'x86_64').to_s
   when 5
     baseurl = node['datadog']['agent5_yumrepo']
   else
@@ -137,8 +135,8 @@ when 'suse'
   end
 
   case node['datadog']['agent_major_version'].to_i
-  when 6
-    baseurl = node['datadog']['agent6_yumrepo_suse']
+  when 6, 7
+    baseurl = URI::join(node['datadog']['yumrepo_suse'], node['datadog']['agent_major_version'].to_s, 'x86_64').to_s
   when 5
     baseurl = node['datadog']['agent5_yumrepo_suse']
   else

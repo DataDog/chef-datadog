@@ -77,10 +77,10 @@ suites:
     - recipe[datadog::dd-agent]
   attributes:
     datadog: &DATADOG
-      agent6_aptrepo: 'http://apt.datad0g.com'
-      agent6_aptrepo_dist: 'beta'
+      aptrepo: 'http://apt.datad0g.com'
+      aptrepo_dist: 'beta'
       # agent_version: '1:6.11.3~rc.2-1'
-      agent6_package_action: 'install'
+      agent_package_action: 'install'
       agent_allow_downgrade: true
       api_key: somenonnullapikeythats32charlong
       application_key: alsonotnil

@@ -29,19 +29,12 @@ default['datadog']['api_key'] = nil
 default['datadog']['application_key'] = nil
 
 # If you're installing a pre-release version of Agent 6 (beta or RC), you need to:
-# * on debian: set node['datadog']['agent6_aptrepo_dist'] to 'beta' instead of 'stable'
-# * on RHEL: set node['datadog']['agent6_yumrepo'] to 'https://yum.datadoghq.com/beta/x86_64/'
+# * on debian: set node['datadog']['aptrepo_dist'] to 'beta' instead of 'stable'
+# * on RHEL: set node['datadog']['yumrepo'] to 'https://yum.datadoghq.com/beta/x86_64/'
 default['datadog']['agent_major_version'] = 6
 
 ########################################################################
 ###                 Agent 6/7 only attributes                        ###
-
-# repos where datadog-agent v6 packages are available
-default['datadog']['agent6_aptrepo'] = 'http://apt.datadoghq.com'
-default['datadog']['agent6_aptrepo_dist'] = 'stable'
-# RPMs are only available for RHEL >= 6 (-> use https protocol) and x86_64 arch
-default['datadog']['agent6_yumrepo'] = 'https://yum.datadoghq.com/stable/6/x86_64/'
-default['datadog']['agent6_yumrepo_suse'] = 'https://yum.datadoghq.com/suse/stable/6/x86_64/'
 
 # The site of the Datadog intake to send Agent data to.
 # This configuration option is supported since Agent 6.6
@@ -133,17 +126,21 @@ yum_protocol =
     'https'
   end
 
+# repos where datadog-agent packages are available
+default['datadog']['aptrepo'] = 'http://apt.datadoghq.com'
+default['datadog']['aptrepo_dist'] = 'stable'
+default['datadog']['yumrepo'] = 'https://yum.datadoghq.com/stable/'
+default['datadog']['yumrepo_suse'] = 'https://yum.datadoghq.com/suse/stable/'
+default['datadog']['agent5_yumrepo'] = "#{yum_protocol}://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/"
+default['datadog']['agent5_yumrepo_suse'] = "https://yum.datadoghq.com/suse/rpm/#{architecture_map[node['kernel']['machine']]}/"
+
 # NB: if you're not using the default repos and/or distributions, make sure
 # to pin the version you're installing with node['datadog']['agent_version']
 default['datadog']['installrepo'] = true
-default['datadog']['agent5_aptrepo'] = 'http://apt.datadoghq.com'
-default['datadog']['agent5_aptrepo_dist'] = 'stable'
 default['datadog']['aptrepo_retries'] = 4
 default['datadog']['aptrepo_use_backup_keyserver'] = false
 default['datadog']['aptrepo_keyserver'] = 'hkp://keyserver.ubuntu.com:80'
 default['datadog']['aptrepo_backup_keyserver'] = 'hkp://pool.sks-keyservers.net:80'
-default['datadog']['agent5_yumrepo'] = "#{yum_protocol}://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/"
-default['datadog']['agent5_yumrepo_suse'] = "https://yum.datadoghq.com/suse/rpm/#{architecture_map[node['kernel']['machine']]}/"
 default['datadog']['yumrepo_gpgkey'] = "#{yum_protocol}://yum.datadoghq.com/DATADOG_RPM_KEY.public"
 default['datadog']['yumrepo_proxy'] = nil
 default['datadog']['yumrepo_proxy_username'] = nil
