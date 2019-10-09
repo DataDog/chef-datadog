@@ -31,7 +31,7 @@ default['datadog']['application_key'] = nil
 # If you're installing a pre-release version of Agent 6 (beta or RC), you need to:
 # * on debian: set node['datadog']['aptrepo_dist'] to 'beta' instead of 'stable'
 # * on RHEL: set node['datadog']['yumrepo'] to 'https://yum.datadoghq.com/beta/x86_64/'
-default['datadog']['agent_major_version'] = 6
+default['datadog']['agent_major_version'] = 7
 
 ########################################################################
 ###                 Agent 6/7 only attributes                        ###
