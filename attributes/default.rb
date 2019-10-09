@@ -41,6 +41,7 @@ default['datadog']['application_key'] = nil
 # * on debian: set node['datadog']['agent6_aptrepo_dist'] to 'beta' instead of 'stable'
 # * on RHEL: set node['datadog']['agent6_yumrepo'] to 'https://yum.datadoghq.com/beta/x86_64/'
 default['datadog']['agent6'] = true
+default['datadog']['agent7'] = false
 
 ########################################################################
 ###                  Agent6-only attributes                          ###
@@ -56,6 +57,8 @@ default['datadog']['agent6_aptrepo_dist'] = 'stable'
 # RPMs are only available for RHEL >= 6 (-> use https protocol) and x86_64 arch
 default['datadog']['agent6_yumrepo'] = 'https://yum.datadoghq.com/stable/6/x86_64/'
 default['datadog']['agent6_yumrepo_suse'] = 'https://yum.datadoghq.com/suse/stable/6/x86_64/'
+default['datadog']['agent7_yumrepo'] = 'https://yum.datadoghq.com/stable/7/x86_64/'
+default['datadog']['agent7_yumrepo_suse'] = 'https://yum.datadoghq.com/suse/stable/7/x86_64/'
 
 # Values that differ on Windows
 # The location of the config folder (containing conf.d)

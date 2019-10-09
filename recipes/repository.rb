@@ -28,7 +28,7 @@ when 'debian'
 
   uri = node['datadog']['agent6'] ? node['datadog']['agent6_aptrepo'] : node['datadog']['aptrepo']
   distribution = node['datadog']['agent6'] ? node['datadog']['agent6_aptrepo_dist'] : node['datadog']['aptrepo_dist']
-  components = node['datadog']['agent6'] ? ['main', '6'] : ['main']
+  components = node['datadog']['agent7'] ? ['main', '6', '7']  : (node['datadog']['agent6'] ? ['main', '6'] : ['main'])
   retries = node['datadog']['aptrepo_retries']
   keyserver = node['datadog']['aptrepo_use_backup_keyserver'] ? node['datadog']['aptrepo_backup_keyserver'] : node['datadog']['aptrepo_keyserver']
   # Add APT repository
@@ -75,7 +75,9 @@ when 'rhel', 'fedora', 'amazon'
   yum_repository 'datadog' do
     name 'datadog'
     description 'datadog'
-    if node['datadog']['agent6']
+    if node['datadog']['agent7']
+      baseurl node['datadog']['agent7_yumrepo']
+    elsif node['datadog']['agent6']
       baseurl node['datadog']['agent6_yumrepo']
     else
       baseurl node['datadog']['yumrepo']
@@ -126,7 +128,9 @@ when 'suse'
   zypper_repository 'datadog' do
     name 'datadog'
     description 'datadog'
-    if node['datadog']['agent6']
+    if node['datadog']['agent7']
+      baseurl node['datadog']['agent7_yumrepo_suse']
+    elsif node['datadog']['agent6']
       baseurl node['datadog']['agent6_yumrepo_suse']
     else
       baseurl node['datadog']['yumrepo_suse']

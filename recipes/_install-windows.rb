@@ -31,7 +31,10 @@ dd_agent6_version =
     node['datadog']['agent6_version']
   end
 
-if node['datadog']['agent6']
+if node['datadog']['agent7']
+  dd_agent_version = dd_agent6_version
+  dd_agent_latest = 'datadog-agent-7-latest.amd64'
+elsif node['datadog']['agent6']
   dd_agent_version = dd_agent6_version
   dd_agent_latest = 'datadog-agent-6-latest.amd64'
 else
