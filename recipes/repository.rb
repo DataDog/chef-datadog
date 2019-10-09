@@ -28,7 +28,7 @@ when 'debian'
 
   case node['datadog']['agent_major_version'].to_i
   when 7
-    components = ['main', '7']
+    components = ['7']
   when 6
     components = ['main', '6']
   when 5
