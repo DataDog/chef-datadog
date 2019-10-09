@@ -19,7 +19,8 @@
 
 is_windows = node['platform_family'] == 'windows'
 
-agent_config_file = ::File.join(node['datadog']['agent6_config_dir'], 'datadog.yaml')
+agent_config_dir = is_windows ? "#{ENV['ProgramData']}/Datadog" : '/etc/datadog-agent'
+agent_config_file = ::File.join(agent_config_dir, 'datadog.yaml')
 template agent_config_file do
   def template_vars
     # we need to always provide an URL value for additional endpoints.

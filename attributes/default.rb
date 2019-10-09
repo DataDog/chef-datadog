@@ -167,23 +167,6 @@ default['datadog']['windows_agent_checksum'] = nil
 # If you're already using version >= 5.12.0 of the Agent, leave this to false.
 default['datadog']['windows_agent_use_exe'] = false
 
-# Values that differ on Windows
-# The location of the config folder (containing conf.d)
-# The name of the dd agent service
-# The log file directory (see logging section below)
-
-# Values that differ on Windows
-# The location of the config folder (containing conf.d)
-if node['platform_family'] == 'windows'
-  default['datadog']['agent5_config_dir'] = "#{ENV['ProgramData']}/Datadog"
-  default['datadog']['agent6_config_dir'] = "#{ENV['ProgramData']}/Datadog"
-  default['datadog']['agent_name'] = 'DatadogAgent'
-else
-  default['datadog']['agent5_config_dir'] = '/etc/dd-agent'
-  default['datadog']['agent6_config_dir'] = '/etc/datadog-agent'
-  default['datadog']['agent_name'] = 'datadog-agent'
-end
-
 # Since 6.11.0, the Datadog Agent creates/uses a custom user to run on Windows.
 # Set `windows_ddagentuser_name` using the format `<domain>\<user>` to provide a
 # specific username and `windows_ddagentuser_password` to provide a specific password.

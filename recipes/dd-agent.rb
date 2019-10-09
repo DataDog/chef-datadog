@@ -52,7 +52,8 @@ if node['datadog']['agent_major_version'].to_i > 5
   include_recipe 'datadog::_agent6_config'
 else
   # Make sure the config directory exists for Agent 5
-  directory node['datadog']['agent5_config_dir'] do
+  agent_config_dir = is_windows ? "#{ENV['ProgramData']}/Datadog" : '/etc/dd-agent'
+  directory agent_config_dir do
     if is_windows
       owner 'Administrators'
       rights :full_control, 'Administrators'
@@ -63,8 +64,7 @@ else
       mode '755'
     end
   end
-
-  agent_config_file = ::File.join(node['datadog']['agent5_config_dir'], 'datadog.conf')
+  agent_config_file = ::File.join(agent_config_dir, 'datadog.conf')
   template agent_config_file do
     def template_vars
       # Default value of node['datadog']['url'] is now nil for an Agent 6
@@ -119,14 +119,16 @@ if node['datadog']['agent_major_version'].to_i > 5 &&
   service_provider = Chef::Provider::Service::Upstart
 end
 
+service_name = is_windows ? 'DatadogAgent' : 'datadog-agent'
+
 service 'datadog-agent' do
-  service_name node['datadog']['agent_name']
+  service_name service_name
   action [agent_enable, agent_start]
   provider service_provider unless service_provider.nil?
   if is_windows
     supports :restart => true, :start => true, :stop => true
-    restart_command "powershell restart-service #{node['datadog']['agent_name']} -Force"
-    stop_command "powershell stop-service #{node['datadog']['agent_name']} -Force"
+    restart_command "powershell restart-service #{service_name} -Force"
+    stop_command "powershell stop-service #{service_name} -Force"
   else
     supports :restart => true, :status => true, :start => true, :stop => true
   end

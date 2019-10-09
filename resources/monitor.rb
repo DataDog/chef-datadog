@@ -52,9 +52,7 @@ action :remove do
 end
 
 def yaml_dir
-  if node['datadog']['agent_major_version'].to_i > 5
-    ::File.join(node['datadog']['agent6_config_dir'], 'conf.d')
-  else
-    ::File.join(node['datadog']['agent5_config_dir'], 'conf.d')
-  end
+  is_agent5 = node['datadog']['agent_major_version'].to_i > 5
+  is_windows = node['platform_family'] == 'windows'
+  return is_windows ? "#{ENV['ProgramData']}/Datadog/conf.d" : (is_agent5 ? '/etc/dd-agent/conf.d' : '/etc/datadog-agent/conf.d')
 end
