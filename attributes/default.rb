@@ -129,10 +129,10 @@ yum_protocol =
 # repos where datadog-agent packages are available
 default['datadog']['aptrepo'] = 'http://apt.datadoghq.com'
 default['datadog']['aptrepo_dist'] = 'stable'
-default['datadog']['yumrepo'] = 'https://yum.datadoghq.com/stable/'
-default['datadog']['yumrepo_suse'] = 'https://yum.datadoghq.com/suse/stable/'
-default['datadog']['agent5_yumrepo'] = "#{yum_protocol}://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/"
-default['datadog']['agent5_yumrepo_suse'] = "https://yum.datadoghq.com/suse/rpm/#{architecture_map[node['kernel']['machine']]}/"
+default['datadog']['yumrepo'] = 'https://yum.datadoghq.com/stable/' # MUST end in /
+default['datadog']['yumrepo_suse'] = 'https://yum.datadoghq.com/suse/stable/' # MUST end in /
+default['datadog']['agent5_yumrepo'] = "#{yum_protocol}://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/" # MUST end in /
+default['datadog']['agent5_yumrepo_suse'] = "https://yum.datadoghq.com/suse/rpm/#{architecture_map[node['kernel']['machine']]}/" # MUST end in /
 
 # NB: if you're not using the default repos and/or distributions, make sure
 # to pin the version you're installing with node['datadog']['agent_version']
