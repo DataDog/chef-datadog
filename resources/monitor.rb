@@ -54,5 +54,9 @@ end
 def yaml_dir
   is_agent5 = node['datadog']['agent_major_version'].to_i > 5
   is_windows = node['platform_family'] == 'windows'
-  return is_windows ? "#{ENV['ProgramData']}/Datadog/conf.d" : (is_agent5 ? '/etc/dd-agent/conf.d' : '/etc/datadog-agent/conf.d')
+  if is_windows
+    "#{ENV['ProgramData']}/Datadog/conf.d"
+  else
+    is_agent5 ? '/etc/dd-agent/conf.d' : '/etc/datadog-agent/conf.d'
+  end
 end

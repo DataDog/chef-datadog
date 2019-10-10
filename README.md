@@ -22,7 +22,7 @@ This cookbook includes support for:
 * Datadog Agent version 6.x
 * Datadog Agent version 5.x
 
-Log collection is available with Agent v6/v7, please refer to the [inline docs](https://github.com/DataDog/chef-datadog/blob/v3.0.0/attributes/default.rb#L401-L406) to enable it.
+Log collection is available with Agent v6/v7, please refer to the [inline docs](https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb#L401-L406) to enable it.
 
 *Note: This README may refer to features that are not released yet. Please check the README of the
 git tag/the gem version you're using for your version's documentation*
@@ -153,7 +153,7 @@ default['datadog']['extra_config']['logs_config'] = { 'use_port_443' => true }`
 
 This example will set the field `logs_config` in the configuration file `datadog.yaml`.
 
-### Using Agent v6 o v5
+### Using Agent v6 or v5
 
 You can still setup the Agent v6 by setting `node['datadog']['agent_major_version']` to 6.
 
@@ -207,7 +207,7 @@ The same works for version 5.
 
 1. Add this cookbook to your Chef Server, either by installing with knife or by adding it to your Berksfile:
   ```
-  cookbook 'datadog', '~> 3.0.0'
+  cookbook 'datadog', '~> 4.0.0'
   ```
 2. Add your API Key either:
   * as a node attribute via an `environment` or `role`, or
@@ -226,7 +226,7 @@ The same works for version 5.
 
   default_attributes(
     'datadog' => {
-      'agent_major_version' => 6,
+      'agent_major_version' => 7,
       'api_key' => 'api_key',
       'application_key' => 'app_key',
       'mongo' => {
@@ -273,7 +273,7 @@ AWS OpsWorks Chef Deployment
 
 1. Add Chef Custom JSON:
   ```json
-  {"datadog":{"agent_major_version": 6, "api_key": "<API_KEY>", "application_key": "<APP_KEY>"}}
+  {"datadog":{"agent_major_version": 7, "api_key": "<API_KEY>", "application_key": "<APP_KEY>"}}
   ```
 
 2. Include the recipe in install-lifecycle recipe:

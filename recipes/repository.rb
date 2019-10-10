@@ -30,7 +30,7 @@ when 'debian'
   when 7
     components = ['7']
   when 6
-    components = ['main', '6']
+    components = ['main', '6'] # early versions of A6 were deployed to main. TODO: remove main if 6 contains all versions
   when 5
     components = ['main']
   else
