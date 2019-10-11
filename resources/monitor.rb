@@ -52,7 +52,7 @@ action :remove do
 end
 
 def yaml_dir
-  is_agent5 = node['datadog']['agent_major_version'].to_i > 5
+  is_agent5 = node['datadog']['agent_major_version'].to_i == 5
   is_windows = node['platform_family'] == 'windows'
   if is_windows
     "#{ENV['ProgramData']}/Datadog/conf.d"

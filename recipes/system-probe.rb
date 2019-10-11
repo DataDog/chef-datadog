@@ -22,7 +22,7 @@ sysprobe_agent_start = node['datadog']['system_probe']['enabled'] ? :start : :st
 
 #
 # Configures system-probe agent
-system_probe_config_file = ::File.join(node['datadog']['agent6_config_dir'], 'system-probe.yaml')
+system_probe_config_file = '/etc/datadog-agent/system-probe.yaml'
 template system_probe_config_file do
   extra_config = {}
   if node['datadog']['extra_config'] && node['datadog']['extra_config']['system_probe']
