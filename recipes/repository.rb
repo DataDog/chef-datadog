@@ -30,7 +30,7 @@ when 'debian'
   when 7
     components = ['7']
   when 6
-    components = ['main', '6'] # early versions of A6 were deployed to main. TODO: remove main if 6 contains all versions
+    components = ['6']
   when 5
     components = ['main']
   else
@@ -81,7 +81,7 @@ when 'rhel', 'fedora', 'amazon'
 
   case node['datadog']['agent_major_version'].to_i
   when 6, 7
-    baseurl = URI.join(node['datadog']['yumrepo'], "#{node['datadog']['agent_major_version']}/", 'x86_64/').to_s
+    baseurl = URI.join(node['datadog']['yumrepo'], "#{node['datadog']['agent_major_version']}/", "#{node['kernel']['machine']}/").to_s
   when 5
     baseurl = node['datadog']['agent5_yumrepo']
   else
@@ -136,7 +136,7 @@ when 'suse'
 
   case node['datadog']['agent_major_version'].to_i
   when 6, 7
-    baseurl = URI.join(node['datadog']['yumrepo_suse'], "#{node['datadog']['agent_major_version']}/", 'x86_64/').to_s
+    baseurl = URI.join(node['datadog']['yumrepo_suse'], "#{node['datadog']['agent_major_version']}/", "#{node['kernel']['machine']}/").to_s
   when 5
     baseurl = node['datadog']['agent5_yumrepo_suse']
   else

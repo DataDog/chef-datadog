@@ -85,8 +85,8 @@ Some attributes have changed their names from version 3.x to 4.x of this cookboo
 | Change package_action | `'agent_package_action'` or `'agent6_package_action'`  |  `'agent_package_action'` for all versions |
 | Change APT repo | `'aptrepo'` or `'agent6_aptrepo'`  |  `'aptrepo'` for all versions |
 | Change APT dist | `'aptrepo_dist'` or `'agent6_aptrepo_dist'`  |  `'aptrepo_dist'` for all versions |
-| Change YUM repo | `'yumrepo'` or `'agent6_yumrepo'`  |  `'yumrepo'` for all versions |
-| Change SUSE repo | `'yumrepo_suse'` or `'agent6_yumrepo_suse'`  |  `'yumrepo_suse'` for all versions |
+| Change YUM repo | `'yumrepo'` or `'agent6_yumrepo'`  |  `'yumrepo'` for Agent 6/7 or `'agent5_yumrepo'` for Agent 5 |
+| Change SUSE repo | `'yumrepo_suse'` or `'agent6_yumrepo_suse'`  |  `'yumrepo_suse'` for Agent 6/7 or `'agent5_yumrepo_suse'` for Agent 5 |
 
 ## Example
 
@@ -137,7 +137,7 @@ E.g.
 ```
 or
 ```
-default['datadog']['extra_config']['secret_backend_command'] = '/sbin/local-secrets'`
+default['datadog']['extra_config']['secret_backend_command'] = '/sbin/local-secrets'
 ```
 
 This example will set the field `secret_backend_command` in the configuration
@@ -148,7 +148,7 @@ For nested attributes, use object syntax:
 E.g.
 
 ```ruby
-default['datadog']['extra_config']['logs_config'] = { 'use_port_443' => true }`
+default['datadog']['extra_config']['logs_config'] = { 'use_port_443' => true }
 ```
 
 This example will set the field `logs_config` in the configuration file `datadog.yaml`.
@@ -156,6 +156,8 @@ This example will set the field `logs_config` in the configuration file `datadog
 ### Using Agent v6 or v5
 
 You can still setup the Agent v6 by setting `node['datadog']['agent_major_version']` to 6.
+
+Note that `agent_major_version` and `agent_version` should be kept consistent.
 
 ```ruby
   default_attributes(
@@ -171,21 +173,22 @@ The same works for version 5.
 
 #### Upgrade from Agent v6 to Agent v7
 
-To upgrade from an already installed Agent v6 to Agent v7, you'll have to set the `agent_package_action` to `install` and we recommend to pin to a specific version:
+To upgrade from an already installed Agent v6 to Agent v7, you'll have to either:
+
+* Set `agent_major_version` to `7`, `agent_package_action` to `upgrade` and pin a specific v7 version as `agent_version` (recommended).
+* Set `agent_major_version` to `7` and `agent_package_action` to `upgrade`.
 
 ```ruby
   default_attributes(
     'datadog' => {
       'agent_major_version' => 7,
-      'agent_version' => '1:7.15.0-1', # optional but recommended
+      'agent_version' => '1:7.15.0-1',
       'agent_package_action' => 'install',
     }
   )
 ```
 
 The same applies if upgrading from 5 to 6.
-
-Note that there are Agent v6 counterparts to several well known Agent v5 attributes (code [here](https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb#L31-L75))
 
 #### Downgrade from an installed Agent v7 to an Agent v6
 
