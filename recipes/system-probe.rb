@@ -41,8 +41,8 @@ template system_probe_config_file do
     enable_conntrack: node['datadog']['system_probe']['enable_conntrack'],
     extra_config: extra_config
   )
-  owner 'dd-agent'
-  group 'root'
+  owner 'root'
+  group 'dd-agent'
   mode '640'
   notifies :restart, 'service[datadog-agent-sysprobe]', :delayed unless node['datadog']['system_probe']['enabled'] == false
   # since process-agent collects network info through system-probe, enabling system-probe should also restart process-agent
