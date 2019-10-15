@@ -175,7 +175,7 @@ The same works for version 5.
 
 To upgrade from an already installed Agent v6 to Agent v7, you'll have to either:
 
-* Set `agent_major_version` to `7`, `agent_package_action` to `upgrade` and pin a specific v7 version as `agent_version` (recommended).
+* Set `agent_major_version` to `7`, `agent_package_action` to `install` and pin a specific v7 version as `agent_version` (recommended).
 * Set `agent_major_version` to `7` and `agent_package_action` to `upgrade`.
 
 ```ruby
