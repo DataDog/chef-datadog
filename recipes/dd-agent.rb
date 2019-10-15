@@ -18,7 +18,13 @@
 #
 
 if node['datadog'].include?('agent6')
-  Chef::Log.warn('The boolean "agent6" is no longer used by this cookbook. Use "agent_major_version" instead. To keep the previous behaviour pin a 3.x version of the cookbook.')
+  Chef::Log.warn('The boolean "agent6" is no longer used by this cookbook since version 4.0.0. Use "agent_major_version" instead. To keep the previous behaviour pin a 3.x version of the cookbook.')
+end
+
+%w[agent6_version agent6_package_action agent6_aptrepo agent6_aptrepo_dist agent6_yumrepo agent6_yumrepo_suse].each do |deprecated|
+  if node['datadog'].include?(deprecated)
+    Chef::Log.warn("The field '#{deprecated}' is no longer used by this cookbook since version 4.0.0. Find an equivalent property in the README. To keep the previous behaviour pin a 3.x version of the cookbook.")
+  end
 end
 
 # Fail here at converge time if no api_key is set
