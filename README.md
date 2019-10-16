@@ -83,10 +83,10 @@ Some attributes have changed their names from version 3.x to 4.x of this cookboo
 | Install Agent 5.x | `'agent6' => false`  |  `'agent_major_version' => 5` |
 | Pin agent version | `'agent_version'` or `'agent6_version'`  |  `'agent_version'` for all versions |
 | Change package_action | `'agent_package_action'` or `'agent6_package_action'`  |  `'agent_package_action'` for all versions |
-| Change APT repo | `'aptrepo'` or `'agent6_aptrepo'`  |  `'aptrepo'` for all versions |
-| Change APT dist | `'aptrepo_dist'` or `'agent6_aptrepo_dist'`  |  `'aptrepo_dist'` for all versions |
-| Change YUM repo | `'yumrepo'` or `'agent6_yumrepo'`  |  `'yumrepo'` for Agent 6/7 or `'agent5_yumrepo'` for Agent 5 |
-| Change SUSE repo | `'yumrepo_suse'` or `'agent6_yumrepo_suse'`  |  `'yumrepo_suse'` for Agent 6/7 or `'agent5_yumrepo_suse'` for Agent 5 |
+| Change APT repo URL | `'aptrepo'` or `'agent6_aptrepo'`  |  `'aptrepo'` for all versions |
+| Change APT repo dist | `'aptrepo_dist'` or `'agent6_aptrepo_dist'`  |  `'aptrepo_dist'` for all versions |
+| Change YUM repo | `'yumrepo'` or `'agent6_yumrepo'`.<br>Component and arch are part of the URL: `https://yum.datadoghq.com/stable/6/x86_64/`  |  `'yumrepo'` for Agent 6/7 or `'agent5_yumrepo'` for Agent 5.<br>Component and arch not part of the URL: `https://yum.datadoghq.com/stable/` |
+| Change SUSE repo | `'yumrepo_suse'` or `'agent6_yumrepo_suse'`.<br>Component and arch are part of the URL: `https://yum.datadoghq.com/suse/stable/6/x86_64/`  |  `'yumrepo_suse'` for Agent 6/7 or `'agent5_yumrepo_suse'` for Agent 5.<br>Component and arch not part of the URL: `https://yum.datadoghq.com/suse/stable/` |
 
 ## Example
 
