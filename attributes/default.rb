@@ -334,6 +334,10 @@ default['datadog']['process_agent']['container_interval'] = nil
 default['datadog']['process_agent']['rtcontainer_interval'] = nil
 
 # System probe functionality settings
+
+# Wheter this cookbook should write system-probe.yaml or not.
+# If set to false all other system-probe settings are ignored
+default['datadog']['system_probe']['manage_config'] = true
 default['datadog']['system_probe']['enabled'] = false
 # sysprobe_socket defines the unix socket location
 default['datadog']['system_probe']['sysprobe_socket'] = '/opt/datadog-agent/run/sysprobe.sock'
