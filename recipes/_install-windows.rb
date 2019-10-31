@@ -86,7 +86,7 @@ ruby_block "Validate Safe MSI" do
       raise "The file downloaded matches a known unsafe MSI - please use a different release"
     end
   end
-    notifies :run, 'powershell_script[Datadog 6.14.x PS Fix]', :immediately
+  notifies :run, 'powershell_script[Datadog 6.14.x PS Fix]', :immediately
 end
 
 
