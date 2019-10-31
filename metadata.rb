@@ -4,7 +4,7 @@ maintainer_email 'package@datadoghq.com'
 license          'Apache-2.0'
 description      'Installs/Configures datadog components'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '3.99.2'
+version          '3.99.3'
 chef_version     '>= 12.7'
 source_url       'https://github.com/DataDog/chef-datadog'
 issues_url       'https://github.com/DataDog/chef-datadog/issues'
