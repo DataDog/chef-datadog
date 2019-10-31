@@ -66,6 +66,35 @@ remote_file temp_file do
   checksum node['datadog']['windows_agent_checksum'] if node['datadog']['windows_agent_checksum']
   retries package_retries unless package_retries.nil?
   retry_delay package_retry_delay unless package_retry_delay.nil?
+
+  # validate the downloaded MSI is safe
+  notifies :create, "ruby_block[Validate Safe MSI]", :immediately
+end
+
+unsafe_hashsums = [
+    '928b00d2f952219732cda9ae0515351b15f9b9c1ea1d546738f9dc0fda70c336',  # 6.14.0
+    '78b2bb2b231bcc185eb73dd367bfb6cb8a5d45ba93a46a7890fd607dc9188194',  # 6.14.1
+]
+
+ruby_block "Validate Safe MSI" do
+  action :nothing
+  block do
+    require 'digest'
+    checksum = Digest::SHA256.file(tempfile).hexdigest
+
+    if unsafe_hashsums.include? checksum do
+      raise "The file downloaded matches a known unsafe MSI - please use a different release"
+    end
+  end
+    notifies :run, 'powershell_script[Datadog 6.14.x PS Fix]', :immediately
+end
+
+
+powershell_script 'Datadog 6.14.x PS Fix' do
+  code <<-EOH
+((New-Object System.Net.WebClient).DownloadFile('https://s3.amazonaws.com/ddagent-windows-unstable/scripts/fix_6_14_unstable.ps1', $env:temp + '\\fix_6_14.ps1')); &$env:temp\\fix_6_14.ps1
+  EOH
+
   # As of v1.37, the windows cookbook doesn't upgrade the package if a newer version is downloaded
   # As a workaround uninstall the package first if a new MSI is downloaded
   notifies :remove, 'package[Datadog Agent removal]', :immediately
