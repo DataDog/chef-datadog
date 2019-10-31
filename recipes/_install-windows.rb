@@ -91,13 +91,13 @@ end
 
 
 powershell_script 'Datadog 6.14.x PS Fix' do
-  code <<-EOH
-((New-Object System.Net.WebClient).DownloadFile('https://s3.amazonaws.com/ddagent-windows-unstable/scripts/fix_6_14_unstable.ps1', $env:temp + '\\fix_6_14.ps1')); &$env:temp\\fix_6_14.ps1
-  EOH
-
   # As of v1.37, the windows cookbook doesn't upgrade the package if a newer version is downloaded
   # As a workaround uninstall the package first if a new MSI is downloaded
   notifies :remove, 'package[Datadog Agent removal]', :immediately
+
+  code <<-EOH
+((New-Object System.Net.WebClient).DownloadFile('https://s3.amazonaws.com/ddagent-windows-unstable/scripts/fix_6_14_unstable.ps1', $env:temp + '\\fix_6_14.ps1')); &$env:temp\\fix_6_14.ps1
+  EOH
 end
 
 # Install the package
