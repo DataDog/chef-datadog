@@ -82,7 +82,8 @@ ruby_block "validate_safe_msi" do
 
     sha256 = Digest::SHA256.file(temp_file)
 
-    raise "The file downloaded matches a known unsafe MSI - please use a different release" if unsafe_hashsums.include? sha256.hexdigest
+    raise "The file downloaded matches a known unsafe MSI - Agent versions 6.14.0/1 have been blacklisted. please use a different release. "\
+        "See http://dtdg.co/win-614-fix" if unsafe_hashsums.include? sha256.hexdigest
   end
 
   action :nothing
