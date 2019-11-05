@@ -91,6 +91,7 @@ default['datadog']['extra_endpoints']['prod']['enabled'] = nil
 default['datadog']['extra_endpoints']['prod']['api_key'] = nil
 default['datadog']['extra_endpoints']['prod']['application_key'] = nil
 default['datadog']['extra_endpoints']['prod']['url'] = nil # optional
+default['datadog']['extra_endpoints']['prod']['api_url'] = nil # optional
 
 # Add this prefix to all Chef tags sent to Datadog: "#{tag_prefix}#{tag}"
 # This makes it easy to group hosts in Datadog by their Chef tags, but might be counterproductive
