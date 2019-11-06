@@ -99,17 +99,18 @@ remote_file temp_file do
   checksum node['datadog']['windows_agent_checksum'] if node['datadog']['windows_agent_checksum']
   retries package_retries unless package_retries.nil?
   retry_delay package_retry_delay unless package_retry_delay.nil?
+
+  # validate the downloaded MSI is safe
   verify do |path|
     require 'digest'
 
     unsafe = unsafe_hashsums.include? Digest::SHA256.file(path).hexdigest
-    Chef::Log.info("\n#{fix_message}\n") if unsafe
+    Chef::Log.error("\n#{fix_message}\n") if unsafe
 
     # verify will abort update if false
     !unsafe
   end if not node['datadog']['windows_blacklist_silent_fail']
 
-  # validate the downloaded MSI is safe
   notifies :run, 'powershell_script[datadog_6.14.x_fix]', :immediately
 end
 
@@ -143,7 +144,7 @@ windows_package 'Datadog Agent' do # ~FC009
     require 'digest'
 
     unsafe = unsafe_hashsums.include? Digest::SHA256.file(temp_file).hexdigest
-    Chef::Log.info("\n#{fix_message}\n") if unsafe
+    Chef::Log.warn("\n#{fix_message}\nContinuing without installing Datadog Agent.") if unsafe
 
     unsafe
   end
