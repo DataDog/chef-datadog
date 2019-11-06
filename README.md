@@ -69,6 +69,22 @@ dd-handler recipe. The known workaround is to update your dependency to `chef_ha
 the `chef_handler` cookbook which is now shipped as a resource in Chef 14.
 Unfortunately, it will display a deprecation message to Chef 14 and 15 users.
 
+Known Issues
+============
+
+Due to a dangerous bug in agent versions `6.14.0` and `6.14.1`, these versions have been blacklisted
+in cookbook versions `>3.3.0`. `>2.20.0`. Please note that chef-runs will fail when updating to
+cookbooks newer than these versions if you are pinned to any of the blacklisted versions.
+
+Users who have not pinned their cookbooks to any release will also experience failed chef runs at the
+time of this writing.
+
+In any case, if you had already deployed an agent version affected by the bug, please update to the latest
+available version of the cookbook for the major release (`2.x`, `3.x`) you are using before attempting to
+upgrade your agent. Please ensure the new cookbook has correctly propagated to your nodes before attempting
+to upgrade the agent; old cookbooks would trigger the bug present in `6.14.0/1`.
+
+
 Recipes
 =======
 
