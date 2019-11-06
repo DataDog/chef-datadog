@@ -66,7 +66,7 @@ remote_file temp_file do
   checksum node['datadog']['windows_agent_checksum'] if node['datadog']['windows_agent_checksum']
   retries package_retries unless package_retries.nil?
   retry_delay package_retry_delay unless package_retry_delay.nil?
-  backup 1
+  backup 2
 
   # validate the downloaded MSI is safe
   notifies :create, 'ruby_block[validate_safe_msi]', :immediately
