@@ -17,6 +17,14 @@
 # limitations under the License.
 #
 
+# Repository configuration
+yum_a5_architecture_map = {
+  'i686' => 'i386',
+  'i386' => 'i386',
+  'x86' => 'i386'
+}
+yum_a5_architecture_map.default = 'x86_64'
+
 case node['platform_family']
 when 'debian'
   include_recipe 'apt'
@@ -79,13 +87,19 @@ when 'rhel', 'fedora', 'amazon'
     end
   end
 
-  case node['datadog']['agent_major_version'].to_i
-  when 6, 7
-    baseurl = URI.join(node['datadog']['yumrepo'], "#{node['datadog']['agent_major_version']}/", "#{node['kernel']['machine']}/").to_s
-  when 5
-    baseurl = node['datadog']['agent5_yumrepo']
+  if !node['datadog']['yumrepo'].nil?
+    baseurl = node['datadog']['yumrepo']
   else
-    Chef::Log.error('agent_major_version not supported.')
+    # Older versions of yum embed M2Crypto with SSL that doesn't support TLS1.2
+    yum_protocol_a5 = node['platform_family'] == 'rhel' ? 'http' : 'https'
+    case node['datadog']['agent_major_version'].to_i
+    when 6, 7
+      baseurl = "https://yum.datadoghq.com/stable/#{node['datadog']['agent_major_version']}/#{node['kernel']['machine']}/"
+    when 5
+      baseurl = "#{yum_protocol_a5}://yum.datadoghq.com/rpm/#{yum_a5_architecture_map[node['kernel']['machine']]}/"
+    else
+      Chef::Log.error('agent_major_version not supported.')
+    end
   end
 
   # Add YUM repository
@@ -134,13 +148,17 @@ when 'suse'
     action :nothing
   end
 
-  case node['datadog']['agent_major_version'].to_i
-  when 6, 7
-    baseurl = URI.join(node['datadog']['yumrepo_suse'], "#{node['datadog']['agent_major_version']}/", "#{node['kernel']['machine']}/").to_s
-  when 5
-    baseurl = node['datadog']['agent5_yumrepo_suse']
+  if !node['datadog']['yumrepo_suse'].nil?
+    baseurl = node['datadog']['yumrepo_suse']
   else
-    Chef::Log.error('agent_major_version not supported.')
+    case node['datadog']['agent_major_version'].to_i
+    when 6, 7
+      baseurl = "https://yum.datadoghq.com/suse/stable/#{node['datadog']['agent_major_version']}/#{node['kernel']['machine']}/"
+    when 5
+      baseurl = "https://yum.datadoghq.com/suse/rpm/#{yum_a5_architecture_map[node['kernel']['machine']]}/"
+    else
+      Chef::Log.error('agent_major_version not supported.')
+    end
   end
 
   # Add YUM repository
