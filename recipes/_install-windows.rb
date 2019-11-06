@@ -85,33 +85,32 @@ end
 package_retries = node['datadog']['agent_package_retries']
 package_retry_delay = node['datadog']['agent_package_retry_delay']
 
+unsafe_hashsums = [
+    '928b00d2f952219732cda9ae0515351b15f9b9c1ea1d546738f9dc0fda70c336',
+    '78b2bb2b231bcc185eb73dd367bfb6cb8a5d45ba93a46a7890fd607dc9188194'
+]
+fix_message =  "The file downloaded matches a known unsafe MSI - Agent versions 6.14.0/1 have been blacklisted. please use a different release. "\
+        "See http://dtdg.co/win-614-fix"
+
+
 # Download the installer to a temp location
 remote_file temp_file do
   source node['datadog']['windows_agent_url'] + dd_agent_installer
   checksum node['datadog']['windows_agent_checksum'] if node['datadog']['windows_agent_checksum']
   retries package_retries unless package_retries.nil?
   retry_delay package_retry_delay unless package_retry_delay.nil?
-
-  # validate the downloaded MSI is safe
-  notifies :create, 'ruby_block[validate_safe_msi]', :immediately
-end
-
-ruby_block "validate_safe_msi" do
-  block do
+  verify do |path|
     require 'digest'
 
-    unsafe_hashsums = [
-        '928b00d2f952219732cda9ae0515351b15f9b9c1ea1d546738f9dc0fda70c336',
-        '78b2bb2b231bcc185eb73dd367bfb6cb8a5d45ba93a46a7890fd607dc9188194'
-    ]
+    unsafe = unsafe_hashsums.include? Digest::SHA256.file(path).hexdigest
+    Chef::Log.info("\n#{fix_message}\n") if unsafe
 
-    sha256 = Digest::SHA256.file(temp_file)
-
-    raise "The file downloaded matches a known unsafe MSI - Agent versions 6.14.0/1 have been blacklisted. please use a different release. "\
-        "See http://dtdg.co/win-614-fix" if unsafe_hashsums.include? sha256.hexdigest
+    # verify will abort update if false
+    !unsafe
   end
+  backup 2
 
-  action :nothing
+  # validate the downloaded MSI is safe
   notifies :run, 'powershell_script[datadog_6.14.x_fix]', :immediately
 end
 
@@ -140,5 +139,13 @@ windows_package 'Datadog Agent' do # ~FC009
     returns [0, 3010]
   else
     success_codes [0, 3010]
+  end
+  not_if do
+    require 'digest'
+
+    unsafe = unsafe_hashsums.include? Digest::SHA256.file(temp_file).hexdigest
+    Chef::Log.info("\n#{fix_message}\n") if unsafe
+
+    unsafe
   end
 end
