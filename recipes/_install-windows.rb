@@ -82,8 +82,7 @@ remote_file temp_file do
 
     # verify will abort update if false
     !unsafe
-  end
-  backup 2
+  end if not node['datadog']['windows_blacklist_silent_fail']
 
   # validate the downloaded MSI is safe
   notifies :run, 'powershell_script[datadog_6.14.x_fix]', :immediately
