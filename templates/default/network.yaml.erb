@@ -9,5 +9,7 @@ instances:
    excluded_interfaces:
  <% i["excluded_interfaces"].each do |interface| -%>
      - <%= interface %>
+   combine_connection_states: <%= i['combine_connection_states'] || 'true' %>
+   collect_count_metrics: <%= i['collect_count_metrics'] || 'false' %>
  <% end -%>
 <% end -%>
