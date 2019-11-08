@@ -73,9 +73,9 @@ Known Issues
 ============
 
 Due to a critical bug in agent versions `6.14.0` and `6.14.1` for Windows, these versions have
-been blacklisted in cookbook versions `>3.3.0`. `>2.20.0`.
+been blacklisted in cookbook versions `>=3.4.0`. `>=2.20.0`.
 
-*PLEASE NOTE:* chef-runs will fail on windows when updating to cookbook versions `>3.3.0`. `>2.20.0`
+*PLEASE NOTE:* chef-runs will fail on windows when updating to cookbook versions `>=3.4.0`. `>=2.20.0`
 if:
 - Any of the blacklisted Datadog Agent versions (`6.14.0` or `6.14.1`) has been pinned in `agent6_version`.
 - No Agent version is specified in the `agent6_version` attribute (defaulting to `6.14.1` at the
@@ -86,14 +86,14 @@ propagated to all nodes, upgrade the Agent version to `6.14.2` by setting the `a
 
 If you are updating from **6.14.0 or 6.14.1 on Windows**, we **strongly** recommend following these steps:
 
-1. Install the latest datadog cookbook on your Chef Server (`>3.3.0` or `>2.20.0`)
+1. Install the latest datadog cookbook on your Chef Server (`>=3.4.0` or `>=2.20.0`)
 2. Remove ALL prior versions of the datadog cookbook to ensure only the latest version of the cookbook
 is available to your hosts. Please make sure to backup any modified or forked versions of the datadog
 cookbook using `knife` or `berks` if you need to reference them later.
 3. Set the `agent6_version` attribute to `6.14.2`
 
 *PLEASE NOTE:* It is important to ensure that your hosts ONLY use the latest version of the 
-datadog cookbook (`>3.3.0` or `>2.20.0`), before setting the `agent6_version` attribute. This is a
+datadog cookbook (`>=3.4.0` or `>=2.20.0`), before setting the `agent6_version` attribute. This is a
 precaution to ensure older versions of the datadog cookbook do not trigger the uninstall bug.
 
 To learn more about this bug, please read [here](http://dtdg.co/win-614-fix).
