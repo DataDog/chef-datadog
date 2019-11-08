@@ -1,6 +1,11 @@
 Changes
 =======
 
+# 2.20.0 / Unreleased
+
+* [FEATURE] Blacklist installation of 6.14.0 and 6.14.1.
+* [FEATURE] Run fix + sanity check script before agent uninstalls.
+
 # 2.19.0 / 2019-05-21
 
 * [FEATURE] Provide custom credentials for the Windows Datadog Agent service. [#618][] [@remeh][]
