@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'digest'
 
 module EnvVar
   def set_env_var(name, value)
@@ -155,6 +156,16 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
+      temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+      mock_digest = Digest::SHA256.new
+
+      before do
+        allow(File).to receive(:open).and_call_original
+        allow(File).to receive(:open).with(temp_file).and_return('foo')
+        allow(Digest::SHA256).to receive(:file).and_call_original
+        allow(Digest::SHA256).to receive(:file).with(temp_file).and_return(mock_digest)
+      end
+
       it_behaves_like 'windows Datadog Agent', :msi
     end
 
@@ -171,6 +182,16 @@ describe 'datadog::dd-agent' do
             'windows_agent_use_exe' => true
           }
         end.converge described_recipe
+      end
+
+      temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.exe')
+      mock_digest = Digest::SHA256.new
+
+      before do
+        allow(File).to receive(:open).and_call_original
+        allow(File).to receive(:open).with(temp_file).and_return('foo')
+        allow(Digest::SHA256).to receive(:file).and_call_original
+        allow(Digest::SHA256).to receive(:file).with(temp_file).and_return(mock_digest)
       end
 
       it_behaves_like 'windows Datadog Agent', :exe
@@ -235,6 +256,7 @@ describe 'datadog::dd-agent' do
     context 'on windows' do
       cached(:chef_run) do
         set_env_var('ProgramData', 'C:\ProgramData')
+
         ChefSpec::SoloRunner.new(
           :platform => 'windows',
           :version => '2012R2',
@@ -248,6 +270,14 @@ describe 'datadog::dd-agent' do
       end
 
       temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+      mock_digest = Digest::SHA256.new
+
+      before do
+        allow(File).to receive(:open).and_call_original
+        allow(File).to receive(:open).with(temp_file).and_return('foo')
+        allow(Digest::SHA256).to receive(:file).and_call_original
+        allow(Digest::SHA256).to receive(:file).with(temp_file).and_return(mock_digest)
+      end
 
       it_behaves_like 'windows Datadog Agent', :msi
       # remote_file source gets converted to an array, so we need to do
@@ -303,6 +333,14 @@ describe 'datadog::dd-agent' do
       end
 
       temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+      mock_digest = Digest::SHA256.new
+
+      before do
+        allow(File).to receive(:open).and_call_original
+        allow(File).to receive(:open).with(temp_file).and_return('foo')
+        allow(Digest::SHA256).to receive(:file).and_call_original
+        allow(Digest::SHA256).to receive(:file).with(temp_file).and_return(mock_digest)
+      end
 
       it_behaves_like 'windows Datadog Agent', :msi
       # remote_file source gets converted to an array, so we need to do
@@ -853,11 +891,22 @@ describe 'datadog::dd-agent' do
             set_env_var('ProgramData', 'C:\ProgramData')
             ChefSpec::SoloRunner.new(
               platform: 'windows',
-              version: '2012R2'
+              version: '2012R2',
+              file_cache_path: 'C:/chef/cache'
             ) do |node|
               node.name 'chef-nodename' # expected to be used as the hostname in `datadog.yaml`
               node.set['datadog'] = { 'api_key' => 'somethingnotnil', 'agent6' => true }
             end.converge described_recipe
+          end
+
+          temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+          mock_digest = Digest::SHA256.new
+
+          before do
+            allow(File).to receive(:open).and_call_original
+            allow(File).to receive(:open).with(temp_file).and_return('foo')
+            allow(Digest::SHA256).to receive(:file).and_call_original
+            allow(Digest::SHA256).to receive(:file).with(temp_file).and_return(mock_digest)
           end
 
           it 'is created' do
@@ -920,6 +969,14 @@ describe 'datadog::dd-agent' do
         end
 
         temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+        mock_digest = Digest::SHA256.new
+
+        before do
+          allow(File).to receive(:open).and_call_original
+          allow(File).to receive(:open).with(temp_file).and_return('foo')
+          allow(Digest::SHA256).to receive(:file).and_call_original
+          allow(Digest::SHA256).to receive(:file).with(temp_file).and_return(mock_digest)
+        end
 
         it 'installs Datadog Agent' do
           expect(chef_run).to install_windows_package('Datadog Agent').with(installer_type: :msi)
