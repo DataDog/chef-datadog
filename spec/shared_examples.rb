@@ -129,8 +129,8 @@ shared_examples_for 'windows Datadog Agent v5' do |installer_extension|
     expect(chef_run.package('Datadog Agent removal')).to do_nothing
   end
 
-  it 'notifies the removal of the Datadog Agent when a remote file is downloaded' do
-    expect(chef_run.remote_file(agent_installer)).to notify('package[Datadog Agent removal]').to(:remove)
+  it 'notifies the validation of the MSI when a remote file is downloaded' do
+    expect(chef_run.remote_file(agent_installer)).to notify('ruby_block[validate_safe_msi]').to(:create)
   end
 
   it 'installs Datadog Agent' do
@@ -152,8 +152,8 @@ shared_examples_for 'windows Datadog Agent' do |installer_extension|
     expect(chef_run.package('Datadog Agent removal')).to do_nothing
   end
 
-  it 'notifies the removal of the Datadog Agent when a remote file is downloaded' do
-    expect(chef_run.remote_file(agent_installer)).to notify('package[Datadog Agent removal]').to(:remove)
+  it 'notifies the validation of the MSI when a remote file is downloaded' do
+    expect(chef_run.remote_file(agent_installer)).to notify('ruby_block[validate_safe_msi]').to(:create)
   end
 
   it 'installs Datadog Agent' do
