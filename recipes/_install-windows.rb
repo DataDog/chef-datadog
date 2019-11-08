@@ -117,6 +117,7 @@ windows_package 'Datadog Agent' do # ~FC009
   not_if do
     require 'digest'
 
-    unsafe_hashsums.include? Digest::SHA256.file(temp_file).hexdigest
+    # Do not fail here if the file isn't there. Will fail later anyway.
+    File.file?(temp_file) && unsafe_hashsums.include?(Digest::SHA256.file(temp_file).hexdigest)
   end
 end
