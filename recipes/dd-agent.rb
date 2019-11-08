@@ -145,7 +145,6 @@ service 'datadog-agent' do
   retry_delay 5
 end
 
-
 system_probe_managed = node['datadog']['system_probe']['manage_config']
 if system_probe_managed
   ruby_block 'include system-probe' do
