@@ -3,6 +3,7 @@ sudo: false
 branches:
   only:
     - master
+    - v2.x
     - /^\d+\.\d+\.x$/ # release forked patches branch
 
 addons:
