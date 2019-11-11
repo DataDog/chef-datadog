@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 3.4.0 / Unreleased
+# 3.4.0 / 2019-11-11 
 
 * [FEATURE] Blacklist installation of 6.14.0 and 6.14.1. See [#652][] [@truthbk][]
 * [FEATURE] Run fix + sanity check script before agent uninstalls. See [#652][] [@truthbk][]
