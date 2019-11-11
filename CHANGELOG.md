@@ -3,8 +3,8 @@ Changes
 
 # 2.20.0 / Unreleased
 
-* [FEATURE] Blacklist installation of 6.14.0 and 6.14.1.
-* [FEATURE] Run fix + sanity check script before agent uninstalls.
+* [FEATURE] Blacklist installation of 6.14.0 and 6.14.1. See [#651][]
+* [FEATURE] Run fix + sanity check script before agent uninstalls. See [#651][]
 
 # 2.19.0 / 2019-05-21
 
@@ -709,6 +709,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#586]: https://github.com/DataDog/chef-datadog/issues/586
 [#588]: https://github.com/DataDog/chef-datadog/issues/588
 [#618]: https://github.com/DataDog/chef-datadog/issues/618
+[#651]: https://github.com/DataDog/chef-datadog/issues/651
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@BrentOnRails]: https://github.com/BrentOnRails
