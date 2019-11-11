@@ -46,6 +46,11 @@ agent_start = node['datadog']['agent_start'] ? :start : :stop
 #
 if node['datadog']['agent6']
   include_recipe 'datadog::_agent6_config'
+  directory node['datadog']['config_dir'] do
+    if is_windows
+      inherits true # Agent 6/7 rely on inheritance being enabled. Reset it in case it was disabled when installing Agent 5.
+    end
+  end
 else
   # Agent 5 and lower
 
