@@ -1,6 +1,11 @@
 Changes
 =======
 
+# 3.4.0 / Unreleased
+
+* [FEATURE] Blacklist installation of 6.14.0 and 6.14.1. See [#652][] [@truthbk][]
+* [FEATURE] Run fix + sanity check script before agent uninstalls. See [#652][] [@truthbk][]
+
 # 3.3.0 / 2019-09-25
 
 * [FEATURE] Add RHEL8/Fedora 28 support (needs Chef >= 15). See [#641][] [@KSerrania][]
@@ -773,6 +778,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#635]: https://github.com/DataDog/chef-datadog/issues/635
 [#639]: https://github.com/DataDog/chef-datadog/issues/639
 [#641]: https://github.com/DataDog/chef-datadog/issues/641
+[#652]: https://github.com/DataDog/chef-datadog/issues/652
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@BrentOnRails]: https://github.com/BrentOnRails

@@ -69,6 +69,36 @@ dd-handler recipe. The known workaround is to update your dependency to `chef_ha
 the `chef_handler` cookbook which is now shipped as a resource in Chef 14.
 Unfortunately, it will display a deprecation message to Chef 14 and 15 users.
 
+Known Issues
+============
+
+Due to a critical bug in agent versions `6.14.0` and `6.14.1` for Windows, these versions have
+been blacklisted in cookbook versions `>=3.4.0`. `>=2.20.0`.
+
+**PLEASE NOTE:** chef-runs will fail on windows when updating to cookbook versions `>=3.4.0`. `>=2.20.0`
+if:
+- Any of the blacklisted Datadog Agent versions (`6.14.0` or `6.14.1`) has been pinned in `agent6_version`.
+- No Agent version is specified in the `agent6_version` attribute (defaulting to `6.14.1` at the
+time of this writing)
+
+After uploading the latest datadog cookbook to your Chef Server and ensuring the cookbook has been
+propagated to all nodes, upgrade the Agent version to `6.14.2` by setting the `agent6_version` attribute.
+
+If you are updating from **6.14.0 or 6.14.1 on Windows**, we **strongly** recommend following these steps:
+
+1. Install the latest datadog cookbook on your Chef Server (`>=3.4.0` or `>=2.20.0`)
+2. Remove ALL prior versions of the datadog cookbook to ensure only the latest version of the cookbook
+is available to your hosts. Please make sure to backup any modified or forked versions of the datadog
+cookbook using `knife` or `berks` if you need to reference them later.
+3. Set the `agent6_version` attribute to `6.14.2`
+
+**PLEASE NOTE:** It is important to ensure that your hosts ONLY use the latest version of the 
+datadog cookbook (`>=3.4.0` or `>=2.20.0`), before setting the `agent6_version` attribute. This is a
+precaution to ensure older versions of the datadog cookbook do not trigger the uninstall bug.
+
+To learn more about this bug, please read [here](http://dtdg.co/win-614-fix).
+
+
 Recipes
 =======
 
@@ -317,8 +347,12 @@ To upgrade from an already installed Agent v5 to Agent v6, you'll have to set th
   default_attributes(
     'datadog' => {
       'agent6' => true,
-      'agent6_version' => '1:6.10.0-1', # optional but recommended
       'agent6_package_action' => 'install',
+      'agent6_version' => {
+        'debian' => '1:6.14.2-1',
+        'rhel' => '6.14.2-1',
+        'windows' => '6.14.2'
+      }
     }
   )
 ```
@@ -343,7 +377,7 @@ You will need to indicate that you want to setup an Agent v5 instead of v6, pin 
 
 1. Add this cookbook to your Chef Server, either by installing with knife or by adding it to your Berksfile:
   ```
-  cookbook 'datadog', '~> 3.0.0'
+  cookbook 'datadog', '~> 3.4.0'
   ```
 2. Add your API Key either:
   * as a node attribute via an `environment` or `role`, or
@@ -365,6 +399,11 @@ You will need to indicate that you want to setup an Agent v5 instead of v6, pin 
       'agent6' => true,
       'api_key' => 'api_key',
       'application_key' => 'app_key',
+      'agent6_version' => {
+        'debian' => '1:6.14.2-1',
+        'rhel' => '6.14.2-1',
+        'windows' => '6.14.2'
+      },
       'mongo' => {
         'instances' => [
           {'host' => 'localhost', 'port' => '27017'}
@@ -410,7 +449,7 @@ AWS OpsWorks Chef Deployment
 
 1. Add Chef Custom JSON:
   ```json
-  {"datadog":{"agent6": true, "api_key": "<API_KEY>", "application_key": "<APP_KEY>"}}
+  {"datadog":{"agent6": true, "agent6_version": "1:6.14.2-1",  "api_key": "<API_KEY>", "application_key": "<APP_KEY>"}}
   ```
 
 2. Include the recipe in install-lifecycle recipe:
