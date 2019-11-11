@@ -86,12 +86,11 @@ package_retries = node['datadog']['agent_package_retries']
 package_retry_delay = node['datadog']['agent_package_retry_delay']
 
 unsafe_hashsums = [
-    '928b00d2f952219732cda9ae0515351b15f9b9c1ea1d546738f9dc0fda70c336',
-    '78b2bb2b231bcc185eb73dd367bfb6cb8a5d45ba93a46a7890fd607dc9188194'
+  '928b00d2f952219732cda9ae0515351b15f9b9c1ea1d546738f9dc0fda70c336',
+  '78b2bb2b231bcc185eb73dd367bfb6cb8a5d45ba93a46a7890fd607dc9188194'
 ]
-fix_message =  "The file downloaded matches a known unsafe MSI - Agent versions 6.14.0/1 have been blacklisted. please use a different release. "\
-        "See http://dtdg.co/win-614-fix"
-
+fix_message = 'The file downloaded matches a known unsafe MSI - Agent versions 6.14.0/1 have been blacklisted. please use a different release. '\
+        'See http://dtdg.co/win-614-fix'
 
 # Download the installer to a temp location
 remote_file temp_file do
@@ -109,7 +108,7 @@ remote_file temp_file do
 
     # verify will abort update if false
     !unsafe
-  end if not node['datadog']['windows_blacklist_silent_fail']
+  end unless node['datadog']['windows_blacklist_silent_fail']
 
   notifies :run, 'powershell_script[datadog_6.14.x_fix]', :immediately
 end
