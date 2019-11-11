@@ -184,7 +184,11 @@ default['datadog']['yumrepo_gpgkey_new'] = "#{yum_protocol}://yum.datadoghq.com/
 
 # Windows Agent Blacklist
 # Attribute to enforce silent failures on agent installs when attempting to install a
-# blacklisted MSI
+# blacklisted MSI. This attribute is to provide a workaround for users already pinned
+# to a blacklisted windows Agent version who may need to avoid breaking their chef runs.
+# The new blacklisting logic, by default will fail your chef run.
+# Please note that this attribute is no silver bullet, not all failed chef runs due to
+# the blacklist will be resolved enabling this feature.
 default['datadog']['windows_blacklist_silent_fail'] = false
 
 # Agent installer checksum
