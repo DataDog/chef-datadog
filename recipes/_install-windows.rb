@@ -54,6 +54,7 @@ end
 
 package 'Datadog Agent removal' do
   package_name 'Datadog Agent'
+  timeout node['datadog']['windows_msi_timeout']
   action :nothing
 end
 
@@ -104,6 +105,7 @@ windows_package 'Datadog Agent' do # ~FC009
   source temp_file
   installer_type installer_type
   options install_options
+  timeout node['datadog']['windows_msi_timeout']
   action :install
   # Before 3.0.0, we adviced users to use the windows cookbook ~> 1.38.0,
   # we should probably keep the compatibilty for some time.
