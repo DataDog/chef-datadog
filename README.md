@@ -76,9 +76,9 @@ Due to a critical bug in agent versions `6.14.0` and `6.14.1` for Windows, these
 been blacklisted in cookbook versions `>=3.4.0`. `>=2.20.0`.
 
 **PLEASE NOTE:** chef-runs will fail on windows when updating to cookbook versions `>=3.4.0`. `>=2.20.0`
-if:
-- Any of the blacklisted Datadog Agent versions (`6.14.0` or `6.14.1`) has been pinned in `agent6_version`.
-- No Agent version is specified in the `agent6_version` attribute (defaulting to `6.14.1` at the
+if `agent6` is set to `true` and any of the following is true:
+- any of the blacklisted Datadog Agent versions (`6.14.0` or `6.14.1`) has been pinned in `agent6_version`, or
+- no Agent version is specified in the `agent6_version` attribute (defaulting to `6.14.1` at the
 time of this writing)
 
 After uploading the latest datadog cookbook to your Chef Server and ensuring the cookbook has been
