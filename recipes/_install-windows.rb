@@ -88,7 +88,7 @@ remote_file temp_file do
 end
 
 remote_file temp_fix_file do
-  source fix_source
+  source "#{node['datadog']['windows_agent_url']}scripts/fix_6_14.ps1"
   retries package_retries unless package_retries.nil?
   retry_delay package_retry_delay unless package_retry_delay.nil?
 
