@@ -113,14 +113,14 @@ powershell_script 'datadog_6.14.x_fix' do
   notifies :remove, 'package[Datadog Agent removal]', :immediately
 end
 
-# Install the package
+# Install/upgrade the package
 windows_package 'Datadog Agent' do # ~FC009
   source temp_file
   installer_type installer_type
   options install_options
-  action :install
   # Before 3.0.0, we adviced users to use the windows cookbook ~> 1.38.0,
   # we should probably keep the compatibilty for some time.
+  action :install # no upgrade method on windows_package
   if respond_to?(:returns)
     returns [0, 3010]
   else
