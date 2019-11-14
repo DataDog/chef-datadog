@@ -122,9 +122,13 @@ windows_package 'Datadog Agent' do # ~FC009
   not_if do
     require 'digest'
 
+<<<<<<< HEAD
     unsafe = unsafe_hashsums.include? Digest::SHA256.file(temp_file).hexdigest
     Chef::Log.info("\n#{fix_message}\n") if unsafe
 
     unsafe
+=======
+    unsafe_hashsums.include? Digest::SHA256.file(temp_file).hexdigest
+>>>>>>> albertvaka/4.0-refactor
   end
 end

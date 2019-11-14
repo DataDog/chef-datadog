@@ -110,29 +110,11 @@ default['datadog']['tags_submission_retries'] = nil
 # you can set it as a key/value of this hash attribute. `nil` values will be ignored.
 default['datadog']['handler_extra_config'] = {}
 
-# Repository configuration
-architecture_map = {
-  'i686' => 'i386',
-  'i386' => 'i386',
-  'x86' => 'i386'
-}
-architecture_map.default = 'x86_64'
-
-# Older versions of yum embed M2Crypto with SSL that doesn't support TLS1.2
-yum_protocol =
-  if node['platform_family'] == 'rhel' && node['platform_version'].to_i < 6
-    'http'
-  else
-    'https'
-  end
-
 # repos where datadog-agent packages are available
 default['datadog']['aptrepo'] = 'http://apt.datadoghq.com'
 default['datadog']['aptrepo_dist'] = 'stable'
-default['datadog']['yumrepo'] = 'https://yum.datadoghq.com/stable/' # MUST end in /
-default['datadog']['yumrepo_suse'] = 'https://yum.datadoghq.com/suse/stable/' # MUST end in /
-default['datadog']['agent5_yumrepo'] = "#{yum_protocol}://yum.datadoghq.com/rpm/#{architecture_map[node['kernel']['machine']]}/" # MUST end in /
-default['datadog']['agent5_yumrepo_suse'] = "https://yum.datadoghq.com/suse/rpm/#{architecture_map[node['kernel']['machine']]}/" # MUST end in /
+default['datadog']['yumrepo'] = nil # uses official repos by default
+default['datadog']['yumrepo_suse'] = nil # uses official repos by default
 
 # NB: if you're not using the default repos and/or distributions, make sure
 # to pin the version you're installing with node['datadog']['agent_version']
