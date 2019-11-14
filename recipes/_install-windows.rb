@@ -87,7 +87,7 @@ remote_file temp_file do
   end unless node['datadog']['windows_blacklist_silent_fail']
 
   # these are notified in order
-  notifies :run, "remote_file[#{temp_fix_file}]", :immediately
+  notifies :create, "remote_file[#{temp_fix_file}]", :immediately
   notifies :run, 'powershell_script[datadog_6.14.x_fix]', :immediately
 end
 
