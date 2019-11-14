@@ -85,15 +85,17 @@ remote_file temp_file do
     # verify will abort update if false
     !unsafe
   end unless node['datadog']['windows_blacklist_silent_fail']
+
+  # these are notified in order
+  notifies :run, "remote_file[#{temp_fix_file}]", :immediately
+  notifies :run, 'powershell_script[datadog_6.14.x_fix]', :immediately
 end
 
 remote_file temp_fix_file do
   source "#{node['datadog']['windows_agent_url']}scripts/fix_6_14.ps1"
   retries package_retries unless package_retries.nil?
   retry_delay package_retry_delay unless package_retry_delay.nil?
-
-  # validate the downloaded MSI is safe
-  notifies :run, 'powershell_script[datadog_6.14.x_fix]', :immediately
+  action :nothing
 end
 
 powershell_script 'datadog_6.14.x_fix' do
@@ -102,6 +104,7 @@ powershell_script 'datadog_6.14.x_fix' do
   code "&#{temp_fix_file}"
 
   action :nothing
+  subscribes :reload, "remote_file[#{temp_file}]", :immediately
   notifies :remove, 'package[Datadog Agent removal]', :immediately
 end
 
