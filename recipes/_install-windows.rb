@@ -99,14 +99,17 @@ remote_file temp_file do
     # verify will abort update if false
     !unsafe
   end unless node['datadog']['windows_blacklist_silent_fail']
+
+  # these are notified in order
+  notifies :create, "remote_file[#{temp_fix_file}]", :immediately
+  notifies :run, 'powershell_script[datadog_6.14.x_fix]', :immediately
 end
 
 remote_file temp_fix_file do
   source fix_source
   retries package_retries unless package_retries.nil?
   retry_delay package_retry_delay unless package_retry_delay.nil?
-
-  notifies :run, 'powershell_script[datadog_6.14.x_fix]', :immediately
+  action :nothing
 end
 
 powershell_script 'datadog_6.14.x_fix' do
