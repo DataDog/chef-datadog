@@ -123,7 +123,7 @@ default['datadog']['aptrepo_retries'] = 4
 default['datadog']['aptrepo_use_backup_keyserver'] = false
 default['datadog']['aptrepo_keyserver'] = 'hkp://keyserver.ubuntu.com:80'
 default['datadog']['aptrepo_backup_keyserver'] = 'hkp://pool.sks-keyservers.net:80'
-default['datadog']['yumrepo_gpgkey'] = "#{yum_protocol}://yum.datadoghq.com/DATADOG_RPM_KEY.public"
+default['datadog']['yumrepo_gpgkey'] = "https://yum.datadoghq.com/DATADOG_RPM_KEY.public"
 default['datadog']['yumrepo_proxy'] = nil
 default['datadog']['yumrepo_proxy_username'] = nil
 default['datadog']['yumrepo_proxy_password'] = nil
@@ -136,7 +136,7 @@ default['datadog']['windows_agent_installer_prefix'] = nil
 
 # Location of additional rpm gpgkey to import (with signature `e09422b3`). In the future the rpm packages
 # of the Agent will be signed with this key.
-default['datadog']['yumrepo_gpgkey_new'] = "#{yum_protocol}://yum.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public"
+default['datadog']['yumrepo_gpgkey_new'] = "https://yum.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public"
 
 # Windows Agent Blacklist
 # Attribute to enforce silent failures on agent installs when attempting to install a
