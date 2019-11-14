@@ -32,6 +32,7 @@ else
 end
 
 temp_file_basename = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli')
+temp_fix_file = ::File.join(Chef::Config[:file_cache_path], 'fix_6_14.ps1')
 
 if node['datadog']['windows_agent_use_exe']
   dd_agent_installer = "#{dd_agent_installer_basename}.exe"
@@ -83,7 +84,13 @@ remote_file temp_file do
 
     # verify will abort update if false
     !unsafe
-  end if not node['datadog']['windows_blacklist_silent_fail']
+  end unless node['datadog']['windows_blacklist_silent_fail']
+end
+
+remote_file temp_fix_file do
+  source fix_source
+  retries package_retries unless package_retries.nil?
+  retry_delay package_retry_delay unless package_retry_delay.nil?
 
   # validate the downloaded MSI is safe
   notifies :run, 'powershell_script[datadog_6.14.x_fix]', :immediately
@@ -92,9 +99,7 @@ end
 powershell_script 'datadog_6.14.x_fix' do
   # As of v1.37, the windows cookbook doesn't upgrade the package if a newer version is downloaded
   # As a workaround uninstall the package first if a new MSI is downloaded
-  code <<-EOH
-((New-Object System.Net.WebClient).DownloadFile('#{node['datadog']['windows_agent_url']}scripts/fix_6_14.ps1', $env:temp + '\\fix_6_14.ps1')); &$env:temp\\fix_6_14.ps1
-  EOH
+  code "&#{temp_fix_file}"
 
   action :nothing
   notifies :remove, 'package[Datadog Agent removal]', :immediately
