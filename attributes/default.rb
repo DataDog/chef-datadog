@@ -191,6 +191,10 @@ default['datadog']['yumrepo_gpgkey_new'] = "#{yum_protocol}://yum.datadoghq.com/
 # the blacklist will be resolved enabling this feature.
 default['datadog']['windows_blacklist_silent_fail'] = false
 
+# Attribute to specify timeout in seconds on MSI operations (install/uninstall)
+# Default should suffice, but provides a knob in case instances with limited resources timeout.
+default['datadog']['windows_msi_timeout'] = 900
+
 # Agent installer checksum
 # Expected checksum to validate correct agent installer is downloaded (Windows only)
 default['datadog']['windows_agent_checksum'] = nil
