@@ -104,7 +104,6 @@ powershell_script 'datadog_6.14.x_fix' do
   code "&#{temp_fix_file}"
 
   action :nothing
-  subscribes :reload, "remote_file[#{temp_file}]", :immediately
   notifies :remove, 'package[Datadog Agent removal]', :immediately
 end
 
