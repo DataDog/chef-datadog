@@ -1,10 +1,16 @@
 Changes
 =======
 
+# 2.20.1 / Unreleased
+
+* [FEATURE] Windows: add MSI max timeout knob. See [#654][] [@truthbk][]
+* [BUGFIX] Windows: add MSI max timeout knob. See [#654][] [@olivielpeau][]
+* [BUGFIX] Windows: use chef facilities instead of powershell to download 6.14 fix script. See [#657][] [@truthbk][]
+
 # 2.20.0 / 2019-11-11 
 
-* [FEATURE] Blacklist installation of 6.14.0 and 6.14.1. See [#651][]
-* [FEATURE] Run fix + sanity check script before agent uninstalls. See [#651][]
+* [FEATURE] Blacklist installation of 6.14.0 and 6.14.1. See [#651][] [@truthbk][]
+* [FEATURE] Run fix + sanity check script before agent uninstalls. See [#651][] [@truthbk][]
 
 # 2.19.0 / 2019-05-21
 
@@ -709,7 +715,22 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#586]: https://github.com/DataDog/chef-datadog/issues/586
 [#588]: https://github.com/DataDog/chef-datadog/issues/588
 [#618]: https://github.com/DataDog/chef-datadog/issues/618
+<<<<<<< HEAD
 [#651]: https://github.com/DataDog/chef-datadog/issues/651
+=======
+[#624]: https://github.com/DataDog/chef-datadog/issues/624
+[#626]: https://github.com/DataDog/chef-datadog/issues/626
+[#628]: https://github.com/DataDog/chef-datadog/issues/628
+[#631]: https://github.com/DataDog/chef-datadog/issues/631
+[#632]: https://github.com/DataDog/chef-datadog/issues/632
+[#634]: https://github.com/DataDog/chef-datadog/issues/634
+[#635]: https://github.com/DataDog/chef-datadog/issues/635
+[#639]: https://github.com/DataDog/chef-datadog/issues/639
+[#641]: https://github.com/DataDog/chef-datadog/issues/641
+[#652]: https://github.com/DataDog/chef-datadog/issues/652
+[#654]: https://github.com/DataDog/chef-datadog/issues/654
+[#657]: https://github.com/DataDog/chef-datadog/issues/657
+>>>>>>> ddcc174... [release] 3.4.1 changelog + metadata changes
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@BrentOnRails]: https://github.com/BrentOnRails
