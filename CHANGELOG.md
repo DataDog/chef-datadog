@@ -1,7 +1,13 @@
 Changes
 =======
 
-# 3.4.0 / 2019-11-11 
+# 3.4.1 / Unreleased
+
+* [FEATURE] Windows: add MSI max timeout knob. See [#654][] [@truthbk][]
+* [BUGFIX] Windows: add MSI max timeout knob. See [#654][] [@olivielpeau][]
+* [BUGFIX] Windows: use chef facilities instead of powershell to download 6.14 fix script. See [#657][] [@truthbk][]
+
+# 3.4.0 / 2019-11-11
 
 * [FEATURE] Blacklist installation of 6.14.0 and 6.14.1. See [#652][] [@truthbk][]
 * [FEATURE] Run fix + sanity check script before agent uninstalls. See [#652][] [@truthbk][]
@@ -779,6 +785,8 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#639]: https://github.com/DataDog/chef-datadog/issues/639
 [#641]: https://github.com/DataDog/chef-datadog/issues/641
 [#652]: https://github.com/DataDog/chef-datadog/issues/652
+[#654]: https://github.com/DataDog/chef-datadog/issues/654
+[#657]: https://github.com/DataDog/chef-datadog/issues/657
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@BrentOnRails]: https://github.com/BrentOnRails
