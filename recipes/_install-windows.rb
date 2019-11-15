@@ -116,7 +116,6 @@ powershell_script 'datadog_6.14.x_fix' do
   # As of v1.37, the windows cookbook doesn't upgrade the package if a newer version is downloaded
   # As a workaround uninstall the package first if a new MSI is downloaded
   code "&#{temp_fix_file}"
-
   action :nothing
   notifies :remove, 'package[Datadog Agent removal]', :immediately
 end
