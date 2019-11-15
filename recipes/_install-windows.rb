@@ -73,11 +73,13 @@ use_windows_package_resource = Gem::Version.new(Chef::VERSION) < Gem::Version.ne
 if use_windows_package_resource
   windows_package 'Datadog Agent removal' do
     package_name 'Datadog Agent'
+    timeout node['datadog']['windows_msi_timeout']
     action :nothing
   end
 else
   package 'Datadog Agent removal' do
     package_name 'Datadog Agent'
+    timeout node['datadog']['windows_msi_timeout']
     action :nothing
   end
 end
@@ -133,6 +135,7 @@ windows_package 'Datadog Agent' do # ~FC009
   source temp_file
   installer_type installer_type
   options install_options
+  timeout node['datadog']['windows_msi_timeout']
   action :install
   if respond_to?(:returns)
     returns [0, 3010]
