@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 2.20.1 / Unreleased
+# 2.20.1 / 2019-11-15 
 
 * [FEATURE] Windows: add MSI max timeout knob. See [#654][] [@truthbk][]
 * [BUGFIX] Windows: add MSI max timeout knob. See [#654][] [@olivielpeau][]
