@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 3.4.1 / Unreleased
+# 3.4.1 / 2019-11-15
 
 * [FEATURE] Windows: add MSI max timeout knob. See [#654][] [@truthbk][]
 * [BUGFIX] Windows: add MSI max timeout knob. See [#654][] [@olivielpeau][]
