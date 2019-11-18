@@ -1,20 +1,20 @@
 Changes
 =======
 
-# 3.4.2 / 2019-11-18
-
-* [BUGFIX] Windows: fix permission inheritance of config directory. See [#653][] [@albertvaka][]
-
 # 3.4.1 / 2019-11-15
 
 * [FEATURE] Windows: add MSI max timeout knob. See [#654][] [@truthbk][]
 * [BUGFIX] Windows: Use windows_agent_url to download script. See [#656][] [@olivielpeau][]
 * [BUGFIX] Windows: use chef facilities instead of powershell to download 6.14 fix script. See [#657][] [@truthbk][]
+* [BUGFIX] Windows: fix permission inheritance of config directory. See [#653][] [@albertvaka][]
 
 # 3.4.0 / 2019-11-11
 
 * [FEATURE] Blacklist installation of 6.14.0 and 6.14.1. See [#652][] [@truthbk][]
 * [FEATURE] Run fix + sanity check script before agent uninstalls. See [#652][] [@truthbk][]
+* [FEATURE] Add SSL config for RedisDB [#643][] [@Velgus][]
+* [FEATURE] Add a setting to disable writing system-probe.yaml [#648][] [@albertvaka][]
+* [BUGFIX] Fix system-probe.yaml ownership [#647][] [@kevinconaway][]
 
 # 3.3.0 / 2019-09-25
 
@@ -788,6 +788,9 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#635]: https://github.com/DataDog/chef-datadog/issues/635
 [#639]: https://github.com/DataDog/chef-datadog/issues/639
 [#641]: https://github.com/DataDog/chef-datadog/issues/641
+[#643]: https://github.com/DataDog/chef-datadog/issues/643
+[#647]: https://github.com/DataDog/chef-datadog/issues/647
+[#648]: https://github.com/DataDog/chef-datadog/issues/648
 [#652]: https://github.com/DataDog/chef-datadog/issues/652
 [#653]: https://github.com/DataDog/chef-datadog/issues/653
 [#654]: https://github.com/DataDog/chef-datadog/issues/654
@@ -808,6 +811,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@RedWhiteMiko]: https://github.com/RedWhiteMiko
 [@SelerityMichael]: https://github.com/SelerityMichael
 [@SupermanScott]: https://github.com/SupermanScott
+[@Velgus]: https://github.com/Velgus
 [@aknarts]: https://github.com/aknarts
 [@albertvaka]: https://github.com/albertvaka
 [@alexism]: https://github.com/alexism
