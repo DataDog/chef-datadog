@@ -1,10 +1,14 @@
 Changes
 =======
 
+# 3.4.2 / 2019-11-18
+
+* [BUGFIX] Windows: fix permission inheritance of config directory. See [#653][] [@albertvaka][]
+
 # 3.4.1 / 2019-11-15
 
 * [FEATURE] Windows: add MSI max timeout knob. See [#654][] [@truthbk][]
-* [BUGFIX] Windows: add MSI max timeout knob. See [#654][] [@olivielpeau][]
+* [BUGFIX] Windows: Use windows_agent_url to download script. See [#656][] [@olivielpeau][]
 * [BUGFIX] Windows: use chef facilities instead of powershell to download 6.14 fix script. See [#657][] [@truthbk][]
 
 # 3.4.0 / 2019-11-11
@@ -785,7 +789,9 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#639]: https://github.com/DataDog/chef-datadog/issues/639
 [#641]: https://github.com/DataDog/chef-datadog/issues/641
 [#652]: https://github.com/DataDog/chef-datadog/issues/652
+[#653]: https://github.com/DataDog/chef-datadog/issues/653
 [#654]: https://github.com/DataDog/chef-datadog/issues/654
+[#656]: https://github.com/DataDog/chef-datadog/issues/656
 [#657]: https://github.com/DataDog/chef-datadog/issues/657
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
@@ -803,6 +809,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@SelerityMichael]: https://github.com/SelerityMichael
 [@SupermanScott]: https://github.com/SupermanScott
 [@aknarts]: https://github.com/aknarts
+[@albertvaka]: https://github.com/albertvaka
 [@alexism]: https://github.com/alexism
 [@alq]: https://github.com/alq
 [@antonio-osorio]: https://github.com/antonio-osorio
