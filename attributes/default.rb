@@ -146,6 +146,19 @@ default['datadog']['windows_agent_installer_prefix'] = nil
 # of the Agent will be signed with this key.
 default['datadog']['yumrepo_gpgkey_new'] = "#{yum_protocol}://yum.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public"
 
+# Windows Agent Blacklist
+# Attribute to enforce silent failures on agent installs when attempting to install a
+# blacklisted MSI. This attribute is to provide a workaround for users already pinned
+# to a blacklisted windows Agent version who may need to avoid breaking their chef runs.
+# The new blacklisting logic, by default will fail your chef run.
+# Please note that this attribute is no silver bullet, not all failed chef runs due to
+# the blacklist will be resolved enabling this feature.
+default['datadog']['windows_blacklist_silent_fail'] = false
+
+# Attribute to specify timeout in seconds on MSI operations (install/uninstall)
+# Default should suffice, but provides a knob in case instances with limited resources timeout.
+default['datadog']['windows_msi_timeout'] = 900
+
 # Agent installer checksum
 # Expected checksum to validate correct agent installer is downloaded (Windows only)
 default['datadog']['windows_agent_checksum'] = nil

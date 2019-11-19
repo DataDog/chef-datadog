@@ -14,6 +14,21 @@ instances:
     <% if i.key?("db") -%>
     db: <%= i["db"] %>
     <% end -%>
+    <% if i.key?("ssl") -%>
+    ssl: <%= i["ssl"] %>
+      <% if i.key?("ssl_keyfile") -%>
+    ssl_keyfile: <%= i["ssl_keyfile"] %>
+      <% end %>
+      <% if i.key?("ssl_certfile") -%>
+    ssl_certfile: <%= i["ssl_certfile"] %>
+      <% end %>
+      <% if i.key?("ssl_ca_certs") -%>
+    ssl_ca_certs: <%= i["ssl_ca_certs"] %>
+      <% end %>
+      <% if i.key?("ssl_cert_reqs") -%>
+    ssl_cert_reqs: <%= i["ssl_cert_reqs"] %>
+      <% end %>
+    <% end -%>
     <% if i.key?("tags") -%>
     tags:
       <% i["tags"].each do |t| -%>
@@ -21,9 +36,9 @@ instances:
       <% end -%>
     <% end -%>
     <% if i.key?("keys") -%>
-        <% if i.key?("warn_on_missing_keys") -%>
+      <% if i.key?("warn_on_missing_keys") -%>
     warn_on_missing_keys: <%= i['warn_on_missing_keys'] %>
-        <% end -%>
+      <% end -%>
     keys:
       <% i["keys"].each do |k| -%>
       - <%= k %>

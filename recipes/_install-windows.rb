@@ -32,6 +32,7 @@ else
 end
 
 temp_file_basename = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli')
+temp_fix_file = ::File.join(Chef::Config[:file_cache_path], 'fix_6_14.ps1')
 
 if node['datadog']['windows_agent_use_exe']
   dd_agent_installer = "#{dd_agent_installer_basename}.exe"
@@ -54,11 +55,19 @@ end
 
 package 'Datadog Agent removal' do
   package_name 'Datadog Agent'
+  timeout node['datadog']['windows_msi_timeout']
   action :nothing
 end
 
 package_retries = node['datadog']['agent_package_retries']
 package_retry_delay = node['datadog']['agent_package_retry_delay']
+
+unsafe_hashsums = [
+  '928b00d2f952219732cda9ae0515351b15f9b9c1ea1d546738f9dc0fda70c336',
+  '78b2bb2b231bcc185eb73dd367bfb6cb8a5d45ba93a46a7890fd607dc9188194'
+]
+fix_message = 'The file downloaded matches a known unsafe MSI - Agent versions 6.14.0/1 have been blacklisted. please use a different release. '\
+        'See http://dtdg.co/win-614-fix'
 
 # Download the installer to a temp location
 remote_file temp_file do
@@ -68,35 +77,32 @@ remote_file temp_file do
   retry_delay package_retry_delay unless package_retry_delay.nil?
 
   # validate the downloaded MSI is safe
-  notifies :create, 'ruby_block[validate_safe_msi]', :immediately
-end
-
-unsafe_hashsums = [
-  '928b00d2f952219732cda9ae0515351b15f9b9c1ea1d546738f9dc0fda70c336',
-  '78b2bb2b231bcc185eb73dd367bfb6cb8a5d45ba93a46a7890fd607dc9188194'
-]
-
-ruby_block 'validate_safe_msi' do
-  block do
+  verify do |path|
     require 'digest'
 
-    sha256 = Digest::SHA256.file(temp_file)
+    unsafe = unsafe_hashsums.include? Digest::SHA256.file(path).hexdigest
+    Chef::Log.error("\n#{fix_message}\n") if unsafe
 
-    raise 'The file downloaded matches a known unsafe MSI - Agent versions 6.14.0/1 have been blacklisted. please use a different release. '\
-        'See http://dtdg.co/win-614-fix' if unsafe_hashsums.include? sha256.hexdigest
-  end
+    # verify will abort update if false
+    !unsafe
+  end unless node['datadog']['windows_blacklist_silent_fail']
 
-  action :nothing
+  # these are notified in order
+  notifies :create, "remote_file[#{temp_fix_file}]", :immediately
   notifies :run, 'powershell_script[datadog_6.14.x_fix]', :immediately
+end
+
+remote_file temp_fix_file do
+  source "#{node['datadog']['windows_agent_url']}scripts/fix_6_14.ps1"
+  retries package_retries unless package_retries.nil?
+  retry_delay package_retry_delay unless package_retry_delay.nil?
+  action :nothing
 end
 
 powershell_script 'datadog_6.14.x_fix' do
   # As of v1.37, the windows cookbook doesn't upgrade the package if a newer version is downloaded
   # As a workaround uninstall the package first if a new MSI is downloaded
-  code <<-EOH
-((New-Object System.Net.WebClient).DownloadFile('https://s3.amazonaws.com/ddagent-windows-stable/scripts/fix_6_14.ps1', $env:temp + '\\fix_6_14.ps1')); &$env:temp\\fix_6_14.ps1
-  EOH
-
+  code "&#{temp_fix_file}"
   action :nothing
   notifies :remove, 'package[Datadog Agent removal]', :immediately
 end
@@ -106,6 +112,7 @@ windows_package 'Datadog Agent' do # ~FC009
   source temp_file
   installer_type installer_type
   options install_options
+  timeout node['datadog']['windows_msi_timeout']
   action :install
   # Before 3.0.0, we adviced users to use the windows cookbook ~> 1.38.0,
   # we should probably keep the compatibilty for some time.
@@ -117,7 +124,9 @@ windows_package 'Datadog Agent' do # ~FC009
   not_if do
     require 'digest'
 
-    # Do not fail here if the file isn't there. Will fail later anyway.
-    File.file?(temp_file) && unsafe_hashsums.include?(Digest::SHA256.file(temp_file).hexdigest)
+    unsafe = File.file?(temp_file) && unsafe_hashsums.include?(Digest::SHA256.file(temp_file).hexdigest)
+    Chef::Log.warn("\n#{fix_message}\nContinuing without installing Datadog Agent.") if unsafe
+
+    unsafe
   end
 end

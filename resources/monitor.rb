@@ -19,7 +19,9 @@ action :add do
   template ::File.join(yaml_dir, "#{new_resource.name}.yaml") do
     # On Windows Agent v5, set the permissions on conf files to Administrators.
     if node['platform_family'] == 'windows'
-      if node['datadog']['agent_major_version'].to_i == 5
+      if node['datadog']['agent_major_version'].to_i > 5
+        inherits true # Agent 6/7 rely on inheritance being enabled. Reset it in case it was disabled when installing Agent 5.
+      else
         owner 'Administrators'
         rights :full_control, 'Administrators'
         inherits false
