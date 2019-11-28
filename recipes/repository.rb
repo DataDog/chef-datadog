@@ -109,7 +109,7 @@ when 'rhel', 'fedora', 'amazon'
     proxy node['datadog']['yumrepo_proxy']
     proxy_username node['datadog']['yumrepo_proxy_username']
     proxy_password node['datadog']['yumrepo_proxy_password']
-    gpgkey node['datadog']['yumrepo_gpgkey']
+    gpgkey node['datadog']['agent_major_version'].to_i < 7 ? node['datadog']['yumrepo_gpgkey'] : node['datadog']['yumrepo_gpgkey_new']
     gpgcheck true
     action :create
   end
@@ -165,7 +165,7 @@ when 'suse'
   zypper_repository 'datadog' do
     description 'datadog'
     baseurl baseurl
-    gpgkey node['datadog']['yumrepo_gpgkey']
+    gpgkey node['datadog']['agent_major_version'].to_i < 7 ? node['datadog']['yumrepo_gpgkey'] : node['datadog']['yumrepo_gpgkey_new']
     gpgautoimportkeys false
     gpgcheck false
     action :create
