@@ -28,8 +28,7 @@ platforms:
 
 - name: <%= platform_version %>-<%= chef_version %>
   driver_config:
-    box: opscode_<%= platform_version %>_chef-provisionerless
-    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_<%= platform_version %>_chef-provisionerless.box
+    box: bento/<%= platform_version %>
     require_chef_omnibus: <%= chef_version %>
 <% end
 
