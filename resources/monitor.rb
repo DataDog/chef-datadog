@@ -19,7 +19,7 @@ action :add do
   template ::File.join(yaml_dir, "#{new_resource.name}.yaml") do
     # On Windows Agent v5, set the permissions on conf files to Administrators.
     if node['platform_family'] == 'windows'
-      if node['datadog']['agent_major_version'].to_i > 5
+      if Chef::Datadog.agent_major_version(node) > 5
         inherits true # Agent 6/7 rely on inheritance being enabled. Reset it in case it was disabled when installing Agent 5.
       else
         owner 'Administrators'
@@ -54,7 +54,7 @@ action :remove do
 end
 
 def yaml_dir
-  is_agent5 = node['datadog']['agent_major_version'].to_i == 5
+  is_agent5 = Chef::Datadog.agent_major_version(node) == 5
   is_windows = node['platform_family'] == 'windows'
   if is_windows
     "#{ENV['ProgramData']}/Datadog/conf.d"

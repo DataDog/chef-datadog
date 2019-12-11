@@ -12,7 +12,7 @@ property :property_name, String, name_property: true
 property :version, String, required: true
 
 action :install do
-  if node['datadog']['agent_major_version'].to_i == 5
+  if Chef::Datadog.agent_major_version(node) == 5
     Chef::Log.error('The datadog_integration resource is not available with Agent v5.')
     return
   end
@@ -31,7 +31,7 @@ action :install do
 end
 
 action :remove do
-  if node['datadog']['agent_major_version'].to_i == 5
+  if Chef::Datadog.agent_major_version(node) == 5
     Chef::Log.error('The datadog_integration resource is not available with Agent v5.')
     return
   end
