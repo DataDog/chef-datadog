@@ -8,13 +8,13 @@ platforms:
 # Loop through two lists and output a total matrix of all possible platform + chef versions
 # fedora-20 needs kitchen-docker 1.7.0, but other bugs prevent that version from being used.
 <% test_platforms = %w(
+      ubuntu-12.04
       ubuntu-14.04
       ubuntu-16.04
-      ubuntu-12.04
-      centos-6.6
       centos-5.11
+      centos-6.6
       centos-7.1
-      debian-7.7
+      debian-7.8
     )
     chef_versions = %w(
       12.7.2
@@ -28,8 +28,7 @@ platforms:
 
 - name: <%= platform_version %>-<%= chef_version %>
   driver_config:
-    box: opscode_<%= platform_version %>_chef-provisionerless
-    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_<%= platform_version %>_chef-provisionerless.box
+    box: bento/<%= platform_version %>
     require_chef_omnibus: <%= chef_version %>
 <% end
 
