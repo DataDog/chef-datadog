@@ -28,10 +28,32 @@ default['datadog']['api_key'] = nil
 # Set it as an attribute, or on your node `run_state` under the key `['datadog']['application_key']`
 default['datadog']['application_key'] = nil
 
-# If you're installing a pre-release version of Agent 6 (beta or RC), you need to:
-# * on debian: set node['datadog']['aptrepo_dist'] to 'beta' instead of 'stable'
-# * on RHEL: set node['datadog']['yumrepo'] to 'https://yum.datadoghq.com/beta/x86_64/'
+# Agent major version
 default['datadog']['agent_major_version'] = 7
+
+# Agent Version
+# Default of `nil` will install latest version. On Windows, this will also upgrade to latest
+# This attribute accepts either a `string` or `hash` with the key as platform_name and value of package version
+# In the case of fedora and amazon linux, use platform_name of rhel
+# Example:
+# default['datadog']['agent_version'] = {
+#  'rhel' => '5.9.0-1',
+#  'windows' => '5.9.0',
+#  'debian' => '1:5.9.0-1'
+# }
+default['datadog']['agent_version'] = nil # nil to install latest
+
+# Allow override with `upgrade` to get latest (Linux only)
+default['datadog']['agent_package_action'] = 'install'
+
+# Agent package options
+# retries and retry_delay for package download/install
+default['datadog']['agent_package_retries'] = nil
+default['datadog']['agent_package_retry_delay'] = nil
+
+# Allow downgrades of the agent (Linux only)
+# Note: on apt-based platforms, this will use the `--force-yes` option on the apt-get command. Use with caution.
+default['datadog']['agent_allow_downgrade'] = false
 
 ########################################################################
 ###                 Agent 6/7 only attributes                        ###
@@ -111,10 +133,13 @@ default['datadog']['tags_submission_retries'] = nil
 default['datadog']['handler_extra_config'] = {}
 
 # repos where datadog-agent packages are available
+# If you're installing a pre-release version of the Agent (beta or RC), you need to:
+# * on debian: set node['datadog']['aptrepo_dist'] to 'beta' instead of 'stable'
+# * on RHEL: set node['datadog']['yumrepo'] to 'https://yum.datadoghq.com/beta/x86_64/'
 default['datadog']['aptrepo'] = 'http://apt.datadoghq.com'
 default['datadog']['aptrepo_dist'] = 'stable'
-default['datadog']['yumrepo'] = nil # uses official repos by default
-default['datadog']['yumrepo_suse'] = nil # uses official repos by default
+default['datadog']['yumrepo'] = nil # uses Datadog stable repos by default
+default['datadog']['yumrepo_suse'] = nil # uses Datadog stable repos by default
 
 # Older versions of yum embed M2Crypto with SSL that doesn't support TLS1.2
 yum_protocol =
@@ -177,30 +202,6 @@ default['datadog']['windows_agent_use_exe'] = false
 # the keys `['datadog']['windows_ddagentuser_name']` and `['datadog']['windows_ddagentuser_password']`
 default['datadog']['windows_ddagentuser_name'] = nil
 default['datadog']['windows_ddagentuser_password'] = nil
-
-# Agent Version
-# Default of `nil` will install latest version. On Windows, this will also upgrade to latest
-# This attribute accepts either a `string` or `hash` with the key as platform_name and value of package version
-# In the case of fedora and amazon linux, use platform_name of rhel
-# Example:
-# default['datadog']['agent_version'] = {
-#  'rhel' => '5.9.0-1',
-#  'windows' => '5.9.0',
-#  'debian' => '1:5.9.0-1'
-# }
-default['datadog']['agent_version'] = nil
-
-# Allow override with `upgrade` to get latest (Linux only)
-default['datadog']['agent_package_action'] = 'install'
-
-# Agent package options
-# retries and retry_delay for package download/install
-default['datadog']['agent_package_retries'] = nil
-default['datadog']['agent_package_retry_delay'] = nil
-
-# Allow downgrades of the agent (Linux only)
-# Note: on apt-based platforms, this will use the `--force-yes` option on the apt-get command. Use with caution.
-default['datadog']['agent_allow_downgrade'] = false
 
 # Chef handler version
 default['datadog']['chef_handler_version'] = nil
