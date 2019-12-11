@@ -54,7 +54,7 @@ agent_start = node['datadog']['agent_start'] ? :start : :stop
 # To add integration-specific configurations, add 'datadog::config_name' to
 # the node's run_list and set the relevant attributes
 #
-if node['datadog']['agent_major_version'].to_i > 5
+if Chef::Datadog.agent_major_version(node) > 5
   include_recipe 'datadog::_agent6_config'
   agent_config_dir = is_windows ? "#{ENV['ProgramData']}/Datadog" : '/etc/datadog-agent'
   directory agent_config_dir do
@@ -123,7 +123,7 @@ end
 
 # Common configuration
 service_provider = nil
-if node['datadog']['agent_major_version'].to_i > 5 &&
+if Chef::Datadog.agent_major_version(node) > 5 &&
    (((node['platform'] == 'amazon' || node['platform_family'] == 'amazon') && node['platform_version'].to_i != 2) ||
     (node['platform'] == 'ubuntu' && node['platform_version'].to_f < 15.04) || # chef <11.14 doesn't use the correct service provider
    (node['platform'] != 'amazon' && node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7))
@@ -156,7 +156,7 @@ if system_probe_managed
   ruby_block 'include system-probe' do
     block do
       # only load system-probe recipe if an agent 6/7 installation comes with it
-      system_probe_supported = !is_windows && node['datadog']['agent_major_version'].to_i > 5
+      system_probe_supported = !is_windows && Chef::Datadog.agent_major_version(node) > 5
       system_probe_installed = ::File.exist?('/opt/datadog-agent/embedded/bin/system-probe')
       if system_probe_supported && system_probe_installed
         run_context.include_recipe 'datadog::system-probe'

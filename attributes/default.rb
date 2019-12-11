@@ -29,7 +29,7 @@ default['datadog']['api_key'] = nil
 default['datadog']['application_key'] = nil
 
 # Agent major version
-default['datadog']['agent_major_version'] = 7
+default['datadog']['agent_major_version'] = nil # nil to autodetect based on 'agent_version'
 
 # Agent Version
 # Default of `nil` will install latest version. On Windows, this will also upgrade to latest

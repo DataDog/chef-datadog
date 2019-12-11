@@ -20,15 +20,7 @@
 # Install the Apt/Yum repository if enabled
 include_recipe 'datadog::repository' if node['datadog']['installrepo']
 
-dd_agent_version = node['datadog']['agent_version']
-if dd_agent_version.respond_to?(:each_pair)
-  platform_family = node['platform_family']
-  # Unless explicitly listed, treat fedora and amazon as rhel
-  if !dd_agent_version.include?(platform_family) && ['fedora', 'amazon'].include?(platform_family)
-    platform_family = 'rhel'
-  end
-  dd_agent_version = dd_agent_version[platform_family]
-end
+dd_agent_version = Chef::Datadog.agent_version(node)
 
 package_action = node['datadog']['agent_package_action']
 

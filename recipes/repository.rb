@@ -25,6 +25,8 @@ yum_a5_architecture_map = {
 }
 yum_a5_architecture_map.default = 'x86_64'
 
+agent_major_version = Chef::Datadog.agent_major_version(node)
+
 case node['platform_family']
 when 'debian'
   include_recipe 'apt'
@@ -34,7 +36,7 @@ when 'debian'
     action :install
   end
 
-  case node['datadog']['agent_major_version'].to_i
+  case agent_major_version
   when 7
     components = ['7']
   when 6
@@ -42,7 +44,7 @@ when 'debian'
   when 5
     components = ['main']
   else
-    Chef::Log.error('agent_major_version not supported.')
+    Chef::Log.error("agent_major_version '#{agent_major_version}' not supported.")
   end
 
   retries = node['datadog']['aptrepo_retries']
@@ -92,13 +94,13 @@ when 'rhel', 'fedora', 'amazon'
   else
     # Older versions of yum embed M2Crypto with SSL that doesn't support TLS1.2
     yum_protocol_a5 = node['platform_family'] == 'rhel' ? 'http' : 'https'
-    case node['datadog']['agent_major_version'].to_i
+    case agent_major_version
     when 6, 7
-      baseurl = "https://yum.datadoghq.com/stable/#{node['datadog']['agent_major_version']}/#{node['kernel']['machine']}/"
+      baseurl = "https://yum.datadoghq.com/stable/#{agent_major_version}/#{node['kernel']['machine']}/"
     when 5
       baseurl = "#{yum_protocol_a5}://yum.datadoghq.com/rpm/#{yum_a5_architecture_map[node['kernel']['machine']]}/"
     else
-      Chef::Log.error('agent_major_version not supported.')
+      Chef::Log.error("agent_major_version '#{agent_major_version}' not supported.")
     end
   end
 
@@ -109,7 +111,7 @@ when 'rhel', 'fedora', 'amazon'
     proxy node['datadog']['yumrepo_proxy']
     proxy_username node['datadog']['yumrepo_proxy_username']
     proxy_password node['datadog']['yumrepo_proxy_password']
-    gpgkey node['datadog']['agent_major_version'].to_i < 7 ? node['datadog']['yumrepo_gpgkey'] : node['datadog']['yumrepo_gpgkey_new']
+    gpgkey agent_major_version < 7 ? node['datadog']['yumrepo_gpgkey'] : node['datadog']['yumrepo_gpgkey_new']
     gpgcheck true
     action :create
   end
@@ -151,13 +153,13 @@ when 'suse'
   if !node['datadog']['yumrepo_suse'].nil?
     baseurl = node['datadog']['yumrepo_suse']
   else
-    case node['datadog']['agent_major_version'].to_i
+    case agent_major_version
     when 6, 7
-      baseurl = "https://yum.datadoghq.com/suse/stable/#{node['datadog']['agent_major_version']}/#{node['kernel']['machine']}/"
+      baseurl = "https://yum.datadoghq.com/suse/stable/#{agent_major_version}/#{node['kernel']['machine']}/"
     when 5
       baseurl = "https://yum.datadoghq.com/suse/rpm/#{yum_a5_architecture_map[node['kernel']['machine']]}/"
     else
-      Chef::Log.error('agent_major_version not supported.')
+      Chef::Log.error("agent_major_version '#{agent_major_version}' not supported.")
     end
   end
 
@@ -165,7 +167,7 @@ when 'suse'
   zypper_repository 'datadog' do
     description 'datadog'
     baseurl baseurl
-    gpgkey node['datadog']['agent_major_version'].to_i < 7 ? node['datadog']['yumrepo_gpgkey'] : node['datadog']['yumrepo_gpgkey_new']
+    gpgkey agent_major_version < 7 ? node['datadog']['yumrepo_gpgkey'] : node['datadog']['yumrepo_gpgkey_new']
     gpgautoimportkeys false
     gpgcheck false
     action :create
