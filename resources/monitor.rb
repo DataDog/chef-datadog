@@ -16,7 +16,7 @@ property :logs, [Array, nil], required: false, default: []
 action :add do
   Chef::Log.debug("Adding monitoring for #{new_resource.name}")
 
-  template ::File.join(yaml_dir, "#{new_resource.name}.yaml") do
+  template ::File.join(config_file_path(new_resource.name), 'conf.yaml') do
     # On Windows Agent v5, set the permissions on conf files to Administrators.
     if node['platform_family'] == 'windows'
       if node['datadog']['agent6']
@@ -31,7 +31,11 @@ action :add do
       mode '600'
     end
 
-    source 'integration.yaml.erb' if new_resource.use_integration_template
+    if new_resource.use_integration_template
+      source 'integration.yaml.erb'
+    else
+      source "#{new_resource.name}.yaml.erb"
+    end
 
     variables(
       init_config: new_resource.init_config,
@@ -53,10 +57,10 @@ action :remove do
   end
 end
 
-def yaml_dir
+def config_file_path(resource_name)
   if node['datadog']['agent6']
-    ::File.join(node['datadog']['agent6_config_dir'], 'conf.d')
+    ::File.join(node['datadog']['agent6_config_dir'], 'conf.d', "#{resource_name}.d")
   else
-    ::File.join(node['datadog']['config_dir'], 'conf.d')
+    ::File.join(node['datadog']['config_dir'], 'conf.d', "#{resource_name}.d")
   end
 end
