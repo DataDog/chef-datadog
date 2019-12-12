@@ -436,11 +436,20 @@ suites:
               - tata
         init_config:
           default_timeout: 10
+
+- name: datadog_mesos_slave
+  run_list:
+    - recipe[datadog::mesos_slave]
+  excludes: *WINDOWS_PLATFORMS
+  attributes:
+    datadog:
+      <<: *DATADOG
+      mesos_slave:
         instances:
           - url: localhost:5050
             timeout: 8
             tags:
-              - toto
+              - slave
               - tata
         init_config:
           default_timeout: 10
