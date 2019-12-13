@@ -46,6 +46,13 @@ action :add do
     cookbook new_resource.cookbook
     sensitive true
   end
+
+  if agent6?
+    file old_mono_config_file_path(new_resource.name) do
+      action :delete
+      sensitive true
+    end
+  end
 end
 
 action :remove do
@@ -58,7 +65,7 @@ action :remove do
 end
 
 def config_file_path(resource_name)
-  if node['datadog']['agent6']
+  if agent6?
     ::File.join(
       node['datadog']['agent6_config_dir'],
       'conf.d',
@@ -72,4 +79,16 @@ def config_file_path(resource_name)
       "#{resource_name}.yaml"
     )
   end
+end
+
+def old_mono_config_file_path(resource_name)
+  ::File.join(
+    node['datadog']['agent6_config_dir'],
+    'conf.d',
+    "#{resource_name}.yaml"
+  )
+end
+
+def agent6?
+  node['datadog']['agent6']
 end
