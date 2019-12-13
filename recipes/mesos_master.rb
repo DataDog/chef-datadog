@@ -33,10 +33,10 @@ include_recipe 'datadog::dd-agent'
 #       default_timeout: 10
 #     }
 
-datadog_monitor 'mesos' do
-  init_config node['datadog']['mesos']['init_config']
-  instances node['datadog']['mesos']['instances']
-  logs node['datadog']['mesos']['logs']
+datadog_monitor 'mesos_master' do
+  init_config node['datadog']['mesos_master']['init_config']
+  instances node['datadog']['mesos_master']['instances']
+  logs node['datadog']['mesos_master']['logs']
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end
