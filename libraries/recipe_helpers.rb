@@ -29,7 +29,9 @@ class Chef
         elsif !agent_major_version.nil?
           ret = agent_major_version.to_i
         else
-          ret = 7 # default
+          # default to Agent 7
+          node.default['datadog']['agent_major_version'] = 7
+          ret = 7
         end
         ret
       end
