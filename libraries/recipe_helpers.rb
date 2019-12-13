@@ -2,7 +2,6 @@ class Chef
   # Helper class for Datadog Chef recipes
   class Datadog
     class << self
-
       def agent_version(node)
         dd_agent_version = node['datadog']['agent_version']
         if dd_agent_version.respond_to?(:each_pair)
@@ -13,7 +12,7 @@ class Chef
           end
           dd_agent_version = dd_agent_version[platform_family]
         end
-        return dd_agent_version
+        dd_agent_version
       end
 
       def agent_major_version(node)
@@ -22,15 +21,17 @@ class Chef
         agent_version = agent_version(node)
 
         if !agent_version.nil?
-          epoch, major, minor, patch, suffix, release = agent_version.match(/([0-9]+:)?([0-9]+)\.([0-9]+)\.([0-9]+)([^-\s]+)?(?:-([0-9]+))?/).captures
+          _epoch, major, _minor, _patch, _suffix, _release = agent_version.match(/([0-9]+:)?([0-9]+)\.([0-9]+)\.([0-9]+)([^-\s]+)?(?:-([0-9]+))?/).captures
           if !agent_major_version.nil? && major.to_i != agent_major_version.to_i
             raise "Provided (#{agent_major_version}) and deduced (#{major}) agent_major_version don't match"
           end
-          return major.to_i
+          ret = major.to_i
         elsif !agent_major_version.nil?
-          return agent_major_version.to_i
+          ret = agent_major_version.to_i
+        else
+          ret = 7 # default
         end
-        return 7 #default
+        ret
       end
 
       def api_key(node)
