@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-AGENT_CONFIG = File.join(@agent_config_dir, 'conf.d/kafka.yaml')
+AGENT_CONFIG = File.join(@agent_config_dir, 'conf.d/kafka.d/conf.yaml')
 
 describe service(@agent_service_name) do
   it { should be_running }
