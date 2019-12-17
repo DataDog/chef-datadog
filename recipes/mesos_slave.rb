@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: datadog
-# Recipe:: mesos
+# Recipe:: mesos_slave
 #
 # Copyright 2011-2015, Datadog
 #
@@ -33,10 +33,10 @@ include_recipe 'datadog::dd-agent'
 #       default_timeout: 10
 #     }
 
-datadog_monitor 'mesos' do
-  init_config node['datadog']['mesos']['init_config']
-  instances node['datadog']['mesos']['instances']
-  logs node['datadog']['mesos']['logs']
+datadog_monitor 'mesos_slave' do
+  init_config node['datadog']['mesos_slave']['init_config']
+  instances node['datadog']['mesos_slave']['instances']
+  logs node['datadog']['mesos_slave']['logs']
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

@@ -1,10 +1,14 @@
-describe 'datadog::gunicorn' do
+describe 'datadog::mesos_slave' do
   expected_yaml = <<-EOF
     logs: ~
     init_config:
-
+      default_timeout: 10
     instances:
-    - proc_name: my_web_app
+    - url: 'localhost:5050'
+      timeout: 8,
+      tags:
+        - slave
+        - tata
   EOF
 
   cached(:chef_run) do
@@ -13,14 +17,18 @@ describe 'datadog::gunicorn' do
       version: '16.04',
       step_into: ['datadog_monitor']
     ) do |node|
-      node.automatic['languages'] = { python: { version: '2.7.2' } }
-
+      node.automatic['languages'] = { 'python' => { 'version' => '2.7.2' } }
       node.normal['datadog'] = {
         api_key: 'someapikey',
-        gunicorn: {
+        mesos_slave: {
+          init_config: {
+            default_timeout: 10
+          },
           instances: [
             {
-              proc_name: 'my_web_app'
+              url: 'localhost:5050',
+              timeout: 8,
+              tags: ['slave', 'tata']
             }
           ]
         }
@@ -34,10 +42,10 @@ describe 'datadog::gunicorn' do
 
   it { is_expected.to include_recipe('datadog::dd-agent') }
 
-  it { is_expected.to add_datadog_monitor('gunicorn') }
+  it { is_expected.to add_datadog_monitor('mesos_slave') }
 
   it 'renders expected YAML config file' do
-    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/gunicorn.d/conf.yaml').with_content { |content|
+    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/mesos_slave.d/conf.yaml').with_content { |content|
       expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
     })
   end

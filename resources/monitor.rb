@@ -16,7 +16,7 @@ property :logs, [Array, nil], required: false, default: []
 action :add do
   Chef::Log.debug("Adding monitoring for #{new_resource.name}")
 
-  template ::File.join(yaml_dir, "#{new_resource.name}.yaml") do
+  template config_file_path(new_resource.name) do
     # On Windows Agent v5, set the permissions on conf files to Administrators.
     if node['platform_family'] == 'windows'
       if Chef::Datadog.agent_major_version(node) > 5
@@ -31,7 +31,11 @@ action :add do
       mode '600'
     end
 
-    source 'integration.yaml.erb' if new_resource.use_integration_template
+    if new_resource.use_integration_template
+      source 'integration.yaml.erb'
+    else
+      source "#{new_resource.name}.yaml.erb"
+    end
 
     variables(
       init_config: new_resource.init_config,
@@ -41,6 +45,13 @@ action :add do
     )
     cookbook new_resource.cookbook
     sensitive true
+  end
+
+  if Chef::Datadog.agent_major_version(node) != 5
+    file old_mono_config_file_path(new_resource.name) do
+      action :delete
+      sensitive true
+    end
   end
 end
 
@@ -61,4 +72,26 @@ def yaml_dir
   else
     is_agent5 ? '/etc/dd-agent/conf.d' : '/etc/datadog-agent/conf.d'
   end
+end
+
+def config_file_path(resource_name)
+  if Chef::Datadog.agent_major_version(node) != 5
+    ::File.join(
+      yaml_dir,
+      "#{resource_name}.d",
+      'conf.yaml'
+    )
+  else
+    ::File.join(
+      yaml_dir,
+      "#{resource_name}.yaml"
+    )
+  end
+end
+
+def old_mono_config_file_path(resource_name)
+  ::File.join(
+    yaml_dir,
+    "#{resource_name}.yaml"
+  )
 end

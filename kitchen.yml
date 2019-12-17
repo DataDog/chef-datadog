@@ -420,19 +420,36 @@ suites:
               my_consumer:
                 my_topic: [0, 1, 4, 12]
 
-- name: datadog_mesos
+- name: datadog_mesos_master
   run_list:
-    - recipe[datadog::mesos]
+    - recipe[datadog::mesos_master]
   excludes: *WINDOWS_PLATFORMS
   attributes:
     datadog:
       <<: *DATADOG
-      mesos:
+      mesos_master:
         instances:
           - url: localhost:5050
             timeout: 8
             tags:
-              - toto
+              - master
+              - tata
+        init_config:
+          default_timeout: 10
+
+- name: datadog_mesos_slave
+  run_list:
+    - recipe[datadog::mesos_slave]
+  excludes: *WINDOWS_PLATFORMS
+  attributes:
+    datadog:
+      <<: *DATADOG
+      mesos_slave:
+        instances:
+          - url: localhost:5050
+            timeout: 8
+            tags:
+              - slave
               - tata
         init_config:
           default_timeout: 10

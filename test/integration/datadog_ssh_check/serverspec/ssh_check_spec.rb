@@ -8,7 +8,7 @@ require 'yaml'
 set :backend, :exec
 set :path, '/sbin:/usr/local/sbin:$PATH'
 
-AGENT_CONFIG = File.join(@agent_config_dir, 'conf.d/ssh_check.yaml')
+AGENT_CONFIG = File.join(@agent_config_dir, 'conf.d/ssh_check.d/conf.yaml')
 
 describe service(@agent_service_name) do
   it { should be_running }

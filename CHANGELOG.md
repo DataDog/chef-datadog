@@ -14,6 +14,11 @@ Changes
   inclusion of Agent 7. Please read the [docs]() for more details about the name changes
   and update your configuration accordingly.
 
+# 3.5.0 / 2019-12-17
+
+* [FEATURE] Allow integrations to have multiple configurations by creating the default configuration into a `.d` folder. See [#666][] [@kbogtob][]
+* [BUGFIX] Fix the support of mesos integrations by separating the mesos slave and master integrations. See [#667][] [@kbogtob][]
+
 # 3.4.1 / 2019-11-15
 
 * [FEATURE] Windows: add MSI max timeout knob. See [#654][] [@truthbk][]
@@ -811,6 +816,8 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#654]: https://github.com/DataDog/chef-datadog/issues/654
 [#656]: https://github.com/DataDog/chef-datadog/issues/656
 [#657]: https://github.com/DataDog/chef-datadog/issues/657
+[#666]: https://github.com/DataDog/chef-datadog/issues/666
+[#667]: https://github.com/DataDog/chef-datadog/issues/667
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@BrentOnRails]: https://github.com/BrentOnRails
@@ -895,6 +902,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@jtimberman]: https://github.com/jtimberman
 [@juliandunn]: https://github.com/juliandunn
 [@jvrplmlmn]: https://github.com/jvrplmlmn
+[@kbogtob]: https://github.com/kbogtob
 [@kevinconaway]: https://github.com/kevinconaway
 [@khouse]: https://github.com/khouse
 [@kindlyseth]: https://github.com/kindlyseth

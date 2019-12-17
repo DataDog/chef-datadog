@@ -41,7 +41,7 @@ describe 'datadog::mongo' do
   it { is_expected.to add_datadog_monitor('mongo') }
 
   it 'renders expected YAML config file' do
-    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/mongo.yaml').with_content { |content|
+    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/mongo.d/conf.yaml').with_content { |content|
       expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
     })
   end

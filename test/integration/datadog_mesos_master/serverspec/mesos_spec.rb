@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-AGENT_CONFIG = File.join(@agent_config_dir, 'conf.d/haproxy.d/conf.yaml')
+AGENT_CONFIG = File.join(@agent_config_dir, 'conf.d/mesos_master.d/conf.yaml')
 
 describe service(@agent_service_name) do
   it { should be_running }
@@ -15,18 +15,17 @@ describe file(AGENT_CONFIG) do
     generated = YAML.load_file(AGENT_CONFIG)
 
     expected = {
-      'instances' => [
+      instances: [
         {
-          'collect_aggregates_only' => true,
-          'collect_status_metrics' => true,
-          'password' => 'sekret',
-          'status_check' => false,
-          'url' => 'http://localhost:22002/status',
-          'username' => 'admin'
+          url: 'localhost:5050',
+          timeout: 8,
+          tags: ['master', 'tata']
         }
       ],
       'logs' => nil,
-      'init_config' => nil
+      init_config: {
+        default_timeout: 10
+      }
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json
