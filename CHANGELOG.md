@@ -1,6 +1,11 @@
 Changes
 =======
 
+# 3.5.0 / Unreleased
+
+* [FEATURE] Allow monitors have multiple configurations by creating the default configuration into a `.d` folder. See [#666][] [@kbogtob][]
+* [BUGFIX] Fix the support of mesos integrations by separating the mesos slave and master integrations. See [#667][] [@kbogtob][]
+
 # 3.4.1 / 2019-11-15
 
 * [FEATURE] Windows: add MSI max timeout knob. See [#654][] [@truthbk][]
