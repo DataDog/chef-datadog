@@ -16,7 +16,18 @@ property :logs, [Array, nil], required: false, default: []
 action :add do
   Chef::Log.debug("Adding monitoring for #{new_resource.name}")
 
-  template config_file_path(new_resource.name) do
+  if Chef::Datadog.agent_major_version(node) != 5
+    directory ::File.join(yaml_dir, "#{new_resource.name}.d") do
+      owner 'dd-agent'
+      group 'dd-agent'
+      mode '755'
+    end
+    yaml_file = ::File.join(yaml_dir, "#{new_resource.name}.d", 'conf.yaml')
+  else
+    yaml_file = ::File.join(yaml_dir, "#{new_resource.name}.yaml")
+  end
+
+  template yaml_file do
     # On Windows Agent v5, set the permissions on conf files to Administrators.
     if node['platform_family'] == 'windows'
       if Chef::Datadog.agent_major_version(node) > 5
@@ -71,21 +82,6 @@ def yaml_dir
     "#{ENV['ProgramData']}/Datadog/conf.d"
   else
     is_agent5 ? '/etc/dd-agent/conf.d' : '/etc/datadog-agent/conf.d'
-  end
-end
-
-def config_file_path(resource_name)
-  if Chef::Datadog.agent_major_version(node) != 5
-    ::File.join(
-      yaml_dir,
-      "#{resource_name}.d",
-      'conf.yaml'
-    )
-  else
-    ::File.join(
-      yaml_dir,
-      "#{resource_name}.yaml"
-    )
   end
 end
 
