@@ -5,10 +5,10 @@ Changes
 
 ## Breaking changes
 
-  * **This cookbook will install Agent 7.x by default**. Datadog Agent 7 uses Python 3 by
-  default so if you were running any custom checks written in Python, they must now be
-  compatible with Python 3. If you were not running any custom checks or if your custom
-  checks are already compatible with Python 3, then it is safe to upgrade to Agent 7.
+  * **This cookbook will install Agent 7.x by default**. Datadog Agent 7 uses Python 3 so
+  if you were running any custom checks written in Python, they must now be compatible with
+  Python 3. If you were not running any custom checks or if your custom checks are already
+  compatible with Python 3, then it is safe to upgrade to Agent 7.
 
   * **Some config parameters prefixed with `agent6` have been renamed** to accomodate the
   inclusion of Agent 7. Please read the [docs]() for more details about the name changes
