@@ -16,21 +16,21 @@ property :logs, [Array, nil], required: false, default: []
 action :add do
   Chef::Log.debug("Adding monitoring for #{new_resource.name}")
 
-  if agent6?
-    directory ::File.join(node['datadog']['agent6_config_dir'], 'conf.d', "#{new_resource.name}.d") do
+  if Chef::Datadog.agent_major_version(node) != 5
+    directory ::File.join(yaml_dir, "#{new_resource.name}.d") do
       owner 'dd-agent'
       group 'dd-agent'
       mode '755'
     end
-    yaml_file = ::File.join(node['datadog']['agent6_config_dir'], 'conf.d', "#{new_resource.name}.d", 'conf.yaml')
+    yaml_file = ::File.join(yaml_dir, "#{new_resource.name}.d", 'conf.yaml')
   else
-    yaml_file = ::File.join(node['datadog']['config_dir'], 'conf.d', "#{new_resource.name}.yaml")
+    yaml_file = ::File.join(yaml_dir, "#{new_resource.name}.yaml")
   end
 
   template yaml_file do
     # On Windows Agent v5, set the permissions on conf files to Administrators.
     if node['platform_family'] == 'windows'
-      if node['datadog']['agent6']
+      if Chef::Datadog.agent_major_version(node) > 5
         inherits true # Agent 6/7 rely on inheritance being enabled. Reset it in case it was disabled when installing Agent 5.
       else
         owner 'Administrators'
@@ -58,7 +58,7 @@ action :add do
     sensitive true
   end
 
-  if agent6?
+  if Chef::Datadog.agent_major_version(node) != 5
     file old_mono_config_file_path(new_resource.name) do
       action :delete
       sensitive true
@@ -75,14 +75,19 @@ action :remove do
   end
 end
 
-def old_mono_config_file_path(resource_name)
-  ::File.join(
-    node['datadog']['agent6_config_dir'],
-    'conf.d',
-    "#{resource_name}.yaml"
-  )
+def yaml_dir
+  is_agent5 = Chef::Datadog.agent_major_version(node) == 5
+  is_windows = node['platform_family'] == 'windows'
+  if is_windows
+    "#{ENV['ProgramData']}/Datadog/conf.d"
+  else
+    is_agent5 ? '/etc/dd-agent/conf.d' : '/etc/datadog-agent/conf.d'
+  end
 end
 
-def agent6?
-  node['datadog']['agent6']
+def old_mono_config_file_path(resource_name)
+  ::File.join(
+    yaml_dir,
+    "#{resource_name}.yaml"
+  )
 end

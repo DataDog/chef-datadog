@@ -30,6 +30,6 @@ suites:
   attributes:
     datadog:
       # TODO(remy): run those tests with Agent v6 recipe.
-      agent6: false
+      agent_major_version: 5
       api_key: somenonnullapikeythats32charlong
       application_key: alsonotnil

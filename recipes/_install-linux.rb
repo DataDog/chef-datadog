@@ -20,37 +20,9 @@
 # Install the Apt/Yum repository if enabled
 include_recipe 'datadog::repository' if node['datadog']['installrepo']
 
-dd_agent5_version =
-  if node['datadog']['agent_version'].respond_to?(:each_pair)
-    case node['platform_family']
-    when 'rhel', 'fedora', 'amazon'
-      node['datadog']['agent_version']['rhel']
-    else
-      node['datadog']['agent_version'][node['platform_family']]
-    end
-  else
-    node['datadog']['agent_version']
-  end
+dd_agent_version = Chef::Datadog.agent_version(node)
 
-dd_agent6_version =
-  if node['datadog']['agent6_version'].respond_to?(:each_pair)
-    case node['platform_family']
-    when 'rhel', 'fedora'
-      node['datadog']['agent6_version']['rhel']
-    else
-      node['datadog']['agent6_version'][node['platform_family']]
-    end
-  else
-    node['datadog']['agent6_version']
-  end
-
-if node['datadog']['agent6']
-  dd_agent_version = dd_agent6_version
-  package_action = node['datadog']['agent6_package_action']
-else
-  dd_agent_version = dd_agent5_version
-  package_action = node['datadog']['agent_package_action']
-end
+package_action = node['datadog']['agent_package_action']
 
 package_retries = node['datadog']['agent_package_retries']
 package_retry_delay = node['datadog']['agent_package_retry_delay']

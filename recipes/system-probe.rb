@@ -22,7 +22,7 @@ sysprobe_agent_start = node['datadog']['system_probe']['enabled'] ? :start : :st
 
 #
 # Configures system-probe agent
-system_probe_config_file = ::File.join(node['datadog']['agent6_config_dir'], 'system-probe.yaml')
+system_probe_config_file = '/etc/datadog-agent/system-probe.yaml'
 template system_probe_config_file do
   extra_config = {}
   if node['datadog']['extra_config'] && node['datadog']['extra_config']['system_probe']
@@ -51,7 +51,7 @@ end
 
 # Common configuration
 service_provider = nil
-if node['datadog']['agent6'] &&
+if Chef::Datadog.agent_major_version(node) > 5 &&
    (((node['platform'] == 'amazon' || node['platform_family'] == 'amazon') && node['platform_version'].to_i != 2) ||
     (node['platform'] == 'ubuntu' && node['platform_version'].to_f < 15.04) || # chef <11.14 doesn't use the correct service provider
    (node['platform'] != 'amazon' && node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7))

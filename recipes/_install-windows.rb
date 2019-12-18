@@ -17,34 +17,17 @@
 # limitations under the License.
 #
 
-dd_agent5_version =
-  if node['datadog']['agent_version'].respond_to?(:each_pair)
-    node['datadog']['agent_version']['windows']
-  else
-    node['datadog']['agent_version']
-  end
+dd_agent_version = Chef::Datadog.agent_version(node)
 
-dd_agent6_version =
-  if node['datadog']['agent6_version'].respond_to?(:each_pair)
-    node['datadog']['agent6_version']['windows']
-  else
-    node['datadog']['agent6_version']
-  end
-
-if node['datadog']['agent6']
-  dd_agent_version = dd_agent6_version
-  dd_agent_latest = 'datadog-agent-6-latest.amd64'
+if dd_agent_version.nil?
+  # Use latest
+  agent_major_version = Chef::Datadog.agent_major_version(node)
+  dd_agent_installer_basename = (agent_major_version == 5) ? 'ddagent-cli-latest' : "datadog-agent-#{agent_major_version}-latest.amd64"
 else
-  dd_agent_version = dd_agent5_version
-  # The latest package basename is `ddagent-cli-latest` for '~> 5.12' versions
-  dd_agent_latest = 'ddagent-cli-latest'
+  dd_agent_installer_prefix = (node['datadog']['windows_agent_installer_prefix'] || 'ddagent-cli')
+  dd_agent_installer_basename = "#{dd_agent_installer_prefix}-#{dd_agent_version}"
 end
 
-# If a different file prefix is specified, use that:
-dd_agent_installer_prefix = node['datadog']['windows_agent_installer_prefix'] ? node['datadog']['windows_agent_installer_prefix'] : 'ddagent-cli'
-
-# If no version is specified, select the latest package.
-dd_agent_installer_basename = dd_agent_version ? "#{dd_agent_installer_prefix}-#{dd_agent_version}" : dd_agent_latest
 temp_file_basename = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli')
 temp_fix_file = ::File.join(Chef::Config[:file_cache_path], 'fix_6_14.ps1')
 
@@ -138,7 +121,7 @@ windows_package 'Datadog Agent' do # ~FC009
   not_if do
     require 'digest'
 
-    unsafe = unsafe_hashsums.include? Digest::SHA256.file(temp_file).hexdigest
+    unsafe = File.file?(temp_file) && unsafe_hashsums.include?(Digest::SHA256.file(temp_file).hexdigest)
     Chef::Log.warn("\n#{fix_message}\nContinuing without installing Datadog Agent.") if unsafe
 
     unsafe
