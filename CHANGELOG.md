@@ -1,6 +1,10 @@
 Changes
 =======
 
+# 3.5.1 / 2019-12-18
+
+* [BUGFIX] Create check `.d` directory if it doesn't exist. See [#670][] [@albertvaka][]
+
 # 3.5.0 / 2019-12-17
 
 * [FEATURE] Allow integrations to have multiple configurations by creating the default configuration into a `.d` folder. See [#666][] [@kbogtob][]
@@ -801,6 +805,9 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#654]: https://github.com/DataDog/chef-datadog/issues/654
 [#656]: https://github.com/DataDog/chef-datadog/issues/656
 [#657]: https://github.com/DataDog/chef-datadog/issues/657
+[#666]: https://github.com/DataDog/chef-datadog/issues/666
+[#667]: https://github.com/DataDog/chef-datadog/issues/667
+[#670]: https://github.com/DataDog/chef-datadog/issues/670
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@BrentOnRails]: https://github.com/BrentOnRails
@@ -885,6 +892,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@jtimberman]: https://github.com/jtimberman
 [@juliandunn]: https://github.com/juliandunn
 [@jvrplmlmn]: https://github.com/jvrplmlmn
+[@kbogtob]: https://github.com/kbogtob
 [@kevinconaway]: https://github.com/kevinconaway
 [@khouse]: https://github.com/khouse
 [@kindlyseth]: https://github.com/kindlyseth
