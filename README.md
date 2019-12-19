@@ -445,3 +445,82 @@ their `CHANGELOG.md` file in the [integrations-core repository](https://github.c
 **Note for Chef Windows users**: as the datadog-agent binary available on the
 node is used by this resource, the chef-client must have read access to the
 `datadog.yaml` file.
+
+
+Development
+===========
+
+To contribute, you will have to follow the contribution guide in [CONTRIBUTING.md](./CONTRIBUTING.md).
+
+### Dependencies
+
+First, you should use [bundler](https://bundler.io) and the provided Gemfile to install the development and release dependencies.
+
+After having installed bundler, you can run the following command to install gem in a vendored folder:
+
+```bash
+bundle install --path .bundle
+```
+
+### Testing
+
+This project uses [rspec](https://rspec.info/) as its unit tests engine. It uses the related `chefspec` gem to abstract the chef logic. Some Chef specs can fail if you don't use the right version of Chef so be careful to use the one pinned in the Gemfile. To run unit tests, you can use:
+
+```bash
+bundle exec rspec
+```
+
+### Integration testing
+
+This project uses [kitchen](https://kitchen.ci/) as its integration tests engine. To really verify integration tests, you should have [vagrant](https://www.vagrantup.com/) installed on your machine.
+
+Kitchen allows you to test specific recipes described in [kitchen.yml](./kitchen.yml) across all platforms and versions that are also described in the same file. Each combination of recipe x platform x version is a test target.
+
+To list available targets, you can use the `list` command:
+
+```bash
+bundle exec kitchen list
+```
+
+To test a specific target, you can run:
+
+```bash
+bundle exec kitchen test <target>
+```
+
+So for example, if you want to test the CouchDB monitor on Ubuntu 16.04, you can run:
+
+```bash
+bundle exec kitchen test datadog-couchdb-ubuntu-1604-15
+```
+
+As there is a CouchDB recipe described in the `kitchen.yml`, and an Ubuntu platform with the 16.04 version.
+
+More information about kitchen on its [Getting Started](https://kitchen.ci/docs/getting-started/introduction/).
+
+### Development loop
+
+To develop some fixes or some features, the easiest way is to work on the platform and version of your choice, setting the machine up with the `create` command and applying the recipe with the `converge` command. If you want to explore the machine and try different things, you can also login into the machine with the `login` command.
+
+Please note that the `login` command only works on Linux & OSX and that you will have to connect to the VM through Virtual Box's interface on Windows. (Or via putty or similar ssh client)
+
+N.B.: The credentials of the created virtual machines are login `vagrant`, password `vagrant`.
+
+```bash
+# Create the relevant vagrant virtual machine
+bundle exec kitchen create datadog-couchdb-ubuntu-1604-15
+
+# Converge to test your recipe
+bundle exec kitchen converge datadog-couchdb-ubuntu-1604-15
+
+# Login to your machine to check stuff
+bundle exec kitchen login datadog-couchdb-ubuntu-1604-15
+
+# Verify the integration tests for your machine
+bundle exec kitchen verify datadog-couchdb-ubuntu-1604-15
+
+# Clean your machine
+bundle exec kitchen destroy datadog-couchdb-ubuntu-1604-15
+```
+
+It is advised that you work in TDD and that you write tests before making changes so that developing your feature or fix is just making tests pass.
