@@ -422,7 +422,7 @@ default['datadog']['autorestart'] = false
 
 # Run the agent in developer mode
 # Agent v5 only.
-default['datadog']['developer_mode']  = false
+default['datadog']['developer_mode'] = false
 
 # Enable profiling in developer mode
 # Agent v5 only.
