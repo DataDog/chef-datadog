@@ -422,7 +422,11 @@ default['datadog']['autorestart'] = false
 
 # Run the agent in developer mode
 # Agent v5 only.
-default['datadog']['developer_mode'] = false
+default['datadog']['developer_mode']  = false
+
+# Enable profiling in developer mode
+# Agent v5 only.
+default['datadog']['allow_profiling'] = false
 
 # How often you want the agent to collect data, in seconds. Any value between
 # 15 and 60 is a reasonable interval.
