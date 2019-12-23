@@ -32,15 +32,13 @@ default['datadog']['application_key'] = nil
 default['datadog']['agent_major_version'] = nil # nil to autodetect based on 'agent_version'
 
 # Agent Version
-# Default of `nil` will install latest version. On Windows, this will also upgrade to latest
-# This attribute accepts either a `string` or `hash` with the key as platform_name and value of package version
-# In the case of fedora and amazon linux, use platform_name of rhel
+# Default of `nil` will install latest version. On Windows, this will also upgrade to latest.
+# This attribute takes a `string` with a version number. For compatibiliy reasons it can also take a
+# hash with the platform_name as key and the version as value.
+# Starting with version 4.1.0, you no longer need to pass the "1:" prefix and "-1" suffix in versions
+# for Debian-based and SUSE.
 # Example:
-# default['datadog']['agent_version'] = {
-#  'rhel' => '5.9.0-1',
-#  'windows' => '5.9.0',
-#  'debian' => '1:5.9.0-1'
-# }
+# default['datadog']['agent_version'] = '7.16.0'
 default['datadog']['agent_version'] = nil # nil to install latest
 
 # Allow override with `upgrade` to get latest (Linux only)
