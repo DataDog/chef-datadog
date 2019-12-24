@@ -12,9 +12,9 @@ class Chef
           end
           dd_agent_version = dd_agent_version[platform_family]
         end
-        if node['platform_family'] == 'suse' || node['platform_family'] == 'debian' then
+        if node['platform_family'] == 'suse' || node['platform_family'] == 'debian'
           if !dd_agent_version.nil? && dd_agent_version.match(/^[0-9]+\.[0-9]+\.[0-9]+((?:~|-)[^0-9\s-]+[^-\s]*)?$/)
-            dd_agent_version = "1:" + dd_agent_version + "-1"
+            dd_agent_version = '1:' + dd_agent_version + '-1'
           end
         end
         dd_agent_version
