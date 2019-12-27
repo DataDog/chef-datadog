@@ -6,15 +6,30 @@ jobs:
       KITCHEN_LOCAL_YAML: kitchen.docker.yml
     steps:
       - checkout
-      - run: curl -L https://www.chef.io/chef/install.sh | sudo bash -s -- -P chefdk -v 3.8
-      - run: chef gem install kitchen-docker -v '~> 2.3.0'
-      - run: eval "$(/opt/chefdk/bin/chef shell-init bash)"
-      - run: chef --version
-      - run: chef gem query -d chefspec rubocop foodcritic rake kitchen-docker
       - run:
-          command: chef exec rake circle
+          name: Set Ruby version to 2.5.1
+          command: |
+                    rvm install 2.5.1
+                    echo . $(rvm 2.5.1 do rvm env --path) >> $BASH_ENV
+      - run:
+          name: Install bundler
+          command: gem install bundler:1.17.3
+      - run:
+          name: Check bundler version
+          command: bundle --version
+      - run:
+          name: Install dependencies with bundler
+          command: bundle install --path .bundle --without release
+      - run:
+          name: Showing gems versions in bundle
+          command: bundle list
+      - run:
+          name: Run specs
+          command: bundle exec rake
+      - run:
+          name: Execute Kitchen tests
+          command: bundle exec rake circle
           no_output_timeout: 900
-
 
 workflows:
   version: 2
