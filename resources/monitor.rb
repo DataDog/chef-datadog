@@ -18,9 +18,19 @@ action :add do
 
   if Chef::Datadog.agent_major_version(node) != 5
     directory ::File.join(yaml_dir, "#{new_resource.name}.d") do
-      owner 'dd-agent'
-      group 'dd-agent'
-      mode '755'
+      if node['platform_family'] == 'windows'
+        if Chef::Datadog.agent_major_version(node) > 5
+          inherits true # Agent 6/7 rely on inheritance being enabled. Reset it in case it was disabled when installing Agent 5.
+        else
+          owner 'Administrators'
+          rights :full_control, 'Administrators'
+          inherits false
+        end
+      else
+        owner 'dd-agent'
+        group 'dd-agent'
+        mode '755'
+      end
     end
     yaml_file = ::File.join(yaml_dir, "#{new_resource.name}.d", 'conf.yaml')
   else
