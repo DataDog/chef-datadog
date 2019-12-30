@@ -1,9 +1,5 @@
 source 'https://rubygems.org'
 
-group :release do
-  gem 'emeril'
-end
-
 gem 'rake'
 gem 'chef', '= 14.10.9'
 gem 'foodcritic', '~> 11.4.0'
