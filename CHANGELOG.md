@@ -1,6 +1,10 @@
 Changes
 =======
 
+# 4.0.1 / 2019-12-31
+
+* [BUGFIX] Fix issues with permissions during monitor directory creation on windows
+
 # 4.0.0 / 2019-12-18
 
 ## Breaking changes
