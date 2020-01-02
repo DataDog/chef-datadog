@@ -1,6 +1,5 @@
 #!/usr/bin/env rake
 
-require 'emeril/rake' unless ENV['CI']
 require 'fileutils'
 require 'foodcritic'
 require 'kitchen/rake_tasks'
@@ -8,6 +7,8 @@ require 'rake/clean'
 require 'rspec/core/rake_task'
 require 'cookstyle'
 require 'rubocop/rake_task'
+
+Rake.add_rakelib 'tasks'
 
 task :default => %i[
   style
