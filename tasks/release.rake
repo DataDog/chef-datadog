@@ -15,14 +15,27 @@ def load_metadata
   end
 end
 
+def clone_in_tmp_dir
+  Dir.mktmpdir do |folder|
+    dest_path = File.join(folder, 'cookbook')
+    unless system('git', 'clone', COOKBOOK_PATH, dest_path)
+      raise "Couldn't clone project into `#{dest_path}`"
+    end
+
+    yield folder
+  end
+end
+
 desc 'Release the cookbook on the Chef supermarket'
 task :release, :key_path do
   Chef::Knife.new.configure_chef
   metadata = load_metadata
 
-  publisher = Chef::Knife::SupermarketShare.new
-  publisher.config[:cookbook_path] = File.join(COOKBOOK_PATH, '..')
-  publisher.config[:supermarket_site] = SUPERMARKET_URL
-  publisher.name_args = [metadata.name, metadata.category || 'Other']
-  publisher.run
+  clone_in_tmp_dir do |cookbook_path|
+    publisher = Chef::Knife::SupermarketShare.new
+    publisher.config[:cookbook_path] = cookbook_path
+    publisher.config[:supermarket_site] = SUPERMARKET_URL
+    publisher.name_args = [metadata.name, metadata.category || 'Other']
+    publisher.run
+  end
 end
