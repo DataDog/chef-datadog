@@ -1271,4 +1271,21 @@ describe 'datadog::dd-agent' do
       end
     end
   end
+
+  context 'add prefix and suffix to version number in debian' do
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        platform: 'ubuntu',
+        version: '14.04'
+      ) do |node|
+        node.normal['datadog'] = {
+          'api_key' => 'somethingnotnil',
+          'agent_version' => '6.16.0'
+        }
+      end.converge described_recipe
+    end
+    it 'installs the full version' do
+      expect(chef_run).to install_apt_package('datadog-agent').with_version('1:6.16.0-1')
+    end
+  end
 end

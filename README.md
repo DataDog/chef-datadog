@@ -95,7 +95,7 @@ If you had an Agent 6 installation, the same configuration will now look like th
 default_attributes(
   'datadog' => {
     'agent_major_version' => 6,          # was 'agent6' => true,
-    'agent_version' => '1:6.10.0-1',     # was 'agent6_version' => '1:6.10.0-1',
+    'agent_version' => '6.10.0',         # was 'agent6_version' => '6.10.0',
     'agent_package_action' => 'install', # was 'agent6_package_action' => 'install',
   }
 )
@@ -181,7 +181,7 @@ To upgrade from an already installed Agent v6 to Agent v7, you'll have to either
   default_attributes(
     'datadog' => {
       'agent_major_version' => 7,
-      'agent_version' => '1:7.15.0-1',
+      'agent_version' => '7.15.0',
       'agent_package_action' => 'install',
     }
   )
@@ -197,7 +197,7 @@ You will need to indicate that you want to setup an Agent v6 instead of v7, pin 
   default_attributes(
     'datadog' => {
       'agent_major_version' => 6,
-      'agent_version' => '1:6.10.0-1',
+      'agent_version' => '6.10.0',
       'agent_allow_downgrade' => true
     }
   )
