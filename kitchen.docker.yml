@@ -15,21 +15,35 @@ platforms:
   - name: centos-6.6
     driver_config:
       require_chef_omnibus: 14.12
+      image: 'datadog/docker-library:chef_kitchen_systemd_centos_6'
+      run_command: /root/start.sh
   - name: centos-7.7
     driver_config:
       require_chef_omnibus: 14.12
+      image: 'datadog/docker-library:chef_kitchen_systemd_centos_7'
+      run_command: /root/start.sh
   - name: debian-8.11
     driver_config:
       require_chef_omnibus: 14.12
 
 suites:
-- name: dd-agent-handler
+<%
+  agent_major_versions = %w(
+    5
+    6
+    7
+  )
+
+  agent_major_versions.each do |agent_major_version|
+%>
+- name: dd-agent-handler<%= agent_major_version %>
   run_list:
-    - recipe[datadog::dd-handler]
     - recipe[datadog::dd-agent]
+    - recipe[datadog::dd-handler]
   attributes:
     datadog:
-      # TODO(remy): run those tests with Agent v6 recipe.
-      agent_major_version: 5
+      agent_major_version: <%= agent_major_version %>
       api_key: somenonnullapikeythats32charlong
       application_key: alsonotnil
+      chef_handler_enable: false
+<% end %>
