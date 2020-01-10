@@ -17,6 +17,9 @@ platforms:
       require_chef_omnibus: 14.12
       image: 'datadog/docker-library:chef_kitchen_systemd_centos_6'
       run_command: /root/start.sh
+    attributes:
+      datadog:
+        service_provider: Systemd
   - name: centos-7.7
     driver_config:
       require_chef_omnibus: 14.12
