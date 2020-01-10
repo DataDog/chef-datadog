@@ -131,6 +131,14 @@ if Chef::Datadog.agent_major_version(node) > 5 &&
   service_provider = Chef::Provider::Service::Upstart
 end
 
+if node['datadog']['service_provider']
+  specified_provider = node['datadog']['service_provider']
+
+  if Chef::Provider::Service.constants.include?(specified_provider.to_sym)
+    service_provider = Chef::Provider::Service.const_get(specified_provider)
+  end
+end
+
 service_name = is_windows ? 'DatadogAgent' : 'datadog-agent'
 
 service 'datadog-agent' do
