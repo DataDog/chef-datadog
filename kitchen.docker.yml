@@ -48,7 +48,7 @@ suites:
       agent_major_version: <%= agent_major_version %>
       api_key: somenonnullapikeythats32charlong
       application_key: alsonotnil
-      chef_handler_enable: false
+      chef_handler_enable: true
   <% if %w(6 7).include?(agent_major_version) %>
   excludes:
     - ubuntu-14.04
