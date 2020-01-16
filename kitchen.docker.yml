@@ -49,4 +49,9 @@ suites:
       api_key: somenonnullapikeythats32charlong
       application_key: alsonotnil
       chef_handler_enable: false
+  <% if %w(6 7).include?(agent_major_version) %>
+  excludes:
+    - ubuntu-14.04
+    - debian-8.11
+  <% end %>
 <% end %>
