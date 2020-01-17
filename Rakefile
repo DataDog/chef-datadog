@@ -96,19 +96,11 @@ task :circle do
   end
 
   def command
-    commands = []
-
-    kitchen_config.platforms.sort_by(&:name).each_with_index do |platform, index|
+    kitchen_config.instances.sort_by(&:name).each_with_object([]).with_index do |(instance, commands), index|
       next unless index % total_workers == current_worker
-      # Escape the platform name to somehting the CLI will understand.
-      # TODO: This could likely be pulled from kitchen_config.instances somehow
-      name = platform.name.delete('.')
 
-      # Scope the suites to only execute against the Agent+handler installer suites.
-      commands.push "kitchen verify dd-agent-handler-#{name}"
-    end
-
-    commands.join(' && ')
+      commands << "kitchen verify #{instance}"
+    end.join(' && ')
   end
 
   sh command unless command.empty?
