@@ -1,6 +1,10 @@
 Changes
 =======
 
+# 4.1.0 / 2020-01-21
+
+* [FEATURE] Automatically format the agent version on debianoids so that every OS can be configured with the same format for the agent version
+
 # 4.0.1 / 2019-12-31
 
 * [BUGFIX] Fix issues with permissions during monitor directory creation on windows
