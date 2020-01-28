@@ -1,13 +1,17 @@
 Changes
 =======
 
+# 4.1.1 / 2020-01-21
+
+* [BUGFIX] Fix version formating for Linuxes that use yum. See [#685][] [@albertvaka][]
+
 # 4.1.0 / 2020-01-21
 
-* [FEATURE] Automatically format the agent version on debianoids so that every OS can be configured with the same format for the agent version
+* [FEATURE] Automatically format the agent version on debianoids so that every OS can be configured with the same format for the agent version. See [#675][] [@albertvaka][]
 
 # 4.0.1 / 2019-12-31
 
-* [BUGFIX] Fix issues with permissions during monitor directory creation on windows
+* [BUGFIX] Fix issues with permissions during monitor directory creation on windows. See [#678][] [@truthbk][]
 
 # 4.0.0 / 2019-12-18
 
@@ -831,6 +835,9 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#666]: https://github.com/DataDog/chef-datadog/issues/666
 [#667]: https://github.com/DataDog/chef-datadog/issues/667
 [#670]: https://github.com/DataDog/chef-datadog/issues/670
+[#675]: https://github.com/DataDog/chef-datadog/issues/675
+[#678]: https://github.com/DataDog/chef-datadog/issues/678
+[#685]: https://github.com/DataDog/chef-datadog/issues/685
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@BrentOnRails]: https://github.com/BrentOnRails
