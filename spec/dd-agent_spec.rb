@@ -1288,4 +1288,21 @@ describe 'datadog::dd-agent' do
       expect(chef_run).to install_apt_package('datadog-agent').with_version('1:6.16.0-1')
     end
   end
+
+  context 'add suffix to version number in fedora' do
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        platform: 'fedora',
+        version: '27'
+      ) do |node|
+        node.normal['datadog'] = {
+          'api_key' => 'somethingnotnil',
+          'agent_version' => '6.16.0'
+        }
+      end.converge described_recipe
+    end
+    it 'installs the full version' do
+      expect(chef_run).to install_yum_package('datadog-agent').with_version('6.16.0-1')
+    end
+  end
 end
