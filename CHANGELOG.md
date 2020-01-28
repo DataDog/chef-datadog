@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 4.1.1 / 2020-01-21
+# 4.1.1 / 2020-01-28
 
 * [BUGFIX] Fix version formating for Linuxes that use yum. See [#685][] [@albertvaka][]
 
