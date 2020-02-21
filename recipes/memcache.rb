@@ -10,7 +10,11 @@ include_recipe 'datadog::dd-agent'
 #                                    {
 #                                      "url" => "localhost",
 #                                      "port" => "11211",
-#                                      "tags" => ["prod", "aws"]
+#                                      "tags" => ["prod", "aws"],
+#                                      "options" => [
+#                                        "items: false",
+#                                        "slabs: false"
+#                                      ]
 #                                    }
 #                                   ]
 
