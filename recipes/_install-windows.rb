@@ -46,8 +46,8 @@ else
   # Since 6.11.0, the core and APM/trace components of the Windows Agent run under
   # a specific user instead of LOCAL_SYSTEM, check whether the user has provided
   # custom credentials and use them if that's the case.
-  install_options.concat(' DDAGENTUSER_NAME=').concat(Chef::Datadog.ddagentuser_name(node)) if Chef::Datadog.ddagentuser_name(node)
-  install_options.concat(' DDAGENTUSER_PASSWORD=').concat(Chef::Datadog.ddagentuser_password(node)) if Chef::Datadog.ddagentuser_password(node)
+  install_options.concat(' DDAGENTUSER_NAME=%DDAGENTUSER_NAME%')
+  install_options.concat(' DDAGENTUSER_PASSWORD=%DDAGENTUSER_PASSWORD%')
 end
 
 package 'Datadog Agent removal' do
@@ -104,6 +104,16 @@ powershell_script 'datadog_6.14.x_fix' do
   notifies :remove, 'package[Datadog Agent removal]', :immediately
 end
 
+windows_env 'DDAGENTUSER_NAME' do
+  value "".concat(Chef::Datadog.ddagentuser_name(node)) if Chef::Datadog.ddagentuser_name(node)
+  sensitive true
+end
+
+windows_env 'DDAGENTUSER_PASSWORD' do
+  value "".concat(Chef::Datadog.ddagentuser_password(node)) if Chef::Datadog.ddagentuser_password(node)
+  sensitive true
+end
+
 # Install the package
 windows_package 'Datadog Agent' do # ~FC009
   source temp_file
@@ -111,7 +121,6 @@ windows_package 'Datadog Agent' do # ~FC009
   options install_options
   timeout node['datadog']['windows_msi_timeout']
   action :install
-  sensitive true
   # Before 3.0.0, we adviced users to use the windows cookbook ~> 1.38.0,
   # we should probably keep the compatibilty for some time.
   if respond_to?(:returns)
@@ -127,4 +136,12 @@ windows_package 'Datadog Agent' do # ~FC009
 
     unsafe
   end
+end
+
+windows_env 'DDAGENTUSER_NAME' do
+  action :delete
+end
+
+windows_env 'DDAGENTUSER_PASSWORD' do
+  action :delete
 end
