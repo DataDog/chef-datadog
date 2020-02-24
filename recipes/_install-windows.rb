@@ -105,12 +105,12 @@ powershell_script 'datadog_6.14.x_fix' do
 end
 
 windows_env 'DDAGENTUSER_NAME' do
-  value "".concat(Chef::Datadog.ddagentuser_name(node)) if Chef::Datadog.ddagentuser_name(node)
+  value Chef::Datadog.ddagentuser_name(node) if Chef::Datadog.ddagentuser_name(node)
   sensitive true
 end
 
 windows_env 'DDAGENTUSER_PASSWORD' do
-  value "".concat(Chef::Datadog.ddagentuser_password(node)) if Chef::Datadog.ddagentuser_password(node)
+  value Chef::Datadog.ddagentuser_password(node) if Chef::Datadog.ddagentuser_password(node)
   sensitive true
 end
 
