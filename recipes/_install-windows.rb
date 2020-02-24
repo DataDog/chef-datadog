@@ -34,12 +34,12 @@ temp_fix_file = ::File.join(Chef::Config[:file_cache_path], 'fix_6_14.ps1')
 if node['datadog']['windows_agent_use_exe']
   dd_agent_installer = "#{dd_agent_installer_basename}.exe"
   temp_file = "#{temp_file_basename}.exe"
-  installer_type = :custom
+  resolved_installer_type = :custom
   install_options = '/q'
 else
   dd_agent_installer = "#{dd_agent_installer_basename}.msi"
   temp_file = "#{temp_file_basename}.msi"
-  installer_type = :msi
+  resolved_installer_type = :msi
   # Agent >= 5.12.0 installs per-machine by default, but specifying ALLUSERS=1 shouldn't affect the install
   install_options = '/norestart ALLUSERS=1'
 
@@ -107,7 +107,7 @@ end
 # Install the package
 windows_package 'Datadog Agent' do # ~FC009
   source temp_file
-  installer_type installer_type
+  installer_type resolved_installer_type
   options install_options
   timeout node['datadog']['windows_msi_timeout']
   action :install
