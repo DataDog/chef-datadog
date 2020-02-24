@@ -104,6 +104,10 @@ class Chef
         end
 
         def chef_version_can_uninstall?
+          # Chef versions previous to 14 cannot correctly uninstall the agent
+          # because they cannot correctly fetch the registry keys of 64 bits
+          # applications for uninstallation so we are only using the downgrade
+          # feature on chef >= to 14
           Gem::Requirement.new('>= 14').satisfied_by?(Gem::Version.new(Chef::VERSION))
         end
       end

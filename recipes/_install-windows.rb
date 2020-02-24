@@ -19,8 +19,6 @@
 
 dd_agent_version = Chef::Datadog.agent_version(node)
 
-dd_agent_version = Chef::Datadog.agent_version(node)
-
 if dd_agent_version.nil?
   # Use latest
   agent_major_version = Chef::Datadog.agent_major_version(node)
@@ -68,6 +66,8 @@ unsafe_hashsums = [
 fix_message = 'The file downloaded matches a known unsafe MSI - Agent versions 6.14.0/1 have been blacklisted. please use a different release. '\
         'See http://dtdg.co/win-614-fix'
 
+must_reinstall = Chef::Datadog::WindowsInstallHelpers.must_reinstall?(node)
+
 # Download the installer to a temp location
 remote_file temp_file do
   source node['datadog']['windows_agent_url'] + dd_agent_installer
@@ -87,8 +87,10 @@ remote_file temp_file do
   end unless node['datadog']['windows_blacklist_silent_fail']
 
   # these are notified in order
-  notifies :create, "remote_file[#{temp_fix_file}]", :immediately
-  notifies :run, 'powershell_script[datadog_6.14.x_fix]', :immediately
+  if must_reinstall
+    notifies :create, "remote_file[#{temp_fix_file}]", :immediately
+    notifies :run, 'powershell_script[datadog_6.14.x_fix]', :immediately
+  end
 end
 
 remote_file temp_fix_file do
