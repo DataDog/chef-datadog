@@ -69,5 +69,44 @@ class Chef
         end
       end
     end
+
+    module WindowsInstallHelpers
+      WIN_BIN_PATH = 'C:/Program Files/Datadog/Datadog Agent/bin/agent'.freeze
+
+      class << self
+        def must_reinstall?(node)
+          current_version = fetch_current_version
+          target_version = requested_agent_version(node)
+
+          return false unless chef_version_can_uninstall?
+          return false unless current_version && target_version
+
+          target_version < current_version
+        end
+
+        private
+
+        def fetch_current_version
+          return nil unless File.exist?(WIN_BIN_PATH)
+
+          agent_status = `"#{WIN_BIN_PATH}" status`
+          match_data = agent_status.match(/^Agent \(v(.*)\)/)
+
+          Gem::Version.new(match_data[1]) if match_data
+        end
+
+        def requested_agent_version(node)
+          version = Chef::Datadog.agent_version(node)
+          return nil unless version
+
+          cleaned = version.scan(/\d+\.\d+\.\d+/).first
+          Gem::Version.new(cleaned) if cleaned
+        end
+
+        def chef_version_can_uninstall?
+          Gem::Requirement.new('>= 14').satisfied_by?(Gem::Version.new(Chef::VERSION))
+        end
+      end
+    end
   end
 end

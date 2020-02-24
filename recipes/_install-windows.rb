@@ -19,6 +19,8 @@
 
 dd_agent_version = Chef::Datadog.agent_version(node)
 
+dd_agent_version = Chef::Datadog.agent_version(node)
+
 if dd_agent_version.nil?
   # Use latest
   agent_major_version = Chef::Datadog.agent_major_version(node)
