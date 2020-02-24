@@ -111,6 +111,7 @@ windows_package 'Datadog Agent' do # ~FC009
   options install_options
   timeout node['datadog']['windows_msi_timeout']
   action :install
+  sensitive true
   # Before 3.0.0, we adviced users to use the windows cookbook ~> 1.38.0,
   # we should probably keep the compatibilty for some time.
   if respond_to?(:returns)
