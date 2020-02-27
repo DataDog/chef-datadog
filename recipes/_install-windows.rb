@@ -57,14 +57,14 @@ temp_fix_file = ::File.join(Chef::Config[:file_cache_path], 'fix_6_14.ps1')
 if node['datadog']['windows_agent_use_exe']
   dd_agent_installer = "#{dd_agent_installer_basename}.exe"
   temp_file = "#{temp_file_basename}.exe"
-  installer_type = :custom
+  resolved_installer_type = :custom
   install_options = '/q'
 else
   dd_agent_installer = "#{dd_agent_installer_basename}.msi"
   temp_file = "#{temp_file_basename}.msi"
-  installer_type = :msi
+  resolved_installer_type = :msi
   # Agent >= 5.12.0 installs per-machine by default, but specifying ALLUSERS=1 shouldn't affect the install
-  install_options = '/norestart ALLUSERS=1 /Log C:\\msi.log'
+  install_options = '/norestart ALLUSERS=1'
 
   # Since 6.11.0, the core and APM/trace components of the Windows Agent run under
   # a specific user instead of LOCAL_SYSTEM, check whether the user has provided
@@ -89,6 +89,8 @@ unsafe_hashsums = [
 fix_message = 'The file downloaded matches a known unsafe MSI - Agent versions 6.14.0/1 have been blacklisted. please use a different release. '\
         'See http://dtdg.co/win-614-fix'
 
+must_reinstall = Chef::Datadog::WindowsInstallHelpers.must_reinstall?(node)
+
 # Download the installer to a temp location
 remote_file temp_file do
   source node['datadog']['windows_agent_url'] + dd_agent_installer
@@ -108,8 +110,10 @@ remote_file temp_file do
   end unless node['datadog']['windows_blacklist_silent_fail']
 
   # these are notified in order
-  notifies :create, "remote_file[#{temp_fix_file}]", :immediately
-  notifies :run, 'powershell_script[datadog_6.14.x_fix]', :immediately
+  if must_reinstall
+    notifies :create, "remote_file[#{temp_fix_file}]", :immediately
+    notifies :run, 'powershell_script[datadog_6.14.x_fix]', :immediately
+  end
 end
 
 remote_file temp_fix_file do
@@ -140,7 +144,7 @@ end
 # Install the package
 windows_package 'Datadog Agent' do # ~FC009
   source temp_file
-  installer_type installer_type
+  installer_type resolved_installer_type
   options install_options
   timeout node['datadog']['windows_msi_timeout']
   action :install
