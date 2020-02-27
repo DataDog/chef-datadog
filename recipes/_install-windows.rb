@@ -17,6 +17,19 @@
 # limitations under the License.
 #
 
+Chef.event_handler do
+  on :run_failed do
+    Windows::Helper.new.do_cleanup(
+      Chef.run_context
+    )
+  end
+  on :run_completed do
+    Windows::Helper.new.do_cleanup(
+      Chef.run_context
+    )
+  end
+end
+
 dd_agent_version = Chef::Datadog.agent_version(node)
 
 if dd_agent_version.nil?
@@ -140,12 +153,4 @@ windows_package 'Datadog Agent' do # ~FC009
 
     unsafe
   end
-end
-
-windows_env 'DDAGENTUSER_NAME' do
-  action :delete
-end
-
-windows_env 'DDAGENTUSER_PASSWORD' do
-  action :delete
 end
