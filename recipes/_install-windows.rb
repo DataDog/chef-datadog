@@ -17,13 +17,23 @@
 # limitations under the License.
 #
 
+include_recipe 'chef_handler'
+
+module Windows
+  class Helper
+    def do_cleanup(context)
+      Chef::Log.info 'Windows environment vars cleanup started.'
+      resource = context.resource_collection.lookup("windows_env[DDAGENTUSER_NAME]")
+      resource.run_action(:delete) if resource
+      resource = context.resource_collection.lookup("windows_env[DDAGENTUSER_PASSWORD]")
+      resource.run_action(:delete) if resource
+      Chef::Log.info 'Windows environment vars cleanup finished.'
+    end
+  end
+end
+
 Chef.event_handler do
   on :run_failed do
-    Windows::Helper.new.do_cleanup(
-      Chef.run_context
-    )
-  end
-  on :run_completed do
     Windows::Helper.new.do_cleanup(
       Chef.run_context
     )
@@ -153,4 +163,14 @@ windows_package 'Datadog Agent' do # ~FC009
 
     unsafe
   end
+end
+
+windows_env 'DDAGENTUSER_NAME' do
+  action :delete
+  sensitive true
+end
+
+windows_env 'DDAGENTUSER_PASSWORD' do
+  action :delete
+  sensitive true
 end
