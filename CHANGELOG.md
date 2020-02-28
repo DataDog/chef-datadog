@@ -6,6 +6,7 @@ Changes
 * [FEATURE] Automatically uninstall and then install the Agent only when trying to downgrade agent version on Windows. See [#690][] [@kbogtob][]
 * [BUGFIX] Set Windows installer as sensitive resource and use env var to specify Windows user credentials to avoid leaks of credentials in logs. See [#691][] and [#694][] [@julien-lebot][]
 * [FEATURE] Support tags feature on directory integration. See [#687][] [@dimier]
+* [FEATURE] Support options feature on memcache integration. See [#689][] [@mikelaning]
 
 # 4.1.1 / 2020-01-28
 
@@ -845,6 +846,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#678]: https://github.com/DataDog/chef-datadog/issues/678
 [#685]: https://github.com/DataDog/chef-datadog/issues/685
 [#687]: https://github.com/DataDog/chef-datadog/issues/687
+[#689]: https://github.com/DataDog/chef-datadog/issues/689
 [#690]: https://github.com/DataDog/chef-datadog/issues/690
 [#691]: https://github.com/DataDog/chef-datadog/issues/691
 [#694]: https://github.com/DataDog/chef-datadog/issues/694
@@ -946,6 +948,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@mattrobenolt]: https://github.com/mattrobenolt
 [@mfischer-zd]: https://github.com/mfischer-zd
 [@mhebbar1]: https://github.com/mhebbar1
+[@mikelaning]: https://github.com/mikelaning
 [@miketheman]: https://github.com/miketheman
 [@mirceal]: https://github.com/mirceal
 [@mlcooper]: https://github.com/mlcooper
