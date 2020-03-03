@@ -1,6 +1,10 @@
 Changes
 =======
 
+# 4.2.1 / 2020-03-03
+
+* [REVERT] Reverted PR #691 and #694 in order to allow users to install Agent on Windows without credentials. See [#699][] [@kbogtob][]
+
 # 4.2.0 / 2020-02-27 - KNOWN BUG
 
 * [FEATURE] Automatically uninstall and then install the Agent only when trying to downgrade agent version on Windows. See [#690][] [@kbogtob][]
@@ -850,6 +854,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#690]: https://github.com/DataDog/chef-datadog/issues/690
 [#691]: https://github.com/DataDog/chef-datadog/issues/691
 [#694]: https://github.com/DataDog/chef-datadog/issues/694
+[#699]: https://github.com/DataDog/chef-datadog/issues/699
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@BrentOnRails]: https://github.com/BrentOnRails
