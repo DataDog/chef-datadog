@@ -1,51 +1,35 @@
-Where to Find the Code
-======================
-To submit issues and patches please visit https://github.com/DataDog/chef-datadog.
-The code is licensed under the Apache License 2.0 (see  LICENSE for details).
+# Datadog Chef Cookbook
 
-[![Chef cookbook](https://img.shields.io/cookbook/v/datadog.svg?style=flat)](https://github.com/DataDog/chef-datadog)
-[![Build Status](https://img.shields.io/circleci/build/gh/DataDog/chef-datadog.svg)](https://circleci.com/gh/DataDog/chef-datadog)
-[![GitHub forks](https://img.shields.io/github/forks/DataDog/chef-datadog.svg)](https://github.com/DataDog/chef-datadog/network)
-[![GitHub stars](https://img.shields.io/github/stars/DataDog/chef-datadog.svg)](https://github.com/DataDog/chef-datadog/stargazers)
-
-Datadog Cookbook
-================
-
-Chef recipes to deploy Datadog's components and configuration automatically.
-
-This cookbook includes support for:
+The Datadog Chef recipes are used to deploy Datadog's components and configuration automatically. This cookbook includes support for:
 
 * Datadog Agent version 7.x (default)
 * Datadog Agent version 6.x
 * Datadog Agent version 5.x
+* Log collection with Agent v6/v7 (enable in [default.rb][1])
 
-Log collection is available with Agent v6/v7, please refer to the [inline docs](https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb#L401-L406) to enable it.
+**Note**: This page may refer to features that are not available for your selected version. Check the README of the
+git tag or gem version for your version's documentation.
 
-*Note: This README may refer to features that are not released yet. Please check the README of the
-git tag/the gem version you're using for your version's documentation*
+## Setup
 
-Requirements
-============
+### Requirements
 
-- chef-client >= 12.7
+The Datadog Chef cookbook is compatible with `chef-client` >= 12.7. If you need support for Chef < 12.7, use a [release 2.x of the cookbook][2]. See the [CHANGELOG][3] for more info.
 
-If you need support for Chef < 12.7, please consider using a [release 2.x of the cookbook](https://github.com/DataDog/chef-datadog/releases/tag/v2.18.0).
-See the CHANGELOG for more info.
+#### Platforms
 
-Platforms
----------
+The following platforms are supported:
 
 * Amazon Linux
 * CentOS
 * Debian
-* RedHat (RHEL 8 requires chef >= 15)
+* RedHat (RHEL 8 requires Chef >= 15)
 * Scientific Linux
 * Ubuntu
 * Windows
-* SUSE (requires chef >= 13.3)
+* SUSE (requires Chef >= 13.3)
 
-Cookbooks
----------
+#### Cookbooks
 
 The following Opscode cookbooks are dependencies:
 
@@ -53,39 +37,91 @@ The following Opscode cookbooks are dependencies:
 * `chef_handler`
 * `yum`
 
-Version `7.1` or later of the `apt` cookbook is needed to install the Agent on Debian 9 or later.
+**Note**: `apt` cookbook v7.1+ is needed to install the Agent on Debian 9+.
 
-### Chef support
+#### Chef support
 
-**Chef 13 users**
+* **Chef 12 users**: Depending on your version of Chef 12 version, you may have to add some extra dependency constraints:
 
-- If you're using Chef 13 and chef_handler 1.x, you may have trouble using the
-dd-handler recipe. The known workaround is to update your dependency to `chef_handler >= 2.1`.
+    ```ruby
+    # Chef < 12.14
+    depends 'yum', '< 5.0'
+    ```
 
-**Chef 14 and 15 users**:
+    ```ruby
+    # Chef < 12.9
+    depends 'apt', '< 6.0.0'
+    depends 'yum', '< 5.0'
+    ```
 
-- In order to support Chef 12 and 13, the `datadog` cookbook has a dependency to
-the `chef_handler` cookbook which is now shipped as a resource in Chef 14.
-Unfortunately, it will display a deprecation message to Chef 14 and 15 users.
+* **Chef 13 users**: For Chef 13 and `chef_handler` 1.x, you may have trouble using the dd-handler recipe. The known workaround is to update your dependency to `chef_handler` >= 2.1.
+
+* **Chef 14 and 15 users**: To support Chef 12 and 13, the `datadog` cookbook has a dependency to the `chef_handler` cookbook, which is shipped as a resource in Chef 14. Unfortunately, it displays a deprecation message to Chef 14 and 15 users.
+
+### Installation
+
+1. Add the cookbook to your Chef Server, either by installing with knife or by adding it to your Berksfile:
+    ```
+    cookbook 'datadog', '~> 4.0.0'
+    ```
+2. Choose a method to add your [Datadog API Key][4]:
+  * As a node attribute via an `environment` or `role`, or
+  * As a node attribute by declaring it in another cookbook at a higher precedence level, or
+  * in the node `run_state` by setting `node.run_state['datadog']['api_key']` in another cookbook preceding `datadog`'s recipes in the run_list. This approach has the benefit of not storing the credential in clear text on the Chef Server.
+3. Create an 'application key' for `chef_handler` [here](https://app.datadoghq.com/account/settings#api), and add it as a node attribute or in the run state, as in Step #2.
+
+   NB: if you're using the run state to store the api and app keys you need to set them at compile time before `datadog::dd-handler` in the run list.
+
+4. Enable Agent integrations by including their recipes and configuration details in your role’s run-list and attributes.
+   Note that you can also create additional integrations recipes by using the `datadog_monitor` resource.
+5. Associate the recipes with the desired `roles`, i.e. "role:chef-client" should contain "datadog::dd-handler" and a "role:base" should start the agent with "datadog::dd-agent". Here's an example role with both recipes plus the MongoDB integration enabled.
+    ```ruby
+    name 'example'
+    description 'Example role using DataDog'
+
+    default_attributes(
+      'datadog' => {
+        'agent_major_version' => 7,
+        'api_key' => 'api_key',
+        'application_key' => 'app_key',
+        'mongo' => {
+          'instances' => [
+            {'host' => 'localhost', 'port' => '27017'}
+          ]
+        }
+      }
+    )
+
+    run_list %w(
+      recipe[datadog::dd-agent]
+      recipe[datadog::dd-handler]
+      recipe[datadog::mongo]
+    )
+    ```
+
+6. Wait until `chef-client` runs on the target node (or trigger chef-client manually if you're impatient)
+
+**Note**: `data_bags` are not used in this recipe because it is unlikely to have more than one API key with only one application key.
+
+### Upgrading
 
 Upgrading to version 4.x of the cookbook
-========================================
 
 Some attributes have changed their names from version 3.x to 4.x of this cookbook. Use this reference table to update your configuration:
 
-| Action | Cookbook 3.x  | Cookbook 4.x  |
-|---|---|---|
-| Install Agent 7.x | Not supported |  `'agent_major_version' => 7` |
-| Install Agent 6.x | `'agent6' => true`  |  `'agent_major_version' => 6` |
-| Install Agent 5.x | `'agent6' => false`  |  `'agent_major_version' => 5` |
-| Pin agent version | `'agent_version'` or `'agent6_version'`  |  `'agent_version'` for all versions |
-| Change package_action | `'agent_package_action'` or `'agent6_package_action'`  |  `'agent_package_action'` for all versions |
-| Change APT repo URL | `'aptrepo'` or `'agent6_aptrepo'`  |  `'aptrepo'` for all versions |
-| Change APT repo dist | `'aptrepo_dist'` or `'agent6_aptrepo_dist'`  |  `'aptrepo_dist'` for all versions |
-| Change YUM repo | `'yumrepo'` or `'agent6_yumrepo'` |  `'yumrepo'` for all versions |
-| Change SUSE repo | `'yumrepo_suse'` or `'agent6_yumrepo_suse'` |  `'yumrepo_suse'` for all versions |
+| Action                | Cookbook 3.x                                          | Cookbook 4.x                              |
+|-----------------------|-------------------------------------------------------|-------------------------------------------|
+| Install Agent 7.x     | Not supported                                         | `'agent_major_version' => 7`              |
+| Install Agent 6.x     | `'agent6' => true`                                    | `'agent_major_version' => 6`              |
+| Install Agent 5.x     | `'agent6' => false`                                   | `'agent_major_version' => 5`              |
+| Pin agent version     | `'agent_version'` or `'agent6_version'`               | `'agent_version'` for all versions        |
+| Change package_action | `'agent_package_action'` or `'agent6_package_action'` | `'agent_package_action'` for all versions |
+| Change APT repo URL   | `'aptrepo'` or `'agent6_aptrepo'`                     | `'aptrepo'` for all versions              |
+| Change APT repo dist  | `'aptrepo_dist'` or `'agent6_aptrepo_dist'`           | `'aptrepo_dist'` for all versions         |
+| Change YUM repo       | `'yumrepo'` or `'agent6_yumrepo'`                     | `'yumrepo'` for all versions              |
+| Change SUSE repo      | `'yumrepo_suse'` or `'agent6_yumrepo_suse'`           | `'yumrepo_suse'` for all versions         |
 
-## Example
+#### Example
 
 If you had an Agent 6 installation, the same configuration will now look like this:
 
@@ -98,8 +134,8 @@ default_attributes(
   }
 )
 ```
-Usage
-=====
+
+## Usage
 
 By default, the current major version (4.x) of this cookbook installs Agent v7.
 
@@ -204,69 +240,6 @@ You will need to indicate that you want to setup an Agent v6 instead of v7, pin 
 The same works for version 5.
 
 ### Instructions
-
-1. Add this cookbook to your Chef Server, either by installing with knife or by adding it to your Berksfile:
-  ```
-  cookbook 'datadog', '~> 4.0.0'
-  ```
-2. Add your API Key either:
-  * as a node attribute via an `environment` or `role`, or
-  * as a node attribute by declaring it in another cookbook at a higher precedence level, or
-  * in the node `run_state` by setting `node.run_state['datadog']['api_key']` in another cookbook preceding `datadog`'s recipes in the run_list. This approach has the benefit of not storing the credential in clear text on the Chef Server.
-3. Create an 'application key' for `chef_handler` [here](https://app.datadoghq.com/account/settings#api), and add it as a node attribute or in the run state, as in Step #2.
-
-   NB: if you're using the run state to store the api and app keys you need to set them at compile time before `datadog::dd-handler` in the run list.
-
-4. Enable Agent integrations by including their recipes and configuration details in your role’s run-list and attributes.
-   Note that you can also create additional integrations recipes by using the `datadog_monitor` resource.
-5. Associate the recipes with the desired `roles`, i.e. "role:chef-client" should contain "datadog::dd-handler" and a "role:base" should start the agent with "datadog::dd-agent". Here's an example role with both recipes plus the MongoDB integration enabled.
-  ```ruby
-  name 'example'
-  description 'Example role using DataDog'
-
-  default_attributes(
-    'datadog' => {
-      'agent_major_version' => 7,
-      'api_key' => 'api_key',
-      'application_key' => 'app_key',
-      'mongo' => {
-        'instances' => [
-          {'host' => 'localhost', 'port' => '27017'}
-        ]
-      }
-    }
-  )
-
-  run_list %w(
-    recipe[datadog::dd-agent]
-    recipe[datadog::dd-handler]
-    recipe[datadog::mongo]
-  )
-  ```
-
-6. Wait until `chef-client` runs on the target node (or trigger chef-client manually if you're impatient)
-
-We are not making use of data_bags in this recipe at this time, as it is unlikely that you will have more than one API key and one application key.
-
-For more deployment details, visit the [Datadog Documentation site](http://docs.datadoghq.com/).
-
-### Chef 12
-
-Depending of the Chef 12 version you're using, you will have to add some extra
-dependency contraints.
-
-#### Chef < 12.14
-
-```ruby
-depends 'yum', '< 5.0'
-```
-
-#### Chef < 12.9
-
-```ruby
-depends 'apt', '< 6.0.0'
-depends 'yum', '< 5.0'
-```
 
 AWS OpsWorks Chef Deployment
 ----------------------------
@@ -444,80 +417,7 @@ node is used by this resource, the chef-client must have read access to the
 `datadog.yaml` file.
 
 
-Development
-===========
-
-To contribute, you will have to follow the contribution guide in [CONTRIBUTING.md](./CONTRIBUTING.md).
-
-### Dependencies
-
-First, you should use [bundler](https://bundler.io) and the provided Gemfile to install the development and release dependencies.
-
-After having installed bundler, you can run the following command to install gem in a vendored folder:
-
-```bash
-bundle install --path .bundle
-```
-
-### Testing
-
-This project uses [rspec](https://rspec.info/) as its unit tests engine. It uses the related `chefspec` gem to abstract the chef logic. Some Chef specs can fail if you don't use the right version of Chef so be careful to use the one pinned in the Gemfile. To run unit tests, you can use:
-
-```bash
-bundle exec rspec
-```
-
-### Integration testing
-
-This project uses [kitchen](https://kitchen.ci/) as its integration tests engine. To really verify integration tests, you should have [vagrant](https://www.vagrantup.com/) installed on your machine.
-
-Kitchen allows you to test specific recipes described in [kitchen.yml](./kitchen.yml) across all platforms and versions that are also described in the same file. Each combination of recipe x platform x version is a test target.
-
-To list available targets, you can use the `list` command:
-
-```bash
-bundle exec kitchen list
-```
-
-To test a specific target, you can run:
-
-```bash
-bundle exec kitchen test <target>
-```
-
-So for example, if you want to test the CouchDB monitor on Ubuntu 16.04, you can run:
-
-```bash
-bundle exec kitchen test datadog-couchdb-ubuntu-1604-15
-```
-
-As there is a CouchDB recipe described in the `kitchen.yml`, and an Ubuntu platform with the 16.04 version.
-
-More information about kitchen on its [Getting Started](https://kitchen.ci/docs/getting-started/introduction/).
-
-### Development loop
-
-To develop some fixes or some features, the easiest way is to work on the platform and version of your choice, setting the machine up with the `create` command and applying the recipe with the `converge` command. If you want to explore the machine and try different things, you can also login into the machine with the `login` command.
-
-Please note that the `login` command only works on Linux & OSX and that you will have to connect to the VM through Virtual Box's interface on Windows. (Or via putty or similar ssh client)
-
-N.B.: The credentials of the created virtual machines are login `vagrant`, password `vagrant`.
-
-```bash
-# Create the relevant vagrant virtual machine
-bundle exec kitchen create datadog-couchdb-ubuntu-1604-15
-
-# Converge to test your recipe
-bundle exec kitchen converge datadog-couchdb-ubuntu-1604-15
-
-# Login to your machine to check stuff
-bundle exec kitchen login datadog-couchdb-ubuntu-1604-15
-
-# Verify the integration tests for your machine
-bundle exec kitchen verify datadog-couchdb-ubuntu-1604-15
-
-# Clean your machine
-bundle exec kitchen destroy datadog-couchdb-ubuntu-1604-15
-```
-
-It is advised that you work in TDD and that you write tests before making changes so that developing your feature or fix is just making tests pass.
+[1]: https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb
+[2]: https://github.com/DataDog/chef-datadog/releases/tag/v2.18.0
+[3]: https://github.com/DataDog/chef-datadog/blob/master/CHANGELOG.md
+[4]: https://app.datadoghq.com/account/settings#api
