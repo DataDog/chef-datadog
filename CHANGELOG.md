@@ -1,10 +1,10 @@
 Changes
 =======
 
-# 4.2.0 / 2020-02-27
+# 4.2.0 / 2020-02-27 - KNOWN BUG
 
 * [FEATURE] Automatically uninstall and then install the Agent only when trying to downgrade agent version on Windows. See [#690][] [@kbogtob][]
-* [BUGFIX] Set Windows installer as sensitive resource and use env var to specify Windows user credentials to avoid leaks of credentials in logs. See [#691][] and [#694][] [@julien-lebot][]
+* [BUGFIX] Set Windows installer as sensitive resource and use env var to specify Windows user credentials to avoid leaks of credentials in logs. See [#691][] and [#694][] [@julien-lebot][] - Known bug: This bugfix introduces a new bug blocking users not using credentials to install on Windows
 * [FEATURE] Support tags feature on directory integration. See [#687][] [@dimier]
 * [FEATURE] Support options feature on memcache integration. See [#689][] [@mikelaning]
 
