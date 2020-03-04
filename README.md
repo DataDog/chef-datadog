@@ -5,7 +5,7 @@ The Datadog Chef recipes are used to deploy Datadog's components and configurati
 * Datadog Agent version 7.x (default)
 * Datadog Agent version 6.x
 * Datadog Agent version 5.x
-* Log collection with Agent v6/v7 (enable in [default.rb][1])
+* Log collection with Agent v6 & v7 (enable in [default.rb][1])
 
 **Note**: This page may refer to features that are not available for your selected version. Check the README of the
 git tag or gem version for your version's documentation.
@@ -39,24 +39,24 @@ The following Opscode cookbooks are dependencies:
 
 **Note**: `apt` cookbook v7.1+ is needed to install the Agent on Debian 9+.
 
-#### Chef support
+#### Chef
 
-* **Chef 12 users**: Depending on your version of Chef 12 version, you may have to add some extra dependency constraints:
+**Chef 12 users**: Depending on your version of Chef 12, there may be additional dependency constraints:
 
-    ```ruby
-    # Chef < 12.14
-    depends 'yum', '< 5.0'
-    ```
+```ruby
+# Chef < 12.14
+depends 'yum', '< 5.0'
+```
 
-    ```ruby
-    # Chef < 12.9
-    depends 'apt', '< 6.0.0'
-    depends 'yum', '< 5.0'
-    ```
+```ruby
+# Chef < 12.9
+depends 'apt', '< 6.0.0'
+depends 'yum', '< 5.0'
+```
 
-* **Chef 13 users**: For Chef 13 and `chef_handler` 1.x, you may have trouble using the dd-handler recipe. The known workaround is to update your dependency to `chef_handler` >= 2.1.
+**Chef 13 users**: For Chef 13 and `chef_handler` 1.x, you may have trouble using the dd-handler recipe. The known workaround is to update your dependency to `chef_handler` >= 2.1.
 
-* **Chef 14 and 15 users**: To support Chef 12 and 13, the `datadog` cookbook has a dependency to the `chef_handler` cookbook, which is shipped as a resource in Chef 14. Unfortunately, it displays a deprecation message to Chef 14 and 15 users.
+**Chef 14 and 15 users**: To support Chef 12 and 13, the `datadog` cookbook has a dependency to the `chef_handler` cookbook, which is shipped as a resource in Chef 14. Unfortunately, it displays a deprecation message to Chef 14 and 15 users.
 
 ### Installation
 
@@ -65,15 +65,17 @@ The following Opscode cookbooks are dependencies:
     cookbook 'datadog', '~> 4.0.0'
     ```
 2. Choose a method to add your [Datadog API Key][4]:
-  * As a node attribute via an `environment` or `role`, or
-  * As a node attribute by declaring it in another cookbook at a higher precedence level, or
-  * in the node `run_state` by setting `node.run_state['datadog']['api_key']` in another cookbook preceding `datadog`'s recipes in the run_list. This approach has the benefit of not storing the credential in clear text on the Chef Server.
+  * As a node attribute with an `environment` or `role`.
+  * As a node attribute by declaring it in another cookbook at a higher precedence level.
+  * In the node `run_state` by setting `node.run_state['datadog']['api_key']` in another cookbook preceding Datadog's recipes in the run_list. This approach does not store the credential in clear text on the Chef Server.
+
 3. Create an 'application key' for `chef_handler` [here](https://app.datadoghq.com/account/settings#api), and add it as a node attribute or in the run state, as in Step #2.
 
-   NB: if you're using the run state to store the api and app keys you need to set them at compile time before `datadog::dd-handler` in the run list.
+    NB: if you're using the run state to store the api and app keys you need to set them at compile time before `datadog::dd-handler` in the run list.
 
 4. Enable Agent integrations by including their recipes and configuration details in your role’s run-list and attributes.
    Note that you can also create additional integrations recipes by using the `datadog_monitor` resource.
+
 5. Associate the recipes with the desired `roles`, i.e. "role:chef-client" should contain "datadog::dd-handler" and a "role:base" should start the agent with "datadog::dd-agent". Here's an example role with both recipes plus the MongoDB integration enabled.
     ```ruby
     name 'example'
@@ -102,6 +104,18 @@ The following Opscode cookbooks are dependencies:
 6. Wait until `chef-client` runs on the target node (or trigger chef-client manually if you're impatient)
 
 **Note**: `data_bags` are not used in this recipe because it is unlikely to have more than one API key with only one application key.
+
+#### AWS OpsWorks Chef deployment
+
+1. Add Chef Custom JSON:
+  ```json
+  {"datadog":{"agent_major_version": 7, "api_key": "<API_KEY>", "application_key": "<APP_KEY>"}}
+  ```
+
+2. Include the recipe in install-lifecycle recipe:
+  ```ruby
+  include_recipe 'datadog::dd-agent'
+  ```
 
 ### Upgrading
 
@@ -239,31 +253,14 @@ You will need to indicate that you want to setup an Agent v6 instead of v7, pin 
 
 The same works for version 5.
 
-### Instructions
+## Recipes
 
-AWS OpsWorks Chef Deployment
-----------------------------
+### default
 
-1. Add Chef Custom JSON:
-  ```json
-  {"datadog":{"agent_major_version": 7, "api_key": "<API_KEY>", "application_key": "<APP_KEY>"}}
-  ```
-
-2. Include the recipe in install-lifecycle recipe:
-  ```ruby
-  include_recipe 'datadog::dd-agent'
-  ```
-
-
-Recipes
-=======
-
-default
--------
 Just a placeholder for now, when we have more shared components they will probably live there.
 
-dd-agent
---------
+### dd-agent
+
 Installs the Datadog agent on the target system, sets the API key, and start the service to report on the local system metrics
 
 **Notes for Windows**:
@@ -275,12 +272,12 @@ Installs the Datadog agent on the target system, sets the API key, and start the
 
   For more information on these Windows packaging changes, see the related [docs on the dd-agent wiki](https://github.com/DataDog/dd-agent/wiki/Windows-Agent-Installation).
 
-dd-handler
-----------
+### dd-handler
+
 Installs the [chef-handler-datadog](https://rubygems.org/gems/chef-handler-datadog) gem and invokes the handler at the end of a Chef run to report the details back to the newsfeed.
 
-dogstatsd-ruby
------------------------
+### dogstatsd-ruby
+
 Installs the language-specific libraries to interact with `dogstatsd`.
 
 For ruby, please use the `datadog::dogstatsd-ruby` recipe.
@@ -291,8 +288,8 @@ For Python, please add a dependency on the `poise-python` cookbook to your custo
   ```
   For more advanced usage, please refer to the [`poise-python` cookbook documentation](https://github.com/poise/poise-python)
 
-ddtrace-ruby
----------------------
+### ddtrace-ruby
+
 Installs the language-specific libraries for application Traces (APM).
 
 For ruby, please use the `datadog::ddtrace-ruby` recipe.
@@ -303,15 +300,13 @@ For Python, please add a dependency on the `poise-python` cookbook to your custo
   ```
   For more advanced usage, please refer to the [`poise-python` cookbook documentation](https://github.com/poise/poise-python)
 
-other
------
+### other
+
 There are many other integration-specific recipes, that are meant to assist in deploying the correct agent configuration files and dependencies for a given integration.
 
-Resources
-=========
+## Resources
 
-datadog_monitor
----------------
+### datadog_monitor
 
 The `datadog_monitor` resource will help you to enable Agent integrations.
 
@@ -319,7 +314,7 @@ The default action `:add` enables the integration by filling a configuration fil
 
 The `:remove` action disables an integration.
 
-### Syntax
+#### Syntax
 
 ```ruby
 datadog_monitor 'name' do
@@ -344,7 +339,7 @@ end
 * `logs` are the fields used to fill values under the the `logs` section in the integration configuration file.
 * `use_integration_template`: set to `true` (recommended) to use a default template that simply writes the values of `instances`, `init_config`and `logs` in YAML under their respective YAML keys. (defaults to `false` for backward compatibility, will default to `true` in a future major version of the cookbook)
 
-### Example
+#### Example
 
 This example enables the ElasticSearch integration by using the `datadog_monitor` resource. It provides the instance configuration (in this case: the url to connect to ElasticSearch) and sets the `use_integration_template` flag to use the default configuration template. Also, it notifies the `service[datadog-agent]` resource in order to restart the Agent.
 
@@ -362,8 +357,7 @@ end
 
 See `recipes/` for many examples using the `datadog_monitor` resource.
 
-datadog_integration
----------------
+### datadog_integration
 
 The `datadog_integration` resource will help you to install specific versions
 of Datadog integrations.
@@ -374,7 +368,7 @@ The default action `:install` installs the integration on the node using the
 The `:remove` action removes an integration from the node using the `agent
 integration remove` command.
 
-### Syntax
+#### Syntax
 
 ```ruby
 datadog_integration 'name' do
@@ -394,7 +388,7 @@ end
 * `version` is the version of the integration that you want to install. Only needed
 with the `:install` action.
 
-### Example
+#### Example
 
 This example installs version `1.11.0` of the ElasticSearch integration by
 using the `datadog_integration` resource.
