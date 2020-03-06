@@ -2,9 +2,9 @@
 
 The Datadog Chef recipes are used to deploy Datadog's components and configuration automatically. The cookbook includes support for:
 
-* Datadog Agent version 7.x (default)
-* Datadog Agent version 6.x
-* Datadog Agent version 5.x
+* Datadog Agent v7.x (default)
+* Datadog Agent v6.x
+* Datadog Agent v5.x
 * Log collection with Agent v6 & v7 (enable in [default.rb][1])
 
 **Note**: This page may refer to features that are not available for your selected version. Check the README of the
@@ -41,7 +41,7 @@ The following Opscode cookbooks are dependencies:
 
 #### Chef
 
-**Chef 12 users**: Depending on your version of Chef 12, there may be additional dependency constraints:
+**Chef 12 users**: Depending on your version of Chef 12, additional dependency constraints may apply:
 
 ```ruby
 # Chef < 12.14
@@ -54,7 +54,7 @@ depends 'apt', '< 6.0.0'
 depends 'yum', '< 5.0'
 ```
 
-**Chef 13 users**: For Chef 13 and `chef_handler` 1.x, you may have trouble using the `dd-handler` recipe. The known workaround is to update your dependency to `chef_handler` >= 2.1.
+**Chef 13 users**: With Chef 13 and `chef_handler` 1.x, you may have trouble using the `dd-handler` recipe. The known workaround is to update your dependency to `chef_handler` >= 2.1.
 
 **Chef 14 and 15 users**: To support Chef 12 and 13, the `datadog` cookbook has a dependency to the `chef_handler` cookbook, which is shipped as a resource in Chef 14. Unfortunately, it displays a deprecation message to Chef 14 and 15 users.
 
@@ -71,7 +71,7 @@ depends 'yum', '< 5.0'
     knife cookbook site install datadog
     ```
     
-2. Set the [Datadog-specific attributes][4] in a role, environment, or another recipe:
+2. Set the [Datadog-specific attributes](#datadog-attributes) in a role, environment, or another recipe:
     ```text
     node.default['datadog']['api_key'] = "<YOUR_DD_API_KEY>"
 
@@ -138,9 +138,11 @@ run_list %w(
 
 #### Extra configuration
 
-To add additional elements to the Agent v6 configuration file (typically `datadog.yaml`) that are not directly available as attributes of the cookbook, use the `node['datadog']['extra_config']` attribute. This attribute is a hash and will be marshaled into the configuration file accordingly.
+To add additional elements to the Agent v6 configuration file (typically `datadog.yaml`) that are not directly available as attributes of the cookbook, use the `node['datadog']['extra_config']` attribute. This is a hash attribute, which is marshaled into the configuration file accordingly.
 
-This example will set the field `secret_backend_command` in the configuration file `datadog.yaml`.
+##### Examples
+
+The following code sets the field `secret_backend_command` in the configuration file `datadog.yaml`:
 
 ```ruby
  default_attributes(
@@ -151,12 +153,14 @@ This example will set the field `secret_backend_command` in the configuration fi
    }
  )
 ```
-or
+
+Additional option for setting the `secret_backend_command`:
+
 ```text
 default['datadog']['extra_config']['secret_backend_command'] = '/sbin/local-secrets'
 ```
 
-For nested attributes, use object syntax. This example will set the field `logs_config` in the configuration file `datadog.yaml`.
+For nested attributes, use object syntax. The following code sets the field `logs_config` in the configuration file `datadog.yaml`.
 
 ```ruby
 default['datadog']['extra_config']['logs_config'] = { 'use_port_443' => true }
@@ -164,29 +168,29 @@ default['datadog']['extra_config']['logs_config'] = { 'use_port_443' => true }
 
 #### AWS OpsWorks Chef deployment
 
-1. Add Chef Custom JSON:
+1. Add Chef custom JSON:
   ```json
   {"datadog":{"agent_major_version": 7, "api_key": "<API_KEY>", "application_key": "<APP_KEY>"}}
   ```
 
-2. Include the recipe in install-lifecycle recipe:
+2. Include the recipe in the `install-lifecycle` recipe:
   ```ruby
   include_recipe 'datadog::dd-agent'
   ```
 
 ## Versions
 
-By default, the current major version (4.x) of this cookbook installs Agent v7.
+By default, the current major version (4.x) of this cookbook installs Agent v7. Attributes are available to control the Agent version installed:
 
-Attributes are available to have finer control over which version of the Agent you install:
+|  Parameter    | Description |
+| ---- | ----------- |
+| `agent_major_version` | Pin the major version of the Agent to 5, 6 or 7 (default).
+| `agent_version` | Pin a specific Agent version (recommended).
+| `agent_package_action` | (Linux only) Defaults to `'install'` (recommended) `'upgrade'` to get automatic Agent updates (we recommend you keep the default here and instead change the pinned `agent_version` to upgrade).
 
- * `agent_major_version`: allows you to pin the major version of the agent to 5, 6 or 7 (default).
- * `agent_version`: allows you to pin a specific agent version (recommended).
- * `agent_package_action` (Linux only): Defaults to `'install'`, can be set `'upgrade'` to get automatic agent updates (we recommend you keep the default here and instead change the pinned `agent_version` to upgrade).
+See the sample [attributes/default.rb][1] for your cookbook version for all available attributes.
 
-Please review the [attributes/default.rb](https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb) file (at the version of the cookbook you use) for the full list and usage of the attributes used by the cookbook.
-
-For general information on the Datadog Agent, please refer to the [datadog-agent](https://github.com/DataDog/datadog-agent/) repo.
+### Upgrade
 
 Some attribute names have changed from version 3.x to 4.x of the cookbook. Use this reference table to update your configuration:
 
@@ -202,44 +206,28 @@ Some attribute names have changed from version 3.x to 4.x of the cookbook. Use t
 | Change YUM repo       | `'yumrepo'` or `'agent6_yumrepo'`                     | `'yumrepo'` for all versions              |
 | Change SUSE repo      | `'yumrepo_suse'` or `'agent6_yumrepo_suse'`           | `'yumrepo_suse'` for all versions         |
 
-For example, the Agent v6 configuration has changed to the following:
+Use one of the following methods to upgrade from Agent v6 to v7:
+
+* Set `agent_major_version` to `7`, `agent_package_action` to `install`, and pin a specific v7 version as `agent_version` (recommended).
+* Set `agent_major_version` to `7` and `agent_package_action` to `upgrade`.
+
+The following example upgrades from Agent v6 to v7. The same applies if you are upgrading from Agent v5 to v6.
 
 ```ruby
 default_attributes(
   'datadog' => {
-    'agent_major_version' => 6,          # was 'agent6' => true,
-    'agent_version' => '6.10.0',         # was 'agent6_version' => '6.10.0',
-    'agent_package_action' => 'install', # was 'agent6_package_action' => 'install',
+    'agent_major_version' => 7,
+    'agent_version' => '7.15.0',
+    'agent_package_action' => 'install',
   }
 )
 ```
 
-### Upgrade
-
-#### Agent v6 to v7
-
-To upgrade from an already installed Agent v6 to Agent v7, you'll have to either:
-
-* Set `agent_major_version` to `7`, `agent_package_action` to `install` and pin a specific v7 version as `agent_version` (recommended).
-* Set `agent_major_version` to `7` and `agent_package_action` to `upgrade`.
-
-```ruby
-  default_attributes(
-    'datadog' => {
-      'agent_major_version' => 7,
-      'agent_version' => '7.15.0',
-      'agent_package_action' => 'install',
-    }
-  )
-```
-
-The same applies if upgrading from 5 to 6.
-
 ### Downgrade
 
-#### Agent v7 to v6
+To downgrade the Agent version, set the `'agent_major_version'`, `'agent_version'`, and allow Agent downgrade.
 
-You will need to indicate that you want to setup an Agent v6 instead of v7, pin the Agent v6 version that you want to install and allow downgrade:
+The following example downgrades to Agent v6. The same applies if you are downgrading to Agent v5.
 
 ```ruby
   default_attributes(
@@ -250,8 +238,6 @@ You will need to indicate that you want to setup an Agent v6 instead of v7, pin 
     }
   )
 ```
-
-The same works for version 5.
 
 ## Recipes
 
