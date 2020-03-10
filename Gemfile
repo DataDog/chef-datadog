@@ -1,7 +1,9 @@
 source 'https://rubygems.org'
 
+chef_version = ENV.fetch('CHEF_VERSION', '14.10.9')
+
 gem 'rake'
-gem 'chef', '= 14.10.9'
+gem 'chef', "= #{chef_version}"
 gem 'foodcritic', '~> 11.4.0'
 gem 'cucumber-core', '~> 3.2.1'
 gem 'chefspec'
