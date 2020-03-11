@@ -106,7 +106,7 @@ The following methods are available for adding your [Datadog API and application
 
 #### Integrations
 
-Enable an Agent integration by including the [recipe](#recipes) and configuration details in your role’s run-list and attributes. **Note**: You can create additional integration recipes by using the [datadog_monitor](#datadog-monitor) resource.
+Enable Agent integrations by including the [recipe](#recipes) and configuration details in your role’s run-list and attributes. **Note**: You can create additional integration recipes by using the [datadog_monitor](#datadog-monitor) resource.
 
 Associate your recipes with the desired `roles`, for example `role:chef-client` should contain `datadog::dd-handler` and `role:base` should start the Agent with `datadog::dd-agent`. Below is an example role with the `dd-handler`, `dd-agent`, and `mongo` recipes:
 
@@ -138,7 +138,7 @@ run_list %w(
 
 #### Extra configuration
 
-To add additional elements to the Agent v6 configuration file (typically `datadog.yaml`) that are not directly available as attributes of the cookbook, use the `node['datadog']['extra_config']` attribute. This is a hash attribute, which is marshaled into the configuration file accordingly.
+To add additional elements to the Agent configuration file (typically `datadog.yaml`) that are not directly available as attributes of the cookbook, use the `node['datadog']['extra_config']` attribute. This is a hash attribute, which is marshaled into the configuration file accordingly.
 
 ##### Examples
 
@@ -154,19 +154,21 @@ The following code sets the field `secret_backend_command` in the configuration 
  )
 ```
 
-Additional option for setting the `secret_backend_command`:
+The `secret_backend_command` can also be set using:
 
 ```text
 default['datadog']['extra_config']['secret_backend_command'] = '/sbin/local-secrets'
 ```
 
-For nested attributes, use object syntax. The following code sets the field `logs_config` in the configuration file `datadog.yaml`.
+For nested attributes, use object syntax. The following code sets the field `logs_config` in the configuration file `datadog.yaml`:
 
 ```ruby
 default['datadog']['extra_config']['logs_config'] = { 'use_port_443' => true }
 ```
 
 #### AWS OpsWorks Chef deployment
+
+Follow the steps below to deploy the Datadog Agent with Chef on AWS OpsWorks:
 
 1. Add Chef custom JSON:
   ```json
@@ -180,13 +182,13 @@ default['datadog']['extra_config']['logs_config'] = { 'use_port_443' => true }
 
 ## Versions
 
-By default, the current major version (4.x) of this cookbook installs Agent v7. Attributes are available to control the Agent version installed:
+By default, the current major version of this cookbook installs Agent v7. The following attributes are available to control the Agent version installed:
 
-|  Parameter    | Description |
-| ---- | ----------- |
-| `agent_major_version` | Pin the major version of the Agent to 5, 6 or 7 (default).
-| `agent_version` | Pin a specific Agent version (recommended).
-| `agent_package_action` | (Linux only) Defaults to `'install'` (recommended) `'upgrade'` to get automatic Agent updates (we recommend you keep the default here and instead change the pinned `agent_version` to upgrade).
+| Parameter              | Description                                                                                                                                                                                      |
+|------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `agent_major_version`  | Pin the major version of the Agent to 5, 6 or 7 (default).                                                                                                                                       |
+| `agent_version`        | Pin a specific Agent version (recommended).                                                                                                                                                      |
+| `agent_package_action` | (Linux only) Defaults to `'install'` (recommended) `'upgrade'` to get automatic Agent updates (we recommend you keep the default here and instead change the pinned `agent_version` to upgrade). |
 
 See the sample [attributes/default.rb][1] for your cookbook version for all available attributes.
 
@@ -241,22 +243,17 @@ The following example downgrades to Agent v6. The same applies if you are downgr
 
 ## Recipes
 
+Access the [Datadog Chef recipes on GitHub][7].
+
 ### default
 
-Just a placeholder for now, when we have more shared components they will probably live there.
+The [default recipe][8] is a placeholder.
 
 ### dd-agent
 
-Installs the Datadog agent on the target system, sets the API key, and start the service to report on the local system metrics
+The [dd-agent recipe][9] installs the Datadog Agent on the target system, sets your [Datadog API key][4], and start the service to report on local system metrics.
 
-**Notes for Windows**:
-
-* Because of changes in the Windows Agent packaging and install in version 5.12.0, when upgrading the Agent from versions <= 5.10.1 to versions >= 5.12.0,
-  please set the `windows_agent_use_exe` attribute to `true`.
-
-  Once the upgrade is complete, you can leave the attribute to its default value (`false`).
-
-  For more information on these Windows packaging changes, see the related [docs on the dd-agent wiki](https://github.com/DataDog/dd-agent/wiki/Windows-Agent-Installation).
+**Note**: Windows users upgrading the Agent from versions <= 5.10.1 to versions >= 5.12.0, set the `windows_agent_use_exe` attribute to `true`. For more details, see the [dd-agent wiki][10].
 
 ### dd-handler
 
@@ -266,25 +263,25 @@ Installs the [chef-handler-datadog](https://rubygems.org/gems/chef-handler-datad
 
 Installs the language-specific libraries to interact with `dogstatsd`.
 
-For ruby, please use the `datadog::dogstatsd-ruby` recipe.
+For ruby, use the `datadog::dogstatsd-ruby` recipe.
 
-For Python, please add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the following resource:
+For Python, add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the following resource:
   ```ruby
   python_package 'dogstatsd-python' # assumes that python and pip are installed
   ```
-  For more advanced usage, please refer to the [`poise-python` cookbook documentation](https://github.com/poise/poise-python)
+  For more advanced usage, refer to the [`poise-python` cookbook documentation](https://github.com/poise/poise-python)
 
 ### ddtrace-ruby
 
 Installs the language-specific libraries for application Traces (APM).
 
-For ruby, please use the `datadog::ddtrace-ruby` recipe.
+For ruby, use the `datadog::ddtrace-ruby` recipe.
 
-For Python, please add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the following resource:
+For Python, add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the following resource:
   ```ruby
   python_package 'ddtrace' # assumes that python and pip are installed
   ```
-  For more advanced usage, please refer to the [`poise-python` cookbook documentation](https://github.com/poise/poise-python)
+  For more advanced usage, refer to the [`poise-python` cookbook documentation](https://github.com/poise/poise-python)
 
 ### other
 
@@ -294,7 +291,7 @@ There are many other integration-specific recipes, that are meant to assist in d
 
 ### datadog_monitor
 
-The `datadog_monitor` resource will help you to enable Agent integrations.
+The `datadog_monitor` resource helps you enable Agent integrations.
 
 The default action `:add` enables the integration by filling a configuration file for the integration with the values provided to the resource, setting the correct permissions on that file, and restarting the Agent.
 
@@ -345,14 +342,11 @@ See `recipes/` for many examples using the `datadog_monitor` resource.
 
 ### datadog_integration
 
-The `datadog_integration` resource will help you to install specific versions
-of Datadog integrations.
+The `datadog_integration` resource help you install specific versions of Datadog integrations.
 
-The default action `:install` installs the integration on the node using the
-`agent integration install` command.
+The default action `:install` installs the integration on the node using the `agent integration install` command.
 
-The `:remove` action removes an integration from the node using the `agent
-integration remove` command.
+The `:remove` action removes an integration from the node using the `agent integration remove` command.
 
 #### Syntax
 
@@ -365,21 +359,19 @@ end
 
 #### Actions
 
-* `:install` Default. Installs an integration in the given version.
+* `:install` (default) Installs an integration in the given version.
 * `:remove` Removes an integration.
 
 #### Properties
 
 * `'name'` is the name of the Agent integration to install, e.g. `datadog-apache`
-* `version` is the version of the integration that you want to install. Only needed
-with the `:install` action.
+* `version` is the version of the integration that you want to install. Only needed with the `:install` action.
 
 #### Example
 
-This example installs version `1.11.0` of the ElasticSearch integration by
-using the `datadog_integration` resource.
+This example installs version `1.11.0` of the ElasticSearch integration by using the `datadog_integration` resource.
 
-Note that the Agent installation needs to be earlier in the run list.
+**Note**: The Agent installation needs to be earlier in the run list.
 
 ```ruby
 include_recipe 'datadog::dd-agent'
@@ -389,8 +381,7 @@ datadog_integration 'datadog-elastic'
 end
 ```
 
-In order to get the available versions of the integrations, please refer to
-their `CHANGELOG.md` file in the [integrations-core repository](https://github.com/DataDog/integrations-core).
+To get the available versions of the integrations, refer to their `CHANGELOG.md` file in the [integrations-core repository](https://github.com/DataDog/integrations-core).
 
 **Note for Chef Windows users**: as the datadog-agent binary available on the
 node is used by this resource, the chef-client must have read access to the
@@ -403,3 +394,7 @@ node is used by this resource, the chef-client must have read access to the
 [4]: https://app.datadoghq.com/account/settings#api
 [5]: https://docs.chef.io/berkshelf/
 [6]: https://docs.chef.io/knife/
+[7]: https://github.com/DataDog/chef-datadog/tree/master/recipes
+[8]: https://github.com/DataDog/chef-datadog/blob/master/recipes/default.rb
+[9]: https://github.com/DataDog/chef-datadog/blob/master/recipes/dd-agent.rb
+[10]: https://github.com/DataDog/dd-agent/wiki/Windows-Agent-Installation
