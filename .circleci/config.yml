@@ -1,16 +1,16 @@
 version: 2
 jobs:
-  test:
+  full-suite:
     machine: true
     environment:
       KITCHEN_LOCAL_YAML: kitchen.docker.yml
     steps:
       - checkout
       - run:
-          name: Set Ruby version to 2.5.1
+          name: Set Ruby version to 2.6.3
           command: |
-                    rvm install 2.5.1
-                    echo . $(rvm 2.5.1 do rvm env --path) >> $BASH_ENV
+                    rvm install 2.6.3
+                    echo . $(rvm 2.6.3 do rvm env --path) >> $BASH_ENV
       - run:
           name: Install bundler
           command: gem install bundler:1.17.3
@@ -19,7 +19,7 @@ jobs:
           command: bundle --version
       - run:
           name: Install dependencies with bundler
-          command: bundle install --path .bundle --without release
+          command: bundle install --path .bundle
       - run:
           name: Showing gems versions in bundle
           command: bundle list
@@ -31,8 +31,65 @@ jobs:
           command: bundle exec rake circle
           no_output_timeout: 900
 
+  specs-ruby2.6.3-chef14.10.9: &specs
+    machine: true
+    environment:
+      KITCHEN_LOCAL_YAML: kitchen.docker.yml
+      CHEF_VERSION: '14.10.9'
+      RUBY_VERSION: '2.6.3'
+    steps:
+      - checkout
+      - run:
+          name: Set Ruby version
+          command: |
+                    echo "Using $RUBY_VERSION"
+                    rvm install $RUBY_VERSION
+                    echo . $(rvm $RUBY_VERSION do rvm env --path) >> $BASH_ENV
+      - run:
+          name: Install bundler
+          command: gem install bundler:1.17.3
+      - run:
+          name: Check bundler version
+          command: bundle --version
+      - run:
+          name: Install dependencies with bundler without Gemfile.lock
+          command: |
+                    rm Gemfile.lock
+                    bundle install --path .bundle
+      - run:
+          name: Showing gems versions in bundle
+          command: bundle list
+      - run:
+          name: Run specs
+          command: bundle exec rake spec
+
+  specs-ruby2.5.1-chef14.10.9:
+    <<: *specs
+    environment:
+      KITCHEN_LOCAL_YAML: kitchen.docker.yml
+      CHEF_VERSION: '14.10.9'
+      RUBY_VERSION: '2.5.1'
+
+  specs-ruby2.4.3-chef13.12.14:
+    <<: *specs
+    environment:
+      KITCHEN_LOCAL_YAML: kitchen.docker.yml
+      CHEF_VERSION: '13.12.14'
+      RUBY_VERSION: '2.4.3'
+
+  specs-ruby2.3.6-chef13.12.14:
+    <<: *specs
+    environment:
+      KITCHEN_LOCAL_YAML: kitchen.docker.yml
+      CHEF_VERSION: '13.12.14'
+      RUBY_VERSION: '2.3.6'
+
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - test
+      - specs-ruby2.6.3-chef14.10.9
+      - specs-ruby2.5.1-chef14.10.9
+      - specs-ruby2.4.3-chef13.12.14
+      - specs-ruby2.3.6-chef13.12.14
+      - full-suite
