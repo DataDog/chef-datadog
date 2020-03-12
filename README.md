@@ -245,57 +245,54 @@ The following example downgrades to Agent v6. The same applies if you are downgr
 
 Access the [Datadog Chef recipes on GitHub][7].
 
-### default
+### Default
 
 The [default recipe][8] is a placeholder.
 
-### dd-agent
+### Agent
 
-The [dd-agent recipe][9] installs the Datadog Agent on the target system, sets your [Datadog API key][4], and start the service to report on local system metrics.
+The [dd-agent recipe][9] installs the Datadog Agent on the target system, sets your [Datadog API key][4], and starts the service to report on local system metrics.
 
-**Note**: Windows users upgrading the Agent from versions <= 5.10.1 to versions >= 5.12.0, set the `windows_agent_use_exe` attribute to `true`. For more details, see the [dd-agent wiki][10].
+**Note**: Windows users upgrading the Agent from versions <= 5.10.1 to >= 5.12.0, set the `windows_agent_use_exe` attribute to `true`. For more details, see the [dd-agent wiki][10].
 
-### dd-handler
+### Handler
 
-Installs the [chef-handler-datadog](https://rubygems.org/gems/chef-handler-datadog) gem and invokes the handler at the end of a Chef run to report the details back to the newsfeed.
+The [dd-handler recipe][11] installs the [chef-handler-datadog][12] gem and invokes the handler at the end of a Chef run to report the details to the newsfeed.
 
-### dogstatsd-ruby
+### DogStatsD
 
-Installs the language-specific libraries to interact with `dogstatsd`.
+The following installs the language-specific libraries that interact with DogStatsD:
 
-For ruby, use the `datadog::dogstatsd-ruby` recipe.
+- Ruby: [dogstatsd-ruby recipe][13]
+- Python: Add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the resource below. For more details, refer to the [poise-python repository][14].
+    ```ruby
+    python_package 'dogstatsd-python' # assumes that python and pip are installed
+    ```
 
-For Python, add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the following resource:
-  ```ruby
-  python_package 'dogstatsd-python' # assumes that python and pip are installed
-  ```
-  For more advanced usage, refer to the [`poise-python` cookbook documentation](https://github.com/poise/poise-python)
+### Tracing
 
-### ddtrace-ruby
+The following installs the language-specific libraries for application tracing (APM):
 
-Installs the language-specific libraries for application Traces (APM).
+- Ruby: [ddtrace-ruby recipe][15]
+- Python: Add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the resource below. For more details, refer to the [poise-python repository][14].
+    ```ruby
+    python_package 'ddtrace' # assumes that python and pip are installed
+    ```
 
-For ruby, use the `datadog::ddtrace-ruby` recipe.
+### Integrations
 
-For Python, add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the following resource:
-  ```ruby
-  python_package 'ddtrace' # assumes that python and pip are installed
-  ```
-  For more advanced usage, refer to the [`poise-python` cookbook documentation](https://github.com/poise/poise-python)
-
-### other
-
-There are many other integration-specific recipes, that are meant to assist in deploying the correct agent configuration files and dependencies for a given integration.
+There are many [recipes][7] to assist you with deploying Agent integration configuration files and dependencies.
 
 ## Resources
 
 ### datadog_monitor
 
-The `datadog_monitor` resource helps you enable Agent integrations.
+Use the `datadog_monitor` resource for enabling Agent integrations without a recipe.
 
-The default action `:add` enables the integration by filling a configuration file for the integration with the values provided to the resource, setting the correct permissions on that file, and restarting the Agent.
+#### Actions
 
-The `:remove` action disables an integration.
+- `:add`: (default) Enables the integration by setting up the configuration file, adding the correct permissions to the file, and restarting the Agent.
+- `:remove` Disables an integration.
 
 #### Syntax
 
@@ -309,24 +306,21 @@ datadog_monitor 'name' do
 end
 ```
 
-#### Actions
-
-* `:add` Default. Enable the integration.
-* `:remove` Use this action to disable the integration.
-
 #### Properties
 
-* `'name'` is the name of the Agent integration to configure and enable
-* `instances` are the fields used to fill values under the `instances` section in the integration configuration file.
-* `init_config` are the fields used to fill values under the the `init_config` section in the integration configuration file.
-* `logs` are the fields used to fill values under the the `logs` section in the integration configuration file.
-* `use_integration_template`: set to `true` (recommended) to use a default template that simply writes the values of `instances`, `init_config`and `logs` in YAML under their respective YAML keys. (defaults to `false` for backward compatibility, will default to `true` in a future major version of the cookbook)
+| Property                   | Description                                                                                                                                                                                                                                                                                    |
+|----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `'name'`                   | The name of the Agent integration to configure and enable                                                                                                                                                                                                                                      |
+| `instances`                | The fields used to fill values under the `instances` section in the integration configuration file.                                                                                                                                                                                            |
+| `init_config`              | The fields used to fill values under the the `init_config` section in the integration configuration file.                                                                                                                                                                                      |
+| `logs`                     | The fields used to fill values under the the `logs` section in the integration configuration file.                                                                                                                                                                                             |
+| `use_integration_template` | Set to `true` (recommended) to use the default template, which writes the values of `instances`, `init_config`, and `logs` in the YAML under their respective keys. This defaults to `false` for backward compatibility, but will default to `true` in a future major version of the cookbook. |
 
 #### Example
 
-This example enables the ElasticSearch integration by using the `datadog_monitor` resource. It provides the instance configuration (in this case: the url to connect to ElasticSearch) and sets the `use_integration_template` flag to use the default configuration template. Also, it notifies the `service[datadog-agent]` resource in order to restart the Agent.
+This example enables the ElasticSearch integration by using the `datadog_monitor` resource. It provides the instance configuration (in this case: the url to connect to ElasticSearch) and sets the `use_integration_template` flag to use the default configuration template. Also, it notifies the `service[datadog-agent]` resource to restart the Agent.
 
-Note that the Agent installation needs to be earlier in the run list.
+**Note**: The Agent installation needs to be earlier in the run list.
 
 ```ruby
 include_recipe 'datadog::dd-agent'
@@ -338,15 +332,16 @@ datadog_monitor 'elastic'
 end
 ```
 
-See `recipes/` for many examples using the `datadog_monitor` resource.
+See the [Datadog integration Chef recipes][7] for additional examples.
 
 ### datadog_integration
 
-The `datadog_integration` resource help you install specific versions of Datadog integrations.
+To install a specific version of a Datadog integration, use the `datadog_integration` resource.
 
-The default action `:install` installs the integration on the node using the `agent integration install` command.
+#### Actions
 
-The `:remove` action removes an integration from the node using the `agent integration remove` command.
+- `:install` (default) Installs an integration with the specified version.
+- `:remove` Removes an integration.
 
 #### Syntax
 
@@ -357,15 +352,10 @@ datadog_integration 'name' do
 end
 ```
 
-#### Actions
-
-* `:install` (default) Installs an integration in the given version.
-* `:remove` Removes an integration.
-
 #### Properties
 
-* `'name'` is the name of the Agent integration to install, e.g. `datadog-apache`
-* `version` is the version of the integration that you want to install. Only needed with the `:install` action.
+- `'name'`: The name of the Agent integration to install, for example: `datadog-apache`.
+- `version`: The version of the integration to install (only required with the `:install` action).
 
 #### Example
 
@@ -381,11 +371,9 @@ datadog_integration 'datadog-elastic'
 end
 ```
 
-To get the available versions of the integrations, refer to their `CHANGELOG.md` file in the [integrations-core repository](https://github.com/DataDog/integrations-core).
+To get the available versions of the integrations, refer to their `CHANGELOG.md` file in the [integrations-core repository][16].
 
-**Note for Chef Windows users**: as the datadog-agent binary available on the
-node is used by this resource, the chef-client must have read access to the
-`datadog.yaml` file.
+**Note**: For Chef Windows users, the `chef-client` must have read access to the `datadog.yaml` file when the `datadog-agent` binary available on the node is used by this resource.
 
 
 [1]: https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb
@@ -398,3 +386,9 @@ node is used by this resource, the chef-client must have read access to the
 [8]: https://github.com/DataDog/chef-datadog/blob/master/recipes/default.rb
 [9]: https://github.com/DataDog/chef-datadog/blob/master/recipes/dd-agent.rb
 [10]: https://github.com/DataDog/dd-agent/wiki/Windows-Agent-Installation
+[11]: https://github.com/DataDog/chef-datadog/blob/master/recipes/dd-handler.rb
+[12]: https://rubygems.org/gems/chef-handler-datadog
+[13]: https://github.com/DataDog/chef-datadog/blob/master/recipes/dogstatsd-ruby.rb
+[14]: https://github.com/poise/poise-python
+[15]: https://github.com/DataDog/chef-datadog/blob/master/recipes/ddtrace-ruby.rb
+[16]: https://github.com/DataDog/integrations-core
