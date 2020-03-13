@@ -22,7 +22,7 @@ Have you fixed a bug or written a new feature and want to share it? Many thanks!
 
 In order to ease/speed up our review, here are some items you can check/improve when submitting your PR:
 
-  * Have a [proper commit history](#commits) (we advise you to rebase if needed).
+  * Have a proper commit history (we advise you to rebase if needed).
   * Write tests for the code you wrote.
   * Preferably, make sure that all unit tests pass locally and some relevant kitchen tests.
   * Summarize your PR with an explanatory title and a message describing your changes, cross-referencing any related bugs/PRs.
