@@ -184,11 +184,11 @@ Follow the steps below to deploy the Datadog Agent with Chef on AWS OpsWorks:
 
 By default, the current major version of this cookbook installs Agent v7. The following attributes are available to control the Agent version installed:
 
-| Parameter              | Description                                                                                                                                                                                      |
-|------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `agent_major_version`  | Pin the major version of the Agent to 5, 6 or 7 (default).                                                                                                                                       |
-| `agent_version`        | Pin a specific Agent version (recommended).                                                                                                                                                      |
-| `agent_package_action` | (Linux only) Defaults to `'install'` (recommended) `'upgrade'` to get automatic Agent updates (we recommend you keep the default here and instead change the pinned `agent_version` to upgrade). |
+| Parameter              | Description                                                                                                                                                                         |
+|------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `agent_major_version`  | Pin the major version of the Agent to 5, 6, or 7 (default).                                                                                                                         |
+| `agent_version`        | Pin a specific Agent version (recommended).                                                                                                                                         |
+| `agent_package_action` | (Linux only) Defaults to `'install'` (recommended), `'upgrade'` to get automatic Agent updates (not recommended, use the default and change the pinned `agent_version` to upgrade). |
 
 See the sample [attributes/default.rb][1] for your cookbook version for all available attributes.
 
@@ -227,7 +227,7 @@ default_attributes(
 
 ### Downgrade
 
-To downgrade the Agent version, set the `'agent_major_version'`, `'agent_version'`, and allow Agent downgrade.
+To downgrade the Agent version, set the `'agent_major_version'`, `'agent_version'`, and `'agent_allow_downgrade'`.
 
 The following example downgrades to Agent v6. The same applies if you are downgrading to Agent v5.
 
@@ -261,22 +261,22 @@ The [dd-handler recipe][11] installs the [chef-handler-datadog][12] gem and invo
 
 ### DogStatsD
 
-The following installs the language-specific libraries that interact with DogStatsD:
+To install a language-specific library that interacts with DogStatsD:
 
 - Ruby: [dogstatsd-ruby recipe][13]
 - Python: Add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the resource below. For more details, refer to the [poise-python repository][14].
     ```ruby
-    python_package 'dogstatsd-python' # assumes that python and pip are installed
+    python_package 'dogstatsd-python' # assumes python and pip are installed
     ```
 
 ### Tracing
 
-The following installs the language-specific libraries for application tracing (APM):
+To install a language-specific library for application tracing (APM):
 
 - Ruby: [ddtrace-ruby recipe][15]
 - Python: Add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the resource below. For more details, refer to the [poise-python repository][14].
     ```ruby
-    python_package 'ddtrace' # assumes that python and pip are installed
+    python_package 'ddtrace' # assumes python and pip are installed
     ```
 
 ### Integrations
@@ -292,7 +292,7 @@ Use the `datadog_monitor` resource for enabling Agent integrations without a rec
 #### Actions
 
 - `:add`: (default) Enables the integration by setting up the configuration file, adding the correct permissions to the file, and restarting the Agent.
-- `:remove` Disables an integration.
+- `:remove`: Disables an integration.
 
 #### Syntax
 
@@ -302,7 +302,7 @@ datadog_monitor 'name' do
   instances                         Array # default value: []
   logs                              Array # default value: []
   use_integration_template          true, false # default value: false
-  action                            Symbol # defaults to :add if not specified
+  action                            Symbol # defaults to :add
 end
 ```
 
@@ -320,7 +320,7 @@ end
 
 This example enables the ElasticSearch integration by using the `datadog_monitor` resource. It provides the instance configuration (in this case: the url to connect to ElasticSearch) and sets the `use_integration_template` flag to use the default configuration template. Also, it notifies the `service[datadog-agent]` resource to restart the Agent.
 
-**Note**: The Agent installation needs to be earlier in the run list.
+**Note**: The Agent installation must be above this recipe in the run list.
 
 ```ruby
 include_recipe 'datadog::dd-agent'
@@ -340,15 +340,15 @@ To install a specific version of a Datadog integration, use the `datadog_integra
 
 #### Actions
 
-- `:install` (default) Installs an integration with the specified version.
-- `:remove` Removes an integration.
+- `:install`: (default) Installs an integration with the specified version.
+- `:remove`: Removes an integration.
 
 #### Syntax
 
 ```ruby
 datadog_integration 'name' do
-  version                           String # version to install for :install action.
-  action                            Symbol # defaults to :install if not specified
+  version                      String # version to install for :install action
+  action                       Symbol # defaults to :install
 end
 ```
 
@@ -361,7 +361,7 @@ end
 
 This example installs version `1.11.0` of the ElasticSearch integration by using the `datadog_integration` resource.
 
-**Note**: The Agent installation needs to be earlier in the run list.
+**Note**: The Agent installation must be above this recipe in the run list.
 
 ```ruby
 include_recipe 'datadog::dd-agent'
@@ -371,7 +371,7 @@ datadog_integration 'datadog-elastic'
 end
 ```
 
-To get the available versions of the integrations, refer to their `CHANGELOG.md` file in the [integrations-core repository][16].
+To get the available versions of the integrations, refer to the integration-specific `CHANGELOG.md` in the [integrations-core repository][16].
 
 **Note**: For Chef Windows users, the `chef-client` must have read access to the `datadog.yaml` file when the `datadog-agent` binary available on the node is used by this resource.
 
