@@ -104,38 +104,6 @@ The following methods are available for adding your [Datadog API and application
 
 **Note**: When using the run state to store your API and application keys, set them at compile time before `datadog::dd-handler` in the run list.
 
-#### Integrations
-
-Enable Agent integrations by including the [recipe](#recipes) and configuration details in your role’s run-list and attributes. **Note**: You can create additional integration recipes by using the [datadog_monitor](#datadog-monitor) resource.
-
-Associate your recipes with the desired `roles`, for example `role:chef-client` should contain `datadog::dd-handler` and `role:base` should start the Agent with `datadog::dd-agent`. Below is an example role with the `dd-handler`, `dd-agent`, and `mongo` recipes:
-
-```ruby
-name 'example'
-description 'Example role using DataDog'
-
-default_attributes(
-  'datadog' => {
-    'agent_major_version' => 7,
-    'api_key' => '<YOUR_DD_API_KEY>',
-    'application_key' => '<YOUR_DD_APP_KEY>',
-    'mongo' => {
-      'instances' => [
-        {'host' => 'localhost', 'port' => '27017'}
-      ]
-    }
-  }
-)
-
-run_list %w(
-  recipe[datadog::dd-agent]
-  recipe[datadog::dd-handler]
-  recipe[datadog::mongo]
-)
-```
-
-**Note**: `data_bags` are not used in this recipe because it is unlikely to have multiple API keys with only one application key.
-
 #### Extra configuration
 
 To add additional elements to the Agent configuration file (typically `datadog.yaml`) that are not directly available as attributes of the cookbook, use the `node['datadog']['extra_config']` attribute. This is a hash attribute, which is marshaled into the configuration file accordingly.
@@ -179,6 +147,38 @@ Follow the steps below to deploy the Datadog Agent with Chef on AWS OpsWorks:
   ```ruby
   include_recipe 'datadog::dd-agent'
   ```
+
+### Integrations
+
+Enable Agent integrations by including the [recipe](#recipes) and configuration details in your role’s run-list and attributes. **Note**: You can create additional integration recipes by using the [datadog_monitor](#datadog-monitor) resource.
+
+Associate your recipes with the desired `roles`, for example `role:chef-client` should contain `datadog::dd-handler` and `role:base` should start the Agent with `datadog::dd-agent`. Below is an example role with the `dd-handler`, `dd-agent`, and `mongo` recipes:
+
+```ruby
+name 'example'
+description 'Example role using DataDog'
+
+default_attributes(
+  'datadog' => {
+    'agent_major_version' => 7,
+    'api_key' => '<YOUR_DD_API_KEY>',
+    'application_key' => '<YOUR_DD_APP_KEY>',
+    'mongo' => {
+      'instances' => [
+        {'host' => 'localhost', 'port' => '27017'}
+      ]
+    }
+  }
+)
+
+run_list %w(
+  recipe[datadog::dd-agent]
+  recipe[datadog::dd-handler]
+  recipe[datadog::mongo]
+)
+```
+
+**Note**: `data_bags` are not used in this recipe because it is unlikely to have multiple API keys with only one application key.
 
 ## Versions
 
