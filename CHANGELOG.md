@@ -1,10 +1,18 @@
 Changes
 =======
 
+# 4.2.1 / 2020-03-03
 
-* [FEATURE] Allow configuration of logs_agent via `datadog['logs_agent_config']`
+* [REVERT] Reverted PR #691 and #694 in order to allow users to install Agent on Windows without credentials. See [#699][] [@kbogtob][]
 
-# 4.1.1 / 2020-01-21
+# 4.2.0 / 2020-02-27 - KNOWN BUG
+
+* [FEATURE] Automatically uninstall and then install the Agent only when trying to downgrade agent version on Windows. See [#690][] [@kbogtob][]
+* [BUGFIX] Set Windows installer as sensitive resource and use env var to specify Windows user credentials to avoid leaks of credentials in logs. See [#691][] and [#694][] [@julien-lebot][] - Known bug: This bugfix introduces a new bug blocking users not using credentials to install on Windows
+* [FEATURE] Support tags feature on directory integration. See [#687][] [@dimier]
+* [FEATURE] Support options feature on memcache integration. See [#689][] [@mikelaning]
+
+# 4.1.1 / 2020-01-28
 
 * [BUGFIX] Fix version formating for Linuxes that use yum. See [#685][] [@albertvaka][]
 
@@ -841,6 +849,12 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#675]: https://github.com/DataDog/chef-datadog/issues/675
 [#678]: https://github.com/DataDog/chef-datadog/issues/678
 [#685]: https://github.com/DataDog/chef-datadog/issues/685
+[#687]: https://github.com/DataDog/chef-datadog/issues/687
+[#689]: https://github.com/DataDog/chef-datadog/issues/689
+[#690]: https://github.com/DataDog/chef-datadog/issues/690
+[#691]: https://github.com/DataDog/chef-datadog/issues/691
+[#694]: https://github.com/DataDog/chef-datadog/issues/694
+[#699]: https://github.com/DataDog/chef-datadog/issues/699
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@BrentOnRails]: https://github.com/BrentOnRails
@@ -885,6 +899,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@darron]: https://github.com/darron
 [@datwiz]: https://github.com/datwiz
 [@degemer]: https://github.com/degemer
+[@dimier]: https://github.com/dimier
 [@dlackty]: https://github.com/dlackty
 [@dominicchan]: https://github.com/dominicchan
 [@donaldguy]: https://github.com/donaldguy
@@ -924,6 +939,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@jschirle73]: https://github.com/jschirle73
 [@jtimberman]: https://github.com/jtimberman
 [@juliandunn]: https://github.com/juliandunn
+[@julien-lebot]: https://github.com/julien-lebot
 [@jvrplmlmn]: https://github.com/jvrplmlmn
 [@kbogtob]: https://github.com/kbogtob
 [@kevinconaway]: https://github.com/kevinconaway
@@ -937,6 +953,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@mattrobenolt]: https://github.com/mattrobenolt
 [@mfischer-zd]: https://github.com/mfischer-zd
 [@mhebbar1]: https://github.com/mhebbar1
+[@mikelaning]: https://github.com/mikelaning
 [@miketheman]: https://github.com/miketheman
 [@mirceal]: https://github.com/mirceal
 [@mlcooper]: https://github.com/mlcooper

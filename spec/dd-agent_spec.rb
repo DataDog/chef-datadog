@@ -148,6 +148,9 @@ describe 'datadog::dd-agent' do
         allow(File).to receive(:open).with(temp_file).and_return('foo')
         allow(Digest::SHA256).to receive(:file).and_call_original
         allow(Digest::SHA256).to receive(:file).with(temp_file).and_return(mock_digest)
+        allow(Chef::Datadog::WindowsInstallHelpers)
+          .to receive(:must_reinstall?)
+          .and_return(true)
       end
 
       it_behaves_like 'windows Datadog Agent', :msi
@@ -176,6 +179,9 @@ describe 'datadog::dd-agent' do
         allow(File).to receive(:open).with(temp_file).and_return('foo')
         allow(Digest::SHA256).to receive(:file).and_call_original
         allow(Digest::SHA256).to receive(:file).with(temp_file).and_return(mock_digest)
+        allow(Chef::Datadog::WindowsInstallHelpers)
+          .to receive(:must_reinstall?)
+          .and_return(true)
       end
 
       it_behaves_like 'windows Datadog Agent', :exe
@@ -249,6 +255,9 @@ describe 'datadog::dd-agent' do
         allow(File).to receive(:open).with(temp_file).and_return('foo')
         allow(Digest::SHA256).to receive(:file).and_call_original
         allow(Digest::SHA256).to receive(:file).with(temp_file).and_return(mock_digest)
+        allow(Chef::Datadog::WindowsInstallHelpers)
+          .to receive(:must_reinstall?)
+          .and_return(true)
       end
 
       it_behaves_like 'windows Datadog Agent v5', :msi
@@ -345,6 +354,9 @@ describe 'datadog::dd-agent' do
         allow(File).to receive(:open).with(temp_file).and_return('foo')
         allow(Digest::SHA256).to receive(:file).and_call_original
         allow(Digest::SHA256).to receive(:file).with(temp_file).and_return(mock_digest)
+        allow(Chef::Datadog::WindowsInstallHelpers)
+          .to receive(:must_reinstall?)
+          .and_return(true)
       end
 
       it_behaves_like 'windows Datadog Agent', :msi
@@ -388,6 +400,9 @@ describe 'datadog::dd-agent' do
         allow(File).to receive(:open).with(temp_file).and_return('foo')
         allow(Digest::SHA256).to receive(:file).and_call_original
         allow(Digest::SHA256).to receive(:file).with(temp_file).and_return(mock_digest)
+        allow(Chef::Datadog::WindowsInstallHelpers)
+          .to receive(:must_reinstall?)
+          .and_return(true)
       end
 
       it_behaves_like 'windows Datadog Agent', :msi
@@ -495,6 +510,9 @@ describe 'datadog::dd-agent' do
         allow(File).to receive(:open).with(temp_file).and_return('foo')
         allow(Digest::SHA256).to receive(:file).and_call_original
         allow(Digest::SHA256).to receive(:file).with(temp_file).and_return(mock_digest)
+        allow(Chef::Datadog::WindowsInstallHelpers)
+          .to receive(:must_reinstall?)
+          .and_return(true)
       end
 
       it_behaves_like 'windows Datadog Agent v5', :msi

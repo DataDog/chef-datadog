@@ -12,6 +12,12 @@ instances:
       - <%= t %>
       <% end -%>
     <% end -%>
+    <% if i.key?('options') -%>
+    options:
+      <% i['options'].each do |o| -%>
+        <%= o %>
+      <% end -%>
+    <% end -%>
   <% end -%>
 
 init_config:
