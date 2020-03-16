@@ -1,6 +1,9 @@
 Changes
 =======
 
+
+* [FEATURE] Allow configuration of logs_agent via `datadog['logs_agent_config']`
+
 # 4.1.1 / 2020-01-21
 
 * [BUGFIX] Fix version formating for Linuxes that use yum. See [#685][] [@albertvaka][]
