@@ -354,11 +354,12 @@ default['datadog']['system_probe']['enable_conntrack'] = false
 # * `false` to explicitly disable it
 # Leave it to `nil` to let the agent's default behavior decide whether to run the log-agent
 default['datadog']['enable_logs_agent'] = nil
-default['datadog']['logs_agent_config'] = nil
-# {
+# Here you can specify any settings that should end up under 'logs_config' in datadog.yaml, eg:
+# default['datadog']['logs_agent_config'] = {
 #   'use_http' => false,
 #   'use_compression' => true
 # }
+default['datadog']['logs_agent_config'] = nil
 
 # For custom gem servers on restricted networks
 # This attribute only works on Chef >= 12.3
