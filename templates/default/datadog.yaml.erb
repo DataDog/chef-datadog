@@ -103,6 +103,10 @@ if node['datadog']['statsd_forward_host']
   agent_config['statsd_forward_port'] = node['datadog']['statsd_forward_port']
 end
 
+if node['datadog']['logs_agent_config']
+  agent_config['logs_config'] = node['datadog']['logs_agent_config']
+end
+
 if node['datadog']['log_file_directory']
   agent_config['log_file'] = ::File.join(node['datadog']['log_file_directory'], "agent.log")
 end
