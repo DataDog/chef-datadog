@@ -38,7 +38,7 @@ Avoid changing too many things at once. For instance if you're fixing a recipe a
 
 Please don't be this person: `git commit -m "Fixed stuff"`. Take a moment to write meaningful commit messages.
 
-The commit message should describe the reason for the change and give extra details that will allow someone later on to understand in 5 seconds the thing you've been working on for a day.
+The commit message should describe the reason for the change and give extra details that allows someone later on to understand in 5 seconds the thing you've been working on for a day.
 
 If your commit is only shipping documentation changes or example files, and is a complete no-op for the test suite, add **[skip ci]** in the commit message body to skip the build and give that slot to someone else who does need it.
 
@@ -100,7 +100,7 @@ The simplest way to develop fixes or features is to set up the platform and vers
 
 **Note**: The `login` command only works on Linux and OSX. For Windows, connect to the VM through the Virtual Box interface or with putty or a similar ssh client.
 
-N.B.: The credentials of the created virtual machines are login `vagrant`, password `vagrant`.
+**Note**: The credentials of the created virtual machines are login `vagrant`, password `vagrant`.
 
 ```bash
 # Create the relevant Vagrant virtual machine
