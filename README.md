@@ -5,7 +5,6 @@ The Datadog Chef recipes are used to deploy Datadog's components and configurati
 * Datadog Agent v7.x (default)
 * Datadog Agent v6.x
 * Datadog Agent v5.x
-* Log collection with Agent v6 & v7 (enable in [default.rb][1])
 
 **Note**: This page may refer to features that are not available for your selected version. Check the README of the
 git tag or gem version for your version's documentation.
