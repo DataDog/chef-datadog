@@ -20,7 +20,7 @@ This document provides guidelines and instructions for contributing to this repo
 
 Have you fixed a bug or written a new feature and want to share it? Many thanks!
 
-In order to ease/speed up our review, here are some items you can check/improve when submitting your PR:
+When submitting your PR, here are some items you can check or improve to facilitate the review process:
 
   * Have a proper commit history (we advise you to rebase if needed).
   * Write tests for the code you wrote.
