@@ -310,7 +310,7 @@ end
 
 | Property                   | Description                                                                                                                                                                                                                                                                                    |
 |----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `'name'`                   | The name of the Agent integration to configure and enable                                                                                                                                                                                                                                      |
+| `'name'`                   | The name of the Agent integration to configure and enable.                                                                                                                                                                                                                                     |
 | `instances`                | The fields used to fill values under the `instances` section in the integration configuration file.                                                                                                                                                                                            |
 | `init_config`              | The fields used to fill values under the the `init_config` section in the integration configuration file.                                                                                                                                                                                      |
 | `logs`                     | The fields used to fill values under the the `logs` section in the integration configuration file.                                                                                                                                                                                             |
@@ -318,7 +318,7 @@ end
 
 #### Example
 
-This example enables the ElasticSearch integration by using the `datadog_monitor` resource. It provides the instance configuration (in this case: the url to connect to ElasticSearch) and sets the `use_integration_template` flag to use the default configuration template. Also, it notifies the `service[datadog-agent]` resource to restart the Agent.
+This example enables the ElasticSearch integration by using the `datadog_monitor` resource. It provides the instance configuration (in this case: the URL to connect to ElasticSearch) and sets the `use_integration_template` flag to use the default configuration template. Also, it notifies the `service[datadog-agent]` resource to restart the Agent.
 
 **Note**: The Agent installation must be above this recipe in the run list.
 
