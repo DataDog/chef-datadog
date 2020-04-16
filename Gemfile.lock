@@ -102,7 +102,7 @@ GEM
     equatable (0.6.1)
     erubi (1.9.0)
     erubis (2.7.0)
-    faraday (1.0.0)
+    faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
     fauxhai-ng (7.5.1)
       net-ssh
@@ -179,7 +179,7 @@ GEM
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
     nori (2.6.0)
-    octokit (4.17.0)
+    octokit (4.18.0)
       faraday (>= 0.9)
       sawyer (~> 0.8.0, >= 0.5.3)
     ohai (14.14.0)
