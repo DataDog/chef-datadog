@@ -230,6 +230,9 @@ default['datadog']['agent_enable'] = true
 # Start agent or not
 default['datadog']['agent_start'] = true
 
+# installation info
+default['datadog']['install_info_enabled'] = true
+
 # Logging configuration
 default['datadog']['syslog']['active'] = false
 default['datadog']['syslog']['udp'] = false
