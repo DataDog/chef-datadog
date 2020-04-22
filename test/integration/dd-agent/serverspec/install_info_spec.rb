@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Install infos' do
   let(:install_info_path) do
     if os == :windows
-      conf_path = "#{ENV['ProgramData']}\\Datadog\\install_info"
+      "#{ENV['ProgramData']}\\Datadog\\install_info"
     else
       '/etc/datadog-agent/install_info'
     end
