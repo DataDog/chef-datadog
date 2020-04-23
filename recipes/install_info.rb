@@ -51,7 +51,7 @@ template flare_path do
 
   variables(
     install_method: "chef-#{Chef::VERSION}",
-    install_method_version: "datadog-cookbook-#{Chef::Datadog.cookbook_version(run_context)}"
+    install_method_version: "datadog_cookbook-#{Chef::Datadog.cookbook_version(run_context)}"
   )
   sensitive true
 end
