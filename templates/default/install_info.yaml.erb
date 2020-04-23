@@ -1,6 +1,7 @@
-<%= JSON.parse(({
+<%=
+{
   'install_method' => {
     'name' => @install_method,
     'version' => @install_method_version,
-  }
-}).to_json).to_yaml %>
+  },
+}.to_yaml %>
