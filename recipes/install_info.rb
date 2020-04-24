@@ -50,8 +50,8 @@ template flare_path do
   source 'install_info.yaml.erb'
 
   variables(
-    install_method: "chef-#{Chef::VERSION}",
-    install_method_version: "datadog_cookbook-#{Chef::Datadog.cookbook_version(run_context)}"
+    chef_version: Chef::VERSION,
+    cookbook_version: Chef::Datadog.cookbook_version(run_context)
   )
   sensitive true
 end

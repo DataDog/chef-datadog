@@ -1,7 +1,8 @@
 <%=
 {
   'install_method' => {
-    'name' => @install_method,
-    'version' => @install_method_version,
+    'tool' => 'chef',
+    'tool_version' => "chef-#{@chef_version}",
+    'installer_version' => "datadog_cookbook-#{@cookbook_version}",
   },
 }.to_yaml %>

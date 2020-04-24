@@ -15,8 +15,9 @@ describe 'Install infos' do
 
   it 'adds an install_info' do
     expect(install_info['install_method']).to match(
-      'name' => /chef-\d+\.\d+\.\d+/,
-      'version' => /^datadog_cookbook-\d+\.\d+\.\d+$/
+      'tool_version' => /chef-\d+\.\d+\.\d+/,
+      'tool' => 'chef',
+      'installer_version' => /^datadog_cookbook-\d+\.\d+\.\d+$/
     )
   end
 end
