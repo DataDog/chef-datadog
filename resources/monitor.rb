@@ -72,10 +72,10 @@ end
 
 action :remove do
   yaml_file = if Chef::Datadog.agent_major_version(node) != 5
-    ::File.join(yaml_dir, "#{new_resource.name}.d", 'conf.yaml')
-  else
-    ::File.join(yaml_dir, "#{new_resource.name}.yaml")
-  end
+                ::File.join(yaml_dir, "#{new_resource.name}.d", 'conf.yaml')
+              else
+                ::File.join(yaml_dir, "#{new_resource.name}.yaml")
+              end
 
   Chef::Log.debug("Removing #{yaml_file}")
 

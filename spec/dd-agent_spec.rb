@@ -1306,3 +1306,73 @@ describe 'datadog::dd-agent' do
     end
   end
 end
+
+describe 'test::monitor_add' do
+  context 'add custom monitor A5' do
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        platform: 'fedora', version: '27',
+        step_into: ['datadog_monitor']
+      ) do |node|
+        node.normal['datadog'] = {
+          'api_key' => 'somethingnotnil',
+          'agent_major_version' => 5
+        }
+      end.converge described_recipe
+    end
+    it 'creates the config file at A5\'s path' do
+      expect(chef_run).to render_file('/etc/dd-agent/conf.d/potato.yaml')
+    end
+  end
+  context 'add custom monitor A7' do
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        platform: 'fedora', version: '27',
+        step_into: ['datadog_monitor']
+      ) do |node|
+        node.normal['datadog'] = {
+          'api_key' => 'somethingnotnil',
+          'agent_major_version' => 7
+        }
+      end.converge described_recipe
+    end
+    it 'creates the config file at A7\'s path' do
+      expect(chef_run).to render_file('/etc/datadog-agent/conf.d/potato.d/conf.yaml')
+    end
+  end
+end
+
+describe 'test::monitor_remove' do
+  context 'remove custom monitor A5' do
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        platform: 'fedora', version: '27',
+        step_into: ['datadog_monitor']
+      ) do |node|
+        node.normal['datadog'] = {
+          'api_key' => 'somethingnotnil',
+          'agent_major_version' => 5
+        }
+      end.converge described_recipe
+    end
+    it 'creates the config file at A5\'s path' do
+      expect(chef_run).to delete_file('/etc/dd-agent/conf.d/potato.yaml')
+    end
+  end
+  context 'remove custom monitor A7' do
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        platform: 'fedora', version: '27',
+        step_into: ['datadog_monitor']
+      ) do |node|
+        node.normal['datadog'] = {
+          'api_key' => 'somethingnotnil',
+          'agent_major_version' => 7
+        }
+      end.converge described_recipe
+    end
+    it 'creates the config file at A7\'s path' do
+      expect(chef_run).to delete_file('/etc/datadog-agent/conf.d/potato.d/conf.yaml')
+    end
+  end
+end
