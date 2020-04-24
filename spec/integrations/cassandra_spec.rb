@@ -410,6 +410,7 @@ describe 'datadog::cassandra' do
             name:
               - PendingTasks
               - CurrentlyBlockedTasks
+              - TotalBlockedTasks
             path:
               - request
         - include:
@@ -425,6 +426,7 @@ describe 'datadog::cassandra' do
             name:
               - PendingTasks
               - CurrentlyBlockedTasks
+              - TotalBlockedTasks
             path:
               - internal
         - include:
@@ -583,6 +585,12 @@ describe 'datadog::cassandra' do
             attribute:
               DroppableTombstoneRatio:
                 alias: cassandra.db.droppable_tombstone_ratio
+        - include:
+            domain: org.apache.cassandra.net
+            type: FailureDetector
+            attribute:
+              - DownEndpointCount
+              - UpEndpointCount
         # Young Gen Collectors (Minor Collections)
         - include:
             domain: java.lang
