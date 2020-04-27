@@ -173,5 +173,8 @@ if system_probe_managed
   end
 end
 
+# Installation metadata to let know the agent about installation method and its version
+include_recipe 'datadog::install_info'
+
 # Install integration packages
 include_recipe 'datadog::integrations' unless is_windows

@@ -59,6 +59,10 @@ class Chef
         run_state_or_attribute(node, 'windows_ddagentuser_password')
       end
 
+      def cookbook_version(run_context)
+        run_context.cookbook_collection['datadog'].version
+      end
+
       private
 
       def run_state_or_attribute(node, attribute)
