@@ -28,7 +28,6 @@ Gemfile*.lock
 
 # Berkshelf
 Berksfile.lock
-cookbooks/
 /.ruby-version
 
 # Test-Kitchen

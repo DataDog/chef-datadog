@@ -71,9 +71,15 @@ action :add do
 end
 
 action :remove do
-  Chef::Log.debug("Removing #{new_resource.name} from #{yaml_dir}")
+  yaml_file = if Chef::Datadog.agent_major_version(node) != 5
+                ::File.join(yaml_dir, "#{new_resource.name}.d", 'conf.yaml')
+              else
+                ::File.join(yaml_dir, "#{new_resource.name}.yaml")
+              end
 
-  file ::File.join(yaml_dir, "#{new_resource.name}.yaml") do
+  Chef::Log.debug("Removing #{yaml_file}")
+
+  file yaml_file do
     action :delete
     sensitive true
   end
