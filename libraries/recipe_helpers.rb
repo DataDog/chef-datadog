@@ -29,7 +29,9 @@ class Chef
 
         unless agent_version.nil?
           match = agent_version.match(/([0-9]+:)?([0-9]+)\.([0-9]+)\.([0-9]+)([^-\s]+)?(?:-([0-9]+))?/)
-          unless match.nil?
+          if match.nil?
+            Chef::Log.warn "Couldn't infer agent_major_version from agent_version '#{agent_version}'"
+          else
             _epoch, major, _minor, _patch, _suffix, _release = match.captures
             if !agent_major_version.nil? && major.to_i != agent_major_version.to_i
               raise "Provided (#{agent_major_version}) and deduced (#{major}) agent_major_version don't match"
