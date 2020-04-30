@@ -27,20 +27,22 @@ class Chef
         agent_major_version = node['datadog']['agent_major_version']
         agent_version = agent_version(node)
 
-        if !agent_version.nil?
-          _epoch, major, _minor, _patch, _suffix, _release = agent_version.match(/([0-9]+:)?([0-9]+)\.([0-9]+)\.([0-9]+)([^-\s]+)?(?:-([0-9]+))?/).captures
-          if !agent_major_version.nil? && major.to_i != agent_major_version.to_i
-            raise "Provided (#{agent_major_version}) and deduced (#{major}) agent_major_version don't match"
+        unless agent_version.nil?
+          match = agent_version.match(/([0-9]+:)?([0-9]+)\.([0-9]+)\.([0-9]+)([^-\s]+)?(?:-([0-9]+))?/)
+          unless match.nil?
+            _epoch, major, _minor, _patch, _suffix, _release = match.captures
+            if !agent_major_version.nil? && major.to_i != agent_major_version.to_i
+              raise "Provided (#{agent_major_version}) and deduced (#{major}) agent_major_version don't match"
+            end
+            return major.to_i
           end
-          ret = major.to_i
-        elsif !agent_major_version.nil?
-          ret = agent_major_version.to_i
-        else
-          # default to Agent 7
-          node.default['datadog']['agent_major_version'] = 7
-          ret = 7
         end
-        ret
+
+        return agent_major_version.to_i unless agent_major_version.nil?
+
+        # default to Agent 7
+        node.default['datadog']['agent_major_version'] = 7
+        7
       end
 
       def api_key(node)
