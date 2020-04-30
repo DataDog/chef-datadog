@@ -1,9 +1,17 @@
 Changes
 =======
 
+# 4.3.0 / 2020-04-30
+* [FEATURE] Allow configuration of log collection via `datadog['logs_agent_config']`. See [#704][] [@Nibons][]
+* [FEATURE] Update the list of Cassandra metrics to collect from JMX. See [#708][] [@k2v][]
+* [FEATURE] Add `combine_connection_states` and `collect_count_metrics` to network check. See [#650][] [@danjamesmay][]
+* [FEATURE] Create `install_info` file with version info for Chef and the cookbook. See [#707][] [@kbogtob][]
+* [BUGFIX] Fix `datadog_monitor` action `:delete` always using Agent 5's path. See [#709][] [@albertvaka][]
+* [BUGFIX] Use `true` and `false` instead of `yes` and `no` for `skip_ssl_validation`. See [#693][] [@jaxi]
+
 # 4.2.1 / 2020-03-03
 
-* [REVERT] Reverted PR #691 and #694 in order to allow users to install Agent on Windows without credentials. See [#699][] [@kbogtob][]
+* [REVERT] Reverted PR [#691][] and [#694][] in order to allow users to install Agent on Windows without credentials. See [#699][] [@kbogtob][]
 
 # 4.2.0 / 2020-02-27 - KNOWN BUG
 
@@ -838,6 +846,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#643]: https://github.com/DataDog/chef-datadog/issues/643
 [#647]: https://github.com/DataDog/chef-datadog/issues/647
 [#648]: https://github.com/DataDog/chef-datadog/issues/648
+[#650]: https://github.com/DataDog/chef-datadog/issues/650
 [#652]: https://github.com/DataDog/chef-datadog/issues/652
 [#653]: https://github.com/DataDog/chef-datadog/issues/653
 [#654]: https://github.com/DataDog/chef-datadog/issues/654
@@ -853,8 +862,13 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#689]: https://github.com/DataDog/chef-datadog/issues/689
 [#690]: https://github.com/DataDog/chef-datadog/issues/690
 [#691]: https://github.com/DataDog/chef-datadog/issues/691
+[#693]: https://github.com/DataDog/chef-datadog/issues/693
 [#694]: https://github.com/DataDog/chef-datadog/issues/694
 [#699]: https://github.com/DataDog/chef-datadog/issues/699
+[#704]: https://github.com/DataDog/chef-datadog/issues/704
+[#707]: https://github.com/DataDog/chef-datadog/issues/707
+[#708]: https://github.com/DataDog/chef-datadog/issues/708
+[#709]: https://github.com/DataDog/chef-datadog/issues/709
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@BrentOnRails]: https://github.com/BrentOnRails
@@ -867,6 +881,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@MiguelMoll]: https://github.com/MiguelMoll
 [@NBParis]: https://github.com/NBParis
 [@NathanielMichael]: https://github.com/NathanielMichael
+[@Nibons]: https://github.com/Nibons
 [@RedWhiteMiko]: https://github.com/RedWhiteMiko
 [@SelerityMichael]: https://github.com/SelerityMichael
 [@SupermanScott]: https://github.com/SupermanScott
@@ -896,6 +911,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@coosh]: https://github.com/coosh
 [@ctrlok]: https://github.com/ctrlok
 [@dafyddcrosby]: https://github.com/dafyddcrosby
+[@danjamesmay]: https://github.com/danjamesmay
 [@darron]: https://github.com/darron
 [@datwiz]: https://github.com/datwiz
 [@degemer]: https://github.com/degemer
@@ -929,6 +945,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@iashwash]: https://github.com/iashwash
 [@inokappa]: https://github.com/inokappa
 [@isaacdd]: https://github.com/isaacdd
+[@jaxi]: https://github.com/jaxi
 [@jblancett]: https://github.com/jblancett
 [@jcftang-r7]: https://github.com/jcftang-r7
 [@jedi4ever]: https://github.com/jedi4ever
@@ -941,6 +958,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@juliandunn]: https://github.com/juliandunn
 [@julien-lebot]: https://github.com/julien-lebot
 [@jvrplmlmn]: https://github.com/jvrplmlmn
+[@k2v]: https://github.com/k2v
 [@kbogtob]: https://github.com/kbogtob
 [@kevinconaway]: https://github.com/kevinconaway
 [@khouse]: https://github.com/khouse
