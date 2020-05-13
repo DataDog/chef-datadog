@@ -100,7 +100,10 @@ class Chef
           agent_status = `"#{WIN_BIN_PATH}" status`
           match_data = agent_status.match(/^Agent \(v(.*)\)/)
 
-          Gem::Version.new(match_data[1]) if match_data
+          # Nightlies like 6.20.0-devel+git.38.cd7f989 fail to parse as Gem::Version because of the '+' sign
+          version = match_data[1].tr('+', '-')
+
+          Gem::Version.new(version) if version
         end
 
         def requested_agent_version(node)
