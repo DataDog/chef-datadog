@@ -101,7 +101,7 @@ class Chef
           match_data = agent_status.match(/^Agent \(v(.*)\)/)
 
           # Nightlies like 6.20.0-devel+git.38.cd7f989 fail to parse as Gem::Version because of the '+' sign
-          version = match_data[1].gsub("+","-")
+          version = match_data[1].tr('+', '-')
 
           Gem::Version.new(version) if version
         end
