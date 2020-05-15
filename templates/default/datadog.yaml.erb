@@ -52,7 +52,7 @@ if node['datadog']['web_proxy']['host']
   end
   if user
     if password
-      http_proxy = "#{user}:#{port}@#{http_proxy}"
+      http_proxy = "#{user}:#{password}@#{http_proxy}"
     else
       http_proxy = "#{user}@#{http_proxy}"
     end
