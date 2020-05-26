@@ -41,7 +41,7 @@ default['datadog']['agent_major_version'] = nil # nil to autodetect based on 'ag
 # default['datadog']['agent_version'] = '7.16.0'
 default['datadog']['agent_version'] = nil # nil to install latest
 # Agent flavor, acceptable values are "agent", iot-agent"
-default['datadog']['agent_flavor'] = "agent" # "agent" to install default agent
+default['datadog']['agent_flavor'] = 'agent' # "agent" to install default agent
 
 # Allow override with `upgrade` to get latest (Linux only)
 default['datadog']['agent_package_action'] = 'install'
