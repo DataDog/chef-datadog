@@ -18,6 +18,11 @@
 #
 
 dd_agent_version = Chef::Datadog.agent_version(node)
+dd_agent_flavor = Chef::Datadog.agent_flavor(node)
+
+if dd_agent_flavor != 'agent'
+  raise "Unsupported agent flavor '#{dd_agent_flavor}' on Windows (only supports 'agent')"
+end
 
 if dd_agent_version.nil?
   # Use latest
