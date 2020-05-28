@@ -79,7 +79,7 @@ suites:
       api_key: somenonnullapikeythats32charlong
       application_key: alsonotnil
       install_info_enabled: true
-      agent_flavor: iot-agent
+      agent_flavor: datadog-iot-agent
       aptrepo: 'https://apt.datad0g.com'
       aptrepo_dist: 'beta'
       agent_version: '7.20.0~rc.3'

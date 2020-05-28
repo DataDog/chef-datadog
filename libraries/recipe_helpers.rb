@@ -3,8 +3,8 @@ class Chef
   class Datadog
     class << self
       ACCEPTABLE_AGENT_FLAVORS = %w[
-        agent
-        iot-agent
+        datadog-agent
+        datadog-iot-agent
       ].freeze
 
       def agent_version(node)
