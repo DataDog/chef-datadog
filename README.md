@@ -64,12 +64,12 @@ depends 'yum', '< 5.0'
     # Berksfile
     cookbook 'datadog', '~> 4.0.0'
     ```
-    
+
     ```shell
     # Knife
     knife cookbook site install datadog
     ```
-    
+
 2. Set the [Datadog-specific attributes](#datadog-attributes) in a role, environment, or another recipe:
     ```text
     node.default['datadog']['api_key'] = "<YOUR_DD_API_KEY>"
@@ -149,7 +149,7 @@ Follow the steps below to deploy the Datadog Agent with Chef on AWS OpsWorks:
 
 ### Integrations
 
-Enable Agent integrations by including the [recipe](#recipes) and configuration details in your role’s run-list and attributes. 
+Enable Agent integrations by including the [recipe](#recipes) and configuration details in your role’s run-list and attributes.
 **Note**: You can create additional integration recipes by using the [datadog_monitor](#datadog-monitor) resource.
 
 Associate your recipes with the desired `roles`, for example `role:chef-client` should contain `datadog::dd-handler` and `role:base` should start the Agent with `datadog::dd-agent`. Below is an example role with the `dd-handler`, `dd-agent`, and `mongo` recipes:
@@ -189,6 +189,7 @@ By default, the current major version of this cookbook installs Agent v7. The fo
 | `agent_major_version`  | Pin the major version of the Agent to 5, 6, or 7 (default).                                                                                                                         |
 | `agent_version`        | Pin a specific Agent version (recommended).                                                                                                                                         |
 | `agent_package_action` | (Linux only) Defaults to `'install'` (recommended), `'upgrade'` to get automatic Agent updates (not recommended, use the default and change the pinned `agent_version` to upgrade). |
+| `agent_flavor` | (Linux only) Defaults to `'datadog-agent'` to install the datadog-agent, can be set to `'datadog-iot-agent'` to install the IOT agent. |
 
 See the sample [attributes/default.rb][1] for your cookbook version for all available attributes.
 

@@ -21,15 +21,17 @@
 include_recipe 'datadog::repository' if node['datadog']['installrepo']
 
 dd_agent_version = Chef::Datadog.agent_version(node)
+dd_agent_flavor = Chef::Datadog.agent_flavor(node)
 
 package_action = node['datadog']['agent_package_action']
 
 package_retries = node['datadog']['agent_package_retries']
 package_retry_delay = node['datadog']['agent_package_retry_delay']
+
 # Install the regular package
 case node['platform_family']
 when 'debian'
-  apt_package 'datadog-agent' do
+  apt_package dd_agent_flavor do
     version dd_agent_version
     retries package_retries unless package_retries.nil?
     retry_delay package_retry_delay unless package_retry_delay.nil?
@@ -41,14 +43,14 @@ when 'rhel', 'fedora', 'amazon'
      node['platform_family'] == 'fedora' && node['platform_version'].to_i >= 28
     # yum_package doesn't work on RHEL 8 and Fedora >= 28
     # dnf_package only works on RHEL 8 / Fedora >= 28 if Chef 15+ is used
-    dnf_package 'datadog-agent' do
+    dnf_package dd_agent_flavor do
       version dd_agent_version
       retries package_retries unless package_retries.nil?
       retry_delay package_retry_delay unless package_retry_delay.nil?
       action package_action # default is :install
     end
   else
-    yum_package 'datadog-agent' do
+    yum_package dd_agent_flavor do
       version dd_agent_version
       retries package_retries unless package_retries.nil?
       retry_delay package_retry_delay unless package_retry_delay.nil?
@@ -57,7 +59,7 @@ when 'rhel', 'fedora', 'amazon'
     end
   end
 when 'suse'
-  zypper_package 'datadog-agent' do # ~FC009
+  zypper_package dd_agent_flavor do # ~FC009
     version dd_agent_version
     retries package_retries unless package_retries.nil?
     retry_delay package_retry_delay unless package_retry_delay.nil?

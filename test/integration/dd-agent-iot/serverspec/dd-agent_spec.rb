@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+@agent_package_name = 'datadog-iot-agent'
+
 describe package(@agent_package_name) do
   it { should be_installed }
 end
