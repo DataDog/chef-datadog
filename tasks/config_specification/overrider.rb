@@ -19,6 +19,7 @@ module ConfigSpecification
     end
 
     private
+
     attr_reader :overrides
 
     def descend(object, steps)
@@ -40,7 +41,7 @@ module ConfigSpecification
           sub_object['name'].downcase == next_step.downcase
         end
       when Hash
-        sub_object = object[next_step]
+        object[next_step]
       end
     end
   end

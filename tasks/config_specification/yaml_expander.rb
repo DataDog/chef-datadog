@@ -1,4 +1,5 @@
 
+# rubocop:disable Lint/AssignmentInCondition
 module ConfigSpecification
   # Expanding specification by loading included templates on the fly,
   # and overriding values
@@ -19,6 +20,7 @@ module ConfigSpecification
     end
 
     private
+
     attr_reader :template_cache
 
     def expand_hash(object)
@@ -75,10 +77,10 @@ module ConfigSpecification
       # will be replaced by the template
 
       keys = obj.keys
-      keys == %w(template) || keys == %w(template overrides)
+      keys == %w[template] || keys == %w[template overrides]
     end
 
-    def template_of(object, remove_reference: false, apply_overrides: false)
+    def template_of(object, remove_reference: false)
       template_path = remove_reference ? object.delete('template') : object['template']
 
       return nil unless template_path
@@ -93,3 +95,4 @@ module ConfigSpecification
     end
   end
 end
+# rubocop:enable Lint/AssignmentInCondition

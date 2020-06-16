@@ -26,6 +26,7 @@ module ConfigSpecification
     end
 
     private
+
     attr_reader :templates
     attr_reader :templates_path
     attr_reader :expander

@@ -1,4 +1,4 @@
-
+# rubocop:disable Lint/AssignmentInCondition
 module ConfigSpecification
   class Serializer
     def initialize(specification)
@@ -23,6 +23,7 @@ module ConfigSpecification
     end
 
     private
+
     attr_reader :specification
 
     def build_parameters
@@ -40,34 +41,34 @@ module ConfigSpecification
         collector[option.name] = option.options.each_with_object({}) do |sub_option, sub_collector|
           dump_option(sub_option, sub_collector)
         end
-      else
-        if (example = option&.value&.example) != nil
-          collector[option.name] = example
-        end
+      elsif option.value && !(example = option.value.example).nil?
+        collector[option.name] = example
+        # or else we don't dump the option
       end
     end
 
-    BLACKLISTED_NAMES = %w(tags service)
+    BLACKLISTED_NAMES = %w[tags service].freeze
 
     def skipped?(option)
       return true if BLACKLISTED_NAMES.include?(option.name.downcase)
 
-      return true if option&.value&.type == 'array'
-      return true if option&.value&.type == 'object'
+      if value = option.value
+        return true if value.type == 'array'
+        return true if value.type == 'object'
 
-      if example = option&.value&.example
-        return true if /<\w+>/.match?(example.inspect)
+        if example = value.example
+          return true if /<\w+>/.match?(example.inspect)
+        end
       end
 
       false
     end
 
     def value(object, indent: 0)
-      buffer = String.new
+      buffer = ' ' * indent
 
       case object
       when Array
-        buffer << ' ' * indent
         buffer << "[\n"
         buffer << object.map do |sub_object|
           value(sub_object, indent: indent + 2)
@@ -75,7 +76,6 @@ module ConfigSpecification
         buffer << ' ' * indent
         buffer << "]\n"
       when Hash
-        buffer << ' ' * indent
         buffer << "{\n"
         object.each do |config_name, config_value|
           buffer << ' ' * (indent + 2)
@@ -84,10 +84,8 @@ module ConfigSpecification
           buffer << value(config_value, indent: indent + 2).strip
           buffer << ",\n"
         end
-        buffer << ' ' * indent
         buffer << "}\n"
       else
-        buffer << ' ' * indent
         buffer << object.inspect
       end
 
@@ -95,3 +93,4 @@ module ConfigSpecification
     end
   end
 end
+# rubocop:enable Lint/AssignmentInCondition
