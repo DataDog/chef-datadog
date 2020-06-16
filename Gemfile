@@ -17,3 +17,10 @@ gem 'kitchen-vagrant'
 gem 'kitchen-docker', '~> 2.3.0'
 
 gem 'rubocop', '~> 0.49.1'
+gem 'byebug'
+
+group :development do
+  gem 'activesupport', '~> 6.0.3'
+  gem 'virtus'
+  gem 'inflecto'
+end
