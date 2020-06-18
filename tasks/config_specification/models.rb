@@ -5,6 +5,10 @@ module ConfigSpecification
 
     attribute :name, String
     attribute :files, Array['ConfigSpecification::Configuration']
+
+    def integration_name
+      name.gsub(/ +/, ' ').split(' ').map(&:capitalize).join.underscore
+    end
   end
 
   class Configuration
@@ -23,8 +27,21 @@ module ConfigSpecification
 
     attribute :name, String
     attribute :description, String
+    attribute :required, Boolean
     attribute :value, 'ConfigSpecification::Value'
     attribute :options, Array['ConfigSpecification::Option']
+
+    def comment
+      "#{name} - required: #{!!required} ".tap do |comment|
+        comment << " - #{value.comment}" if value
+      end.strip
+    end
+
+    def example
+      return unless value
+
+      value.example
+    end
   end
 
   class Value
@@ -33,6 +50,14 @@ module ConfigSpecification
     attribute :type, String
     attribute :example
     attribute :items, 'ConfigSpecification::Value'
+
+    def comment
+      if items
+        "#{type} of #{items.comment}"
+      elsif type
+        type
+      end
+    end
   end
 end
 

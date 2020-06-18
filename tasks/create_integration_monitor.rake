@@ -8,7 +8,15 @@ begin
   INTEGRATIONS_CORE_REPO = 'git@github.com:DataDog/integrations-core.git'.freeze
   ROOT_PATH = Pathname.new(File.join(File.dirname(__FILE__), '..')).freeze
 
-  def clone_integrations_in_tmp_dir
+  def local_itg_or_clone_in_tmp_dir
+    # rubocop:disable Lint/AssignmentInCondition
+    if dd_root = ENV['DATADOG_ROOT']
+      # rubocop:enable Lint/AssignmentInCondition
+      path = File.join(dd_root, 'integrations-core')
+      puts "Using DD_ROOT to use core-integrations at '#{path}'"
+      return yield Pathname.new(path)
+    end
+
     Dir.mktmpdir do |folder|
       dest_path = Pathname.new(File.join(folder, 'integrations-core'))
 
@@ -32,12 +40,11 @@ begin
     steps[name_index]
   end
 
-  desc 'Update the default attributes of integrations from config samples'
-  task :download_default_config, [:integration_name] do |_, args|
+  desc 'Create a monitor for given integrations'
+  task :create_integration_monitor, [:integration_name] do |_, args|
     integration_pattern = args[:integration_name] || '*'
 
-    clone_integrations_in_tmp_dir do |core_path|
-      core_path = Pathname.new('/Users/karim.bogtob/dd/integrations-core/')
+    local_itg_or_clone_in_tmp_dir do |core_path|
       template_cache = ConfigSpecification::TemplateCache.new(core_path)
       expander = ConfigSpecification::YAMLExpander.new(template_cache)
 
@@ -53,10 +60,11 @@ begin
         expanded_specification = expander.expand(YAML.load_file(spec_path))
         specification = ConfigSpecification::Specification.new(expanded_specification)
 
-        output_path = (ROOT_PATH + "attributes/#{current_integration_name}.rb").cleanpath
+        output_path = (ROOT_PATH + "recipes/#{current_integration_name}.rb").cleanpath
 
         puts "Writing default configuration to #{output_path}"
-        ConfigSpecification::Serializer.new(specification).write_to(output_path)
+        recipe = ConfigSpecification::MonitorSerializer.new(specification).serialize
+        File.write(output_path, recipe)
       end
     end
   end
