@@ -4,7 +4,7 @@ Changes
 # 4.4.0 / 2020-06-19
 * [FEATURE] Add support for `datadog-iot-agent` agent flavor. See [#717]
 * [BUGFIX] Do not crash if agent_version doesn't match version regex. See [#711][] [@albertvaka][]
-* [BUGFIX] Support + sign (for nightlies) in agent version. See [#712][] [@albertvaka][]
+* [BUGFIX] Support '+' sign (for nightlies) in agent version. See [#712][] [@albertvaka][]
 * [BUGFIX] Fix Proxy configuration with authentication. See [#714][] [@fatbasstard][]
 * [BUGFIX] Fix link to win32_event_log sample config. See [#715][] [@albertvaka][]
 * [BUGFIX] Do not crash if the agent is not running. See [#718][] [@albertvaka][]
