@@ -1,6 +1,14 @@
 Changes
 =======
 
+# 4.4.0 / 2020-06-19
+* [FEATURE] Add support for `datadog-iot-agent` agent flavor. See [#717][]
+* [BUGFIX] Do not crash if agent_version doesn't match version regex. See [#711][] [@albertvaka][]
+* [BUGFIX] Support '+' sign (for nightlies) in agent version. See [#712][] [@albertvaka][]
+* [BUGFIX] Fix Proxy configuration with authentication. See [#714][] [@fatbasstard][]
+* [BUGFIX] Fix link to win32_event_log sample config. See [#715][] [@albertvaka][]
+* [BUGFIX] Do not crash if the agent is not running. See [#718][] [@albertvaka][]
+
 # 4.3.0 / 2020-04-30
 * [FEATURE] Allow configuration of log collection via `datadog['logs_agent_config']`. See [#704][] [@Nibons][]
 * [FEATURE] Update the list of Cassandra metrics to collect from JMX. See [#708][] [@k2v][]
@@ -869,6 +877,12 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#707]: https://github.com/DataDog/chef-datadog/issues/707
 [#708]: https://github.com/DataDog/chef-datadog/issues/708
 [#709]: https://github.com/DataDog/chef-datadog/issues/709
+[#711]: https://github.com/DataDog/chef-datadog/issues/711
+[#712]: https://github.com/DataDog/chef-datadog/issues/712
+[#714]: https://github.com/DataDog/chef-datadog/issues/714
+[#715]: https://github.com/DataDog/chef-datadog/issues/715
+[#717]: https://github.com/DataDog/chef-datadog/issues/717
+[#718]: https://github.com/DataDog/chef-datadog/issues/718
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@BrentOnRails]: https://github.com/BrentOnRails
@@ -928,6 +942,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@elijahandrews]: https://github.com/elijahandrews
 [@eplanet]: https://github.com/eplanet
 [@evan2645]: https://github.com/evan2645
+[@fatbasstard]: https://github.com/fatbasstard
 [@flah00]: https://github.com/flah00
 [@foobarto]: https://github.com/foobarto
 [@frezbo]: https://github.com/frezbo
