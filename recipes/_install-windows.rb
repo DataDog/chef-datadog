@@ -17,11 +17,51 @@
 # limitations under the License.
 #
 
+include_recipe 'chef_handler'
+
+module Windows
+  class Helper
+    def do_cleanup(context)
+      Chef::Log.info 'Windows environment vars cleanup started.'
+      resource = context.resource_collection.lookup('windows_env[DDAGENTUSER_NAME]')
+      resource.run_action(:delete) if resource
+      resource = context.resource_collection.lookup('windows_env[DDAGENTUSER_PASSWORD]')
+      resource.run_action(:delete) if resource
+      Chef::Log.info 'Windows environment vars cleanup finished.'
+    end
+  end
+end
+
+Chef.event_handler do
+  on :run_failed do
+    Windows::Helper.new.do_cleanup(
+      Chef.run_context
+    )
+  end
+end
+
 dd_agent_version = Chef::Datadog.agent_version(node)
 dd_agent_flavor = Chef::Datadog.agent_flavor(node)
 
 if dd_agent_flavor != 'datadog-agent'
   raise "Unsupported agent flavor '#{dd_agent_flavor}' on Windows (only supports 'datadog-agent')"
+end
+
+ddagentuser_name = Chef::Datadog.ddagentuser_name(node)
+ddagentuser_password = Chef::Datadog.ddagentuser_password(node)
+
+if ddagentuser_name
+  windows_env 'DDAGENTUSER_NAME' do
+    value ddagentuser_name
+    sensitive true
+  end
+end
+
+if ddagentuser_password
+  windows_env 'DDAGENTUSER_PASSWORD' do
+    value ddagentuser_password
+    sensitive true
+  end
 end
 
 if dd_agent_version.nil?
@@ -51,8 +91,8 @@ else
   # Since 6.11.0, the core and APM/trace components of the Windows Agent run under
   # a specific user instead of LOCAL_SYSTEM, check whether the user has provided
   # custom credentials and use them if that's the case.
-  install_options.concat(' DDAGENTUSER_NAME=').concat(Chef::Datadog.ddagentuser_name(node)) if Chef::Datadog.ddagentuser_name(node)
-  install_options.concat(' DDAGENTUSER_PASSWORD=').concat(Chef::Datadog.ddagentuser_password(node)) if Chef::Datadog.ddagentuser_password(node)
+  install_options.concat(' DDAGENTUSER_NAME=%DDAGENTUSER_NAME%') if ddagentuser_name
+  install_options.concat(' DDAGENTUSER_PASSWORD=%DDAGENTUSER_PASSWORD%') if ddagentuser_password
 end
 
 package 'Datadog Agent removal' do
@@ -134,5 +174,19 @@ windows_package 'Datadog Agent' do # ~FC009
     Chef::Log.warn("\n#{fix_message}\nContinuing without installing Datadog Agent.") if unsafe
 
     unsafe
+  end
+end
+
+if ddagentuser_name
+  windows_env 'DDAGENTUSER_NAME' do
+    action :delete
+    sensitive true
+  end
+end
+
+if ddagentuser_password
+  windows_env 'DDAGENTUSER_PASSWORD' do
+    action :delete
+    sensitive true
   end
 end
