@@ -4,10 +4,8 @@ driver:
   customize:
     memory: 1024
 
-platforms:
-# Loop through two lists and output a total matrix of all possible platform + chef versions
-# fedora-20 needs kitchen-docker 1.7.0, but other bugs prevent that version from being used.
-<% test_platforms = %w(
+<%
+    test_platforms = %w(
       ubuntu-12.04
       ubuntu-14.04
       ubuntu-16.04
@@ -22,7 +20,25 @@ platforms:
       14
       15
     )
+    windows_platform = 'windows-2012r2'
+    windows_chef_versions = %w(
+      12.7.2
+      13.11.3
+      14
+      15
+    )
 
+%>
+
+.WINDOWS_PLATFORMS: &WINDOWS_PLATFORMS
+<% chef_versions.each do |chef_version| %>
+  - <%= windows_platform %>-<%= chef_version %>
+<% end %>
+
+platforms:
+# Loop through two lists and output a total matrix of all possible platform + chef versions
+# fedora-20 needs kitchen-docker 1.7.0, but other bugs prevent that version from being used.
+<%
     test_platforms.product(chef_versions).each do |platform_version, chef_version|
 %>
 
@@ -31,14 +47,6 @@ platforms:
     box: bento/<%= platform_version %>
     require_chef_omnibus: <%= chef_version %>
 <% end
-
-windows_platform = 'windows-2012r2'
-windows_chef_versions = %w(
-  12.7.2
-  13.11.3
-  14
-  15
-)
 
 windows_chef_versions.each do |chef_version|
 %>
@@ -129,10 +137,7 @@ suites:
 - name: datadog_cacti
   run_list:
     - recipe[datadog::cacti]
-  excludes: &WINDOWS_PLATFORMS
-  <% chef_versions.each do |chef_version| %>
-    - <%= windows_platform %>-<%= chef_version %>
-  <% end %>
+  excludes: *WINDOWS_PLATFORMS
   attributes:
     datadog:
       <<: *DATADOG
