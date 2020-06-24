@@ -82,6 +82,9 @@ windows_chef_versions.each do |chef_version|
 %>
 
 - name: <%= windows_platform %>-<%= chef_version %>
+  driver:
+    gui: false
+    linked_clone: true
   driver_config:
     box: mwrock/Windows2012R2  # lightweight windows box
     require_chef_omnibus: <%= chef_version %>
