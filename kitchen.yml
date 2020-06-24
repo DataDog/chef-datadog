@@ -4,29 +4,68 @@ driver:
   customize:
     memory: 1024
 
-platforms:
-# Loop through two lists and output a total matrix of all possible platform + chef versions
-# fedora-20 needs kitchen-docker 1.7.0, but other bugs prevent that version from being used.
-<% test_platforms = %w(
+<%
+require "net/http"
+require "uri"
+
+    test_platforms = %w(
       ubuntu-12.04
       ubuntu-14.04
       ubuntu-16.04
       centos-5.11
       centos-6.6
       centos-7.1
-      debian-7.8
+      debian-8
     )
+    # ERROR: Cookbook 'apt' version '7.3.0' depends on chef version [">= 13.3"], but the running chef version is 12.7.2
     chef_versions = %w(
       12.7.2
       13.11.3
       14
       15
     )
+    windows_platform = 'windows-2012r2'
+    windows_chef_versions = %w(
+      14.14.29
+    )
+    platforms_combo = {}
+%>
 
-    test_platforms.product(chef_versions).each do |platform_version, chef_version|
+.WINDOWS_PLATFORMS: &WINDOWS_PLATFORMS
+<% windows_chef_versions.each do |chef_version| %>
+  - <%= windows_platform %>-<%= chef_version %>
+<% end %>
+
+.LINUX_PLATFORMS: &LINUX_PLATFORMS
+<% test_platforms.product(chef_versions).each do |platform_version, chef_version| 
+  platform_name = platform_version[/(.*)-(.*)/, 1]
+  platform_version = platform_version[/(.*)-(.*)/, 2]
+  uri = URI.parse("https://omnitruck.chef.io/stable/chef/metadata?v=#{chef_version}&p=#{platform_name}&pv=#{platform_version}&m=x86_64")
+  puts "Checking #{uri}"
+  resp = Net::HTTP.get_response(uri)
+  puts resp.code == "200"
+  if resp.code == "200" %>
+    - <%= platform_version %>-<%= chef_version %>
+  <% platforms_combo[platform_version] = chef_version
+  end
+  puts platforms_combo
+end %>
+
+.DATADOG: &DATADOG
+  api_key: somenonnullapikeythats32charlong
+  application_key: alsonotnil
+
+platforms:
+# Loop through two lists and output a total matrix of all possible platform + chef versions
+# fedora-20 needs kitchen-docker 1.7.0, but other bugs prevent that version from being used.
+<%
+    platforms_combo.each do |platform_version, chef_version|
 %>
 
 - name: <%= platform_version %>-<%= chef_version %>
+  driver:
+    gui: false
+    linked_clone: true
   driver_config:
     box: bento/<%= platform_version %>
     require_chef_omnibus: <%= chef_version %>
@@ -67,17 +106,16 @@ suites:
   run_list:
     - recipe[datadog::dd-agent]
   attributes:
-    datadog: &DATADOG
-      api_key: somenonnullapikeythats32charlong
-      application_key: alsonotnil
+    datadog:
+      <<: *DATADOG
 
 - name: dd-agent-iot
   run_list:
     - recipe[datadog::dd-agent]
+  excludes: *WINDOWS_PLATFORMS
   attributes:
-    datadog: &DATADOG
-      api_key: somenonnullapikeythats32charlong
-      application_key: alsonotnil
+    datadog:
+      <<: *DATADOG
       install_info_enabled: true
       agent_flavor: datadog-iot-agent
       aptrepo: 'https://apt.datad0g.com'
@@ -88,14 +126,13 @@ suites:
   run_list:
     - recipe[datadog::dd-agent]
   attributes:
-    datadog: &DATADOG
+    datadog:
+      <<: *DATADOG
       aptrepo: 'http://apt.datad0g.com'
       aptrepo_dist: 'beta'
       # agent_version: '1:6.11.3~rc.2-1'
       agent_package_action: 'install'
       agent_allow_downgrade: true
-      api_key: somenonnullapikeythats32charlong
-      application_key: alsonotnil
       system_probe:
         enabled: true
         sysprobe_socket: /opt/datadog-agent/run/sysprobe.sock
@@ -107,9 +144,8 @@ suites:
   run_list:
     - recipe[datadog::dd-handler]
   attributes:
-    datadog: &DATADOG
-      api_key: somenonnullapikeythats32charlong
-      application_key: alsonotnil
+    datadog:
+      <<: *DATADOG
 
 - name: datadog_apache
   run_list:
