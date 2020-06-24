@@ -48,7 +48,6 @@ require "uri"
     - <%= platform_version %>-<%= chef_version %>
   <% platforms_combo[platform_version] = chef_version
   end
-  puts platforms_combo
 end %>
 
 .DATADOG: &DATADOG
