@@ -4,8 +4,10 @@ driver:
   customize:
     memory: 1024
 
-<%
-    test_platforms = %w(
+platforms:
+# Loop through two lists and output a total matrix of all possible platform + chef versions
+# fedora-20 needs kitchen-docker 1.7.0, but other bugs prevent that version from being used.
+<% test_platforms = %w(
       ubuntu-12.04
       ubuntu-14.04
       ubuntu-16.04
@@ -20,26 +22,7 @@ driver:
       14
       15
     )
-    windows_platform = 'windows-2012r2'
-    windows_chef_versions = %w(
-      15
-    )
-%>
 
-.WINDOWS_PLATFORMS: &WINDOWS_PLATFORMS
-<% windows_chef_versions.each do |chef_version| %>
-  - <%= windows_platform %>-<%= chef_version %>
-<% end %>
-
-.LINUX_PLATFORMS: &LINUX_PLATFORMS
-<% test_platforms.product(chef_versions).each do |platform_version, chef_version| %>
-  - <%= platform_version %>-<%= chef_version %>
-<% end %>
-
-platforms:
-# Loop through two lists and output a total matrix of all possible platform + chef versions
-# fedora-20 needs kitchen-docker 1.7.0, but other bugs prevent that version from being used.
-<%
     test_platforms.product(chef_versions).each do |platform_version, chef_version|
 %>
 
@@ -48,20 +31,26 @@ platforms:
     box: bento/<%= platform_version %>
     require_chef_omnibus: <%= chef_version %>
 <% end
+
+windows_platform = 'windows-2012r2'
+windows_chef_versions = %w(
+  12.7.2
+  13.11.3
+  14
+  15
+)
+
 windows_chef_versions.each do |chef_version|
 %>
 
 - name: <%= windows_platform %>-<%= chef_version %>
-  driver:
-    gui: false
-    linked_clone: true
   driver_config:
     box: mwrock/Windows2012R2  # lightweight windows box
     require_chef_omnibus: <%= chef_version %>
     communicator: winrm
     customize:
       usb: "off"  # USB is disabled on this box to make it more lightweight
-      vrde: "off"  # enable RDP
+      vrde: "on"  # enable RDP
   transport:
     name: winrm
 
@@ -75,26 +64,6 @@ suites:
 #   # There is a sanity.bats test to simply verify that /tmp exists.
 
 - name: dd-agent
-  run_list:
-    - recipe[datadog::dd-agent]
-  attributes:
-    datadog: &DATADOG
-      api_key: somenonnullapikeythats32charlong
-      application_key: alsonotnil
-
-- name: dd-agent-windows
-  run_list:
-    - recipe[datadog::dd-agent]
-  excludes: *LINUX_PLATFORMS
-  attributes:
-    datadog: &DATADOG
-      api_key: somenonnullapikeythats32charlong
-      application_key: alsonotnil
-      # Windows will create 'ausername' with password 'apasswd'
-      windows_ddagentuser_name: ausername
-      windows_ddagentuser_password: apasswd
-
-- name: dd-agent-no-username-password
   run_list:
     - recipe[datadog::dd-agent]
   attributes:
@@ -160,7 +129,10 @@ suites:
 - name: datadog_cacti
   run_list:
     - recipe[datadog::cacti]
-  excludes: *WINDOWS_PLATFORMS
+  excludes: &WINDOWS_PLATFORMS
+  <% chef_versions.each do |chef_version| %>
+    - <%= windows_platform %>-<%= chef_version %>
+  <% end %>
   attributes:
     datadog:
       <<: *DATADOG
