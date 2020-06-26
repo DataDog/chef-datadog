@@ -391,7 +391,6 @@ describe 'datadog::cassandra' do
               - Latency
               - Timeouts
               - Unavailables
-              - Latency
             attribute:
               - Count
               - 75thPercentile
