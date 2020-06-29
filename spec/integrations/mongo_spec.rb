@@ -5,6 +5,7 @@ describe 'datadog::mongo' do
 
     instances:
     - server: mongodb://localhost:27017
+      timeout: 60
       tags:
       - 'env:test'
 
@@ -24,6 +25,7 @@ describe 'datadog::mongo' do
             {
               host: 'localhost',
               port: '27017',
+              timeout: '60',
               tags: ['env:test']
             }
           ]
