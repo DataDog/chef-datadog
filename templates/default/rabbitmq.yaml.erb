@@ -44,6 +44,9 @@ instances:
     - <%= x %>
     <% end -%>
   <% end -%>
+  <% if i.key?('timeout') -%>
+      timeout: <%= i['timeout'] %>
+  <% end -%>
 <% end -%>
 
 # Nothing to configure here
