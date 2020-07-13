@@ -1,11 +1,57 @@
 include_recipe 'datadog::dd-agent'
 
-# Monitor Riak
+# Monitor MapReduce
 #
 # Here is the description of acceptable attributes:
-# node.datadog.riak = {
+# node.datadog.mapreduce = {
 #   # init_config - required: false
 #   "init_config" => {
+#     # general_counters - required: false  - array of object
+#     "general_counters" => [
+#       {
+#         "counter_group_name" => "org.apache.hadoop.mapreduce.FileSystemCounter",
+#         "counters" => [
+#           {
+#             "counter_name" => "HDFS_BYTES_READ",
+#           }
+# ,
+#         ],
+#       }
+# ,
+#     ],
+#     # job_specific_counters - required: false  - array of object
+#     "job_specific_counters" => [
+#       {
+#         "job_name" => "<JOB_NAME>",
+#         "metrics" => [
+#           {
+#             "counter_group_name" => "org.apache.hadoop.mapreduce.FileSystemCounter",
+#             "counters" => [
+#               {
+#                 "counter_name" => "FILE_BYTES_WRITTEN",
+#               }
+# ,
+#               {
+#                 "counter_name" => "HDFS_BYTES_WRITTEN",
+#               }
+# ,
+#             ],
+#           }
+# ,
+#           {
+#             "counter_group_name" => "org.apache.hadoop.mapreduce.FileSystemCounter",
+#             "counters" => [
+#               {
+#                 "counter_name" => "HDFS_BYTES_READ",
+#               }
+# ,
+#             ],
+#           }
+# ,
+#         ],
+#       }
+# ,
+#     ],
 #     # proxy - required: false  - object
 #     "proxy" => {
 #       "http" => "http://<PROXY_SERVER_FOR_HTTP>:<PORT>",
@@ -25,8 +71,10 @@ include_recipe 'datadog::dd-agent'
 #   # instances - required: false
 #   "instances" => [
 #     {
-#       # url - required: true  - string
-#       "url" => "http://127.0.0.1:8098/stats",
+#       # resourcemanager_uri - required: true  - string
+#       "resourcemanager_uri" => "http://localhost:8088",
+#       # cluster_name - required: true  - string
+#       "cluster_name" => "<MAPREDUCE_CLUSTER_NAME>",
 #       # proxy - required: false  - object
 #       "proxy" => {
 #         "http" => "http://<PROXY_SERVER_FOR_HTTP>:<PORT>",
@@ -117,9 +165,9 @@ include_recipe 'datadog::dd-agent'
 #   "logs" => nil,
 # }
 
-datadog_monitor 'riak' do
-  instances node['datadog']['riak']['instances']
-  logs node['datadog']['riak']['logs']
+datadog_monitor 'mapreduce' do
+  instances node['datadog']['mapreduce']['instances']
+  logs node['datadog']['mapreduce']['logs']
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

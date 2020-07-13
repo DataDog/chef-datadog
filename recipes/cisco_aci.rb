@@ -1,9 +1,9 @@
 include_recipe 'datadog::dd-agent'
 
-# Monitor Riak
+# Monitor Cisco ACI
 #
 # Here is the description of acceptable attributes:
-# node.datadog.riak = {
+# node.datadog.cisco_aci = {
 #   # init_config - required: false
 #   "init_config" => {
 #     # proxy - required: false  - object
@@ -25,8 +25,27 @@ include_recipe 'datadog::dd-agent'
 #   # instances - required: false
 #   "instances" => [
 #     {
-#       # url - required: true  - string
-#       "url" => "http://127.0.0.1:8098/stats",
+#       # aci_url - required: true  - string
+#       "aci_url" => "localhost",
+#       # pwd - required: true  - string
+#       "pwd" => nil,
+#       # tenant - required: false  - array of string
+#       "tenant" => [
+#         "<TENANT_1>",
+#         "<TENANT_2>",
+#       ],
+#       # aci_urls - required: false  - array of string
+#       "aci_urls" => [
+#         "<HOST>:<PORT>",
+#       ],
+#       # cert_name - required: false  - string
+#       "cert_name" => nil,
+#       # cert_key_password - required: false  - string
+#       "cert_key_password" => nil,
+#       # cert_key - required: false  - string
+#       "cert_key" => nil,
+#       # cert_key_path - required: false  - string
+#       "cert_key_path" => nil,
 #       # proxy - required: false  - object
 #       "proxy" => {
 #         "http" => "http://<PROXY_SERVER_FOR_HTTP>:<PORT>",
@@ -42,8 +61,8 @@ include_recipe 'datadog::dd-agent'
 #       "auth_type" => "basic",
 #       # use_legacy_auth_encoding - required: false  - boolean
 #       "use_legacy_auth_encoding" => true,
-#       # username - required: false  - string
-#       "username" => nil,
+#       # username - required: true  - string
+#       "username" => "datadog",
 #       # password - required: false  - string
 #       "password" => nil,
 #       # ntlm_domain - required: false  - string
@@ -108,18 +127,16 @@ include_recipe 'datadog::dd-agent'
 #       # service - required: false  - string
 #       "service" => nil,
 #       # min_collection_interval - required: false  - number
-#       "min_collection_interval" => 15,
+#       "min_collection_interval" => 180,
 #       # empty_default_hostname - required: false  - boolean
 #       "empty_default_hostname" => false,
 #     },
 #   ],
-#   # logs - required: false
-#   "logs" => nil,
 # }
 
-datadog_monitor 'riak' do
-  instances node['datadog']['riak']['instances']
-  logs node['datadog']['riak']['logs']
+datadog_monitor 'cisco_aci' do
+  instances node['datadog']['cisco_aci']['instances']
+  logs node['datadog']['cisco_aci']['logs']
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

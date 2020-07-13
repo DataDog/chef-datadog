@@ -1,9 +1,9 @@
 include_recipe 'datadog::dd-agent'
 
-# Monitor Riak
+# Monitor HDFS Namenode
 #
 # Here is the description of acceptable attributes:
-# node.datadog.riak = {
+# node.datadog.hdfs_namenode = {
 #   # init_config - required: false
 #   "init_config" => {
 #     # proxy - required: false  - object
@@ -25,8 +25,8 @@ include_recipe 'datadog::dd-agent'
 #   # instances - required: false
 #   "instances" => [
 #     {
-#       # url - required: true  - string
-#       "url" => "http://127.0.0.1:8098/stats",
+#       # hdfs_namenode_jmx_uri - required: true  - string
+#       "hdfs_namenode_jmx_uri" => "http://localhost:50070",
 #       # proxy - required: false  - object
 #       "proxy" => {
 #         "http" => "http://<PROXY_SERVER_FOR_HTTP>:<PORT>",
@@ -117,9 +117,9 @@ include_recipe 'datadog::dd-agent'
 #   "logs" => nil,
 # }
 
-datadog_monitor 'riak' do
-  instances node['datadog']['riak']['instances']
-  logs node['datadog']['riak']['logs']
+datadog_monitor 'hdfs_namenode' do
+  instances node['datadog']['hdfs_namenode']['instances']
+  logs node['datadog']['hdfs_namenode']['logs']
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

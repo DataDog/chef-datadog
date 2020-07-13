@@ -1,9 +1,9 @@
 include_recipe 'datadog::dd-agent'
 
-# Monitor Riak
+# Monitor Spark
 #
 # Here is the description of acceptable attributes:
-# node.datadog.riak = {
+# node.datadog.spark = {
 #   # init_config - required: false
 #   "init_config" => {
 #     # proxy - required: false  - object
@@ -25,8 +25,23 @@ include_recipe 'datadog::dd-agent'
 #   # instances - required: false
 #   "instances" => [
 #     {
-#       # url - required: true  - string
-#       "url" => "http://127.0.0.1:8098/stats",
+#       # spark_url - required: true  - string
+#       "spark_url" => "http://localhost:8080",
+#       # cluster_name - required: true  - string
+#       "cluster_name" => nil,
+#       # spark_cluster_mode - required: false  - string
+#       "spark_cluster_mode" => "spark_yarn_mode",
+#       # spark_ui_ports - required: false  - array of integer
+#       "spark_ui_ports" => [
+#         "<PORT_1>",
+#         "<PORT_2>",
+#       ],
+#       # spark_pre_20_mode - required: false  - boolean
+#       "spark_pre_20_mode" => false,
+#       # spark_proxy_enabled - required: false  - boolean
+#       "spark_proxy_enabled" => false,
+#       # streaming_metrics - required: false  - boolean
+#       "streaming_metrics" => true,
 #       # proxy - required: false  - object
 #       "proxy" => {
 #         "http" => "http://<PROXY_SERVER_FOR_HTTP>:<PORT>",
@@ -117,9 +132,9 @@ include_recipe 'datadog::dd-agent'
 #   "logs" => nil,
 # }
 
-datadog_monitor 'riak' do
-  instances node['datadog']['riak']['instances']
-  logs node['datadog']['riak']['logs']
+datadog_monitor 'spark' do
+  instances node['datadog']['spark']['instances']
+  logs node['datadog']['spark']['logs']
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

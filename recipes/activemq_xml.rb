@@ -1,9 +1,9 @@
 include_recipe 'datadog::dd-agent'
 
-# Monitor Riak
+# Monitor ActiveMQ XML
 #
 # Here is the description of acceptable attributes:
-# node.datadog.riak = {
+# node.datadog.activemq_xml = {
 #   # init_config - required: false
 #   "init_config" => {
 #     # proxy - required: false  - object
@@ -26,7 +26,24 @@ include_recipe 'datadog::dd-agent'
 #   "instances" => [
 #     {
 #       # url - required: true  - string
-#       "url" => "http://127.0.0.1:8098/stats",
+#       "url" => "http://localhost:8161",
+#       # suppress_errors - required: false  - boolean
+#       "suppress_errors" => false,
+#       # detailed_queues - required: false  - array of string
+#       "detailed_queues" => [
+#         "<QUEUE_1>",
+#         "<QUEUE_2>",
+#       ],
+#       # detailed_topics - required: false  - array of string
+#       "detailed_topics" => [
+#         "<TOPIC_1>",
+#         "<TOPIC_2>",
+#       ],
+#       # detailed_subscribers - required: false  - array of string
+#       "detailed_subscribers" => [
+#         "<SUBSCRIBER_1>",
+#         "<SUBSCRIBER_2>",
+#       ],
 #       # proxy - required: false  - object
 #       "proxy" => {
 #         "http" => "http://<PROXY_SERVER_FOR_HTTP>:<PORT>",
@@ -113,13 +130,11 @@ include_recipe 'datadog::dd-agent'
 #       "empty_default_hostname" => false,
 #     },
 #   ],
-#   # logs - required: false
-#   "logs" => nil,
 # }
 
-datadog_monitor 'riak' do
-  instances node['datadog']['riak']['instances']
-  logs node['datadog']['riak']['logs']
+datadog_monitor 'activemq_xml' do
+  instances node['datadog']['activemq_xml']['instances']
+  logs node['datadog']['activemq_xml']['logs']
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

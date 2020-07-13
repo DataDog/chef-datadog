@@ -1,9 +1,9 @@
 include_recipe 'datadog::dd-agent'
 
-# Monitor Riak
+# Monitor Marathon
 #
 # Here is the description of acceptable attributes:
-# node.datadog.riak = {
+# node.datadog.marathon = {
 #   # init_config - required: false
 #   "init_config" => {
 #     # proxy - required: false  - object
@@ -26,7 +26,26 @@ include_recipe 'datadog::dd-agent'
 #   "instances" => [
 #     {
 #       # url - required: true  - string
-#       "url" => "http://127.0.0.1:8098/stats",
+#       "url" => "https://<SERVER>:<PORT>",
+#       # acs_url - required: false  - string
+#       "acs_url" => "https://<SERVER>:<PORT>",
+#       # group - required: false  - string
+#       "group" => "product",
+#       # label_tags - required: false  - array of string
+#       "label_tags" => [
+#         "<MARATHON_LABEL_NAME>",
+#       ],
+#       # tags - required: false  - array of string
+#       "tags" => [
+#         "<KEY_1>:<VALUE_1>",
+#         "<KEY_2>:<VALUE_2>",
+#       ],
+#       # service - required: false  - string
+#       "service" => nil,
+#       # min_collection_interval - required: false  - number
+#       "min_collection_interval" => 15,
+#       # empty_default_hostname - required: false  - boolean
+#       "empty_default_hostname" => false,
 #       # proxy - required: false  - object
 #       "proxy" => {
 #         "http" => "http://<PROXY_SERVER_FOR_HTTP>:<PORT>",
@@ -100,26 +119,15 @@ include_recipe 'datadog::dd-agent'
 #       "log_requests" => false,
 #       # persist_connections - required: false  - boolean
 #       "persist_connections" => false,
-#       # tags - required: false  - array of string
-#       "tags" => [
-#         "<KEY_1>:<VALUE_1>",
-#         "<KEY_2>:<VALUE_2>",
-#       ],
-#       # service - required: false  - string
-#       "service" => nil,
-#       # min_collection_interval - required: false  - number
-#       "min_collection_interval" => 15,
-#       # empty_default_hostname - required: false  - boolean
-#       "empty_default_hostname" => false,
 #     },
 #   ],
 #   # logs - required: false
 #   "logs" => nil,
 # }
 
-datadog_monitor 'riak' do
-  instances node['datadog']['riak']['instances']
-  logs node['datadog']['riak']['logs']
+datadog_monitor 'marathon' do
+  instances node['datadog']['marathon']['instances']
+  logs node['datadog']['marathon']['logs']
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end
