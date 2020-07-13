@@ -55,7 +55,7 @@ jobs:
           name: Install dependencies with bundler without Gemfile.lock
           command: |
                     rm Gemfile.lock
-                    bundle install --path .bundle
+                    bundle install --path .bundle --without=development
       - run:
           name: Showing gems versions in bundle
           command: bundle list
