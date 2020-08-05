@@ -95,7 +95,7 @@ depends 'yum', '< 5.0'
 
 ### Dockerized environment
 
-To build a docker environment, use the files under `docker_test_env`:
+To build a Docker environment, use the files under `docker_test_env`:
 
 ```
 cd docker_test_env
@@ -108,7 +108,7 @@ To run the container use:
 docker run -d -v /dev/vboxdrv:/dev/vboxdrv --privileged=true chef-datadog-container
 ```
 
-Then it's possible to attach a console to the container or better, use vscode remote-container feature to start developing inside the container.
+Then attach a console to the container or use the VScode remote-container feature to develop inside the container.
 
 #### Datadog attributes
 
