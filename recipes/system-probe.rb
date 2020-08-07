@@ -44,9 +44,9 @@ template system_probe_config_file do
   owner 'root'
   group 'dd-agent'
   mode '640'
-  notifies :restart, 'service[datadog-agent-sysprobe]', :delayed unless node['datadog']['system_probe']['enabled'] == false
+  notifies :restart, 'service[datadog-agent-sysprobe]', :delayed if node['datadog']['system_probe']['enabled']
   # since process-agent collects network info through system-probe, enabling system-probe should also restart process-agent
-  notifies :restart, 'service[datadog-agent]', :delayed unless node['datadog']['system_probe']['enabled'] == false
+  notifies :restart, 'service[datadog-agent]', :delayed if node['datadog']['system_probe']['enabled']
 end
 
 # Common configuration
@@ -63,5 +63,5 @@ service 'datadog-agent-sysprobe' do
   action [sysprobe_agent_start]
   provider service_provider unless service_provider.nil?
   supports :restart => true, :status => true, :start => true, :stop => true
-  subscribes :restart, "template[#{system_probe_config_file}]", :delayed unless node['datadog']['system_probe']['enabled'] == false
+  subscribes :restart, "template[#{system_probe_config_file}]", :delayed if node['datadog']['system_probe']['enabled']
 end

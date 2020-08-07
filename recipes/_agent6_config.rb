@@ -64,5 +64,5 @@ template agent_config_file do
     end
   )
   sensitive true if Chef::Resource.instance_methods(false).include?(:sensitive)
-  notifies :restart, 'service[datadog-agent]', :delayed unless node['datadog']['agent_start'] == false
+  notifies :restart, 'service[datadog-agent]', :delayed if node['datadog']['agent_start']
 end
