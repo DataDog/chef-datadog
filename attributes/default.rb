@@ -226,7 +226,8 @@ default['datadog']['hostname'] = node.name
 # rather than the hostname for chef-handler.
 default['datadog']['use_ec2_instance_id'] = false
 
-# Enable the agent to start at boot
+# Enable the agent to start at boot. Note that this can't be false if 'enable_process_agent'
+# or 'enable_trace_agent' are true, since they depend on the main agent.
 default['datadog']['agent_enable'] = true
 
 # Start agent or not
