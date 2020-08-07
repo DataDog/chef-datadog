@@ -39,7 +39,7 @@ proxy_user: <%= node['datadog']['web_proxy']['user'] %>
 proxy_password: <%= node['datadog']['web_proxy']['password'] %>
 <% end -%>
 
-<% if node['datadog']['non_local_traffic'] == true %>
+<% if node['datadog']['non_local_traffic'] %>
 non_local_traffic: true
 <% end -%>
 
