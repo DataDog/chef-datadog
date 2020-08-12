@@ -10,7 +10,7 @@ default_action :install
 
 property :property_name, String, name_property: true
 property :version, String, required: true
-property :third_party, Boolean, required: false, default: false
+property :third_party, [true, false], required: false, default: false
 
 action :install do
   if Chef::Datadog.agent_major_version(node) == 5
