@@ -5,8 +5,6 @@ class Mock
       @stdout = stdout
     end
 
-    def stdout
-      @stdout
-    end
+    attr_reader :stdout
   end
 end
