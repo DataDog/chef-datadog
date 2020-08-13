@@ -34,7 +34,7 @@ describe 'datadog_integration' do
   context 'with third party integration that is already installed' do
     stubs_for_resource('execute[integration install]') do |resource|
       allow(resource).to receive_shell_out('/opt/datadog-agent/bin/agent/agent integration show -q foo-bar')
-      .and_return(Mock::ShellCommandResult.new('1.0.0'))
+        .and_return(Mock::ShellCommandResult.new('1.0.0'))
     end
     recipe do
       datadog_integration 'foo-bar' do
@@ -48,7 +48,7 @@ describe 'datadog_integration' do
   context 'with third party integration that is installed with an older version' do
     stubs_for_resource('execute[integration install]') do |resource|
       allow(resource).to receive_shell_out('/opt/datadog-agent/bin/agent/agent integration show -q foo-bar')
-      .and_return(Mock::ShellCommandResult.new('0.9.0'))
+        .and_return(Mock::ShellCommandResult.new('0.9.0'))
     end
     recipe do
       datadog_integration 'foo-bar' do
