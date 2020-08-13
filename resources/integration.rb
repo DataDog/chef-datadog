@@ -21,7 +21,7 @@ action :install do
   Chef::Log.debug("Getting integration #{new_resource.property_name}")
 
   execute 'integration install' do
-    command   "\"#{agent_exe_filepath}\" integration install #{'--third-party' if new_resource.third_party} #{new_resource.property_name}==#{new_resource.version}"
+    command   "\"#{agent_exe_filepath}\" integration install #{'--third-party ' if new_resource.third_party}#{new_resource.property_name}==#{new_resource.version}"
     user      'dd-agent' unless node['platform_family'] == 'windows'
 
     not_if {
