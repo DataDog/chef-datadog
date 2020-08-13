@@ -365,8 +365,9 @@ To install a specific version of a Datadog integration, use the `datadog_integra
 
 ```ruby
 datadog_integration 'name' do
-  version                      String # version to install for :install action
-  action                       Symbol # defaults to :install
+  version                      String         # version to install for :install action
+  action                       Symbol         # defaults to :install
+  third_party                  [true, false]  # defaults to :false
 end
 ```
 
@@ -374,6 +375,7 @@ end
 
 - `'name'`: The name of the Agent integration to install, for example: `datadog-apache`.
 - `version`: The version of the integration to install (only required with the `:install` action).
+- `third_party`: Set to false if installing a Datadog integration, true otherwise. Available for Datadog Agents version 6.21/7.21 and higher only.
 
 #### Example
 
