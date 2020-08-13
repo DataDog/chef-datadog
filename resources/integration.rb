@@ -21,6 +21,7 @@ action :install do
   Chef::Log.debug("Getting integration #{new_resource.property_name}")
 
   execute 'integration install' do
+    # Space at the end of '--third-party ' is intentional, so that if --third-party is not specified, no additional space is added to the command line
     command   "\"#{agent_exe_filepath}\" integration install #{'--third-party ' if new_resource.third_party}#{new_resource.property_name}==#{new_resource.version}"
     user      'dd-agent' unless node['platform_family'] == 'windows'
 
