@@ -168,18 +168,10 @@ service 'datadog-agent' do
 end
 
 system_probe_managed = node['datadog']['system_probe']['manage_config']
-if system_probe_managed
-  ruby_block 'include system-probe' do
-    block do
-      # only load system-probe recipe if an agent 6/7 installation comes with it
-      system_probe_supported = !is_windows && Chef::Datadog.agent_major_version(node) > 5
-      system_probe_installed = ::File.exist?('/opt/datadog-agent/embedded/bin/system-probe')
-      if system_probe_supported && system_probe_installed
-        run_context.include_recipe 'datadog::system-probe'
-      end
-    end
-  end
-end
+system_probe_supported = !is_windows && Chef::Datadog.agent_major_version(node) > 5
+
+# system-probe is a dependency of the agent on Linux
+include_recipe 'datadog::system-probe' if system_probe_managed && system_probe_supported
 
 # Installation metadata to let know the agent about installation method and its version
 include_recipe 'datadog::install_info'
