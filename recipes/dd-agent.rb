@@ -35,6 +35,8 @@ ruby_block 'datadog-api-key-unset' do
   only_if { Chef::Datadog.api_key(node).nil? }
 end
 
+agent_major_version = Chef::Datadog.agent_major_version(node)
+agent_minor_version = Chef::Datadog.agent_minor_version(node)
 is_windows = node['platform_family'] == 'windows'
 
 # Install the agent
@@ -62,7 +64,7 @@ agent_start = node['datadog']['agent_start'] ? :start : :stop
 # To add integration-specific configurations, add 'datadog::config_name' to
 # the node's run_list and set the relevant attributes
 #
-if Chef::Datadog.agent_major_version(node) > 5
+if agent_major_version > 5
   include_recipe 'datadog::_agent6_config'
   agent_config_dir = is_windows ? "#{ENV['ProgramData']}/Datadog" : '/etc/datadog-agent'
   directory agent_config_dir do
@@ -131,7 +133,7 @@ end
 
 # Common configuration
 service_provider = nil
-if Chef::Datadog.agent_major_version(node) > 5 &&
+if agent_major_version > 5 &&
    (((node['platform'] == 'amazon' || node['platform_family'] == 'amazon') && node['platform_version'].to_i != 2) ||
     (node['platform'] == 'ubuntu' && node['platform_version'].to_f < 15.04) || # chef <11.14 doesn't use the correct service provider
    (node['platform'] != 'amazon' && node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7))
@@ -168,18 +170,13 @@ service 'datadog-agent' do
 end
 
 system_probe_managed = node['datadog']['system_probe']['manage_config']
-if system_probe_managed
-  ruby_block 'include system-probe' do
-    block do
-      # only load system-probe recipe if an agent 6/7 installation comes with it
-      system_probe_supported = !is_windows && Chef::Datadog.agent_major_version(node) > 5
-      system_probe_installed = ::File.exist?('/opt/datadog-agent/embedded/bin/system-probe')
-      if system_probe_supported && system_probe_installed
-        run_context.include_recipe 'datadog::system-probe'
-      end
-    end
-  end
-end
+agent_version_greater_than_6_11 = agent_major_version > 5 && (agent_minor_version.nil? || agent_minor_version > 11) || agent_major_version > 6
+
+# System probe requires at least agent 6.12, before that it was called the network-tracer
+system_probe_supported = agent_version_greater_than_6_11 && !is_windows
+
+# system-probe is a dependency of the agent on Linux
+include_recipe 'datadog::system-probe' if system_probe_managed && system_probe_supported
 
 # Installation metadata to let know the agent about installation method and its version
 include_recipe 'datadog::install_info'

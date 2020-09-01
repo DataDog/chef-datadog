@@ -18,11 +18,14 @@
 #
 
 # Set the correct agent startup action
-sysprobe_agent_start = node['datadog']['system_probe']['enabled'] ? :start : :stop
+sysprobe_enabled = node['datadog']['system_probe']['enabled']
+sysprobe_agent_start = sysprobe_enabled ? :start : :stop
 
 #
 # Configures system-probe agent
 system_probe_config_file = '/etc/datadog-agent/system-probe.yaml'
+system_probe_config_file_exists = ::File.exist?(system_probe_config_file)
+
 template system_probe_config_file do
   extra_config = {}
   if node['datadog']['extra_config'] && node['datadog']['extra_config']['system_probe']
@@ -47,6 +50,9 @@ template system_probe_config_file do
   notifies :restart, 'service[datadog-agent-sysprobe]', :delayed if node['datadog']['system_probe']['enabled']
   # since process-agent collects network info through system-probe, enabling system-probe should also restart process-agent
   notifies :restart, 'service[datadog-agent]', :delayed if node['datadog']['system_probe']['enabled']
+
+  # System probe is not enabled and the file doesn't exists, don't create it
+  not_if { !sysprobe_enabled && !system_probe_config_file_exists }
 end
 
 # Common configuration
