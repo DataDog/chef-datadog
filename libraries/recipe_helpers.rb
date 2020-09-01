@@ -52,6 +52,20 @@ class Chef
         7
       end
 
+      def agent_minor_version(node)
+        agent_version = agent_version(node)
+        unless agent_version.nil?
+          match = agent_version.match(/([0-9]+:)?([0-9]+)\.([0-9]+)\.([0-9]+)([^-\s]+)?(?:-([0-9]+))?/)
+          if match.nil?
+            Chef::Log.warn "Couldn't infer agent_minor_version from agent_version '#{agent_version}'"
+          else
+            _epoch, _major, minor, _patch, _suffix, _release = match.captures
+            return minor.to_i
+          end
+        end
+        nil
+      end
+
       def agent_flavor(node)
         # user-specified values
         agent_flavor = node['datadog']['agent_flavor']
