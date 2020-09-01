@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe 'datadog::system-probe' do
-  context 'with configuration' do
-    cached(:chef_run) do
+  context 'with system-probe not enabled' do
+    cached(:solo) do
       ChefSpec::SoloRunner.new(
         platform: 'ubuntu',
         version: '16.04'
@@ -17,7 +17,46 @@ describe 'datadog::system-probe' do
             'sysprobe_socket' => '/test/ing.sock'
           }
         }
-      end.converge described_recipe
+      end
+    end
+
+    cached(:chef_run) do
+      solo.converge(described_recipe) do
+        solo.resource_collection.insert(
+          Chef::Resource::Service.new('datadog-agent', solo.run_context))
+      end
+    end
+
+    it 'is NOT created' do
+      expect(chef_run).not_to create_template('/etc/datadog-agent/system-probe.yaml')
+    end
+  end
+
+  context 'with system-probe enabled' do
+    cached(:solo) do
+      ChefSpec::SoloRunner.new(
+        platform: 'ubuntu',
+        version: '16.04'
+      ) do |node|
+        node.name 'chef-nodename' # expected to be used as the hostname in `datadog.yaml`
+        node.normal['datadog'] = {
+          'api_key' => 'somethingnotnil',
+          'agent_major_version' => 6,
+          'system_probe' => {
+            'enabled' => true,
+            'debug_port' => 123,
+            'bpf_debug' => true,
+            'sysprobe_socket' => '/test/ing.sock'
+          }
+        }
+      end
+    end
+
+    cached(:chef_run) do
+      solo.converge(described_recipe) do
+        solo.resource_collection.insert(
+          Chef::Resource::Service.new('datadog-agent', solo.run_context))
+      end
     end
 
     it 'is created' do
@@ -30,7 +69,7 @@ describe 'datadog::system-probe' do
         bpf_debug: true
         debug_port: 123
         enable_conntrack: false
-        enabled: false
+        enabled: true
         sysprobe_socket: "/test/ing.sock"
       EOF
 
@@ -41,7 +80,7 @@ describe 'datadog::system-probe' do
   end
 
   context 'with extra_config params set' do
-    cached(:chef_run) do
+    cached(:solo) do
       ChefSpec::SoloRunner.new(
         platform: 'ubuntu',
         version: '16.04'
@@ -50,13 +89,23 @@ describe 'datadog::system-probe' do
         node.normal['datadog'] = {
           'api_key' => 'somethingnotnil',
           'agent_major_version' => 6,
+          'system_probe' => {
+            'enabled' => true,
+          },
           'extra_config' => {
             'system_probe' => {
               'max_tracked_connections' => 1000
             }
           }
         }
-      end.converge described_recipe
+      end
+    end
+
+    cached(:chef_run) do
+      solo.converge(described_recipe) do
+        solo.resource_collection.insert(
+          Chef::Resource::Service.new('datadog-agent', solo.run_context))
+      end
     end
 
     it 'is created' do
@@ -69,7 +118,7 @@ describe 'datadog::system-probe' do
         bpf_debug: false
         debug_port: 0
         enable_conntrack: false
-        enabled: false
+        enabled: true
         sysprobe_socket: "/opt/datadog-agent/run/sysprobe.sock"
         max_tracked_connections: 1000
       EOF
