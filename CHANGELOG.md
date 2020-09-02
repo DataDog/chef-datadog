@@ -8,12 +8,9 @@ Changes
 * [FEATURE] Install dd agent with yum on Amazon Linux 1. See [#731][] [@tymartin-novu][]
 * [FEATURE] Add third-party integrations support. See [#734][] [@julien-lebot][]
 * [FEATURE] Add Amazon Linux 2 to kitchen tests. See [#735][] [@julien-lebot][]
-* [OPTIMIZE] Remove equality conditions with booleans. See [#733][] [@albertvaka][]
 * [BUGFIX] Set windows credentials as sensitive. See [#722][] [@julien-lebot][]
 * [BUGFIX] Remove duplicate attribute. See [#727][] [@julien-lebot][]
 * [BUGFIX] Make dd-agent recipe idempotent. See [#736][] [@julien-lebot][]
-* [MISC] Add dev container env that can run kitchen tests. See [#723][] [@julien-lebot][]
-* [MISC] Update Gemfile.lock. See [#726][] [@julien-lebot][]
 * [MISC] Warn when the Agent will start despite being disabled. See [#732][] [@albertvaka][]
 
 # 4.4.0 / 2020-06-19
