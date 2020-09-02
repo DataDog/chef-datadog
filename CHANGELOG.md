@@ -895,6 +895,16 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#715]: https://github.com/DataDog/chef-datadog/issues/715
 [#717]: https://github.com/DataDog/chef-datadog/issues/717
 [#718]: https://github.com/DataDog/chef-datadog/issues/718
+[#725]: https://github.com/DataDog/chef-datadog/issues/725
+[#728]: https://github.com/DataDog/chef-datadog/issues/728
+[#729]: https://github.com/DataDog/chef-datadog/issues/729
+[#731]: https://github.com/DataDog/chef-datadog/issues/731
+[#734]: https://github.com/DataDog/chef-datadog/issues/734
+[#735]: https://github.com/DataDog/chef-datadog/issues/735
+[#722]: https://github.com/DataDog/chef-datadog/issues/722
+[#727]: https://github.com/DataDog/chef-datadog/issues/727
+[#736]: https://github.com/DataDog/chef-datadog/issues/736
+[#732]: https://github.com/DataDog/chef-datadog/issues/732
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@Azraeht]: https://github.com/Azraeht
