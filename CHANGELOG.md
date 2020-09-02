@@ -1,6 +1,21 @@
 Changes
 =======
 
+# 4.5.0 / 2020-09-02
+* [FEATURE] [cassandra] add support for failures/timeouts/unavailable collection. See [#725][@k2v][]
+* [FEATURE] Add timeout management for Mongo integration. See [#728][@Azraeht][]
+* [FEATURE] add support for the timeout setting for Rabbitmq. See [#729][@ABrehm264][]
+* [FEATURE] Install dd agent with yum on Amazon Linux 1. See [#731][@tymartin-novu][]
+* [FEATURE] Add third-party integrations support. See [#734][@julien-lebot][]
+* [FEATURE] Add Amazon Linux 2 to kitchen tests. See [#735][@julien-lebot][]
+* [OPTIMIZE] Remove equality conditions with booleans. See [#733][@albertvaka][]
+* [BUGFIX] Set windows credentials as sensitive. See [#722][@julien-lebot][]
+* [BUGFIX] Remove duplicate attribute. See [#727][@julien-lebot][]
+* [BUGFIX] Make dd-agent recipe idempotent. See [#736][@julien-lebot][]
+* [MISC] Add dev container env that can run kitchen tests. See [#723][@julien-lebot][]
+* [MISC] Update Gemfile.lock. See [#726][@julien-lebot][]
+* [MISC] Warn when the Agent will start despite being disabled. See [#732][@albertvaka][]
+
 # 4.4.0 / 2020-06-19
 * [FEATURE] Add support for `datadog-iot-agent` agent flavor. See [#717][]
 * [BUGFIX] Do not crash if agent_version doesn't match version regex. See [#711][] [@albertvaka][]
@@ -885,6 +900,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#718]: https://github.com/DataDog/chef-datadog/issues/718
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
+[@Azraeht]: https://github.com/Azraeht
 [@BrentOnRails]: https://github.com/BrentOnRails
 [@DorianZaccaria]: https://github.com/DorianZaccaria
 [@EasyAsABC123]: https://github.com/EasyAsABC123
@@ -1027,6 +1043,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@timusg]: https://github.com/timusg
 [@tmichelet]: https://github.com/tmichelet
 [@truthbk]: https://github.com/truthbk
+[@tymartin-novu]: https://github.com/tymartin-novu
 [@uzyexe]: https://github.com/uzyexe
 [@wk8]: https://github.com/wk8
 [@wolf31o2]: https://github.com/wolf31o2
