@@ -178,8 +178,10 @@ include_recipe 'datadog::dd-agent'
 # }
 
 datadog_monitor 'nginx_ingress_controller' do
+  init_config node['datadog']['nginx_ingress_controller']['init_config']
   instances node['datadog']['nginx_ingress_controller']['instances']
   logs node['datadog']['nginx_ingress_controller']['logs']
+  use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

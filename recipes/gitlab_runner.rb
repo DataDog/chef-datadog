@@ -227,8 +227,10 @@ include_recipe 'datadog::dd-agent'
 # }
 
 datadog_monitor 'gitlab_runner' do
+  init_config node['datadog']['gitlab_runner']['init_config']
   instances node['datadog']['gitlab_runner']['instances']
   logs node['datadog']['gitlab_runner']['logs']
+  use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

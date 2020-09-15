@@ -118,8 +118,10 @@ include_recipe 'datadog::dd-agent'
 # }
 
 datadog_monitor 'hdfs_datanode' do
+  init_config node['datadog']['hdfs_datanode']['init_config']
   instances node['datadog']['hdfs_datanode']['instances']
   logs node['datadog']['hdfs_datanode']['logs']
+  use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

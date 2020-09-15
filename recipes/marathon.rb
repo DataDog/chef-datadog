@@ -126,8 +126,10 @@ include_recipe 'datadog::dd-agent'
 # }
 
 datadog_monitor 'marathon' do
+  init_config node['datadog']['marathon']['init_config']
   instances node['datadog']['marathon']['instances']
   logs node['datadog']['marathon']['logs']
+  use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

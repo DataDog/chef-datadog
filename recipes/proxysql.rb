@@ -54,8 +54,10 @@ include_recipe 'datadog::dd-agent'
 # }
 
 datadog_monitor 'proxysql' do
+  init_config node['datadog']['proxysql']['init_config']
   instances node['datadog']['proxysql']['instances']
   logs node['datadog']['proxysql']['logs']
+  use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

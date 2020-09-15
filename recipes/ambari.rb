@@ -141,8 +141,10 @@ include_recipe 'datadog::dd-agent'
 # }
 
 datadog_monitor 'ambari' do
+  init_config node['datadog']['ambari']['init_config']
   instances node['datadog']['ambari']['instances']
   logs node['datadog']['ambari']['logs']
+  use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

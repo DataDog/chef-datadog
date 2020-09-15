@@ -133,8 +133,10 @@ include_recipe 'datadog::dd-agent'
 # }
 
 datadog_monitor 'activemq_xml' do
+  init_config node['datadog']['activemq_xml']['init_config']
   instances node['datadog']['activemq_xml']['instances']
   logs node['datadog']['activemq_xml']['logs']
+  use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

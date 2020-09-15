@@ -32,8 +32,10 @@ include_recipe 'datadog::dd-agent'
 # }
 
 datadog_monitor 'nfsstat' do
+  init_config node['datadog']['nfsstat']['init_config']
   instances node['datadog']['nfsstat']['instances']
   logs node['datadog']['nfsstat']['logs']
+  use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

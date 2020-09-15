@@ -129,8 +129,10 @@ include_recipe 'datadog::dd-agent'
 # }
 
 datadog_monitor 'cloud_foundry_api' do
+  init_config node['datadog']['cloud_foundry_api']['init_config']
   instances node['datadog']['cloud_foundry_api']['instances']
   logs node['datadog']['cloud_foundry_api']['logs']
+  use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

@@ -415,8 +415,10 @@ include_recipe 'datadog::dd-agent'
 # }
 
 datadog_monitor 'aerospike' do
+  init_config node['datadog']['aerospike']['init_config']
   instances node['datadog']['aerospike']['instances']
   logs node['datadog']['aerospike']['logs']
+  use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

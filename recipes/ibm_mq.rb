@@ -92,8 +92,10 @@ include_recipe 'datadog::dd-agent'
 # }
 
 datadog_monitor 'ibm_mq' do
+  init_config node['datadog']['ibm_mq']['init_config']
   instances node['datadog']['ibm_mq']['instances']
   logs node['datadog']['ibm_mq']['logs']
+  use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

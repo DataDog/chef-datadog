@@ -51,8 +51,10 @@ include_recipe 'datadog::dd-agent'
 # }
 
 datadog_monitor 'hyperv' do
+  init_config node['datadog']['hyperv']['init_config']
   instances node['datadog']['hyperv']['instances']
   logs node['datadog']['hyperv']['logs']
+  use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

@@ -118,8 +118,10 @@ include_recipe 'datadog::dd-agent'
 # }
 
 datadog_monitor 'kong' do
+  init_config node['datadog']['kong']['init_config']
   instances node['datadog']['kong']['instances']
   logs node['datadog']['kong']['logs']
+  use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

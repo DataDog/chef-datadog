@@ -133,8 +133,10 @@ include_recipe 'datadog::dd-agent'
 # }
 
 datadog_monitor 'spark' do
+  init_config node['datadog']['spark']['init_config']
   instances node['datadog']['spark']['instances']
   logs node['datadog']['spark']['logs']
+  use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

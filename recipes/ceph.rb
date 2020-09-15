@@ -57,8 +57,10 @@ include_recipe 'datadog::dd-agent'
 # }
 
 datadog_monitor 'ceph' do
+  init_config node['datadog']['ceph']['init_config']
   instances node['datadog']['ceph']['instances']
   logs node['datadog']['ceph']['logs']
+  use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

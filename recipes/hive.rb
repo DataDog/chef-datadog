@@ -86,8 +86,10 @@ include_recipe 'datadog::dd-agent'
 # }
 
 datadog_monitor 'hive' do
+  init_config node['datadog']['hive']['init_config']
   instances node['datadog']['hive']['instances']
   logs node['datadog']['hive']['logs']
+  use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

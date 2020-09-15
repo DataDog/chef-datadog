@@ -40,8 +40,10 @@ include_recipe 'datadog::dd-agent'
 # }
 
 datadog_monitor 'rethinkdb' do
+  init_config node['datadog']['rethinkdb']['init_config']
   instances node['datadog']['rethinkdb']['instances']
   logs node['datadog']['rethinkdb']['logs']
+  use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end
