@@ -64,7 +64,7 @@ module ConfigSpecification
       when Array
         buffer << "[\n"
         object.each do |sub_object|
-          buffer << dump_value(sub_object, indent: indent + 2)
+          buffer << dump_value(sub_object, indent: indent + 2).rstrip
           buffer << ",\n"
         end
         buffer << ' ' * indent

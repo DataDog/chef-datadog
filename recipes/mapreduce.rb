@@ -13,11 +13,9 @@ include_recipe 'datadog::dd-agent'
 #         "counters" => [
 #           {
 #             "counter_name" => "HDFS_BYTES_READ",
-#           }
-# ,
+#           },
 #         ],
-#       }
-# ,
+#       },
 #     ],
 #     # job_specific_counters - required: false  - array of object
 #     "job_specific_counters" => [
@@ -29,28 +27,22 @@ include_recipe 'datadog::dd-agent'
 #             "counters" => [
 #               {
 #                 "counter_name" => "FILE_BYTES_WRITTEN",
-#               }
-# ,
+#               },
 #               {
 #                 "counter_name" => "HDFS_BYTES_WRITTEN",
-#               }
-# ,
+#               },
 #             ],
-#           }
-# ,
+#           },
 #           {
 #             "counter_group_name" => "org.apache.hadoop.mapreduce.FileSystemCounter",
 #             "counters" => [
 #               {
 #                 "counter_name" => "HDFS_BYTES_READ",
-#               }
-# ,
+#               },
 #             ],
-#           }
-# ,
+#           },
 #         ],
-#       }
-# ,
+#       },
 #     ],
 #     # proxy - required: false  - object
 #     "proxy" => {

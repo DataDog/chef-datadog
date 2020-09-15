@@ -13,8 +13,7 @@ include_recipe 'datadog::dd-agent'
 #         "query" => "<QUERY>",
 #         "columns" => "<COLUMNS>",
 #         "tags" => "<TAGS>",
-#       }
-# ,
+#       },
 #     ],
 #     # service - required: false  - string
 #     "service" => nil,
@@ -50,19 +49,16 @@ include_recipe 'datadog::dd-agent'
 #             {
 #               "name" => "foo",
 #               "type" => "tag",
-#             }
-# ,
+#             },
 #             {
 #               "name" => "event.total",
 #               "type" => "gauge",
-#             }
-# ,
+#             },
 #           ],
 #           "tags" => [
 #             "test:clickhouse",
 #           ],
-#         }
-# ,
+#         },
 #       ],
 #       # tags - required: false  - array of string
 #       "tags" => [
