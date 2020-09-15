@@ -60,7 +60,7 @@ default['datadog']['agent_allow_downgrade'] = false
 
 # The site of the Datadog intake to send Agent data to.
 # This configuration option is supported since Agent 6.6
-# Defaults to 'datadoghq.com', set to 'datadoghq.eu' to send data to the EU site.
+# Defaults to 'datadoghq.com', can be set to 'datadoghq.eu' (for the EU site) or 'us3.datadoghq.com'.
 default['datadog']['site'] = nil
 
 # The port on which the IPC api listens
