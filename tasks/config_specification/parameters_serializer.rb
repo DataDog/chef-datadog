@@ -6,11 +6,10 @@ module ConfigSpecification
     end
 
     def serialize
-      found = nil
       if specification.files.size > 1
-        puts "! WARNING: Found more than one file in spec for #{integration_name}: #{specification.files.map(&:canonic_name).join(", ")}"
+        puts "! WARNING: Found more than one file in spec for #{integration_name}: #{specification.files.map(&:canonic_name).join(', ')}"
       end
-      file = specification.files.find {|f| f.canonic_name == integration_name}
+      file = specification.files.find { |f| f.canonic_name == integration_name }
       if file.nil?
         file = specification.files.first
         puts "! WARNING: Found no file named #{integration_name} in spec, will use #{file.canonic_name} instead"
