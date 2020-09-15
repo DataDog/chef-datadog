@@ -5,10 +5,6 @@ module ConfigSpecification
 
     attribute :name, String
     attribute :files, Array['ConfigSpecification::Configuration']
-
-    def integration_name
-      name.gsub(/ +/, ' ').split(' ').map(&:capitalize).join.underscore
-    end
   end
 
   class Configuration

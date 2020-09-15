@@ -1,9 +1,9 @@
 
 module ConfigSpecification
   class MonitorSerializer
-    def initialize(specification)
+    def initialize(specification, integration_name)
       @specification = specification
-      @integration_name = specification.integration_name
+      @integration_name = integration_name
     end
 
     def serialize
@@ -34,7 +34,7 @@ end
     end
 
     def parameters
-      ParametersSerializer.new(specification).serialize[integration_name]
+      ParametersSerializer.new(specification, integration_name).serialize
     end
   end
 end

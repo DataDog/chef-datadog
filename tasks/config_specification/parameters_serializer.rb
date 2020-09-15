@@ -1,18 +1,27 @@
 module ConfigSpecification
   class ParametersSerializer
-    def initialize(specification)
+    def initialize(specification, integration_name)
       @specification = specification
+      @integration_name = integration_name
     end
 
     def serialize
-      specification.files.each_with_object({}) do |file, parameters|
-        parameters[file.canonic_name] = dump_options(file.options)
+      found = nil
+      if specification.files.size > 1
+        puts "! WARNING: Found more than one file in spec for #{integration_name}: #{specification.files.map(&:canonic_name).join(", ")}"
       end
+      file = specification.files.find {|f| f.canonic_name == integration_name}
+      if file.nil?
+        file = specification.files.first
+        puts "! WARNING: Found no file named #{integration_name} in spec, will use #{file.canonic_name} instead"
+      end
+      dump_options(file.options)
     end
 
     private
 
     attr_reader :specification
+    attr_reader :integration_name
 
     def dump_options(options, indent: 0)
       buffer = ' ' * indent

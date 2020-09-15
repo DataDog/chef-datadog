@@ -69,6 +69,8 @@ include_recipe 'datadog::dd-agent'
 #       "ssl_cipher_spec" => "TLS_RSA_WITH_AES_256_CBC_SHA",
 #       # ssl_key_repository_location - required: false  - string
 #       "ssl_key_repository_location" => "/var/mqm/ssl-db/client/KeyringClient",
+#       # ssl_certificate_label - required: false  - string
+#       "ssl_certificate_label" => nil,
 #       # queue_tag_re - required: false  - object
 #       "queue_tag_re" => {
 #         "SYSTEM.*" => "queue_type:system",

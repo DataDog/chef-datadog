@@ -32,7 +32,7 @@ begin
     core_path.glob("#{integration_pattern}/assets/configuration/spec.yaml")
   end
 
-  def integration_name(spec_path)
+  def integration_name_from_spec_path(spec_path)
     steps = spec_path.to_s.split('/')
     # integrations-core is the base folder so the integration name is
     # its child folder
@@ -53,7 +53,7 @@ begin
       puts "Found #{matching_specs.size} matching specifications"
 
       matching_specs.each do |spec_path|
-        current_integration_name = integration_name(spec_path)
+        current_integration_name = integration_name_from_spec_path(spec_path)
 
         puts "Loading specification of integration '#{current_integration_name}'"
 
@@ -63,7 +63,7 @@ begin
         output_path = (ROOT_PATH + "recipes/#{current_integration_name}.rb").cleanpath
 
         puts "Writing default configuration to #{output_path}"
-        recipe = ConfigSpecification::MonitorSerializer.new(specification).serialize
+        recipe = ConfigSpecification::MonitorSerializer.new(specification, current_integration_name).serialize
         File.write(output_path, recipe)
       end
     end
