@@ -1,9 +1,9 @@
 include_recipe 'datadog::dd-agent'
 
-# Monitor Riak
+# Monitor Yarn
 #
 # Here is the description of acceptable attributes:
-# node.datadog.riak = {
+# node.datadog.yarn = {
 #   # init_config - required: false
 #   "init_config" => {
 #     # proxy - required: false  - object
@@ -25,8 +25,36 @@ include_recipe 'datadog::dd-agent'
 #   # instances - required: false
 #   "instances" => [
 #     {
-#       # url - required: true  - string
-#       "url" => "http://127.0.0.1:8098/stats",
+#       # resourcemanager_uri - required: true  - string
+#       "resourcemanager_uri" => "http://localhost:8088",
+#       # cluster_name - required: true  - string
+#       "cluster_name" => "default_cluster",
+#       # application_tags - required: false  - object
+#       "application_tags" => {
+#         "<TAG_KEY1>" => "<YARN_KEY>",
+#         "<TAG_KEY2>" => "<YARN_KEY>",
+#       },
+#       # application_status_mapping - required: false  - object
+#       "application_status_mapping" => {
+#         "ALL" => "unknown",
+#         "NEW" => "ok",
+#         "NEW_SAVING" => "ok",
+#         "SUBMITTED" => "ok",
+#         "ACCEPTED" => "ok",
+#         "RUNNING" => "ok",
+#         "FINISHED" => "ok",
+#         "FAILED" => "critical",
+#         "KILLED" => "critical",
+#       },
+#       # collect_app_metrics - required: false  - boolean
+#       "collect_app_metrics" => true,
+#       # queue_blacklist - required: false  - array of string
+#       "queue_blacklist" => [
+#         "<QUEUE_NAME_1>",
+#         "<QUEUE_NAME_2>",
+#       ],
+#       # split_yarn_application_tags - required: false  - boolean
+#       "split_yarn_application_tags" => false,
 #       # proxy - required: false  - object
 #       "proxy" => {
 #         "http" => "http://<PROXY_SERVER_FOR_HTTP>:<PORT>",
@@ -117,10 +145,10 @@ include_recipe 'datadog::dd-agent'
 #   "logs" => nil,
 # }
 
-datadog_monitor 'riak' do
-  init_config node['datadog']['riak']['init_config']
-  instances node['datadog']['riak']['instances']
-  logs node['datadog']['riak']['logs']
+datadog_monitor 'yarn' do
+  init_config node['datadog']['yarn']['init_config']
+  instances node['datadog']['yarn']['instances']
+  logs node['datadog']['yarn']['logs']
   use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']

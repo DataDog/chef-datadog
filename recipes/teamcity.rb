@@ -1,9 +1,9 @@
 include_recipe 'datadog::dd-agent'
 
-# Monitor Riak
+# Monitor Teamcity
 #
 # Here is the description of acceptable attributes:
-# node.datadog.riak = {
+# node.datadog.teamcity = {
 #   # init_config - required: false
 #   "init_config" => {
 #     # proxy - required: false  - object
@@ -25,8 +25,18 @@ include_recipe 'datadog::dd-agent'
 #   # instances - required: false
 #   "instances" => [
 #     {
-#       # url - required: true  - string
-#       "url" => "http://127.0.0.1:8098/stats",
+#       # name - required: true  - string
+#       "name" => "<BUILD_NAME>",
+#       # server - required: true  - string
+#       "server" => "http://teamcity.<ACCOUNT_NAME>.com",
+#       # build_configuration - required: true  - string
+#       "build_configuration" => nil,
+#       # basic_http_authentication - required: false  - boolean
+#       "basic_http_authentication" => false,
+#       # host_affected - required: false  - string
+#       "host_affected" => nil,
+#       # is_deployment - required: false  - boolean
+#       "is_deployment" => false,
 #       # proxy - required: false  - object
 #       "proxy" => {
 #         "http" => "http://<PROXY_SERVER_FOR_HTTP>:<PORT>",
@@ -113,14 +123,12 @@ include_recipe 'datadog::dd-agent'
 #       "empty_default_hostname" => false,
 #     },
 #   ],
-#   # logs - required: false
-#   "logs" => nil,
 # }
 
-datadog_monitor 'riak' do
-  init_config node['datadog']['riak']['init_config']
-  instances node['datadog']['riak']['instances']
-  logs node['datadog']['riak']['logs']
+datadog_monitor 'teamcity' do
+  init_config node['datadog']['teamcity']['init_config']
+  instances node['datadog']['teamcity']['instances']
+  logs node['datadog']['teamcity']['logs']
   use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']

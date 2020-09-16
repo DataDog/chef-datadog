@@ -1,9 +1,9 @@
 include_recipe 'datadog::dd-agent'
 
-# Monitor Riak
+# Monitor Kong
 #
 # Here is the description of acceptable attributes:
-# node.datadog.riak = {
+# node.datadog.kong = {
 #   # init_config - required: false
 #   "init_config" => {
 #     # proxy - required: false  - object
@@ -25,8 +25,8 @@ include_recipe 'datadog::dd-agent'
 #   # instances - required: false
 #   "instances" => [
 #     {
-#       # url - required: true  - string
-#       "url" => "http://127.0.0.1:8098/stats",
+#       # kong_status_url - required: true  - string
+#       "kong_status_url" => "http://localhost:8001/status/",
 #       # proxy - required: false  - object
 #       "proxy" => {
 #         "http" => "http://<PROXY_SERVER_FOR_HTTP>:<PORT>",
@@ -117,10 +117,10 @@ include_recipe 'datadog::dd-agent'
 #   "logs" => nil,
 # }
 
-datadog_monitor 'riak' do
-  init_config node['datadog']['riak']['init_config']
-  instances node['datadog']['riak']['instances']
-  logs node['datadog']['riak']['logs']
+datadog_monitor 'kong' do
+  init_config node['datadog']['kong']['init_config']
+  instances node['datadog']['kong']['instances']
+  logs node['datadog']['kong']['logs']
   use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']

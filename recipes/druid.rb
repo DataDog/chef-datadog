@@ -1,9 +1,9 @@
 include_recipe 'datadog::dd-agent'
 
-# Monitor Riak
+# Monitor Druid
 #
 # Here is the description of acceptable attributes:
-# node.datadog.riak = {
+# node.datadog.druid = {
 #   # init_config - required: false
 #   "init_config" => {
 #     # proxy - required: false  - object
@@ -26,7 +26,7 @@ include_recipe 'datadog::dd-agent'
 #   "instances" => [
 #     {
 #       # url - required: true  - string
-#       "url" => "http://127.0.0.1:8098/stats",
+#       "url" => "<DRUID_INSTANCE_URL>",
 #       # proxy - required: false  - object
 #       "proxy" => {
 #         "http" => "http://<PROXY_SERVER_FOR_HTTP>:<PORT>",
@@ -117,10 +117,10 @@ include_recipe 'datadog::dd-agent'
 #   "logs" => nil,
 # }
 
-datadog_monitor 'riak' do
-  init_config node['datadog']['riak']['init_config']
-  instances node['datadog']['riak']['instances']
-  logs node['datadog']['riak']['logs']
+datadog_monitor 'druid' do
+  init_config node['datadog']['druid']['init_config']
+  instances node['datadog']['druid']['instances']
+  logs node['datadog']['druid']['logs']
   use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']

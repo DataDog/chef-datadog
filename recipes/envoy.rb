@@ -1,9 +1,9 @@
 include_recipe 'datadog::dd-agent'
 
-# Monitor Riak
+# Monitor Envoy
 #
 # Here is the description of acceptable attributes:
-# node.datadog.riak = {
+# node.datadog.envoy = {
 #   # init_config - required: false
 #   "init_config" => {
 #     # proxy - required: false  - object
@@ -25,8 +25,29 @@ include_recipe 'datadog::dd-agent'
 #   # instances - required: false
 #   "instances" => [
 #     {
-#       # url - required: true  - string
-#       "url" => "http://127.0.0.1:8098/stats",
+#       # stats_url - required: true  - string
+#       "stats_url" => "http://localhost:80/stats",
+#       # included_metrics - required: false  - array of string
+#       "included_metrics" => [
+#         "cluster\\.(in|out)\\..*",
+#       ],
+#       # excluded_metrics - required: false  - array of string
+#       "excluded_metrics" => [
+#         "^http\\..*",
+#       ],
+#       # cache_metrics - required: false  - boolean
+#       "cache_metrics" => true,
+#       # tags - required: false  - array of string
+#       "tags" => [
+#         "<KEY_1>:<VALUE_1>",
+#         "<KEY_2>:<VALUE_2>",
+#       ],
+#       # service - required: false  - string
+#       "service" => nil,
+#       # min_collection_interval - required: false  - number
+#       "min_collection_interval" => 15,
+#       # empty_default_hostname - required: false  - boolean
+#       "empty_default_hostname" => false,
 #       # proxy - required: false  - object
 #       "proxy" => {
 #         "http" => "http://<PROXY_SERVER_FOR_HTTP>:<PORT>",
@@ -100,27 +121,16 @@ include_recipe 'datadog::dd-agent'
 #       "log_requests" => false,
 #       # persist_connections - required: false  - boolean
 #       "persist_connections" => false,
-#       # tags - required: false  - array of string
-#       "tags" => [
-#         "<KEY_1>:<VALUE_1>",
-#         "<KEY_2>:<VALUE_2>",
-#       ],
-#       # service - required: false  - string
-#       "service" => nil,
-#       # min_collection_interval - required: false  - number
-#       "min_collection_interval" => 15,
-#       # empty_default_hostname - required: false  - boolean
-#       "empty_default_hostname" => false,
 #     },
 #   ],
 #   # logs - required: false
 #   "logs" => nil,
 # }
 
-datadog_monitor 'riak' do
-  init_config node['datadog']['riak']['init_config']
-  instances node['datadog']['riak']['instances']
-  logs node['datadog']['riak']['logs']
+datadog_monitor 'envoy' do
+  init_config node['datadog']['envoy']['init_config']
+  instances node['datadog']['envoy']['instances']
+  logs node['datadog']['envoy']['logs']
   use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']

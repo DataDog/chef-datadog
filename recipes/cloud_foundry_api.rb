@@ -1,32 +1,38 @@
 include_recipe 'datadog::dd-agent'
 
-# Monitor Riak
+# Monitor Cloud Foundry API
 #
 # Here is the description of acceptable attributes:
-# node.datadog.riak = {
-#   # init_config - required: false
-#   "init_config" => {
-#     # proxy - required: false  - object
-#     "proxy" => {
-#       "http" => "http://<PROXY_SERVER_FOR_HTTP>:<PORT>",
-#       "https" => "https://<PROXY_SERVER_FOR_HTTPS>:<PORT>",
-#       "no_proxy" => [
-#         "<HOSTNAME_1>",
-#         "<HOSTNAME_2>",
-#       ],
-#     },
-#     # skip_proxy - required: false  - boolean
-#     "skip_proxy" => false,
-#     # timeout - required: false  - number
-#     "timeout" => 10,
-#     # service - required: false  - string
-#     "service" => nil,
-#   },
+# node.datadog.cloud_foundry_api = {
 #   # instances - required: false
 #   "instances" => [
 #     {
-#       # url - required: true  - string
-#       "url" => "http://127.0.0.1:8098/stats",
+#       # api_url - required: true  - string
+#       "api_url" => nil,
+#       # client_id - required: true  - string
+#       "client_id" => nil,
+#       # client_secret - required: true  - string
+#       "client_secret" => nil,
+#       # event_filter - required: false  - array of string
+#       "event_filter" => [
+#         "audit.app.restage",
+#         "audit.app.update",
+#         "audit.app.create",
+#         "app.crash",
+#       ],
+#       # results_per_page - required: false  - integer
+#       "results_per_page" => nil,
+#       # tags - required: false  - array of string
+#       "tags" => [
+#         "<KEY_1>:<VALUE_1>",
+#         "<KEY_2>:<VALUE_2>",
+#       ],
+#       # service - required: false  - string
+#       "service" => nil,
+#       # min_collection_interval - required: false  - number
+#       "min_collection_interval" => 15,
+#       # empty_default_hostname - required: false  - boolean
+#       "empty_default_hostname" => false,
 #       # proxy - required: false  - object
 #       "proxy" => {
 #         "http" => "http://<PROXY_SERVER_FOR_HTTP>:<PORT>",
@@ -100,27 +106,32 @@ include_recipe 'datadog::dd-agent'
 #       "log_requests" => false,
 #       # persist_connections - required: false  - boolean
 #       "persist_connections" => false,
-#       # tags - required: false  - array of string
-#       "tags" => [
-#         "<KEY_1>:<VALUE_1>",
-#         "<KEY_2>:<VALUE_2>",
-#       ],
-#       # service - required: false  - string
-#       "service" => nil,
-#       # min_collection_interval - required: false  - number
-#       "min_collection_interval" => 15,
-#       # empty_default_hostname - required: false  - boolean
-#       "empty_default_hostname" => false,
 #     },
 #   ],
-#   # logs - required: false
-#   "logs" => nil,
+#   # init_config - required: false
+#   "init_config" => {
+#     # service - required: false  - string
+#     "service" => nil,
+#     # proxy - required: false  - object
+#     "proxy" => {
+#       "http" => "http://<PROXY_SERVER_FOR_HTTP>:<PORT>",
+#       "https" => "https://<PROXY_SERVER_FOR_HTTPS>:<PORT>",
+#       "no_proxy" => [
+#         "<HOSTNAME_1>",
+#         "<HOSTNAME_2>",
+#       ],
+#     },
+#     # skip_proxy - required: false  - boolean
+#     "skip_proxy" => false,
+#     # timeout - required: false  - number
+#     "timeout" => 10,
+#   },
 # }
 
-datadog_monitor 'riak' do
-  init_config node['datadog']['riak']['init_config']
-  instances node['datadog']['riak']['instances']
-  logs node['datadog']['riak']['logs']
+datadog_monitor 'cloud_foundry_api' do
+  init_config node['datadog']['cloud_foundry_api']['init_config']
+  instances node['datadog']['cloud_foundry_api']['instances']
+  logs node['datadog']['cloud_foundry_api']['logs']
   use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']

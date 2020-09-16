@@ -1,9 +1,9 @@
 include_recipe 'datadog::dd-agent'
 
-# Monitor Riak
+# Monitor MarkLogic
 #
 # Here is the description of acceptable attributes:
-# node.datadog.riak = {
+# node.datadog.marklogic = {
 #   # init_config - required: false
 #   "init_config" => {
 #     # proxy - required: false  - object
@@ -26,7 +26,22 @@ include_recipe 'datadog::dd-agent'
 #   "instances" => [
 #     {
 #       # url - required: true  - string
-#       "url" => "http://127.0.0.1:8098/stats",
+#       "url" => "http://localhost:8002/",
+#       # enable_health_service_checks - required: false  - boolean
+#       "enable_health_service_checks" => false,
+#       # resource_filters - required: false  - array of object
+#       "resource_filters" => [
+#         {
+#           "resource_type" => "forest",
+#           "pattern" => "Documents",
+#         },
+#         {
+#           "resource_type" => "database",
+#           "include" => false,
+#           "pattern" => "Doc*",
+#           "group" => "Default",
+#         },
+#       ],
 #       # proxy - required: false  - object
 #       "proxy" => {
 #         "http" => "http://<PROXY_SERVER_FOR_HTTP>:<PORT>",
@@ -113,14 +128,12 @@ include_recipe 'datadog::dd-agent'
 #       "empty_default_hostname" => false,
 #     },
 #   ],
-#   # logs - required: false
-#   "logs" => nil,
 # }
 
-datadog_monitor 'riak' do
-  init_config node['datadog']['riak']['init_config']
-  instances node['datadog']['riak']['instances']
-  logs node['datadog']['riak']['logs']
+datadog_monitor 'marklogic' do
+  init_config node['datadog']['marklogic']['init_config']
+  instances node['datadog']['marklogic']['instances']
+  logs node['datadog']['marklogic']['logs']
   use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
