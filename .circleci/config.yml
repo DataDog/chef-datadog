@@ -69,6 +69,35 @@ jobs:
       KITCHEN_LOCAL_YAML: kitchen.docker.yml
       CHEF_VERSION: '16.5.77'
       RUBY_VERSION: '2.6.3'
+    steps:
+      - checkout
+      - run:
+          name: Set Ruby version to 2.6.3
+          command: |
+                    rvm install 2.6.3
+                    echo . $(rvm 2.6.3 do rvm env --path) >> $BASH_ENV
+      - run:
+          name: Install bundler
+          command: gem install bundler:1.17.3
+      - run:
+          name: Check bundler version
+          command: bundle --version
+      - run:
+          name: Update bundle with bundler
+          command: bundle update
+      - run:
+          name: Install dependencies with bundler
+          command: bundle install --path .bundle
+      - run:
+          name: Showing gems versions in bundle
+          command: bundle list
+      - run:
+          name: Run specs
+          command: bundle exec rake
+      - run:
+          name: Execute Kitchen tests
+          command: bundle exec rake circle
+          no_output_timeout: 900
 
   specs-ruby2.6.3-chef16.5.77:
     <<: *specs
