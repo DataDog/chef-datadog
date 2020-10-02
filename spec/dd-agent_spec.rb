@@ -140,7 +140,8 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+      # temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+      temp_file = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli.msi')
       mock_digest = Digest::SHA256.new
 
       before do
@@ -171,7 +172,8 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.exe')
+      # temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.exe')
+      temp_file = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli.msi')
       mock_digest = Digest::SHA256.new
 
       before do
@@ -247,7 +249,8 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+      # temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+      temp_file = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli.msi')
       mock_digest = Digest::SHA256.new
 
       before do
@@ -285,7 +288,8 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+      # temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+      temp_file = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli.msi')
 
       it 'installs Datadog Agent' do
         expect(chef_run).to install_windows_package('Datadog Agent').with(installer_type: :msi)
@@ -346,7 +350,8 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+      # temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+      temp_file = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli.msi')
       mock_digest = Digest::SHA256.new
 
       before do
@@ -392,7 +397,8 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+      # temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+      temp_file = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli.msi')
       mock_digest = Digest::SHA256.new
 
       before do
@@ -502,7 +508,8 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+      # temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+      temp_file = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli.msi')
       mock_digest = Digest::SHA256.new
 
       before do
@@ -1097,7 +1104,8 @@ describe 'datadog::dd-agent' do
             end.converge described_recipe
           end
 
-          temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+          # temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+          temp_file = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli.msi')
           mock_digest = Digest::SHA256.new
 
           before do
@@ -1166,7 +1174,8 @@ describe 'datadog::dd-agent' do
           end.converge described_recipe
         end
 
-        temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+        # temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+        temp_file = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli.msi')
         mock_digest = Digest::SHA256.new
 
         before do
@@ -1235,7 +1244,8 @@ describe 'datadog::dd-agent' do
           end.converge described_recipe
         end
 
-        temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+        # temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+        temp_file = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli.msi')
         mock_digest = Digest::SHA256.new
 
         before do
@@ -1273,7 +1283,8 @@ describe 'datadog::dd-agent' do
           end.converge described_recipe
         end
 
-        temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+        # temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+        temp_file = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli.msi')
 
         it 'installs Datadog Agent' do
           expect(chef_run).to install_windows_package('Datadog Agent').with(installer_type: :msi)
