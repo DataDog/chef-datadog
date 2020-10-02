@@ -92,9 +92,6 @@ jobs:
           name: Showing gems versions in bundle
           command: bundle list
       - run:
-          name: Run specs
-          command: bundle exec rake
-      - run:
           name: Execute Kitchen tests
           command: bundle exec rake circle
           no_output_timeout: 900
