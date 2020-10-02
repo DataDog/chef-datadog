@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  full-suite:
+  full-suite: &suite
     machine: true
     environment:
       KITCHEN_LOCAL_YAML: kitchen.docker.yml
@@ -63,6 +63,18 @@ jobs:
           name: Run specs
           command: bundle exec rake spec
 
+  full-suite-chef16.5.77:
+    <<: *suite
+    environment:
+      KITCHEN_LOCAL_YAML: kitchen.docker.yml
+      CHEF_VERSION: '16.5.77'
+
+  specs-ruby2.6.3-chef16.5.77:
+    <<: *specs
+    environment:
+      KITCHEN_LOCAL_YAML: kitchen.docker.yml
+      CHEF_VERSION: '16.5.77'
+
   specs-ruby2.5.1-chef14.10.9:
     <<: *specs
     environment:
@@ -88,8 +100,10 @@ workflows:
   version: 2
   build_and_test:
     jobs:
+      - specs-ruby2.6.3-chef16.5.77
       - specs-ruby2.6.3-chef14.10.9
       - specs-ruby2.5.1-chef14.10.9
       - specs-ruby2.4.3-chef13.12.14
       - specs-ruby2.3.6-chef13.12.14
       - full-suite
+      - full-suite-chef16.5.77
