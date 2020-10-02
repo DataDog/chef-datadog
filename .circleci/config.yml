@@ -68,12 +68,14 @@ jobs:
     environment:
       KITCHEN_LOCAL_YAML: kitchen.docker.yml
       CHEF_VERSION: '16.5.77'
+      RUBY_VERSION: '2.6.3'
 
   specs-ruby2.6.3-chef16.5.77:
     <<: *specs
     environment:
       KITCHEN_LOCAL_YAML: kitchen.docker.yml
       CHEF_VERSION: '16.5.77'
+      RUBY_VERSION: '2.6.3'
 
   specs-ruby2.5.1-chef14.10.9:
     <<: *specs
