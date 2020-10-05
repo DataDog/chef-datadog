@@ -1,6 +1,6 @@
 #
-# Cookbook Name: datadog
-# Recipe: disk
+# Cookbook:: datadog
+# Recipe:: disk
 #
 # This recipe exists to apply (optional) configuration to the disk integration
 # This recipe does not need to be included to use the disk integration,
