@@ -133,14 +133,13 @@ describe 'datadog::dd-agent' do
         set_env_var('ProgramData', 'C:\ProgramData')
         ChefSpec::SoloRunner.new(
           :platform => 'windows',
-          :version => '2012R2',
-          :file_cache_path => 'C:/chef/cache'
+          :version => '2012R2'
         ) do |node|
           node.normal['datadog'] = { 'api_key' => 'somethingnotnil' }
         end.converge described_recipe
       end
 
-      temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+      temp_file = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli.msi')
       mock_digest = Digest::SHA256.new
 
       before do
@@ -161,8 +160,7 @@ describe 'datadog::dd-agent' do
         set_env_var('ProgramData', 'C:\ProgramData')
         ChefSpec::SoloRunner.new(
           :platform => 'windows',
-          :version => '2012R2',
-          :file_cache_path => 'C:/chef/cache'
+          :version => '2012R2'
         ) do |node|
           node.normal['datadog'] = {
             'api_key' => 'somethingnotnil',
@@ -171,7 +169,7 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.exe')
+      temp_file = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli.exe')
       mock_digest = Digest::SHA256.new
 
       before do
@@ -236,18 +234,17 @@ describe 'datadog::dd-agent' do
 
         ChefSpec::SoloRunner.new(
           :platform => 'windows',
-          :version => '2012R2',
-          :file_cache_path => 'C:/chef/cache'
+          :version => '2012R2'
         ) do |node|
           node.normal['datadog'] = {
             'agent_major_version' => 5,
             'api_key' => 'somethingnotnil',
-            'agent_version' => '5.10.1'
+            'agent_version' => '5.10.1',
           }
         end.converge described_recipe
       end
 
-      temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+      temp_file = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli.msi')
       mock_digest = Digest::SHA256.new
 
       before do
@@ -275,8 +272,7 @@ describe 'datadog::dd-agent' do
         set_env_var('ProgramData', 'C:\ProgramData')
         ChefSpec::SoloRunner.new(
           :platform => 'windows',
-          :version => '2012R2',
-          :file_cache_path => 'C:/chef/cache'
+          :version => '2012R2'
         ) do |node|
           node.normal['datadog'] = {
             'api_key' => 'somethingnotnil',
@@ -285,7 +281,7 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+      temp_file = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli.msi')
 
       it 'installs Datadog Agent' do
         expect(chef_run).to install_windows_package('Datadog Agent').with(installer_type: :msi)
@@ -331,8 +327,7 @@ describe 'datadog::dd-agent' do
 
         ChefSpec::SoloRunner.new(
           :platform => 'windows',
-          :version => '2012R2',
-          :file_cache_path => 'C:/chef/cache'
+          :version => '2012R2'
         ) do |node|
           node.normal['datadog'] = {
             'agent_major_version' => 6,
@@ -346,7 +341,7 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+      temp_file = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli.msi')
       mock_digest = Digest::SHA256.new
 
       before do
@@ -375,8 +370,7 @@ describe 'datadog::dd-agent' do
         set_env_var('ProgramData', 'C:\ProgramData')
         ChefSpec::SoloRunner.new(
           :platform => 'windows',
-          :version => '2012R2',
-          :file_cache_path => 'C:/chef/cache'
+          :version => '2012R2'
         ) do |node|
           node.normal['datadog'] = {
             'agent_major_version' => 6,
@@ -392,7 +386,7 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+      temp_file = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli.msi')
       mock_digest = Digest::SHA256.new
 
       before do
@@ -487,8 +481,7 @@ describe 'datadog::dd-agent' do
         set_env_var('ProgramData', 'C:\ProgramData')
         ChefSpec::SoloRunner.new(
           :platform => 'windows',
-          :version => '2012R2',
-          :file_cache_path => 'C:/chef/cache'
+          :version => '2012R2'
         ) do |node|
           node.normal['datadog'] = {
             'agent_major_version' => 5,
@@ -502,7 +495,7 @@ describe 'datadog::dd-agent' do
         end.converge described_recipe
       end
 
-      temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+      temp_file = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli.msi')
       mock_digest = Digest::SHA256.new
 
       before do
@@ -1089,15 +1082,14 @@ describe 'datadog::dd-agent' do
             set_env_var('ProgramData', 'C:\ProgramData')
             ChefSpec::SoloRunner.new(
               platform: 'windows',
-              version: '2012R2',
-              file_cache_path: 'C:/chef/cache'
+              version: '2012R2'
             ) do |node|
               node.name 'chef-nodename' # expected to be used as the hostname in `datadog.yaml`
               node.normal['datadog'] = { 'api_key' => 'somethingnotnil', 'agent_major_version' => 6 }
             end.converge described_recipe
           end
 
-          temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+          temp_file = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli.msi')
           mock_digest = Digest::SHA256.new
 
           before do
@@ -1166,7 +1158,7 @@ describe 'datadog::dd-agent' do
           end.converge described_recipe
         end
 
-        temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+        temp_file = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli.msi')
         mock_digest = Digest::SHA256.new
 
         before do
@@ -1224,8 +1216,7 @@ describe 'datadog::dd-agent' do
           set_env_var('ProgramData', 'C:\ProgramData')
           ChefSpec::SoloRunner.new(
             :platform => 'windows',
-            :version => '2012R2',
-            :file_cache_path => 'C:/chef/cache'
+            :version => '2012R2'
           ) do |node|
             node.normal['datadog'] = {
               'api_key' => 'somethingnotnil',
@@ -1235,7 +1226,7 @@ describe 'datadog::dd-agent' do
           end.converge described_recipe
         end
 
-        temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+        temp_file = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli.msi')
         mock_digest = Digest::SHA256.new
 
         before do
@@ -1263,8 +1254,8 @@ describe 'datadog::dd-agent' do
           set_env_var('ProgramData', 'C:\ProgramData')
           ChefSpec::SoloRunner.new(
             :platform => 'windows',
-            :version => '2012R2',
-            :file_cache_path => 'C:/chef/cache'
+            :version => '2012R2'
+
           ) do |node|
             node.normal['datadog'] = {
               'api_key' => 'somethingnotnil',
@@ -1273,7 +1264,7 @@ describe 'datadog::dd-agent' do
           end.converge described_recipe
         end
 
-        temp_file = ::File.join('C:/chef/cache', 'ddagent-cli.msi')
+        temp_file = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli.msi')
 
         it 'installs Datadog Agent' do
           expect(chef_run).to install_windows_package('Datadog Agent').with(installer_type: :msi)

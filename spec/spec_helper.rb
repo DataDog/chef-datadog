@@ -19,7 +19,7 @@ RSpec.configure do |config|
   # @see https://github.com/chef-cookbooks/yum/issues/140
   config.log_level = :error
 
-  config.file_cache_path = '/var/chef/cache'
+  config.file_cache_path = Chef::Config[:file_cache_path]
 
   config.before do
     # recipes/dd-agent.rb

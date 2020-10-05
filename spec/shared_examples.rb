@@ -119,7 +119,7 @@ end
 shared_examples_for 'windows Datadog Agent v5' do |installer_extension|
   it_behaves_like 'common windows resources v5'
 
-  agent_installer = "C:/chef/cache/ddagent-cli.#{installer_extension}"
+  agent_installer = ::File.join(Chef::Config[:file_cache_path], "ddagent-cli.#{installer_extension}")
 
   it 'downloads the remote file only if it\'s changed' do
     expect(chef_run).to create_remote_file(agent_installer)
@@ -146,7 +146,7 @@ end
 shared_examples_for 'windows Datadog Agent' do |installer_extension|
   it_behaves_like 'common windows resources'
 
-  agent_installer = "C:/chef/cache/ddagent-cli.#{installer_extension}"
+  agent_installer = ::File.join(Chef::Config[:file_cache_path], "ddagent-cli.#{installer_extension}")
 
   it 'downloads the remote file only if it\'s changed' do
     expect(chef_run).to create_remote_file(agent_installer)
