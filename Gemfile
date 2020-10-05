@@ -4,7 +4,6 @@ chef_version = ENV.fetch('CHEF_VERSION', '14.10.9')
 
 gem 'rake'
 gem 'chef', "= #{chef_version}"
-gem 'foodcritic', '~> 11.4.0'
 gem 'cucumber-core', '~> 3.2.1'
 gem 'yaml'
 gem 'chefspec'
@@ -17,7 +16,8 @@ gem 'json_spec', '~> 1.1.4'
 gem 'kitchen-vagrant'
 gem 'kitchen-docker', '~> 2.3.0'
 
-gem 'rubocop', '~> 0.49.1'
+gem 'foodcritic', '~> 16.3.0'
+gem 'rubocop', '~> 0.80.1'
 
 if Gem::Version.new(chef_version) >= Gem::Version.new('14.10.9')
   group :development do
