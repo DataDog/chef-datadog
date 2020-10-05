@@ -16,10 +16,12 @@ Style/PercentLiteralDelimiters:
     '%w': '[]'
 
 Style/TrailingCommaInArrayLiteral:
-  EnforcedStyleForMultiline: consistent_comma
+  #EnforcedStyleForMultiline: comma
+  Enabled: false
 
 Style/TrailingCommaInHashLiteral:
-  EnforcedStyleForMultiline: consistent_comma
+  #EnforcedStyleForMultiline: comma
+  Enabled: false
 
 # Only enforce a wordlist for 5 or longer lists.
 Style/WordArray:

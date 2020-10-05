@@ -25,7 +25,13 @@ namespace :style do
 
   desc 'Run Chef style checks'
   FoodCritic::Rake::LintTask.new(:chef) do |t|
-    t.options = { fail_tags: ['correctness'] }
+    t.options = {
+      fail_tags: ['correctness'],
+      tags: [
+        '~FC048', # Disables: Prefer shell_out helper method to shelling out with ruby
+        '~FC121', # Disables: Cookbook depends on cookbook made obsolete by Chef 14 (chef_handler)
+      ]
+    }
   end
 end
 
