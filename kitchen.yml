@@ -9,7 +9,6 @@ platforms:
 # fedora-20 needs kitchen-docker 1.7.0, but other bugs prevent that version from being used.
 <% test_platforms = %w(
       amazonlinux-2
-      ubuntu-12.04
       ubuntu-14.04
       ubuntu-16.04
       centos-5.11
@@ -19,7 +18,6 @@ platforms:
     )
     chef_versions = %w(
       12.7.2
-      13.11.3
       14
       15
     )
@@ -266,37 +264,6 @@ suites:
               - kitchen
               - sink
 
-- name: datadog_fluentd
-  run_list:
-    - recipe[datadog::fluentd]
-  attributes:
-    datadog:
-      <<: *DATADOG
-      fluentd:
-        instances:
-          - monitor_agent_url: http://localhost.com:24220/api/plugins.json
-            plugin_ids:
-              - api
-              - plugin
-            tags:
-              - kitchen
-              - sink
-
-- name: datadog_haproxy
-  run_list:
-    - recipe[datadog::haproxy]
-  attributes:
-    datadog:
-      <<: *DATADOG
-      haproxy:
-        instances:
-          - username: admin
-            password: sekret
-            url: http://localhost:22002/status
-            status_check: false
-            collect_aggregates_only: true
-            collect_status_metrics: true
-
 - name: datadog_http_check
   run_list:
     - recipe[datadog::http_check]
@@ -349,17 +316,6 @@ suites:
                 exclude:
                   bean_regex:
                     - regex_on_excluded_bean
-
-- name: datadog_mongo
-  run_list:
-    - recipe[datadog::mongo]
-  attributes:
-    datadog:
-      <<: *DATADOG
-      mongo:
-        instances:
-          - host: localhost
-            port: 27017
 
 - name: datadog_mysql
   run_list:
@@ -576,48 +532,6 @@ suites:
       twemproxy:
         instances:
           - url: http://localhost:22222
-
-- name: datadog_postfix
-  run_list:
-    - recipe[sudo]
-    - recipe[datadog::postfix]
-  attributes:
-    authorization:
-      sudo:
-        include_sudoers_d: true
-    datadog:
-      <<: *DATADOG
-      postfix:
-        instances:
-        - directory: "/var/spool/postfix"
-          queues:
-          - incoming
-          - active
-          - deferred
-          tags:
-          - prod
-          - postfix_core
-        - directory: "/var/spool/postfix"
-          queues:
-          - bounce
-          tags:
-          - test
-
-- name: datadog_vault
-  run_list:
-    - recipe[datadog::vault]
-  attributes:
-    datadog:
-      <<: *DATADOG
-      vault:
-        instances:
-          - api_url: http://localhost:8200/v1
-            detect_leader: false
-            skip_proxy: false
-            ssl_verify: true
-            ssl_ca_cert: /path/to/cert.crt
-            tags: ['_default']
-            timeout: 20
 
 # Integrations test of the datadog_integration resource
 - name: dd_integration_resource
