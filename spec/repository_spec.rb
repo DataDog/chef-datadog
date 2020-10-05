@@ -46,7 +46,7 @@ describe 'datadog::repository' do
       end
 
       it 'downloads the new RPM key' do
-        expect(chef_run).to create_remote_file('DATADOG_RPM_KEY_E09422B3.public').with(path: '/var/chef/cache/DATADOG_RPM_KEY_E09422B3.public')
+        expect(chef_run).to create_remote_file('DATADOG_RPM_KEY_E09422B3.public').with(path: ::File.join(Chef::Config[:file_cache_path], 'DATADOG_RPM_KEY_E09422B3.public'))
       end
 
       it 'notifies the GPG key install if a new one is downloaded' do
@@ -88,7 +88,7 @@ describe 'datadog::repository' do
       end
 
       it 'downloads the new RPM key' do
-        expect(chef_run).to create_remote_file('DATADOG_RPM_KEY_E09422B3.public').with(path: '/var/chef/cache/DATADOG_RPM_KEY_E09422B3.public')
+        expect(chef_run).to create_remote_file('DATADOG_RPM_KEY_E09422B3.public').with(path: ::File.join(Chef::Config[:file_cache_path], 'DATADOG_RPM_KEY_E09422B3.public'))
       end
 
       it 'notifies the GPG key install if a new one is downloaded' do
@@ -130,7 +130,7 @@ describe 'datadog::repository' do
       end
 
       it 'downloads the new RPM key' do
-        expect(chef_run).to create_remote_file('DATADOG_RPM_KEY_E09422B3.public').with(path: '/var/chef/cache/DATADOG_RPM_KEY_E09422B3.public')
+        expect(chef_run).to create_remote_file('DATADOG_RPM_KEY_E09422B3.public').with(path: ::File.join(Chef::Config[:file_cache_path], 'DATADOG_RPM_KEY_E09422B3.public'))
       end
 
       it 'notifies the GPG key install if a new one is downloaded' do
