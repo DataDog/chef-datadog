@@ -16,8 +16,8 @@ gem 'json_spec', '~> 1.1.4'
 gem 'kitchen-vagrant'
 gem 'kitchen-docker', '~> 2.3.0'
 
-gem 'foodcritic', '~> 16.3.0'
-gem 'rubocop', '~> 0.80.1'
+gem 'foodcritic', (RUBY_VERSION >= '2.4' ? '~> 16.3.0' : '~> 11.4.0')
+gem 'rubocop', (RUBY_VERSION >= '2.4' ? '~> 0.80.1' : '~> 0.49.1')
 
 if Gem::Version.new(chef_version) >= Gem::Version.new('14.10.9')
   group :development do
