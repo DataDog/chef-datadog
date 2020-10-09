@@ -182,7 +182,7 @@ default['datadog']['windows_blacklist_silent_fail'] = false
 
 # Attribute to specify timeout in seconds on MSI operations (install/uninstall)
 # Default should suffice, but provides a knob in case instances with limited resources timeout.
-default['datadog']['windows_msi_timeout'] = 900
+default['datadog']['windows_msi_timeout'] = 1200
 
 # Agent installer checksum
 # Expected checksum to validate correct agent installer is downloaded (Windows only)
