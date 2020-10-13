@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+require 'yaml' # Our erb templates need this
+
 if node['datadog'].include?('agent6')
   Chef::Log.warn('The boolean "agent6" is no longer used by this cookbook since version 4.0.0. Use "agent_major_version" instead. To keep the previous behaviour pin a 3.x version of the cookbook.')
 end
