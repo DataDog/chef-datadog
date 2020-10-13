@@ -6,6 +6,7 @@ gem 'rake'
 gem 'chef', "= #{chef_version}"
 gem 'foodcritic', '~> 11.4.0'
 gem 'cucumber-core', '~> 3.2.1'
+gem 'yaml'
 gem 'chefspec'
 gem 'berkshelf'
 gem 'fauxhai-ng', '~> 7.5.1'
