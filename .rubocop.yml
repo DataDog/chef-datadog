@@ -21,6 +21,9 @@ Style/TrailingCommaInArrayLiteral:
 Style/TrailingCommaInHashLiteral:
   Enabled: false
 
+Style/TrailingCommaInLiteral:
+  Enabled: false
+
 # Only enforce a wordlist for 5 or longer lists.
 Style/WordArray:
   MinSize: 5
