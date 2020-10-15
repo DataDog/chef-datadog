@@ -70,6 +70,7 @@ when 'rhel', 'fedora', 'amazon'
     # gnupg is required to check the downloaded key's fingerprint
     package 'gnupg' do
       action :install
+      only_if { node['packages']['gnupg2'].nil? }
     end
 
     # Download new RPM key
