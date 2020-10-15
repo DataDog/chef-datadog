@@ -1,6 +1,16 @@
 Changes
 =======
 
+# 4.6.0 / 2020-10-15
+* [BUGFIX] Explicitly require yaml. See[#749][] [@albertvaka][]
+* [BUGFIX] Increase Windows MSI install timeout to 1200 seconds. See [#746][] [@mikezhu-dd][]
+* [BUGFIX] Network plugin yaml nesting. See [#739][] [@swalberg][]
+* [BUGFIX] Fix syntax issues in README examples. See [#744][] [@jimdaga][]
+* [FEATURE] [circlci] Add tests for Chef 16.5.77. See [#741][] [@truthbk][]
+* [BUGFIX] [spec] Fix hardcoded paths. See [#742][] [@albertvaka][]
+* [BUGFIX] Adds generated recipes for missing checks. See [#730][] [@albertvaka][]
+* [FEATURE] Update docs to include us3 region. See [#740][] [@albertvaka][]
+
 # 4.5.0 / 2020-09-02
 * [FEATURE] [cassandra] add support for failures/timeouts/unavailable collection. See [#725][] [@k2v][]
 * [FEATURE] Add timeout management for Mongo integration. See [#728][] [@Azraeht][]
@@ -895,16 +905,24 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#715]: https://github.com/DataDog/chef-datadog/issues/715
 [#717]: https://github.com/DataDog/chef-datadog/issues/717
 [#718]: https://github.com/DataDog/chef-datadog/issues/718
+[#722]: https://github.com/DataDog/chef-datadog/issues/722
 [#725]: https://github.com/DataDog/chef-datadog/issues/725
+[#727]: https://github.com/DataDog/chef-datadog/issues/727
 [#728]: https://github.com/DataDog/chef-datadog/issues/728
 [#729]: https://github.com/DataDog/chef-datadog/issues/729
+[#730]: https://github.com/DataDog/chef-datadog/issues/730
 [#731]: https://github.com/DataDog/chef-datadog/issues/731
+[#732]: https://github.com/DataDog/chef-datadog/issues/732
 [#734]: https://github.com/DataDog/chef-datadog/issues/734
 [#735]: https://github.com/DataDog/chef-datadog/issues/735
-[#722]: https://github.com/DataDog/chef-datadog/issues/722
-[#727]: https://github.com/DataDog/chef-datadog/issues/727
 [#736]: https://github.com/DataDog/chef-datadog/issues/736
-[#732]: https://github.com/DataDog/chef-datadog/issues/732
+[#739]: https://github.com/DataDog/chef-datadog/issues/739
+[#740]: https://github.com/DataDog/chef-datadog/issues/740
+[#741]: https://github.com/DataDog/chef-datadog/issues/741
+[#742]: https://github.com/DataDog/chef-datadog/issues/742
+[#744]: https://github.com/DataDog/chef-datadog/issues/744
+[#746]: https://github.com/DataDog/chef-datadog/issues/746
+[#749]: https://github.com/DataDog/chef-datadog/issues/749
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@Azraeht]: https://github.com/Azraeht
@@ -988,6 +1006,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@jcftang-r7]: https://github.com/jcftang-r7
 [@jedi4ever]: https://github.com/jedi4ever
 [@jeffbyrnes]: https://github.com/jeffbyrnes
+[@jimdaga]: https://github.com/jimdaga
 [@jmanero-r7]: https://github.com/jmanero-r7
 [@jpcallanta]: https://github.com/jpcallanta
 [@jridgewell]: https://github.com/jridgewell
@@ -1011,6 +1030,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@mhebbar1]: https://github.com/mhebbar1
 [@mikelaning]: https://github.com/mikelaning
 [@miketheman]: https://github.com/miketheman
+[@mikezhu-dd]: https://github.com/mikezhu-dd
 [@mirceal]: https://github.com/mirceal
 [@mlcooper]: https://github.com/mlcooper
 [@moisesbotarro]: https://github.com/moisesbotarro
@@ -1044,6 +1064,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@stensonb]: https://github.com/stensonb
 [@stolfi]: https://github.com/stolfi
 [@stonith]: https://github.com/stonith
+[@swalberg]: https://github.com/swalberg
 [@takus]: https://github.com/takus
 [@tejom]: https://github.com/tejom
 [@thisismana]: https://github.com/thisismana
