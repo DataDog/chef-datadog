@@ -98,6 +98,25 @@ class Chef
         run_context.cookbook_collection['datadog'].version
       end
 
+      def upstart_platform?(node)
+        agent_major_version(node) > 5 &&
+          (((node['platform'] == 'amazon' || node['platform_family'] == 'amazon') && node['platform_version'].to_i != 2) ||
+           (node['platform'] == 'ubuntu' && node['platform_version'].to_f < 15.04) || # chef <11.14 doesn't use the correct service provider
+          (node['platform'] != 'amazon' && node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7))
+      end
+
+      def service_provider(node)
+        if node['datadog']['service_provider']
+          specified_provider = node['datadog']['service_provider']
+          if Chef::Provider::Service.constants.include?(specified_provider.to_sym)
+            service_provider = Chef::Provider::Service.const_get(specified_provider)
+          end
+          service_provider
+        elsif upstart_platform?(node)
+          Chef::Provider::Service::Upstart
+        end
+      end
+
       private
 
       def run_state_or_attribute(node, attribute)

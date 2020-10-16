@@ -23,7 +23,7 @@ action :install do
   execute 'integration install' do
     # Space at the end of '--third-party ' is intentional, so that if --third-party is not specified, no additional space is added to the command line
     command   "\"#{agent_exe_filepath}\" integration install #{'--third-party ' if new_resource.third_party}#{new_resource.property_name}==#{new_resource.version}"
-    user      'dd-agent' unless node['platform_family'] == 'windows'
+    user      'dd-agent' unless platform_family?('windows')
 
     not_if {
       output = shell_out("#{agent_exe_filepath} integration show -q #{new_resource.property_name}").stdout
@@ -42,7 +42,7 @@ action :remove do
 
   execute 'integration remove' do
     command   "\"#{agent_exe_filepath}\" integration remove #{new_resource.property_name}"
-    user      'dd-agent' unless node['platform_family'] == 'windows'
+    user      'dd-agent' unless platform_family?('windows')
 
     not_if {
       output = shell_out("#{agent_exe_filepath} integration show -q #{new_resource.property_name}").stdout
@@ -52,7 +52,7 @@ action :remove do
 end
 
 def agent_exe_filepath
-  if node['platform_family'] == 'windows'
+  if platform_family?('windows')
     # The Windows Agent will always be setup in this path if the _install-windows.rb
     # has been used to install it.
     "C:\\Program\ Files\\Datadog\\Datadog\ Agent\\embedded\\agent.exe"

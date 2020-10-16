@@ -93,7 +93,7 @@ when 'rhel', 'fedora', 'amazon'
     baseurl = node['datadog']['yumrepo']
   else
     # Older versions of yum embed M2Crypto with SSL that doesn't support TLS1.2
-    yum_protocol_a5 = node['platform_family'] == 'rhel' ? 'http' : 'https'
+    yum_protocol_a5 = platform_family?('rhel') ? 'http' : 'https'
     case agent_major_version
     when 6, 7
       baseurl = "https://yum.datadoghq.com/stable/#{agent_major_version}/#{node['kernel']['machine']}/"

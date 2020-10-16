@@ -143,7 +143,7 @@ default['datadog']['yumrepo_suse'] = nil # uses Datadog stable repos by default
 
 # Older versions of yum embed M2Crypto with SSL that doesn't support TLS1.2
 yum_protocol =
-  if node['platform_family'] == 'rhel' && node['platform_version'].to_i < 6
+  if platform_family?('rhel') && node['platform_version'].to_i < 6
     'http'
   else
     'https'
@@ -242,7 +242,7 @@ default['datadog']['syslog']['udp'] = false
 default['datadog']['syslog']['host'] = nil
 default['datadog']['syslog']['port'] = nil
 default['datadog']['log_file_directory'] =
-  if node['platform_family'] == 'windows'
+  if platform_family?('windows')
     nil # let the agent use a default log file dir
   else
     '/var/log/datadog'

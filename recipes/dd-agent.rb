@@ -39,7 +39,7 @@ end
 
 agent_major_version = Chef::Datadog.agent_major_version(node)
 agent_minor_version = Chef::Datadog.agent_minor_version(node)
-is_windows = node['platform_family'] == 'windows'
+is_windows = platform_family?('windows')
 
 # Install the agent
 if is_windows
@@ -134,22 +134,7 @@ else
 end
 
 # Common configuration
-service_provider = nil
-if agent_major_version > 5 &&
-   (((node['platform'] == 'amazon' || node['platform_family'] == 'amazon') && node['platform_version'].to_i != 2) ||
-    (node['platform'] == 'ubuntu' && node['platform_version'].to_f < 15.04) || # chef <11.14 doesn't use the correct service provider
-   (node['platform'] != 'amazon' && node['platform_family'] == 'rhel' && node['platform_version'].to_i < 7))
-  # use Upstart provider explicitly for Agent 6 on Amazon Linux < 2.0 and RHEL < 7
-  service_provider = Chef::Provider::Service::Upstart
-end
-
-if node['datadog']['service_provider']
-  specified_provider = node['datadog']['service_provider']
-
-  if Chef::Provider::Service.constants.include?(specified_provider.to_sym)
-    service_provider = Chef::Provider::Service.const_get(specified_provider)
-  end
-end
+service_provider = Chef::Datadog.service_provider(node)
 
 service_name = is_windows ? 'DatadogAgent' : 'datadog-agent'
 
