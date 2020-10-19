@@ -42,7 +42,7 @@ describe 'datadog::repository' do
       end
 
       it 'installs gnupg' do
-        expect(chef_run).to install_package('gnupg')
+        expect(chef_run).to install_package('gnupg') if chef_run.node['packages']['gnupg2'].nil?
       end
 
       it 'downloads the new RPM key' do
@@ -84,7 +84,7 @@ describe 'datadog::repository' do
       end
 
       it 'installs gnupg' do
-        expect(chef_run).to install_package('gnupg')
+        expect(chef_run).to install_package('gnupg') if chef_run.node['packages']['gnupg2'].nil?
       end
 
       it 'downloads the new RPM key' do
@@ -126,7 +126,7 @@ describe 'datadog::repository' do
       end
 
       it 'installs gnupg' do
-        expect(chef_run).to install_package('gnupg')
+        expect(chef_run).to install_package('gnupg') if chef_run.node['packages']['gnupg2'].nil?
       end
 
       it 'downloads the new RPM key' do
