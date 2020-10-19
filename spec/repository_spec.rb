@@ -41,6 +41,10 @@ describe 'datadog::repository' do
         )
       end
 
+      it 'installs gnupg' do
+        expect(chef_run).to install_package('gnupg') if chef_run.node['packages']['gnupg2'].nil?
+      end
+
       it 'downloads the new RPM key' do
         expect(chef_run).to create_remote_file('DATADOG_RPM_KEY_E09422B3.public').with(path: ::File.join(Chef::Config[:file_cache_path], 'DATADOG_RPM_KEY_E09422B3.public'))
       end
@@ -79,6 +83,10 @@ describe 'datadog::repository' do
         )
       end
 
+      it 'installs gnupg' do
+        expect(chef_run).to install_package('gnupg') if chef_run.node['packages']['gnupg2'].nil?
+      end
+
       it 'downloads the new RPM key' do
         expect(chef_run).to create_remote_file('DATADOG_RPM_KEY_E09422B3.public').with(path: ::File.join(Chef::Config[:file_cache_path], 'DATADOG_RPM_KEY_E09422B3.public'))
       end
@@ -115,6 +123,10 @@ describe 'datadog::repository' do
         expect(chef_run.node['datadog']['yumrepo_gpgkey_new']).to match(
           /DATADOG_RPM_KEY_E09422B3.public/
         )
+      end
+
+      it 'installs gnupg' do
+        expect(chef_run).to install_package('gnupg') if chef_run.node['packages']['gnupg2'].nil?
       end
 
       it 'downloads the new RPM key' do
