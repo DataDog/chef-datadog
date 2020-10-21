@@ -2,7 +2,14 @@
 
 instances:
   <% @instances.each do |i| -%>
-  - server: mongodb://<%= i['host']%>:<%= i['port'] %>
+  - hosts:
+      - <%= i['host']%>:<%= i['port'] %>
+    <% if i.key?('username') -%>
+    username: <%= i['username'] %>
+    <% end -%>
+    <% if i.key?('password') -%>
+    password: <%= i['password'] %>
+    <% end -%>
     <% if i.key?('timeout') -%>
     timeout: <%= i['timeout'] %>
     <% end -%>
