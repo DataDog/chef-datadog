@@ -4,7 +4,8 @@ describe 'datadog::mongo' do
     init_config:
 
     instances:
-      - hosts: localhost:27017
+      - hosts:
+          - localhost:27017
         username: someuser
         password: somepassword
         timeout: 60
