@@ -4,12 +4,13 @@ describe 'datadog::mongo' do
     init_config:
 
     instances:
-      - host: localhost:27017
+      - hosts:
+          - localhost:27017
         username: someuser
         password: somepassword
-      timeout: 60
-      tags:
-      - 'env:test'
+        timeout: 60
+        tags:
+        - 'env:test'
 
   EOF
 
