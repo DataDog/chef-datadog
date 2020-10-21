@@ -4,10 +4,12 @@ describe 'datadog::mongo' do
     init_config:
 
     instances:
-      - hosts:
-          - localhost:27017
+      - hosts: localhost:27017
+        username: someuser
+        password: somepassword
+        timeout: 60
         tags:
-          - 'env:test'
+        - 'env:test'
 
   EOF
 
@@ -23,8 +25,11 @@ describe 'datadog::mongo' do
         mongo: {
           instances: [
             {
-              hosts: 'localhost',
+              host: 'localhost',
               port: '27017',
+              username: 'someuser',
+              password: 'somepassword',
+              timeout: '60',
               tags: ['env:test']
             }
           ]
