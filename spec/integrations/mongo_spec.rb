@@ -7,7 +7,7 @@ describe 'datadog::mongo' do
       - hosts:
           - localhost:27017
         tags:
-        - 'env:test'
+          - 'env:test'
 
   EOF
 
