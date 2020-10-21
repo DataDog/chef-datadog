@@ -4,7 +4,7 @@ include_recipe 'datadog::dd-agent'
 #
 # node.set['datadog']['mongo']['instances'] = [
 #   {
-#     'host' => 'localhost',
+#     'hosts' => 'localhost',
 #     'port' => '27017',
 #     'username' => 'someuser',
 #     'password' => 'somepassword',

@@ -6,9 +6,6 @@ describe 'datadog::mongo' do
     instances:
       - hosts:
           - localhost:27017
-        username: someuser
-        password: somepassword
-        timeout: 60
         tags:
         - 'env:test'
 
@@ -26,9 +23,8 @@ describe 'datadog::mongo' do
         mongo: {
           instances: [
             {
-              host: 'localhost',
+              hosts: 'localhost',
               port: '27017',
-              timeout: '60',
               tags: ['env:test']
             }
           ]
