@@ -26,3 +26,6 @@ Style/TrailingCommaInHashLiteral:
 # Only enforce a wordlist for 5 or longer lists.
 Style/WordArray:
   MinSize: 5
+
+ChefDeprecations/DeprecatedChefSpecPlatform:
+  Enabled: false
