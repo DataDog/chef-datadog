@@ -29,3 +29,6 @@ Style/WordArray:
 
 ChefDeprecations/DeprecatedChefSpecPlatform:
   Enabled: false
+
+ChefModernize/UnnecessaryDependsChef14:
+  Enabled: false
