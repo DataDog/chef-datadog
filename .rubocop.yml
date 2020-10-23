@@ -32,3 +32,6 @@ ChefDeprecations/DeprecatedChefSpecPlatform:
 
 ChefModernize/UnnecessaryDependsChef14:
   Enabled: false
+
+ChefDeprecations/ChefHandlerUsesSupports:
+  Enabled: false
