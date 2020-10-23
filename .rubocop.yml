@@ -35,3 +35,6 @@ ChefModernize/UnnecessaryDependsChef14:
 
 ChefDeprecations/ChefHandlerUsesSupports:
   Enabled: false
+
+ChefStyle/TrueClassFalseClassResourceProperties:
+  Enabled: false
