@@ -4,8 +4,6 @@
 # The datadog_resource must be used on a system where the datadog-agent has
 # already been setup.
 
-require 'chef/mixin/shell_out'
-
 default_action :install
 
 property :property_name, String, name_property: true
