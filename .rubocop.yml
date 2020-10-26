@@ -30,12 +30,15 @@ Style/WordArray:
   MinSize: 5
 
 ChefDeprecations/DeprecatedChefSpecPlatform:
+  # We want to keep compatiblity with old distros/platforms
   Enabled: false
 
 ChefModernize/UnnecessaryDependsChef14:
+  # We want to keep compatiblity with Chef < 14
   Enabled: false
 
 ChefDeprecations/ChefHandlerUsesSupports:
+  # We want to keep compatiblity with Chef < 14
   Enabled: false
 
 ChefStyle/TrueClassFalseClassResourceProperties:
