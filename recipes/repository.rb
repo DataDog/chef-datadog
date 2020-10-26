@@ -28,7 +28,7 @@ agent_major_version = Chef::Datadog.agent_major_version(node)
 
 case node['platform_family']
 when 'debian'
-  include_recipe 'apt'
+  apt_update 'update'
 
   package 'install-apt-transport-https' do
     package_name 'apt-transport-https'
