@@ -16,10 +16,12 @@ Style/PercentLiteralDelimiters:
     '%w': '[]'
 
 Style/TrailingCommaInArrayLiteral:
+  # TODO: Uncoment this and open a massive PR which adds all the trailing commas
   #EnforcedStyleForMultiline: comma
   Enabled: false
 
 Style/TrailingCommaInHashLiteral:
+  # TODO: Uncoment this and open a massive PR which adds all the trailing commas
   #EnforcedStyleForMultiline: comma
   Enabled: false
 
