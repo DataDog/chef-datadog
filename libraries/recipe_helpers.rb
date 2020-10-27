@@ -144,11 +144,16 @@ class Chef
 
         private
 
-        def fetch_current_version
+        include Chef::Mixin::ShellOut
+        def agent_status
           return nil unless File.exist?(WIN_BIN_PATH)
+          shell_out("\"#{WIN_BIN_PATH}\" status").stdout.strip
+        end
 
-          agent_status = `"#{WIN_BIN_PATH}" status`
-          match_data = agent_status.match(/^Agent \(v(.*)\)/)
+        def fetch_current_version
+          status = agent_status
+          return nil if status.nil?
+          match_data = status.match(/^Agent \(v(.*)\)/)
 
           # Nightlies like 6.20.0-devel+git.38.cd7f989 fail to parse as Gem::Version because of the '+' sign
           version = match_data[1].tr('+', '-') if match_data
