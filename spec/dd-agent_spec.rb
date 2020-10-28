@@ -434,7 +434,7 @@ describe 'datadog::dd-agent' do
       cached(:chef_run) do
         ChefSpec::SoloRunner.new(
           :platform => 'redhat',
-          :version => '6.9'
+          :version => '6.10'
         ) do |node|
           node.normal['datadog'] = {
             'agent_major_version' => 6,
@@ -544,7 +544,7 @@ describe 'datadog::dd-agent' do
       cached(:chef_run) do
         ChefSpec::SoloRunner.new(
           :platform => 'redhat',
-          :version => '6.9'
+          :version => '6.10'
         ) do |node|
           node.normal['datadog'] = {
             'agent_major_version' => 5,
@@ -993,7 +993,7 @@ describe 'datadog::dd-agent' do
         cached(:chef_run) do
           ChefSpec::SoloRunner.new(
             :platform => 'redhat',
-            :version => '6.8'
+            :version => '6.10'
           ) do |node|
             node.normal['datadog'] = { 'api_key' => 'somethingnotnil', 'agent_major_version' => 6 }
           end.converge described_recipe
@@ -1010,7 +1010,7 @@ describe 'datadog::dd-agent' do
         cached(:chef_run) do
           ChefSpec::SoloRunner.new(
             :platform => 'redhat',
-            :version => '7.3'
+            :version => '7.7'
           ) do |node|
             node.normal['datadog'] = { 'api_key' => 'somethingnotnil', 'agent_major_version' => 6 }
           end.converge described_recipe
@@ -1255,7 +1255,6 @@ describe 'datadog::dd-agent' do
           ChefSpec::SoloRunner.new(
             :platform => 'windows',
             :version => '2012R2'
-
           ) do |node|
             node.normal['datadog'] = {
               'api_key' => 'somethingnotnil',

@@ -16,14 +16,30 @@ Style/PercentLiteralDelimiters:
     '%w': '[]'
 
 Style/TrailingCommaInArrayLiteral:
+  # TODO: Uncoment this and open a massive PR which adds all the trailing commas
+  #EnforcedStyleForMultiline: comma
   Enabled: false
 
 Style/TrailingCommaInHashLiteral:
-  Enabled: false
-
-Style/TrailingCommaInLiteral:
+  # TODO: Uncoment this and open a massive PR which adds all the trailing commas
+  #EnforcedStyleForMultiline: comma
   Enabled: false
 
 # Only enforce a wordlist for 5 or longer lists.
 Style/WordArray:
   MinSize: 5
+
+ChefDeprecations/DeprecatedChefSpecPlatform:
+  # We want to keep compatiblity with old distros/platforms
+  Enabled: false
+
+ChefModernize/UnnecessaryDependsChef14:
+  # We want to keep compatiblity with Chef < 14
+  Enabled: false
+
+ChefDeprecations/ChefHandlerUsesSupports:
+  # We want to keep compatiblity with Chef < 14
+  Enabled: false
+
+ChefStyle/TrueClassFalseClassResourceProperties:
+  Enabled: false

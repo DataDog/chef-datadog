@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: datadog
+# Cookbook:: datadog
 # Recipe:: _agent6_config
 #
-# Copyright 2011-2017, Datadog
+# Copyright:: 2011-2017, Datadog
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-is_windows = node['platform_family'] == 'windows'
+is_windows = platform_family?('windows')
 
 agent_config_dir = is_windows ? "#{ENV['ProgramData']}/Datadog" : '/etc/datadog-agent'
 agent_config_file = ::File.join(agent_config_dir, 'datadog.yaml')

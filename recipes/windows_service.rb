@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: datadog
+# Cookbook:: datadog
 # Recipe:: windows_service
 #
 

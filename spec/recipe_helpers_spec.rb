@@ -36,20 +36,12 @@ describe Chef::Datadog::WindowsInstallHelpers do
 
     context 'when the agent is installed' do
       before do
-        allow(File).to receive(:exist?).and_return(false)
-        allow(File)
-          .to receive(:exist?)
-          .with('C:/Program Files/Datadog/Datadog Agent/bin/agent')
-          .and_return(true)
-
-        # stub agent status call
-        allow_any_instance_of(Module)
-          .to receive(:`)
-          .with('"C:/Program Files/Datadog/Datadog Agent/bin/agent" status')
-          .and_return(agent_status)
+        allow(Chef::Datadog::WindowsInstallHelpers)
+          .to receive(:agent_status)
+          .and_return(agent_status_string)
       end
 
-      let(:agent_status) do
+      let(:agent_status_string) do
         %(
 .....
 Agent (v6.20.0)

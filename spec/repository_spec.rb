@@ -7,7 +7,7 @@ describe 'datadog::repository' do
     end
 
     it 'include apt cookbook' do
-      expect(chef_run).to include_recipe('apt::default')
+      expect(chef_run).to periodic_apt_update('update')
     end
 
     it 'installs apt-transport-https' do

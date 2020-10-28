@@ -1,8 +1,7 @@
 #
-# Cookbook Name:: datadog
+# Cookbook:: datadog
 # Recipe:: repository
-#
-# Copyright 2013-2015, Datadog
+# Copyright:: 2013-2015, Datadog
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,7 +28,7 @@ agent_major_version = Chef::Datadog.agent_major_version(node)
 
 case node['platform_family']
 when 'debian'
-  include_recipe 'apt'
+  apt_update 'update'
 
   package 'install-apt-transport-https' do
     package_name 'apt-transport-https'
@@ -94,7 +93,7 @@ when 'rhel', 'fedora', 'amazon'
     baseurl = node['datadog']['yumrepo']
   else
     # Older versions of yum embed M2Crypto with SSL that doesn't support TLS1.2
-    yum_protocol_a5 = node['platform_family'] == 'rhel' ? 'http' : 'https'
+    yum_protocol_a5 = platform_family?('rhel') ? 'http' : 'https'
     case agent_major_version
     when 6, 7
       baseurl = "https://yum.datadoghq.com/stable/#{agent_major_version}/#{node['kernel']['machine']}/"

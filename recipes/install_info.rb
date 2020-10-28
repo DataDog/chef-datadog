@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: datadog
+# Cookbook:: datadog
 # Recipe:: install_info
 #
-# Copyright 2011-2020, Datadog
+# Copyright:: 2011-2020, Datadog
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,8 +24,7 @@
 return if Chef::Datadog.agent_major_version(node) == 5
 
 def flare_path
-  case node['platform_family']
-  when 'windows'
+  if platform_family?('windows')
     "#{ENV['ProgramData']}/Datadog/install_info"
   else
     '/etc/datadog-agent/install_info'
@@ -39,8 +38,7 @@ template flare_path do
     action :delete
   end
 
-  case node['platform_family']
-  when 'windows'
+  if platform_family?('windows')
     inherits true # Agent 6/7 rely on inheritance being enabled. Reset it in case it was disabled when installing Agent 5.
   else
     owner 'dd-agent'
