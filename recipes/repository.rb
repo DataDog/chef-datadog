@@ -203,14 +203,12 @@ when 'suse'
   end
 
   # Add YUM repository
-  rpm_gpg_keys.each do |rpm_gpg_key|
-    zypper_repository 'datadog' do
-      description 'datadog'
-      baseurl baseurl
-      gpgkey agent_major_version < 7 ? node['datadog']['yumrepo_gpgkey'] : node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}"]
-      gpgautoimportkeys false
-      gpgcheck false
-      action :create
-    end
+  zypper_repository 'datadog' do
+    description 'datadog'
+    baseurl baseurl
+    gpgkey agent_major_version < 7 ? node['datadog']['yumrepo_gpgkey'] : node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_keys[0][rpm_gpg_keys_short_fingerprint]}"]
+    gpgautoimportkeys false
+    gpgcheck false
+    action :create
   end
 end
