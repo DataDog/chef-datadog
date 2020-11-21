@@ -23,8 +23,8 @@ describe 'datadog::systemd' do
             running: ok
             exited: critical
         tags:
-        - mykey1:myvalue1
-        - mykey2:myvalue2
+          - mykey1:myvalue1
+          - mykey2:myvalue2
 
     init_config:
     # No init_config details needed
