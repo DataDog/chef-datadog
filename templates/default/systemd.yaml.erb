@@ -6,7 +6,6 @@ instances:
         <% i['unit_names'].each do |u| -%>
       - <%= u %>
         <% end -%>
-
     <% if i.key?('substate_status_mapping') -%>
     substate_status_mapping:
       <% i['substate_status_mapping'].each do |s| -%>
@@ -19,7 +18,6 @@ instances:
       <% end -%>
     <% end -%>
     <% if i.key?('tags') -%>
-    
     tags:
       <% i['tags'].each do |t| -%>
     - <%= t %>

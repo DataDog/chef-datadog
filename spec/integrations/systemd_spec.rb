@@ -8,7 +8,6 @@ describe 'datadog::systemd' do
       - unit_names:
           - myservice1.service
           - myservice2.service
-
         substate_status_mapping:
           myservice1.service:
             running: ok
@@ -19,7 +18,6 @@ describe 'datadog::systemd' do
             running: ok
             exited: critical
             stopped: critical
-
         tags:
         - mykey1:myvalue1
         - mykey2:myvalue2
@@ -49,7 +47,7 @@ describe 'datadog::systemd' do
                   running: 'ok',
                   exited: 'critical'
                 },
-                myservice2_service: {
+                myservice2.service: {
                   plugged: 'ok',
                   mounted: 'ok',
                   running: 'ok',
