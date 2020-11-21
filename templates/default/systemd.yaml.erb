@@ -9,12 +9,26 @@ instances:
     <% if i.key?('substate_status_mapping') -%>
     substate_status_mapping:
       <% i['substate_status_mapping'].each do |s| -%>
-      <% s.keys.each do |k| %>
-      <%= k %>:
-        <% s["#{k}"].each do |l,v| %>
+        <% if s.key?('services') -%>
+          <% s['services'].each do |k| -%>
+            <% k.keys.each do |j| -%>
+      <%= j %>.service:
+              <% k["#{j}"].each do |l,v| %>
         <%= l %>: <%= v %>
+              <% end -%>
+            <% end -%>
+          <% end -%>
         <% end -%>
-      <% end -%>
+        <% if s.key?('sockets') -%>
+          <% s['sockets'].each do |k| -%>
+            <% k.keys.each do |j| -%>
+      <%= j %>.socket:
+              <% k["#{j}"].each do |l,v| %>
+        <%= l %>: <%= v %>
+              <% end -%>
+            <% end -%>
+          <% end -%>
+        <% end -%>
       <% end -%>
     <% end -%>
     <% if i.key?('tags') -%>

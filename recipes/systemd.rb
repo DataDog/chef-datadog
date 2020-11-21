@@ -6,39 +6,36 @@ include_recipe 'datadog::dd-agent'
 #   {
 #     'unit_names' => [
 #       'myservice1.service',
-#       'myservice2.service'
-#      ],
+#       'myservice2.service',
+#       'mysocket.socket'
+#     ],
+#     'substate_status_mapping' => [
+#       'services' => [
+#         'myservice1' => {
+#           'running' => 'ok',
+#           'exited' => 'critical'
+#         },
+#         'myservice2' => {
+#           'plugged' => 'ok',
+#           'mounted' => 'ok',
+#           'running' => 'ok',
+#           'exited' => 'critical',
+#           'stopped' => 'critical'
+#         }
+#       ],
+#       'sockets' => [
+#         'mysocket' => {
+#           'running' => 'ok',
+#           'exited' => 'critical'
+#         }
+#       ]
+#     ],
 #     'tags' => [
-#       'mykey:myvalue1',
+#       'mykey1:myvalue1',
 #       'mykey2:myvalue2'
 #     ]
 #   }
-
-node.default['datadog']['systemd']['instances'] = [
-  {
-    'unit_names' => [
-      'myservice1.service',
-      'myservice2.service'
-    ],
-    'substate_status_mapping' => [
-      'myservice1.service' => {
-        'running' => 'ok',
-        'exited' => 'critical'
-      },
-      'myservice2.service' => {
-        'plugged' => 'ok',
-        'mounted' => 'ok',
-        'running' => 'ok',
-        'exited' => 'critical',
-        'stopped' => 'critical'
-      }
-    ],
-    'tags' => [
-      'mykey:myvalue1',
-      'mykey2:myvalue2'
-    ]
-  }
-]
+# ]
 
 datadog_monitor 'systemd' do
   instances node['datadog']['systemd']['instances']

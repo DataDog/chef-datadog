@@ -8,6 +8,7 @@ describe 'datadog::systemd' do
       - unit_names:
           - myservice1.service
           - myservice2.service
+          - mysocket.socket
         substate_status_mapping:
           myservice1.service:
             running: ok
@@ -18,6 +19,9 @@ describe 'datadog::systemd' do
             running: ok
             exited: critical
             stopped: critical
+          mysocket.socket:
+            running: ok
+            exited: critical
         tags:
         - mykey1:myvalue1
         - mykey2:myvalue2
@@ -40,20 +44,29 @@ describe 'datadog::systemd' do
             {
               unit_names: [
                 'myservice1.service',
-                'myservice2.service'
+                'myservice2.service',
+                'mysocket.socket'
               ],
               substate_status_mapping: [
-                myservice1_service: {
-                  running: 'ok',
-                  exited: 'critical'
-                },
-                myservice2.service: {
-                  plugged: 'ok',
-                  mounted: 'ok',
-                  running: 'ok',
-                  exited: 'critical',
-                  stopped: 'critical'
-                }
+                services: [
+                  myservice1: {
+                    running: 'ok',
+                    exited: 'critical'
+                  },
+                  myservice2: {
+                    plugged: 'ok',
+                    mounted: 'ok',
+                    running: 'ok',
+                    exited: 'critical',
+                    stopped: 'critical'
+                  }
+                ],
+                sockets: [
+                  mysocket: {
+                    running: 'ok',
+                    exited: 'critical'
+                  }
+                ]
               ],
               tags: [
                 'mykey1:myvalue1',

@@ -18,7 +18,9 @@ describe file(AGENT_CONFIG) do
       'instances' => [
         {
           'unit_names' => [
-            'myservice1.service'
+            'myservice1.service',
+            'myservice2.service',
+            'mysocket.socket'    
           ]
         }
       ],
