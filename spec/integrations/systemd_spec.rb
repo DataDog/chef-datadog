@@ -45,11 +45,11 @@ describe 'datadog::systemd' do
                 'myservice2.service'
               ],
               substate_status_mapping: [
-                myservice1.service: {
+                myservice1_service: {
                   running: 'ok',
                   exited: 'critical'
                 },
-                myservice2.service: {
+                myservice2_service: {
                   plugged: 'ok',
                   mounted: 'ok',
                   running: 'ok',
