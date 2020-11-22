@@ -20,7 +20,7 @@ describe file(AGENT_CONFIG) do
           'unit_names' => [
             'myservice1.service',
             'myservice2.service',
-            'mysocket.socket'    
+            'mysocket.socket'
           ]
         }
       ],
