@@ -1,33 +1,28 @@
 describe 'datadog::systemd' do
   expected_yaml = <<-EOF
-    ---
-    logs:
-
-
+    init_config: ~
     instances:
-      - unit_names:
+      - substate_status_mapping:
+          myservice1.service:
+            exited: critical
+            running: ok
+          myservice2.service:
+            exited: critical
+            mounted: ok
+            plugged: ok
+            running: ok
+            stopped: critical
+          mysocket.socket:
+            exited: critical
+            running: ok
+        tags:
+          - 'mykey1:myvalue1'
+          - 'mykey2:myvalue2'
+        unit_names:
           - myservice1.service
           - myservice2.service
           - mysocket.socket
-        substate_status_mapping:
-          myservice1.service:
-            running: ok
-            exited: critical
-          myservice2.service:
-            plugged: ok
-            mounted: ok
-            running: ok
-            exited: critical
-            stopped: critical
-          mysocket.socket:
-            running: ok
-            exited: critical
-        tags:
-          - mykey1:myvalue1
-          - mykey2:myvalue2
-
-    init_config:
-    # No init_config details needed
+    logs: ~
   EOF
 
   cached(:chef_run) do
@@ -43,36 +38,30 @@ describe 'datadog::systemd' do
           instances: [
             {
               unit_names: [
-                myservice1.service,
-                myservice2.service,
-                mysocket.socket
+                'myservice1.service',
+                'myservice2.service',
+                'mysocket.socket'
               ],
               substate_status_mapping: [
-                {
-                  services: [
-                    {
-                      myservice1: {
-                        running: 'ok',
-                        exited: 'critical'
-                      },
-                      myservice2: {
-                        plugged: 'ok',
-                        mounted: 'ok',
-                        running: 'ok',
-                        exited: 'critical',
-                        stopped: 'critical'
-                      }
-                    }
-                  ],
-                  sockets: [
-                    {
-                      mysocket: {
-                        running: 'ok',
-                        exited: 'critical'
-                      }
-                    }
-                  ]
-                }
+                services: [
+                  myservice1: {
+                    running: 'ok',
+                    exited: 'critical'
+                  },
+                  myservice2: {
+                    plugged: 'ok',
+                    mounted: 'ok',
+                    running: 'ok',
+                    exited: 'critical',
+                    stopped: 'critical'
+                  }
+                ],
+                sockets: [
+                  mysocket: {
+                    running: 'ok',
+                    exited: 'critical'
+                  }
+                ]
               ],
               tags: [
                 'mykey1:myvalue1',
@@ -81,7 +70,6 @@ describe 'datadog::systemd' do
             }
           ]
         }
-
       }
     end.converge(described_recipe)
   end
