@@ -167,9 +167,10 @@ default['datadog']['windows_agent_url'] = 'https://s3.amazonaws.com/ddagent-wind
 # Only applies if specific version specified
 default['datadog']['windows_agent_installer_prefix'] = nil
 
-# Location of additional rpm gpgkey to import (with signature `e09422b3`). In the future the rpm packages
+# Location of additional rpm gpg keys to import. In the future the rpm packages
 # of the Agent will be signed with this key.
-default['datadog']['yumrepo_gpgkey_new'] = "#{yum_protocol}://yum.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public"
+default['datadog']['yumrepo_gpgkey_new_e09422b3'] = "#{yum_protocol}://yum.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public"
+default['datadog']['yumrepo_gpgkey_new_fd4bf915'] = "#{yum_protocol}://yum.datadoghq.com/DATADOG_RPM_KEY_20200908.public"
 
 # Windows Agent Blacklist
 # Attribute to enforce silent failures on agent installs when attempting to install a
