@@ -1,6 +1,12 @@
 Changes
 =======
 
+# 4.7.0 / 2020-11-25
+* [FEATURE] Trust new signing key [#754][] [@nilskuehme][]
+* [FEATURE] Add support for the systemd check [#755][] [@nilskuehme][]
+* [FEATURE] Add support for Mongo authentication [#753][] [@nilskuehme][]
+* [BUGFIX] Fix conflit with gnupg2 on RHEL8/CentOS8 [#750][] [@haidars][]
+
 # 4.6.0 / 2020-10-15
 * [BUGFIX] Explicitly require yaml. See[#749][] [@albertvaka][]
 * [BUGFIX] Increase Windows MSI install timeout to 1200 seconds. See [#746][] [@mikezhu-dd][]
@@ -923,6 +929,10 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#744]: https://github.com/DataDog/chef-datadog/issues/744
 [#746]: https://github.com/DataDog/chef-datadog/issues/746
 [#749]: https://github.com/DataDog/chef-datadog/issues/749
+[#750]: https://github.com/DataDog/chef-datadog/issues/750
+[#753]: https://github.com/DataDog/chef-datadog/issues/753
+[#754]: https://github.com/DataDog/chef-datadog/issues/754
+[#755]: https://github.com/DataDog/chef-datadog/issues/755
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@Azraeht]: https://github.com/Azraeht
@@ -993,6 +1003,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@gregf]: https://github.com/gregf
 [@grogancolin]: https://github.com/grogancolin
 [@gswallow]: https://github.com/gswallow
+[@haidars]: https://github.com/haidars
 [@hartfordfive]: https://github.com/hartfordfive
 [@hilli]: https://github.com/hilli
 [@historus]: https://github.com/historus
@@ -1038,6 +1049,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@mtougeron]: https://github.com/mtougeron
 [@nicholas-devlin]: https://github.com/nicholas-devlin
 [@nickmarden]: https://github.com/nickmarden
+[@nilskuehme]: https://github.com/nilskuehme
 [@nkts]: https://github.com/nkts
 [@nyanshak]: https://github.com/nyanshak
 [@olivielpeau]: https://github.com/olivielpeau
