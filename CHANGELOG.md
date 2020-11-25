@@ -1,6 +1,9 @@
 Changes
 =======
 
+# 4.7.1 / 2020-11-25
+* [BUGFIX] Revert [#754][]
+
 # 4.7.0 / 2020-11-25
 * [FEATURE] Trust new signing key [#754][] [@mikezhu-dd][]
 * [FEATURE] Add support for the systemd check [#755][] [@nilskuehme][]
