@@ -1,6 +1,9 @@
 Changes
 =======
 
+# 4.7.2 / 2020-11-25
+* [FEATURE] Trust new signing key [#754][] [@mikezhu-dd][]
+
 # 4.7.1 / 2020-11-25
 * [BUGFIX] Revert [#754][]
 
