@@ -2,7 +2,7 @@ Changes
 =======
 
 # 4.7.0 / 2020-11-25
-* [FEATURE] Trust new signing key [#754][] [@nilskuehme][]
+* [FEATURE] Trust new signing key [#754][] [@mikezhu-dd][]
 * [FEATURE] Add support for the systemd check [#755][] [@nilskuehme][]
 * [FEATURE] Add support for Mongo authentication [#753][] [@nilskuehme][]
 * [BUGFIX] Fix conflit with gnupg2 on RHEL8/CentOS8 [#750][] [@haidars][]
