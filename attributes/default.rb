@@ -109,6 +109,10 @@ default['datadog']['url'] = nil
 # `env:node.chef_environment`, `role:node.node.run_list.role`, `tag:somecheftag`
 default['datadog']['tags'] = ''
 
+# The environment name where the agent is running. Attached in-app to every
+# metric, event, log, trace, and service check emitted by the Agent.
+default['datadog']['env'] = nil
+
 # Collect EC2 tags, set to 'yes' to collect
 default['datadog']['collect_ec2_tags'] = nil
 

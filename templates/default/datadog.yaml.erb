@@ -82,6 +82,7 @@ agent_config = @extra_config.merge({
   additional_endpoints: @additional_endpoints,
   skip_ssl_validation: node['datadog']['web_proxy']['skip_ssl_validation'],
   tags: tags,
+  env: node['datadog']['env'],
   create_dd_check_tags: node['datadog']['create_dd_check_tags'],
   collect_ec2_tags: node['datadog']['collect_ec2_tags'],
   dogstatsd_non_local_traffic: node['datadog']['non_local_traffic'],

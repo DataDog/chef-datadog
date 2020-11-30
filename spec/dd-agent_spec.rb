@@ -1158,16 +1158,6 @@ describe 'datadog::dd-agent' do
           end.converge described_recipe
         end
 
-        temp_file = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli.msi')
-        mock_digest = Digest::SHA256.new
-
-        before do
-          allow(File).to receive(:open).and_call_original
-          allow(File).to receive(:open).with(temp_file).and_return('foo')
-          allow(Digest::SHA256).to receive(:file).and_call_original
-          allow(Digest::SHA256).to receive(:file).with(temp_file).and_return(mock_digest)
-        end
-
         it 'is created' do
           expect(chef_run).to create_template('/etc/datadog-agent/datadog.yaml')
         end
@@ -1202,6 +1192,62 @@ describe 'datadog::dd-agent' do
               process_dd_url: "https://process.datadoghq.com"
               custom_param: somethingnotnil
             EOF
+
+          expect(chef_run).to(render_file('/etc/datadog-agent/datadog.yaml').with_content { |content|
+            expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
+          })
+        end
+      end
+
+      context 'with tags and env set' do
+        cached(:chef_run) do
+          ChefSpec::SoloRunner.new(
+            platform: 'ubuntu',
+            version: '14.04'
+          ) do |node|
+            node.name 'chef-nodename' # expected to be used as the hostname in `datadog.yaml`
+            node.normal['datadog'] = {
+              'api_key' => 'somethingnotnil',
+              'tags' => { 'datacenter' => 'us-east' },
+              'env' => 'myenv',
+            }
+          end.converge described_recipe
+        end
+
+        it 'is created' do
+          expect(chef_run).to create_template('/etc/datadog-agent/datadog.yaml')
+        end
+
+        it 'contains expected YAML configuration' do
+          expected_yaml = <<-EOF
+          api_key: somethingnotnil
+          tags:
+            - datacenter:us-east
+          env: myenv
+          use_dogstatsd: true
+          bind_host: localhost
+          additional_endpoints: {}
+          histogram_aggregates:
+            - "max"
+            - "median"
+            - "avg"
+            - "count"
+          histogram_percentiles:
+            - "0.95"
+          hostname: "chef-nodename"
+          log_file: "/var/log/datadog/agent.log"
+          log_level: "INFO"
+          dogstatsd_non_local_traffic: false
+          apm_config:
+            apm_non_local_traffic: false
+          process_config:
+            enabled: "false"
+            blacklist_patterns: []
+            scrub_args: true
+            custom_sensitive_words: []
+            intervals: {}
+            process_dd_url: "https://process.datadoghq.com"
+          EOF
 
           expect(chef_run).to(render_file('/etc/datadog-agent/datadog.yaml').with_content { |content|
             expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
