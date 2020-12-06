@@ -124,6 +124,10 @@ if node['datadog']['syslog']['active']
   end
 end
 
+if !node['datadog']['log_to_console'].nil?
+  agent_config['log_to_console'] = node['datadog']['log_to_console']
+end
+
 # Set proxy options
 if !http_proxy.nil?
   agent_config['proxy'] = {
