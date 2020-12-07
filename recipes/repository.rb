@@ -65,7 +65,7 @@ when 'debian'
   retries = node['datadog']['aptrepo_retries']
   keyserver = node['datadog']['aptrepo_use_backup_keyserver'] ? node['datadog']['aptrepo_backup_keyserver'] : node['datadog']['aptrepo_keyserver']
   # Add APT repositories
-  apt_repository "datadog" do
+  apt_repository 'datadog' do
     keyserver keyserver
     key apt_gpg_key
     uri node['datadog']['aptrepo']
