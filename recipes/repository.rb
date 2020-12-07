@@ -28,7 +28,7 @@ agent_major_version = Chef::Datadog.agent_major_version(node)
 
 # A2923DFF56EDA6E76E55E492D3A80E30382E94DE expires in 2022
 # D75CEA17048B9ACBF186794B32637D44F14F620E expires in 2032
-apt_gpg_keys = ['A2923DFF56EDA6E76E55E492D3A80E30382E94DE', 'D75CEA17048B9ACBF186794B32637D44F14F620E']
+apt_gpg_key = 'D75CEA17048B9ACBF186794B32637D44F14F620E'
 
 # DATADOG_RPM_KEY_E09422B3.public expires in 2022
 # DATADOG_RPM_KEY_20200908.public expires in 2024
@@ -65,16 +65,14 @@ when 'debian'
   retries = node['datadog']['aptrepo_retries']
   keyserver = node['datadog']['aptrepo_use_backup_keyserver'] ? node['datadog']['aptrepo_backup_keyserver'] : node['datadog']['aptrepo_keyserver']
   # Add APT repositories
-  apt_gpg_keys.each do |apt_gpg_key|
-    apt_repository "datadog_apt_#{apt_gpg_key}" do
-      keyserver keyserver
-      key apt_gpg_key
-      uri node['datadog']['aptrepo']
-      distribution node['datadog']['aptrepo_dist']
-      components components
-      action :add
-      retries retries
-    end
+  apt_repository "datadog" do
+    keyserver keyserver
+    key apt_gpg_key
+    uri node['datadog']['aptrepo']
+    distribution node['datadog']['aptrepo_dist']
+    components components
+    action :add
+    retries retries
   end
 
   # Previous versions of the cookbook could create this repo file, make sure we remove it now
