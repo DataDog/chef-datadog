@@ -246,6 +246,7 @@ default['datadog']['syslog']['active'] = false
 default['datadog']['syslog']['udp'] = false
 default['datadog']['syslog']['host'] = nil
 default['datadog']['syslog']['port'] = nil
+default['datadog']['log_to_console'] = nil
 default['datadog']['log_file_directory'] =
   if platform_family?('windows')
     nil # let the agent use a default log file dir
