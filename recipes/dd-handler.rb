@@ -65,9 +65,14 @@ chef_handler 'Chef::Handler::Datadog' do
   def handler_config
     extra_config = node['datadog']['handler_extra_config'].reject { |_, v| v.nil? }
 
-    # Since Agent 6 supports node['datadog']['url'] = nil, we need to fallback
-    # on a default value here.
+    # Since Agent 6 supports node['datadog']['url'] = nil and node['datadog']['site'] = nil,
+    # we need to fallback on a default value here.
+
+    # Passing the site option directly to the handler is only supported since v0.12.0 of chef-handler-datadog.
+    # To preserve compatibility with older versions, the site option is therefore
+    # resolved here, and only the URL is passed.
     dd_url = 'https://app.datadoghq.com'
+    dd_url = 'https://app.' + node['datadog']['site'] unless node['datadog']['site'].nil?
     dd_url = node['datadog']['url'] unless node['datadog']['url'].nil?
 
     config = extra_config.merge(

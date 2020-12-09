@@ -6,14 +6,14 @@ shared_examples 'a chef-handler-datadog installer' do |version|
   end
 end
 
-shared_examples 'a chef-handler-datadog runner' do |extra_endpoints, tags_blacklist_regex, override_config|
+shared_examples 'a chef-handler-datadog runner' do |extra_endpoints, url, tags_blacklist_regex, override_config|
   it 'runs the handler' do
     handler_config = {
       api_key: 'somethingnotnil',
       application_key: 'somethingnotnil2',
       use_ec2_instance_id: true,
       tag_prefix: 'tag:',
-      url: 'https://app.datadoghq.com',
+      url: url || 'https://app.datadoghq.com',
       extra_endpoints: extra_endpoints || [],
       tags_blacklist_regex: tags_blacklist_regex,
       send_policy_tags: false,
@@ -137,7 +137,7 @@ describe 'datadog::dd-handler' do
 
     it_behaves_like 'a chef-handler-datadog installer'
 
-    it_behaves_like 'a chef-handler-datadog runner', extra_endpoints, nil, nil
+    it_behaves_like 'a chef-handler-datadog runner', extra_endpoints, nil, nil, nil
   end
 
   context 'multiple endpoints disabled' do
@@ -177,7 +177,7 @@ describe 'datadog::dd-handler' do
 
     it_behaves_like 'a chef-handler-datadog installer'
 
-    it_behaves_like 'a chef-handler-datadog runner', nil, 'tags.*', nil
+    it_behaves_like 'a chef-handler-datadog runner', nil, nil, 'tags.*', nil
   end
 
   context 'handler_extra_config set' do
@@ -196,6 +196,44 @@ describe 'datadog::dd-handler' do
 
     it_behaves_like 'a chef-handler-datadog installer'
 
-    it_behaves_like 'a chef-handler-datadog runner', nil, nil, 'foo' => 'bar'
+    it_behaves_like 'a chef-handler-datadog runner', nil, nil, nil, 'foo' => 'bar'
+  end
+
+  context 'site set' do
+    cached(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        platform: 'ubuntu',
+        version: '14.04'
+      ) do |node|
+        node.normal['datadog']['api_key'] = 'somethingnotnil'
+        node.normal['datadog']['application_key'] = 'somethingnotnil2'
+        node.normal['datadog']['chef_handler_enable'] = true
+        node.normal['datadog']['use_ec2_instance_id'] = true
+        node.normal['datadog']['site'] = 'custom.site.com'
+      end.converge described_recipe
+    end
+
+    it_behaves_like 'a chef-handler-datadog installer'
+
+    it_behaves_like 'a chef-handler-datadog runner', nil, 'https://app.custom.site.com', nil, nil
+  end
+
+  context 'url set' do
+    cached(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        platform: 'ubuntu',
+        version: '14.04'
+      ) do |node|
+        node.normal['datadog']['api_key'] = 'somethingnotnil'
+        node.normal['datadog']['application_key'] = 'somethingnotnil2'
+        node.normal['datadog']['chef_handler_enable'] = true
+        node.normal['datadog']['use_ec2_instance_id'] = true
+        node.normal['datadog']['url'] = 'https://app.custom.site.com'
+      end.converge described_recipe
+    end
+
+    it_behaves_like 'a chef-handler-datadog installer'
+
+    it_behaves_like 'a chef-handler-datadog runner', nil, 'https://app.custom.site.com', nil, nil
   end
 end
