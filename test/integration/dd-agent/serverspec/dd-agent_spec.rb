@@ -14,10 +14,11 @@ describe command('/opt/datadog-agent/bin/agent/agent status | grep -v "Instance 
   its(:stdout) { should_not contain 'ERROR' }
 end
 
-# The new APT key is imported
+# The new APT keys are imported
 describe command('apt-key list'), :if => ['debian', 'ubuntu'].include?(os[:family]) do
   its(:exit_status) { should eq 0 }
   its(:stdout) { should contain '382E94DE' }
+  its(:stdout) { should contain 'F14F620E' }
 end
 
 # The new RPM keys are imported
