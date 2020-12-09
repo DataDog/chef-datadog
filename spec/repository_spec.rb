@@ -15,14 +15,8 @@ describe 'datadog::repository' do
     end
 
     it 'sets up an apt repo with fingerprint A2923DFF56EDA6E76E55E492D3A80E30382E94DE' do
-      expect(chef_run).to add_apt_repository('datadog_apt_A2923DFF56EDA6E76E55E492D3A80E30382E94DE').with(
+      expect(chef_run).to add_apt_repository('datadog').with(
         key: ['A2923DFF56EDA6E76E55E492D3A80E30382E94DE']
-      )
-    end
-
-    it 'sets up an apt repo with fingerprint D75CEA17048B9ACBF186794B32637D44F14F620E' do
-      expect(chef_run).to add_apt_repository('datadog_apt_D75CEA17048B9ACBF186794B32637D44F14F620E').with(
-        key: ['D75CEA17048B9ACBF186794B32637D44F14F620E']
       )
     end
 
