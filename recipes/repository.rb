@@ -66,15 +66,15 @@ when 'debian'
   keyserver = node['datadog']['aptrepo_use_backup_keyserver'] ? node['datadog']['aptrepo_backup_keyserver'] : node['datadog']['aptrepo_keyserver']
   # Add APT repositories
   if Chef::VERSION.to_i >= 13.4
-  apt_repository 'datadog' do
-    keyserver keyserver
-    key apt_gpg_keys
-    uri node['datadog']['aptrepo']
-    distribution node['datadog']['aptrepo_dist']
-    components components
-    action :add
-    retries retries
-  end
+    apt_repository 'datadog' do
+      keyserver keyserver
+      key apt_gpg_keys
+      uri node['datadog']['aptrepo']
+      distribution node['datadog']['aptrepo_dist']
+      components components
+      action :add
+      retries retries
+    end
   else
     # Works as long as both key entries serves the same content
     apt_gpg_keys.each do |apt_gpg_key|
