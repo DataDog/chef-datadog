@@ -63,6 +63,14 @@ when 'debian'
     Chef::Log.error("agent_major_version '#{agent_major_version}' not supported.")
   end
 
+  other_apt_gpg_keys.each do |key|
+    key_short = key[-8..-1] # last 8 chars, since some versions of apt-key list add dashes in between key parts
+    execute "apt-key import key #{key_short}" do
+      command "apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 #{key}"
+      not_if "apt-key list | grep #{key_short}"
+    end
+  end
+
   retries = node['datadog']['aptrepo_retries']
   keyserver = node['datadog']['aptrepo_use_backup_keyserver'] ? node['datadog']['aptrepo_backup_keyserver'] : node['datadog']['aptrepo_keyserver']
   # Add APT repositories
@@ -74,14 +82,6 @@ when 'debian'
     components components
     action :add
     retries retries
-  end
-
-  other_apt_gpg_keys.each do |key|
-    key_short = key[-8..-1] # last 8 chars, since some versions of apt-key list add dashes in between key parts
-    execute "apt-key import key #{key_short}" do
-      command "apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 #{key}"
-      not_if "apt-key list | grep #{key_short}"
-    end
   end
 
   # Previous versions of the cookbook could create these repo files, make sure we remove it now
