@@ -1,6 +1,11 @@
 Changes
 =======
 
+# 4.8.0 / 2020-12-11
+* [FEATURE] Add `env` and `log_to_console` options [#759][] [@albertvaka][], and [#760][] [@nilskuehme][]
+* [BUGFIX] Fix adding new signing key for apt [#761][] [@nilskuehme][],  [#763][] [@KSerrania][], [#765][] [@albertvaka][] and [#767][] [@nilskuehme][]
+* [BUGFIX] Take site option into account in chef-handler config [#762][] [@KSerrania][]
+
 # 4.7.2 / 2020-11-25
 * [FEATURE] Trust new signing key [#754][] [@mikezhu-dd][]
 
@@ -939,6 +944,13 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#753]: https://github.com/DataDog/chef-datadog/issues/753
 [#754]: https://github.com/DataDog/chef-datadog/issues/754
 [#755]: https://github.com/DataDog/chef-datadog/issues/755
+[#759]: https://github.com/DataDog/chef-datadog/issues/759
+[#760]: https://github.com/DataDog/chef-datadog/issues/760
+[#761]: https://github.com/DataDog/chef-datadog/issues/761
+[#762]: https://github.com/DataDog/chef-datadog/issues/762
+[#763]: https://github.com/DataDog/chef-datadog/issues/763
+[#765]: https://github.com/DataDog/chef-datadog/issues/765
+[#767]: https://github.com/DataDog/chef-datadog/issues/767
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@Azraeht]: https://github.com/Azraeht
