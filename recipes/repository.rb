@@ -64,7 +64,7 @@ when 'debian'
   end
 
   other_apt_gpg_keys.each do |key|
-    key_short = key[-8..-1] # last 8 chars, since some versions of apt-key list add dashes in between key parts
+    key_short = key[-8..-1] # last 8 chars, since some versions of apt-key add dashes between key sections
     execute "apt-key import key #{key_short}" do
       command "apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 #{key}"
       not_if "apt-key list | grep #{key_short}"
