@@ -16,8 +16,9 @@ describe 'datadog::repository' do
 
     it 'sets up an apt repo with fingerprint A2923DFF56EDA6E76E55E492D3A80E30382E94DE and D75CEA17048B9ACBF186794B32637D44F14F620E' do
       expect(chef_run).to add_apt_repository('datadog').with(
-        key: ['A2923DFF56EDA6E76E55E492D3A80E30382E94DE', 'D75CEA17048B9ACBF186794B32637D44F14F620E']
+        key: ['D75CEA17048B9ACBF186794B32637D44F14F620E']
       )
+      expect(chef_run).to run_execute('apt-key import key 382E94DE')
     end
 
     it 'removes the datadog-beta repo' do
