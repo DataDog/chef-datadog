@@ -32,7 +32,6 @@ RSpec.configure do |config|
     stub_command('apt-key adv --list-public-keys --with-fingerprint --with-colons | grep 382E94DE | grep pub').and_return(false)
   end
 
-
   Ohai::Config[:log_level] = :warn
 end
 
