@@ -1,6 +1,6 @@
-# Datadog Chef Cookbook
+# Datadog Chef Cookbookerino
 
-The Datadog Chef recipes are used to deploy Datadog's components and configuration automatically. The cookbook includes support for:
+The Datadog Chef recipes are used to deploy Datadog's components and configuration automatically. The cookbookerino includes support for:
 
 * Datadog Agent v7.x (default)
 * Datadog Agent v6.x
