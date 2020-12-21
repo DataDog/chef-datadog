@@ -11,7 +11,6 @@ include_recipe 'datadog::dd-agent'
 #       'content_match' => 'string to match',
 #       'include_content' => true,
 #       'collect_response_time' => true,
-#       'skip_event' => true,
 #       'tags' => [
 #        'myApp',
 #        'serviceName'
