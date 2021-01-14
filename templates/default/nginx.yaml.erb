@@ -3,8 +3,6 @@
 instances:
 <% @instances.each do |i| -%>
   - nginx_status_url: <%= i['nginx_status_url'] %>
-  <% unless i['min_collection_interval'].nil? -%>
-    min_collection_interval:  <%= i['min_collection_interval'] %>
   <% unless i['ssl_validation'].nil? -%>
     ssl_validation: <%= i['ssl_validation'] %>
   <% end -%>
