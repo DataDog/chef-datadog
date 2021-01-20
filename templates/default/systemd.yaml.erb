@@ -13,7 +13,7 @@ instances:
           <% s['services'].each do |k| -%>
             <% k.keys.each do |j| -%>
       <%= j %>.service:
-              <% k["#{j}"].each do |l,v| %>
+              <% k[j].each do |l,v| %>
         <%= l %>: <%= v %>
               <% end -%>
             <% end -%>
@@ -23,7 +23,7 @@ instances:
           <% s['sockets'].each do |k| -%>
             <% k.keys.each do |j| -%>
       <%= j %>.socket:
-              <% k["#{j}"].each do |l,v| %>
+              <% k[j].each do |l,v| %>
         <%= l %>: <%= v %>
               <% end -%>
             <% end -%>
