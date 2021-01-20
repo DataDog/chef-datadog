@@ -98,15 +98,15 @@ when 'debian'
   end
 
 when 'rhel', 'fedora', 'amazon'
+  # gnupg is required to check the downloaded key's fingerprint
+  package 'gnupg' do
+    action :install
+    only_if { node['packages']['gnupg2'].nil? }
+  end
+  
   # Import new RPM key
   rpm_gpg_keys.each do |rpm_gpg_key|
     next unless node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}"]
-
-    # gnupg is required to check the downloaded key's fingerprint
-    package 'gnupg' do
-      action :install
-      only_if { node['packages']['gnupg2'].nil? }
-    end
 
     # Download new RPM key
     key_local_path = ::File.join(Chef::Config[:file_cache_path], rpm_gpg_key[rpm_gpg_keys_name])
