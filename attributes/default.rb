@@ -189,6 +189,11 @@ default['datadog']['windows_blacklist_silent_fail'] = false
 # Default should suffice, but provides a knob in case instances with limited resources timeout.
 default['datadog']['windows_msi_timeout'] = 1200
 
+# Mute hosts during an MSI installation
+# To prevent no-data alerts when MSI installs take long.
+# Requires 'application_key' to be set to a valid app key.
+default['datadog']['windows_mute_hosts_during_install'] = false
+
 # Agent installer checksum
 # Expected checksum to validate correct agent installer is downloaded (Windows only)
 default['datadog']['windows_agent_checksum'] = nil

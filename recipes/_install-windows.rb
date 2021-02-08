@@ -157,6 +157,36 @@ powershell_script 'datadog_6.14.x_fix' do
   notifies :remove, 'package[Datadog Agent removal]', :immediately
 end
 
+if node['datadog']['windows_mute_hosts_during_install'] then
+  ruby_block 'Mute host while installing' do
+    block do
+      require 'net/http'
+      require 'uri'
+      require 'json'
+      hostname = node['datadog']['hostname']
+      api_key = Chef::Datadog.api_key(node)
+      app_key = Chef::Datadog.application_key(node)
+      uri = URI.parse("https://api.datadoghq.com/api/v1/host/#{hostname}/mute")
+      request = Net::HTTP::Post.new(uri)
+      request.content_type = "application/json"
+      request["Dd-Api-Key"] = api_key
+      request["Dd-Application-Key"] = app_key
+      request.body = JSON.dump({
+        'message': 'Muted during install by datadog-chef cookbook',
+        'end': Time.now.getutc.to_i + (60*60), # Set to automatically unmute in 60 minutes
+      })
+      response = Net::HTTP.start(uri.hostname, uri.port, { use_ssl: true }) do |http|
+        http.request(request)
+      end
+      if response.code != 200 then
+        Chef::Log.warn("Mute request failed with code #{response.code}: #{response.body}")
+      end
+    end
+    action :run
+  end
+end
+
+
 # Install the package
 windows_package 'Datadog Agent' do # ~FC009
   source temp_file
@@ -178,6 +208,30 @@ windows_package 'Datadog Agent' do # ~FC009
     Chef::Log.warn("\n#{fix_message}\nContinuing without installing Datadog Agent.") if unsafe
 
     unsafe
+  end
+end
+
+if node['datadog']['windows_mute_hosts_during_install'] then
+  ruby_block 'Unmute host after installing' do
+    block do
+      require 'net/http'
+      require 'uri'
+      require 'json'
+      hostname = node['datadog']['hostname']
+      api_key = Chef::Datadog.api_key(node)
+      app_key = Chef::Datadog.application_key(node)
+      uri = URI.parse("https://api.datadoghq.com/api/v1/host/#{hostname}/unmute")
+      request = Net::HTTP::Post.new(uri)
+      request["Dd-Api-Key"] = api_key
+      request["Dd-Application-Key"] = app_key
+      response = Net::HTTP.start(uri.hostname, uri.port, { use_ssl: true }) do |http|
+        http.request(request)
+      end
+      if response.code != 200 then
+        Chef::Log.warn("Unmute request failed with code #{response.code}: #{response.body}")
+      end
+    end
+    action :run
   end
 end
 
