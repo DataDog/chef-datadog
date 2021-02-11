@@ -36,6 +36,11 @@ module Windows
       resource = context.resource_collection.lookup('windows_env[DDAGENTUSER_PASSWORD]')
       resource.run_action(:delete)
     end
+
+    def unmute_host(context)
+      resource = context.resource_collection.lookup('ruby_block[Unmute host after installing]')
+      resource.run_action(:run)
+    end
   end
 end
 
@@ -207,6 +212,11 @@ if node['datadog']['windows_mute_hosts_during_install'] then
       end
     end
     action :nothing
+  end
+  Chef.event_handler do
+    on :run_failed do
+      Windows::Helper.new.unmute_host(Chef.run_context)
+    end
   end
 end
 
