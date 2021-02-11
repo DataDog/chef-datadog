@@ -158,6 +158,9 @@ powershell_script 'datadog_6.14.x_fix' do
 end
 
 if node['datadog']['windows_mute_hosts_during_install'] then
+  if not Chef::Datadog.application_key(node) then
+    Chef::Log.error('windows_mute_hosts_during_install requires an application_key but it is not set.')
+  end
   ruby_block 'Mute host while installing' do
     block do
       require 'net/http'
