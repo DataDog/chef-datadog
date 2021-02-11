@@ -237,7 +237,7 @@ The following example upgrades from Agent v6 to v7. The same applies if you are 
 default_attributes(
   'datadog' => {
     'agent_major_version' => 7,
-    'agent_version' => '7.15.0',
+    'agent_version' => '7.25.1',
     'agent_package_action' => 'install',
   }
 )
