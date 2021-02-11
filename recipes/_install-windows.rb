@@ -185,36 +185,8 @@ if node['datadog']['windows_mute_hosts_during_install'] then
         Chef::Log.warn("Mute request failed with code #{response.code}: #{response.body}")
       end
     end
-    action :run
+    action :nothing
   end
-end
-
-
-# Install the package
-windows_package 'Datadog Agent' do # ~FC009
-  source temp_file
-  installer_type resolved_installer_type
-  options install_options
-  timeout node['datadog']['windows_msi_timeout']
-  action :install
-  # Before 3.0.0, we adviced users to use the windows cookbook ~> 1.38.0,
-  # we should probably keep the compatibilty for some time.
-  if respond_to?(:returns)
-    returns [0, 3010]
-  else
-    success_codes [0, 3010]
-  end
-  not_if do
-    require 'digest'
-
-    unsafe = File.file?(temp_file) && unsafe_hashsums.include?(Digest::SHA256.file(temp_file).hexdigest)
-    Chef::Log.warn("\n#{fix_message}\nContinuing without installing Datadog Agent.") if unsafe
-
-    unsafe
-  end
-end
-
-if node['datadog']['windows_mute_hosts_during_install'] then
   ruby_block 'Unmute host after installing' do
     block do
       require 'net/http'
@@ -234,7 +206,35 @@ if node['datadog']['windows_mute_hosts_during_install'] then
         Chef::Log.warn("Unmute request failed with code #{response.code}: #{response.body}")
       end
     end
-    action :run
+    action :nothing
+  end
+end
+
+# Install the package
+windows_package 'Datadog Agent' do # ~FC009
+  source temp_file
+  installer_type resolved_installer_type
+  options install_options
+  timeout node['datadog']['windows_msi_timeout']
+  action :install
+  # Before 3.0.0, we adviced users to use the windows cookbook ~> 1.38.0,
+  # we should probably keep the compatibilty for some time.
+  if respond_to?(:returns)
+    returns [0, 3010]
+  else
+    success_codes [0, 3010]
+  end
+  if node['datadog']['windows_mute_hosts_during_install'] then
+    notifies :run, 'ruby_block[Mute host while installing]', :before
+    notifies :run, 'ruby_block[Unmute host after installing]', :immediately
+  end
+  not_if do
+    require 'digest'
+
+    unsafe = File.file?(temp_file) && unsafe_hashsums.include?(Digest::SHA256.file(temp_file).hexdigest)
+    Chef::Log.warn("\n#{fix_message}\nContinuing without installing Datadog Agent.") if unsafe
+
+    unsafe
   end
 end
 
