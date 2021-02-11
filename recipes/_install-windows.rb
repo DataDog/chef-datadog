@@ -31,6 +31,7 @@ module Windows
       resource = context.resource_collection.lookup('windows_env[DDAGENTUSER_NAME]')
       resource.run_action(:delete)
     end
+
     def clean_password(context)
       resource = context.resource_collection.lookup('windows_env[DDAGENTUSER_PASSWORD]')
       resource.run_action(:delete)
