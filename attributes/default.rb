@@ -191,7 +191,7 @@ default['datadog']['windows_msi_timeout'] = 1200
 
 # Mute hosts during an MSI installation
 # To prevent no-data alerts when MSI installs take long.
-# Requires 'application_key' to be set to a valid app key.
+# Requires setting 'application_key' to a valid app key for the Datadog REST API.
 default['datadog']['windows_mute_hosts_during_install'] = false
 
 # Agent installer checksum
