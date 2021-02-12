@@ -1326,6 +1326,56 @@ describe 'datadog::dd-agent' do
     end
   end
 
+  context 'windows_mute_hosts_during_install' do
+    cached(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        :platform => 'windows',
+        :version => '2012R2'
+      ) do |node|
+        node.normal['datadog'] = {
+          'api_key' => 'somethingnotnil',
+          'windows_mute_hosts_during_install' => true,
+          'agent_major_version' => 7,
+        }
+      end.converge described_recipe
+    end
+
+    it 'mutes and unmutes host' do
+      expect(chef_run).to nothing_ruby_block('Mute host while installing')
+      expect(chef_run).to nothing_ruby_block('Unmute host after installing')
+      expect(chef_run).to install_windows_package('Datadog Agent').with(installer_type: :msi)
+
+      package = chef_run.windows_package('Datadog Agent')
+      expect(package).to notify('ruby_block[Mute host while installing]').to(:run).before
+      expect(package).to notify('ruby_block[Unmute host after installing]').to(:run).immediately
+    end
+  end
+
+  context 'not windows_mute_hosts_during_install' do
+    cached(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        :platform => 'windows',
+        :version => '2012R2'
+      ) do |node|
+        node.normal['datadog'] = {
+          'api_key' => 'somethingnotnil',
+          'windows_mute_hosts_during_install' => false,
+          'agent_major_version' => 7,
+        }
+      end.converge described_recipe
+    end
+
+    it 'mutes and unmutes host' do
+      expect(chef_run).to_not nothing_ruby_block('Mute host while installing')
+      expect(chef_run).to_not nothing_ruby_block('Unmute host after installing')
+      expect(chef_run).to install_windows_package('Datadog Agent').with(installer_type: :msi)
+
+      package = chef_run.windows_package('Datadog Agent')
+      expect(package).to_not notify('ruby_block[Mute host while installing]').to(:run).before
+      expect(package).to_not notify('ruby_block[Unmute host after installing]').to(:run).immediately
+    end
+  end
+
   context 'add prefix and suffix to version number in debian' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(
