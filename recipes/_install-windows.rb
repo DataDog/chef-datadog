@@ -186,7 +186,7 @@ if node['datadog']['windows_mute_hosts_during_install'] then
       response = Net::HTTP.start(uri.hostname, uri.port, { use_ssl: true }) do |http|
         http.request(request)
       end
-      if response.code != 200 then
+      if response.code != '200' then
         Chef::Log.warn("Mute request failed with code #{response.code}: #{response.body}")
       end
     end
@@ -207,7 +207,7 @@ if node['datadog']['windows_mute_hosts_during_install'] then
       response = Net::HTTP.start(uri.hostname, uri.port, { use_ssl: true }) do |http|
         http.request(request)
       end
-      if response.code != 200 then
+      if response.code != '200' then
         Chef::Log.warn("Unmute request failed with code #{response.code}: #{response.body}")
       end
     end
