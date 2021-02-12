@@ -19,38 +19,35 @@
 
 include_recipe 'chef_handler'
 
-module Windows
-  class Helper
-    def do_cleanup(context)
-      Chef::Log.info 'Windows environment vars cleanup started.'
-      resource = context.resource_collection.lookup('windows_env[DDAGENTUSER_NAME]')
-      resource.run_action(:delete) if resource
-      resource = context.resource_collection.lookup('windows_env[DDAGENTUSER_PASSWORD]')
-      resource.run_action(:delete) if resource
-      Chef::Log.info 'Windows environment vars cleanup finished.'
-    end
-  end
-end
-
-Chef.event_handler do
-  on :run_failed do
-    Windows::Helper.new.do_cleanup(
-      Chef.run_context
-    )
-  end
-end
-
-dd_agent_version = Chef::Datadog.agent_version(node)
 dd_agent_flavor = Chef::Datadog.agent_flavor(node)
 
 if dd_agent_flavor != 'datadog-agent'
   raise "Unsupported agent flavor '#{dd_agent_flavor}' on Windows (only supports 'datadog-agent')"
 end
 
+module Windows
+  class Helper
+    def clean_user(context)
+      resource = context.resource_collection.lookup('windows_env[DDAGENTUSER_NAME]')
+      resource.run_action(:delete)
+    end
+
+    def clean_password(context)
+      resource = context.resource_collection.lookup('windows_env[DDAGENTUSER_PASSWORD]')
+      resource.run_action(:delete)
+    end
+  end
+end
+
 ddagentuser_name = Chef::Datadog.ddagentuser_name(node)
 ddagentuser_password = Chef::Datadog.ddagentuser_password(node)
 
 if ddagentuser_name
+  Chef.event_handler do
+    on :run_failed do
+      Windows::Helper.new.clean_user(Chef.run_context)
+    end
+  end
   windows_env 'DDAGENTUSER_NAME' do
     value ddagentuser_name
     sensitive true
@@ -58,11 +55,18 @@ if ddagentuser_name
 end
 
 if ddagentuser_password
+  Chef.event_handler do
+    on :run_failed do
+      Windows::Helper.new.clean_password(Chef.run_context)
+    end
+  end
   windows_env 'DDAGENTUSER_PASSWORD' do
     value ddagentuser_password
     sensitive true
   end
 end
+
+dd_agent_version = Chef::Datadog.agent_version(node)
 
 if dd_agent_version.nil?
   # Use latest
