@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 4.9.0 / 2021-02-15
+# 4.9.0 / 2021-02-16
 * [FEATURE] allow muting a host during an MSI install [#778][] [@albertvaka][]
 * [FEATURE] Kafka recipe: allow setting any conf [#776][] [@albertvaka][]
 * [BUGFIX] Fix fatal in error handler if `ddagentuser_name` or `ddagentuser_password` not defined [#777][] [@albertvaka][]
