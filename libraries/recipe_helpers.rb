@@ -94,6 +94,10 @@ class Chef
         run_state_or_attribute(node, 'windows_ddagentuser_password')
       end
 
+      def npm_install(node)
+        run_state_or_attribute(node, 'windows_npm_install')
+      end
+
       def cookbook_version(run_context)
         run_context.cookbook_collection['datadog'].version
       end

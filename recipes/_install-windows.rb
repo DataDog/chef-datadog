@@ -82,6 +82,8 @@ else
   dd_agent_installer_basename = "#{dd_agent_installer_prefix}-#{dd_agent_version}"
 end
 
+dd_agent_install_npm = Chef::Datadog.npm_install(node)
+
 temp_file_basename = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli')
 temp_fix_file = ::File.join(Chef::Config[:file_cache_path], 'fix_6_14.ps1')
 
@@ -102,6 +104,8 @@ else
   # custom credentials and use them if that's the case.
   install_options.concat(' DDAGENTUSER_NAME=%DDAGENTUSER_NAME%') if ddagentuser_name
   install_options.concat(' DDAGENTUSER_PASSWORD=%DDAGENTUSER_PASSWORD%') if ddagentuser_password
+
+  install_options.concat(" NPM=#{dd_agent_install_npm}") if dd_agent_install_npm
 end
 
 package 'Datadog Agent removal' do
