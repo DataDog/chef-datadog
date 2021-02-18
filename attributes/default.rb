@@ -213,6 +213,9 @@ default['datadog']['windows_agent_use_exe'] = false
 default['datadog']['windows_ddagentuser_name'] = nil
 default['datadog']['windows_ddagentuser_password'] = nil
 
+# Since 7.27, the MSI has a switch to install NPM driver. Default to not install. Specify "true" to install.
+default['datadog']['windows_npm_install'] = nil
+
 # Chef handler version
 default['datadog']['chef_handler_version'] = nil
 
