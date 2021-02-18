@@ -105,7 +105,7 @@ else
   install_options.concat(' DDAGENTUSER_NAME=%DDAGENTUSER_NAME%') if ddagentuser_name
   install_options.concat(' DDAGENTUSER_PASSWORD=%DDAGENTUSER_PASSWORD%') if ddagentuser_password
 
-  install_options.concat(" NPM=#{dd_agent_install_npm}") unless dd_agent_install_npm.nil?
+  install_options.concat(" NPM=#{dd_agent_install_npm}") if dd_agent_install_npm
 end
 
 package 'Datadog Agent removal' do
