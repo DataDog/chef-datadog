@@ -127,7 +127,7 @@ when 'rhel', 'fedora', 'amazon'
     # Import key if fingerprint matches
     execute "rpm-import datadog key #{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}" do
       command "rpm --import #{key_local_path}"
-      only_if { rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == "current" }
+      only_if { rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == 'current' }
       only_if "gpg --dry-run --quiet --with-fingerprint #{key_local_path} | grep '#{rpm_gpg_key[rpm_gpg_keys_full_fingerprint]}' || gpg --dry-run --import --import-options import-show #{key_local_path} | grep '#{gpg_key_fingerprint_without_space}'"
       action :nothing
     end
@@ -189,7 +189,7 @@ when 'suse'
     # Import key if fingerprint matches
     execute "rpm-import datadog key #{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}" do
       command "rpm --import #{new_key_local_path}"
-      only_if { rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == "current" }
+      only_if { rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == 'current' }
       only_if "gpg --dry-run --quiet --with-fingerprint #{new_key_local_path} | grep '#{rpm_gpg_key[rpm_gpg_keys_full_fingerprint]}' || gpg --dry-run --import --import-options import-show #{new_key_local_path} | grep '#{gpg_key_fingerprint_without_space}'"
       action :nothing
     end
@@ -228,7 +228,7 @@ when 'suse'
   zypper_repository 'datadog' do
     description 'datadog'
     baseurl baseurl
-    gpgkey agent_major_version < 6 ? node['datadog']['yumrepo_gpgkey'] : node['datadog']["yumrepo_gpgkey_new_current"]
+    gpgkey agent_major_version < 6 ? node['datadog']['yumrepo_gpgkey'] : node['datadog']['yumrepo_gpgkey_new_current']
     gpgautoimportkeys false
     gpgcheck false
     action :create
