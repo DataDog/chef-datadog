@@ -173,6 +173,8 @@ default['datadog']['windows_agent_installer_prefix'] = nil
 
 # Location of additional rpm gpg keys to import. In the future the rpm packages
 # of the Agent will be signed with this key.
+# DATADOG_RPM_KEY_CURRENT always contains the key that is used to sign repodata and latest packages
+default['datadog']['yumrepo_gpgkey_new_current'] = "#{yum_protocol}://yum.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public"
 default['datadog']['yumrepo_gpgkey_new_e09422b3'] = "#{yum_protocol}://yum.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public"
 default['datadog']['yumrepo_gpgkey_new_fd4bf915'] = "#{yum_protocol}://yum.datadoghq.com/DATADOG_RPM_KEY_20200908.public"
 
