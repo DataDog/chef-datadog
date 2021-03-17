@@ -303,7 +303,7 @@ There are many [recipes][7] to assist you with deploying Agent integration confi
 
 ## Resources
 
-### datadog_monitor
+### Integrations without recipes
 
 Use the `datadog_monitor` resource for enabling Agent integrations without a recipe.
 
@@ -352,7 +352,7 @@ end
 
 See the [Datadog integration Chef recipes][7] for additional examples.
 
-### datadog_integration
+### Integration versions
 
 To install a specific version of a Datadog integration, use the `datadog_integration` resource.
 
