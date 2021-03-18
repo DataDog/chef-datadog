@@ -33,10 +33,10 @@ other_apt_gpg_keys = ['A2923DFF56EDA6E76E55E492D3A80E30382E94DE']
 
 # DATADOG_RPM_KEY_CURRENT always contains the key that is used to sign repodata and latest packages
 # DATADOG_RPM_KEY_E09422B3.public expires in 2022
-# DATADOG_RPM_KEY_20200908.public expires in 2024
+# DATADOG_RPM_KEY_FD4BF915.public expires in 2024
 rpm_gpg_keys = [['DATADOG_RPM_KEY_CURRENT.public', 'current', ''],
                 ['DATADOG_RPM_KEY_E09422B3.public', 'e09422b3', 'A4C0 B90D 7443 CF6E 4E8A  A341 F106 8E14 E094 22B3'],
-                ['DATADOG_RPM_KEY_20200908.public', 'fd4bf915', 'C655 9B69 0CA8 82F0 23BD  F3F6 3F4D 1729 FD4B F915']]
+                ['DATADOG_RPM_KEY_FD4BF915.public', 'fd4bf915', 'C655 9B69 0CA8 82F0 23BD  F3F6 3F4D 1729 FD4B F915']]
 
 # Local file name of the key
 rpm_gpg_keys_name = 0
