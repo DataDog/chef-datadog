@@ -367,6 +367,10 @@ default['datadog']['system_probe']['sysprobe_socket'] = '/opt/datadog-agent/run/
 default['datadog']['system_probe']['debug_port'] = 0
 default['datadog']['system_probe']['bpf_debug'] = false
 default['datadog']['system_probe']['enable_conntrack'] = false
+# Enable this switch will install NPM driver and sysprobe, as well as generate the config file.
+# Turning on this setting will effectively turn on the setting(s) automatically:
+# ['datadog']['system_probe']['enabled']
+default['datadog']['system_probe']['network_enabled'] = false
 
 # Logs functionality settings (Agent 6/7 only)
 # Set `enable_logs_agent` to:
