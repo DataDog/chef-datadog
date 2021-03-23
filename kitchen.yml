@@ -460,6 +460,39 @@ suites:
               - "somepid"
               - "pidname"
 
+- name: datadog_rabbitmq
+  run_list:
+    - recipe[datadog::rabbitmq]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      rabbitmq:
+        instances:
+          - api_url: 'http://localhost:15672/api/'
+            user: someuser
+            pass: somepassword
+            max_detailed_exchanges: 300
+            max_detailed_queues: 300
+            tags:
+              - tag1
+              - tag2
+            nodes:
+              - node1
+              - node2
+            nodes_regexes:
+              - node3.*
+              - node4.*
+            queues:
+              - queue1
+              - queue2
+            queues_regexes:
+              - queue3.*
+              - queue4.*
+            vhosts:
+              - vhost1
+              - vhost2
+            timeout: 30
+
 - name: datadog_ssh_check
   run_list:
     - recipe[datadog::ssh_check]
