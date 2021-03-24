@@ -65,6 +65,8 @@ describe 'datadog::system-probe' do
 
     it 'contains expected YAML configuration' do
       expected_yaml = <<-EOF
+      network_config:
+        enabled: false
       system_probe_config:
         bpf_debug: true
         debug_port: 123
@@ -114,6 +116,8 @@ describe 'datadog::system-probe' do
 
     it 'contains expected YAML configuration' do
       expected_yaml = <<-EOF
+      network_config:
+        enabled: false
       system_probe_config:
         bpf_debug: false
         debug_port: 0
