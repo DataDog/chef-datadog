@@ -158,7 +158,7 @@ end
 
 system_probe_managed = node['datadog']['system_probe']['manage_config']
 agent_version_greater_than_6_11 = agent_major_version > 5 && (agent_minor_version.nil? || agent_minor_version > 11) || agent_major_version > 6
-agent_version_greater_than_6_26 = agent_major_version > 5 && (agent_minor_version.nil? || agent_minor_version > 26) || agent_major_version > 6
+agent_version_greater_than_6_26 = agent_major_version > 5 && (agent_minor_version.nil? || agent_minor_version > 26)
 
 # System probe requires at least agent 6.12 on Linux or 6.27 on Windows, before that it was called the network-tracer or unsupported.
 system_probe_supported = (agent_version_greater_than_6_11 && !is_windows) || (agent_version_greater_than_6_26 && is_windows)
