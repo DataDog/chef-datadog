@@ -30,6 +30,7 @@ describe file(AGENT_CONFIG) do
       'logs' => nil,
       init_config: {
         is_jmx: true,
+        collect_default_metrics: true
         conf: [
           {
             include: {

@@ -13,6 +13,7 @@ describe 'datadog::kafka' do
 
     init_config:
       is_jmx: true
+      collect_default_metrics: true
 
       # Metrics collected by this check. You should not have to modify this.
       conf:
@@ -208,6 +209,7 @@ describe 'datadog::kafka' do
 
     init_config:
       is_jmx: true
+      collect_default_metrics: true
 
       # Metrics collected by this check. You should not have to modify this.
       conf:

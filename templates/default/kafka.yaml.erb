@@ -3,6 +3,7 @@
 <% if @version == 2 %>
 init_config:
   is_jmx: true
+  collect_default_metrics: true
 
   # Metrics collected by this check. You should not have to modify this.
   conf:
@@ -377,6 +378,7 @@ init_config:
 <% else %>
 init_config:
   is_jmx: true
+  collect_default_metrics: true
 
   # Metrics collected by this check. You should not have to modify this.
   conf:
