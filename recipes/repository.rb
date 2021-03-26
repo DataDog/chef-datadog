@@ -31,10 +31,12 @@ agent_major_version = Chef::Datadog.agent_major_version(node)
 apt_gpg_key = 'D75CEA17048B9ACBF186794B32637D44F14F620E'
 other_apt_gpg_keys = ['A2923DFF56EDA6E76E55E492D3A80E30382E94DE']
 
+# DATADOG_RPM_KEY_CURRENT always contains the key that is used to sign repodata and latest packages
 # DATADOG_RPM_KEY_E09422B3.public expires in 2022
-# DATADOG_RPM_KEY_20200908.public expires in 2024
-rpm_gpg_keys = [['DATADOG_RPM_KEY_E09422B3.public', 'e09422b3', 'A4C0 B90D 7443 CF6E 4E8A  A341 F106 8E14 E094 22B3'],
-                ['DATADOG_RPM_KEY_20200908.public', 'fd4bf915', 'C655 9B69 0CA8 82F0 23BD  F3F6 3F4D 1729 FD4B F915']]
+# DATADOG_RPM_KEY_FD4BF915.public expires in 2024
+rpm_gpg_keys = [['DATADOG_RPM_KEY_CURRENT.public', 'current', ''],
+                ['DATADOG_RPM_KEY_E09422B3.public', 'e09422b3', 'A4C0 B90D 7443 CF6E 4E8A  A341 F106 8E14 E094 22B3'],
+                ['DATADOG_RPM_KEY_FD4BF915.public', 'fd4bf915', 'C655 9B69 0CA8 82F0 23BD  F3F6 3F4D 1729 FD4B F915']]
 
 # Local file name of the key
 rpm_gpg_keys_name = 0
@@ -113,6 +115,8 @@ when 'rhel', 'fedora', 'amazon'
     remote_file "remote_file_#{rpm_gpg_key[rpm_gpg_keys_name]}" do
       path key_local_path
       source node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}"]
+      # note that for the "current" key, this will fine, because there's never going to be
+      # gpg-pubkey-current entry in the RPM database
       not_if "rpm -q gpg-pubkey-#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}" # (key already imported)
       notifies :run, "execute[rpm-import datadog key #{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}]", :immediately
     end
@@ -123,7 +127,7 @@ when 'rhel', 'fedora', 'amazon'
     # Import key if fingerprint matches
     execute "rpm-import datadog key #{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}" do
       command "rpm --import #{key_local_path}"
-      only_if "gpg --dry-run --quiet --with-fingerprint #{key_local_path} | grep '#{rpm_gpg_key[rpm_gpg_keys_full_fingerprint]}' || gpg --dry-run --import --import-options import-show #{key_local_path} | grep '#{gpg_key_fingerprint_without_space}'"
+      only_if "gpg --dry-run --quiet --with-fingerprint #{key_local_path} | grep '#{rpm_gpg_key[rpm_gpg_keys_full_fingerprint]}' || gpg --dry-run --import --import-options import-show #{key_local_path} | grep '#{gpg_key_fingerprint_without_space}' || [ #{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]} = \"current\" ]"
       action :nothing
     end
   end
@@ -145,13 +149,14 @@ when 'rhel', 'fedora', 'amazon'
 
   # Add YUM repository
   yumrepo_gpgkeys = []
-  if agent_major_version < 7
-    yumrepo_gpgkeys.push(node['datadog']['yumrepo_gpgkey'])
-  else
+  if agent_major_version > 5
     rpm_gpg_keys.each do |rpm_gpg_key|
       yumrepo_gpgkeys.push(node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}"])
     end
   end
+  # yum/dnf go through entries in the order in which they're set in the repofile;
+  # add the old key last so it doesn't get imported at all if a newer key can be used
+  yumrepo_gpgkeys.push(node['datadog']['yumrepo_gpgkey']) if agent_major_version < 7
 
   yum_repository 'datadog' do
     description 'datadog'
@@ -183,7 +188,7 @@ when 'suse'
     # Import key if fingerprint matches
     execute "rpm-import datadog key #{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}" do
       command "rpm --import #{new_key_local_path}"
-      only_if "gpg --dry-run --quiet --with-fingerprint #{new_key_local_path} | grep '#{rpm_gpg_key[rpm_gpg_keys_full_fingerprint]}' || gpg --dry-run --import --import-options import-show #{new_key_local_path} | grep '#{gpg_key_fingerprint_without_space}'"
+      only_if "gpg --dry-run --quiet --with-fingerprint #{new_key_local_path} | grep '#{rpm_gpg_key[rpm_gpg_keys_full_fingerprint]}' || gpg --dry-run --import --import-options import-show #{new_key_local_path} | grep '#{gpg_key_fingerprint_without_space}' || [ #{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]} = \"current\" ]"
       action :nothing
     end
   end
@@ -221,7 +226,7 @@ when 'suse'
   zypper_repository 'datadog' do
     description 'datadog'
     baseurl baseurl
-    gpgkey agent_major_version < 7 ? node['datadog']['yumrepo_gpgkey'] : node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_keys[0][rpm_gpg_keys_short_fingerprint]}"]
+    gpgkey agent_major_version < 6 ? node['datadog']['yumrepo_gpgkey'] : node['datadog']['yumrepo_gpgkey_new_current']
     gpgautoimportkeys false
     gpgcheck false
     action :create
