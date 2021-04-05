@@ -1,6 +1,12 @@
 Changes
 =======
 
+# 4.9.0 / 2021-02-17
+* [FEATURE] allow muting a host during an MSI install [#778][] [@albertvaka][]
+* [FEATURE] Kafka recipe: allow setting any conf [#776][] [@albertvaka][]
+* [BUGFIX] Fix fatal in error handler if `ddagentuser_name` or `ddagentuser_password` not defined [#777][] [@albertvaka][]
+* [BUGFIX] Fix `yum_package[gnupg]` resource being declared more than once [#772][] [@cdonadeo][]
+
 # 4.8.0 / 2020-12-11
 * [FEATURE] Add `env` and `log_to_console` options [#759][] [@albertvaka][], and [#760][] [@nilskuehme][]
 * [BUGFIX] Fix adding new signing key for apt [#761][] [@nilskuehme][],  [#763][] [@KSerrania][], [#765][] [@albertvaka][] and [#767][] [@nilskuehme][]
@@ -951,6 +957,10 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#763]: https://github.com/DataDog/chef-datadog/issues/763
 [#765]: https://github.com/DataDog/chef-datadog/issues/765
 [#767]: https://github.com/DataDog/chef-datadog/issues/767
+[#772]: https://github.com/DataDog/chef-datadog/issues/772
+[#776]: https://github.com/DataDog/chef-datadog/issues/776
+[#777]: https://github.com/DataDog/chef-datadog/issues/777
+[#778]: https://github.com/DataDog/chef-datadog/issues/778
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@Azraeht]: https://github.com/Azraeht
@@ -986,6 +996,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@borgilb]: https://github.com/borgilb
 [@brentm5]: https://github.com/brentm5
 [@ccannell67]: https://github.com/ccannell67
+[@cdonadeo]: https://github.com/cdonadeo
 [@chrissnell]: https://github.com/chrissnell
 [@clmoreno]: https://github.com/clmoreno
 [@clofresh]: https://github.com/clofresh

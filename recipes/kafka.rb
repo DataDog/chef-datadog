@@ -5,9 +5,11 @@ include_recipe 'datadog::dd-agent'
 # Set the following attributes
 # * `instances` (required)
 #   List of Kafka clusters to monitor. Each cluster is generally a dictionary with a `host`, `port` and a `name`.
-#   More attributes are available. For more information, please refer to : https://github.com/DataDog/integrations-core/blob/master/kafka/conf.yaml.example
+#   More attributes are available. For more information, see https://github.com/DataDog/integrations-core/blob/master/kafka/datadog_checks/kafka/data/conf.yaml.example
+# * `conf` (optional)
+#   List of metrics to be collected. For more information, see https://github.com/DataDog/integrations-core/blob/master/kafka/datadog_checks/kafka/data/conf.yaml.example
 # * `version` (optional)
-#   Select the appropriate configuration file template. Available options are:
+#   Only used if `conf` is not set, allows you to use a pre-defined conf template. Available options are:
 #   * `1` (Default, Kafka < 0.8.2).
 #   * `2` (Kafka >= 0.8.2).
 
@@ -35,10 +37,14 @@ include_recipe 'datadog::dd-agent'
 #
 #
 
+template_version = node['datadog']['kafka']['conf'].nil? ? node['datadog']['kafka']['version'] : 3
+
 datadog_monitor 'kafka' do
   instances node['datadog']['kafka']['instances']
-  version node['datadog']['kafka']['version']
+  version template_version
+  init_config({ :is_jmx => true, :conf => node['datadog']['kafka']['conf'] })
   logs node['datadog']['kafka']['logs']
   action :add
+  use_integration_template template_version == 3
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
 end

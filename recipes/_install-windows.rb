@@ -19,38 +19,40 @@
 
 include_recipe 'chef_handler'
 
-module Windows
-  class Helper
-    def do_cleanup(context)
-      Chef::Log.info 'Windows environment vars cleanup started.'
-      resource = context.resource_collection.lookup('windows_env[DDAGENTUSER_NAME]')
-      resource.run_action(:delete) if resource
-      resource = context.resource_collection.lookup('windows_env[DDAGENTUSER_PASSWORD]')
-      resource.run_action(:delete) if resource
-      Chef::Log.info 'Windows environment vars cleanup finished.'
-    end
-  end
-end
-
-Chef.event_handler do
-  on :run_failed do
-    Windows::Helper.new.do_cleanup(
-      Chef.run_context
-    )
-  end
-end
-
-dd_agent_version = Chef::Datadog.agent_version(node)
 dd_agent_flavor = Chef::Datadog.agent_flavor(node)
 
 if dd_agent_flavor != 'datadog-agent'
   raise "Unsupported agent flavor '#{dd_agent_flavor}' on Windows (only supports 'datadog-agent')"
 end
 
+module Windows
+  class Helper
+    def clean_user(context)
+      resource = context.resource_collection.lookup('windows_env[DDAGENTUSER_NAME]')
+      resource.run_action(:delete)
+    end
+
+    def clean_password(context)
+      resource = context.resource_collection.lookup('windows_env[DDAGENTUSER_PASSWORD]')
+      resource.run_action(:delete)
+    end
+
+    def unmute_host(context)
+      resource = context.resource_collection.lookup('ruby_block[Unmute host after installing]')
+      resource.run_action(:run)
+    end
+  end
+end
+
 ddagentuser_name = Chef::Datadog.ddagentuser_name(node)
 ddagentuser_password = Chef::Datadog.ddagentuser_password(node)
 
 if ddagentuser_name
+  Chef.event_handler do
+    on :run_failed do
+      Windows::Helper.new.clean_user(Chef.run_context)
+    end
+  end
   windows_env 'DDAGENTUSER_NAME' do
     value ddagentuser_name
     sensitive true
@@ -58,11 +60,18 @@ if ddagentuser_name
 end
 
 if ddagentuser_password
+  Chef.event_handler do
+    on :run_failed do
+      Windows::Helper.new.clean_password(Chef.run_context)
+    end
+  end
   windows_env 'DDAGENTUSER_PASSWORD' do
     value ddagentuser_password
     sensitive true
   end
 end
+
+dd_agent_version = Chef::Datadog.agent_version(node)
 
 if dd_agent_version.nil?
   # Use latest
@@ -72,6 +81,8 @@ else
   dd_agent_installer_prefix = (node['datadog']['windows_agent_installer_prefix'] || 'ddagent-cli')
   dd_agent_installer_basename = "#{dd_agent_installer_prefix}-#{dd_agent_version}"
 end
+
+dd_agent_install_npm = Chef::Datadog.npm_install(node)
 
 temp_file_basename = ::File.join(Chef::Config[:file_cache_path], 'ddagent-cli')
 temp_fix_file = ::File.join(Chef::Config[:file_cache_path], 'fix_6_14.ps1')
@@ -93,6 +104,8 @@ else
   # custom credentials and use them if that's the case.
   install_options.concat(' DDAGENTUSER_NAME=%DDAGENTUSER_NAME%') if ddagentuser_name
   install_options.concat(' DDAGENTUSER_PASSWORD=%DDAGENTUSER_PASSWORD%') if ddagentuser_password
+
+  install_options.concat(' ADDLOCAL=MainApplication,NPM') if dd_agent_install_npm
 end
 
 package 'Datadog Agent removal' do
@@ -153,6 +166,60 @@ powershell_script 'datadog_6.14.x_fix' do
   notifies :remove, 'package[Datadog Agent removal]', :immediately
 end
 
+if node['datadog']['windows_mute_hosts_during_install']
+  unless Chef::Datadog.application_key(node)
+    Chef::Log.error('windows_mute_hosts_during_install requires an application_key but it is not set.')
+  end
+  ruby_block 'Mute host while installing' do
+    block do
+      require 'net/http'
+      require 'uri'
+      require 'json'
+      hostname = node['datadog']['hostname']
+      uri = URI.parse("https://api.datadoghq.com/api/v1/host/#{hostname}/mute")
+      request = Net::HTTP::Post.new(uri)
+      request.content_type = 'application/json'
+      request['Dd-Api-Key'] = Chef::Datadog.api_key(node)
+      request['Dd-Application-Key'] = Chef::Datadog.application_key(node)
+      request.body = JSON.dump({
+        'message': 'Muted during install by datadog-chef cookbook',
+        'end': Time.now.getutc.to_i + (60 * 60), # Set to automatically unmute in 60 minutes
+      })
+      response = Net::HTTP.start(uri.hostname, uri.port, { use_ssl: true }) do |http|
+        http.request(request)
+      end
+      if response.code != '200'
+        Chef::Log.warn("Mute request failed with code #{response.code}: #{response.body}")
+      end
+    end
+    action :nothing
+  end
+  ruby_block 'Unmute host after installing' do
+    block do
+      require 'net/http'
+      require 'uri'
+      require 'json'
+      hostname = node['datadog']['hostname']
+      uri = URI.parse("https://api.datadoghq.com/api/v1/host/#{hostname}/unmute")
+      request = Net::HTTP::Post.new(uri)
+      request['Dd-Api-Key'] = Chef::Datadog.api_key(node)
+      request['Dd-Application-Key'] = Chef::Datadog.application_key(node)
+      response = Net::HTTP.start(uri.hostname, uri.port, { use_ssl: true }) do |http|
+        http.request(request)
+      end
+      if response.code != '200'
+        Chef::Log.warn("Unmute request failed with code #{response.code}: #{response.body}")
+      end
+    end
+    action :nothing
+  end
+  Chef.event_handler do
+    on :run_failed do
+      Windows::Helper.new.unmute_host(Chef.run_context)
+    end
+  end
+end
+
 # Install the package
 windows_package 'Datadog Agent' do # ~FC009
   source temp_file
@@ -166,6 +233,10 @@ windows_package 'Datadog Agent' do # ~FC009
     returns [0, 3010]
   else
     success_codes [0, 3010]
+  end
+  if node['datadog']['windows_mute_hosts_during_install']
+    notifies :run, 'ruby_block[Mute host while installing]', :before
+    notifies :run, 'ruby_block[Unmute host after installing]', :immediately
   end
   not_if do
     require 'digest'

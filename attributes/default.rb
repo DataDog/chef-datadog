@@ -160,7 +160,7 @@ default['datadog']['aptrepo_retries'] = 4
 default['datadog']['aptrepo_use_backup_keyserver'] = false
 default['datadog']['aptrepo_keyserver'] = 'hkp://keyserver.ubuntu.com:80'
 default['datadog']['aptrepo_backup_keyserver'] = 'hkp://pool.sks-keyservers.net:80'
-default['datadog']['yumrepo_gpgkey'] = "#{yum_protocol}://yum.datadoghq.com/DATADOG_RPM_KEY.public"
+default['datadog']['yumrepo_gpgkey'] = "#{yum_protocol}://keys.datadoghq.com/DATADOG_RPM_KEY.public"
 default['datadog']['yumrepo_proxy'] = nil
 default['datadog']['yumrepo_proxy_username'] = nil
 default['datadog']['yumrepo_proxy_password'] = nil
@@ -173,8 +173,10 @@ default['datadog']['windows_agent_installer_prefix'] = nil
 
 # Location of additional rpm gpg keys to import. In the future the rpm packages
 # of the Agent will be signed with this key.
-default['datadog']['yumrepo_gpgkey_new_e09422b3'] = "#{yum_protocol}://yum.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public"
-default['datadog']['yumrepo_gpgkey_new_fd4bf915'] = "#{yum_protocol}://yum.datadoghq.com/DATADOG_RPM_KEY_20200908.public"
+# DATADOG_RPM_KEY_CURRENT always contains the key that is used to sign repodata and latest packages
+default['datadog']['yumrepo_gpgkey_new_current'] = "#{yum_protocol}://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public"
+default['datadog']['yumrepo_gpgkey_new_e09422b3'] = "#{yum_protocol}://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public"
+default['datadog']['yumrepo_gpgkey_new_fd4bf915'] = "#{yum_protocol}://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public"
 
 # Windows Agent Blacklist
 # Attribute to enforce silent failures on agent installs when attempting to install a
@@ -188,6 +190,11 @@ default['datadog']['windows_blacklist_silent_fail'] = false
 # Attribute to specify timeout in seconds on MSI operations (install/uninstall)
 # Default should suffice, but provides a knob in case instances with limited resources timeout.
 default['datadog']['windows_msi_timeout'] = 1200
+
+# Mute hosts during an MSI installation
+# To prevent no-data alerts when MSI installs take long.
+# Requires setting 'application_key' to a valid app key for the Datadog REST API.
+default['datadog']['windows_mute_hosts_during_install'] = false
 
 # Agent installer checksum
 # Expected checksum to validate correct agent installer is downloaded (Windows only)
@@ -207,6 +214,9 @@ default['datadog']['windows_agent_use_exe'] = false
 # the keys `['datadog']['windows_ddagentuser_name']` and `['datadog']['windows_ddagentuser_password']`
 default['datadog']['windows_ddagentuser_name'] = nil
 default['datadog']['windows_ddagentuser_password'] = nil
+
+# Since 7.27, the MSI has a switch to install NPM driver. Default to not install. Specify "true" to install.
+default['datadog']['windows_npm_install'] = nil
 
 # Chef handler version
 default['datadog']['chef_handler_version'] = nil
@@ -359,6 +369,10 @@ default['datadog']['system_probe']['sysprobe_socket'] = '/opt/datadog-agent/run/
 default['datadog']['system_probe']['debug_port'] = 0
 default['datadog']['system_probe']['bpf_debug'] = false
 default['datadog']['system_probe']['enable_conntrack'] = false
+# Enable this switch will install NPM driver and sysprobe, as well as generate the config file.
+# Turning on this setting will effectively turn on the setting(s) automatically:
+# ['datadog']['system_probe']['enabled']
+default['datadog']['system_probe']['network_enabled'] = false
 
 # Logs functionality settings (Agent 6/7 only)
 # Set `enable_logs_agent` to:

@@ -1,43 +1,9 @@
-<%= JSON.parse(({'logs' => @logs }).to_json).to_yaml %>
-
-instances:
-  <% @instances.each do |i| -%>
-  - host: <%= i['host'] %>
-    port: <%= i['port'] %>
-    <% if i['name'] -%>
-    name: <%= i['name'] %>
-    <% end -%>
-    <% if i['user'] -%>
-    user: <%= i['user'] %>
-    <% end -%>
-    <% if i['password'] -%>
-    password: <%= i['password'] %>
-    <% end -%>
-    <% if i['process_name_regex'] and i['tools_jar_path'] -%>
-    process_name_regex: <%= i['process_name_regex'] %> # Instead of specifying a host, and port. The agent can connect using the attach api.
-                                                       # This requires the JDK to be installed and the path to tools.jar to be set below.
-    tools_jar_path: <%= i['tools_jar_path'] %>
-    <% end -%>
-    <% if i['java_bin_path'] -%>
-    java_bin_path: <%= i['java_bin_path'] %> #Optional, should be set if the agent cannot find your java executable
-    <% end -%>
-    <% if i['trust_store_path'] -%>
-    trust_store_path: <%= i['trust_store_path'] %> # Optional, should be set if ssl is enabled
-    <% end -%>
-    <% if i['trust_store_password'] -%>
-    trust_store_password: <%= i['trust_store_password'] %>
-    <% end -%>
-    <% if i.key?('tags') -%>
-    tags:
-      <% i['tags'].each do |k, v| -%>
-      <%= k %>: <%= v %>
-      <% end -%>
-    <% end -%>
-  <% end -%>
+<%= JSON.parse(({'logs' => @logs, 'instances' => @instances }).to_json).to_yaml %>
 
 <% if @version == 2 %>
 init_config:
   is_jmx: true
+  collect_default_metrics: true
 
   # Metrics collected by this check. You should not have to modify this.
   conf:
@@ -412,6 +378,7 @@ init_config:
 <% else %>
 init_config:
   is_jmx: true
+  collect_default_metrics: true
 
   # Metrics collected by this check. You should not have to modify this.
   conf:
