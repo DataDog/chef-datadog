@@ -9,6 +9,9 @@ instances:
     <% unless i["pshard_stats"].nil? %>
     pshard_stats: <%= i["pshard_stats"] %>
     <% end %>
+    <% unless i['min_collection_interval'].nil? -%>
+    min_collection_interval:  <%= i['min_collection_interval'] %>
+    <% end -%>
     <% unless i["cluster_stats"].nil? %>
     cluster_stats: <%= i["cluster_stats"] %>
     <% end %>

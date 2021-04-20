@@ -9,6 +9,10 @@ The Datadog Chef recipes are used to deploy Datadog's components and configurati
 **Note**: This page may refer to features that are not available for your selected version. Check the README of the
 git tag or gem version for your version's documentation.
 
+## CloudHealth Specific Changes
+
+Include `min_collection_interval` in templates `templates/default/{elastic,mysql,nginx,rabbitmq,redisdb}.yaml.erb`.
+
 ## Setup
 
 ### Requirements

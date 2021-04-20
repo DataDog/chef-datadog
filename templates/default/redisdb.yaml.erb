@@ -8,6 +8,9 @@ instances:
   - host: <%= i["server"] %>
     port: <%= i["port"] || 6379 %>
   <% end -%>
+  <% unless i['min_collection_interval'].nil? -%>
+    min_collection_interval:  <%= i['min_collection_interval'] %>
+  <% end -%>
     <% if i.key?("password") -%>
     password: <%= i["password"] %>
     <% end -%>
