@@ -119,7 +119,7 @@ describe 'datadog::repository' do
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
           ]
-        )
+        ).with(repo_gpgcheck: true)
       end
     end
 
@@ -193,7 +193,7 @@ describe 'datadog::repository' do
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY.public',
           ]
-        )
+        ).with(repo_gpgcheck: true)
       end
     end
 
@@ -268,7 +268,7 @@ describe 'datadog::repository' do
             'http://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
             'http://keys.datadoghq.com/DATADOG_RPM_KEY.public',
           ]
-        )
+        ).with(repo_gpgcheck: false)
       end
     end
   end

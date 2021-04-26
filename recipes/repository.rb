@@ -166,6 +166,7 @@ when 'rhel', 'fedora', 'amazon'
     proxy_password node['datadog']['yumrepo_proxy_password']
     gpgkey yumrepo_gpgkeys
     gpgcheck true
+    repo_gpgcheck node['datadog']['yumrepo_repo_gpgcheck']
     action :create
   end
 when 'suse'
@@ -229,6 +230,9 @@ when 'suse'
     gpgkey agent_major_version < 6 ? node['datadog']['yumrepo_gpgkey'] : node['datadog']['yumrepo_gpgkey_new_current']
     gpgautoimportkeys false
     gpgcheck false
+    # zypper has no repo_gpgcheck option, but it does repodata signature checks
+    # by default which users have to actually disable system-wide, so we are
+    # fine not setting it explicitly
     action :create
   end
 end
