@@ -132,6 +132,20 @@ when 'rhel', 'fedora', 'amazon'
     end
   end
 
+  # When the user has set yumrepo_repo_gpgcheck explicitly, we respect that.
+  # Otherwise, we turn on repo_gpgcheck by default when both:
+  # * We're not running on RHEL/CentOS 5 or older
+  # * User has not overriden the default yumrepo
+  repo_gpgcheck = if node['datadog']['yumrepo_repo_gpgcheck'].nil?
+                    if !node['datadog']['yumrepo'].nil? || (platform_family?('rhel') && node['platform_version'].to_i < 6)
+                      false
+                    else
+                      true
+                    end
+                  else
+                    node['datadog']['yumrepo_repo_gpgcheck']
+                  end
+
   if !node['datadog']['yumrepo'].nil?
     baseurl = node['datadog']['yumrepo']
   else
@@ -142,6 +156,7 @@ when 'rhel', 'fedora', 'amazon'
       baseurl = "https://yum.datadoghq.com/stable/#{agent_major_version}/#{node['kernel']['machine']}/"
     when 5
       baseurl = "#{yum_protocol_a5}://yum.datadoghq.com/rpm/#{yum_a5_architecture_map[node['kernel']['machine']]}/"
+      repo_gpgcheck = false
     else
       Chef::Log.error("agent_major_version '#{agent_major_version}' not supported.")
     end
@@ -166,6 +181,7 @@ when 'rhel', 'fedora', 'amazon'
     proxy_password node['datadog']['yumrepo_proxy_password']
     gpgkey yumrepo_gpgkeys
     gpgcheck true
+    repo_gpgcheck repo_gpgcheck
     action :create
   end
 when 'suse'
@@ -229,6 +245,9 @@ when 'suse'
     gpgkey agent_major_version < 6 ? node['datadog']['yumrepo_gpgkey'] : node['datadog']['yumrepo_gpgkey_new_current']
     gpgautoimportkeys false
     gpgcheck false
+    # zypper has no repo_gpgcheck option, but it does repodata signature checks
+    # by default (when the repomd.xml.asc file is present) which users have
+    # to actually disable system-wide, so we are fine not setting it explicitly
     action :create
   end
 end
