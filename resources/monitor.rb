@@ -19,6 +19,7 @@ property :init_config, [Hash, nil], required: false, default: {}
 property :instances, Array, required: false, default: []
 property :version, [Integer, nil], required: false, default: nil
 property :use_integration_template, [TrueClass, FalseClass], required: false, default: false
+property :is_jmx, [TrueClass, FalseClass], required: false, default: false
 property :logs, [Array, nil], required: false, default: []
 
 action :add do
@@ -60,8 +61,13 @@ action :add do
       source "#{new_resource.name}.yaml.erb"
     end
 
+    init_config = new_resource.init_config
+    if new_resource.is_jmx
+      init_config.merge!({'is_jmx': true, 'collect_default_metrics': true })
+    end
+
     variables(
-      init_config: new_resource.init_config,
+      init_config: init_config,
       instances:   new_resource.instances,
       version:     new_resource.version,
       logs:        new_resource.logs

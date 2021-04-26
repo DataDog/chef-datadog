@@ -99,6 +99,7 @@ datadog_monitor 'hazelcast' do
   init_config node['datadog']['hazelcast']['init_config']
   instances node['datadog']['hazelcast']['instances']
   logs node['datadog']['hazelcast']['logs']
+  is_jmx true
   use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
