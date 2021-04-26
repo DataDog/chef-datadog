@@ -136,14 +136,15 @@ when 'rhel', 'fedora', 'amazon'
   # Otherwise, we turn on repo_gpgcheck by default when both:
   # * We're not running on RHEL/CentOS 5 or older
   # * User has not overriden the default yumrepo
-  repo_gpgcheck = node['datadog']['yumrepo_repo_gpgcheck']
-  if repo_gpgcheck.nil?
-    if !node['datadog']['yumrepo'].nil? || (platform_family?('rhel') && node['platform_version'].to_i < 6)
-      repo_gpgcheck = false
-    else
-      repo_gpgcheck = true
-    end
-  end
+  repo_gpgcheck = if node['datadog']['yumrepo_repo_gpgcheck'].nil?
+                    if !node['datadog']['yumrepo'].nil? || (platform_family?('rhel') && node['platform_version'].to_i < 6)
+                      false
+                    else
+                      true
+                    end
+                  else
+                    node['datadog']['yumrepo_repo_gpgcheck']
+                  end
 
   if !node['datadog']['yumrepo'].nil?
     baseurl = node['datadog']['yumrepo']
