@@ -1,7 +1,7 @@
 include_recipe 'datadog::dd-agent'
 
 # Monitor solr
-# @see https://github.com/DataDog/integrations-core/blob/master/solr/conf.yaml.example Solr Example
+# @see https://github.com/DataDog/chef-datadog/blob/master/templates/default/solr.yaml.erb Solr Example
 # @example
 #
 
