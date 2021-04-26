@@ -160,13 +160,10 @@ default['datadog']['aptrepo_retries'] = 4
 default['datadog']['aptrepo_use_backup_keyserver'] = false
 default['datadog']['aptrepo_keyserver'] = 'hkp://keyserver.ubuntu.com:80'
 default['datadog']['aptrepo_backup_keyserver'] = 'hkp://pool.sks-keyservers.net:80'
-# repo_gpgcheck on RHEL 5 requires additional packages (e.g. pygpgme) that might not
-# always be installed/available in enabled repositories
-default['datadog']['yumrepo_repo_gpgcheck'] = if platform_family?('rhel') && node['platform_version'].to_i < 6
-                                                false
-                                              else
-                                                true
-                                              end
+# When repo_gpgcheck set to nil, it will get turned on in the code when
+# not running on RHEL/CentOS <= 5 and not providing custom yumrepo.
+# You can set it to true/false explicitly to override this behaviour.
+default['datadog']['yumrepo_repo_gpgcheck'] = nil
 default['datadog']['yumrepo_gpgkey'] = "#{yum_protocol}://keys.datadoghq.com/DATADOG_RPM_KEY.public"
 default['datadog']['yumrepo_proxy'] = nil
 default['datadog']['yumrepo_proxy_username'] = nil
