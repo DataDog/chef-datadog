@@ -271,6 +271,50 @@ describe 'datadog::repository' do
         ).with(repo_gpgcheck: false)
       end
     end
+
+    context 'centos 8.1, agent 6' do
+      cached(:chef_run) do
+        ChefSpec::SoloRunner.new(
+          platform: 'centos', version: '8'
+        ) do |node|
+          node.normal['datadog'] = { 'agent_major_version' => '6' }
+          node.automatic['platform_version'] = '8.1'
+        end.converge(described_recipe)
+      end
+
+      it 'disables repo_gpgcheck because of dnf bug in RHEL 8.1' do
+        expect(chef_run).to create_yum_repository('datadog').with(
+          gpgkey: [
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY.public',
+          ]
+        ).with(repo_gpgcheck: false)
+      end
+    end
+
+    context 'centos 8.2, agent 6' do
+      cached(:chef_run) do
+        ChefSpec::SoloRunner.new(
+          platform: 'centos', version: '8'
+        ) do |node|
+          node.normal['datadog'] = { 'agent_major_version' => '6' }
+          node.automatic['platform_version'] = '8.2'
+        end.converge(described_recipe)
+      end
+
+      it 'enables repo_gpgcheck because of fixed dnf bug in RHEL 8.2' do
+        expect(chef_run).to create_yum_repository('datadog').with(
+          gpgkey: [
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY.public',
+          ]
+        ).with(repo_gpgcheck: true)
+      end
+    end
   end
 
   context 'suseiods' do
