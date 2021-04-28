@@ -140,7 +140,7 @@ when 'rhel', 'fedora', 'amazon'
   #   of https://bugzilla.redhat.com/show_bug.cgi?id=1792506
   repo_gpgcheck = if node['datadog']['yumrepo_repo_gpgcheck'].nil?
                     if !node['datadog']['yumrepo'].nil? || (platform_family?('rhel') && node['platform_version'].to_i < 6) ||
-                        (['centos', 'redhat'].include?(node['platform']) && node['platform_version'].to_f >= 8.1 && node['platform_version'].to_f < 8.2)
+                       (platform?('centos', 'redhat') && node['platform_version'].to_f >= 8.1 && node['platform_version'].to_f < 8.2)
                       false
                     else
                       true
