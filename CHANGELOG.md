@@ -969,6 +969,14 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#776]: https://github.com/DataDog/chef-datadog/issues/776
 [#777]: https://github.com/DataDog/chef-datadog/issues/777
 [#778]: https://github.com/DataDog/chef-datadog/issues/778
+[#780]: https://github.com/DataDog/chef-datadog/issues/780
+[#781]: https://github.com/DataDog/chef-datadog/issues/781
+[#782]: https://github.com/DataDog/chef-datadog/issues/782
+[#784]: https://github.com/DataDog/chef-datadog/issues/784
+[#786]: https://github.com/DataDog/chef-datadog/issues/786
+[#789]: https://github.com/DataDog/chef-datadog/issues/789
+[#791]: https://github.com/DataDog/chef-datadog/issues/791
+[#793]: https://github.com/DataDog/chef-datadog/issues/793
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@Azraeht]: https://github.com/Azraeht
@@ -1001,6 +1009,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@benmanns]: https://github.com/benmanns
 [@bflad]: https://github.com/bflad
 [@bitmonk]: https://github.com/bitmonk
+[@bkabrda]: https://github.com/bkabrda
 [@borgilb]: https://github.com/borgilb
 [@brentm5]: https://github.com/brentm5
 [@ccannell67]: https://github.com/ccannell67
