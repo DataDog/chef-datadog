@@ -1,6 +1,14 @@
 Changes
 =======
 
+# 4.10.0 / 2021-05-05
+
+* [FEATURE] Support for NPM on Windows [#780][], [#781][] and [#784][] ([@mikezhu-dd][])
+* [FEATURE] Implement usage of multiple GPG keys in repofiles, get keys from keys.datadoghq.com [#782][] ([@bkabrda][])
+* [FEATURE] Enable yum repository repo_gpgcheck option for Red Hat platforms by default [#789][] and [#793][] ([@bkabrda][])
+* [BUGFIX] Added collect_default_metrics: true to kafka.d/conf.yaml [#786][] ([@nilskuehme][])
+* [BUGFIX] Set is_jmx in solr template [#791][] ([@albertvaka][])
+
 # 4.9.0 / 2021-02-17
 * [FEATURE] allow muting a host during an MSI install [#778][] [@albertvaka][]
 * [FEATURE] Kafka recipe: allow setting any conf [#776][] [@albertvaka][]
