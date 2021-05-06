@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 4.10.0 / 2021-05-05
+# 4.10.0 / 2021-05-06
 
 * [FEATURE] Support for NPM on Windows [#780][], [#781][] and [#784][] ([@mikezhu-dd][])
 * [FEATURE] Implement usage of multiple GPG keys in repofiles, get keys from keys.datadoghq.com [#782][] ([@bkabrda][])
