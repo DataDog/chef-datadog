@@ -140,7 +140,7 @@ default['datadog']['handler_extra_config'] = {}
 # If you're installing a pre-release version of the Agent (beta or RC), you need to:
 # * on debian: set node['datadog']['aptrepo_dist'] to 'beta' instead of 'stable'
 # * on RHEL: set node['datadog']['yumrepo'] to 'https://yum.datadoghq.com/beta/x86_64/'
-default['datadog']['aptrepo'] = 'http://apt.datadoghq.com'
+default['datadog']['aptrepo'] = nil # uses Datadog stable repos by default
 default['datadog']['aptrepo_dist'] = 'stable'
 default['datadog']['yumrepo'] = nil # uses Datadog stable repos by default
 default['datadog']['yumrepo_suse'] = nil # uses Datadog stable repos by default
@@ -157,9 +157,6 @@ yum_protocol =
 # to pin the version you're installing with node['datadog']['agent_version']
 default['datadog']['installrepo'] = true
 default['datadog']['aptrepo_retries'] = 4
-default['datadog']['aptrepo_use_backup_keyserver'] = false
-default['datadog']['aptrepo_keyserver'] = 'hkp://keyserver.ubuntu.com:80'
-default['datadog']['aptrepo_backup_keyserver'] = 'hkp://pool.sks-keyservers.net:80'
 # When repo_gpgcheck set to nil, it will get turned on in the code when
 # not running on RHEL/CentOS <= 5 and not providing custom yumrepo.
 # You can set it to true/false explicitly to override this behaviour.
