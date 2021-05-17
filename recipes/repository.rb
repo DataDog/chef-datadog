@@ -70,6 +70,11 @@ when 'debian'
     action :install
   end
 
+  package 'install-gnupg' do
+    package_name 'gnupg'
+    action :install
+  end
+
   file apt_usr_share_keyring do
     action :create_if_missing
     content ''
