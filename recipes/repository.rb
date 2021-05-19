@@ -95,7 +95,9 @@ when 'debian'
     # Import the APT key
     execute "import apt datadog key #{key_fingerprint}" do
       command "/bin/cat #{key_local_path} | gpg --import --batch --no-default-keyring --keyring #{apt_usr_share_keyring}"
-      not_if "/bin/cat #{key_local_path} | gpg --dry-run --import --batch --no-default-keyring --keyring #{apt_usr_share_keyring} 2>&1 | grep 'unchanged: 1'"
+      # the second part extracts the fingerprint of the key from output like "fpr::::A2923DFF56EDA6E76E55E492D3A80E30382E94DE:"
+      not_if "/usr/bin/gpg --no-default-keyring --keyring #{apt_usr_share_keyring} --list-keys --with-fingerprint --with-colons | grep \
+             $(cat #{key_local_path} | gpg --with-colons --with-fingerprint 2>/dev/null | grep 'fpr:' | sed 's|^fpr||' | tr -d ':')"
       action :nothing
     end
   end
