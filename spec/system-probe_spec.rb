@@ -66,7 +66,7 @@ describe 'datadog::system-probe' do
     it 'contains expected YAML configuration' do
       expected_yaml = <<-EOF
       network_config:
-        enabled: false
+        enabled: true
       system_probe_config:
         bpf_debug: true
         debug_port: 123
@@ -117,7 +117,7 @@ describe 'datadog::system-probe' do
     it 'contains expected YAML configuration' do
       expected_yaml = <<-EOF
       network_config:
-        enabled: false
+        enabled: true
       system_probe_config:
         bpf_debug: false
         debug_port: 0
@@ -125,6 +125,53 @@ describe 'datadog::system-probe' do
         enabled: true
         sysprobe_socket: "/opt/datadog-agent/run/sysprobe.sock"
         max_tracked_connections: 1000
+      EOF
+
+      expect(chef_run).to(render_file('/etc/datadog-agent/system-probe.yaml').with_content { |content|
+        expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
+      })
+    end
+  end
+
+  context 'with network_enabled set to false' do
+    cached(:solo) do
+      ChefSpec::SoloRunner.new(
+        platform: 'ubuntu',
+        version: '16.04'
+      ) do |node|
+        node.name 'chef-nodename' # expected to be used as the hostname in `datadog.yaml`
+        node.normal['datadog'] = {
+          'api_key' => 'somethingnotnil',
+          'agent_major_version' => 6,
+          'system_probe' => {
+            'enabled' => true,
+            'network_enabled' => false,
+          },
+        }
+      end
+    end
+
+    cached(:chef_run) do
+      solo.converge(described_recipe) do
+        solo.resource_collection.insert(
+          Chef::Resource::Service.new('datadog-agent', solo.run_context))
+      end
+    end
+
+    it 'is created' do
+      expect(chef_run).to create_template('/etc/datadog-agent/system-probe.yaml')
+    end
+
+    it 'contains expected YAML configuration' do
+      expected_yaml = <<-EOF
+      network_config:
+        enabled: false
+      system_probe_config:
+        bpf_debug: false
+        debug_port: 0
+        enable_conntrack: false
+        enabled: true
+        sysprobe_socket: "/opt/datadog-agent/run/sysprobe.sock"
       EOF
 
       expect(chef_run).to(render_file('/etc/datadog-agent/system-probe.yaml').with_content { |content|
