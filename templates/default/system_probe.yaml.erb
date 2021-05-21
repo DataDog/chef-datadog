@@ -9,7 +9,7 @@ system_probe_config = {
     enable_conntrack: @enable_conntrack,
   }.merge(@extra_config),
   network_config: {
-    enabled: node['datadog']['system_probe']['network_enabled'],
+    enabled: Chef::Datadog.network_enabled(node),
   }
 }
 -%>
