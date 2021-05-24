@@ -20,7 +20,7 @@
 is_windows = platform_family?('windows')
 
 # Set the correct agent startup action
-sysprobe_enabled = node['datadog']['system_probe']['enabled'] || Chef::Datadog.network_enabled(node)
+sysprobe_enabled = node['datadog']['system_probe']['enabled'] || node['datadog']['system_probe']['network_enabled']
 sysprobe_agent_start = sysprobe_enabled ? :start : :stop
 
 #

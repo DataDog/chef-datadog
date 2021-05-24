@@ -95,19 +95,11 @@ class Chef
       end
 
       def npm_install(node)
-        run_state_or_attribute(node, 'windows_npm_install') || run_state_or_attribute_network_enabled(node)
+        run_state_or_attribute(node, 'windows_npm_install') || run_state_or_attribute_system_probe(node, 'network_enabled')
       end
 
       def cookbook_version(run_context)
         run_context.cookbook_collection['datadog'].version
-      end
-
-      def network_enabled(node)
-        if node['datadog']['system_probe']['network_enabled'].nil?
-          node['datadog']['system_probe']['enabled']
-        else
-          node['datadog']['system_probe']['network_enabled']
-        end
       end
 
       def upstart_platform?(node)
@@ -144,15 +136,6 @@ class Chef
           node.run_state['datadog']['system_probe'][attribute]
         else
           node['datadog']['system_probe'][attribute]
-        end
-      end
-
-      def run_state_or_attribute_network_enabled(node)
-        from_system_probe = run_state_or_attribute_system_probe(node, 'network_enabled')
-        if from_system_probe.nil?
-          network_enabled(node)
-        else
-          from_system_probe
         end
       end
     end
