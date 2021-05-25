@@ -366,6 +366,8 @@ default['datadog']['process_agent']['rtcontainer_interval'] = nil
 # Whether this cookbook should write system-probe.yaml or not.
 # If set to false all other system-probe settings are ignored
 default['datadog']['system_probe']['manage_config'] = true
+# When `system_probe.enabled` is set to false and `network_enabled` is set to true,
+# the NPM module of system probe will still run.
 default['datadog']['system_probe']['enabled'] = false
 # sysprobe_socket defines the unix socket location
 default['datadog']['system_probe']['sysprobe_socket'] = '/opt/datadog-agent/run/sysprobe.sock'
@@ -376,7 +378,9 @@ default['datadog']['system_probe']['enable_conntrack'] = false
 # Enable this switch will install NPM driver and sysprobe, as well as generate the config file.
 # Turning on this setting will effectively turn on the setting(s) automatically:
 # ['datadog']['system_probe']['enabled']
-default['datadog']['system_probe']['network_enabled'] = false
+# When this is set to nil (default), `network_config` won't be rendered in system-probe.yaml,
+# making the Agent use the default setting for this value.
+default['datadog']['system_probe']['network_enabled'] = nil
 
 # Logs functionality settings (Agent 6/7 only)
 # Set `enable_logs_agent` to:
