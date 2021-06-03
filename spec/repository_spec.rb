@@ -1,3 +1,40 @@
+shared_examples 'old debianoid' do
+  it 'properly creates both keyring files and imports all keys' do
+    expect(chef_run).to create_file_if_missing('/usr/share/keyrings/datadog-archive-keyring.gpg')
+    expect(chef_run).to create_remote_file('/etc/apt/trusted.gpg.d/datadog-archive-keyring.gpg').with(
+      source: 'file:///usr/share/keyrings/datadog-archive-keyring.gpg')
+    expect(chef_run).to create_file('/etc/apt/sources.list.d/datadog.list').with(
+      content: 'deb [signed-by=/usr/share/keyrings/datadog-archive-keyring.gpg] https://apt.datadoghq.com stable 7'
+    )
+
+    # NOTE: there is no way in chefspec to actually test the notified action,
+    # see https://github.com/chefspec/chefspec/issues/541
+    expect(chef_run.remote_file('remote_file_DATADOG_APT_KEY_CURRENT.public')).to notify(
+      'execute[import apt datadog key DATADOG_APT_KEY_CURRENT.public]').to(:run).immediately
+    expect(chef_run.remote_file('remote_file_D75CEA17048B9ACBF186794B32637D44F14F620E')).to notify(
+      'execute[import apt datadog key D75CEA17048B9ACBF186794B32637D44F14F620E]').to(:run).immediately
+    expect(chef_run.remote_file('remote_file_A2923DFF56EDA6E76E55E492D3A80E30382E94DE')).to notify(
+      'execute[import apt datadog key A2923DFF56EDA6E76E55E492D3A80E30382E94DE]').to(:run).immediately
+  end
+end
+
+shared_examples 'new debianoid' do
+  it 'properly creates the keyring file and imports all keys' do
+    expect(chef_run).to create_file_if_missing('/usr/share/keyrings/datadog-archive-keyring.gpg')
+    expect(chef_run).to_not create_remote_file('/etc/apt/trusted.gpg.d/datadog-archive-keyring.gpg')
+    expect(chef_run).to create_file('/etc/apt/sources.list.d/datadog.list').with(
+      content: 'deb [signed-by=/usr/share/keyrings/datadog-archive-keyring.gpg] https://apt.datadoghq.com stable 7'
+    )
+
+    expect(chef_run.remote_file('remote_file_DATADOG_APT_KEY_CURRENT.public')).to notify(
+      'execute[import apt datadog key DATADOG_APT_KEY_CURRENT.public]').to(:run).immediately
+    expect(chef_run.remote_file('remote_file_D75CEA17048B9ACBF186794B32637D44F14F620E')).to notify(
+      'execute[import apt datadog key D75CEA17048B9ACBF186794B32637D44F14F620E]').to(:run).immediately
+    expect(chef_run.remote_file('remote_file_A2923DFF56EDA6E76E55E492D3A80E30382E94DE')).to notify(
+      'execute[import apt datadog key A2923DFF56EDA6E76E55E492D3A80E30382E94DE]').to(:run).immediately
+  end
+end
+
 describe 'datadog::repository' do
   context 'on debianoids' do
     cached(:chef_run) do
@@ -14,12 +51,7 @@ describe 'datadog::repository' do
       expect(chef_run).to install_package('install-apt-transport-https')
     end
 
-    it 'sets up an apt repo with fingerprint A2923DFF56EDA6E76E55E492D3A80E30382E94DE and D75CEA17048B9ACBF186794B32637D44F14F620E' do
-      expect(chef_run).to add_apt_repository('datadog').with(
-        key: ['D75CEA17048B9ACBF186794B32637D44F14F620E']
-      )
-      expect(chef_run).to run_execute('apt-key import key 382E94DE')
-    end
+    # testing of creation of the source file + keyrings is done for various cases in different methods
 
     it 'removes the datadog-beta repo' do
       expect(chef_run).to remove_apt_repository('datadog-beta')
@@ -32,6 +64,50 @@ describe 'datadog::repository' do
     it 'removes the datadog_apt_D75CEA17048B9ACBF186794B32637D44F14F620E repo' do
       expect(chef_run).to remove_apt_repository('datadog_apt_D75CEA17048B9ACBF186794B32637D44F14F620E')
     end
+  end
+
+  context 'debian < 9' do
+    cached(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        # Fauxhai doesn't have definition for Debian < 9, but we can
+        # workaround that by setting platform_version below
+        platform: 'debian', version: '9.11'
+      ) do |node|
+        node.automatic['platform_version'] = '8.0'
+      end.converge(described_recipe)
+    end
+
+    it_behaves_like 'old debianoid'
+  end
+
+  context 'ubuntu < 16' do
+    cached(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        platform: 'ubuntu', version: '14.04'
+      ).converge(described_recipe)
+    end
+
+    it_behaves_like 'old debianoid'
+  end
+
+  context 'debian >= 9' do
+    cached(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        platform: 'debian', version: '9.11'
+      ).converge(described_recipe)
+    end
+
+    it_behaves_like 'new debianoid'
+  end
+
+  context 'ubuntu >= 16' do
+    cached(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        platform: 'ubuntu', version: '16.04'
+      ).converge(described_recipe)
+    end
+
+    it_behaves_like 'new debianoid'
   end
 
   context 'rhellions' do
