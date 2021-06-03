@@ -26,7 +26,7 @@ yum_a5_architecture_map.default = 'x86_64'
 
 agent_major_version = Chef::Datadog.agent_major_version(node)
 
-# DATADOG_APT_KEY_CURRENT always contains the key that is used to sing repodata and latest packages
+# DATADOG_APT_KEY_CURRENT always contains the key that is used to sign repodata and latest packages
 # A2923DFF56EDA6E76E55E492D3A80E30382E94DE expires in 2022
 # D75CEA17048B9ACBF186794B32637D44F14F620E expires in 2032
 apt_gpg_keys = {
