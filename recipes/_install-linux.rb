@@ -38,6 +38,12 @@ when 'debian'
     action package_action # default is :install
     options '--force-yes' if node['datadog']['agent_allow_downgrade']
   end
+
+  apt_package 'datadog-signing-keys' do
+    retries package_retries unless package_retries.nil?
+    retry_delay package_retry_delay unless package_retry_delay.nil?
+    action :upgrade
+  end
 when 'rhel', 'fedora', 'amazon'
   if platform_family?('rhel') && node['platform_version'].to_i >= 8 && !platform?('amazon') ||
      platform_family?('fedora') && node['platform_version'].to_i >= 28
