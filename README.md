@@ -6,7 +6,7 @@ The Datadog Chef recipes are used to deploy Datadog's components and configurati
 * Datadog Agent v6.x
 * Datadog Agent v5.x
 
-**Note**: This page may refer to features that are not available for your selected version. Check the README of the
+**Note**: This page may reference features that are not available for your selected version. Check the README of the
 git tag or gem version for your version's documentation.
 
 ## Setup
@@ -275,14 +275,14 @@ The [dd-agent recipe][9] installs the Datadog Agent on the target system, sets y
 
 ### Handler
 
-The [dd-handler recipe][11] installs the [chef-handler-datadog][12] gem and invokes the handler at the end of a Chef run to report the details to the newsfeed.
+The [dd-handler recipe][11] installs the [chef-handler-datadog][12] gem and invokes the handler at the end of a Chef run to report the details to the news feed.
 
 ### DogStatsD
 
 To install a language-specific library that interacts with DogStatsD:
 
 - Ruby: [dogstatsd-ruby recipe][13]
-- Python: Add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the resource below. For more details, refer to the [poise-python repository][14].
+- Python: Add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the resource below. For more details, see the [poise-python repository][14].
     ```ruby
     python_package 'dogstatsd-python' # assumes python and pip are installed
     ```
@@ -292,7 +292,7 @@ To install a language-specific library that interacts with DogStatsD:
 To install a language-specific library for application tracing (APM):
 
 - Ruby: [ddtrace-ruby recipe][15]
-- Python: Add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the resource below. For more details, refer to the [poise-python repository][14].
+- Python: Add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the resource below. For more details, see the [poise-python repository][14].
     ```ruby
     python_package 'ddtrace' # assumes python and pip are installed
     ```
@@ -303,7 +303,7 @@ There are many [recipes][7] to assist you with deploying Agent integration confi
 
 ## Resources
 
-### datadog_monitor
+### `datadog_monitor`
 
 Use the `datadog_monitor` resource for enabling Agent integrations without a recipe.
 
@@ -332,7 +332,7 @@ end
 | `instances`                | The fields used to fill values under the `instances` section in the integration configuration file.                                                                                                                                                                                            |
 | `init_config`              | The fields used to fill values under the the `init_config` section in the integration configuration file.                                                                                                                                                                                      |
 | `logs`                     | The fields used to fill values under the the `logs` section in the integration configuration file.                                                                                                                                                                                             |
-| `use_integration_template` | Set to `true` (recommended) to use the default template, which writes the values of `instances`, `init_config`, and `logs` in the YAML under their respective keys. This defaults to `false` for backward compatibility, but will default to `true` in a future major version of the cookbook. |
+| `use_integration_template` | Set to `true` (recommended) to use the default template, which writes the values of `instances`, `init_config`, and `logs` in the YAML under their respective keys. This defaults to `false` for backward compatibility, but defaults to `true` in a future major version of the cookbook. |
 
 #### Example
 
@@ -352,7 +352,7 @@ end
 
 See the [Datadog integration Chef recipes][7] for additional examples.
 
-### datadog_integration
+### `datadog_integration`
 
 To install a specific version of a Datadog integration, use the `datadog_integration` resource.
 
@@ -391,7 +391,7 @@ datadog_integration 'datadog-elastic' do
 end
 ```
 
-To get the available versions of the integrations, refer to the integration-specific `CHANGELOG.md` in the [integrations-core repository][16].
+To get the available versions of the integrations, see the integration-specific `CHANGELOG.md` in the [integrations-core repository][16].
 
 **Note**: For Chef Windows users, the `chef-client` must have read access to the `datadog.yaml` file when the `datadog-agent` binary available on the node is used by this resource.
 
