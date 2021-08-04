@@ -6,7 +6,7 @@ The Datadog Chef recipes are used to deploy Datadog's components and configurati
 * Datadog Agent v6.x
 * Datadog Agent v5.x
 
-**Note**: This page may reference features that are not available for your selected version. Check the README of the
+**Note**: This page may discuss features that are not available for your selected version. Check the README of the
 git tag or gem version for your version's documentation.
 
 ## Setup
@@ -332,7 +332,7 @@ end
 | `instances`                | The fields used to fill values under the `instances` section in the integration configuration file.                                                                                                                                                                                            |
 | `init_config`              | The fields used to fill values under the the `init_config` section in the integration configuration file.                                                                                                                                                                                      |
 | `logs`                     | The fields used to fill values under the the `logs` section in the integration configuration file.                                                                                                                                                                                             |
-| `use_integration_template` | Set to `true` (recommended) to use the default template, which writes the values of `instances`, `init_config`, and `logs` in the YAML under their respective keys. This defaults to `false` for backward compatibility, but defaults to `true` in a future major version of the cookbook. |
+| `use_integration_template` | Set to `true` (recommended) to use the default template, which writes the values of `instances`, `init_config`, and `logs` in the YAML under their respective keys. This defaults to `false` for backward compatibility, but may default to `true` in a future major version of the cookbook. |
 
 #### Example
 
