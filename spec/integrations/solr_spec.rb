@@ -13,6 +13,7 @@ describe 'datadog::solr' do
         newTag: test
 
   init_config:
+    collect_default_metrics: true
     conf:
       - include:
           type: searcher
@@ -77,6 +78,7 @@ describe 'datadog::solr' do
             avgRequestsPerSecond:
               alias: solr.search_handler.avg_requests_per_sec
               metric_type: gauge
+    is_jmx: true
   EOF
 
   cached(:chef_run) do

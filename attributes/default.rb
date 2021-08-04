@@ -140,7 +140,7 @@ default['datadog']['handler_extra_config'] = {}
 # If you're installing a pre-release version of the Agent (beta or RC), you need to:
 # * on debian: set node['datadog']['aptrepo_dist'] to 'beta' instead of 'stable'
 # * on RHEL: set node['datadog']['yumrepo'] to 'https://yum.datadoghq.com/beta/x86_64/'
-default['datadog']['aptrepo'] = 'http://apt.datadoghq.com'
+default['datadog']['aptrepo'] = nil # uses Datadog stable repos by default
 default['datadog']['aptrepo_dist'] = 'stable'
 default['datadog']['yumrepo'] = nil # uses Datadog stable repos by default
 default['datadog']['yumrepo_suse'] = nil # uses Datadog stable repos by default
@@ -157,10 +157,11 @@ yum_protocol =
 # to pin the version you're installing with node['datadog']['agent_version']
 default['datadog']['installrepo'] = true
 default['datadog']['aptrepo_retries'] = 4
-default['datadog']['aptrepo_use_backup_keyserver'] = false
-default['datadog']['aptrepo_keyserver'] = 'hkp://keyserver.ubuntu.com:80'
-default['datadog']['aptrepo_backup_keyserver'] = 'hkp://pool.sks-keyservers.net:80'
-default['datadog']['yumrepo_gpgkey'] = "#{yum_protocol}://yum.datadoghq.com/DATADOG_RPM_KEY.public"
+# When repo_gpgcheck set to nil, it will get turned on in the code when
+# not running on RHEL/CentOS <= 5 and not providing custom yumrepo.
+# You can set it to true/false explicitly to override this behaviour.
+default['datadog']['yumrepo_repo_gpgcheck'] = nil
+default['datadog']['yumrepo_gpgkey'] = "#{yum_protocol}://keys.datadoghq.com/DATADOG_RPM_KEY.public"
 default['datadog']['yumrepo_proxy'] = nil
 default['datadog']['yumrepo_proxy_username'] = nil
 default['datadog']['yumrepo_proxy_password'] = nil
@@ -173,8 +174,10 @@ default['datadog']['windows_agent_installer_prefix'] = nil
 
 # Location of additional rpm gpg keys to import. In the future the rpm packages
 # of the Agent will be signed with this key.
-default['datadog']['yumrepo_gpgkey_new_e09422b3'] = "#{yum_protocol}://yum.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public"
-default['datadog']['yumrepo_gpgkey_new_fd4bf915'] = "#{yum_protocol}://yum.datadoghq.com/DATADOG_RPM_KEY_20200908.public"
+# DATADOG_RPM_KEY_CURRENT always contains the key that is used to sign repodata and latest packages
+default['datadog']['yumrepo_gpgkey_new_current'] = "#{yum_protocol}://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public"
+default['datadog']['yumrepo_gpgkey_new_e09422b3'] = "#{yum_protocol}://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public"
+default['datadog']['yumrepo_gpgkey_new_fd4bf915'] = "#{yum_protocol}://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public"
 
 # Windows Agent Blacklist
 # Attribute to enforce silent failures on agent installs when attempting to install a
@@ -360,6 +363,8 @@ default['datadog']['process_agent']['rtcontainer_interval'] = nil
 # Whether this cookbook should write system-probe.yaml or not.
 # If set to false all other system-probe settings are ignored
 default['datadog']['system_probe']['manage_config'] = true
+# When `system_probe.enabled` is set to false and `network_enabled` is set to true,
+# the NPM module of system probe will still run.
 default['datadog']['system_probe']['enabled'] = false
 # sysprobe_socket defines the unix socket location
 default['datadog']['system_probe']['sysprobe_socket'] = '/opt/datadog-agent/run/sysprobe.sock'
@@ -367,6 +372,12 @@ default['datadog']['system_probe']['sysprobe_socket'] = '/opt/datadog-agent/run/
 default['datadog']['system_probe']['debug_port'] = 0
 default['datadog']['system_probe']['bpf_debug'] = false
 default['datadog']['system_probe']['enable_conntrack'] = false
+# Enable this switch will install NPM driver and sysprobe, as well as generate the config file.
+# Turning on this setting will effectively turn on the setting(s) automatically:
+# ['datadog']['system_probe']['enabled']
+# When this is set to nil (default), `network_config` won't be rendered in system-probe.yaml,
+# making the Agent use the default setting for this value.
+default['datadog']['system_probe']['network_enabled'] = nil
 
 # Logs functionality settings (Agent 6/7 only)
 # Set `enable_logs_agent` to:

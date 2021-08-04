@@ -95,7 +95,7 @@ class Chef
       end
 
       def npm_install(node)
-        run_state_or_attribute(node, 'windows_npm_install')
+        run_state_or_attribute(node, 'windows_npm_install') || run_state_or_attribute_system_probe(node, 'network_enabled')
       end
 
       def cookbook_version(run_context)
@@ -128,6 +128,14 @@ class Chef
           node.run_state['datadog'][attribute]
         else
           node['datadog'][attribute]
+        end
+      end
+
+      def run_state_or_attribute_system_probe(node, attribute)
+        if node.run_state.key?('datadog') && node.run_state['datadog'].key?('system_probe') && node.run_state['datadog']['system_probe'].key?(attribute)
+          node.run_state['datadog']['system_probe'][attribute]
+        else
+          node['datadog']['system_probe'][attribute]
         end
       end
     end

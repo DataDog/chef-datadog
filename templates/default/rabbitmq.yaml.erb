@@ -13,7 +13,10 @@ instances:
     # https://help.datadoghq.com/hc/en-us/articles/211590103-Tagging-RabbitMQ-queues-by-tag-family
     tag_families: <%= i['tag_families'] || 'false' %>
   <% if i.key?('max_detailed_exchanges') -%>
-      max_detailed_exchanges: <%= i['max_detailed_exchanges'] %>
+    max_detailed_exchanges: <%= i['max_detailed_exchanges'] %>
+  <% end -%>
+  <% if i.key?('max_detailed_queues') -%>
+    max_detailed_queues: <%= i['max_detailed_queues'] %>
   <% end -%>
   <% if i.key?('tags') -%>
     tags:
@@ -52,7 +55,7 @@ instances:
     <% end -%>
   <% end -%>
   <% if i.key?('timeout') -%>
-      timeout: <%= i['timeout'] %>
+    timeout: <%= i['timeout'] %>
   <% end -%>
 <% end -%>
 

@@ -27,6 +27,7 @@ action :install do
       output = shell_out("#{agent_exe_filepath} integration show -q #{new_resource.property_name}").stdout
       output.strip == new_resource.version
     }
+    notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
   end
 end
 
@@ -46,6 +47,7 @@ action :remove do
       output = shell_out("#{agent_exe_filepath} integration show -q #{new_resource.property_name}").stdout
       output.strip.empty?
     }
+    notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
   end
 end
 
