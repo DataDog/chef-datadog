@@ -1,6 +1,14 @@
 Changes
 =======
 
+# 4.11.0 / 2021-08-10
+
+* [FEATURE] Get keys from keys.datadoghq.com, not Ubuntu keyserver, and other improvements to APT keys management [#796][] [@bkabrda][]
+* [FEATURE] Install datadog-signing-keys on Debian based platforms [#804][] [@bkabrda][]
+* [BUGFIX] Ensure NPM is not turned off by default when system probe is enabled [#799][] [@bkabrda][]
+* [BUGFIX] Integration resource notifies a restart of the Agent after installing a new version [#806][] [@lchayoun][]
+* [BUGFIX] On Windows, don't try to start NPM unless network_enabled is set [#803][] [] [@KSerrania][]
+
 # 4.10.0 / 2021-05-06
 
 * [FEATURE] Support for NPM on Windows [#780][], [#781][] and [#784][] ([@mikezhu-dd][])
@@ -977,6 +985,11 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#789]: https://github.com/DataDog/chef-datadog/issues/789
 [#791]: https://github.com/DataDog/chef-datadog/issues/791
 [#793]: https://github.com/DataDog/chef-datadog/issues/793
+[#796]: https://github.com/DataDog/chef-datadog/issues/796
+[#799]: https://github.com/DataDog/chef-datadog/issues/799
+[#803]: https://github.com/DataDog/chef-datadog/issues/803
+[#804]: https://github.com/DataDog/chef-datadog/issues/804
+[#806]: https://github.com/DataDog/chef-datadog/issues/806
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@Azraeht]: https://github.com/Azraeht
@@ -1080,6 +1093,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@krasnoukhov]: https://github.com/krasnoukhov
 [@kurochan]: https://github.com/kurochan
 [@kylegoch]: https://github.com/kylegoch
+[@lchayoun]: https://github.com/lchayoun
 [@lefthand]: https://github.com/lefthand
 [@martinisoft]: https://github.com/martinisoft
 [@mattrobenolt]: https://github.com/mattrobenolt
