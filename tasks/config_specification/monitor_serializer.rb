@@ -7,7 +7,7 @@ module ConfigSpecification
     end
 
     def serialize
-      %(include_recipe 'datadog::dd-agent'
+      %(include_recipe '::dd-agent'
 
 # Monitor #{specification.name}
 #

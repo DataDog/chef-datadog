@@ -66,7 +66,7 @@ describe 'datadog::go-metro' do
 
     it_behaves_like 'datadog-agent'
 
-    it { is_expected.to include_recipe('datadog::dd-agent') }
+    it { is_expected.to include_recipe('::dd-agent') }
 
     it { is_expected.to install_package('libcap') }
 
@@ -157,7 +157,7 @@ describe 'datadog::go-metro' do
 
     it_behaves_like 'datadog-agent'
 
-    it { is_expected.to include_recipe('datadog::dd-agent') }
+    it { is_expected.to include_recipe('::dd-agent') }
 
     it {
       is_expected.to install_package('libcap').with(

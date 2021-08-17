@@ -1,4 +1,4 @@
-include_recipe 'datadog::dd-agent'
+include_recipe '::dd-agent'
 
 # Go-Metro (TCP RTT) Integration: Passively monitor TCP Round Trip Time
 # between the monitored host and others nodes on the network

@@ -1,4 +1,4 @@
-include_recipe 'datadog::dd-agent'
+include_recipe '::dd-agent'
 
 # Build a data structure with configuration.
 # @see https://github.com/DataDog/dd-agent/blob/master/conf.d/jmx.yaml.example JMX Example

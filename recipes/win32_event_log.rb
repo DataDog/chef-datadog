@@ -1,4 +1,4 @@
-include_recipe 'datadog::dd-agent'
+include_recipe '::dd-agent'
 
 # Monitor the Windows Event Log
 # @see https://github.com/DataDog/integrations-core/blob/master/win32_event_log/datadog_checks/win32_event_log/data/conf.yaml.example for details

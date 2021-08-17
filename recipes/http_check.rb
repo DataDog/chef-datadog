@@ -1,4 +1,4 @@
-include_recipe 'datadog::dd-agent'
+include_recipe '::dd-agent'
 
 # Build a data structure with configuration.
 # @see http://docs.datadoghq.com/guides/network_checks/

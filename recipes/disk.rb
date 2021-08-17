@@ -9,7 +9,7 @@
 # For more information on the integration itself, see:
 # https://docs.datadoghq.com/integrations/disk/
 
-include_recipe 'datadog::dd-agent'
+include_recipe '::dd-agent'
 
 # example configuration:
 # node['datadog']['disk']['instances'] = [

@@ -18,7 +18,7 @@
 #
 
 # Install the Apt/Yum repository if enabled
-include_recipe 'datadog::repository' if node['datadog']['installrepo']
+include_recipe '::repository' if node['datadog']['installrepo']
 
 dd_agent_version = Chef::Datadog.agent_version(node)
 dd_agent_flavor = Chef::Datadog.agent_flavor(node)

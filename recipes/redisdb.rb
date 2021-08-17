@@ -1,4 +1,4 @@
-include_recipe 'datadog::dd-agent'
+include_recipe '::dd-agent'
 
 # Build a data structure with configuration.
 # @see https://github.com/DataDog/integrations-core/blob/master/redisdb/conf.yaml.example RedisDB Example
