@@ -7,4 +7,4 @@ group :integration do
   cookbook 'test', path: './test/cookbooks/test' # Used to test custom resources (datadog_monitor, integration)
 end
 
-cookbook 'yum', '< 7.0.0'
+cookbook 'yum', '< 8.0.0'
