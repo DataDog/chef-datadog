@@ -90,7 +90,7 @@ describe 'datadog::jmx' do
 
   it_behaves_like 'datadog-agent'
 
-  it { is_expected.to include_recipe('::dd-agent') }
+  it { is_expected.to include_recipe('datadog::dd-agent') }
 
   it { is_expected.to add_datadog_monitor('jmx') }
 

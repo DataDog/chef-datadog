@@ -20,7 +20,7 @@ shared_examples_for 'common linux resources v5' do
   it_behaves_like 'datadog conf'
 
   it 'includes the repository recipe' do
-    expect(chef_run).to include_recipe('::repository')
+    expect(chef_run).to include_recipe('datadog::repository')
   end
 
   it 'ensures the dd-agent directory exists' do
@@ -38,7 +38,7 @@ shared_examples_for 'common linux resources' do
   it_behaves_like 'datadog conf'
 
   it 'includes the repository recipe' do
-    expect(chef_run).to include_recipe('::repository')
+    expect(chef_run).to include_recipe('datadog::repository')
   end
 
   it 'drops an agent config file' do
