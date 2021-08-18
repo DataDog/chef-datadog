@@ -6,3 +6,5 @@ group :integration do
   cookbook 'sudo' # Use '< 5.0.0' with Chef < 13
   cookbook 'test', path: './test/cookbooks/test' # Used to test custom resources (datadog_monitor, integration)
 end
+
+cookbook 'yum', '< 7.0.0'
