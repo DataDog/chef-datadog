@@ -161,7 +161,7 @@ Follow the steps below to deploy the Datadog Agent with Chef on AWS OpsWorks:
 
 2. Include the recipe in the `install-lifecycle` recipe:
   ```ruby
-  include_recipe 'datadog::dd-agent'
+  include_recipe '::dd-agent'
   ```
 
 ### Integrations
@@ -341,7 +341,7 @@ This example enables the ElasticSearch integration by using the `datadog_monitor
 **Note**: The Agent installation must be above this recipe in the run list.
 
 ```ruby
-include_recipe 'datadog::dd-agent'
+include_recipe '::dd-agent'
 
 datadog_monitor 'elastic' do
   instances  [{'url' => 'http://localhost:9200'}]
@@ -384,7 +384,7 @@ This example installs version `1.11.0` of the ElasticSearch integration by using
 **Note**: The Agent installation must be above this recipe in the run list.
 
 ```ruby
-include_recipe 'datadog::dd-agent'
+include_recipe '::dd-agent'
 
 datadog_integration 'datadog-elastic' do
   version '1.11.0'

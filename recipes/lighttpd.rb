@@ -1,4 +1,4 @@
-include_recipe 'datadog::dd-agent'
+include_recipe '::dd-agent'
 
 datadog_monitor 'lighttpd' do
   instances node['datadog']['lighttpd']['instances']

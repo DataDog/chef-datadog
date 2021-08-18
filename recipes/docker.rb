@@ -16,7 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-include_recipe 'datadog::dd-agent'
+include_recipe '::dd-agent'
 
 # The docker check is deprecated in agent version 5.x.
 # Please use the docker_daemon check instead.

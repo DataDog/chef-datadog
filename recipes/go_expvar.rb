@@ -1,4 +1,4 @@
-include_recipe 'datadog::dd-agent'
+include_recipe '::dd-agent'
 
 # Monitor Go metrics exported via expvar
 #  node['datadog']['go_expvar']['instances'] = [

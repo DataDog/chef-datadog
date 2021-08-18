@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-include_recipe 'datadog::dd-agent'
+include_recipe '::dd-agent'
 
 # Install all specified integrations
 # example:

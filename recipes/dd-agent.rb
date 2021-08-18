@@ -43,9 +43,9 @@ is_windows = platform_family?('windows')
 
 # Install the agent
 if is_windows
-  include_recipe 'datadog::_install-windows'
+  include_recipe '::_install-windows'
 else
-  include_recipe 'datadog::_install-linux'
+  include_recipe '::_install-linux'
 end
 
 if !node['datadog']['agent_enable'] && node['datadog']['enable_process_agent']
@@ -67,7 +67,7 @@ agent_start = node['datadog']['agent_start'] ? :start : :stop
 # the node's run_list and set the relevant attributes
 #
 if agent_major_version > 5
-  include_recipe 'datadog::_agent6_config'
+  include_recipe '::_agent6_config'
   agent_config_dir = is_windows ? "#{ENV['ProgramData']}/Datadog" : '/etc/datadog-agent'
   directory agent_config_dir do
     if is_windows
@@ -164,10 +164,10 @@ agent_version_greater_than_6_26 = agent_major_version > 5 && (agent_minor_versio
 system_probe_supported = (agent_version_greater_than_6_11 && !is_windows) || (agent_version_greater_than_6_26 && is_windows)
 
 # system-probe is a dependency of the agent on Linux or Windows
-include_recipe 'datadog::system-probe' if system_probe_managed && system_probe_supported
+include_recipe '::system-probe' if system_probe_managed && system_probe_supported
 
 # Installation metadata to let know the agent about installation method and its version
-include_recipe 'datadog::install_info'
+include_recipe '::install_info'
 
 # Install integration packages
-include_recipe 'datadog::integrations' unless is_windows
+include_recipe '::integrations' unless is_windows

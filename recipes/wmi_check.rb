@@ -1,4 +1,4 @@
-include_recipe 'datadog::dd-agent'
+include_recipe '::dd-agent'
 
 # see example configuration file here:
 # https://github.com/DataDog/integrations-core/blob/master/wmi_check/conf.yaml.example

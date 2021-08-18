@@ -16,7 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-include_recipe 'datadog::dd-agent'
+include_recipe '::dd-agent'
 
 # Build a data structure with configuration.
 # @example
