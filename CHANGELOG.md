@@ -1,6 +1,11 @@
 Changes
 =======
 
+# 4.11.1 / 2021-08-24
+
+* [BUGFIX] Support cookbook renaming [#810][] [@lchayoun][]
+* [BUGFIX] Use YAML.dump instead of to_yaml [#813][] [@mbaitelman][]
+
 # 4.11.0 / 2021-08-10
 
 * [FEATURE] Get keys from keys.datadoghq.com, not Ubuntu keyserver, and other improvements to APT keys management [#796][] [@bkabrda][]
@@ -990,6 +995,8 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#803]: https://github.com/DataDog/chef-datadog/issues/803
 [#804]: https://github.com/DataDog/chef-datadog/issues/804
 [#806]: https://github.com/DataDog/chef-datadog/issues/806
+[#810]: https://github.com/DataDog/chef-datadog/issues/810
+[#813]: https://github.com/DataDog/chef-datadog/issues/813
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@Azraeht]: https://github.com/Azraeht
@@ -1097,6 +1104,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@lefthand]: https://github.com/lefthand
 [@martinisoft]: https://github.com/martinisoft
 [@mattrobenolt]: https://github.com/mattrobenolt
+[@mbaitelman]: https://github.com/mbaitelman
 [@mfischer-zd]: https://github.com/mfischer-zd
 [@mhebbar1]: https://github.com/mhebbar1
 [@mikelaning]: https://github.com/mikelaning
