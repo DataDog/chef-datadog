@@ -1,9 +1,6 @@
 require 'rake'
 require 'chef'
 require 'chef/cookbook_uploader'
-require 'chef/cookbook_site_streaming_uploader'
-require 'chef/knife'
-require 'chef/knife/supermarket_share'
 
 COOKBOOK_PATH = File.join(File.dirname(__FILE__), '..').freeze
 METADATA_PATH = File.join(COOKBOOK_PATH, 'metadata.rb').freeze
@@ -28,6 +25,11 @@ end
 
 desc 'Release the cookbook on the Chef supermarket'
 task :release, :key_path do
+  # Lazy-load these modules, not available in Chef 17
+  require 'chef/cookbook_site_streaming_uploader'
+  require 'chef/knife'
+  require 'chef/knife/supermarket_share'
+
   Chef::Knife.new.configure_chef
   metadata = load_metadata
 

@@ -467,9 +467,17 @@ describe 'datadog::repository' do
       end
 
       it 'sets up a yum repo' do
-        expect(chef_run).to create_zypper_repository('datadog').with(
-          gpgkey: 'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public'
-        )
+        # Since Chef 17, the gpgkey field is automatically converted into an
+        # array by the zypper_repository resource.
+        if Chef::VERSION >= '17'
+          expect(chef_run).to create_zypper_repository('datadog').with(
+            gpgkey: ['https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public']
+          )
+        else
+          expect(chef_run).to create_zypper_repository('datadog').with(
+            gpgkey: 'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public'
+          )
+        end
       end
     end
   end
