@@ -86,6 +86,30 @@ jobs:
           name: Run specs
           command: bundle exec rake spec
 
+  specs-ruby3.0.2-chef17.4.38:
+    <<: *specs
+    environment:
+      CHEF_VERSION: '17.4.38'
+      RUBY_VERSION: '3.0.2'
+
+  specs-ruby3.0.2-chef16.5.77:
+    <<: *specs
+    environment:
+      CHEF_VERSION: '16.5.77'
+      RUBY_VERSION: '3.0.2'
+
+  specs-ruby2.7.4-chef17.4.38:
+    <<: *specs
+    environment:
+      CHEF_VERSION: '17.4.38'
+      RUBY_VERSION: '2.7.4'
+
+  specs-ruby2.7.4-chef16.5.77:
+    <<: *specs
+    environment:
+      CHEF_VERSION: '16.5.77'
+      RUBY_VERSION: '2.7.4'
+
   specs-ruby2.6.3-chef16.5.77:
     <<: *specs
     environment:
@@ -122,6 +146,10 @@ workflows:
     jobs:
       - kitchen-docker-tests
       - style
+      - specs-ruby3.0.2-chef17.4.38
+      - specs-ruby3.0.2-chef16.5.77
+      - specs-ruby2.7.4-chef17.4.38
+      - specs-ruby2.7.4-chef16.5.77
       - specs-ruby2.6.3-chef16.5.77
       - specs-ruby2.6.3-chef14.10.9
       - specs-ruby2.5.1-chef14.10.9
