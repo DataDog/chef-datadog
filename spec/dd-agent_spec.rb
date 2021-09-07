@@ -57,7 +57,7 @@ describe 'datadog::dd-agent' do
       cached(:chef_run) do
         ChefSpec::SoloRunner.new(
           :platform => 'debian',
-          :version => '7.11'
+          :version => '8.11'
         ) do |node|
           node.normal['datadog'] = { 'api_key' => 'somethingnotnil' }
           node.normal['languages'] = { 'python' => { 'version' => '2.7.5+' } }
@@ -117,7 +117,7 @@ describe 'datadog::dd-agent' do
       cached(:chef_run) do
         ChefSpec::SoloRunner.new(
           :platform => 'fedora',
-          :version => '26'
+          :version => '31'
         ) do |node|
           node.normal['datadog'] = { 'api_key' => 'somethingnotnil' }
           node.normal['languages'] = { 'python' => { 'version' => '2.7.9' } }
@@ -414,7 +414,7 @@ describe 'datadog::dd-agent' do
       cached(:chef_run) do
         ChefSpec::SoloRunner.new(
           :platform => 'fedora',
-          :version => '26'
+          :version => '31'
         ) do |node|
           node.normal['datadog'] = {
             'agent_major_version' => 6,
@@ -523,7 +523,7 @@ describe 'datadog::dd-agent' do
       cached(:chef_run) do
         ChefSpec::SoloRunner.new(
           :platform => 'fedora',
-          :version => '26'
+          :version => '31'
         ) do |node|
           node.normal['datadog'] = {
             'agent_major_version' => 5,
@@ -1397,7 +1397,7 @@ describe 'datadog::dd-agent' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(
         platform: 'fedora',
-        version: '27'
+        version: '32'
       ) do |node|
         node.normal['datadog'] = {
           'api_key' => 'somethingnotnil',
@@ -1415,7 +1415,7 @@ describe 'test::monitor_add' do
   context 'add custom monitor A5' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(
-        platform: 'fedora', version: '27',
+        platform: 'fedora', version: '32',
         step_into: ['datadog_monitor']
       ) do |node|
         node.normal['datadog'] = {
@@ -1431,7 +1431,7 @@ describe 'test::monitor_add' do
   context 'add custom monitor A7' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(
-        platform: 'fedora', version: '27',
+        platform: 'fedora', version: '32',
         step_into: ['datadog_monitor']
       ) do |node|
         node.normal['datadog'] = {
@@ -1450,7 +1450,7 @@ describe 'test::monitor_remove' do
   context 'remove custom monitor A5' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(
-        platform: 'fedora', version: '27',
+        platform: 'fedora', version: '32',
         step_into: ['datadog_monitor']
       ) do |node|
         node.normal['datadog'] = {
@@ -1466,7 +1466,7 @@ describe 'test::monitor_remove' do
   context 'remove custom monitor A7' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(
-        platform: 'fedora', version: '27',
+        platform: 'fedora', version: '32',
         step_into: ['datadog_monitor']
       ) do |node|
         node.normal['datadog'] = {
