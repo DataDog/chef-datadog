@@ -118,7 +118,7 @@ GEM
     erubis (2.7.0)
     faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
-    fauxhai-ng (7.5.1)
+    fauxhai-ng (8.3.1)
       net-ssh
     ffi (1.13.1)
     ffi-yajl (2.3.4)
@@ -371,7 +371,7 @@ DEPENDENCIES
   cookstyle
   coveralls (~> 0.8.19)
   cucumber-core (~> 3.2.1)
-  fauxhai-ng (~> 7.5.1)
+  fauxhai-ng (~> 8.3.1)
   foodcritic (~> 16.3.0)
   inflecto
   json_spec (~> 1.1.4)
