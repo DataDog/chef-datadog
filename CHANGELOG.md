@@ -4,6 +4,7 @@
 
 * [DOCS] Add linting of Markdown files
 * [MISC] Add [EditorConfig](https://editorconfig.org) for consistent whitespace across maintainers
+* [DOCS] Add `TESTING.md`
 
 ## 4.15.0 / 2022-10-06
 * [BUGFIX] Enforce calls of agent version without color output [#863][] [@KSerrania][]
