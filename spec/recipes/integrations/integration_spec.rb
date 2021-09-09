@@ -1,5 +1,5 @@
 require 'chefspec'
-require_relative '../../libraries/test_helpers'
+require_relative '../../../libraries/test_helpers'
 
 describe 'datadog_integration' do
   step_into :datadog_integration
