@@ -140,12 +140,6 @@ jobs:
       CHEF_VERSION: '13.12.14'
       RUBY_VERSION: '2.4.3'
 
-  specs-ruby2.3.6-chef13.12.14:
-    <<: *specs
-    environment:
-      CHEF_VERSION: '13.12.14'
-      RUBY_VERSION: '2.3.6'
-
 workflows:
   version: 2
   build_and_test:
@@ -160,4 +154,3 @@ workflows:
       - specs-ruby2.6.3-chef14.10.9
       - specs-ruby2.5.1-chef14.10.9
       - specs-ruby2.4.3-chef13.12.14
-      - specs-ruby2.3.6-chef13.12.14
