@@ -259,6 +259,10 @@ The following example downgrades to Agent v6. The same applies if you are downgr
   )
 ```
 
+### Uninstall
+
+To uninstall the Agent, remove the `dd-agent` recipe and add the `remove-dd-agent` recipe with no attributes.
+
 ## Recipes
 
 Access the [Datadog Chef recipes on GitHub][7].
