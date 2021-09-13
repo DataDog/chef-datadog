@@ -167,7 +167,7 @@ Follow the steps below to deploy the Datadog Agent with Chef on AWS OpsWorks:
 ### Integrations
 
 Enable Agent integrations by including the [recipe](#recipes) and configuration details in your role’s run-list and attributes.
-**Note**: You can create additional integration recipes by using the [datadog_monitor](#datadog-monitor) resource.
+**Note**: You can use the `datadog_monitor` resource for enabling Agent integrations without a recipe.
 
 Associate your recipes with the desired `roles`, for example `role:chef-client` should contain `datadog::dd-handler` and `role:base` should start the Agent with `datadog::dd-agent`. Below is an example role with the `dd-handler`, `dd-agent`, and `mongo` recipes:
 
