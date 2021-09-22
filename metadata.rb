@@ -23,5 +23,15 @@ issues_url       'https://github.com/DataDog/chef-datadog/issues'
 end
 
 depends    'chef_handler', '>= 1.2'
-depends    'apt' # Use '< 6.0.0' with Chef < 12.9
-depends    'yum', '>= 3.0' # Use '< 5.0' with Chef < 12.14
+depends    'apt'
+
+if Chef::VERSION < Gem::Version.new(14.0)
+  depends 'sudo'
+end
+
+if Chef::VERSION < Gem::Version.new(15.3) ||
+   Gem::Version.new(ENV['CHEF_VERSION']) < Gem::Version.new(15.3)
+  depends 'yum', '< 7.0.0'
+else
+  depends 'yum'
+end
