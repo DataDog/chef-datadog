@@ -1,6 +1,16 @@
 Changes
 =======
 
+# Unreleased
+
+## Breaking changes
+
+  * **This cookbook only supports Chef 14.14+.** It means that if you want to continue
+  to use this cookbook with a version of Chef `< 14.4`, you will have to use the datadog
+  cookbook in a version `< 5.0`. However, we recommend to switch to the `5.x` version.
+
+  * **Enabled unified mode** since it will be the default on Chef 18. See [CHEF-33](https://docs.chef.io/deprecations_unified_mode/) deprecation.
+
 # 4.11.1 / 2021-08-24
 
 * [BUGFIX] Support cookbook renaming [#810][] [@lchayoun][]
