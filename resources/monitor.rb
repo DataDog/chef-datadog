@@ -1,5 +1,9 @@
 # Configure a service via its yaml file
 
+# enable unified mode. See CHEF-33 Deprecation warning:
+# https://docs.chef.io/deprecations_unified_mode/
+unified_mode true
+
 require 'yaml' # Our erb templates need this
 
 default_action :add
