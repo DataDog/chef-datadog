@@ -20,6 +20,7 @@ platforms:
       14.14
       16.5
       17
+      18
     )
 
     test_platforms.product(chef_versions).each do |platform_version, chef_version|
