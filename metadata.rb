@@ -4,7 +4,7 @@ maintainer_email 'package@datadoghq.com'
 license          'Apache-2.0'
 description      'Installs/Configures datadog components'
 version          '4.11.1'
-chef_version     '>= 12.7'
+chef_version     '>= 14.14'
 source_url       'https://github.com/DataDog/chef-datadog'
 issues_url       'https://github.com/DataDog/chef-datadog/issues'
 
