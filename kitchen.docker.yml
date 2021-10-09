@@ -4,7 +4,7 @@ driver:
   use_sudo: false
 
 provisioner:
-  deprecations_as_errors: true
+  deprecations_as_errors: false
   solo_rb:
     silence_deprecation_warnings:
     - chef-25
