@@ -1,7 +1,10 @@
-Changes
-=======
+# Changes
 
-# 4.15.0 / 2022-10-06
+## Unreleased
+
+* [DOCS] Add linting of Markdown files
+
+## 4.15.0 / 2022-10-06
 * [BUGFIX] Enforce calls of agent version without color output [#863][] [@KSerrania][]
 * [FEATURE] Add configuration for custom_log_collection [#861][] [@nilskuehme][]
 * [FEATURE] Add configuration for gearmand integration [#860][] [@nilskuehme][]
@@ -10,10 +13,13 @@ Changes
 * [BUGFIX] Don't use epoch/release for yum package version on Chef < 14 [#856][] [@bkabrda][]
 * [FEATURE] Use agent version instead of agent status to determine the current Agent version [#852][] [@amenasria][]
 
-# 4.14.0 / 2022-06-14
+
+## 4.14.0 / 2022-06-14
+
 * [BUGFIX] Fix system probe recipe on Windows [#850][] [@julien-lebot][]
 
-# 4.13.0 / 2022-03-30
+
+## 4.13.0 / 2022-03-30
 
 * [FEATURE] Allow enabling CWS and CSPM [#843][] [@lebauce][]
 * [FEATURE] Add support for AlmaLinux and Rocky Linux [#836][] [@bkabrda][]
@@ -22,19 +28,19 @@ Changes
 * [BUGFIX] Use the correct socket for system probe on Windows [#833][] [@julien-lebot][]
 * [BUGFIX] Add is_jmx by default to jmxfetch checks [#792][] [@albertvaka][]
 
-# 4.12.0 / 2021-12-03
+## 4.12.0 / 2021-12-03
 
 * [FEATURE] Added support for Chef 18+. [@axl89][] [#822][]
 * [FEATURE] Enabled unified mode on compatible platforms since it will be the default on Chef 18. See [CHEF-33](https://docs.chef.io/deprecations_unified_mode/) deprecation. [@axl89][] [#822][]
 * [FEATURE] Include `dogstatsd_port` in `datadog.yaml` for Agent 6 and Agent 7 [@brentm5][] [#828][]
 * [BUGFIX] Ignore `apt update` failures to keep running if some sources are offline [#830][] [@bkabrda][]
 
-# 4.11.1 / 2021-08-24
+## 4.11.1 / 2021-08-24
 
 * [BUGFIX] Support cookbook renaming [#810][] [@lchayoun][]
 * [BUGFIX] Use YAML.dump instead of to_yaml [#813][] [@mbaitelman][]
 
-# 4.11.0 / 2021-08-10
+## 4.11.0 / 2021-08-10
 
 * [FEATURE] Get keys from keys.datadoghq.com, not Ubuntu keyserver, and other improvements to APT keys management [#796][] [@bkabrda][]
 * [FEATURE] Install datadog-signing-keys on Debian based platforms [#804][] [@bkabrda][]
@@ -42,7 +48,7 @@ Changes
 * [BUGFIX] Integration resource notifies a restart of the Agent after installing a new version [#806][] [@lchayoun][]
 * [BUGFIX] On Windows, don't try to start NPM unless network_enabled is set [#803][] [] [@KSerrania][]
 
-# 4.10.0 / 2021-05-06
+## 4.10.0 / 2021-05-06
 
 * [FEATURE] Support for NPM on Windows [#780][], [#781][] and [#784][] ([@mikezhu-dd][])
 * [FEATURE] Implement usage of multiple GPG keys in repofiles, get keys from keys.datadoghq.com [#782][] ([@bkabrda][])
@@ -50,30 +56,36 @@ Changes
 * [BUGFIX] Added collect_default_metrics: true to kafka.d/conf.yaml [#786][] ([@nilskuehme][])
 * [BUGFIX] Set is_jmx in solr template [#791][] ([@albertvaka][])
 
-# 4.9.0 / 2021-02-17
+## 4.9.0 / 2021-02-17
+
 * [FEATURE] allow muting a host during an MSI install [#778][] [@albertvaka][]
 * [FEATURE] Kafka recipe: allow setting any conf [#776][] [@albertvaka][]
 * [BUGFIX] Fix fatal in error handler if `ddagentuser_name` or `ddagentuser_password` not defined [#777][] [@albertvaka][]
 * [BUGFIX] Fix `yum_package[gnupg]` resource being declared more than once [#772][] [@cdonadeo][]
 
-# 4.8.0 / 2020-12-11
+## 4.8.0 / 2020-12-11
+
 * [FEATURE] Add `env` and `log_to_console` options [#759][] [@albertvaka][], and [#760][] [@nilskuehme][]
 * [BUGFIX] Fix adding new signing key for apt [#761][] [@nilskuehme][],  [#763][] [@KSerrania][], [#765][] [@albertvaka][] and [#767][] [@nilskuehme][]
 * [BUGFIX] Take site option into account in chef-handler config [#762][] [@KSerrania][]
 
-# 4.7.2 / 2020-11-25
+## 4.7.2 / 2020-11-25
+
 * [FEATURE] Trust new signing key [#754][] [@mikezhu-dd][]
 
-# 4.7.1 / 2020-11-25
+## 4.7.1 / 2020-11-25
+
 * [BUGFIX] Revert [#754][]
 
-# 4.7.0 / 2020-11-25
+## 4.7.0 / 2020-11-25
+
 * [FEATURE] Trust new signing key [#754][] [@mikezhu-dd][]
 * [FEATURE] Add support for the systemd check [#755][] [@nilskuehme][]
 * [FEATURE] Add support for Mongo authentication [#753][] [@nilskuehme][]
 * [BUGFIX] Fix conflit with gnupg2 on RHEL8/CentOS8 [#750][] [@haidars][]
 
-# 4.6.0 / 2020-10-15
+## 4.6.0 / 2020-10-15
+
 * [BUGFIX] Explicitly require yaml. See[#749][] [@albertvaka][]
 * [BUGFIX] Increase Windows MSI install timeout to 1200 seconds. See [#746][] [@mikezhu-dd][]
 * [BUGFIX] Network plugin yaml nesting. See [#739][] [@swalberg][]
@@ -83,7 +95,8 @@ Changes
 * [BUGFIX] Adds generated recipes for missing checks. See [#730][] [@albertvaka][]
 * [FEATURE] Update docs to include us3 region. See [#740][] [@albertvaka][]
 
-# 4.5.0 / 2020-09-02
+## 4.5.0 / 2020-09-02
+
 * [FEATURE] [cassandra] add support for failures/timeouts/unavailable collection. See [#725][] [@k2v][]
 * [FEATURE] Add timeout management for Mongo integration. See [#728][] [@Azraeht][]
 * [FEATURE] add support for the timeout setting for Rabbitmq. See [#729][] [@ABrehm264][]
@@ -95,7 +108,8 @@ Changes
 * [BUGFIX] Make dd-agent recipe idempotent. See [#736][] [@julien-lebot][]
 * [MISC] Warn when the Agent will start despite being disabled. See [#732][] [@albertvaka][]
 
-# 4.4.0 / 2020-06-19
+## 4.4.0 / 2020-06-19
+
 * [FEATURE] Add support for `datadog-iot-agent` agent flavor. See [#717][]
 * [BUGFIX] Do not crash if agent_version doesn't match version regex. See [#711][] [@albertvaka][]
 * [BUGFIX] Support '+' sign (for nightlies) in agent version. See [#712][] [@albertvaka][]
@@ -103,7 +117,8 @@ Changes
 * [BUGFIX] Fix link to win32_event_log sample config. See [#715][] [@albertvaka][]
 * [BUGFIX] Do not crash if the agent is not running. See [#718][] [@albertvaka][]
 
-# 4.3.0 / 2020-04-30
+## 4.3.0 / 2020-04-30
+
 * [FEATURE] Allow configuration of log collection via `datadog['logs_agent_config']`. See [#704][] [@Nibons][]
 * [FEATURE] Update the list of Cassandra metrics to collect from JMX. See [#708][] [@k2v][]
 * [FEATURE] Add `combine_connection_states` and `collect_count_metrics` to network check. See [#650][] [@danjamesmay][]
@@ -111,59 +126,59 @@ Changes
 * [BUGFIX] Fix `datadog_monitor` action `:delete` always using Agent 5's path. See [#709][] [@albertvaka][]
 * [BUGFIX] Use `true` and `false` instead of `yes` and `no` for `skip_ssl_validation`. See [#693][] [@jaxi]
 
-# 4.2.1 / 2020-03-03
+## 4.2.1 / 2020-03-03
 
 * [REVERT] Reverted PR [#691][] and [#694][] in order to allow users to install Agent on Windows without credentials. See [#699][] [@kbogtob][]
 
-# 4.2.0 / 2020-02-27 - KNOWN BUG
+## 4.2.0 / 2020-02-27 - KNOWN BUG
 
 * [FEATURE] Automatically uninstall and then install the Agent only when trying to downgrade agent version on Windows. See [#690][] [@kbogtob][]
 * [BUGFIX] Set Windows installer as sensitive resource and use env var to specify Windows user credentials to avoid leaks of credentials in logs. See [#691][] and [#694][] [@julien-lebot][] - Known bug: This bugfix introduces a new bug blocking users not using credentials to install on Windows
 * [FEATURE] Support tags feature on directory integration. See [#687][] [@dimier]
 * [FEATURE] Support options feature on memcache integration. See [#689][] [@mikelaning]
 
-# 4.1.1 / 2020-01-28
+## 4.1.1 / 2020-01-28
 
 * [BUGFIX] Fix version formating for Linuxes that use yum. See [#685][] [@albertvaka][]
 
-# 4.1.0 / 2020-01-21
+## 4.1.0 / 2020-01-21
 
 * [FEATURE] Automatically format the agent version on debianoids so that every OS can be configured with the same format for the agent version. See [#675][] [@albertvaka][]
 
-# 4.0.1 / 2019-12-31
+## 4.0.1 / 2019-12-31
 
 * [BUGFIX] Fix issues with permissions during monitor directory creation on windows. See [#678][] [@truthbk][]
 
-# 4.0.0 / 2019-12-18
+## 4.0.0 / 2019-12-18
 
-## Breaking changes
+### Breaking changes
 
-  * **This cookbook will install Agent 7.x by default**. Datadog Agent 7 uses Python 3 so
+* **This cookbook will install Agent 7.x by default**. Datadog Agent 7 uses Python 3 so
   if you were running any custom checks written in Python, they must now be compatible with
   Python 3. If you were not running any custom checks or if your custom checks are already
   compatible with Python 3, then it is safe to upgrade to Agent 7.
 
-  * **Some config parameters prefixed with `agent6` have been renamed** to accomodate the
-  inclusion of Agent 7. Please read the [docs]() for more details about the name changes
+* **Some config parameters prefixed with `agent6` have been renamed** to accomodate the
+  inclusion of Agent 7. Please read the [docs](https://github.com/DataDog/chef-datadog/tree/v4.0.0#upgrading-to-version-4x-of-the-cookbook) for more details about the name changes
   and update your configuration accordingly.
 
-# 3.5.1 / 2019-12-18
+## 3.5.1 / 2019-12-18
 
 * [BUGFIX] Create check `.d` directory if it doesn't exist. See [#670][] [@albertvaka][]
 
-# 3.5.0 / 2019-12-17
+## 3.5.0 / 2019-12-17
 
 * [FEATURE] Allow integrations to have multiple configurations by creating the default configuration into a `.d` folder. See [#666][] [@kbogtob][]
 * [BUGFIX] Fix the support of mesos integrations by separating the mesos slave and master integrations. See [#667][] [@kbogtob][]
 
-# 3.4.1 / 2019-11-15
+## 3.4.1 / 2019-11-15
 
 * [FEATURE] Windows: add MSI max timeout knob. See [#654][] [@truthbk][]
 * [BUGFIX] Windows: Use windows_agent_url to download script. See [#656][] [@olivielpeau][]
 * [BUGFIX] Windows: use chef facilities instead of powershell to download 6.14 fix script. See [#657][] [@truthbk][]
 * [BUGFIX] Windows: fix permission inheritance of config directory. See [#653][] [@albertvaka][]
 
-# 3.4.0 / 2019-11-11
+## 3.4.0 / 2019-11-11
 
 * [FEATURE] Blacklist installation of 6.14.0 and 6.14.1. See [#652][] [@truthbk][]
 * [FEATURE] Run fix + sanity check script before agent uninstalls. See [#652][] [@truthbk][]
@@ -171,43 +186,43 @@ Changes
 * [FEATURE] Add a setting to disable writing system-probe.yaml [#648][] [@albertvaka][]
 * [BUGFIX] Fix system-probe.yaml ownership [#647][] [@kevinconaway][]
 
-# 3.3.0 / 2019-09-25
+## 3.3.0 / 2019-09-25
 
 * [FEATURE] Add RHEL8/Fedora 28 support (needs Chef >= 15). See [#641][] [@KSerrania][]
 * [OPTIMIZE] Add support of the `cmd_port` and `gui_port` fields in Agent config template. See [#632][] [@iashwash][] [@MCKrab][]
 * [OPTIMIZE] Add support of the `ssl_ca_cert` field in the vault template. See [#624][] [@jschirle73][]
 * [OPTIMIZE] Improve the README examples for the `extra_config` field. See [#639][] [@nicholas-devlin][]
 
-# 3.2.0 / 2019-07-25
+## 3.2.0 / 2019-07-25
 
 * [FEATURE] Support the `extra_config` field in the system-probe recipe. See [#635][] [@kevinconaway][]
 * [BUGFIX] Fix the support of SLES 15 by supporting recent versions of `gpg` while importing the GPG key. See [#631][] [@KSerrania][]
 * [MISC] Allow custom prefix for Windows agent artifact. See [#634][] [@truthbk][]
 
-# 3.1.0 / 2019-07-10
+## 3.1.0 / 2019-07-10
 
 * [FEATURE] Add support of the `system-probe` Agent. See [#626][] [@shang-wang][]
 * [OPTIMIZE] Add support of the `extra_config` field in the `process_config` section. See [#628][] [@p-lambert][]
 
-# 3.0.0 / 2019-06-12
+## 3.0.0 / 2019-06-12
 
-## Breaking changes
+### Breaking changes
 
-  * **This cookbook only supports Chef 12.7+.** It means that if you want to continue
+* **This cookbook only supports Chef 12.7+.** It means that if you want to continue
   to use this cookbook with a version of Chef `< 12.7`, you will have to use the datadog
   cookbook in a version `< 3.0`. However, we recommend to switch to the `3.x` version
   because there is no plan to update the `2.x` branch with new features for now.
-  * **Agent v6 is now installed by default.** You can set `node['datadog']['agent6'] => false` to continue to use Agent v5. Please see the README for more details.
-  * The `datadog_monitor` resource doesn't automatically restart the Agent anymore.
+* **Agent v6 is now installed by default.** You can set `node['datadog']['agent6'] => false` to continue to use Agent v5. Please see the README for more details.
+* The `datadog_monitor` resource doesn't automatically restart the Agent anymore.
   See `recipes/mongo.rb` for an example on how to restart the Agent after `datadog_monitor` has been executed. See the README for more details on the resource.
-  * A new attribute `node['datadog']['site']` will let you send the data to either
+* A new attribute `node['datadog']['site']` will let you send the data to either
   the US or the EU site (this applies to the Datadog handler as well). Also, `default['datadog']['url']` is now set to `nil`.
   If not overriden in your cookbook, the Agent will pick which site to send data to based on these two attributes.
-  * Drop support for chef-handler-datadog < 0.10.0, please use a more recent version.
-  * Add the `datadog_integration` resource to easily control installed integration, more info in the README.
-  * Drop Agent v4 compatibility code.
+* Drop support for chef-handler-datadog < 0.10.0, please use a more recent version.
+* Add the `datadog_integration` resource to easily control installed integration, more info in the README.
+* Drop Agent v4 compatibility code.
 
-## Details
+### Details
 
 * [FEATURE] Ensure compatibility with Chef 14 & 15 (drop compatibility with Chef < 12.7). See [#450][] [#597][] [@martinisoft][] [@remeh][]
 * [FEATURE] Agent 6 is now installed by default. See [#594][] [@remeh][]
@@ -220,11 +235,11 @@ Changes
 * [MISC] Remove recipes using `easy_install`. See [#591][] [@stefanwb][] [@remeh][]
 * [MISC] Drops Agent v4 compatibility code. See [#599][] [@remeh][]
 
-# 2.19.0 / 2019-05-21
+## 2.19.0 / 2019-05-21
 
 * [FEATURE] Provide custom credentials for the Windows Datadog Agent service. [#618][] [@remeh][]
 
-# 2.18.0 / 2019-03-18
+## 2.18.0 / 2019-03-18
 
 **Note for Windows users**: since Agent v6.11, `datadog >= 2.18.0` is
 necessary (see README)
@@ -235,7 +250,7 @@ necessary (see README)
 * [MISC] Add optional NGINX monitor attributes. See [#564][] [@spencermpeterson][]
 * [DOCS] Add an example for the `extra_config` field. See [#586][] [@remeh][]
 
-# 2.17.0 / 2019-03-01
+## 2.17.0 / 2019-03-01
 
 * [FEATURE] Add support for SLES. See [#505][] [@gmmeyer][]
 * [FEATURE] Add `index_stats` parameter for ElasticSearch. See [#568][] [@aymen-chetoui][]
@@ -248,17 +263,17 @@ necessary (see README)
 * [MISC] Switch to cookstyle. See [#565][] [@jeffbyrnes][]
 * [MISC] Bump requirement on `chef_handler`. See [#396][] [@olivielpeau][]
 
-# 2.16.1 / 2018-07-16
+## 2.16.1 / 2018-07-16
 
 * [FEATURE] Add support for `no_proxy` Agent v6 option. See [#549][] [@stonith][]
 * [MISC] Fix typo in documentation of `enable_logs_agent` option. See [#544][] [@rsheyd][]
 
-# 2.16.0 / 2018-05-14
+## 2.16.0 / 2018-05-14
 
 * [FEATURE] Support data scrubber config fields for process agent. See [#540][] [@moisesbotarro][]
 * [MISC] Document `easy_install_package` removal from Chef 13+. See [#533][] [@olivielpeau][]
 
-# 2.15.0 / 2018-03-21
+## 2.15.0 / 2018-03-21
 
 This release adds full support of Agent 6 on Windows.
 
@@ -272,11 +287,13 @@ This release adds full support of Agent 6 on Windows.
 * [BUGFIX] Force `windows_service` to restart in order to cope with restart error. See [#520][] [@stefanwb][]
 * [BUGFIX] Fix default `datadog.yaml` template for Windows. See [#528][] [@olivielpeau][]
 
-# 2.14.1 / 2018-03-05
+## 2.14.1 / 2018-03-05
+
 * [BUGFIX] Fix service provider on Amazon Linux < 2.0. See [#523][] [@olivielpeau][]
 * [OPTIMIZE] Remove reference to old expired APT key, keep only newer key. See [#522][] [@olivielpeau][]
 
-# 2.14.0 / 2018-02-27
+## 2.14.0 / 2018-02-27
+
 * [FEATURE] Enable log collection with chef. See [#498][] [@NBParis][]
 * [FEATURE] Support process agent configuration in datadog.yaml. See [#511][] [@conorbranagan][]
 * [FEATURE] Add recipe for WMI check. See [#499][] [@mlcooper][]
@@ -285,7 +302,7 @@ This release adds full support of Agent 6 on Windows.
 * [FEATURE] Consul: support self leader check and network latency checks. See [#501][] [@azuretek][]
 * [BUGFIX] RHEL/Amazon linux: add service provider hint for Agent6 + upstart. See [#518][] [@olivielpeau][]
 
-# 2.13.0 / 2017-12-01
+## 2.13.0 / 2017-12-01
 
 * [FEATURE] Add support for Logs, See [#490][] [@tmichelet][]
 * [FEATURE] Add go-metro recipe, [#484][] [@iancward][]
@@ -297,7 +314,7 @@ This release adds full support of Agent 6 on Windows.
 * [BUGFIX] Fix default log file directory on Windows, [#492][] [@borgilb][] & [@olivielpeau][]
 * [BUGFIX] Add check to consul template for `tags` key, [#479][] [@grogancolin][]
 
-# 2.12.0 / 2017-09-28
+## 2.12.0 / 2017-09-28
 
 * [FEATURE] Support of Agent 6 beta for debianoids, [#472][] [@olivielpeau][]
 * [FEATURE] Add `tag_families` option to RabbitMQ template, [#437][] & [#460][] [@lefthand][] & [@foobarto][]
@@ -308,18 +325,18 @@ This release adds full support of Agent 6 on Windows.
 * [BUGFIX] Fix `ssl_verify` option of rabbitmq template, [#474][] [@iancward][]
 * [DOCS] Fix missing array braces in supervisord example, [#454][] [@benmanns][]
 
-# 2.11.0 / 2017-09-21
+## 2.11.0 / 2017-09-21
 
 * [FEATURE] Add configuration for the process-agent, [#465][] [@conorbranagan][]
 * [FEATURE] Add SNMP recipe, [#436][] [@mlcooper][]
 * [OPTIMIZE] Do not include `yum` recipe to avoid overwriting main yum config, [#446][] [@olivielpeau][]
 * [BUGFIX] Avoid failures of agent `service` resource with frequent restarts on systemd, [#469][] [@olivielpeau][]
 
-# 2.10.1 / 2017-05-31
+## 2.10.1 / 2017-05-31
 
 * [OPTIMIZE] Add compatibility with `windows` cookbook `3.0`, [#438][] [@olivielpeau][]
 
-# 2.10.0 / 2017-05-08
+## 2.10.0 / 2017-05-08
 
 * [FEATURE] Update nginx configuration template, [#417][] [@iancward][]
 * [FEATURE] Add service discovery attributes to `datadog.conf`, [#420][] [@bflad][]
@@ -331,11 +348,11 @@ This release adds full support of Agent 6 on Windows.
 * [FEATURE] Let the trace-agent use its own default settings, [#433][] [@olivielpeau][]
 * [FEATURE] Allow specifying trace env, [#435][] [@krasnoukhov][]
 
-# 2.9.1 / 2017-03-28
+## 2.9.1 / 2017-03-28
 
 * [BUGFIX] Keep main agent config in `Main` section when `enable_trace_agent` is true, [#419][] [@bflad][]
 
-# 2.9.0 / 2017-03-24
+## 2.9.0 / 2017-03-24
 
 This release should be fully compatible with Chef 13.
 
@@ -351,11 +368,11 @@ This release should be fully compatible with Chef 13.
 * [MISC] Loosen constraint on `chef_handler` cookbook version, [#414][] [@olivielpeau][]
 * [MISC] Add constraint on `windows` cookbook version, [#415][] [@olivielpeau][]
 
-# 2.8.1 / 2017-02-03
+## 2.8.1 / 2017-02-03
 
 * [BUGFIX] Fix agent version pinning on Windows, [#400][] [@olivielpeau][]
 
-# 2.8.0 / 2017-01-25
+## 2.8.0 / 2017-01-25
 
 * [FEATURE] Add `ssl_verify` option to RabbitMQ template, [#383][] [@iancward][]
 * [FEATURE] Add correct sudo commands to Postfix recipe, [#384][] [@BrentOnRails][] & [@degemer][]
@@ -364,7 +381,7 @@ This release should be fully compatible with Chef 13.
 * [FEATURE] Add tags blacklist regex attribute for handler, [#397][] [@ABrehm264][] & [@degemer][]
 * [FEATURE] Defer evaluation of api and app keys and read from `run_state`, [#395][] [@mfischer-zd][]
 
-# 2.7.0 / 2016-11-15
+## 2.7.0 / 2016-11-15
 
 * [FEATURE] Add `dd-agent` user to `docker` group in `docker`/`docker_daemon` recipes, [#364][] [@jvrplmlmn][]
 * [FEATURE] Add support for `system_swap` check, [#372][] [@iancward][]
@@ -374,7 +391,7 @@ This release should be fully compatible with Chef 13.
 * [OPTIMIZE] Simplify `postgres.yaml` template, [#380][] [@miketheman][]
 * [BUGFIX] Allow instances with no `tags` in `postfix` template, [#374][] [@nyanshak][]
 
-# 2.6.0 / 2016-09-20
+## 2.6.0 / 2016-09-20
 
 * [FEATURE] Allow multiple enpoints/api_keys conf on Agent and handler, [#317][] [@degemer][]
 * [FEATURE] Add `kafka` template versioning, [#340][] [@degemer][]
@@ -386,7 +403,7 @@ This release should be fully compatible with Chef 13.
 * [BUGFIX] Fix `datadog-agent-base` removal guard logic on rhellions, [#358][] [@olivielpeau][]
 * [BUGFIX] Replace deprecated properties of `yum_repository`, [#361][] & [#362][] [@historus][] & [@olivielpeau][]
 
-# 2.5.0 / 2016-08-08
+## 2.5.0 / 2016-08-08
 
 * [FEATURE] Add support for `extra_packages` agent checks, [#271][] [@tmichelet][]
 * [FEATURE] Add Windows support to `remove-dd-agent` recipe (Chef >= 12.6 only), [#332][] [@raycrawford][]
@@ -405,13 +422,13 @@ This release should be fully compatible with Chef 13.
   of `chef_handler` broke compatibility with Chef 11. Chef 11 compatibility has been re-introduced in the `1.3`
   release, we recommend using that version or higher if you use Chef 11.
 
-# 2.4.0 / 2016-05-04
+## 2.4.0 / 2016-05-04
 
 * [FEATURE] Add support for `dns_check`, [#294][] [@nickmarden][]
 * [FEATURE] Add support for `directory` check, [#277][] [@kindlyseth][]
 * [BUGFIX] Template error in `postgres.yaml`, [#300][], [#304][] [@miketheman][]
 
-# 2.3.0 / 2016-04-25
+## 2.3.0 / 2016-04-25
 
 * [FEATURE] Add support for `go_expvar` check, [#298][] [@hartfordfive][]
 * [FEATURE] Allow a String or Hash when configuring Agent tags, [#296][] [@martinisoft][]
@@ -439,7 +456,7 @@ This release should be fully compatible with Chef 13.
 * [MISC] Add Kitchen tests via CircleCI & kitchen-docker, [@miketheman][]
 * [MISC] Update Travis lint/spec tests to use ChefDK-supplied packages, [@miketheman][]
 
-# 2.2.0 / 2015-10-27
+## 2.2.0 / 2015-10-27
 
 * This release deserves a specific callout for a feature that has been finally
   implemented and deserves a major round of applause to [@EasyAsABC123][],
@@ -482,7 +499,7 @@ This release should be fully compatible with Chef 13.
 * [MISC] Update `jmx` tests for accurate structure, [@miketheman][]
 * [MISC] Update libraries used in test suite, [@miketheman][]
 
-# 2.1.0 / 2015-04-20
+## 2.1.0 / 2015-04-20
 
 * [FEATURE] Add support for `mesos` check, [#200][] [@DorianZaccaria][]
 * [FEATURE] Add support for `docker` check, [#197][] [@DorianZaccaria][]
@@ -513,22 +530,22 @@ This release should be fully compatible with Chef 13.
 * [DOCS] Remove suggestion for python cookbook, as it is no longer needed. [@miketheman][]
 * [MISC] Updates to test suite for simplicity, deprecation warnings, dependencies [@miketheman][] & [@darron][]
 
-# 2.0.0 / 2014-08-22
+## 2.0.0 / 2014-08-22
 
 * **BREAKING CHANGE**: Datadog Agent 5.0.0 Release Edition
 
-  With the release of Datadog Agent 5.x, all Python dependencies are now bundled, and extensions for monitoring are no
-  longer needed. Integration-specific recipes no longer install any packages, so if you are using a version older than
-  5.x, you may have to install these yourself. This greatly simplifies deployment of all components for monitoring.
-  See commit b77582122f3db774a838f90907b421e544dd099c for the exact package resources that have been removed.
-  Affected recipes:
+With the release of Datadog Agent 5.x, all Python dependencies are now bundled, and extensions for monitoring are no
+longer needed. Integration-specific recipes no longer install any packages, so if you are using a version older than
+5.x, you may have to install these yourself. This greatly simplifies deployment of all components for monitoring.
+See commit b77582122f3db774a838f90907b421e544dd099c for the exact package resources that have been removed.
+Affected recipes:
 
-  - hdfs
-  - memcache
-  - mongodb
-  - mysql
-  - postgres
-  - redisdb
+* hdfs
+* memcache
+* mongodb
+* mysql
+* postgres
+* redisdb
 
 * **BREAKING CHANGE**: Removed chef_gem support for Chef versions pre 0.10.9.
 
@@ -543,7 +560,7 @@ This release should be fully compatible with Chef 13.
 * [FEATURE] Allow database name to be passed into postgres template, [@miketheman][]
 * [MISC] Many updates to testing suite. Faster style, better specs. [@miketheman][]
 
-# 1.2.0 / 2014-03-24
+## 1.2.0 / 2014-03-24
 
 * [FEATURE] Add `relations` parameter to Postgres check config, [#97][] [@miketheman][]
 * [FEATURE] Add `sock` parameter to MySQL check configuration, [#105][] [@thisismana][]
@@ -567,15 +584,14 @@ This release should be fully compatible with Chef 13.
 * [BUGFIX] Set gpgcheck to false for `yum` repo if it exists, [#89][] [@alexism][], [#101][] [@nkts][]
 * [MISC] Inline doc for postgres recipe, [#83][] [@timusg][]
 
-
-# 1.1.1 / 2013-10-17
+## 1.1.1 / 2013-10-17
 
 * [FEATURE] added rabbitmq recipe and template, [@miketheman][]
 * [BUGFIX] memcache dependencies and template, [#67][] [@elijahandrews][]
 * [BUGFIX] redis python client check was not properly checking the default version, [@remh][]
 * [MISC] tailor 1.3.1 caught some cosmetic issue, [@alq][]
 
-# 1.1.0 / 2013-08-20
+## 1.1.0 / 2013-08-20
 
 * [FEATURE] Parameterize chef-handler-datadog Gem version, [#60][] [@mfischer-zd][]
 * [FEATURE] Allow control of `network.yaml` via attributes, [#63][] [@JoeDeVries][]
@@ -586,20 +602,21 @@ This release should be fully compatible with Chef 13.
 * [MISC] correct the riak integration example, [@miketheman][]
 * [MISC] updated CHANGELOG.md style, [@miketheman][]
 
-#### Dependency Note
+### Dependency Note
+
 One of the dependencies of this cookbook is the `apt` cookbook.
 A change introduced in the `apt` cookbook 2.0.0 release was a Chef 11-specific feature that would break on any Chef 10 system, so we considered adding a restriction in our `metadata.rb` to anything below 2.0.0.
 
 A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well with both Chef 10 and 11. We recommend using this version, or higher.
 
-# 1.0.1 / 2013-05-14
+## 1.0.1 / 2013-05-14
 
 * Fixed iis and rabbitmq template syntax - [#58][] [@gregf][]
 * Updated style/spacing in ActiveMQ template
 * Updated test suite to validate cookbook & templates
 * Updated chefignore to clean the built cookbook from containing cruft
 
-# 1.0.0 / 2013-05-06
+## 1.0.0 / 2013-05-06
 
 * **BREAKING CHANGE**: Moved all attributes into `datadog` namespace - [#46][] ([#23][], [#26][])
 
@@ -625,17 +642,20 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 * Generated config file removes some whitespace - [#56][]
 * Removed dependency on `yum::epel`, only uses `yum` for the `repository` recipe
 
+## 0.1.4 / 2013-04-25
 
-# 0.1.4 / 2013-04-25
 * Quick fix for backporting test code to support upload in ruby 1.8.7
 
-# 0.1.3 / 2013-01-27
+## 0.1.3 / 2013-01-27
+
 * Work-around for COOK-2171
 
-# 0.1.2 / 2012-10-15
+## 0.1.2 / 2012-10-15
+
 * Fixed typo in jmx section
 
-# 0.1.1 / 2012-09-18
+## 0.1.1 / 2012-09-18
+
 * Added support for postgres, redis & memcached
 * `dd-agent` - updated to include more platforms
 * `dd-handler` - updated to leverage `chef_gem` resource if available
@@ -646,34 +666,44 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 * Removed extraneous dependencies
 * Added automated testing suite
 
-# 0.0.12
+## 0.0.12
+
 * Updated for CentOS dependencies
 
-# 0.0.11
+## 0.0.11
+
 * Link to github repository.
 
-# 0.0.10
+## 0.0.10
+
 * `dd-handler` - Corrects attribute name.
 
-# 0.0.9
+## 0.0.9
+
 * `dd-agent` - Adds an explicit varnish attribute.
 
-# 0.0.8
+## 0.0.8
+
 * `dd-agent` - Add varnish support.
 
-# 0.0.7
+## 0.0.7
+
 * `dd-agent` - default to using instance IDs as hostnames when running dd-agent on EC2
 
-# 0.0.5
+## 0.0.5
+
 * `dd-agent` - Full datadog.conf template using attributes (thanks [@drewrothstein][])
 
-# 0.0.4
+## 0.0.4
+
 * `dd-agent` - Added support for Nagios PerfData and Graphite.
 
-# 0.0.3
+## 0.0.3
+
 * `dd-agent` - Added support for RPM installs - Red Hat, CentOS, Scientific, Fedora
 
-# 0.0.2
+## 0.0.2
+
 * Initial refactoring, including the `dd-agent` cookbook here
 * Adding chef-handler-datadog to report to the newsfeed
 * Added ruby-dev dependency

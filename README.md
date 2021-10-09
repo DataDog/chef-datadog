@@ -62,7 +62,8 @@ depends 'yum', '< 5.0'
 ### Installation
 
 1. Add the cookbook to your Chef server with [Berkshelf][5] or [Knife][6]:
-    ```text
+
+    ```ruby
     # Berksfile
     cookbook 'datadog', '~> 4.0.0'
     ```
@@ -72,41 +73,44 @@ depends 'yum', '< 5.0'
     knife cookbook site install datadog
     ```
 
-2. Set the [Datadog-specific attributes](#datadog-attributes) in a role, environment, or another recipe:
-    ```text
+1. Set the [Datadog-specific attributes](#datadog-attributes) in a role, environment, or another recipe:
+
+    ```ruby
     node.default['datadog']['api_key'] = "<YOUR_DD_API_KEY>"
 
     node.default['datadog']['application_key'] = "<YOUR_DD_APP_KEY>"
     ```
 
-3. Upload the updated cookbook to your Chef server:
-    ```shell
+1. Upload the updated cookbook to your Chef server:
+
+    ```bash
     berks upload
     # or
     knife cookbook upload datadog
     ```
 
-4. After uploading, add the cookbook to your node's `run_list` or `role`:
-    ```text
+1. After uploading, add the cookbook to your node's `run_list` or `role`:
+
+    ```ruby
     "run_list": [
       "recipe[datadog::dd-agent]"
     ]
     ```
 
-5. Wait for the next scheduled `chef-client` run or trigger it manually.
+1. Wait for the next scheduled `chef-client` run or trigger it manually.
 
 ### Dockerized environment
 
 To build a Docker environment, use the files under `docker_test_env`:
 
-```
+```bash
 cd docker_test_env
 docker build -t chef-datadog-container .
 ```
 
 To run the container use:
 
-```
+```bash
 docker run -d -v /dev/vboxdrv:/dev/vboxdrv --privileged=true chef-datadog-container
 ```
 
@@ -142,7 +146,7 @@ The following code sets the field `secret_backend_command` in the configuration 
 
 The `secret_backend_command` can also be set using:
 
-```text
+```ruby
 default['datadog']['extra_config']['secret_backend_command'] = '/sbin/local-secrets'
 ```
 
@@ -157,14 +161,16 @@ default['datadog']['extra_config']['logs_config'] = { 'use_port_443' => true }
 Follow the steps below to deploy the Datadog Agent with Chef on AWS OpsWorks:
 
 1. Add Chef custom JSON:
-  ```json
-  {"datadog":{"agent_major_version": 7, "api_key": "<API_KEY>", "application_key": "<APP_KEY>"}}
-  ```
 
-2. Include the recipe in the `install-lifecycle` recipe:
-  ```ruby
-  include_recipe '::dd-agent'
-  ```
+    ```json
+    {"datadog":{"agent_major_version": 7, "api_key": "<API_KEY>", "application_key": "<APP_KEY>"}}
+    ```
+
+1. Include the recipe in the `install-lifecycle` recipe:
+
+    ```ruby
+    include_recipe '::dd-agent'
+    ```
 
 ### Integrations
 
@@ -204,11 +210,11 @@ run_list %w(
 By default, the current major version of this cookbook installs Agent v7. The following attributes are available to control the Agent version installed:
 
 | Parameter              | Description                                                                                                                                                                         |
-|------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `agent_major_version`  | Pin the major version of the Agent to 5, 6, or 7 (default).                                                                                                                         |
 | `agent_version`        | Pin a specific Agent version (recommended).                                                                                                                                         |
 | `agent_package_action` | (Linux only) Defaults to `'install'` (recommended), `'upgrade'` to get automatic Agent updates (not recommended, use the default and change the pinned `agent_version` to upgrade). |
-| `agent_flavor` | (Linux only) Defaults to `'datadog-agent'` to install the datadog-agent, can be set to `'datadog-iot-agent'` to install the IOT agent. |
+| `agent_flavor`         | (Linux only) Defaults to `'datadog-agent'` to install the datadog-agent, can be set to `'datadog-iot-agent'` to install the IOT agent.                                              |
 
 See the sample [attributes/default.rb][1] for your cookbook version for all available attributes.
 
@@ -217,7 +223,7 @@ See the sample [attributes/default.rb][1] for your cookbook version for all avai
 Some attribute names have changed from version 3.x to 4.x of the cookbook. Use this reference table to update your configuration:
 
 | Action                | Cookbook 3.x                                          | Cookbook 4.x                              |
-|-----------------------|-------------------------------------------------------|-------------------------------------------|
+| --------------------- | ----------------------------------------------------- | ----------------------------------------- |
 | Install Agent 7.x     | Not supported                                         | `'agent_major_version' => 7`              |
 | Install Agent 6.x     | `'agent6' => true`                                    | `'agent_major_version' => 6`              |
 | Install Agent 5.x     | `'agent6' => false`                                   | `'agent_major_version' => 5`              |
@@ -287,8 +293,9 @@ The [dd-handler recipe][11] installs the [chef-handler-datadog][12] gem and invo
 
 To install a language-specific library that interacts with DogStatsD:
 
-- Ruby: [dogstatsd-ruby recipe][13]
-- Python: Add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the resource below. For more details, see the [poise-python repository][14].
+* Ruby: [dogstatsd-ruby recipe][13]
+* Python: Add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the resource below. For more details, see the [poise-python repository][14].
+
     ```ruby
     python_package 'dogstatsd-python' # assumes python and pip are installed
     ```
@@ -297,8 +304,9 @@ To install a language-specific library that interacts with DogStatsD:
 
 To install a language-specific library for application tracing (APM):
 
-- Ruby: [ddtrace-ruby recipe][15]
-- Python: Add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the resource below. For more details, see the [poise-python repository][14].
+* Ruby: [ddtrace-ruby recipe][15]
+* Python: Add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the resource below. For more details, see the [poise-python repository][14].
+
     ```ruby
     python_package 'ddtrace' # assumes python and pip are installed
     ```
@@ -323,8 +331,8 @@ Use the `datadog_monitor` resource for enabling Agent integrations without a rec
 
 #### Actions
 
-- `:add`: (default) Enables the integration by setting up the configuration file, adding the correct permissions to the file, and restarting the Agent.
-- `:remove`: Disables an integration.
+* `:add`: (default) Enables the integration by setting up the configuration file, adding the correct permissions to the file, and restarting the Agent.
+* `:remove`: Disables an integration.
 
 #### Syntax
 
@@ -340,12 +348,12 @@ end
 
 #### Properties
 
-| Property                   | Description                                                                                                                                                                                                                                                                                    |
-|----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `'name'`                   | The name of the Agent integration to configure and enable.                                                                                                                                                                                                                                     |
-| `instances`                | The fields used to fill values under the `instances` section in the integration configuration file.                                                                                                                                                                                            |
-| `init_config`              | The fields used to fill values under the the `init_config` section in the integration configuration file.                                                                                                                                                                                      |
-| `logs`                     | The fields used to fill values under the the `logs` section in the integration configuration file.                                                                                                                                                                                             |
+| Property                   | Description                                                                                                                                                                                                                                                                                   |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `'name'`                   | The name of the Agent integration to configure and enable.                                                                                                                                                                                                                                    |
+| `instances`                | The fields used to fill values under the `instances` section in the integration configuration file.                                                                                                                                                                                           |
+| `init_config`              | The fields used to fill values under the the `init_config` section in the integration configuration file.                                                                                                                                                                                     |
+| `logs`                     | The fields used to fill values under the the `logs` section in the integration configuration file.                                                                                                                                                                                            |
 | `use_integration_template` | Set to `true` (recommended) to use the default template, which writes the values of `instances`, `init_config`, and `logs` in the YAML under their respective keys. This defaults to `false` for backward compatibility, but may default to `true` in a future major version of the cookbook. |
 
 #### Example
@@ -372,8 +380,8 @@ To install a specific version of a Datadog integration, use the `datadog_integra
 
 #### Actions
 
-- `:install`: (default) Installs an integration with the specified version.
-- `:remove`: Removes an integration.
+* `:install`: (default) Installs an integration with the specified version.
+* `:remove`: Removes an integration.
 
 #### Syntax
 
@@ -387,9 +395,9 @@ end
 
 #### Properties
 
-- `'name'`: The name of the Agent integration to install, for example: `datadog-apache`.
-- `version`: The version of the integration to install (only required with the `:install` action).
-- `third_party`: Set to false if installing a Datadog integration, true otherwise. Available for Datadog Agents version 6.21/7.21 and higher only.
+* `'name'`: The name of the Agent integration to install, for example: `datadog-apache`.
+* `version`: The version of the integration to install (only required with the `:install` action).
+* `third_party`: Set to false if installing a Datadog integration, true otherwise. Available for Datadog Agents version 6.21/7.21 and higher only.
 
 #### Example
 
@@ -408,7 +416,6 @@ end
 To get the available versions of the integrations, see the integration-specific `CHANGELOG.md` in the [integrations-core repository][16].
 
 **Note**: For Chef Windows users, the `chef-client` must have read access to the `datadog.yaml` file when the `datadog-agent` binary available on the node is used by this resource.
-
 
 [1]: https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb
 [2]: https://github.com/DataDog/chef-datadog/releases/tag/v2.18.0
