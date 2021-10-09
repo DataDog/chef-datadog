@@ -27,10 +27,12 @@ jobs:
       - checkout
       - run:
           name: Install gems
-          command: chef gem install coveralls json_spec
+          command: chef gem install coveralls json_spec rspec_junit_formatter
       - run:
           name: Unit
           command: chef exec rspec spec/
+      - store_test_results:
+          path: /tmp/chef-datadog-rspec.xml
 
   integration:
     executor: chef
