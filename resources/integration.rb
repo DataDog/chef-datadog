@@ -4,9 +4,13 @@
 # The datadog_resource must be used on a system where the datadog-agent has
 # already been setup.
 
-# enable unified mode. See CHEF-33 Deprecation warning:
+# enable unified mode on specific Chef versions.
+# See CHEF-33 Deprecation warning:
 # https://docs.chef.io/deprecations_unified_mode/
-unified_mode true
+
+if Chef::Datadog.should_use_unified_mode(node)
+  unified_mode true
+end
 
 default_action :install
 

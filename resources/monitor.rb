@@ -1,8 +1,12 @@
 # Configure a service via its yaml file
 
-# enable unified mode. See CHEF-33 Deprecation warning:
+# enable unified mode on specific Chef versions.
+# See CHEF-33 Deprecation warning:
 # https://docs.chef.io/deprecations_unified_mode/
-unified_mode true
+
+if Chef::Datadog.should_use_unified_mode(node)
+  unified_mode true
+end
 
 require 'yaml' # Our erb templates need this
 
