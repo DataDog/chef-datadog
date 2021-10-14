@@ -17,7 +17,8 @@ platforms:
       debian-7.8
     )
     chef_versions = %w(
-      14.14
+      12.7.2
+      14
       16.5
       17
       18
@@ -34,7 +35,9 @@ platforms:
 
 windows_platform = 'windows-2012r2'
 windows_chef_versions = %w(
-  14.14
+  12.7.2
+  13.11.3
+  14
   15
 )
 

@@ -14,10 +14,10 @@ platforms:
 
   - name: ubuntu-14.04
     driver_config:
-      require_chef_omnibus: 14.14
+      require_chef_omnibus: 14.12
   - name: centos-6.6
     driver_config:
-      require_chef_omnibus: 14.14
+      require_chef_omnibus: 14.12
       image: 'datadog/docker-library:chef_kitchen_systemd_centos_6'
       run_command: /root/start.sh
     attributes:
@@ -25,7 +25,7 @@ platforms:
         service_provider: Systemd
   - name: centos-7.7
     driver_config:
-      require_chef_omnibus: 14.14
+      require_chef_omnibus: 14.12
       image: 'datadog/docker-library:chef_kitchen_systemd_centos_7'
       run_command: /root/start.sh
   - name: centos-7.7
@@ -35,7 +35,7 @@ platforms:
       run_command: /root/start.sh
   - name: debian-8.11
     driver_config:
-      require_chef_omnibus: 14.14
+      require_chef_omnibus: 14.12
 
 suites:
 <%
