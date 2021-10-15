@@ -11,7 +11,7 @@ class Chef
         # See CHEF-33 deprecation warning
         # https://docs.chef.io/unified_mode/
         node_version = Chef::Version::Platform.new(node[:platform_version].to_s)
-        (node_version.major >= 16) || (node_version.major == 15 && node_version.minor >= 3) || (node_version.major == 14 && node_version.minor >= 14))
+        (node_version.major >= 15 && node_version.minor >= 3) || ((node_version.major < 15) && (node_version.major >= 14 && node_version.minor >= 14))
       end
 
       def agent_version(node)
