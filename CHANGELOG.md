@@ -1,6 +1,11 @@
 Changes
 =======
 
+# Unreleased
+
+* [FEATURE] Enabled unified mode on compatible platforms since it will be the default on Chef 18. See [CHEF-33](https://docs.chef.io/deprecations_unified_mode/) deprecation.
+* [FEATURE] Added support for Chef 18+.
+
 # 4.11.1 / 2021-08-24
 
 * [BUGFIX] Support cookbook renaming [#810][] [@lchayoun][]
