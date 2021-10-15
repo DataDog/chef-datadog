@@ -8,9 +8,7 @@
 # See CHEF-33 Deprecation warning:
 # https://docs.chef.io/deprecations_unified_mode/
 
-if Chef::Datadog.should_use_unified_mode(node)
-  unified_mode true
-end
+unified_mode true if respond_to?(:unified_mode)
 
 default_action :install
 
