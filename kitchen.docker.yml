@@ -5,6 +5,9 @@ driver:
 
 provisioner:
   deprecations_as_errors: true
+  solo_rb:
+    silence_deprecation_warnings:
+    - chef-25
 
 platforms:
   # Exclude this OS for now, due to some odd behavior with the NTP check on CircleCI systems.
