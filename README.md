@@ -411,7 +411,7 @@ To get the available versions of the integrations, see the integration-specific 
 [1]: https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb
 [2]: https://github.com/DataDog/chef-datadog/releases/tag/v2.18.0
 [3]: https://github.com/DataDog/chef-datadog/blob/master/CHANGELOG.md
-[4]: https://app.datadoghq.com/account/settings#api
+[4]: https://app.datadoghq.com/organization-settings/api-keys
 [5]: https://docs.chef.io/berkshelf/
 [6]: https://docs.chef.io/knife/
 [7]: https://github.com/DataDog/chef-datadog/tree/master/recipes
