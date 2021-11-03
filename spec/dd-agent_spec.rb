@@ -1066,6 +1066,7 @@ describe 'datadog::dd-agent' do
             log_file: "/var/log/datadog/agent.log"
             log_level: "INFO"
             dogstatsd_non_local_traffic: false
+            dogstatsd_port: 8125
             apm_config:
               apm_non_local_traffic: false
             process_config:
@@ -1126,6 +1127,7 @@ describe 'datadog::dd-agent' do
             hostname: "chef-nodename"
             log_level: "INFO"
             dogstatsd_non_local_traffic: false
+            dogstatsd_port: 8125
             apm_config:
               apm_non_local_traffic: false
             process_config:
@@ -1187,6 +1189,7 @@ describe 'datadog::dd-agent' do
             log_file: "/var/log/datadog/agent.log"
             log_level: "INFO"
             dogstatsd_non_local_traffic: false
+            dogstatsd_port: 8125
             apm_config:
               apm_non_local_traffic: false
             process_config:
@@ -1244,6 +1247,7 @@ describe 'datadog::dd-agent' do
           log_file: "/var/log/datadog/agent.log"
           log_level: "INFO"
           dogstatsd_non_local_traffic: false
+          dogstatsd_port: 8125
           apm_config:
             apm_non_local_traffic: false
           process_config:

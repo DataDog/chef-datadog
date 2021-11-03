@@ -89,6 +89,7 @@ agent_config = @extra_config.merge({
   histogram_aggregates: string_list_to_array(node['datadog']['histogram_aggregates']),
   histogram_percentiles: string_list_to_array(node['datadog']['histogram_percentiles']),
   use_dogstatsd: node['datadog']['dogstatsd'],
+  dogstatsd_port: node['datadog']['dogstatsd_port'],
   statsd_metric_namespace: node['datadog']['statsd_metric_namespace'],
   log_level: node['datadog']['log_level'],
   cmd_port: node['datadog']['cmd_port'],
