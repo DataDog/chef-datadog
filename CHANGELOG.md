@@ -1,10 +1,12 @@
 Changes
 =======
 
-# Unreleased
+# 4.12.0 / 2021-12-03
 
-* [FEATURE] Enabled unified mode on compatible platforms since it will be the default on Chef 18. See [CHEF-33](https://docs.chef.io/deprecations_unified_mode/) deprecation.
-* [FEATURE] Added support for Chef 18+.
+* [FEATURE] Added support for Chef 18+. [@axl89][] [#822][]
+* [FEATURE] Enabled unified mode on compatible platforms since it will be the default on Chef 18. See [CHEF-33](https://docs.chef.io/deprecations_unified_mode/) deprecation. [@axl89][] [#822][]
+* [FEATURE] Include `dogstatsd_port` in `datadog.yaml` for Agent 6 and Agent 7 [@brentm5][] [#828][]
+* [BUGFIX] Ignore `apt update` failures to keep running if some sources are offline [#830][] [@bkabrda][]
 
 # 4.11.1 / 2021-08-24
 
@@ -1002,6 +1004,9 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#806]: https://github.com/DataDog/chef-datadog/issues/806
 [#810]: https://github.com/DataDog/chef-datadog/issues/810
 [#813]: https://github.com/DataDog/chef-datadog/issues/813
+[#822]: https://github.com/DataDog/chef-datadog/issues/822
+[#828]: https://github.com/DataDog/chef-datadog/issues/828
+[#830]: https://github.com/DataDog/chef-datadog/issues/830
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@Azraeht]: https://github.com/Azraeht
@@ -1027,6 +1032,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@antonio-osorio]: https://github.com/antonio-osorio
 [@arthurnn]: https://github.com/arthurnn
 [@asherf]: https://github.com/asherf
+[@axl89]: https://github.com/axl89
 [@aymen-chetoui]: https://github.com/aymen-chetoui
 [@azuretek]: https://github.com/azuretek
 [@babbottscott]: https://github.com/babbottscott
