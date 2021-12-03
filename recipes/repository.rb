@@ -63,7 +63,9 @@ when 'debian'
     }
   end
 
-  apt_update 'update'
+  apt_update 'update' do
+    ignore_failure true
+  end
 
   package 'install-apt-transport-https' do
     package_name 'apt-transport-https'
