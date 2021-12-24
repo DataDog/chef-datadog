@@ -31,9 +31,9 @@ else
 end
 
 if Chef::VERSION < Gem::Version.new(12.4)
-  depends    'yum', '>= 3.0, < 5.0'
+  depends    'yum', '>= 3.0', '< 5.0'
 elsif Chef::VERSION < Gem::Version.new(15.3)
-  depends    'yum', '>= 3.0, < 7.0'
+  depends    'yum', '>= 3.0', '< 7.0'
 else
   depends    'yum', '>= 3.0'
 end
