@@ -369,11 +369,14 @@ default['datadog']['system_probe']['manage_config'] = true
 # the NPM module of system probe will still run.
 default['datadog']['system_probe']['enabled'] = false
 # sysprobe_socket defines the unix socket location
-if platform_family?('windows')
-  default['datadog']['system_probe']['sysprobe_socket'] = 'localhost:3333'
-else
-  default['datadog']['system_probe']['sysprobe_socket'] = '/opt/datadog-agent/run/sysprobe.sock'
-end
+default['datadog']['system_probe']['sysprobe_socket'] =
+  if platform_family?('windows')
+    # might be //opt/datadog-agent/run/sysprobe.sock
+    # note the //
+    'localhost:3333'
+  else
+    '/opt/datadog-agent/run/sysprobe.sock'
+  end
 
 # debug_port is the http port for expvar, it is disabled if set to 0
 default['datadog']['system_probe']['debug_port'] = 0
