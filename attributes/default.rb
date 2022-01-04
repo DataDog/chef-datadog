@@ -371,8 +371,6 @@ default['datadog']['system_probe']['enabled'] = false
 # sysprobe_socket defines the unix socket location
 default['datadog']['system_probe']['sysprobe_socket'] =
   if platform_family?('windows')
-    # might be //opt/datadog-agent/run/sysprobe.sock
-    # note the //
     'localhost:3333'
   else
     '/opt/datadog-agent/run/sysprobe.sock'
