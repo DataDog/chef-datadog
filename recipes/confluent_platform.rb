@@ -89,6 +89,7 @@ datadog_monitor 'confluent_platform' do
   init_config node['datadog']['confluent_platform']['init_config']
   instances node['datadog']['confluent_platform']['instances']
   logs node['datadog']['confluent_platform']['logs']
+  is_jmx true
   use_integration_template true
   action :add
   notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
