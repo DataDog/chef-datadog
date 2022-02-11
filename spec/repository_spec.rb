@@ -391,6 +391,50 @@ describe 'datadog::repository' do
         ).with(repo_gpgcheck: true)
       end
     end
+
+    context 'almalinux 8.5, agent 6', if: min_chef_version('17.0.69') do
+      cached(:chef_run) do
+        ChefSpec::SoloRunner.new(
+          platform: 'almalinux', version: '8'
+        ) do |node|
+          node.normal['datadog'] = { 'agent_major_version' => '6' }
+          node.automatic['platform_version'] = '8.5'
+        end.converge(described_recipe)
+      end
+
+      it 'sets up the yum repo' do
+        expect(chef_run).to create_yum_repository('datadog').with(
+          gpgkey: [
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY.public',
+          ]
+        ).with(repo_gpgcheck: true)
+      end
+    end
+
+    context 'rocky 8.5, agent 6', if: min_chef_version('17.1.35') do
+      cached(:chef_run) do
+        ChefSpec::SoloRunner.new(
+          platform: 'rocky', version: '8'
+        ) do |node|
+          node.normal['datadog'] = { 'agent_major_version' => '6' }
+          node.automatic['platform_version'] = '8.5'
+        end.converge(described_recipe)
+      end
+
+      it 'sets up the yum repo' do
+        expect(chef_run).to create_yum_repository('datadog').with(
+          gpgkey: [
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY.public',
+          ]
+        ).with(repo_gpgcheck: true)
+      end
+    end
   end
 
   context 'suseiods' do

@@ -39,6 +39,12 @@ platforms:
   - name: debian-8.11
     driver_config:
       require_chef_omnibus: 14.12
+  - name: rocky-8
+    driver_config:
+      platform: rhel # kitchen-docker doesn't recognize rocky otherwise
+      require_chef_omnibus: 16.17.4
+      image: 'datadog/docker-library:chef_kitchen_systemd_rocky_8'
+      run_command: /root/start.sh
 
 suites:
 <%
