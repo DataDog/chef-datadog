@@ -8,6 +8,10 @@ require 'yaml'
 
 require 'shared_examples'
 
+def min_chef_version(version)
+  Gem.loaded_specs['chef'].version > Gem::Version.new(version)
+end
+
 RSpec.configure do |config|
   # Use color not only in STDOUT but also in pagers and files
   config.tty = true

@@ -19,10 +19,12 @@ The Datadog Chef cookbook is compatible with `chef-client` >= 12.7. If you need 
 
 The following platforms are supported:
 
+* AlmaLinux (requires Chef 16 >= 16.10.8 or Chef >= 17.0.69)
 * Amazon Linux
 * CentOS
 * Debian
 * RedHat (RHEL 8 requires Chef >= 15)
+* Rocky (requires Chef 16 >= 16.17.4 or Chef >= 17.1.35)
 * Scientific Linux
 * Ubuntu
 * Windows

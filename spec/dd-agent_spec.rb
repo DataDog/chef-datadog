@@ -134,6 +134,36 @@ describe 'datadog::dd-agent' do
       it_behaves_like 'rhellions dnf no version set'
     end
 
+    context 'on AlmaLinux distro', if: min_chef_version('17.0.69') do
+      cached(:chef_run) do
+        ChefSpec::SoloRunner.new(
+          :platform => 'almalinux',
+          :version => '8'
+        ) do |node|
+          node.normal['datadog'] = { 'api_key' => 'somethingnotnil' }
+          node.normal['languages'] = { 'python' => { 'version' => '2.7.9' } }
+        end.converge described_recipe
+      end
+
+      it_behaves_like 'repo recipe'
+      it_behaves_like 'rhellions dnf no version set'
+    end
+
+    context 'on Rocky Linux distro', if: min_chef_version('17.1.35') do
+      cached(:chef_run) do
+        ChefSpec::SoloRunner.new(
+          :platform => 'rocky',
+          :version => '8'
+        ) do |node|
+          node.normal['datadog'] = { 'api_key' => 'somethingnotnil' }
+          node.normal['languages'] = { 'python' => { 'version' => '2.7.9' } }
+        end.converge described_recipe
+      end
+
+      it_behaves_like 'repo recipe'
+      it_behaves_like 'rhellions dnf no version set'
+    end
+
     context 'on Windows' do
       cached(:chef_run) do
         set_env_var('ProgramData', 'C:\ProgramData')
