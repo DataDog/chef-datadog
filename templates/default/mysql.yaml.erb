@@ -6,6 +6,9 @@ instances:
     <% if i.key?('port') -%>
     port: <%= i['port'] %>
     <% end -%>
+    <% if i.key?('dbm') -%>
+    dbm: <%= i['dbm'] %>
+    <% end -%>
     user: <%= i['user'] %>
     pass: <%= i['pass'] %>
     <% if i.key?('sock') -%>

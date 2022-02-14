@@ -24,6 +24,7 @@ describe file(AGENT_CONFIG) do
       'instances' => [
         {
           'server' => '1.1.1.1',
+          'dbm' => true,
           'port' => 3307,
           'user' => 'my_username',
           'pass' => 'my_password',
