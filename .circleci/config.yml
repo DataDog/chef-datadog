@@ -1,7 +1,8 @@
 version: 2
 jobs:
   kitchen-docker-tests:
-    machine: true
+    machine:
+      image: ubuntu-2004:202201-02
     environment:
       CHEF_LICENSE: accept # newer versions of Chef client need explicit license accept to run
       KITCHEN_LOCAL_YAML: kitchen.docker.yml
@@ -29,7 +30,8 @@ jobs:
           no_output_timeout: 900
 
   style:
-    machine: true
+    machine:
+      image: ubuntu-2004:202201-02
     environment:
       CHEF_VERSION: '16.5.77'
       RUBY_VERSION: '2.6.3'
@@ -63,7 +65,8 @@ jobs:
           command: bundle exec rake style
 
   specs-base: &specs
-    machine: true
+    machine:
+      image: ubuntu-2004:202201-02
     environment:
       CHEF_VERSION: 'needs-to-be-specified'
       RUBY_VERSION: 'needs-to-be-specified'
