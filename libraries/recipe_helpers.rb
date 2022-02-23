@@ -18,10 +18,8 @@ class Chef
           dd_agent_version = dd_agent_version[platform_family]
         end
         if !dd_agent_version.nil? && dd_agent_version.match(/^[0-9]+\.[0-9]+\.[0-9]+((?:~|-)[^0-9\s-]+[^-\s]*)?$/)
-          if node['platform_family'] == 'suse' || node['platform_family'] == 'debian'
+          if %w(debian amazon fedora rhel suse).include?(node['platform_family'])
             dd_agent_version = '1:' + dd_agent_version + '-1'
-          elsif node['platform_family'] == 'rhel' || node['platform_family'] == 'fedora' || node['platform_family'] == 'amazon'
-            dd_agent_version += '-1'
           end
         end
         dd_agent_version
