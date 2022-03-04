@@ -7,17 +7,20 @@ instances:
     consumer_groups: <%= i['name'] %>
     <% i["consumer_groups"].each do |consumer, t| -%>
       <%= consumer %>:
-        <% t.each do |topic, l| -%>
-          <%= topic %>: <%= l %>
-        <% end -%>
+      <% t.each do |topic, l| -%>
+        <%= topic %>: <%= l %>
+      <% end -%>
     <% end -%>
     <% end -%>
     <% if i.key?('monitor_unlisted_consumer_groups') -%>
-    monitor_unlisted_consumer_groups: <%= if i['monitor_unlisted_consumer_groups'] == 'true' && !['consumer_groups']; true; else false; end %>
+    monitor_unlisted_consumer_groups: <%= if i['monitor_unlisted_consumer_groups'] == true && !i['consumer_groups']; true; else false; end %>
     <% end -%>
     zk_connect_str: <%= i['zk_connect_str'] %>
     <% if i['zk_prefix'] -%>
     zk_prefix: <%= i['zk_prefix'] %>
+    <% end -%>
+    <% if i.key?('kafka_consumer_offsets')  && i['kafka_consumer_offsets'] == true-%>
+    kafka_consumer_offsets: true
     <% end -%>
   <% end -%>
 
