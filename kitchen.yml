@@ -21,7 +21,7 @@ platforms:
     )
     chef_versions = %w(
       12.7.2
-      14
+      14.10.9
       16.5
       17
       18
