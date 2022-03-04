@@ -15,6 +15,8 @@ platforms:
       centos-6.6
       centos-7.1
       debian-7.8
+      debian-9.13
+      debian-10.11
       rockylinux-8.5
     )
     chef_versions = %w(
