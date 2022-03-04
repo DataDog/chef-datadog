@@ -10,6 +10,7 @@ describe 'datadog::kafka_consumer' do
       monitor_unlisted_consumer_groups: false
       zk_connect_str: localhost:2181
       zk_prefix: /0.8
+      kafka_consumer_offsets: true
 
   init_config:
   # The Kafka Consumer check does not require any init_config
@@ -34,10 +35,11 @@ describe 'datadog::kafka_consumer' do
                   my_topic: [0, 1, 4, 12]
                 }
               },
-              monitor_unlisted_consumer_groups: 'false',
+              monitor_unlisted_consumer_groups: false,
               zk_connect_str: 'localhost:2181',
               password: 'localhost:2181',
-              zk_prefix: '/0.8'
+              zk_prefix: '/0.8',
+              kafka_consumer_offsets: true
             }
           ]
         }

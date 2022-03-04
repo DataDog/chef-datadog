@@ -19,12 +19,13 @@ describe file(AGENT_CONFIG) do
           :kafka_connect_str => 'localhost:19092',
           :consumer_groups => {
             :my_consumer => {
-              :my_topic => [0,1,4,12]
+              :my_topic => [0, 1, 4, 12]
             }
           },
-          :monitor_unlisted_consumer_groups => 'false',
+          :monitor_unlisted_consumer_groups => false,
           :zk_connect_str => 'localhost:2181',
-          :zk_prefix => '/0.8'
+          :zk_prefix => '/0.8',
+          :kafka_consumer_offsets => true
         }
       ],
       'logs' => nil,
