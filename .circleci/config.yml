@@ -35,15 +35,11 @@ jobs:
   integration:
     executor: chef
     parameters:
-      chef_version:
-        description: Chef version to test against
-        type: string
-      os:
-        description: OS and version to test against
+      command:
+        description: The kitchen test command to run, w/ Chef version specified via env var $CHEF_VERSION
         type: string
     environment:
       CHEF_LICENSE: accept-no-persist
-      CHEF_VERSION: <<parameters.chef_version>>
       KITCHEN_LOCAL_YAML: kitchen.docker.yml
     steps:
       - checkout
@@ -55,7 +51,7 @@ jobs:
       - run:
           name: Test Kitchen
           no_output_timeout: 1h
-          command: kitchen test <<parameters.os>>
+          command: <<parameters.command>>
       - store_artifacts:
           path: .kitchen/logs
 
@@ -67,16 +63,15 @@ workflows:
       - integration:
           matrix:
             parameters:
-              chef_version:
-                - "13"
-                - "14"
-                - "16"
-                - "17"
-              os:
-                - amazonlinux-2
-                - centos-7
-                - centos-8
-                - debian-9
-                - debian-10
-                - ubuntu-1804
-                - ubuntu-2004
+              command:
+                - CHEF_VERSION=14 kitchen test dd-agent-handler5-centos-6
+                - CHEF_VERSION=14 kitchen test dd-agent-handler5-centos-7
+                - CHEF_VERSION=14 kitchen test dd-agent-handler5-debian-8
+                - CHEF_VERSION=16 kitchen test dd-agent-handler5-rocky-8
+                - CHEF_VERSION=14 kitchen test dd-agent-handler5-ubuntu-1404
+                - CHEF_VERSION=14 kitchen test dd-agent-handler6-centos-6
+                - CHEF_VERSION=14 kitchen test dd-agent-handler6-centos-7
+                - CHEF_VERSION=16 kitchen test dd-agent-handler6-rocky-8
+                - CHEF_VERSION=14 kitchen test dd-agent-handler7-centos-6
+                - CHEF_VERSION=14 kitchen test dd-agent-handler7-centos-7
+                - CHEF_VERSION=16 kitchen test dd-agent-handler7-rocky-8
