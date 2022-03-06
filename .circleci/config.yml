@@ -30,7 +30,12 @@ jobs:
           command: chef gem install coveralls json_spec rspec_junit_formatter
       - run:
           name: Unit
-          command: chef exec rspec spec/
+          # Parallelize unit tests
+          # DOCS: https://circleci.com/docs/2.0/parallelism-faster-jobs/
+          # EXAMPLE: https://circleci.com/developer/orbs/orb/betterdoc/ruby-build
+          command: |
+            TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
+            chef exec rspec $TEST_FILES
       - store_test_results:
           path: /tmp/chef-datadog-rspec.xml
 
