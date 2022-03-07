@@ -15,11 +15,13 @@ platforms:
       centos-6.6
       centos-7.1
       debian-7.8
+      debian-9.13
+      debian-10.11
       rockylinux-8.5
     )
     chef_versions = %w(
       12.7.2
-      14
+      14.10.9
       16.5
       17
       18
@@ -387,11 +389,13 @@ suites:
       kafka_consumer:
         instances:
           - kafka_connect_str: localhost:19092
-            zk_connect_str: localhost:2181
-            zk_prefix: /0.8
             consumer_groups:
               my_consumer:
                 my_topic: [0, 1, 4, 12]
+            monitor_unlisted_consumer_groups: true
+            zk_connect_str: localhost:2181
+            zk_prefix: /0.8
+            kafka_consumer_offsets: true
 
 - name: datadog_mesos_master
   run_list:
@@ -591,4 +595,3 @@ suites:
         instances:
           - host: localhost
             port: 49112
-
