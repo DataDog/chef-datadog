@@ -56,6 +56,9 @@ jobs:
             curl -L https://omnitruck.chef.io/install.sh |
               sudo bash -s -- -c stable -P chef-workstation
       - run:
+          name: Install gems
+          command: chef gem install kitchen-docker
+      - run:
           name: Test Kitchen
           no_output_timeout: 1h
           command: <<parameters.command>>
