@@ -32,7 +32,7 @@ describe 'datadog::go-metro' do
 
     cached(:chef_run) do
       ChefSpec::SoloRunner.new(
-        step_into: ['datadog_monitor'], platform: 'redhat', version: '7.7'
+        step_into: ['datadog_monitor'], platform: 'redhat', version: '7'
       ) do |node|
         node.automatic['languages'] = { python: { version: '2.7.2' } }
 

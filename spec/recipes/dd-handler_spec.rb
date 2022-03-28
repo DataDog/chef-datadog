@@ -38,7 +38,7 @@ describe 'datadog::dd-handler' do
     cached(:chef_run) do
       ChefSpec::SoloRunner.new(
         platform: 'ubuntu',
-        version: '14.04'
+        version: '16.04'
       ) do |node|
         node.normal['datadog']['api_key'] = 'somethingnotnil'
         node.normal['datadog']['application_key'] = 'somethingnotnil2'
@@ -56,7 +56,7 @@ describe 'datadog::dd-handler' do
     cached(:chef_run) do
       ChefSpec::SoloRunner.new(
         platform: 'ubuntu',
-        version: '14.04'
+        version: '16.04'
       ) do |node|
         node.normal['datadog']['api_key'] = 'somethingnotnil'
         node.normal['datadog']['application_key'] = 'somethingnotnil2'
@@ -76,7 +76,7 @@ describe 'datadog::dd-handler' do
     cached(:chef_run) do
       ChefSpec::SoloRunner.new(
         platform: 'ubuntu',
-        version: '14.04'
+        version: '16.04'
       ) do |node|
         node.normal['datadog']['api_key'] = 'api_overriden_by_run_state'
         node.normal['datadog']['application_key'] = 'app_overriden_by_run_state'
@@ -98,7 +98,7 @@ describe 'datadog::dd-handler' do
     cached(:chef_run) do
       ChefSpec::SoloRunner.new(
         platform: 'ubuntu',
-        version: '14.04'
+        version: '16.04'
       ) do |node|
         node.normal['datadog']['chef_handler_enable'] = true
         node.normal['datadog']['use_ec2_instance_id'] = true
@@ -118,7 +118,7 @@ describe 'datadog::dd-handler' do
     cached(:chef_run) do
       ChefSpec::SoloRunner.new(
         platform: 'ubuntu',
-        version: '14.04'
+        version: '16.04'
       ) do |node|
         node.normal['datadog']['api_key'] = 'somethingnotnil'
         node.normal['datadog']['application_key'] = 'somethingnotnil2'
@@ -144,7 +144,7 @@ describe 'datadog::dd-handler' do
     cached(:chef_run) do
       ChefSpec::SoloRunner.new(
         platform: 'ubuntu',
-        version: '14.04'
+        version: '16.04'
       ) do |node|
         node.normal['datadog']['api_key'] = 'somethingnotnil'
         node.normal['datadog']['application_key'] = 'somethingnotnil2'
@@ -165,7 +165,7 @@ describe 'datadog::dd-handler' do
     cached(:chef_run) do
       ChefSpec::SoloRunner.new(
         platform: 'ubuntu',
-        version: '14.04'
+        version: '16.04'
       ) do |node|
         node.normal['datadog']['api_key'] = 'somethingnotnil'
         node.normal['datadog']['application_key'] = 'somethingnotnil2'
@@ -184,7 +184,7 @@ describe 'datadog::dd-handler' do
     cached(:chef_run) do
       ChefSpec::SoloRunner.new(
         platform: 'ubuntu',
-        version: '14.04'
+        version: '16.04'
       ) do |node|
         node.normal['datadog']['api_key'] = 'somethingnotnil'
         node.normal['datadog']['application_key'] = 'somethingnotnil2'
@@ -203,7 +203,7 @@ describe 'datadog::dd-handler' do
     cached(:chef_run) do
       ChefSpec::SoloRunner.new(
         platform: 'ubuntu',
-        version: '14.04'
+        version: '16.04'
       ) do |node|
         node.normal['datadog']['api_key'] = 'somethingnotnil'
         node.normal['datadog']['application_key'] = 'somethingnotnil2'
@@ -222,7 +222,7 @@ describe 'datadog::dd-handler' do
     cached(:chef_run) do
       ChefSpec::SoloRunner.new(
         platform: 'ubuntu',
-        version: '14.04'
+        version: '16.04'
       ) do |node|
         node.normal['datadog']['api_key'] = 'somethingnotnil'
         node.normal['datadog']['application_key'] = 'somethingnotnil2'
