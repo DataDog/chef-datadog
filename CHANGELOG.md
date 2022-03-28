@@ -10,6 +10,7 @@
 * [BUGFIX] Drop deprecated ChefSpec coverage
 * [BUGFIX] Update unit tests to run against current versions of distros
 * [MISC] Avoid declaring `sudo` & `yum` dependencies twice, condition versions based on Chef version
+* [OPTIMIZE] Test the `dd-agent` & `dd-handler` recipes together
 
 ## 4.15.0 / 2022-10-06
 * [BUGFIX] Enforce calls of agent version without color output [#863][] [@KSerrania][]

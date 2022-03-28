@@ -61,19 +61,16 @@ windows_chef_versions.each do |chef_version|
 <% end %>
 
 suites:
-# - name: default
-#   run_list: ["recipe[datadog::default]"]
-#   attributes: {}
-#   # This should actually do nothing.
-#   # There is a sanity.bats test to simply verify that /tmp exists.
-
-- name: dd-agent
+- name: dd-agent-handler
   run_list:
     - recipe[datadog::dd-agent]
+    - recipe[datadog::dd-handler]
   attributes:
     datadog: &DATADOG
+      agent_major_version: <%= ENV['AGENT_MAJOR_VERSION'] || 7 %>
       api_key: somenonnullapikeythats32charlong
       application_key: alsonotnil
+      chef_handler_enable: true
 
 - name: dd-agent-iot
   run_list:
@@ -106,14 +103,6 @@ suites:
         debug_port: 7654
         bpf_debug: true
         enable_conntrack: true
-
-- name: dd-handler
-  run_list:
-    - recipe[datadog::dd-handler]
-  attributes:
-    datadog: &DATADOG
-      api_key: somenonnullapikeythats32charlong
-      application_key: alsonotnil
 
 - name: datadog_apache
   run_list:
