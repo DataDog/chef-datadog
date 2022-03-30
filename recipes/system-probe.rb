@@ -20,10 +20,11 @@
 is_windows = platform_family?('windows')
 
 # Set the correct agent startup action
+cws_enabled = node['datadog']['security_agent']['cws']['enabled']
 sysprobe_enabled = if is_windows
                      node['datadog']['system_probe']['network_enabled']
                    else
-                     node['datadog']['system_probe']['enabled'] || node['datadog']['system_probe']['network_enabled']
+                     node['datadog']['system_probe']['enabled'] || node['datadog']['system_probe']['network_enabled'] || cws_enabled
                    end
 sysprobe_agent_start = sysprobe_enabled ? :start : :stop
 
@@ -47,6 +48,14 @@ template system_probe_config_file do
     end
   end
 
+  runtime_security_extra_config = {}
+  if node['datadog']['extra_config'] && node['datadog']['extra_config']['security_agent'] && node['datadog']['extra_config']['security_agent']['runtime_security_config']
+    node['datadog']['extra_config']['security_agent']['runtime_security_config'].each do |k, v|
+      next if v.nil?
+      runtime_security_extra_config[k] = v
+    end
+  end
+
   source 'system_probe.yaml.erb'
   variables(
     enabled: node['datadog']['system_probe']['enabled'],
@@ -54,7 +63,9 @@ template system_probe_config_file do
     debug_port: node['datadog']['system_probe']['debug_port'],
     bpf_debug: node['datadog']['system_probe']['bpf_debug'],
     enable_conntrack: node['datadog']['system_probe']['enable_conntrack'],
-    extra_config: extra_config
+    system_probe_extra_config: extra_config,
+    runtime_security_enabled: cws_enabled,
+    runtime_security_extra_config: runtime_security_extra_config
   )
 
   if is_windows
@@ -70,6 +81,7 @@ template system_probe_config_file do
   notifies :restart, 'service[datadog-agent-sysprobe]', :delayed if sysprobe_enabled
   # since process-agent collects network info through system-probe, enabling system-probe should also restart process-agent
   notifies :restart, 'service[datadog-agent]', :delayed if sysprobe_enabled
+  notifies :restart, 'service[datadog-agent-security]', :delayed if cws_enabled
 
   # System probe is not enabled and the file doesn't exists, don't create it
   not_if { !sysprobe_enabled && !system_probe_config_file_exists }

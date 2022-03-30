@@ -7,8 +7,14 @@ system_probe_config = {
     debug_port: @debug_port,
     bpf_debug: @bpf_debug,
     enable_conntrack: @enable_conntrack,
-  }.merge(@extra_config),
+  }.merge(@system_probe_extra_config),
 }
+
+if @runtime_security_enabled
+  system_probe_config['runtime_security_config'] = {
+    enabled: @runtime_security_enabled
+  }.merge(@runtime_security_extra_config)
+end
 
 # We let the Agent default value take effect if user didn't explicitly
 # specify something else than nil for 'network_enabled'

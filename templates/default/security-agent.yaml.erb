@@ -1,0 +1,13 @@
+<%
+## Populate system_probe_config ##
+security_agent_config = {
+  runtime_security_config: {
+    enabled: @runtime_security_enabled,
+  }.merge(@runtime_security_extra_config),
+  compliance_config: {
+    enabled: @compliance_enabled,
+  }.merge(@compliance_extra_config),
+}
+-%>
+
+<%= JSON.parse(security_agent_config.to_json).to_yaml %>
