@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 4.13.0 / 2022-12-30
+# 4.13.0 / 2022-03-30
 
 * [FEATURE] Allow enabling CWS and CSPM [#843][] [@lebauce][]
 * [FEATURE] Add support for AlmaLinux and Rocky Linux [#836][] [@bkabrda][]
