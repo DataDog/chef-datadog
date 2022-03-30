@@ -21,7 +21,6 @@ is_windows = platform_family?('windows')
 
 # Set the correct agent startup action
 security_agent_enabled = !is_windows && node['datadog']['security_agent']['cws']['enabled'] || node['datadog']['security_agent']['cspm']['enabled']
-security_agent_start = security_agent_enabled ? :start : :stop
 
 #
 # Configures security-agent agent
@@ -71,9 +70,9 @@ service_name = 'datadog-agent-security'
 if security_agent_enabled
   service 'datadog-agent-security' do
     service_name service_name
-    action [security_agent_start]
+    action :start
     provider service_provider unless service_provider.nil?
     supports :restart => true, :status => true, :start => true, :stop => true
-    subscribes :restart, "template[#{security_agent_config_file}]", :delayed if security_agent_enabled
+    subscribes :restart, "template[#{security_agent_config_file}]", :delayed
   end
 end
