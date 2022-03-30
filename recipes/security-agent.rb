@@ -68,10 +68,12 @@ service_provider = Chef::Datadog.service_provider(node)
 
 service_name = 'datadog-agent-security'
 
-service 'datadog-agent-security' do
-  service_name service_name
-  action [security_agent_start]
-  provider service_provider unless service_provider.nil?
-  supports :restart => true, :status => true, :start => true, :stop => true
-  subscribes :restart, "template[#{security_agent_config_file}]", :delayed if security_agent_enabled
+if security_agent_enabled
+  service 'datadog-agent-security' do
+    service_name service_name
+    action [security_agent_start]
+    provider service_provider unless service_provider.nil?
+    supports :restart => true, :status => true, :start => true, :stop => true
+    subscribes :restart, "template[#{security_agent_config_file}]", :delayed if security_agent_enabled
+  end
 end
