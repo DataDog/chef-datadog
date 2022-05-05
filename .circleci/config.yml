@@ -17,6 +17,7 @@ jobs:
                     curl -sSL https://rvm.io/pkuczynski.asc | gpg --import -
                     # Update RVM. Using this path instead of https://get.rvm.io because the later uses the letsencrypt cert that breaks openssl 1.0
                     curl -sSL https://raw.githubusercontent.com/rvm/rvm/master/binscripts/rvm-installer | bash -s stable
+                    rvm reload
                     rvm install $RUBY_VERSION
                     echo . $(rvm $RUBY_VERSION do rvm env --path) >> $BASH_ENV
       - run:
