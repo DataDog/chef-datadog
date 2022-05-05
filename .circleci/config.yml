@@ -12,6 +12,7 @@ jobs:
       - run:
           name: Set Ruby version
           command: |
+                    set -ex
                     echo "Using $RUBY_VERSION"
                     curl -sSL https://rvm.io/pkuczynski.asc | gpg --import -
                     # Update RVM. Using this path instead of https://get.rvm.io because the later uses the letsencrypt cert that breaks openssl 1.0
