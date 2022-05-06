@@ -1,7 +1,8 @@
 version: 2
 jobs:
   kitchen-docker-tests:
-    machine: true
+    machine:
+      image: ubuntu-2004:202201-02
     environment:
       CHEF_LICENSE: accept # newer versions of Chef client need explicit license accept to run
       KITCHEN_LOCAL_YAML: kitchen.docker.yml
@@ -15,6 +16,7 @@ jobs:
                     curl -sSL https://rvm.io/pkuczynski.asc | gpg --import -
                     # Update RVM. Using this path instead of https://get.rvm.io because the later uses the letsencrypt cert that breaks openssl 1.0
                     curl -sSL https://raw.githubusercontent.com/rvm/rvm/master/binscripts/rvm-installer | bash -s stable
+                    rvm reload
                     rvm install $RUBY_VERSION
                     echo . $(rvm $RUBY_VERSION do rvm env --path) >> $BASH_ENV
       - run:
@@ -29,7 +31,8 @@ jobs:
           no_output_timeout: 900
 
   style:
-    machine: true
+    machine:
+      image: ubuntu-2004:202201-02
     environment:
       CHEF_VERSION: '16.5.77'
       RUBY_VERSION: '2.6.3'
@@ -42,6 +45,7 @@ jobs:
                     curl -sSL https://rvm.io/pkuczynski.asc | gpg --import -
                     # Update RVM. Using this path instead of https://get.rvm.io because the later uses the letsencrypt cert that breaks openssl 1.0
                     curl -sSL https://raw.githubusercontent.com/rvm/rvm/master/binscripts/rvm-installer | bash -s stable
+                    rvm reload
                     rvm install $RUBY_VERSION
                     echo . $(rvm $RUBY_VERSION do rvm env --path) >> $BASH_ENV
       - run:
@@ -63,7 +67,8 @@ jobs:
           command: bundle exec rake style
 
   specs-base: &specs
-    machine: true
+    machine:
+      image: ubuntu-2004:202201-02
     environment:
       CHEF_VERSION: 'needs-to-be-specified'
       RUBY_VERSION: 'needs-to-be-specified'
@@ -76,6 +81,7 @@ jobs:
                     curl -sSL https://rvm.io/pkuczynski.asc | gpg --import -
                     # Update RVM. Using this path instead of https://get.rvm.io because the later uses the letsencrypt cert that breaks openssl 1.0
                     curl -sSL https://raw.githubusercontent.com/rvm/rvm/master/binscripts/rvm-installer | bash -s stable
+                    rvm reload
                     rvm install $RUBY_VERSION
                     echo . $(rvm $RUBY_VERSION do rvm env --path) >> $BASH_ENV
       - run:
