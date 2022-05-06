@@ -105,7 +105,7 @@ task :circle do
     kitchen_config.instances.sort_by(&:name).each_with_object([]).with_index do |(instance, commands), index|
       next unless index % total_workers == current_worker
 
-      commands << "kitchen verify -D --log-level=debug #{instance}"
+      commands << "kitchen verify #{instance}"
     end.join(' && ')
   end
 
