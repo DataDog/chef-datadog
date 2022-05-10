@@ -6,6 +6,7 @@ case node['os']
 when 'linux'
   package 'datadog-agent' do
     action :purge
+    options '--auto-remove'
   end
 when 'windows'
   package 'Datadog Agent' do
