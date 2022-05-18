@@ -58,7 +58,7 @@ template security_agent_config_file do
 
   notifies :restart, 'service[datadog-agent-security]', :delayed if security_agent_enabled
 
-  # Security agent is not enabled and the file doesn't exists, don't create it
+  # Security agent is not enabled and the file doesn't exist, don't create it
   not_if { !security_agent_enabled && !security_agent_config_file_exists }
 end
 

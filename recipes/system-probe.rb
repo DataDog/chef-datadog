@@ -26,7 +26,8 @@ sysprobe_enabled = if is_windows
                    else
                      node['datadog']['system_probe']['enabled'] || node['datadog']['system_probe']['network_enabled'] || cws_enabled
                    end
-sysprobe_agent_start = sysprobe_enabled ? :start : :stop
+agent_started = node['datadog']['agent_enable'] && node['datadog']['agent_start']
+sysprobe_agent_start = agent_started && sysprobe_enabled ? :start : :stop
 
 #
 # Configures system-probe agent
@@ -78,10 +79,11 @@ template system_probe_config_file do
     mode '640'
   end
 
-  notifies :restart, 'service[datadog-agent-sysprobe]', :delayed if sysprobe_enabled
+  # Only try to start the system-probe service if the datadog-agent service is also started
+  notifies :restart, 'service[datadog-agent-sysprobe]', :delayed if agent_started && sysprobe_enabled
   # since process-agent collects network info through system-probe, enabling system-probe should also restart process-agent
-  notifies :restart, 'service[datadog-agent]', :delayed if sysprobe_enabled
-  notifies :restart, 'service[datadog-agent-security]', :delayed if cws_enabled
+  notifies :restart, 'service[datadog-agent]', :delayed if agent_started && sysprobe_enabled
+  notifies :restart, 'service[datadog-agent-security]', :delayed if agent_started && cws_enabled
 
   # System probe is not enabled and the file doesn't exists, don't create it
   not_if { !sysprobe_enabled && !system_probe_config_file_exists }
@@ -104,5 +106,5 @@ service 'datadog-agent-sysprobe' do
     supports :restart => true, :status => true, :start => true, :stop => true
   end
   supports :restart => true, :status => true, :start => true, :stop => true
-  subscribes :restart, "template[#{system_probe_config_file}]", :delayed if sysprobe_enabled
+  subscribes :restart, "template[#{system_probe_config_file}]", :delayed if agent_started && sysprobe_enabled
 end
