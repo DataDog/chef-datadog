@@ -48,14 +48,6 @@ else
   include_recipe '::_install-linux'
 end
 
-if !node['datadog']['agent_enable'] && node['datadog']['enable_process_agent']
-  Chef::Log.warn("'agent_enable' is set to 'false', but 'enable_process_agent' is set to 'true'. This will cause the datadog-agent to start, since the process-agent depends on it.")
-end
-
-if !node['datadog']['agent_enable'] && node['datadog']['enable_trace_agent']
-  Chef::Log.warn("'agent_enable' is set to 'false', but 'enable_trace_agent' is set to 'true'. This will cause the datadog-agent to start, since the trace-agent depends on it.")
-end
-
 # Set the Agent service enable or disable
 agent_enable = node['datadog']['agent_enable'] ? :enable : :disable
 # Set the correct Agent startup action
