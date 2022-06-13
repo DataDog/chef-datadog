@@ -26,11 +26,7 @@ sysprobe_enabled = if is_windows
                    else
                      node['datadog']['system_probe']['enabled'] || node['datadog']['system_probe']['network_enabled'] || cws_enabled
                    end
-if sysprobe_enabled && node['datadog']['agent_start'] && node['datadog']['agent_enable']
-  sysprobe_agent_start = :start
-else
-  sysprobe_agent_start = :stop
-end
+sysprobe_agent_start = sysprobe_enabled && node['datadog']['agent_start'] && node['datadog']['agent_enable'] ? :start : :stop
 
 #
 # Configures system-probe agent
@@ -72,7 +68,7 @@ template system_probe_config_file do
     runtime_security_extra_config: runtime_security_extra_config
   )
 
-  if !is_windows
+  unless is_windows
     owner 'root'
     group 'dd-agent'
     mode '640'
