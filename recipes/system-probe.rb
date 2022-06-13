@@ -26,7 +26,11 @@ sysprobe_enabled = if is_windows
                    else
                      node['datadog']['system_probe']['enabled'] || node['datadog']['system_probe']['network_enabled'] || cws_enabled
                    end
-sysprobe_agent_start = sysprobe_enabled ? :start : :stop
+if sysprobe_enabled && node['datadog']['agent_start'] && node['datadog']['agent_enable']
+  sysprobe_agent_start = :start
+else
+  sysprobe_agent_start = :stop
+end
 
 #
 # Configures system-probe agent
