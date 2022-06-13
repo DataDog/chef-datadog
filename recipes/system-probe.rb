@@ -72,11 +72,7 @@ template system_probe_config_file do
     runtime_security_extra_config: runtime_security_extra_config
   )
 
-  if is_windows
-    owner 'Administrators'
-    rights :full_control, 'Administrators'
-    inherits false
-  else
+  if !is_windows
     owner 'root'
     group 'dd-agent'
     mode '640'
