@@ -1,6 +1,9 @@
 Changes
 =======
 
+# 4.14.0 / 2022-06-14
+* [BUGFIX] Fix system probe recipe on Windows [#850][] [@julien-lebot][]
+
 # 4.13.0 / 2022-03-30
 
 * [FEATURE] Allow enabling CWS and CSPM [#843][] [@lebauce][]
@@ -1022,6 +1025,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#836]: https://github.com/DataDog/chef-datadog/issues/836
 [#839]: https://github.com/DataDog/chef-datadog/issues/839
 [#843]: https://github.com/DataDog/chef-datadog/issues/843
+[#850]: https://github.com/DataDog/chef-datadog/issues/850
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@Azraeht]: https://github.com/Azraeht
