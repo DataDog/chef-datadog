@@ -32,29 +32,37 @@ class Chef
         Gem::Requirement.new(">= #{version}").satisfied_by?(Gem::Version.new(Chef::VERSION))
       end
 
-      def agent_version(node)
-        dd_agent_version = node['datadog']['agent_version']
-        if dd_agent_version.respond_to?(:each_pair)
+      def compute_version(node, attribute)
+        dd_version = node['datadog'][attribute]
+        if dd_version.respond_to?(:each_pair)
           platform_family = node['platform_family']
           # Unless explicitly listed, treat fedora and amazon as rhel
-          if !dd_agent_version.include?(platform_family) && ['fedora', 'amazon'].include?(platform_family)
+          if !dd_version.include?(platform_family) && ['fedora', 'amazon'].include?(platform_family)
             platform_family = 'rhel'
           end
-          dd_agent_version = dd_agent_version[platform_family]
+          dd_version = dd_version[platform_family]
         end
-        if !dd_agent_version.nil? && dd_agent_version.match(/^[0-9]+\.[0-9]+\.[0-9]+((?:~|-)[^0-9\s-]+[^-\s]*)?$/)
+        if !dd_version.nil? && dd_version.match(/^[0-9]+\.[0-9]+\.[0-9]+((?:~|-)[^0-9\s-]+[^-\s]*)?$/)
           # For RHEL-based distros:
           # - we can only add epoch and release when running Chef >= 14, as Chef < 14
           # has different yum logic that doesn't know how to work with epoch and release
           # - for Chef < 14, we only add release
           if %w[debian suse].include?(node['platform_family']) ||
              (%w[amazon fedora rhel].include?(node['platform_family']) && chef_version_ge?(14))
-            dd_agent_version = '1:' + dd_agent_version + '-1'
+            dd_version = '1:' + dd_version + '-1'
           elsif %w[amazon fedora rhel].include?(node['platform_family'])
-            dd_agent_version += '-1'
+            dd_version += '-1'
           end
         end
-        dd_agent_version
+        dd_version
+      end
+
+      def agent_version(node)
+        compute_version(node, 'agent_version')
+      end
+
+      def fips_proxy_version(node)
+        compute_version(node, 'fips_proxy_version')
       end
 
       def agent_major_version(node)
