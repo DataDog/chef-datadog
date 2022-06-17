@@ -137,23 +137,22 @@ end
 service_provider = Chef::Datadog.service_provider(node)
 
 service_name = is_windows ? 'DatadogAgent' : 'datadog-agent'
-
-service 'datadog-agent' do
-  service_name service_name
-  action [agent_enable, agent_start]
-  provider service_provider unless service_provider.nil?
-  if is_windows
-    supports :restart => true, :start => true, :stop => true
-    restart_command "powershell restart-service #{service_name} -Force"
-    stop_command "powershell stop-service #{service_name} -Force"
-  else
-    supports :restart => true, :status => true, :start => true, :stop => true
+if is_windows
+  ddservice 'datadog-agent' do
+    subscribes :restart, "template[#{agent_config_file}]", :delayed if node['datadog']['agent_start']
   end
-  subscribes :restart, "template[#{agent_config_file}]", :delayed if node['datadog']['agent_start']
-  # HACK: the restart can fail when we hit systemd's restart limits (by default, 5 starts every 10 seconds)
-  # To workaround this, retry once after 5 seconds, and a second time after 10 seconds
-  retries 2
-  retry_delay 5
+else
+  service 'datadog-agent' do
+    service_name service_name
+    action [agent_enable, agent_start]
+    provider service_provider unless service_provider.nil?
+    supports :restart => true, :status => true, :start => true, :stop => true
+    subscribes :restart, "template[#{agent_config_file}]", :delayed if node['datadog']['agent_start']
+    # HACK: the restart can fail when we hit systemd's restart limits (by default, 5 starts every 10 seconds)
+    # To workaround this, retry once after 5 seconds, and a second time after 10 seconds
+    retries 2
+    retry_delay 5
+  end
 end
 
 system_probe_managed = node['datadog']['system_probe']['manage_config']
