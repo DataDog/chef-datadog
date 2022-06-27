@@ -143,8 +143,11 @@ class Chef
 
       class << self
         def must_reinstall?(node)
+          puts "Im in must_reinstall rn"
           current_version = fetch_current_version
+          puts "current_version is #{current_version}"
           target_version = requested_agent_version(node)
+          puts "target_version is #{target_version}"
 
           return false unless chef_version_can_uninstall?
           return false unless current_version && target_version
