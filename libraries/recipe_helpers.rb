@@ -165,12 +165,13 @@ class Chef
 
         def fetch_current_version
           status = agent_status
+          print "In fetch_current_version: #{agent_status}"
           return nil if status.nil?
           match_data = status.match(/^Agent (.*) - Meta: (.*) - Commit/)
 
           # Nightlies like 6.20.0-devel+git.38.cd7f989 fail to parse as Gem::Version because of the '+' sign
           version = match_data[1] + '-' + match_data[2] if match_data
-          puts "In fetch_current_version: #{agent_status} ===> #{version}"
+          puts " ===> #{version}"
 
           Gem::Version.new(version) if version
         end
