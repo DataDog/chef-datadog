@@ -163,6 +163,7 @@ class Chef
           puts shell_out("\"#{WIN_BIN_PATH}\" version").stdout.strip
           puts "Trying \"#{WIN_BIN_PATH}\" status"
           puts shell_out("\"#{WIN_BIN_PATH}\" status").stdout.strip
+          puts shell_out("dir \"C:/Program Files/Datadog/Datadog Agent/\"").stdout.strip
           return nil unless File.exist?(WIN_BIN_PATH)
           puts "On a pu lancer 'agent version' bro tqt"
           shell_out("\"#{WIN_BIN_PATH}\" version").stdout.strip
