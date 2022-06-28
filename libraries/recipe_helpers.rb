@@ -160,12 +160,13 @@ class Chef
         include Chef::Mixin::ShellOut
         def agent_status
           return nil unless File.exist?(WIN_BIN_PATH)
+          puts "On a pu lancer 'agent version' bro tqt"
           shell_out("\"#{WIN_BIN_PATH}\" version").stdout.strip
         end
 
         def fetch_current_version
           status = agent_status
-          print "In fetch_current_version: #{agent_status}"
+          puts "In fetch_current_version: #{agent_status}"
           return nil if status.nil?
           match_data = status.match(/^Agent (.*) - Meta: (.*) - Commit/)
 
