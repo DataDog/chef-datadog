@@ -159,6 +159,7 @@ class Chef
 
         include Chef::Mixin::ShellOut
         def agent_status
+          puts shell_out("\"#{WIN_BIN_PATH}\" version").stdout.strip
           return nil unless File.exist?(WIN_BIN_PATH)
           puts "On a pu lancer 'agent version' bro tqt"
           shell_out("\"#{WIN_BIN_PATH}\" version").stdout.strip
