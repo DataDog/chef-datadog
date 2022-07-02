@@ -23,7 +23,7 @@ is_windows = platform_family?('windows')
 
 # Install the agent
 if is_windows
-  raise "Windows currently unsupported for the datadog FIPS proxy."
+  raise 'Windows currently unsupported for the datadog FIPS proxy.'
 else
   include_recipe '::_install-fips-proxy-linux'
 end
@@ -32,7 +32,6 @@ end
 fips_proxy_enable = node['datadog']['fips_proxy_enable'] ? :enable : :disable
 # Set the Datadog FIPS proxy service startup action
 fips_proxy_start = node['datadog']['fips_proxy_start'] ? :start : :stop
-
 
 # Common configuration
 service_provider = Chef::Datadog.service_provider(node)
