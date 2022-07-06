@@ -143,11 +143,8 @@ class Chef
 
       class << self
         def must_reinstall?(node)
-          puts "Im in must_reinstall rn"
           current_version = fetch_current_version
-          puts "current_version is #{current_version}"
           target_version = requested_agent_version(node)
-          puts "target_version is #{target_version}"
 
           return false unless chef_version_can_uninstall?
           return false unless current_version && target_version
@@ -159,13 +156,7 @@ class Chef
 
         include Chef::Mixin::ShellOut
         def agent_get_version
-          puts "Trying \"#{WIN_BIN_PATH}\" version"
-          puts shell_out("\"#{WIN_BIN_PATH}\" version").stdout.strip
-          puts "Trying \"#{WIN_BIN_PATH}\" status"
-          puts shell_out("\"#{WIN_BIN_PATH}\" status").stdout.strip
-          puts shell_out("dir \"C:/Program Files/Datadog/Datadog Agent/\"").stdout.strip
           return nil unless File.exist?(WIN_BIN_PATH)
-          puts "On a pu lancer 'agent version' bro tqt"
           shell_out("\"#{WIN_BIN_PATH}\" version").stdout.strip
         end
 
@@ -179,7 +170,6 @@ class Chef
           # If the Meta tag is catched, we'll add it to the version to specify the nightly version we're using
           # Nightlies like 6.20.0-devel+git.38.cd7f989 fail to parse as Gem::Version because of the '+' sign so let's use '-'
           version = version + '-' + nightly_version if nightly_version
-
 
           Gem::Version.new(version) if version
         end
