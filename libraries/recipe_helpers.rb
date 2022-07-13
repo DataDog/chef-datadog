@@ -155,18 +155,21 @@ class Chef
         private
 
         include Chef::Mixin::ShellOut
-        def agent_status
+        def agent_get_version
           return nil unless File.exist?(WIN_BIN_PATH)
-          shell_out("\"#{WIN_BIN_PATH}\" status").stdout.strip
+          shell_out("\"#{WIN_BIN_PATH}\" version").stdout.strip
         end
 
         def fetch_current_version
-          status = agent_status
-          return nil if status.nil?
-          match_data = status.match(/^Agent \(v(.*)\)/)
+          raw_version = agent_get_version
+          return nil if raw_version.nil?
+          match_data = raw_version.match(/^Agent ([^\s]*) (- Meta: ([^\s]*) )?- Commit/)
 
-          # Nightlies like 6.20.0-devel+git.38.cd7f989 fail to parse as Gem::Version because of the '+' sign
-          version = match_data[1].tr('+', '-') if match_data
+          version = match_data[1] if match_data
+          nightly_version = match_data[3] if match_data[2]
+          # If the Meta tag is catched, we'll add it to the version to specify the nightly version we're using
+          # Nightlies like 6.20.0-devel+git.38.cd7f989 fail to parse as Gem::Version because of the '+' sign so let's use '-'
+          version = version + '-' + nightly_version if nightly_version
 
           Gem::Version.new(version) if version
         end

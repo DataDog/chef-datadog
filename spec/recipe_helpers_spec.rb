@@ -37,15 +37,13 @@ describe Chef::Datadog::WindowsInstallHelpers do
     context 'when the agent is installed' do
       before do
         allow(Chef::Datadog::WindowsInstallHelpers)
-          .to receive(:agent_status)
-          .and_return(agent_status_string)
+          .to receive(:agent_get_version)
+          .and_return(agent_version_string)
       end
 
-      let(:agent_status_string) do
+      let(:agent_version_string) do
         %(
-.....
-Agent (v6.20.0)
-....
+Agent 6.20.0 - Commit: 3c29612 - Serialization version: v5.0.22 - Go version: go1.17.11
         )
       end
 
@@ -70,11 +68,9 @@ Agent (v6.20.0)
       end
 
       context 'when the current agent version is a nightly' do
-        let(:agent_status) do
+        let(:agent_get_version) do
           %(
-.....
-Agent (v6.20.0-devel+git.38.cd7f989)
-....
+Agent 6.20.0-devel - Meta: git.38.cd7f989 - Commit: cd7f98964 - Serialization version: v5.0.22 - Go version: go1.17.11
           )
         end
 
