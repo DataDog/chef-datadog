@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-include_recipe 'chef_handler'
+include_recipe 'chef_handler' if Chef::VERSION < Gem::Version.new(14.0)
 
 dd_agent_flavor = Chef::Datadog.agent_flavor(node)
 

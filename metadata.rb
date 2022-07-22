@@ -22,10 +22,10 @@ issues_url       'https://github.com/DataDog/chef-datadog/issues'
   supports os
 end
 
-depends    'chef_handler', '>= 1.2'
 depends    'apt'
 
 if Chef::VERSION < Gem::Version.new(14.0)
+  depends 'chef_handler', '>= 1.2'
   depends 'sudo'
 end
 
