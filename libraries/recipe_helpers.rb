@@ -7,6 +7,10 @@ class Chef
         datadog-iot-agent
       ].freeze
 
+      def chef_version_ge? version
+        Gem::Requirement.new(">= #{version}").satisfied_by?(Gem::Version.new(Chef::VERSION))
+      end
+
       def agent_version(node)
         dd_agent_version = node['datadog']['agent_version']
         if dd_agent_version.respond_to?(:each_pair)
@@ -18,7 +22,10 @@ class Chef
           dd_agent_version = dd_agent_version[platform_family]
         end
         if !dd_agent_version.nil? && dd_agent_version.match(/^[0-9]+\.[0-9]+\.[0-9]+((?:~|-)[^0-9\s-]+[^-\s]*)?$/)
-          if %w[debian amazon fedora rhel suse].include?(node['platform_family'])
+          # For RHEL-based distros, we can only add epoch and release when running Chef >= 14, as Chef < 14
+          # has different yum logic that doesn't know how to work with epoch and/or release
+          if %w[debian suse].include?(node['platform_family']) ||
+              (%w[amazon fedora rhel].include?(node['platform_family']) && chef_version_ge?(14))
             dd_agent_version = '1:' + dd_agent_version + '-1'
           end
         end
@@ -187,7 +194,7 @@ class Chef
           # because they cannot correctly fetch the registry keys of 64 bits
           # applications for uninstallation so we are only using the downgrade
           # feature on chef >= to 14
-          Gem::Requirement.new('>= 14').satisfied_by?(Gem::Version.new(Chef::VERSION))
+          Chef::Datadog.chef_version_ge? 14
         end
       end
     end
