@@ -7,7 +7,7 @@ class Chef
         datadog-iot-agent
       ].freeze
 
-      def chef_version_ge? version
+      def chef_version_ge?(version)
         Gem::Requirement.new(">= #{version}").satisfied_by?(Gem::Version.new(Chef::VERSION))
       end
 
@@ -25,7 +25,7 @@ class Chef
           # For RHEL-based distros, we can only add epoch and release when running Chef >= 14, as Chef < 14
           # has different yum logic that doesn't know how to work with epoch and/or release
           if %w[debian suse].include?(node['platform_family']) ||
-              (%w[amazon fedora rhel].include?(node['platform_family']) && chef_version_ge?(14))
+             (%w[amazon fedora rhel].include?(node['platform_family']) && chef_version_ge?(14))
             dd_agent_version = '1:' + dd_agent_version + '-1'
           end
         end
