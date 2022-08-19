@@ -22,11 +22,15 @@ class Chef
           dd_agent_version = dd_agent_version[platform_family]
         end
         if !dd_agent_version.nil? && dd_agent_version.match(/^[0-9]+\.[0-9]+\.[0-9]+((?:~|-)[^0-9\s-]+[^-\s]*)?$/)
-          # For RHEL-based distros, we can only add epoch and release when running Chef >= 14, as Chef < 14
-          # has different yum logic that doesn't know how to work with epoch and/or release
+          # For RHEL-based distros:
+          # - we can only add epoch and release when running Chef >= 14, as Chef < 14
+          # has different yum logic that doesn't know how to work with epoch and release
+          # - for Chef < 14, we only add release
           if %w[debian suse].include?(node['platform_family']) ||
              (%w[amazon fedora rhel].include?(node['platform_family']) && chef_version_ge?(14))
             dd_agent_version = '1:' + dd_agent_version + '-1'
+          elsif %w[amazon fedora rhel].include?(node['platform_family'])
+            dd_agent_version += '-1'
           end
         end
         dd_agent_version
