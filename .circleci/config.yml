@@ -17,7 +17,9 @@ jobs:
       - checkout
       - run:
           name: Lint
-          command: chef exec cookstyle --display-cop-names --extra-details
+          command: chef exec cookstyle --display-cop-names --extra-details --format progress --format junit --out /tmp/chef-datadog-cookstyle.xml
+      - store_test_results:
+          path: /tmp/chef-datadog-cookstyle.xml
 
   unit:
     executor: chefworkstation
