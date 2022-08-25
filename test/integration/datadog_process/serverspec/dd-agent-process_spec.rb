@@ -1,5 +1,3 @@
-# Encoding: utf-8
-
 require 'spec_helper'
 
 PROCESS_CONFIG = File.join(@agent_config_dir, 'conf.d/process.d/conf.yaml')
