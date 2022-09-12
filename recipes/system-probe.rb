@@ -32,7 +32,7 @@ sysprobe_agent_start = sysprobe_enabled && node['datadog']['agent_start'] && nod
 # Configures system-probe agent
 system_probe_config_file =
   if is_windows
-    'C:/ProgramData/Datadog/system-probe.yaml'
+    "#{ENV['ProgramData']}/Datadog/system-probe.yaml"
   else
     '/etc/datadog-agent/system-probe.yaml'
   end
