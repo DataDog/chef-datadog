@@ -397,7 +397,7 @@ end
 
 * `'name'`: The name of the Agent integration to install, for example: `datadog-apache`.
 * `version`: The version of the integration to install (only required with the `:install` action).
-* `third_party`: Set to false if installing a Datadog integration, true otherwise. Available for Datadog Agents version 6.21/7.21 and higher only.
+* `third_party`: Set to false if installing a Datadog integration, true otherwise. Available for Datadog Agent versions 6.21/7.21 and higher only.
 
 #### Example
 

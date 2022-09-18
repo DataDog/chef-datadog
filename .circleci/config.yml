@@ -45,7 +45,7 @@ jobs:
     executor: chef
     parameters:
       command:
-        description: The kitchen test command to run, w/ Chef version specified via env var $CHEF_VERSION
+        description: The kitchen test command to run, with Chef version specified from environment variable $CHEF_VERSION
         type: string
     environment:
       CHEF_LICENSE: accept-no-persist
