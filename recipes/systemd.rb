@@ -7,7 +7,8 @@ include_recipe '::dd-agent'
 #     'unit_names' => [
 #       'myservice1.service',
 #       'myservice2.service',
-#       'mysocket.socket'
+#       'mysocket.socket',
+#       'mytimer.timer'
 #     ],
 #     'substate_status_mapping' => [
 #       'services' => [
@@ -27,6 +28,12 @@ include_recipe '::dd-agent'
 #         'mysocket' => {
 #           'running' => 'ok',
 #           'exited' => 'critical'
+#         }
+#       ],
+#       'timers' => [
+#         'mytimer' => {
+#          'running' => 'ok',
+#          'exited' => 'critical'
 #         }
 #       ]
 #     ],
