@@ -9,32 +9,14 @@ instances:
     <% if i.key?('substate_status_mapping') -%>
     substate_status_mapping:
       <% i['substate_status_mapping'].each do |s| -%>
-        <% if s.key?('services') -%>
-          <% s['services'].each do |k| -%>
-            <% k.keys.each do |j| -%>
-      <%= j %>.service:
-              <% k[j].each do |l,v| %>
+        <% %w(services sockets timers).each do |unit_type| -%>
+          <% if s.key?(unit_type)-%>
+            <% s[unit_type].each do |k| -%>
+              <% k.keys.each do |j| -%>
+      <%= j %>.<%= unit_type %>:
+                <% k[j].each do |l,v| %>
         <%= l %>: <%= v %>
-              <% end -%>
-            <% end -%>
-          <% end -%>
-        <% end -%>
-        <% if s.key?('sockets') -%>
-          <% s['sockets'].each do |k| -%>
-            <% k.keys.each do |j| -%>
-      <%= j %>.socket:
-              <% k[j].each do |l,v| %>
-        <%= l %>: <%= v %>
-              <% end -%>
-            <% end -%>
-          <% end -%>
-        <% end -%>
-        <% if s.key?('timers') -%>
-          <% s['timers'].each do |k| -%>
-            <% k.keys.each do |j| -%>
-      <%= j %>.timer:
-              <% k[j].each do |l,v| %>
-        <%= l %>: <%= v %>
+                <% end -%>
               <% end -%>
             <% end -%>
           <% end -%>
