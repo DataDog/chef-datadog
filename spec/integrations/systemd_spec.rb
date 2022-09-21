@@ -48,7 +48,7 @@ describe 'datadog::systemd' do
                 'mytimer.timer'
               ],
               substate_status_mapping: [
-                services: [
+                service: [
                   myservice1: {
                     running: 'ok',
                     exited: 'critical'
@@ -61,13 +61,13 @@ describe 'datadog::systemd' do
                     stopped: 'critical'
                   }
                 ],
-                sockets: [
+                socket: [
                   mysocket: {
                     running: 'ok',
                     exited: 'critical'
                   }
                 ],
-                timers: [
+                timer: [
                   mytimer: {
                     running: 'ok',
                     exited: 'critical'
