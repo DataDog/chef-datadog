@@ -15,6 +15,9 @@ describe 'datadog::systemd' do
           mysocket.socket:
             exited: critical
             running: ok
+          mytimer.timer:
+            exited: critical
+            running: ok
         tags:
           - 'mykey1:myvalue1'
           - 'mykey2:myvalue2'
@@ -22,6 +25,7 @@ describe 'datadog::systemd' do
           - myservice1.service
           - myservice2.service
           - mysocket.socket
+          - mytimer.timer
     logs: ~
   EOF
 
@@ -40,7 +44,8 @@ describe 'datadog::systemd' do
               unit_names: [
                 'myservice1.service',
                 'myservice2.service',
-                'mysocket.socket'
+                'mysocket.socket',
+                'mytimer.timer'
               ],
               substate_status_mapping: [
                 services: [
@@ -58,6 +63,12 @@ describe 'datadog::systemd' do
                 ],
                 sockets: [
                   mysocket: {
+                    running: 'ok',
+                    exited: 'critical'
+                  }
+                ],
+                timers: [
+                  mytimer: {
                     running: 'ok',
                     exited: 'critical'
                   }
