@@ -29,6 +29,16 @@ instances:
             <% end -%>
           <% end -%>
         <% end -%>
+        <% if s.key?('timers') -%>
+          <% s['timers'].each do |k| -%>
+            <% k.keys.each do |j| -%>
+      <%= j %>.timer:
+              <% k[j].each do |l,v| %>
+        <%= l %>: <%= v %>
+              <% end -%>
+            <% end -%>
+          <% end -%>
+        <% end -%>
       <% end -%>
     <% end -%>
     <% if i.key?('tags') -%>
