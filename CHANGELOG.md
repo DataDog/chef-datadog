@@ -1,6 +1,10 @@
 Changes
 =======
 
+# 4.15.0 / 2022-09-29
+* [BUGFIX] Specify release but not epoch for RPM packages on Chef < 14 [#858][] [@KSerrania][]
+* [BUGFIX] Don't use epoch/release for yum package version on Chef < 14 [#856][] [@bkabrda][]
+
 # 4.14.0 / 2022-06-14
 * [BUGFIX] Fix system probe recipe on Windows [#850][] [@julien-lebot][]
 
@@ -1026,6 +1030,8 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#839]: https://github.com/DataDog/chef-datadog/issues/839
 [#843]: https://github.com/DataDog/chef-datadog/issues/843
 [#850]: https://github.com/DataDog/chef-datadog/issues/850
+[#856]: https://github.com/DataDog/chef-datadog/issues/856
+[#858]: https://github.com/DataDog/chef-datadog/issues/858
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@Azraeht]: https://github.com/Azraeht
