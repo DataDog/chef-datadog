@@ -9,11 +9,11 @@ instances:
     <% if i.key?('substate_status_mapping') -%>
     substate_status_mapping:
       <% i['substate_status_mapping'].each do |s| -%>
-        <% %w(target service socket device mount automount swap path timer snapshot slice scope busname).each do |unit_type| -%>
+        <% %w(targets services sockets devices mounts automounts swaps paths timers snapshots slices scopes busnames).each do |unit_type| -%>
           <% if s.key?(unit_type)-%>
             <% s[unit_type].each do |k| -%>
               <% k.keys.each do |j| -%>
-      <%= j %>.<%= unit_type %>:
+      <%= j %>.<%= unit_type.chomp('s') %>:
                 <% k[j].each do |l,v| %>
         <%= l %>: <%= v %>
                 <% end -%>
