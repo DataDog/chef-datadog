@@ -1,13 +1,14 @@
 include_recipe '::dd-agent'
 
 # Monitor Systemd
-#
+# It works for all unit types like targets, services, sockets, devices, mounts, automounts, swaps, paths, timers, snapshots, slices, scopes, busnames
 # node.default['datadog']['systemd']['instances'] = [
 #   {
 #     'unit_names' => [
 #       'myservice1.service',
 #       'myservice2.service',
-#       'mysocket.socket'
+#       'mysocket.socket',
+#       'mytimer.timer'
 #     ],
 #     'substate_status_mapping' => [
 #       'services' => [
@@ -27,6 +28,12 @@ include_recipe '::dd-agent'
 #         'mysocket' => {
 #           'running' => 'ok',
 #           'exited' => 'critical'
+#         }
+#       ],
+#       'timers' => [
+#         'mytimer' => {
+#          'running' => 'ok',
+#          'exited' => 'critical'
 #         }
 #       ]
 #     ],
