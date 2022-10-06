@@ -168,7 +168,7 @@ class Chef
         include Chef::Mixin::ShellOut
         def agent_get_version
           return nil unless File.exist?(WIN_BIN_PATH)
-          shell_out("\"#{WIN_BIN_PATH}\" version").stdout.strip
+          shell_out("\"#{WIN_BIN_PATH}\" version -n").stdout.strip
         end
 
         def fetch_current_version
