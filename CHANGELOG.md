@@ -1,6 +1,15 @@
 Changes
 =======
 
+# 4.15.0 / 2022-10-06
+* [BUGFIX] Enforce calls of agent version without color output [#863][] [@KSerrania][]
+* [FEATURE] Add configuration for custom_log_collection [#861][] [@nilskuehme][]
+* [FEATURE] Add configuration for gearmand integration [#860][] [@nilskuehme][]
+* [FEATURE] Add unit types to Systemd integration [#859][] [@nilskuehme][]
+* [BUGFIX] Specify release but not epoch for RPM packages on Chef < 14 [#858][] [@KSerrania][]
+* [BUGFIX] Don't use epoch/release for yum package version on Chef < 14 [#856][] [@bkabrda][]
+* [FEATURE] Use agent version instead of agent status to determine the current Agent version [#852][] [@amenasria][]
+
 # 4.14.0 / 2022-06-14
 * [BUGFIX] Fix system probe recipe on Windows [#850][] [@julien-lebot][]
 
@@ -1026,6 +1035,13 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#839]: https://github.com/DataDog/chef-datadog/issues/839
 [#843]: https://github.com/DataDog/chef-datadog/issues/843
 [#850]: https://github.com/DataDog/chef-datadog/issues/850
+[#852]: https://github.com/DataDog/chef-datadog/issues/852
+[#856]: https://github.com/DataDog/chef-datadog/issues/856
+[#858]: https://github.com/DataDog/chef-datadog/issues/858
+[#859]: https://github.com/DataDog/chef-datadog/issues/859
+[#860]: https://github.com/DataDog/chef-datadog/issues/860
+[#861]: https://github.com/DataDog/chef-datadog/issues/861
+[#863]: https://github.com/DataDog/chef-datadog/issues/863
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@Azraeht]: https://github.com/Azraeht
@@ -1048,6 +1064,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@albertvaka]: https://github.com/albertvaka
 [@alexism]: https://github.com/alexism
 [@alq]: https://github.com/alq
+[@amenasria]: https://github.com/amenasria
 [@antonio-osorio]: https://github.com/antonio-osorio
 [@arthurnn]: https://github.com/arthurnn
 [@asherf]: https://github.com/asherf
