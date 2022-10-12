@@ -25,11 +25,11 @@ describe file(AGENT_CONFIG) do
           'new_leader_checks' => false,
           'catalog_checks' => false,
           'service_whitelist' => 'consul',
-          'tags' => ['_default']
-        }
+          'tags' => ['_default'],
+        },
       ],
       'logs' => nil,
-      'init_config' => nil
+      'init_config' => nil,
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

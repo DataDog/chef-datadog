@@ -35,20 +35,20 @@ describe 'datadog::redisdb' do
             {
               command_stats: true,
               db: 0,
-              keys: ['key1', 'key2'],
+              keys: %w(key1 key2),
               port: 6379,
               password: 'somepass',
               server: 'localhost',
               'slowlog-max-len' => 128,
               socket_timeout: 5,
-              tags: [
-                'optional_tag1',
-                'optional_tag2'
-              ],
-              warn_on_missing_keys: false
-            }
-          ]
-        }
+              tags: %w(
+                optional_tag1
+                optional_tag2
+              ),
+              warn_on_missing_keys: false,
+            },
+          ],
+        },
       }
     end.converge(described_recipe)
   end
@@ -62,8 +62,8 @@ describe 'datadog::redisdb' do
   it { is_expected.to add_datadog_monitor('redisdb') }
 
   it 'renders expected YAML config file' do
-    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/redisdb.d/conf.yaml').with_content { |content|
+    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/redisdb.d/conf.yaml').with_content do |content|
       expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-    })
+    end)
   end
 end

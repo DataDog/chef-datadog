@@ -19,11 +19,11 @@ describe file(PROCESS_CONFIG) do
           'exact_match' => false,
           'ignore_denied_access' => true,
           'tags' => ['env:test', 'appname:somename'],
-          'search_string' => ['somepid', 'pidname']
-        }
+          'search_string' => %w(somepid pidname),
+        },
       ],
       'logs' => nil,
-      'init_config' => nil
+      'init_config' => nil,
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

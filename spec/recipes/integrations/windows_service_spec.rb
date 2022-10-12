@@ -27,12 +27,12 @@ describe 'datadog::windows_service' do
           instances: [
             {
               username: 'REMOTEHOSTNAME\\thomas',
-              services: ['RemoteService1', 'RemoteService2'],
+              services: %w(RemoteService1 RemoteService2),
               host: 'REMOTEHOSTNAME',
-              password: 'secretpw'
-            }
-          ]
-        }
+              password: 'secretpw',
+            },
+          ],
+        },
       }
     end.converge(described_recipe)
   end
@@ -46,9 +46,9 @@ describe 'datadog::windows_service' do
   it { is_expected.to add_datadog_monitor('windows_service') }
 
   it 'renders expected YAML config file for remote host service monitoring' do
-    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/windows_service.d/conf.yaml').with_content { |content|
+    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/windows_service.d/conf.yaml').with_content do |content|
       expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-    })
+    end)
   end
 end
 
@@ -78,11 +78,11 @@ describe 'datadog::windows_service' do
         windows_service: {
           instances: [
             {
-              services: ['LocalService1', 'LocalService2'],
-              host: '.'
-            }
-          ]
-        }
+              services: %w(LocalService1 LocalService2),
+              host: '.',
+            },
+          ],
+        },
       }
     end.converge(described_recipe)
   end
@@ -96,8 +96,8 @@ describe 'datadog::windows_service' do
   it { is_expected.to add_datadog_monitor('windows_service') }
 
   it 'renders expected YAML config file for local host service monitoring' do
-    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/windows_service.d/conf.yaml').with_content { |content|
+    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/windows_service.d/conf.yaml').with_content do |content|
       expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-    })
+    end)
   end
 end

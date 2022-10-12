@@ -79,15 +79,15 @@ describe 'datadog::cassandra' do
                 port: 7199,
                 user: 'someuser',
                 password: 'somepass',
-                process_name_regex: '.*cassandra.*'
-              }
+                process_name_regex: '.*cassandra.*',
+              },
             ],
             init_config: {
               conf: [
                 {
                   include: {
                     domain: 'org.apache.cassandra.db',
-                    attribute: %w[
+                    attribute: %w(
                       BloomFilterDiskSpaceUsed
                       BloomFilterFalsePositives
                       BloomFilterFalseRatio
@@ -120,34 +120,34 @@ describe 'datadog::cassandra' do
                       TotalWriteLatencyMicros
                       UpdateInterval
                       WriteCount
-                    ]
+                    ),
                   },
                   exclude: {
-                    keyspace: 'system'
-                  }
+                    keyspace: 'system',
+                  },
                 },
                 {
                   include: {
                     domain: 'org.apache.cassandra.internal',
-                    attribute: [
-                      'ActiveCount',
-                      'CompletedTasks',
-                      'CurrentlyBlockedTasks',
-                      'TotalBlockedTasks'
-                    ]
-                  }
+                    attribute: %w(
+                      ActiveCount
+                      CompletedTasks
+                      CurrentlyBlockedTasks
+                      TotalBlockedTasks
+                    ),
+                  },
                 },
                 {
                   include: {
                     domain: 'org.apache.cassandra.net',
                     attribute: [
-                      'TotalTimeouts'
-                    ]
-                  }
-                }
-              ]
-            }
-          }
+                      'TotalTimeouts',
+                    ],
+                  },
+                },
+              ],
+            },
+          },
         }
       end.converge(described_recipe)
     end
@@ -161,9 +161,9 @@ describe 'datadog::cassandra' do
     it { is_expected.to add_datadog_monitor('cassandra') }
 
     it 'renders expected YAML config file' do
-      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/cassandra.d/conf.yaml').with_content { |content|
+      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/cassandra.d/conf.yaml').with_content do |content|
         expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-      })
+      end)
     end
   end
 
@@ -283,15 +283,15 @@ describe 'datadog::cassandra' do
                 port: 7199,
                 user: 'someuser',
                 password: 'somepass',
-                process_name_regex: '.*cassandra.*'
-              }
+                process_name_regex: '.*cassandra.*',
+              },
             ],
             init_config: {
               conf: [
                 {
                   include: {
                     domain: 'org.apache.cassandra.db',
-                    attribute: %w[
+                    attribute: %w(
                       BloomFilterDiskSpaceUsed
                       BloomFilterFalsePositives
                       BloomFilterFalseRatio
@@ -324,34 +324,34 @@ describe 'datadog::cassandra' do
                       TotalWriteLatencyMicros
                       UpdateInterval
                       WriteCount
-                    ]
+                    ),
                   },
                   exclude: {
-                    keyspace: 'system'
-                  }
+                    keyspace: 'system',
+                  },
                 },
                 {
                   include: {
                     domain: 'org.apache.cassandra.internal',
-                    attribute: [
-                      'ActiveCount',
-                      'CompletedTasks',
-                      'CurrentlyBlockedTasks',
-                      'TotalBlockedTasks'
-                    ]
-                  }
+                    attribute: %w(
+                      ActiveCount
+                      CompletedTasks
+                      CurrentlyBlockedTasks
+                      TotalBlockedTasks
+                    ),
+                  },
                 },
                 {
                   include: {
                     domain: 'org.apache.cassandra.net',
                     attribute: [
-                      'TotalTimeouts'
-                    ]
-                  }
-                }
-              ]
-            }
-          }
+                      'TotalTimeouts',
+                    ],
+                  },
+                },
+              ],
+            },
+          },
         }
       end.converge(described_recipe)
     end
@@ -365,9 +365,9 @@ describe 'datadog::cassandra' do
     it { is_expected.to add_datadog_monitor('cassandra') }
 
     it 'renders expected YAML config file' do
-      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/cassandra.d/conf.yaml').with_content { |content|
+      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/cassandra.d/conf.yaml').with_content do |content|
         expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-      })
+      end)
     end
   end
 
@@ -838,10 +838,10 @@ describe 'datadog::cassandra' do
                 port: 7199,
                 user: 'someuser',
                 password: 'somepass',
-                process_name_regex: '.*cassandra.*'
-              }
-            ]
-          }
+                process_name_regex: '.*cassandra.*',
+              },
+            ],
+          },
         }
       end.converge(described_recipe)
     end
@@ -855,9 +855,9 @@ describe 'datadog::cassandra' do
     it { is_expected.to add_datadog_monitor('cassandra') }
 
     it 'renders expected YAML config file' do
-      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/cassandra.d/conf.yaml').with_content { |content|
+      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/cassandra.d/conf.yaml').with_content do |content|
         expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-      })
+      end)
     end
   end
 end

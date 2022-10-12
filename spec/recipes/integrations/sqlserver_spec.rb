@@ -44,29 +44,29 @@ describe 'datadog::sqlserver' do
                 password: 'bogus_pw',
                 command_timeout: 30,
                 database: 'fake_db_name',
-                tags: ['test_tag_name']
-              }
+                tags: ['test_tag_name'],
+              },
             ],
             init_config: {
               custom_metrics: [
                 {
                   name: 'sqlserver.clr.execution',
-                  counter_name: 'CLR execution'
+                  counter_name: 'CLR execution',
                 },
                 {
                   name: 'sqlserver.exec.in_progress',
                   counter_name: 'OLEDB calls',
-                  instance_name: 'Cumulative execution time (ms) per second'
+                  instance_name: 'Cumulative execution time (ms) per second',
                 },
                 {
                   name: 'sqlserver.db.commit_table_entries',
                   counter_name: 'Log Flushes/sec',
                   instance_name: 'ALL',
-                  tag_by: 'db'
-                }
-              ]
-            }
-          }
+                  tag_by: 'db',
+                },
+              ],
+            },
+          },
         }
       end.converge(described_recipe)
     end
@@ -80,9 +80,9 @@ describe 'datadog::sqlserver' do
     it { is_expected.to add_datadog_monitor('sqlserver') }
 
     it 'renders expected YAML config file' do
-      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/sqlserver.d/conf.yaml').with_content { |content|
+      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/sqlserver.d/conf.yaml').with_content do |content|
         expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-      })
+      end)
     end
   end
 end
@@ -124,10 +124,10 @@ describe 'datadog::sqlserver' do
                 password: 'bogus_pw',
                 command_timeout: 30,
                 database: 'fake_db_name',
-                tags: ['test_tag_name']
-              }
-            ]
-          }
+                tags: ['test_tag_name'],
+              },
+            ],
+          },
         }
       end.converge(described_recipe)
     end
@@ -141,9 +141,9 @@ describe 'datadog::sqlserver' do
     it { is_expected.to add_datadog_monitor('sqlserver') }
 
     it 'renders expected YAML config file' do
-      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/sqlserver.d/conf.yaml').with_content { |content|
+      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/sqlserver.d/conf.yaml').with_content do |content|
         expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-      })
+      end)
     end
   end
 end

@@ -59,7 +59,7 @@ describe 'datadog::postgres' do
               dbname: 'my_database',
               password: 'somepass',
               port: 5432,
-              relations: ['apple_table', 'orange_table'],
+              relations: %w(apple_table orange_table),
               server: 'localhost',
               ssl: true,
               tags: ['spec'],
@@ -67,32 +67,32 @@ describe 'datadog::postgres' do
               'custom_metrics' => [
                 {
                   'descriptors' => [
-                    ['query_column1', 'tag1'],
-                    ['query_column2', 'tag2']
+                    %w(query_column1 tag1),
+                    %w(query_column2 tag2),
                   ],
                   'metrics' => {
                     'field1' => ['postgresql.field1', 'GAUGE'],
-                    'field2' => ['postgresql.field2', 'MONOTONIC']
+                    'field2' => ['postgresql.field2', 'MONOTONIC'],
                   },
                   'query' => 'SELECT query_column1, query_column2, %s FROM foo',
-                  'relation' => true
+                  'relation' => true,
                 },
                 {
                   'descriptors' => [
-                    ['three', 'three'],
-                    ['four', 'four']
+                    %w(three three),
+                    %w(four four),
                   ],
                   'metrics' => {
                     'field3' => ['postgresql.field3', 'GAUGE'],
-                    'field4' => ['postgresql.field4', 'MONOTONIC']
+                    'field4' => ['postgresql.field4', 'MONOTONIC'],
                   },
                   'query' => 'SELECT three, four, %s FROM foo',
-                  'relation' => false
-                }
-              ]
-            }
-          ]
-        }
+                  'relation' => false,
+                },
+              ],
+            },
+          ],
+        },
       }
     end.converge(described_recipe)
   end
@@ -106,9 +106,9 @@ describe 'datadog::postgres' do
   it { is_expected.to add_datadog_monitor('postgres') }
 
   it 'renders expected YAML config file' do
-    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/postgres.d/conf.yaml').with_content { |content|
+    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/postgres.d/conf.yaml').with_content do |content|
       expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-    })
+    end)
   end
 end
 
@@ -137,10 +137,10 @@ describe 'datadog::postgres' do
             instances: [
               {
                 dbname: 'default_settings',
-                server: 'localhost'
-              }
-            ]
-          }
+                server: 'localhost',
+              },
+            ],
+          },
         }
       end.converge(described_recipe)
     end
@@ -154,9 +154,9 @@ describe 'datadog::postgres' do
     it { is_expected.to add_datadog_monitor('postgres') }
 
     it 'renders expected YAML config file' do
-      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/postgres.d/conf.yaml').with_content { |content|
+      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/postgres.d/conf.yaml').with_content do |content|
         expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-      })
+      end)
     end
   end
 
@@ -183,10 +183,10 @@ describe 'datadog::postgres' do
             instances: [
               {
                 dbname: 'default_settings',
-                server: '/var/run/postgresql/.s.PGSQL.5432'
-              }
-            ]
-          }
+                server: '/var/run/postgresql/.s.PGSQL.5432',
+              },
+            ],
+          },
         }
       end.converge(described_recipe)
     end
@@ -200,9 +200,9 @@ describe 'datadog::postgres' do
     it { is_expected.to add_datadog_monitor('postgres') }
 
     it 'renders expected YAML config file' do
-      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/postgres.d/conf.yaml').with_content { |content|
+      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/postgres.d/conf.yaml').with_content do |content|
         expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-      })
+      end)
     end
   end
 
@@ -241,11 +241,11 @@ describe 'datadog::postgres' do
                 relations: [
                   'my_table',
                   'my_other_table',
-                  relation_name: 'another_table', schemas: ['public', 'prod']
-                ]
-              }
-            ]
-          }
+                  relation_name: 'another_table', schemas: %w(public prod),
+                ],
+              },
+            ],
+          },
         }
       end.converge(described_recipe)
     end
@@ -259,9 +259,9 @@ describe 'datadog::postgres' do
     it { is_expected.to add_datadog_monitor('postgres') }
 
     it 'renders expected YAML config file' do
-      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/postgres.d/conf.yaml').with_content { |content|
+      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/postgres.d/conf.yaml').with_content do |content|
         expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-      })
+      end)
     end
   end
 
@@ -316,29 +316,29 @@ describe 'datadog::postgres' do
                 'custom_metrics' => [
                   {
                     'descriptors' => [
-                      ['query_column1', 'tag1'],
-                      ['query_column2', 'tag2']
+                      %w(query_column1 tag1),
+                      %w(query_column2 tag2),
                     ],
                     'metrics' => {
                       'field1' => ['postgresql.field1', 'GAUGE'],
-                      'field2' => ['postgresql.field2', 'MONOTONIC']
+                      'field2' => ['postgresql.field2', 'MONOTONIC'],
                     },
                     'query' => 'SELECT query_column1, query_column2, %s FROM foo',
-                    'relation' => true
+                    'relation' => true,
                   },
                   {
                     'descriptors' => [],
                     'metrics' => {
                       'field3' => ['postgresql.field3', 'GAUGE'],
-                      'field4' => ['postgresql.field4', 'MONOTONIC']
+                      'field4' => ['postgresql.field4', 'MONOTONIC'],
                     },
                     'query' => 'SELECT three, four, %s FROM foo',
-                    'relation' => false
-                  }
-                ]
-              }
-            ]
-          }
+                    'relation' => false,
+                  },
+                ],
+              },
+            ],
+          },
         }
       end.converge(described_recipe)
     end
@@ -352,9 +352,9 @@ describe 'datadog::postgres' do
     it { is_expected.to add_datadog_monitor('postgres') }
 
     it 'renders expected YAML config file' do
-      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/postgres.d/conf.yaml').with_content { |content|
+      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/postgres.d/conf.yaml').with_content do |content|
         expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-      })
+      end)
     end
   end
 end

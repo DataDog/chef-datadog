@@ -21,21 +21,21 @@ describe file(JMX_CONFIG) do
             {
               'include' => {
                 'domain' => 'my_domain',
-                'bean' => ['my_bean', 'my_second_bean'],
+                'bean' => %w(my_bean my_second_bean),
                 'attribute' => {
                   'attribute1' => { 'metric_type' => 'counter', 'alias' => 'jmx.my_metric_name' },
-                  'attribute2' => { 'metric_type' => 'gauge', 'alias' => 'jmx.my2ndattribute' }
-                }
-              }
+                  'attribute2' => { 'metric_type' => 'gauge', 'alias' => 'jmx.my2ndattribute' },
+                },
+              },
             },
             {
               'include' => { 'domain' => '2nd_domain' },
-              'exclude' => { 'bean' => ['excluded_bean'] }
+              'exclude' => { 'bean' => ['excluded_bean'] },
             },
             {
               'include' => { 'domain_regex' => 'regex_on_domain' },
-              'exclude' => { 'bean_regex' => ['regex_on_excluded_bean'] }
-            }
+              'exclude' => { 'bean_regex' => ['regex_on_excluded_bean'] },
+            },
           ],
           'host' => 'localhost',
           'name' => 'jmx_instance',
@@ -43,11 +43,11 @@ describe file(JMX_CONFIG) do
           'port' => 7199,
           'tags' => {
             'env' => 'stage',
-            'newTag' => 'test'
+            'newTag' => 'test',
           },
-          'user' => 'someuser'
-        }
-      ]
+          'user' => 'someuser',
+        },
+      ],
     }.freeze
 
     expect(generated.to_json).to be_json_eql EXPECTED.to_json

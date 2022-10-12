@@ -29,18 +29,18 @@ describe 'datadog::win32_event_log' do
         api_key: 'someapikey',
         win32_event_log: {
           init_config: {
-            tag_event_id: true
+            tag_event_id: true,
           },
           instances: [
             {
               log_file: ['Application'],
               source_name: ['MSSQLSERVER'],
-              type: ['Warning', 'Error'],
+              type: %w(Warning Error),
               message_filters: ['%error%'],
-              tags: ['sqlserver']
-            }
-          ]
-        }
+              tags: ['sqlserver'],
+            },
+          ],
+        },
       }
     end.converge(described_recipe)
   end
@@ -54,8 +54,8 @@ describe 'datadog::win32_event_log' do
   it { is_expected.to add_datadog_monitor('win32_event_log') }
 
   it 'renders expected YAML config file' do
-    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/win32_event_log.d/conf.yaml').with_content { |content|
+    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/win32_event_log.d/conf.yaml').with_content do |content|
       expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-    })
+    end)
   end
 end

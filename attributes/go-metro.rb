@@ -19,5 +19,5 @@ default['datadog']['go-metro']['init_config'] = {
   'statsd_ip' => '127.0.0.1',
   'statsd_port' => 8125,
   'log_to_file' => true,
-  'log_level' => 'info'
+  'log_level' => 'info',
 }

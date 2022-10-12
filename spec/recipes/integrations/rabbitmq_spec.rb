@@ -43,15 +43,15 @@ describe 'datadog::rabbitmq' do
               api_url: 'http://localhost:15672/api/',
               user: 'guest',
               pass: 'guest',
-              tags: ['optional_tag1', 'optional_tag2'],
+              tags: %w(optional_tag1 optional_tag2),
               nodes: ['rabbit@localhost', 'rabbit2@domain'],
               nodes_regexes: ['bla.*'],
-              queues: ['queue1', 'queue2'],
+              queues: %w(queue1 queue2),
               queues_regexes: ['thisqueue-.*', 'another_\\d+queue'],
-              vhosts: ['vhost1', 'vhost2']
-            }
-          ]
-        }
+              vhosts: %w(vhost1 vhost2),
+            },
+          ],
+        },
       }
     end.converge(described_recipe)
   end
@@ -65,8 +65,8 @@ describe 'datadog::rabbitmq' do
   it { is_expected.to add_datadog_monitor('rabbitmq') }
 
   it 'renders expected YAML config file' do
-    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/rabbitmq.d/conf.yaml').with_content { |content|
+    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/rabbitmq.d/conf.yaml').with_content do |content|
       expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-    })
+    end)
   end
 end

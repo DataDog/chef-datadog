@@ -8,7 +8,7 @@ chef_version     '>= 12.7'
 source_url       'https://github.com/DataDog/chef-datadog'
 issues_url       'https://github.com/DataDog/chef-datadog/issues'
 
-%w[
+%w(
   amazon
   centos
   debian
@@ -18,11 +18,11 @@ issues_url       'https://github.com/DataDog/chef-datadog/issues'
   ubuntu
   windows
   suse
-].each do |os|
+).each do |os|
   supports os
 end
 
-depends    'apt'
+depends 'apt'
 
 if Chef::VERSION < Gem::Version.new(14.0)
   depends 'chef_handler', '>= 1.2'

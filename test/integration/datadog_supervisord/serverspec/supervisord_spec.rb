@@ -22,7 +22,7 @@ describe file(AGENT_CONFIG) do
       instances: [
         {
           name: 'server0',
-          socket: 'unix:///var/run/default-supervisor.sock'
+          socket: 'unix:///var/run/default-supervisor.sock',
         },
         {
           name: 'server1',
@@ -30,14 +30,14 @@ describe file(AGENT_CONFIG) do
           port: 9001,
           user: 'user',
           pass: 'pass',
-          proc_names: [
-            'apache2',
-            'webapp'
-          ]
-        }
+          proc_names: %w(
+            apache2
+            webapp
+          ),
+        },
       ],
       'logs' => nil,
-      init_config: nil
+      init_config: nil,
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

@@ -24,10 +24,10 @@ describe 'datadog::tokumx' do
             {
               host: 'localhost',
               port: '27017',
-              tags: ['env:test']
-            }
-          ]
-        }
+              tags: ['env:test'],
+            },
+          ],
+        },
       }
     end.converge(described_recipe)
   end
@@ -41,8 +41,8 @@ describe 'datadog::tokumx' do
   it { is_expected.to add_datadog_monitor('tokumx') }
 
   it 'renders expected YAML config file' do
-    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/tokumx.d/conf.yaml').with_content { |content|
+    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/tokumx.d/conf.yaml').with_content do |content|
       expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-    })
+    end)
   end
 end

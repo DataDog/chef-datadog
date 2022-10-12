@@ -14,17 +14,17 @@ describe 'datadog::security-agent' do
           'security_agent' => {
             'cws' => {
               'enabled' => true,
-            }
+            },
           },
           'extra_config' => {
             'security_agent' => {
               'runtime_security_config' => {
                 'activity_dump' => {
                   'enabled' => true,
-                }
-              }
-            }
-          }
+                },
+              },
+            },
+          },
         }
       end
     end
@@ -50,9 +50,9 @@ describe 'datadog::security-agent' do
           enabled: true
       EOF
 
-      expect(chef_run).to(render_file('/etc/datadog-agent/security-agent.yaml').with_content { |content|
+      expect(chef_run).to(render_file('/etc/datadog-agent/security-agent.yaml').with_content do |content|
         expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-      })
+      end)
     end
   end
 end

@@ -22,11 +22,11 @@ describe file(AGENT_CONFIG) do
           'pshard_stats' => true,
           'index_stats' => true,
           'shard_level_metrics' => true,
-          'tags' => ['kitchen', 'sink']
-        }
+          'tags' => %w(kitchen sink),
+        },
       ],
       'logs' => nil,
-      'init_config' => nil
+      'init_config' => nil,
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

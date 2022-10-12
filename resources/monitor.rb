@@ -18,8 +18,8 @@ property :cookbook, String, default: 'datadog'
 property :init_config, [Hash, nil], required: false, default: {}
 property :instances, Array, required: false, default: []
 property :version, [Integer, nil], required: false, default: nil
-property :use_integration_template, [TrueClass, FalseClass], required: false, default: false
-property :is_jmx, [TrueClass, FalseClass], required: false, default: false
+property :use_integration_template, [true, false], required: false, default: false
+property :is_jmx, [true, false], required: false, default: false
 property :logs, [Array, nil], required: false, default: []
 
 action :add do

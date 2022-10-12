@@ -25,7 +25,7 @@ describe file(AGENT_CONFIG) do
           'username' => 'root',
           'password' => 'password',
           'add_missing_keys' => false,
-          'tags' => ['tag1', 'tag2']
+          'tags' => %w(tag1 tag2),
         },
         {
           'host' => 'sftp_server.example.com',
@@ -33,11 +33,11 @@ describe file(AGENT_CONFIG) do
           'port' => 2323,
           'sftp_check' => true,
           'private_key_file' => '/path/to/key',
-          'tags' => ['tag1', 'tag3']
-        }
+          'tags' => %w(tag1 tag3),
+        },
       ],
       'logs' => nil,
-      'init_config' => nil
+      'init_config' => nil,
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

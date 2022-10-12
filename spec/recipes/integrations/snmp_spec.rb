@@ -59,7 +59,7 @@ describe 'datadog::snmp' do
           snmp: {
             init_config: {
               mibs_folder: '/path/to/your/mibs/folder',
-              ignore_nonincreasing_oid: false
+              ignore_nonincreasing_oid: false,
             },
             instances: [
               {
@@ -70,66 +70,66 @@ describe 'datadog::snmp' do
                 timeout: 1,
                 retries: 5,
                 enforce_mib_constraints: true,
-                tags: [
-                  'optional_tag_1',
-                  'optional_tag_2'
-                ],
+                tags: %w(
+                  optional_tag_1
+                  optional_tag_2
+                ),
                 metrics: [
                   {
                     MIB: 'UDP-MIB',
-                    symbol: 'udpInDatagrams'
+                    symbol: 'udpInDatagrams',
                   },
                   {
                     MIB: 'TCP-MIB',
-                    symbol: 'tcpActiveOpens'
+                    symbol: 'tcpActiveOpens',
                   },
                   {
                     OID: '1.3.6.1.2.1.6.5',
-                    name: 'tcpPassiveOpens'
+                    name: 'tcpPassiveOpens',
                   },
                   {
                     OID: '1.3.6.1.2.1.6.5',
                     name: 'tcpPassiveOpens',
                     metric_tags: [
-                      'TCP'
-                    ]
+                      'TCP',
+                    ],
                   },
                   {
                     OID: '1.3.6.1.4.1.3375.2.1.1.2.1.8.0',
                     name: 'F5_TotalCurrentConnections',
-                    forced_type: 'gauge'
+                    forced_type: 'gauge',
                   },
                   {
                     MIB: 'IF-MIB',
                     table: 'ifTable',
-                    symbols: [
-                      'ifInOctets',
-                      'ifOutOctets'
-                    ],
+                    symbols: %w(
+                      ifInOctets
+                      ifOutOctets
+                    ),
                     metric_tags: [
                       {
                         tag: 'interface',
-                        column: 'ifDescr'
-                      }
-                    ]
+                        column: 'ifDescr',
+                      },
+                    ],
                   },
                   {
                     MIB: 'IP-MIB',
                     table: 'ipSystemStatsTable',
                     symbols: [
-                      'ipSystemStatsInReceives'
+                      'ipSystemStatsInReceives',
                     ],
                     metric_tags: [
                       {
                         tag: 'ipversion',
-                        index: 1
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
+                        index: 1,
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
         }
       end.converge(described_recipe)
     end
@@ -143,9 +143,9 @@ describe 'datadog::snmp' do
     it { is_expected.to add_datadog_monitor('snmp') }
 
     it 'renders expected YAML config file' do
-      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/snmp.d/conf.yaml').with_content { |content|
+      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/snmp.d/conf.yaml').with_content do |content|
         expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-      })
+      end)
     end
   end
 end
@@ -197,23 +197,23 @@ describe 'datadog::snmp' do
                 privProtocol: 'privProtocol',
                 timeout: 1,
                 retries: 5,
-                tags: [
-                  'optional_tag_1',
-                  'optional_tag_2'
-                ],
+                tags: %w(
+                  optional_tag_1
+                  optional_tag_2
+                ),
                 metrics: [
                   {
                     MIB: 'UDP-MIB',
-                    symbol: 'udpInDatagrams'
+                    symbol: 'udpInDatagrams',
                   },
                   {
                     MIB: 'TCP-MIB',
-                    symbol: 'tcpActiveOpens'
-                  }
-                ]
-              }
-            ]
-          }
+                    symbol: 'tcpActiveOpens',
+                  },
+                ],
+              },
+            ],
+          },
         }
       end.converge(described_recipe)
     end
@@ -227,9 +227,9 @@ describe 'datadog::snmp' do
     it { is_expected.to add_datadog_monitor('snmp') }
 
     it 'renders expected YAML config file' do
-      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/snmp.d/conf.yaml').with_content { |content|
+      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/snmp.d/conf.yaml').with_content do |content|
         expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-      })
+      end)
     end
   end
 end

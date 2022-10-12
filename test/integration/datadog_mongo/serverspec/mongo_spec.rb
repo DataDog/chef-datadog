@@ -18,11 +18,11 @@ describe file(AGENT_CONFIG) do
           'hosts' => 'localhost:27017',
           'username' => 'someuser',
           'password' => 'somepassword',
-          'timeout' => 30
-        }
+          'timeout' => 30,
+        },
       ],
       'logs' => nil,
-      'init_config' => nil
+      'init_config' => nil,
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

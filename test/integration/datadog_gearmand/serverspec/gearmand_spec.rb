@@ -17,13 +17,13 @@ describe file(AGENT_CONFIG) do
         {
           'server' => '127.0.0.1',
           'port' => '4730',
-          'tasks' => [
-            'TASK_1',
-            'TASK_2',
-          ],
+          'tasks' => %w(
+            TASK_1
+            TASK_2
+          ),
           'tags' => [
             '<KEY_1>:<VALUE_1>',
-            '<KEY_2>:<VALUE_2>'
+            '<KEY_2>:<VALUE_2>',
           ],
           'service' => '<SERVICE>',
           # Defaults to 15 if not set
@@ -32,16 +32,16 @@ describe file(AGENT_CONFIG) do
           'empty_default_hostname' => true,
           'metric_patterns' => {
             'include' => [
-              '<INCLUDE_REGEX>'
+              '<INCLUDE_REGEX>',
             ],
             'exclude' => [
-              '<EXCLUDE_REGEX>'
-            ]
-          }
-        }
+              '<EXCLUDE_REGEX>',
+            ],
+          },
+        },
       ],
       'logs' => nil,
-      'init_config' => nil
+      'init_config' => nil,
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

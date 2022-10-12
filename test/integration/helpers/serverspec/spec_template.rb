@@ -16,10 +16,10 @@ describe file(AGENT_CONFIG) do
       instances: [
         {
           config_param: 'value',
-          tags: ['kitchen', 'sink']
-        }
+          tags: %w(kitchen sink),
+        },
       ],
-      init_config: nil
+      init_config: nil,
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

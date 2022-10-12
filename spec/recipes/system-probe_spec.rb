@@ -14,8 +14,8 @@ describe 'datadog::system-probe' do
           'system_probe' => {
             'debug_port' => 123,
             'bpf_debug' => true,
-            'sysprobe_socket' => '/test/ing.sock'
-          }
+            'sysprobe_socket' => '/test/ing.sock',
+          },
         }
       end
     end
@@ -47,7 +47,7 @@ describe 'datadog::system-probe' do
             'bpf_debug' => true,
             'sysprobe_socket' => '/test/ing.sock',
             'network_enabled' => true,
-          }
+          },
         }
       end
     end
@@ -75,9 +75,9 @@ describe 'datadog::system-probe' do
         sysprobe_socket: "/test/ing.sock"
       EOF
 
-      expect(chef_run).to(render_file('/etc/datadog-agent/system-probe.yaml').with_content { |content|
+      expect(chef_run).to(render_file('/etc/datadog-agent/system-probe.yaml').with_content do |content|
         expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-      })
+      end)
     end
   end
 
@@ -95,8 +95,8 @@ describe 'datadog::system-probe' do
             'enabled' => true,
             'debug_port' => 123,
             'bpf_debug' => true,
-            'sysprobe_socket' => '/test/ing.sock'
-          }
+            'sysprobe_socket' => '/test/ing.sock',
+          },
         }
       end
     end
@@ -122,9 +122,9 @@ describe 'datadog::system-probe' do
         sysprobe_socket: "/test/ing.sock"
       EOF
 
-      expect(chef_run).to(render_file('/etc/datadog-agent/system-probe.yaml').with_content { |content|
+      expect(chef_run).to(render_file('/etc/datadog-agent/system-probe.yaml').with_content do |content|
         expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-      })
+      end)
     end
   end
 
@@ -143,9 +143,9 @@ describe 'datadog::system-probe' do
           },
           'extra_config' => {
             'system_probe' => {
-              'max_tracked_connections' => 1000
-            }
-          }
+              'max_tracked_connections' => 1000,
+            },
+          },
         }
       end
     end
@@ -172,9 +172,9 @@ describe 'datadog::system-probe' do
         max_tracked_connections: 1000
       EOF
 
-      expect(chef_run).to(render_file('/etc/datadog-agent/system-probe.yaml').with_content { |content|
+      expect(chef_run).to(render_file('/etc/datadog-agent/system-probe.yaml').with_content do |content|
         expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-      })
+      end)
     end
   end
 end

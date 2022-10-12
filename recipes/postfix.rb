@@ -24,7 +24,7 @@
 #
 
 include_recipe '::dd-agent'
-include_recipe 'sudo' # ~FC007 uses `suggests`
+include_recipe 'sudo'
 
 postfix_instances = Array(node['datadog']['postfix']['instances'])
 postfix_commands = postfix_instances.map do |instance|

@@ -28,17 +28,17 @@ describe 'datadog::nginx' do
           instances: [
             {
               nginx_status_url: 'http://localhost:80/nginx_status/',
-              tags: ['optional_tag1', 'optional_tag2']
+              tags: %w(optional_tag1 optional_tag2),
             }, {
               nginx_status_url: 'http://localhost:81/nginx_status/',
               user: 'my_username',
-              password: 'my_password'
+              password: 'my_password',
             }, {
               nginx_status_url: 'https://localhost:82/nginx_status/',
-              ssl_validation: false
+              ssl_validation: false,
             }
-          ]
-        }
+          ],
+        },
       }
     end.converge(described_recipe)
   end
@@ -52,8 +52,8 @@ describe 'datadog::nginx' do
   it { is_expected.to add_datadog_monitor('nginx') }
 
   it 'renders expected YAML config file' do
-    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/nginx.d/conf.yaml').with_content { |content|
+    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/nginx.d/conf.yaml').with_content do |content|
       expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-    })
+    end)
   end
 end

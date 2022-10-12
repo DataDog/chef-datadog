@@ -29,10 +29,10 @@ action :install do
     command   "\"#{agent_exe_filepath}\" integration install #{'--third-party ' if new_resource.third_party}#{new_resource.property_name}==#{new_resource.version}"
     user      'dd-agent' unless platform_family?('windows')
 
-    not_if {
+    not_if do
       output = shell_out("#{agent_exe_filepath} integration show -q #{new_resource.property_name}").stdout
       output.strip == new_resource.version
-    }
+    end
     notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
   end
 end
@@ -49,10 +49,10 @@ action :remove do
     command   "\"#{agent_exe_filepath}\" integration remove #{new_resource.property_name}"
     user      'dd-agent' unless platform_family?('windows')
 
-    not_if {
+    not_if do
       output = shell_out("#{agent_exe_filepath} integration show -q #{new_resource.property_name}").stdout
       output.strip.empty?
-    }
+    end
     notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
   end
 end

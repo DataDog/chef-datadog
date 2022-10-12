@@ -17,7 +17,7 @@ shared_examples 'a chef-handler-datadog runner' do |extra_endpoints, url, tags_b
       extra_endpoints: extra_endpoints || [],
       tags_blacklist_regex: tags_blacklist_regex,
       send_policy_tags: false,
-      tags_submission_retries: nil
+      tags_submission_retries: nil,
     }
 
     unless override_config.nil?
@@ -84,7 +84,7 @@ describe 'datadog::dd-handler' do
         node.normal['datadog']['use_ec2_instance_id'] = true
         node.run_state['datadog'] = {
           'api_key' => 'somethingnotnil',
-          'application_key' => 'somethingnotnil2'
+          'application_key' => 'somethingnotnil2',
         }
       end.converge described_recipe
     end
@@ -104,7 +104,7 @@ describe 'datadog::dd-handler' do
         node.normal['datadog']['use_ec2_instance_id'] = true
         node.run_state['datadog'] = {
           'api_key' => 'somethingnotnil',
-          'application_key' => 'somethingnotnil2'
+          'application_key' => 'somethingnotnil2',
         }
       end.converge described_recipe
     end
@@ -132,7 +132,7 @@ describe 'datadog::dd-handler' do
 
     extra_endpoints = [
       Mash.new(api_key: 'something',
-               application_key: 'something2')
+               application_key: 'something2'),
     ]
 
     it_behaves_like 'a chef-handler-datadog installer'

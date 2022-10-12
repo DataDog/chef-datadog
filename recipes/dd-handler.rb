@@ -31,11 +31,11 @@ if node['datadog']['chef_handler_version'] &&
   return
 end
 
-chef_gem 'chef-handler-datadog' do # ~FC009
+chef_gem 'chef-handler-datadog' do
   action :install
   version node['datadog']['chef_handler_version']
   # Chef 12 introduced `compile_time` - remove respond_to? when Chef 11 is EOL.
-  compile_time true if respond_to?(:compile_time)
+  compile_time true
   clear_sources true if node['datadog']['gem_server']
   source node['datadog']['gem_server'] if node['datadog']['gem_server']
 end
@@ -76,15 +76,15 @@ chef_handler 'Chef::Handler::Datadog' do
     dd_url = node['datadog']['url'] unless node['datadog']['url'].nil?
 
     config = extra_config.merge(
-      :api_key => Chef::Datadog.api_key(node),
-      :application_key => Chef::Datadog.application_key(node),
-      :use_ec2_instance_id => node['datadog']['use_ec2_instance_id'],
-      :tag_prefix => node['datadog']['tag_prefix'],
-      :url => dd_url,
-      :extra_endpoints => extra_endpoints,
-      :tags_blacklist_regex => node['datadog']['tags_blacklist_regex'],
-      :send_policy_tags => node['datadog']['send_policy_tags'],
-      :tags_submission_retries => node['datadog']['tags_submission_retries']
+      api_key: Chef::Datadog.api_key(node),
+      application_key: Chef::Datadog.application_key(node),
+      use_ec2_instance_id: node['datadog']['use_ec2_instance_id'],
+      tag_prefix: node['datadog']['tag_prefix'],
+      url: dd_url,
+      extra_endpoints: extra_endpoints,
+      tags_blacklist_regex: node['datadog']['tags_blacklist_regex'],
+      send_policy_tags: node['datadog']['send_policy_tags'],
+      tags_submission_retries: node['datadog']['tags_submission_retries']
     )
 
     unless node['datadog']['use_ec2_instance_id']
@@ -100,7 +100,7 @@ chef_handler 'Chef::Handler::Datadog' do
       [handler_config]
     end
   )
-  supports :report => true, :exception => true
+  supports report: true, exception: true
   action :nothing
   only_if { node['datadog']['chef_handler_enable'] }
 end.run_action(:enable)

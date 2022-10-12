@@ -45,42 +45,42 @@ describe 'datadog::systemd' do
                 'myservice1.service',
                 'myservice2.service',
                 'mysocket.socket',
-                'mytimer.timer'
+                'mytimer.timer',
               ],
               substate_status_mapping: [
                 services: [
                   myservice1: {
                     running: 'ok',
-                    exited: 'critical'
+                    exited: 'critical',
                   },
                   myservice2: {
                     plugged: 'ok',
                     mounted: 'ok',
                     running: 'ok',
                     exited: 'critical',
-                    stopped: 'critical'
-                  }
+                    stopped: 'critical',
+                  },
                 ],
                 sockets: [
                   mysocket: {
                     running: 'ok',
-                    exited: 'critical'
-                  }
+                    exited: 'critical',
+                  },
                 ],
                 timers: [
                   mytimer: {
                     running: 'ok',
-                    exited: 'critical'
-                  }
-                ]
+                    exited: 'critical',
+                  },
+                ],
               ],
               tags: [
                 'mykey1:myvalue1',
-                'mykey2:myvalue2'
-              ]
-            }
-          ]
-        }
+                'mykey2:myvalue2',
+              ],
+            },
+          ],
+        },
       }
     end.converge(described_recipe)
   end
@@ -94,8 +94,8 @@ describe 'datadog::systemd' do
   it { is_expected.to add_datadog_monitor('systemd') }
 
   it 'renders expected YAML config file' do
-    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/systemd.d/conf.yaml').with_content { |content|
+    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/systemd.d/conf.yaml').with_content do |content|
       expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-    })
+    end)
   end
 end

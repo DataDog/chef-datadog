@@ -26,11 +26,11 @@ describe file(AGENT_CONFIG) do
           'skip_proxy' => false,
           'ssl_verify' => true,
           'tags' => ['_default'],
-          'timeout' => 20
-        }
+          'timeout' => 20,
+        },
       ],
       'logs' => nil,
-      'init_config' => nil
+      'init_config' => nil,
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

@@ -44,16 +44,16 @@ describe 'datadog::go-metro' do
                 interface: 'eth0',
                 tags: ['env:prod'],
                 ips: ['10.0.0.1', '10.0.0.2', '10.0.0.3'],
-                hosts: ['app.datadoghq.com']
+                hosts: ['app.datadoghq.com'],
               },
               {
                 interface: 'eth1',
                 tags: ['env:qa'],
                 ips: ['192.168.0.22'],
-                hosts: ['docs.datadoghq.com']
-              }
-            ]
-          }
+                hosts: ['docs.datadoghq.com'],
+              },
+            ],
+          },
         }
       end.converge(described_recipe)
     end
@@ -81,11 +81,11 @@ describe 'datadog::go-metro' do
     it 'renders expected YAML config file' do
       expect(chef_run).to(
         render_file('/etc/datadog-agent/conf.d/go-metro.d/conf.yaml')
-        .with_content { |content|
+        .with_content do |content|
           expect(YAML.safe_load(content).to_json).to be_json_eql(
             YAML.safe_load(expected_yaml).to_json
           )
-        }
+        end
       )
     end
   end
@@ -127,24 +127,24 @@ describe 'datadog::go-metro' do
           'go-metro' => {
             libcap_package: {
               package_name: 'libcap2-bin',
-              version: '123'
+              version: '123',
             },
             init_config: {
               snaplen: 1024,
               idle_ttl: 300,
               exp_ttl: 120,
               statsd_ip: '127.0.0.5',
-              log_level: 'debug'
+              log_level: 'debug',
             },
             instances: [
               {
                 interface: 'eth0',
                 tags: ['env:prod'],
                 ips: ['10.0.0.1', '10.0.0.2', '10.0.0.3'],
-                hosts: ['app.datadoghq.com']
-              }
-            ]
-          }
+                hosts: ['app.datadoghq.com'],
+              },
+            ],
+          },
         }
       end.converge(described_recipe)
     end
@@ -177,11 +177,11 @@ describe 'datadog::go-metro' do
     it 'renders expected YAML config file' do
       expect(chef_run).to(
         render_file('/etc/datadog-agent/conf.d/go-metro.d/conf.yaml')
-        .with_content { |content|
+        .with_content do |content|
           expect(YAML.safe_load(content).to_json).to be_json_eql(
             YAML.safe_load(expected_yaml).to_json
           )
-        }
+        end
       )
     end
   end
@@ -194,7 +194,7 @@ describe 'datadog::go-metro' do
         node.automatic['languages'] = { python: { version: '2.7.2' } }
 
         node.normal['datadog'] = {
-          api_key: 'someapikey'
+          api_key: 'someapikey',
         }
       end
     end

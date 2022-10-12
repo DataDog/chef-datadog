@@ -35,23 +35,23 @@ describe 'datadog::php_fpm' do
               'password' => 'mypassword',
               'status_url' => 'http://localhost/status',
               'user' => 'user',
-              'tags' => [
-                'optional_tag1',
-                'optional_tag2'
-              ]
+              'tags' => %w(
+                optional_tag1
+                optional_tag2
+              ),
             },
             {
               'password' => 'mypassword',
               'ping_url' => 'http://localhost/ping',
               'ping_reply' => 'pong',
               'user' => 'user',
-              'tags' => [
-                'optional_tag1',
-                'optional_tag2'
-              ]
-            }
-          ]
-        }
+              'tags' => %w(
+                optional_tag1
+                optional_tag2
+              ),
+            },
+          ],
+        },
       }
     end.converge(described_recipe)
   end
@@ -65,8 +65,8 @@ describe 'datadog::php_fpm' do
   it { is_expected.to add_datadog_monitor('php_fpm') }
 
   it 'renders expected YAML config file' do
-    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/php_fpm.d/conf.yaml').with_content { |content|
+    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/php_fpm.d/conf.yaml').with_content do |content|
       expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-    })
+    end)
   end
 end

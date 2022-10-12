@@ -16,12 +16,12 @@ describe file(AGENT_CONFIG) do
       'instances' => [
         {
           'monitor_agent_url' => 'http://localhost.com:24220/api/plugins.json',
-          'plugin_ids' => ['api', 'plugin'],
-          'tags' => ['kitchen', 'sink']
-        }
+          'plugin_ids' => %w(api plugin),
+          'tags' => %w(kitchen sink),
+        },
       ],
       'logs' => nil,
-      'init_config' => nil
+      'init_config' => nil,
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

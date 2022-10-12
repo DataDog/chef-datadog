@@ -19,12 +19,12 @@ describe file(AGENT_CONFIG) do
             'myservice1.service',
             'myservice2.service',
             'mysocket.socket',
-            'mytimer.timer'
-          ]
-        }
+            'mytimer.timer',
+          ],
+        },
       ],
       'logs' => nil,
-      'init_config' => nil
+      'init_config' => nil,
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

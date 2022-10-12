@@ -22,16 +22,16 @@ describe 'datadog::mesos_slave' do
         api_key: 'someapikey',
         mesos_slave: {
           init_config: {
-            default_timeout: 10
+            default_timeout: 10,
           },
           instances: [
             {
               url: 'localhost:5050',
               timeout: 8,
-              tags: ['slave', 'tata']
-            }
-          ]
-        }
+              tags: %w(slave tata),
+            },
+          ],
+        },
       }
     end.converge(described_recipe)
   end
@@ -45,8 +45,8 @@ describe 'datadog::mesos_slave' do
   it { is_expected.to add_datadog_monitor('mesos_slave') }
 
   it 'renders expected YAML config file' do
-    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/mesos_slave.d/conf.yaml').with_content { |content|
+    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/mesos_slave.d/conf.yaml').with_content do |content|
       expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-    })
+    end)
   end
 end

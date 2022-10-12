@@ -53,14 +53,14 @@ describe 'datadog::wmi_check' do
                   [
                     'NumberOfProcesses',
                     'system.proc.count',
-                    'gauge'
+                    'gauge',
                   ],
                   [
                     'NumberOfUsers',
                     'system.users.count',
-                    'gauge'
-                  ]
-                ]
+                    'gauge',
+                  ],
+                ],
               },
               {
                 class: 'Win32_PerfFormattedData_PerfProc_Process',
@@ -68,22 +68,22 @@ describe 'datadog::wmi_check' do
                   [
                     'ThreadCount',
                     'my_app.threads.count',
-                    'gauge'
+                    'gauge',
                   ],
                   [
                     'VirtualBytes',
                     'my_app.mem.virtual',
-                    'gauge'
-                  ]
+                    'gauge',
+                  ],
                 ],
                 filters: [
                   {
-                    Name: 'myapp'
-                  }
+                    Name: 'myapp',
+                  },
                 ],
                 constant_tags: [
-                  'role:test'
-                ]
+                  'role:test',
+                ],
               },
               {
                 class: 'Win32_PerfFormattedData_PerfProc_Process',
@@ -91,31 +91,31 @@ describe 'datadog::wmi_check' do
                   [
                     'ThreadCount',
                     'proc.threads.count',
-                    'gauge'
+                    'gauge',
                   ],
                   [
                     'VirtualBytes',
                     'proc.mem.virtual',
-                    'gauge'
+                    'gauge',
                   ],
                   [
                     'PercentProcessorTime',
                     'proc.cpu_pct',
-                    'gauge'
-                  ]
+                    'gauge',
+                  ],
                 ],
                 filters: [
                   {
-                    Name: 'app1'
+                    Name: 'app1',
                   },
                   {
-                    Name: 'app2'
+                    Name: 'app2',
                   },
                   {
-                    Name: 'app3'
-                  }
+                    Name: 'app3',
+                  },
                 ],
-                tag_by: 'Name'
+                tag_by: 'Name',
               },
               {
                 class: 'Win32_PerfFormattedData_PerfProc_Process',
@@ -123,26 +123,26 @@ describe 'datadog::wmi_check' do
                   [
                     'IOReadBytesPerSec',
                     'proc.io.bytes_read',
-                    'gauge'
-                  ]
+                    'gauge',
+                  ],
                 ],
                 filters: [
                   {
-                    Name: 'app%'
-                  }
+                    Name: 'app%',
+                  },
                 ],
                 tag_by: 'Name',
                 tag_queries: [
-                  [
-                    'IDProcess',
-                    'Win32_Process',
-                    'Handle',
-                    'CommandLine'
-                  ]
-                ]
-              }
-            ]
-          }
+                  %w(
+                    IDProcess
+                    Win32_Process
+                    Handle
+                    CommandLine
+                  ),
+                ],
+              },
+            ],
+          },
         }
       end.converge(described_recipe)
     end
@@ -156,9 +156,9 @@ describe 'datadog::wmi_check' do
     it { is_expected.to add_datadog_monitor('wmi_check') }
 
     it 'renders expected YAML config file' do
-      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/wmi_check.d/conf.yaml').with_content { |content|
+      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/wmi_check.d/conf.yaml').with_content do |content|
         expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-      })
+      end)
     end
   end
 end

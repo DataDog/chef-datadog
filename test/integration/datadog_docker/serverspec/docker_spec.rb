@@ -18,28 +18,28 @@ describe file(AGENT_CONFIG) do
           url: 'unix://var/run/docker.sock',
           tag_by_command: false,
           new_tag_names: false,
-          tags: [
-            'toto',
-            'tata'
-          ],
+          tags: %w(
+            toto
+            tata
+          ),
           include: [
             'docker_image:ubuntu',
-            'docker_image:debian'
+            'docker_image:debian',
           ],
           exclude: [
-            '.*'
+            '.*',
           ],
           collect_events: true,
           collect_container_size: false,
           collect_all_metrics: false,
-          collect_images_stats: false
-        }
+          collect_images_stats: false,
+        },
       ],
       'logs' => nil,
       init_config: {
         docker_root: '/',
-        socket_timeout: 10
-      }
+        socket_timeout: 10,
+      },
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

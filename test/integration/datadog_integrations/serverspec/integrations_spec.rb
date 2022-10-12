@@ -15,11 +15,11 @@ describe file(AGENT_CONFIG) do
     expected = {
       instances: [
         {
-          url: 'http://localhost:22222'
-        }
+          url: 'http://localhost:22222',
+        },
       ],
       'logs' => nil,
-      init_config: {}
+      init_config: {},
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

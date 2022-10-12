@@ -16,15 +16,15 @@ describe file(AGENT_CONFIG) do
       'instances' => [
         {
           'name' => 'test',
-          'url' => 'http://localhost/'
+          'url' => 'http://localhost/',
         },
         {
           'name' => 'test2',
-          'url' => 'http://localhost/'
-        }
+          'url' => 'http://localhost/',
+        },
       ],
       'logs' => nil,
-      'init_config' => nil
+      'init_config' => nil,
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

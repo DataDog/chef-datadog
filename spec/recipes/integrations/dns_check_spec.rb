@@ -30,19 +30,19 @@ describe 'datadog::dns_check' do
             {
               'hostname' => 'foo.example.com',
               'nameserver' => 'prod-ns.example.com',
-              'timeout' => 1
+              'timeout' => 1,
             },
             {
               'hostname' => 'bar.example.com',
-              'nameserver' => 'prod-ns.example.com'
+              'nameserver' => 'prod-ns.example.com',
             },
             {
               'hostname' => 'staging.example.com',
               'nameserver' => 'test-ns.example.com',
-              'timeout' => 2
-            }
-          ]
-        }
+              'timeout' => 2,
+            },
+          ],
+        },
       }
     end.converge(described_recipe)
   end
@@ -56,8 +56,8 @@ describe 'datadog::dns_check' do
   it { is_expected.to add_datadog_monitor('dns_check') }
 
   it 'renders expected YAML config file' do
-    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/dns_check.d/conf.yaml').with_content { |content|
+    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/dns_check.d/conf.yaml').with_content do |content|
       expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-    })
+    end)
   end
 end

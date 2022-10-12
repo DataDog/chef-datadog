@@ -38,13 +38,13 @@ describe 'datadog::gearmand' do
             {
               server: '127.0.0.1',
               port: '4730',
-              tasks: [
-                'TASK_1',
-                'TASK_2',
-              ],
+              tasks: %w(
+                TASK_1
+                TASK_2
+              ),
               tags: [
                 '<KEY_1>:<VALUE_1>',
-                '<KEY_2>:<VALUE_2>'
+                '<KEY_2>:<VALUE_2>',
               ],
               service: '<SERVICE>',
               # Defaults to 15 if not set
@@ -53,15 +53,15 @@ describe 'datadog::gearmand' do
               empty_default_hostname: true,
               metric_patterns: {
                 include: [
-                  '<INCLUDE_REGEX>'
+                  '<INCLUDE_REGEX>',
                 ],
                 exclude: [
-                  '<EXCLUDE_REGEX>'
-                ]
-              }
-            }
-          ]
-        }
+                  '<EXCLUDE_REGEX>',
+                ],
+              },
+            },
+          ],
+        },
       }
     end.converge(described_recipe)
   end
@@ -75,8 +75,8 @@ describe 'datadog::gearmand' do
   it { is_expected.to add_datadog_monitor('gearmand') }
 
   it 'renders expected YAML config file' do
-    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/gearmand.d/conf.yaml').with_content { |content|
+    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/gearmand.d/conf.yaml').with_content do |content|
       expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-    })
+    end)
   end
 end

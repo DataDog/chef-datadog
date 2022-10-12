@@ -17,16 +17,16 @@ describe file(AGENT_CONFIG) do
         {
           'name' => 'test',
           'host' => 'localhost',
-          'port' => 1234
+          'port' => 1234,
         },
         {
           'name' => 'test2',
           'host' => 'localhost',
-          'port' => 5678
-        }
+          'port' => 5678,
+        },
       ],
       'logs' => nil,
-      'init_config' => nil
+      'init_config' => nil,
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

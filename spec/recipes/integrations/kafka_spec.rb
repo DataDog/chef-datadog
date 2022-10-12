@@ -172,10 +172,10 @@ describe 'datadog::kafka' do
                 name: 'fasdfas',
                 user: 'someuser',
                 password: 'somepass',
-                tags: { key: 'value' }
-              }
-            ]
-          }
+                tags: { key: 'value' },
+              },
+            ],
+          },
         }
       end.converge(described_recipe)
     end
@@ -189,9 +189,9 @@ describe 'datadog::kafka' do
     it { is_expected.to add_datadog_monitor('kafka') }
 
     it 'renders expected YAML config file' do
-      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/kafka.d/conf.yaml').with_content { |content|
+      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/kafka.d/conf.yaml').with_content do |content|
         expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-      })
+      end)
     end
   end
 
@@ -602,10 +602,10 @@ describe 'datadog::kafka' do
                 name: 'fasdfas',
                 user: 'someuser',
                 password: 'somepass',
-                tags: { key: 'value' }
-              }
-            ]
-          }
+                tags: { key: 'value' },
+              },
+            ],
+          },
         }
       end.converge(described_recipe)
     end
@@ -619,9 +619,9 @@ describe 'datadog::kafka' do
     it { is_expected.to add_datadog_monitor('kafka') }
 
     it 'renders expected YAML config file' do
-      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/kafka.d/conf.yaml').with_content { |content|
+      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/kafka.d/conf.yaml').with_content do |content|
         expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-      })
+      end)
     end
   end
 
@@ -669,11 +669,11 @@ describe 'datadog::kafka' do
                   attribute: {
                     Count: {
                       metric_type: 'rate',
-                      alias: 'kafka.producer.request_rate'
-                    }
-                  }
-                }
-              }
+                      alias: 'kafka.producer.request_rate',
+                    },
+                  },
+                },
+              },
             ],
             instances: [
               {
@@ -682,10 +682,10 @@ describe 'datadog::kafka' do
                 name: 'fasdfas',
                 user: 'someuser',
                 password: 'somepass',
-                tags: { key: 'value' }
-              }
-            ]
-          }
+                tags: { key: 'value' },
+              },
+            ],
+          },
         }
       end.converge(described_recipe)
     end
@@ -699,9 +699,9 @@ describe 'datadog::kafka' do
     it { is_expected.to add_datadog_monitor('kafka') }
 
     it 'renders expected YAML config file' do
-      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/kafka.d/conf.yaml').with_content { |content|
+      expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/kafka.d/conf.yaml').with_content do |content|
         expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-      })
+      end)
     end
   end
 end

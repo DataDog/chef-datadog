@@ -20,11 +20,11 @@ describe file(AGENT_CONFIG) do
           'password' => 'sekret',
           'status_check' => false,
           'url' => 'http://localhost:22002/status',
-          'username' => 'admin'
-        }
+          'username' => 'admin',
+        },
       ],
       'logs' => nil,
-      'init_config' => nil
+      'init_config' => nil,
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

@@ -19,11 +19,11 @@ describe file(AGENT_CONFIG) do
           'host' => 'europe.pool.ntp.org',
           'port' => 9999,
           'version' => 4,
-          'timeout' => 10
-        }
+          'timeout' => 10,
+        },
       ],
       'logs' => nil,
-      'init_config' => nil
+      'init_config' => nil,
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

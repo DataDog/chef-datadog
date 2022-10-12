@@ -19,16 +19,16 @@ describe 'datadog::integrations' do
         extra_packages: {
           twemproxy: {
             name: 'dd-check-twemproxy',
-            version: '0.1.0-1'
-          }
+            version: '0.1.0-1',
+          },
         },
         twemproxy: {
           instances: [
             {
-              url: 'http://localhost:22222'
-            }
-          ]
-        }
+              url: 'http://localhost:22222',
+            },
+          ],
+        },
       }
     end.converge(described_recipe)
   end
@@ -38,9 +38,9 @@ describe 'datadog::integrations' do
   it { is_expected.to add_datadog_monitor('twemproxy') }
 
   it 'renders expected YAML config file' do
-    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/twemproxy.d/conf.yaml').with_content { |content|
+    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/twemproxy.d/conf.yaml').with_content do |content|
       expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-    })
+    end)
   end
 
   it 'installs check\'s package with specified version' do

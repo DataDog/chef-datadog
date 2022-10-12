@@ -56,45 +56,45 @@ describe 'datadog::docker_daemon' do
             tls_client_cert: '/path/to/client-cert.pem',
             tls_client_key: '/path/to/client-key.pem',
             tls_cacert: '/path/to/ca.pem',
-            tls_verify: true
+            tls_verify: true,
           },
           instances: [
             {
               url: 'unix://var/run/docker.sock',
-              tags: [
-                'toto',
-                'tata'
-              ],
+              tags: %w(
+                toto
+                tata
+              ),
               include: [
                 'docker_image:ubuntu',
-                'docker_image:debian'
+                'docker_image:debian',
               ],
               exclude: [
-                '.*'
+                '.*',
               ],
-              performance_tags: [
-                'container_name',
-                'image_name',
-                'image_tag',
-                'docker_image'
-              ],
-              container_tags: [
-                'image_name',
-                'image_tag',
-                'docker_image'
-              ],
+              performance_tags: %w(
+                container_name
+                image_name
+                image_tag
+                docker_image
+              ),
+              container_tags: %w(
+                image_name
+                image_tag
+                docker_image
+              ),
               collect_labels_as_tags: [
                 'com.docker.compose.service',
-                'com.docker.compose.project'
+                'com.docker.compose.project',
               ],
               ecs_tags: true,
               collect_events: true,
               collect_container_size: false,
               collect_image_size: false,
-              collect_images_stats: false
-            }
-          ]
-        }
+              collect_images_stats: false,
+            },
+          ],
+        },
       }
     end.converge(described_recipe)
   end
@@ -110,8 +110,8 @@ describe 'datadog::docker_daemon' do
   it { is_expected.to manage_group('docker').with(append: true, members: ['dd-agent']) }
 
   it 'renders expected YAML config file' do
-    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/docker_daemon.d/conf.yaml').with_content { |content|
+    expect(chef_run).to(render_file('/etc/datadog-agent/conf.d/docker_daemon.d/conf.yaml').with_content do |content|
       expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
-    })
+    end)
   end
 end

@@ -26,11 +26,11 @@ describe file(AGENT_CONFIG) do
           'ssl_keyfile' => '/etc/etcd/ssl.key',
           'ssl_certfile' => '/etc/etcd/ssl.crt',
           'ssl_cert_validation' => true,
-          'ssl_ca_certs' => '/etc/etcd/ca-certs.crt'
-        }
+          'ssl_ca_certs' => '/etc/etcd/ca-certs.crt',
+        },
       ],
       'logs' => nil,
-      'init_config' => nil
+      'init_config' => nil,
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

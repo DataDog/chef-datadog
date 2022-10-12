@@ -2,10 +2,10 @@ class Chef
   # Helper class for Datadog Chef recipes
   class Datadog
     class << self
-      ACCEPTABLE_AGENT_FLAVORS = %w[
+      ACCEPTABLE_AGENT_FLAVORS = %w(
         datadog-agent
         datadog-iot-agent
-      ].freeze
+      ).freeze
 
       def chef_version_ge?(version)
         Gem::Requirement.new(">= #{version}").satisfied_by?(Gem::Version.new(Chef::VERSION))
@@ -16,7 +16,7 @@ class Chef
         if dd_agent_version.respond_to?(:each_pair)
           platform_family = node['platform_family']
           # Unless explicitly listed, treat fedora and amazon as rhel
-          if !dd_agent_version.include?(platform_family) && ['fedora', 'amazon'].include?(platform_family)
+          if !dd_agent_version.include?(platform_family) && %w(fedora amazon).include?(platform_family)
             platform_family = 'rhel'
           end
           dd_agent_version = dd_agent_version[platform_family]
@@ -26,10 +26,10 @@ class Chef
           # - we can only add epoch and release when running Chef >= 14, as Chef < 14
           # has different yum logic that doesn't know how to work with epoch and release
           # - for Chef < 14, we only add release
-          if %w[debian suse].include?(node['platform_family']) ||
-             (%w[amazon fedora rhel].include?(node['platform_family']) && chef_version_ge?(14))
+          if %w(debian suse).include?(node['platform_family']) ||
+             (%w(amazon fedora rhel).include?(node['platform_family']) && chef_version_ge?(14))
             dd_agent_version = '1:' + dd_agent_version + '-1'
-          elsif %w[amazon fedora rhel].include?(node['platform_family'])
+          elsif %w(amazon fedora rhel).include?(node['platform_family'])
             dd_agent_version += '-1'
           end
         end
@@ -167,13 +167,13 @@ class Chef
 
         include Chef::Mixin::ShellOut
         def agent_get_version
-          return nil unless File.exist?(WIN_BIN_PATH)
+          return unless File.exist?(WIN_BIN_PATH)
           shell_out("\"#{WIN_BIN_PATH}\" version -n").stdout.strip
         end
 
         def fetch_current_version
           raw_version = agent_get_version
-          return nil if raw_version.nil?
+          return if raw_version.nil?
           match_data = raw_version.match(/^Agent ([^\s]*) (- Meta: ([^\s]*) )?- Commit/)
 
           version = match_data[1] if match_data
@@ -187,7 +187,7 @@ class Chef
 
         def requested_agent_version(node)
           version = Chef::Datadog.agent_version(node)
-          return nil unless version
+          return unless version
 
           cleaned = version.scan(/\d+\.\d+\.\d+/).first
           Gem::Version.new(cleaned) if cleaned

@@ -15,20 +15,20 @@ describe file(AGENT_CONFIG) do
     expected = {
       'instances' => [
         {
-          :kafka_connect_str => 'localhost:19092',
-          :consumer_groups => {
-            :my_consumer => {
-              :my_topic => [0, 1, 4, 12]
-            }
+          kafka_connect_str: 'localhost:19092',
+          consumer_groups: {
+            my_consumer: {
+              my_topic: [0, 1, 4, 12],
+            },
           },
-          :monitor_unlisted_consumer_groups => false,
-          :zk_connect_str => 'localhost:2181',
-          :zk_prefix => '/0.8',
-          :kafka_consumer_offsets => true
-        }
+          monitor_unlisted_consumer_groups: false,
+          zk_connect_str: 'localhost:2181',
+          zk_prefix: '/0.8',
+          kafka_consumer_offsets: true,
+        },
       ],
       'logs' => nil,
-      'init_config' => nil
+      'init_config' => nil,
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

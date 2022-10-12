@@ -15,9 +15,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
-
-include_recipe 'chef_handler' if Chef::VERSION < Gem::Version.new(14.0)
+# if Chef::VERSION < Gem::Version.new(14.0)
 
 dd_agent_flavor = Chef::Datadog.agent_flavor(node)
 
@@ -117,10 +115,10 @@ end
 package_retries = node['datadog']['agent_package_retries']
 package_retry_delay = node['datadog']['agent_package_retry_delay']
 
-unsafe_hashsums = [
-  '928b00d2f952219732cda9ae0515351b15f9b9c1ea1d546738f9dc0fda70c336',
-  '78b2bb2b231bcc185eb73dd367bfb6cb8a5d45ba93a46a7890fd607dc9188194'
-]
+unsafe_hashsums = %w(
+  928b00d2f952219732cda9ae0515351b15f9b9c1ea1d546738f9dc0fda70c336
+  78b2bb2b231bcc185eb73dd367bfb6cb8a5d45ba93a46a7890fd607dc9188194
+)
 fix_message = 'The file downloaded matches a known unsafe MSI - Agent versions 6.14.0/1 have been blacklisted. please use a different release. '\
         'See http://dtdg.co/win-614-fix'
 
@@ -221,7 +219,7 @@ if node['datadog']['windows_mute_hosts_during_install']
 end
 
 # Install the package
-windows_package 'Datadog Agent' do # ~FC009
+windows_package 'Datadog Agent' do
   source temp_file
   installer_type resolved_installer_type
   options install_options
