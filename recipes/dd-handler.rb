@@ -63,7 +63,7 @@ chef_handler 'Chef::Handler::Datadog' do
   end
 
   def handler_config
-    extra_config = node['datadog']['handler_extra_config'].reject { |_, v| v.nil? }
+    extra_config = node['datadog']['handler_extra_config'].compact
 
     # Since Agent 6 supports node['datadog']['url'] = nil and node['datadog']['site'] = nil,
     # we need to fallback on a default value here.
