@@ -994,6 +994,7 @@ describe 'datadog::dd-agent' do
   context 'agent 6' do
     describe 'the datadog-agent service' do
       context 'on Amazon Linux < 2.0' do
+        # rubocop:disable Chef/Deprecations/DeprecatedChefSpecPlatform
         cached(:chef_run) do
           ChefSpec::SoloRunner.new(
             platform: 'amazon',
@@ -1002,6 +1003,7 @@ describe 'datadog::dd-agent' do
             node.normal['datadog'] = { 'api_key' => 'somethingnotnil', 'agent_major_version' => 6 }
           end.converge described_recipe
         end
+        # rubocop:enable Chef/Deprecations/DeprecatedChefSpecPlatform
 
         it 'is enabled with Upstart provider' do
           expect(chef_run).to enable_service('datadog-agent').with(
