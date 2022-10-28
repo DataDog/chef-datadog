@@ -10,6 +10,7 @@ instances:
     rabbitmq_user: <%= i['user'] || 'guest' %>
     rabbitmq_pass: <%= i['pass'] || 'guest' %>
     tls_verify: <%= i.key?('tls_verify') ? i['tls_verify'] : 'true' %>
+    tls_ignore_warning: <%= i['tls_ignore_warning'] || 'false' %>
     # https://help.datadoghq.com/hc/en-us/articles/211590103-Tagging-RabbitMQ-queues-by-tag-family
     tag_families: <%= i['tag_families'] || 'false' %>
   <% if i.key?('max_detailed_exchanges') -%>
