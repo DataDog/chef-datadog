@@ -20,6 +20,10 @@ if RUBY_VERSION < '2.4'
   gem 'json', '~> 2.4.1'
 end
 
+if RUBY_VERSION < '2.6'
+  gem 'net-ssh', '~> 6.1.0'
+end
+
 gem 'foodcritic', (RUBY_VERSION >= '2.4' ? '~> 16.3.0' : '~> 11.4.0')
 gem 'rubocop', (RUBY_VERSION >= '2.4' ? '~> 0.80.1' : '~> 0.49.1')
 
