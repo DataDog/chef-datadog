@@ -280,7 +280,7 @@ GEM
       semverse (>= 1.1, < 4.0)
     specinfra (2.82.21)
       net-scp
-      net-ssh (>= 2.7)
+      net-ssh (>= 2.7, <7.0)
       net-telnet (= 0.1.1)
       sfl
     strings (0.2.0)
