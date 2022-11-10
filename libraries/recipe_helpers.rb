@@ -7,6 +7,11 @@ class Chef
         datadog-iot-agent
       ].freeze
 
+      # This method stores a variable that is used across recipes so we needed a place to define it
+      def apt_sources_list_file
+        '/etc/apt/sources.list.d/datadog.list'
+      end
+
       def chef_version_ge?(version)
         Gem::Requirement.new(">= #{version}").satisfied_by?(Gem::Version.new(Chef::VERSION))
       end
