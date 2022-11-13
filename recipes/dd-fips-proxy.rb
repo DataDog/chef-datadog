@@ -38,6 +38,15 @@ service_provider = Chef::Datadog.service_provider(node)
 
 service_name = 'datadog-fips-proxy'
 
+file '/etc/datadog-fips-proxy/datadog-fips-proxy.cfg' do
+  owner 'root'
+  group 'root'
+  mode 0766
+  content ::File.open('/etc/datadog-fips-proxy/datadog-fips-proxy.cfg.example').read
+  not_if { ::File.exist?('/etc/datadog-fips-proxy/datadog-fips-proxy.cfg') }
+  action :create
+end
+
 service 'datadog-fips-proxy' do
   service_name service_name
   action [fips_proxy_enable, fips_proxy_start]
