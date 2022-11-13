@@ -42,7 +42,7 @@ file '/etc/datadog-fips-proxy/datadog-fips-proxy.cfg' do
   owner 'root'
   group 'root'
   mode 0766
-  content ::File.open('/etc/datadog-fips-proxy/datadog-fips-proxy.cfg.example').read
+  content lazy { ::File.open('/etc/datadog-fips-proxy/datadog-fips-proxy.cfg.example').read }
   not_if { ::File.exist?('/etc/datadog-fips-proxy/datadog-fips-proxy.cfg') }
   action :create
 end
