@@ -278,7 +278,7 @@ GEM
     solve (4.0.4)
       molinillo (~> 0.6)
       semverse (>= 1.1, < 4.0)
-    specinfra (2.83.3)
+    specinfra (2.82.21)
       net-scp
       net-ssh (>= 2.7)
       net-telnet (= 0.1.1)
