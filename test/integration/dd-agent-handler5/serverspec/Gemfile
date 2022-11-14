@@ -3,4 +3,5 @@ source 'https://rubygems.org'
 if RUBY_VERSION < '2.6'
   gem 'net-ssh', '~> 6.1.0'
   gem 'public_suffix', '~> 4.0.0'
+  gem 'json_spec', '~> 1.1.5'
 end
