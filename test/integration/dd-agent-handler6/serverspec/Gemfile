@@ -1,7 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'serverspec', '~> 2.42.0'
-
 if RUBY_VERSION < '2.6'
   gem 'net-ssh', '~> 6.1.0'
 end
