@@ -8,6 +8,6 @@ if RUBY_VERSION < '2.6'
   gem 'json_spec', '~> 1.1.5'
 end
 
-if Gem::Version.new(chef_version) > Gem::Version.new('16.0.0') and RUBY_VERSION < '2.7'
+if Gem::Version.new(chef_version) > Gem::Version.new('16.0.0') && RUBY_VERSION < '2.7'
   gem 'train-core', '~> 3.9.0'
 end
