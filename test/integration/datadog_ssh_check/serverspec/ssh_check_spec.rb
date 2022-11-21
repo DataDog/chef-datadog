@@ -14,6 +14,8 @@ describe service(@agent_service_name) do
   it { should be_running }
 end
 
+puts "Baguette"
+
 describe file(AGENT_CONFIG) do
   it { should be_a_file }
 
