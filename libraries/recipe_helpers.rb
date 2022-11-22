@@ -7,6 +7,10 @@ class Chef
         datadog-iot-agent
       ].freeze
 
+      def chef_version_ge?(version)
+        Gem::Requirement.new(">= #{version}").satisfied_by?(Gem::Version.new(Chef::VERSION))
+      end
+
       def agent_version(node)
         dd_agent_version = node['datadog']['agent_version']
         if dd_agent_version.respond_to?(:each_pair)
@@ -18,8 +22,15 @@ class Chef
           dd_agent_version = dd_agent_version[platform_family]
         end
         if !dd_agent_version.nil? && dd_agent_version.match(/^[0-9]+\.[0-9]+\.[0-9]+((?:~|-)[^0-9\s-]+[^-\s]*)?$/)
-          if %w[debian amazon fedora rhel suse].include?(node['platform_family'])
+          # For RHEL-based distros:
+          # - we can only add epoch and release when running Chef >= 14, as Chef < 14
+          # has different yum logic that doesn't know how to work with epoch and release
+          # - for Chef < 14, we only add release
+          if %w[debian suse].include?(node['platform_family']) ||
+             (%w[amazon fedora rhel].include?(node['platform_family']) && chef_version_ge?(14))
             dd_agent_version = '1:' + dd_agent_version + '-1'
+          elsif %w[amazon fedora rhel].include?(node['platform_family'])
+            dd_agent_version += '-1'
           end
         end
         dd_agent_version
@@ -155,18 +166,21 @@ class Chef
         private
 
         include Chef::Mixin::ShellOut
-        def agent_status
+        def agent_get_version
           return nil unless File.exist?(WIN_BIN_PATH)
-          shell_out("\"#{WIN_BIN_PATH}\" status").stdout.strip
+          shell_out("\"#{WIN_BIN_PATH}\" version -n").stdout.strip
         end
 
         def fetch_current_version
-          status = agent_status
-          return nil if status.nil?
-          match_data = status.match(/^Agent \(v(.*)\)/)
+          raw_version = agent_get_version
+          return nil if raw_version.nil?
+          match_data = raw_version.match(/^Agent ([^\s]*) (- Meta: ([^\s]*) )?- Commit/)
 
-          # Nightlies like 6.20.0-devel+git.38.cd7f989 fail to parse as Gem::Version because of the '+' sign
-          version = match_data[1].tr('+', '-') if match_data
+          version = match_data[1] if match_data
+          nightly_version = match_data[3] if match_data[2]
+          # If the Meta tag is catched, we'll add it to the version to specify the nightly version we're using
+          # Nightlies like 6.20.0-devel+git.38.cd7f989 fail to parse as Gem::Version because of the '+' sign so let's use '-'
+          version = version + '-' + nightly_version if nightly_version
 
           Gem::Version.new(version) if version
         end
@@ -184,7 +198,7 @@ class Chef
           # because they cannot correctly fetch the registry keys of 64 bits
           # applications for uninstallation so we are only using the downgrade
           # feature on chef >= to 14
-          Gem::Requirement.new('>= 14').satisfied_by?(Gem::Version.new(Chef::VERSION))
+          Chef::Datadog.chef_version_ge? 14
         end
       end
     end

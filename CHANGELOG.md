@@ -1,6 +1,27 @@
 Changes
 =======
 
+# 4.15.0 / 2022-10-06
+* [BUGFIX] Enforce calls of agent version without color output [#863][] [@KSerrania][]
+* [FEATURE] Add configuration for custom_log_collection [#861][] [@nilskuehme][]
+* [FEATURE] Add configuration for gearmand integration [#860][] [@nilskuehme][]
+* [FEATURE] Add unit types to Systemd integration [#859][] [@nilskuehme][]
+* [BUGFIX] Specify release but not epoch for RPM packages on Chef < 14 [#858][] [@KSerrania][]
+* [BUGFIX] Don't use epoch/release for yum package version on Chef < 14 [#856][] [@bkabrda][]
+* [FEATURE] Use agent version instead of agent status to determine the current Agent version [#852][] [@amenasria][]
+
+# 4.14.0 / 2022-06-14
+* [BUGFIX] Fix system probe recipe on Windows [#850][] [@julien-lebot][]
+
+# 4.13.0 / 2022-03-30
+
+* [FEATURE] Allow enabling CWS and CSPM [#843][] [@lebauce][]
+* [FEATURE] Add support for AlmaLinux and Rocky Linux [#836][] [@bkabrda][]
+* [FEATURE] Add `monitor_unlisted_consumer_groups` and `kafka_consumer_offsets` to kafka_consumer [#834][] [@ganeshkumarsv][]
+* [BUGFIX] Specify package epoch on RH-like platforms to ensure proper upgrade path [#839][] [@bkabrda][]
+* [BUGFIX] Use the correct socket for system probe on Windows [#833][] [@julien-lebot][]
+* [BUGFIX] Add is_jmx by default to jmxfetch checks [#792][] [@albertvaka][]
+
 # 4.12.0 / 2021-12-03
 
 * [FEATURE] Added support for Chef 18+. [@axl89][] [#822][]
@@ -996,6 +1017,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#786]: https://github.com/DataDog/chef-datadog/issues/786
 [#789]: https://github.com/DataDog/chef-datadog/issues/789
 [#791]: https://github.com/DataDog/chef-datadog/issues/791
+[#792]: https://github.com/DataDog/chef-datadog/issues/792
 [#793]: https://github.com/DataDog/chef-datadog/issues/793
 [#796]: https://github.com/DataDog/chef-datadog/issues/796
 [#799]: https://github.com/DataDog/chef-datadog/issues/799
@@ -1007,6 +1029,19 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#822]: https://github.com/DataDog/chef-datadog/issues/822
 [#828]: https://github.com/DataDog/chef-datadog/issues/828
 [#830]: https://github.com/DataDog/chef-datadog/issues/830
+[#833]: https://github.com/DataDog/chef-datadog/issues/833
+[#834]: https://github.com/DataDog/chef-datadog/issues/834
+[#836]: https://github.com/DataDog/chef-datadog/issues/836
+[#839]: https://github.com/DataDog/chef-datadog/issues/839
+[#843]: https://github.com/DataDog/chef-datadog/issues/843
+[#850]: https://github.com/DataDog/chef-datadog/issues/850
+[#852]: https://github.com/DataDog/chef-datadog/issues/852
+[#856]: https://github.com/DataDog/chef-datadog/issues/856
+[#858]: https://github.com/DataDog/chef-datadog/issues/858
+[#859]: https://github.com/DataDog/chef-datadog/issues/859
+[#860]: https://github.com/DataDog/chef-datadog/issues/860
+[#861]: https://github.com/DataDog/chef-datadog/issues/861
+[#863]: https://github.com/DataDog/chef-datadog/issues/863
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@Azraeht]: https://github.com/Azraeht
@@ -1029,6 +1064,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@albertvaka]: https://github.com/albertvaka
 [@alexism]: https://github.com/alexism
 [@alq]: https://github.com/alq
+[@amenasria]: https://github.com/amenasria
 [@antonio-osorio]: https://github.com/antonio-osorio
 [@arthurnn]: https://github.com/arthurnn
 [@asherf]: https://github.com/asherf
@@ -1074,6 +1110,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@flah00]: https://github.com/flah00
 [@foobarto]: https://github.com/foobarto
 [@frezbo]: https://github.com/frezbo
+[@ganeshkumarsv]: https://github.com/ganeshkumarsv
 [@gkze]: https://github.com/gkze
 [@gmmeyer]: https://github.com/gmmeyer
 [@graemej]: https://github.com/graemej
@@ -1112,6 +1149,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@kurochan]: https://github.com/kurochan
 [@kylegoch]: https://github.com/kylegoch
 [@lchayoun]: https://github.com/lchayoun
+[@lebauce]: https://github.com/lebauce
 [@lefthand]: https://github.com/lefthand
 [@martinisoft]: https://github.com/martinisoft
 [@mattrobenolt]: https://github.com/mattrobenolt

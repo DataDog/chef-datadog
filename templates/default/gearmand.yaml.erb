@@ -1,0 +1,62 @@
+<%= JSON.parse(({'logs' => @logs }).to_json).to_yaml -%>
+
+instances:
+<% @instances.each do |i| %>
+  <% if i['server'] -%>
+    <% ip = i['server'] %>
+  <% else %>
+    <% ip = '127.0.0.1' %>
+  <% end -%>
+- server: <%= ip %>
+  <% if i['port'] -%>
+    <% port = i['port'] %>
+  <% else %>
+    <% port = '4730' %>
+  <% end -%>
+  port: <%= port %>
+  <% if i['tasks'] %>
+  tasks:
+    <% i['tasks'].each do |task| -%>
+  - <%= task %>
+    <% end %>
+  <% end %>
+  <% if i['tags'] %>
+  tags:
+    <% i['tags'].each do |tag| -%>
+  - <%= tag %>
+    <% end %>
+  <% end %>
+  <% if i['service'] %>
+  service: <%= i['service'] %>
+  <% end %>
+  <% if i['min_collection_interval'] %>
+    <% seconds = i['min_collection_interval'] %>
+  <% else %>
+    <% seconds = 15 %>
+  <% end %>
+  min_collection_interval: <%= seconds %>
+  <% if i['empty_default_hostname'] %>
+     <% boolean = i['empty_default_hostname'] %>
+  <% else %>
+     <% boolean = false %>
+  <% end %>
+  empty_default_hostname: <%= boolean %>
+  <% if i['metric_patterns'] %>
+  metric_patterns:
+    <% if i['metric_patterns'].include?('include') %>
+    include:
+      <% i['metric_patterns']['include'].each do |regex| %>
+    - <%= regex %>
+      <% end %>
+    <% end %>
+    <% if i['metric_patterns'].include?('exclude') %>
+    exclude:
+      <% i['metric_patterns']['exclude'].each do |regex| %>
+    - <%= regex %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end -%>
+
+init_config:
+# No init_config details needed

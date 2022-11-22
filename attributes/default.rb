@@ -360,6 +360,10 @@ default['datadog']['process_agent']['rtprocess_interval'] = nil
 default['datadog']['process_agent']['container_interval'] = nil
 default['datadog']['process_agent']['rtcontainer_interval'] = nil
 
+# Cloud Workload Security functionality settings
+default['datadog']['security_agent']['cws']['enabled'] = false
+default['datadog']['security_agent']['cspm']['enabled'] = false
+
 # System probe functionality settings
 
 # Whether this cookbook should write system-probe.yaml or not.

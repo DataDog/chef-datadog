@@ -1446,7 +1446,11 @@ describe 'datadog::dd-agent' do
       end.converge described_recipe
     end
     it 'installs the full version' do
-      expect(chef_run).to install_dnf_package('datadog-agent').with_version('1:6.16.0-1')
+      if Chef::Datadog.chef_version_ge? 14
+        expect(chef_run).to install_dnf_package('datadog-agent').with_version('1:6.16.0-1')
+      else
+        expect(chef_run).to install_dnf_package('datadog-agent').with_version('6.16.0-1')
+      end
     end
   end
 end
