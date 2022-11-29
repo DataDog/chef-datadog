@@ -71,4 +71,8 @@ suites:
     - ubuntu-14.04
     - debian-8.11
   <% end %>
+  <% if agent_major_version == 5 %>
+  excludes:
+    - centos-7.7
+  <% end %>
 <% end %>
