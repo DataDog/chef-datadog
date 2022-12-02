@@ -1,5 +1,7 @@
 --color
 --format progress
+--format RspecJunitFormatter
+--out /tmp/chef-datadog-rspec.xml
 --order rand
 --require spec_helper
 --tag focus

@@ -1,5 +1,3 @@
-# Encoding: utf-8
-
 require 'spec_helper'
 
 AGENT_CONFIG = File.join(@agent_config_dir, 'conf.d/cassandra.d/conf.yaml')
@@ -22,8 +20,8 @@ describe file(AGENT_CONFIG) do
           user: 'someuser',
           password: 'somepass',
           process_name_regex: '.*cassandra.*',
-          cassandra_aliasing: true
-        }
+          cassandra_aliasing: true,
+        },
       ],
       'logs' => nil,
       'init_config' => {
@@ -32,49 +30,49 @@ describe file(AGENT_CONFIG) do
             include: {
               domain: 'org.apache.cassandra.metrics',
               type: 'ClientRequest',
-              scope: [
-                'Read',
-                'Write'
-              ],
-              name: [
-                'Latency',
-                'Timeouts',
-                'Unavailables'
-              ],
-              attribute: [
-                'Count',
-                'OneMinuteRate'
-              ]
-            }
+              scope: %w(
+                Read
+                Write
+              ),
+              name: %w(
+                Latency
+                Timeouts
+                Unavailables
+              ),
+              attribute: %w(
+                Count
+                OneMinuteRate
+              ),
+            },
           },
           {
             include: {
               domain: 'org.apache.cassandra.metrics',
               type: 'ClientRequest',
-              scope: [
-                'Read',
-                'Write'
-              ],
+              scope: %w(
+                Read
+                Write
+              ),
               name: [
-                'TotalLatency'
-              ]
-            }
+                'TotalLatency',
+              ],
+            },
           },
           {
             include: {
               domain: 'org.apache.cassandra.metrics',
               type: 'Storage',
-              name: [
-                'Load',
-                'Exceptions'
-              ]
-            }
+              name: %w(
+                Load
+                Exceptions
+              ),
+            },
           },
           {
             include: {
               domain: 'org.apache.cassandra.metrics',
               type: 'ColumnFamily',
-              name: %w[
+              name: %w(
                 TotalDiskSpaceUsed
                 BloomFilterDiskSpaceUsed
                 BloomFilterFalsePositives
@@ -88,66 +86,66 @@ describe file(AGENT_CONFIG) do
                 MemtableLiveDataSize
                 MemtableSwitchCount
                 MinRowSize
-              ]
+              ),
             },
             exclude: {
-              keyspace: [
-                'system',
-                'system_auth',
-                'system_distributed',
-                'system_traces'
-              ]
-            }
+              keyspace: %w(
+                system
+                system_auth
+                system_distributed
+                system_traces
+              ),
+            },
           },
           {
             include: {
               domain: 'org.apache.cassandra.metrics',
               type: 'Cache',
-              name: [
-                'Capacity',
-                'Size'
-              ],
+              name: %w(
+                Capacity
+                Size
+              ),
               attribute: [
-                'Value'
-              ]
-            }
+                'Value',
+              ],
+            },
           },
           {
             include: {
               domain: 'org.apache.cassandra.metrics',
               type: 'Cache',
-              name: [
-                'Hits',
-                'Requests'
-              ],
+              name: %w(
+                Hits
+                Requests
+              ),
               attribute: [
-                'Count'
-              ]
-            }
+                'Count',
+              ],
+            },
           },
           {
             include: {
               domain: 'org.apache.cassandra.metrics',
               type: 'ThreadPools',
               path: 'request',
-              name: [
-                'ActiveTasks',
-                'CompletedTasks',
-                'PendingTasks',
-                'CurrentlyBlockedTasks'
-              ]
-            }
+              name: %w(
+                ActiveTasks
+                CompletedTasks
+                PendingTasks
+                CurrentlyBlockedTasks
+              ),
+            },
           },
           {
             include: {
               domain: 'org.apache.cassandra.db',
               attribute: [
-                'UpdateInterval'
-              ]
-            }
-          }
-        ]
-      }
+                'UpdateInterval',
+              ],
+            },
+          },
+        ],
+      },
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

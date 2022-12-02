@@ -1,42 +1,49 @@
-# bundler
-.bundle
-Gemfile*.lock
-
-# For MacOS:
-.DS_Store
-
-# For Ruby Managers
-.rbenv-version
-.ruby-version
-.ruby-gemset
-.rvmrc
-
-# For TextMate
-*.tmproj
-
-# For emacs:
+*.rbc
+.config
+InstalledFiles
+pkg
+test/tmp
+test/version_tmp
+tmp
+_Store
 *~
 *#
 .#*
 \#*#
+*.un~
+*.tmp
+*.bk
+*.bkup
 
-# For vim:
+# editor files
+.idea
 .*.sw[a-z]
 
-# For Vagrant
-.vagrant
+# ruby/bundler/rspec files
+.ruby-version
+.ruby-gemset
+.rvmrc
+Gemfile.lock
+.bundle
+*.gem
+coverage
+spec/reports
 
-# Berkshelf
+# YARD / rdoc artifacts
+.yardoc
+_yardoc
+doc/
+rdoc
+
+# chef infra stuff
 Berksfile.lock
-/.ruby-version
+.kitchen
+kitchen.local.yml
+vendor/
+.coverage/
+.zero-knife.rb
+Policyfile.lock.json
 
-# Test-Kitchen
-.kitchen/
-.kitchen.local.yml
-
-# Coverage
-coverage/
-
-# Local environment managaers
-.env
-.envrc
+# vagrant stuff
+.vagrant/
+.vagrant.d/

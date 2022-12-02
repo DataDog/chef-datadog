@@ -20,7 +20,7 @@
 yum_a5_architecture_map = {
   'i686' => 'i386',
   'i386' => 'i386',
-  'x86' => 'i386'
+  'x86' => 'i386',
 }
 yum_a5_architecture_map.default = 'x86_64'
 
@@ -58,9 +58,9 @@ when 'debian'
   log 'apt deprecated parameters warning' do
     level :warn
     message 'Attributes "aptrepo_use_backup_keyserver", "aptrepo_keyserver" and "aptrepo_backup_keyserver" are deprecated since version 4.11.0'
-    only_if {
+    only_if do
       !node['datadog']['aptrepo_use_backup_keyserver'].nil? || !node['datadog']['aptrepo_keyserver'].nil? || !node['datadog']['aptrepo_backup_keyserver'].nil?
-    }
+    end
   end
 
   apt_update 'update' do
@@ -177,7 +177,7 @@ when 'rhel', 'fedora', 'amazon'
     remote_file "remote_file_#{rpm_gpg_key[rpm_gpg_keys_name]}" do
       path key_local_path
       source node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}"]
-      # note that for the "current" key, this will fine, because there's never going to be
+      # NOTE: that for the "current" key, this will fine, because there's never going to be
       # gpg-pubkey-current entry in the RPM database
       not_if "rpm -q gpg-pubkey-#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}" # (key already imported)
       notifies :run, "execute[rpm-import datadog key #{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}]", :immediately

@@ -1,5 +1,3 @@
-# Encoding: utf-8
-
 require 'spec_helper'
 
 AGENT_CONFIG = File.join(@agent_config_dir, 'conf.d/mesos_master.d/conf.yaml')
@@ -19,13 +17,13 @@ describe file(AGENT_CONFIG) do
         {
           url: 'localhost:5050',
           timeout: 8,
-          tags: ['master', 'tata']
-        }
+          tags: %w(master tata),
+        },
       ],
       'logs' => nil,
       init_config: {
-        default_timeout: 10
-      }
+        default_timeout: 10,
+      },
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

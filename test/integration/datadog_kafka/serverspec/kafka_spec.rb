@@ -1,5 +1,3 @@
-# Encoding: utf-8
-
 require 'spec_helper'
 
 AGENT_CONFIG = File.join(@agent_config_dir, 'conf.d/kafka.d/conf.yaml')
@@ -24,8 +22,8 @@ describe file(AGENT_CONFIG) do
           port: 9999,
           trust_store_password: 'password',
           trust_store_path: '/path/to/trustStore.jks',
-          user: 'username'
-        }
+          user: 'username',
+        },
       ],
       'logs' => nil,
       init_config: {
@@ -39,10 +37,10 @@ describe file(AGENT_CONFIG) do
               attribute: {
                 MeanRate: {
                   metric_type: 'gauge',
-                  alias: 'kafka.net.bytes_out'
-                }
-              }
-            }
+                  alias: 'kafka.net.bytes_out',
+                },
+              },
+            },
           },
           {
             include: {
@@ -51,10 +49,10 @@ describe file(AGENT_CONFIG) do
               attribute: {
                 MeanRate: {
                   metric_type: 'gauge',
-                  alias: 'kafka.net.bytes_in'
-                }
-              }
-            }
+                  alias: 'kafka.net.bytes_in',
+                },
+              },
+            },
           },
           {
             include: {
@@ -63,10 +61,10 @@ describe file(AGENT_CONFIG) do
               attribute: {
                 MeanRate: {
                   metric_type: 'gauge',
-                  alias: 'kafka.messages_in'
-                }
-              }
-            }
+                  alias: 'kafka.messages_in',
+                },
+              },
+            },
           },
           {
             include: {
@@ -75,10 +73,10 @@ describe file(AGENT_CONFIG) do
               attribute: {
                 MeanRate: {
                   metric_type: 'gauge',
-                  alias: 'kafka.request.fetch.failed'
-                }
-              }
-            }
+                  alias: 'kafka.request.fetch.failed',
+                },
+              },
+            },
           },
           {
             include: {
@@ -87,10 +85,10 @@ describe file(AGENT_CONFIG) do
               attribute: {
                 MeanRate: {
                   metric_type: 'gauge',
-                  alias: 'kafka.request.produce.failed'
-                }
-              }
-            }
+                  alias: 'kafka.request.produce.failed',
+                },
+              },
+            },
           },
           {
             include: {
@@ -99,14 +97,14 @@ describe file(AGENT_CONFIG) do
               attribute: {
                 Mean: {
                   metric_type: 'gauge',
-                  alias: 'kafka.request.produce.time.avg'
+                  alias: 'kafka.request.produce.time.avg',
                 },
                 '99thPercentile' => {
                   metric_type: 'gauge',
-                  alias: 'kafka.request.produce.time.99percentile'
-                }
-              }
-            }
+                  alias: 'kafka.request.produce.time.99percentile',
+                },
+              },
+            },
           },
           {
             include: {
@@ -115,14 +113,14 @@ describe file(AGENT_CONFIG) do
               attribute: {
                 Mean: {
                   metric_type: 'gauge',
-                  alias: 'kafka.request.fetch.time.avg'
+                  alias: 'kafka.request.fetch.time.avg',
                 },
                 '99thPercentile' => {
                   metric_type: 'gauge',
-                  alias: 'kafka.request.fetch.time.99percentile'
-                }
-              }
-            }
+                  alias: 'kafka.request.fetch.time.99percentile',
+                },
+              },
+            },
           },
           {
             include: {
@@ -131,14 +129,14 @@ describe file(AGENT_CONFIG) do
               attribute: {
                 Mean: {
                   metric_type: 'gauge',
-                  alias: 'kafka.request.update_metadata.time.avg'
+                  alias: 'kafka.request.update_metadata.time.avg',
                 },
                 '99thPercentile' => {
                   metric_type: 'gauge',
-                  alias: 'kafka.request.update_metadata.time.99percentile'
-                }
-              }
-            }
+                  alias: 'kafka.request.update_metadata.time.99percentile',
+                },
+              },
+            },
           },
           {
             include: {
@@ -147,14 +145,14 @@ describe file(AGENT_CONFIG) do
               attribute: {
                 Mean: {
                   metric_type: 'gauge',
-                  alias: 'kafka.request.metadata.time.avg'
+                  alias: 'kafka.request.metadata.time.avg',
                 },
                 '99thPercentile' => {
                   metric_type: 'gauge',
-                  alias: 'kafka.request.metadata.time.99percentile'
-                }
-              }
-            }
+                  alias: 'kafka.request.metadata.time.99percentile',
+                },
+              },
+            },
           },
           {
             include: {
@@ -163,14 +161,14 @@ describe file(AGENT_CONFIG) do
               attribute: {
                 Mean: {
                   metric_type: 'gauge',
-                  alias: 'kafka.request.offsets.time.avg'
+                  alias: 'kafka.request.offsets.time.avg',
                 },
                 '99thPercentile' => {
                   metric_type: 'gauge',
-                  alias: 'kafka.request.offsets.time.99percentile'
-                }
-              }
-            }
+                  alias: 'kafka.request.offsets.time.99percentile',
+                },
+              },
+            },
           },
           {
             include: {
@@ -179,10 +177,10 @@ describe file(AGENT_CONFIG) do
               attribute: {
                 MeanRate: {
                   metric_type: 'gauge',
-                  alias: 'kafka.replication.isr_shrinks'
-                }
-              }
-            }
+                  alias: 'kafka.replication.isr_shrinks',
+                },
+              },
+            },
           },
           {
             include: {
@@ -191,10 +189,10 @@ describe file(AGENT_CONFIG) do
               attribute: {
                 MeanRate: {
                   metric_type: 'gauge',
-                  alias: 'kafka.replication.isr_expands'
-                }
-              }
-            }
+                  alias: 'kafka.replication.isr_expands',
+                },
+              },
+            },
           },
           {
             include: {
@@ -203,10 +201,10 @@ describe file(AGENT_CONFIG) do
               attribute: {
                 MeanRate: {
                   metric_type: 'gauge',
-                  alias: 'kafka.replication.leader_elections'
-                }
-              }
-            }
+                  alias: 'kafka.replication.leader_elections',
+                },
+              },
+            },
           },
           {
             include: {
@@ -215,10 +213,10 @@ describe file(AGENT_CONFIG) do
               attribute: {
                 MeanRate: {
                   metric_type: 'gauge',
-                  alias: 'kafka.replication.unclean_leader_elections'
-                }
-              }
-            }
+                  alias: 'kafka.replication.unclean_leader_elections',
+                },
+              },
+            },
           },
           {
             include: {
@@ -227,13 +225,13 @@ describe file(AGENT_CONFIG) do
               attribute: {
                 MeanRate: {
                   metric_type: 'gauge',
-                  alias: 'kafka.log.flush_rate'
-                }
-              }
-            }
-          }
-        ]
-      }
+                  alias: 'kafka.log.flush_rate',
+                },
+              },
+            },
+          },
+        ],
+      },
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

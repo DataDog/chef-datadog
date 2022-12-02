@@ -72,7 +72,7 @@ if security_agent_enabled
     service_name service_name
     action :start
     provider service_provider unless service_provider.nil?
-    supports :restart => true, :status => true, :start => true, :stop => true
+    supports restart: true, status: true, start: true, stop: true
     subscribes :restart, "template[#{security_agent_config_file}]", :delayed
   end
 end

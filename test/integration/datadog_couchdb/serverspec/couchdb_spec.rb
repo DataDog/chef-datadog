@@ -1,5 +1,3 @@
-# Encoding: utf-8
-
 require 'spec_helper'
 
 AGENT_CONFIG = File.join(@agent_config_dir, 'conf.d/couch.d/conf.yaml')
@@ -19,11 +17,11 @@ describe file(AGENT_CONFIG) do
         {
           password: 'somepass',
           server: 'http://localhost:5984',
-          user: 'someuser'
-        }
+          user: 'someuser',
+        },
       ],
       'logs' => nil,
-      'init_config' => nil
+      'init_config' => nil,
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

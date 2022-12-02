@@ -1,5 +1,3 @@
-# Encoding: utf-8
-
 require 'spec_helper'
 
 AGENT_CONFIG = File.join(@agent_config_dir, 'conf.d/cassandra.d/conf.yaml')
@@ -22,8 +20,8 @@ describe file(AGENT_CONFIG) do
           user: 'someuser',
           password: 'somepass',
           process_name_regex: '.*cassandra.*',
-          cassandra_aliasing: true
-        }
+          cassandra_aliasing: true,
+        },
       ],
       'logs' => nil,
       'init_config' => {
@@ -31,7 +29,7 @@ describe file(AGENT_CONFIG) do
           {
             include: {
               domain: 'org.apache.cassandra.db',
-              attribute: %w[
+              attribute: %w(
                 BloomFilterDiskSpaceUsed
                 BloomFilterFalsePositives
                 BloomFilterFalseRatio
@@ -64,33 +62,33 @@ describe file(AGENT_CONFIG) do
                 TotalWriteLatencyMicros
                 UpdateInterval
                 WriteCount
-              ]
+              ),
             },
             exclude: {
-              keyspace: 'system'
-            }
+              keyspace: 'system',
+            },
           },
           {
             include: {
               domain: 'org.apache.cassandra.internal',
-              attribute: [
-                'ActiveCount',
-                'CompletedTasks',
-                'CurrentlyBlockedTasks',
-                'TotalBlockedTasks'
-              ]
-            }
+              attribute: %w(
+                ActiveCount
+                CompletedTasks
+                CurrentlyBlockedTasks
+                TotalBlockedTasks
+              ),
+            },
           },
           {
             include: {
               domain: 'org.apache.cassandra.net',
               attribute: [
-                'TotalTimeouts'
-              ]
-            }
-          }
-        ]
-      }
+                'TotalTimeouts',
+              ],
+            },
+          },
+        ],
+      },
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

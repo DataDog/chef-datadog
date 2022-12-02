@@ -1,5 +1,3 @@
-# Encoding: utf-8
-
 require 'spec_helper'
 
 AGENT_CONFIG = File.join(@agent_config_dir, 'conf.d/systemd.d/conf.yaml')
@@ -21,12 +19,12 @@ describe file(AGENT_CONFIG) do
             'myservice1.service',
             'myservice2.service',
             'mysocket.socket',
-            'mytimer.timer'
-          ]
-        }
+            'mytimer.timer',
+          ],
+        },
       ],
       'logs' => nil,
-      'init_config' => nil
+      'init_config' => nil,
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

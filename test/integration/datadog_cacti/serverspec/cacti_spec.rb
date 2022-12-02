@@ -1,5 +1,3 @@
-# Encoding: utf-8
-
 require 'spec_helper'
 
 AGENT_CONFIG = File.join(@agent_config_dir, 'conf.d/cacti.d/conf.yaml')
@@ -17,16 +15,16 @@ describe file(AGENT_CONFIG) do
     expected = {
       'instances' => [
         {
-          field_names: ['ifIndex', 'dskDevice', 'ifName'],
+          field_names: %w(ifIndex dskDevice ifName),
           mysql_host: 'localhost',
           mysql_password: 'mysql_read_only_password',
           mysql_user: 'mysql_read_only',
           rrd_path: '/path/to/cacti/rra',
-          rrd_whitelist: '/path/to/rrd_whitelist.txt'
-        }
+          rrd_whitelist: '/path/to/rrd_whitelist.txt',
+        },
       ],
       'logs' => nil,
-      'init_config' => nil
+      'init_config' => nil,
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

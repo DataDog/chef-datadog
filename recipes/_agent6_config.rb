@@ -47,7 +47,7 @@ template agent_config_file do
     {
       extra_config: extra_config,
       api_key: Chef::Datadog.api_key(node),
-      additional_endpoints: additional_endpoints
+      additional_endpoints: additional_endpoints,
     }
   end
 

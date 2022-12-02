@@ -32,7 +32,7 @@ sysprobe_agent_start = sysprobe_enabled && node['datadog']['agent_start'] && nod
 # Configures system-probe agent
 system_probe_config_file =
   if is_windows
-    'C:/ProgramData/Datadog/system-probe.yaml'
+    "#{ENV['ProgramData']}/Datadog/system-probe.yaml"
   else
     '/etc/datadog-agent/system-probe.yaml'
   end
@@ -93,12 +93,12 @@ service 'datadog-agent-sysprobe' do
   action [sysprobe_agent_start]
   provider service_provider unless service_provider.nil?
   if is_windows
-    supports :restart => true, :start => true, :stop => true
+    supports restart: true, start: true, stop: true
     restart_command "powershell restart-service #{service_name} -Force"
     stop_command "powershell stop-service #{service_name} -Force"
   else
-    supports :restart => true, :status => true, :start => true, :stop => true
+    supports restart: true, status: true, start: true, stop: true
   end
-  supports :restart => true, :status => true, :start => true, :stop => true
+  supports restart: true, status: true, start: true, stop: true
   subscribes :restart, "template[#{system_probe_config_file}]", :delayed if sysprobe_enabled
 end

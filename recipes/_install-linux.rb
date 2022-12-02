@@ -65,7 +65,7 @@ when 'rhel', 'fedora', 'amazon'
     end
   end
 when 'suse'
-  zypper_package dd_agent_flavor do # ~FC009
+  zypper_package dd_agent_flavor do
     version dd_agent_version
     retries package_retries unless package_retries.nil?
     retry_delay package_retry_delay unless package_retry_delay.nil?

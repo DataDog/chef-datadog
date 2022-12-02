@@ -1,5 +1,3 @@
-# Encoding: utf-8
-
 require 'spec_helper'
 
 AGENT_CONFIG = File.join(@agent_config_dir, 'conf.d/twemproxy.d/conf.yaml')
@@ -17,11 +15,11 @@ describe file(AGENT_CONFIG) do
     expected = {
       instances: [
         {
-          url: 'http://localhost:22222'
-        }
+          url: 'http://localhost:22222',
+        },
       ],
       'logs' => nil,
-      init_config: {}
+      init_config: {},
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

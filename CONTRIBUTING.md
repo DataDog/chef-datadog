@@ -22,11 +22,11 @@ Have you fixed a bug or written a new feature and want to share it? Many thanks!
 
 When submitting your PR, here are some items you can check or improve to facilitate the review process:
 
-  * Have a proper commit history (we advise you to rebase if needed).
-  * Write tests for the code you wrote.
-  * Preferably, make sure that all unit tests pass locally and some relevant kitchen tests.
-  * Summarize your PR with an explanatory title and a message describing your changes, cross-referencing any related bugs/PRs.
-  * Open your PR against the `master` branch.
+* Have a proper commit history (we advise you to rebase if needed).
+* Write tests for the code you wrote.
+* Preferably, make sure that all unit tests pass locally and some relevant kitchen tests.
+* Summarize your PR with an explanatory title and a message describing your changes, cross-referencing any related bugs/PRs.
+* Open your PR against the `master` branch.
 
 Your pull request must pass all CI tests before we merge it. If you see an error and don't think it's your fault, it may not be! [Join us on Slack][slack] or send us an email, and together we'll get it sorted out.
 
@@ -118,7 +118,6 @@ bundle exec kitchen verify datadog-couchdb-ubuntu-1604-15
 # Clean your machine
 bundle exec kitchen destroy datadog-couchdb-ubuntu-1604-15
 ```
-
 
 [bundler]: https://bundler.io
 [kitchen]: https://github.com/test-kitchen/test-kitchen

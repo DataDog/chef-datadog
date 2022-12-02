@@ -1,5 +1,3 @@
-# Encoding: utf-8
-
 require 'spec_helper'
 
 AGENT_CONFIG = File.join(@agent_config_dir, 'conf.d/apache.d/conf.yaml')
@@ -20,11 +18,11 @@ describe file(AGENT_CONFIG) do
           'apache_status_url' => 'http://mysite.com/server-status?auto',
           'apache_user' => 'someusername',
           'apache_password' => 'sekret',
-          'tags' => ['kitchen', 'sink']
-        }
+          'tags' => %w(kitchen sink),
+        },
       ],
       'logs' => nil,
-      'init_config' => nil
+      'init_config' => nil,
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

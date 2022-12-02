@@ -23,7 +23,7 @@ if node['datadog'].include?('agent6')
   Chef::Log.warn('The boolean "agent6" is no longer used by this cookbook since version 4.0.0. Use "agent_major_version" instead. To keep the previous behaviour pin a 3.x version of the cookbook.')
 end
 
-%w[agent6_version agent6_package_action agent6_aptrepo agent6_aptrepo_dist agent6_yumrepo agent6_yumrepo_suse].each do |deprecated|
+%w(agent6_version agent6_package_action agent6_aptrepo agent6_aptrepo_dist agent6_yumrepo agent6_yumrepo_suse).each do |deprecated|
   if node['datadog'].include?(deprecated)
     Chef::Log.warn("The field '#{deprecated}' is no longer used by this cookbook since version 4.0.0. Find an equivalent property in the README. To keep the previous behaviour pin a 3.x version of the cookbook.")
   end
@@ -102,15 +102,11 @@ else
       node['datadog']['extra_endpoints'].each do |_, endpoint|
         next unless endpoint['enabled']
         api_keys << endpoint['api_key']
-        dd_urls << if endpoint['url']
-                     endpoint['url']
-                   else
-                     dd_url
-                   end
+        dd_urls << (endpoint['url'] || dd_url)
       end
       {
-        :api_keys => api_keys,
-        :dd_urls => dd_urls
+        api_keys: api_keys,
+        dd_urls: dd_urls,
       }
     end
     if is_windows
@@ -143,11 +139,11 @@ service 'datadog-agent' do
   action [agent_enable, agent_start]
   provider service_provider unless service_provider.nil?
   if is_windows
-    supports :restart => true, :start => true, :stop => true
+    supports restart: true, start: true, stop: true
     restart_command "powershell restart-service #{service_name} -Force"
     stop_command "powershell stop-service #{service_name} -Force"
   else
-    supports :restart => true, :status => true, :start => true, :stop => true
+    supports restart: true, status: true, start: true, stop: true
   end
   subscribes :restart, "template[#{agent_config_file}]", :delayed if node['datadog']['agent_start']
   # HACK: the restart can fail when we hit systemd's restart limits (by default, 5 starts every 10 seconds)

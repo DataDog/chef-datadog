@@ -42,7 +42,7 @@ template_version = node['datadog']['kafka']['conf'].nil? ? node['datadog']['kafk
 datadog_monitor 'kafka' do
   instances node['datadog']['kafka']['instances']
   version template_version
-  init_config({ :is_jmx => true, :conf => node['datadog']['kafka']['conf'] })
+  init_config({ is_jmx: true, conf: node['datadog']['kafka']['conf'] })
   logs node['datadog']['kafka']['logs']
   action :add
   use_integration_template template_version == 3

@@ -1,5 +1,3 @@
-# Encoding: utf-8
-
 require 'spec_helper'
 require 'json_spec'
 require 'serverspec'
@@ -27,11 +25,11 @@ describe file(AGENT_CONFIG) do
           port: 6432,
           username: 'john',
           password: 'doe',
-          tags: ['toto', 'tata']
-        }
+          tags: %w(toto tata),
+        },
       ],
       'logs' => nil,
-      init_config: nil
+      init_config: nil,
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json

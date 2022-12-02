@@ -1,5 +1,3 @@
-# Encoding: utf-8
-
 require 'spec_helper'
 
 AGENT_CONFIG = File.join(@agent_config_dir, 'conf.d/REPLACEME.d/conf.yaml')
@@ -18,10 +16,10 @@ describe file(AGENT_CONFIG) do
       instances: [
         {
           config_param: 'value',
-          tags: ['kitchen', 'sink']
-        }
+          tags: %w(kitchen sink),
+        },
       ],
-      init_config: nil
+      init_config: nil,
     }
 
     expect(generated.to_json).to be_json_eql expected.to_json
