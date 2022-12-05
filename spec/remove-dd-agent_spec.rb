@@ -29,23 +29,23 @@ describe 'datadog::remove-dd-agent' do
         expect(chef_run).to delete_file(apt_sources_list_file)
     end
 
-    let(:chef_run) { ChefSpec::SoloRunner.new(platform: 'amazon', version: '2.0').converge(described_recipe) }
+    # let(:chef_run) { ChefSpec::SoloRunner.new(platform: 'amazon', version: '2.0').converge(described_recipe) }
 
-    it 'removes the Datadog Agent package'
-        expect(chef_run).to remove_package('datadog-agent')
-    end
+    # it 'removes the Datadog Agent package'
+    #     expect(chef_run).to remove_package('datadog-agent')
+    # end
 
-    it 'removes the Datadog yum repository'
-        expect(chef_run).to remove_yum_repository('datadog')
-    end
+    # it 'removes the Datadog yum repository'
+    #     expect(chef_run).to remove_yum_repository('datadog')
+    # end
 
-    let(:chef_run) { ChefSpec::SoloRunner.new(platform: 'suse', version: '12.5').converge(described_recipe) }
+    # let(:chef_run) { ChefSpec::SoloRunner.new(platform: 'suse', version: '12.5').converge(described_recipe) }
 
-    it 'removes the Datadog Agent package'
-        expect(chef_run).to remove_package('datadog-agent')
-    end
+    # it 'removes the Datadog Agent package'
+    #     expect(chef_run).to remove_package('datadog-agent')
+    # end
 
-    it 'removes the Datadog yum repository'
-        expect(chef_run).to remove_zypper_repository('datadog')
-    end
+    # it 'removes the Datadog yum repository'
+    #     expect(chef_run).to remove_zypper_repository('datadog')
+    # end
 end
