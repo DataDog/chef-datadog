@@ -48,6 +48,4 @@ describe 'datadog::remove-dd-agent' do
     it 'removes the Datadog yum repository'
         expect(chef_run).to remove_zypper_repository('datadog')
     end
-
-
-
+end
