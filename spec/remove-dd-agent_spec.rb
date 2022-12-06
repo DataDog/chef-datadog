@@ -21,7 +21,6 @@ describe 'datadog::remove-dd-agent' do
   context 'when on Ubuntu' do
     let(:chef_run) { ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '20.04').converge(described_recipe) }
 
-
     it 'purges the datadog-agent package' do
       expect(chef_run).to purge_package('datadog-agent')
     end
