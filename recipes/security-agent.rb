@@ -2,7 +2,7 @@
 # Cookbook:: datadog
 # Recipe:: security-agent
 #
-# Copyright:: 2011-2022, Datadog
+# Copyright:: 2011-Present, Datadog
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
