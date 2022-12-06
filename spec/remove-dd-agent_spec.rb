@@ -18,34 +18,49 @@ require 'spec_helper'
 apt_sources_list_file = Chef::Datadog.apt_sources_list_file
 
 describe 'datadog::remove-dd-agent' do
-    let(:chef_run) { ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '20.04').converge(described_recipe) }
+    context 'when on Ubuntu' do
+        let(:chef_run) { ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '20.04').converge(described_recipe) }
 
-    it 'removes the Datadog Agent package'
-        expect(chef_run).to remove_package('datadog-agent')
+        
+        it 'purges the datadog-agent package' do
+            expect(chef_run).to purge_package('datadog-agent')
+        end
+
+        it 'removes apt_sources_list_file and purges the datadog-signing-keys package' do
+            expect(chef_run).to purge_apt_package('datadog-signing-keys')
+            expect(chef_run).to delete_file(apt_sources_list_file)
+        end
     end
 
-    it 'removes apt_sources_list_file and the datadog-signing-keys package'
-        expect(chef_run).to remove_apt_package('datadog-signing-keys')
-        expect(chef_run).to delete_file(apt_sources_list_file)
+    context 'when on Amazon Linux' do
+        let(:chef_run) { ChefSpec::SoloRunner.new(platform: 'amazon', version: '2').converge(described_recipe) }
+
+        it 'purges the datadog-agent package' do
+            expect(chef_run).to purge_package('datadog-agent')
+        end
+
+        it 'removes the datadog yum repository' do
+            expect(chef_run).to remove_yum_repository('datadog')
+        end
     end
 
-    # let(:chef_run) { ChefSpec::SoloRunner.new(platform: 'amazon', version: '2.0').converge(described_recipe) }
+    context 'when on Suse' do
+        let(:chef_run) { ChefSpec::SoloRunner.new(platform: 'suse', version: '12.5').converge(described_recipe) }
 
-    # it 'removes the Datadog Agent package'
-    #     expect(chef_run).to remove_package('datadog-agent')
-    # end
+        it 'purges the datadog-agent package' do
+            expect(chef_run).to purge_package('datadog-agent')
+        end
 
-    # it 'removes the Datadog yum repository'
-    #     expect(chef_run).to remove_yum_repository('datadog')
-    # end
+        it 'removes the datadog zypper repository' do
+            expect(chef_run).to remove_zypper_repository('datadog')
+        end
+    end
 
-    # let(:chef_run) { ChefSpec::SoloRunner.new(platform: 'suse', version: '12.5').converge(described_recipe) }
+    context 'when on Windows' do
+        let(:chef_run) { ChefSpec::SoloRunner.new(platform: 'windows', version: '2016').converge(described_recipe) }
 
-    # it 'removes the Datadog Agent package'
-    #     expect(chef_run).to remove_package('datadog-agent')
-    # end
-
-    # it 'removes the Datadog yum repository'
-    #     expect(chef_run).to remove_zypper_repository('datadog')
-    # end
+        it 'removes the Datadog Agent package' do
+            expect(chef_run).to remove_package('Datadog Agent')
+        end
+    end
 end
