@@ -30,7 +30,7 @@ when 'linux'
   case node['platform_family']
   when 'amazon', 'rhel' # 'rhel' includes redhat, centos, rocky, scientific and almalinux
     yum_repository 'datadog' do
-      action :delete
+      action :remove
     end
   when 'debian' # 'debian' includes debian and ubuntu
     apt_package 'datadog-signing-keys' do
