@@ -6,7 +6,7 @@ include_recipe '::dd-agent'
 # up the following attributes at some point in your Chef run, in either a role
 # or another cookbook.
 #
-# node['datadog']['ssh_check']['instances'] = [
+# node.default['datadog']['ssh_check']['instances'] = [
 #   {
 #     'host'              => '1.2.3.4',               # required for each instance
 #     'username'          => 'user',                  # required for each instance
@@ -15,6 +15,7 @@ include_recipe '::dd-agent'
 #     'sftp_check'        => true,                    # optional, defaults to true
 #     'private_key_file'  => '/path/to/key',          # optional
 #     'add_missing_keys'  => false,                   # optional, defaults to false
+#     'min_collection_interval' => 300,               # optional, defaults to 15
 #     'tags'              => [node.chef_environment]  # optional
 #   }
 # ]

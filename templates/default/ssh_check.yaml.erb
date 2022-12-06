@@ -5,7 +5,7 @@ instances:
   - host: <%= i['host'] %>
     username: <%= i['username'] %>
     <%
-    keys = %w(password port sftp_check private_key_file add_missing_keys tags)
+    keys = %w(password port sftp_check private_key_file add_missing_keys min_collection_interval tags)
     keys.each do |key|
       if i.key?(key)
     -%>
