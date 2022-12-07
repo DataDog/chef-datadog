@@ -7,7 +7,9 @@ class Chef
         datadog-iot-agent
       ].freeze
 
-      # This method stores a variable that is used across recipes so we needed a place to define it
+      # This method stores a variable that is used across recipes so we needed a place to define it.
+      # Global variables like this are usually set in the attributes/default.rb file for users to edit them.
+      # We don't want this variable to be changed by the user though, hence the place.
       def apt_sources_list_file
         '/etc/apt/sources.list.d/datadog.list'
       end
