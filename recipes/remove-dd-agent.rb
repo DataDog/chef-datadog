@@ -28,7 +28,7 @@ when 'linux'
 
   # Then remove the installation files (depending on the OS: sources_list file, datadog-signing-keys package...)
   case node['platform_family']
-  when 'amazon', 'rhel' # 'rhel' includes redhat, centos, rocky, scientific and almalinux
+  when 'amazon', 'rhel', 'fedora' # 'rhel' includes redhat, centos, rocky, scientific and almalinux
     yum_repository 'datadog' do
       action :remove
     end
