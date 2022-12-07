@@ -37,7 +37,8 @@ apt_gpg_keys = {
 }
 apt_trusted_d_keyring = '/etc/apt/trusted.gpg.d/datadog-archive-keyring.gpg'
 apt_usr_share_keyring = '/usr/share/keyrings/datadog-archive-keyring.gpg'
-apt_sources_list_file = '/etc/apt/sources.list.d/datadog.list'
+# Importing apt_sources_list_file variable from recipe_helpers.rb
+apt_sources_list_file = Chef::Datadog.apt_sources_list_file
 apt_repo_uri = 'https://apt.datadoghq.com'
 
 # DATADOG_RPM_KEY_CURRENT always contains the key that is used to sign repodata and latest packages
