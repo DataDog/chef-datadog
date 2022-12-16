@@ -42,19 +42,6 @@ The following Opscode cookbooks are dependencies:
 
 #### Chef
 
-**Chef 12 users**: Depending on your version of Chef 12, additional dependency constraints may apply:
-
-```ruby
-# Chef < 12.14
-depends 'yum', '< 5.0'
-```
-
-```ruby
-# Chef < 12.9
-depends 'apt', '< 6.0.0'
-depends 'yum', '< 5.0'
-```
-
 **Chef 13 users**: With Chef 13 and `chef_handler` 1.x, you may have trouble using the `dd-handler` recipe. The known workaround is to update your dependency to `chef_handler` >= 2.1.
 
 **Chef 14 and later users**: To support Chef 12 and 13, the `datadog` cookbook has a dependency on the `chef_handler` cookbook, which is shipped as a resource in Chef 14. Unfortunately, this causes a deprecation message on Chef 14 and later.
