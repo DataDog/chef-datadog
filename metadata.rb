@@ -37,7 +37,7 @@ end
 
 # Use '< 5.0' with Chef < 12.14
 if Chef::VERSION < Gem::Version.new(12.14)
-  depends 'yum', '< 5.0'
+  depends 'yum', '>= 3.0', '< 5.0'
 else
   depends 'yum', '>= 3.0'
 end
