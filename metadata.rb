@@ -23,12 +23,12 @@ issues_url       'https://github.com/DataDog/chef-datadog/issues'
 end
 
 current_chef_version = if Chef::VERSION.instance_of? String
-    # For Chef < 13.1.33 Chef::VERSION was a String
-    Gem::Version.new(Chef::VERSION.to_f)
-  else
-    # Else Chef::VERSION is already a VersionString
-    Chef::VERSION
-  end
+                         # For Chef < 13.1.33 Chef::VERSION was a String
+                         Gem::Version.new(Chef::VERSION.to_f)
+                       else
+                         # Else Chef::VERSION is already a VersionString
+                         Chef::VERSION
+                       end
 
 if current_chef_version < Gem::Version.new(14)
   # The chef_handler cookbook is shipped as part of Chef >= 14,
