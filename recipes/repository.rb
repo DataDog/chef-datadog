@@ -236,9 +236,6 @@ when 'rhel', 'fedora', 'amazon'
       yumrepo_gpgkeys.push(node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}"])
     end
   end
-  # yum/dnf go through entries in the order in which they're set in the repofile;
-  # add the old key last so it doesn't get imported at all if a newer key can be used
-  yumrepo_gpgkeys.push(node['datadog']['yumrepo_gpgkey']) if agent_major_version < 7
 
   yum_repository 'datadog' do
     description 'datadog'
@@ -276,20 +273,13 @@ when 'suse'
     end
   end
 
-  # Now the old key is mostly hard-coded
+  # The DATADOG_RPM_KEY.public (4172a230) is not used anymore, it should be deleted if present
   old_key_local_path = ::File.join(Chef::Config[:file_cache_path], 'DATADOG_RPM_KEY.public')
   remote_file 'DATADOG_RPM_KEY.public' do
     path old_key_local_path
     source node['datadog']['yumrepo_gpgkey']
-    not_if 'rpm -q gpg-pubkey-4172a230' # (key already imported)
-    notifies :run, 'execute[rpm-import datadog key 4172a230]', :immediately
-  end
-
-  # Import key if fingerprint matches
-  execute 'rpm-import datadog key 4172a230' do
-    command "rpm --import #{old_key_local_path}"
-    only_if "gpg --dry-run --quiet --with-fingerprint #{old_key_local_path} | grep '60A3 89A4 4A0C 32BA E3C0  3F0B 069B 56F5 4172 A230' || gpg --dry-run --import --import-options import-show #{old_key_local_path} | grep '60A389A44A0C32BAE3C03F0B069B56F54172A230'"
-    action :nothing
+    only_if 'rpm -q gpg-pubkey-4172a230'
+    notifies :run, 'execute[rpm --erase gpg-pubkey-4172a230-55dd14f6]', :immediately
   end
 
   if !node['datadog']['yumrepo_suse'].nil?
@@ -309,7 +299,7 @@ when 'suse'
   zypper_repository 'datadog' do
     description 'datadog'
     baseurl baseurl
-    gpgkey agent_major_version < 6 ? node['datadog']['yumrepo_gpgkey'] : node['datadog']['yumrepo_gpgkey_new_current']
+    gpgkey node['datadog']['yumrepo_gpgkey_new_current']
     gpgautoimportkeys false
     gpgcheck false
     # zypper has no repo_gpgcheck option, but it does repodata signature checks
