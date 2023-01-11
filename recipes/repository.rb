@@ -55,6 +55,14 @@ rpm_gpg_keys_short_fingerprint = 1
 # Space delimited full fingerprint
 rpm_gpg_keys_full_fingerprint = 2
 
+# This method deletes an RPM GPG key if it is installed
+def remove_rpm_gpg_key(rpm_gpg_key_full_fingerprint)
+  execute "rpm-remove old gpg key #{rpm_gpg_key_full_fingerprint}" do
+    command "rpm --erase gpg-pubkey-#{rpm_gpg_key_full_fingerprint}"
+    only_if "rpm -q gpg-pubkey-#{rpm_gpg_key_full_fingerprint}"
+  end
+end
+
 case node['platform_family']
 when 'debian'
   log 'apt deprecated parameters warning' do
@@ -196,6 +204,9 @@ when 'rhel', 'fedora', 'amazon'
     end
   end
 
+  # The DATADOG_RPM_KEY.public (4172a230) is not used anymore, it should be deleted if present
+  remove_rpm_gpg_key('4172a230-55dd14f6')
+
   # When the user has set yumrepo_repo_gpgcheck explicitly, we respect that.
   # Otherwise, we turn on repo_gpgcheck by default when both:
   # * We're not running on RHEL/CentOS 5 or older
@@ -274,17 +285,7 @@ when 'suse'
   end
 
   # The DATADOG_RPM_KEY.public (4172a230) is not used anymore, it should be deleted if present
-  old_key_local_path = ::File.join(Chef::Config[:file_cache_path], 'DATADOG_RPM_KEY.public')
-  remote_file 'DATADOG_RPM_KEY.public' do
-    path old_key_local_path
-    source node['datadog']['yumrepo_gpgkey']
-    only_if 'rpm -q gpg-pubkey-4172a230'
-    notifies :run, 'execute[rpm-remove old gpg key 4172a230]', :immediately
-  end
-
-  execute 'rpm-remove old gpg key 4172a230' do
-    command 'rpm --erase gpg-pubkey-4172a230-55dd14f6'
-  end
+  remove_rpm_gpg_key('4172a230-55dd14f6')
 
   if !node['datadog']['yumrepo_suse'].nil?
     baseurl = node['datadog']['yumrepo_suse']
