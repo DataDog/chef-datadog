@@ -284,7 +284,6 @@ when 'suse'
 
   execute 'rpm-remove old gpg key 4172a230' do
     command 'rpm --erase gpg-pubkey-4172a230-55dd14f6'
-    action :nothing
   end
 
   if !node['datadog']['yumrepo_suse'].nil?
