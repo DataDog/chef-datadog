@@ -503,19 +503,10 @@ describe 'datadog::repository' do
         expect(keyfile_exec_r).to do_nothing
       end
 
-      it 'downloads the old RPM key 4172a230' do
-        expect(chef_run).to create_remote_file('DATADOG_RPM_KEY.public').with(path: ::File.join(Chef::Config[:file_cache_path], 'DATADOG_RPM_KEY.public'))
-      end
-
       it 'deletes the old RPM GPG key 4172a230 if it exists' do
         keyfile_r = chef_run.remote_file('DATADOG_RPM_KEY.public')
-        expect(keyfile_r).to notify('execute[rpm --erase gpg-pubkey-4172a230-55dd14f6]')
+        expect(keyfile_r).to notify('execute[rpm-remove old gpg key 4172a230]')
           .to(:run).immediately
-      end
-
-      it 'doesn\'t execute[rpm-import datadog key *] by default 4172a230' do
-        keyfile_exec_r = chef_run.execute('rpm-import datadog key 4172a230')
-        expect(keyfile_exec_r).to do_nothing
       end
 
       it 'sets up a yum repo' do

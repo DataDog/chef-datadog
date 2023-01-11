@@ -279,7 +279,12 @@ when 'suse'
     path old_key_local_path
     source node['datadog']['yumrepo_gpgkey']
     only_if 'rpm -q gpg-pubkey-4172a230'
-    notifies :run, 'execute[rpm --erase gpg-pubkey-4172a230-55dd14f6]', :immediately
+    notifies :run, 'execute[rpm-remove old gpg key 4172a230]', :immediately
+  end
+
+  execute 'rpm-remove old gpg key 4172a230' do
+    command 'rpm --erase gpg-pubkey-4172a230-55dd14f6'
+    action :nothing
   end
 
   if !node['datadog']['yumrepo_suse'].nil?
