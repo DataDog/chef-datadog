@@ -64,7 +64,7 @@ def remove_rpm_gpg_key(rpm_gpg_key_full_fingerprint)
   end
 end
 
-def warn_deprecated_yumrepo_gpgkey()
+def warn_deprecated_yumrepo_gpgkey
   log 'yum deprecated parameters warning' do
     level :warn
     message 'Attribute "yumrepo_gpgkey" is deprecated since version 4.16.0'
