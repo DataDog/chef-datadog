@@ -60,6 +60,7 @@ def remove_rpm_gpg_key(rpm_gpg_key_full_fingerprint)
   execute "rpm-remove old gpg key #{rpm_gpg_key_full_fingerprint}" do
     command "rpm --erase gpg-pubkey-#{rpm_gpg_key_full_fingerprint}"
     only_if "rpm -q gpg-pubkey-#{rpm_gpg_key_full_fingerprint}"
+    action :run
   end
 end
 
