@@ -6,7 +6,7 @@ jobs:
     environment:
       CHEF_LICENSE: accept # newer versions of Chef client need explicit license accept to run
       KITCHEN_LOCAL_YAML: kitchen.docker.yml
-      RUBY_VERSION: '2.6.3' # ruby used to invoke kitchen, not the version used in the tests
+      RUBY_VERSION: '2.7.1' # ruby used to invoke kitchen, not the version used in the tests
     steps:
       - checkout
       - run:
