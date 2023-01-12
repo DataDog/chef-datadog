@@ -15,6 +15,8 @@ gem 'test-kitchen'
 gem 'json_spec', '~> 1.1.4'
 gem 'kitchen-vagrant'
 gem 'kitchen-docker', '~> 2.3.0'
+gem 'rbnacl', '~> 4.0.2'
+gem 'rbnacl-libsodium' ,'~> 1.0.16'
 
 if RUBY_VERSION < '2.4'
   gem 'json', '~> 2.4.1'
