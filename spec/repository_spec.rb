@@ -505,7 +505,7 @@ describe 'datadog::repository' do
 
       it 'deletes the old RPM GPG key 4172a230 if it exists' do
         expect(chef_run).to run_execute('rpm-remove old gpg key 4172a230-55dd14f6')
-        .with(command: 'rpm --erase gpg-pubkey-4172a230-55dd14f6')
+          .with(command: 'rpm --erase gpg-pubkey-4172a230-55dd14f6')
       end
 
       it 'sets up a yum repo' do
