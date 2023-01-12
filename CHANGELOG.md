@@ -3,7 +3,7 @@ Changes
 
 # 4.16.0 / 2023-01-12
 
-* [FEATURE] Remove old RPM GPG key [#877][] [@amenasria][]
+* [DEPRECATION] Remove old RPM GPG key. This also removes the `yumrepo_gpgkey` parameter [#877][] [@amenasria][]
 * [FEATURE] Add min_collection_interval option to ssh_check config [#867][] [@nilskuehme][]
 * [BUGFIX] Remove source file and datadog-signing-keys package when removing the Agent [#865][] [@amenasria][]
 
