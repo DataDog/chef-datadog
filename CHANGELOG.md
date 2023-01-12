@@ -1,6 +1,12 @@
 Changes
 =======
 
+# 4.16.0 / 2023-01-12
+
+* [FEATURE] Remove old RPM GPG key [#877][] [@amenasria][]
+* [FEATURE] Add min_collection_interval option to ssh_check config [#867][] [@nilskuehme][]
+* [BUGFIX] Remove source file and datadog-signing-keys package when removing the Agent [#865][] [@amenasria][]
+
 # 4.15.0 / 2022-10-06
 * [BUGFIX] Enforce calls of agent version without color output [#863][] [@KSerrania][]
 * [FEATURE] Add configuration for custom_log_collection [#861][] [@nilskuehme][]
