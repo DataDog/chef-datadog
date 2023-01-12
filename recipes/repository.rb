@@ -64,6 +64,16 @@ def remove_rpm_gpg_key(rpm_gpg_key_full_fingerprint)
   end
 end
 
+def warn_deprecated_yumrepo_gpgkey()
+  log 'yum deprecated parameters warning' do
+    level :warn
+    message 'Attribute "yumrepo_gpgkey" is deprecated since version 4.16.0'
+    only_if {
+      !node['datadog']['yumrepo_gpgkey'].nil?
+    }
+  end
+end
+
 case node['platform_family']
 when 'debian'
   log 'apt deprecated parameters warning' do
@@ -173,6 +183,9 @@ when 'debian'
   end
 
 when 'rhel', 'fedora', 'amazon'
+  # The yumrepo_gpgkey parameter was removed because the DATADOG_RPM_KEY.public (4172a230) is not used anymore
+  warn_deprecated_yumrepo_gpgkey()
+
   # gnupg is required to check the downloaded key's fingerprint
   package 'gnupg' do
     action :install
@@ -261,6 +274,9 @@ when 'rhel', 'fedora', 'amazon'
     action :create
   end
 when 'suse'
+  # The yumrepo_gpgkey parameter was removed because the DATADOG_RPM_KEY.public (4172a230) is not used anymore
+  warn_deprecated_yumrepo_gpgkey()
+
   # Import new RPM key
   rpm_gpg_keys.each do |rpm_gpg_key|
     next unless node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}"]
