@@ -21,7 +21,7 @@ jobs:
                     echo . $(rvm $RUBY_VERSION do rvm env --path) >> $BASH_ENV
       - run:
           name: Install bundler
-          command: gem install bundler:2.4.0
+          command: gem install bundler:2.3.26
       - run:
           name: Install dependencies with bundler
           command: bundle install --path .bundle
@@ -50,7 +50,7 @@ jobs:
                     echo . $(rvm $RUBY_VERSION do rvm env --path) >> $BASH_ENV
       - run:
           name: Install bundler
-          command: gem install bundler:1.17.3
+          command: gem install bundler:2.3.26
       - run:
           name: Check bundler version
           command: bundle --version
@@ -86,7 +86,7 @@ jobs:
                     echo . $(rvm $RUBY_VERSION do rvm env --path) >> $BASH_ENV
       - run:
           name: Install bundler
-          command: gem install bundler:1.17.3
+          command: gem install bundler:2.3.26
       - run:
           name: Check bundler version
           command: bundle --version
