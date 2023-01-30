@@ -281,7 +281,6 @@ describe 'datadog::repository' do
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY.public',
           ]
         ).with(repo_gpgcheck: true)
       end
@@ -356,7 +355,6 @@ describe 'datadog::repository' do
             'http://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
             'http://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
             'http://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
-            'http://keys.datadoghq.com/DATADOG_RPM_KEY.public',
           ]
         ).with(repo_gpgcheck: false)
       end
@@ -378,7 +376,6 @@ describe 'datadog::repository' do
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY.public',
           ]
         ).with(repo_gpgcheck: false)
       end
@@ -400,7 +397,6 @@ describe 'datadog::repository' do
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY.public',
           ]
         ).with(repo_gpgcheck: true)
       end
@@ -422,7 +418,6 @@ describe 'datadog::repository' do
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY.public',
           ]
         ).with(repo_gpgcheck: true)
       end
@@ -444,7 +439,6 @@ describe 'datadog::repository' do
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY.public',
           ]
         ).with(repo_gpgcheck: true)
       end
@@ -509,19 +503,9 @@ describe 'datadog::repository' do
         expect(keyfile_exec_r).to do_nothing
       end
 
-      it 'downloads the old RPM key 4172a230' do
-        expect(chef_run).to create_remote_file('DATADOG_RPM_KEY.public').with(path: ::File.join(Chef::Config[:file_cache_path], 'DATADOG_RPM_KEY.public'))
-      end
-
-      it 'notifies the GPG key install if the old key is downloaded 4172a230' do
-        keyfile_r = chef_run.remote_file('DATADOG_RPM_KEY.public')
-        expect(keyfile_r).to notify('execute[rpm-import datadog key 4172a230]')
-          .to(:run).immediately
-      end
-
-      it 'doesn\'t execute[rpm-import datadog key *] by default 4172a230' do
-        keyfile_exec_r = chef_run.execute('rpm-import datadog key 4172a230')
-        expect(keyfile_exec_r).to do_nothing
+      it 'deletes the old RPM GPG key 4172a230 if it exists' do
+        expect(chef_run).to run_execute('rpm-remove old gpg key 4172a230-55dd14f6')
+          .with(command: 'rpm --erase gpg-pubkey-4172a230-55dd14f6')
       end
 
       it 'sets up a yum repo' do
