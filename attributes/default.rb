@@ -389,6 +389,7 @@ default['datadog']['system_probe']['enable_conntrack'] = false
 # When this is set to nil (default), `network_config` won't be rendered in system-probe.yaml,
 # making the Agent use the default setting for this value.
 default['datadog']['system_probe']['network_enabled'] = nil
+default['datadog']['system_probe']['service_monitoring_enabled'] = nil
 
 # Logs functionality settings (Agent 6/7 only)
 # Set `enable_logs_agent` to:

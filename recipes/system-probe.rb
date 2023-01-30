@@ -24,7 +24,7 @@ cws_enabled = node['datadog']['security_agent']['cws']['enabled']
 sysprobe_enabled = if is_windows
                      node['datadog']['system_probe']['network_enabled']
                    else
-                     node['datadog']['system_probe']['enabled'] || node['datadog']['system_probe']['network_enabled'] || cws_enabled
+                     node['datadog']['system_probe']['enabled'] || node['datadog']['system_probe']['network_enabled'] || node['datadog']['system_probe']['service_monitoring_enabled'] || cws_enabled
                    end
 sysprobe_agent_start = sysprobe_enabled && node['datadog']['agent_start'] && node['datadog']['agent_enable'] ? :start : :stop
 
