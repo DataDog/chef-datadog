@@ -595,3 +595,16 @@ suites:
         instances:
           - host: localhost
             port: 49112
+
+- name: datadog_jboss_wildfly
+  run_list:
+    - recipe[datadog::jboss_wildfly]
+  attributes:
+    datadog:
+      <<: *DATADOG
+      jboss_wildfly:
+        init_config:
+          custom_jar_paths: ["/opt/wildfly/bin/client/jboss-client.jar"]
+        instances:
+          - jmx_url: localhost:9990
+            tools_jar_path: /opt/wildfly/bin/client/jboss-client.jar

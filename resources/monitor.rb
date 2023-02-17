@@ -78,7 +78,7 @@ action :add do
     init_config = new_resource.init_config
     if new_resource.is_jmx
       init_config ||= {}
-      init_config.merge!({ 'is_jmx': true, 'collect_default_metrics': true })
+      init_config = init_config.merge({ 'is_jmx': true, 'collect_default_metrics': true })
     end
 
     variables(
