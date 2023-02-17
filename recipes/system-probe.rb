@@ -2,7 +2,7 @@
 # Cookbook:: datadog
 # Recipe:: system-probe
 #
-# Copyright:: 2011-2019, Datadog
+# Copyright:: 2011-Present, Datadog
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ cws_enabled = node['datadog']['security_agent']['cws']['enabled']
 sysprobe_enabled = if is_windows
                      node['datadog']['system_probe']['network_enabled']
                    else
-                     node['datadog']['system_probe']['enabled'] || node['datadog']['system_probe']['network_enabled'] || cws_enabled
+                     node['datadog']['system_probe']['enabled'] || node['datadog']['system_probe']['network_enabled'] || node['datadog']['system_probe']['service_monitoring_enabled'] || cws_enabled
                    end
 sysprobe_agent_start = sysprobe_enabled && node['datadog']['agent_start'] && node['datadog']['agent_enable'] ? :start : :stop
 

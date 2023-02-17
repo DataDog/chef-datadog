@@ -1,3 +1,17 @@
+# Copyright:: 2011-Present, Datadog
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 shared_examples 'old debianoid' do
   it 'properly creates both keyring files and imports all keys' do
     expect(chef_run).to create_file_if_missing('/usr/share/keyrings/datadog-archive-keyring.gpg')
@@ -267,7 +281,6 @@ describe 'datadog::repository' do
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY.public',
           ]
         ).with(repo_gpgcheck: true)
       end
@@ -342,7 +355,6 @@ describe 'datadog::repository' do
             'http://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
             'http://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
             'http://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
-            'http://keys.datadoghq.com/DATADOG_RPM_KEY.public',
           ]
         ).with(repo_gpgcheck: false)
       end
@@ -364,7 +376,6 @@ describe 'datadog::repository' do
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY.public',
           ]
         ).with(repo_gpgcheck: false)
       end
@@ -386,7 +397,6 @@ describe 'datadog::repository' do
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY.public',
           ]
         ).with(repo_gpgcheck: true)
       end
@@ -408,7 +418,6 @@ describe 'datadog::repository' do
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY.public',
           ]
         ).with(repo_gpgcheck: true)
       end
@@ -430,7 +439,6 @@ describe 'datadog::repository' do
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY.public',
           ]
         ).with(repo_gpgcheck: true)
       end
@@ -495,19 +503,9 @@ describe 'datadog::repository' do
         expect(keyfile_exec_r).to do_nothing
       end
 
-      it 'downloads the old RPM key 4172a230' do
-        expect(chef_run).to create_remote_file('DATADOG_RPM_KEY.public').with(path: ::File.join(Chef::Config[:file_cache_path], 'DATADOG_RPM_KEY.public'))
-      end
-
-      it 'notifies the GPG key install if the old key is downloaded 4172a230' do
-        keyfile_r = chef_run.remote_file('DATADOG_RPM_KEY.public')
-        expect(keyfile_r).to notify('execute[rpm-import datadog key 4172a230]')
-          .to(:run).immediately
-      end
-
-      it 'doesn\'t execute[rpm-import datadog key *] by default 4172a230' do
-        keyfile_exec_r = chef_run.execute('rpm-import datadog key 4172a230')
-        expect(keyfile_exec_r).to do_nothing
+      it 'deletes the old RPM GPG key 4172a230 if it exists' do
+        expect(chef_run).to run_execute('rpm-remove old gpg key 4172a230-55dd14f6')
+          .with(command: 'rpm --erase gpg-pubkey-4172a230-55dd14f6')
       end
 
       it 'sets up a yum repo' do

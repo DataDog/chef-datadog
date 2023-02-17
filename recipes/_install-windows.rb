@@ -2,7 +2,7 @@
 # Cookbook:: datadog
 # Recipe:: _install-windows
 #
-# Copyright:: 2011-2015, Datadog
+# Copyright:: 2011-Present, Datadog
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,7 +17,9 @@
 # limitations under the License.
 #
 
-include_recipe 'chef_handler'
+if Chef::VERSION < Gem::Version.new(14)
+  include_recipe 'chef_handler'
+end
 
 dd_agent_flavor = Chef::Datadog.agent_flavor(node)
 

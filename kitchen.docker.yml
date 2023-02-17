@@ -39,6 +39,9 @@ platforms:
   - name: debian-8.11
     driver_config:
       require_chef_omnibus: 14.12
+      # The Debian 8 (Jessie) GPG key expired on Sat Nov 19 2022 21:01:13 GMT+0000.
+      # This Docker image uses gpgv wrapper that ignores key expiration date but checks package signatures.
+      image: 'datadog/docker-library:chef_kitchen_apt_debian_8'
   - name: rocky-8
     driver_config:
       platform: rhel # kitchen-docker doesn't recognize rocky otherwise
@@ -70,5 +73,9 @@ suites:
   excludes:
     - ubuntu-14.04
     - debian-8.11
+  <% end %>
+  <% if %w(5).include?(agent_major_version) %>
+  excludes:
+    - centos-7.7
   <% end %>
 <% end %>

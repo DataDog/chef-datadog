@@ -57,8 +57,6 @@ depends 'yum', '< 5.0'
 
 **Chef 13 users**: With Chef 13 and `chef_handler` 1.x, you may have trouble using the `dd-handler` recipe. The known workaround is to update your dependency to `chef_handler` >= 2.1.
 
-**Chef 14 and later users**: To support Chef 12 and 13, the `datadog` cookbook has a dependency on the `chef_handler` cookbook, which is shipped as a resource in Chef 14. Unfortunately, this causes a deprecation message on Chef 14 and later.
-
 ### Installation
 
 1. Add the cookbook to your Chef server with [Berkshelf][5] or [Knife][6]:
@@ -312,6 +310,8 @@ There are many [recipes][7] to assist you with deploying Agent integration confi
 The [system-probe recipe][17] is automatically included by default. It writes the `system-probe.yaml` file. This behavior can be disabled by setting `node['datadog']['system_probe']['manage_config']` to false.
 
 To enable [Network Performance Monitoring][7] (NPM) in `system-probe.yaml`, set `node['datadog']['system_probe']['network_enabled']` to true.
+
+To enable [Universal Service Monitoring][7] (USM) in `system-probe.yaml`, set `node['datadog']['system_probe']['service_monitoring_enabled']` to true.
 
 **Note for Windows users**: NPM is supported on Windows with Agent v6.27+ and v7.27+. It ships as an optional component that is only installed if `node['datadog']['system_probe']['network_enabled']` is set to true when the Agent is installed or upgraded. Because of this, existing installations might need to do an uninstall and reinstall of the Agent once to install the NPM component, unless the Agent is upgraded at the same time.
 

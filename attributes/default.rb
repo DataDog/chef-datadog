@@ -2,7 +2,7 @@
 # Cookbook:: datadog
 # Attributes:: default
 #
-# Copyright:: 2011-2015, Datadog
+# Copyright:: 2011-Present, Datadog
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -161,7 +161,6 @@ default['datadog']['aptrepo_retries'] = 4
 # not running on RHEL/CentOS <= 5 and not providing custom yumrepo.
 # You can set it to true/false explicitly to override this behaviour.
 default['datadog']['yumrepo_repo_gpgcheck'] = nil
-default['datadog']['yumrepo_gpgkey'] = "#{yum_protocol}://keys.datadoghq.com/DATADOG_RPM_KEY.public"
 default['datadog']['yumrepo_proxy'] = nil
 default['datadog']['yumrepo_proxy_username'] = nil
 default['datadog']['yumrepo_proxy_password'] = nil
@@ -390,6 +389,7 @@ default['datadog']['system_probe']['enable_conntrack'] = false
 # When this is set to nil (default), `network_config` won't be rendered in system-probe.yaml,
 # making the Agent use the default setting for this value.
 default['datadog']['system_probe']['network_enabled'] = nil
+default['datadog']['system_probe']['service_monitoring_enabled'] = nil
 
 # Logs functionality settings (Agent 6/7 only)
 # Set `enable_logs_agent` to:
