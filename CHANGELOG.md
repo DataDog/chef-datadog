@@ -1,6 +1,10 @@
 Changes
 =======
 
+# 4.17.0 / 2023-02-20
+* [FEATURE] Added the option to enable Universal System Monitoring (USM) [#876][] [@guyarb][]
+* [BUGFIX] Fix crash for jmx integrations with `init_config` attributes set [#869][] [@KSerrania][]
+
 # 4.16.0 / 2023-01-12
 
 * [DEPRECATION] Remove old RPM GPG key. This also removes the `yumrepo_gpgkey` parameter [#877][] [@amenasria][]
@@ -1123,6 +1127,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@gregf]: https://github.com/gregf
 [@grogancolin]: https://github.com/grogancolin
 [@gswallow]: https://github.com/gswallow
+[@guyarb]: https://github.com/guyarb
 [@haidars]: https://github.com/haidars
 [@hartfordfive]: https://github.com/hartfordfive
 [@hilli]: https://github.com/hilli
