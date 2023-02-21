@@ -2,7 +2,7 @@ Changes
 =======
 
 # 4.17.0 / 2023-02-20
-* [FEATURE] Added the option to enable Universal System Monitoring (USM) [#876][] [@guyarb][]
+* [FEATURE] Added the option to enable Universal Service Monitoring (USM) [#876][] [@guyarb][]
 * [BUGFIX] Fix crash for jmx integrations with `init_config` attributes set [#869][] [@KSerrania][]
 
 # 4.16.0 / 2023-01-12
