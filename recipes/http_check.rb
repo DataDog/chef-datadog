@@ -15,7 +15,7 @@
 include_recipe '::dd-agent'
 
 # Build a data structure with configuration.
-# @see http://docs.datadoghq.com/guides/network_checks/
+# @see https://docs.datadoghq.com/integrations/http_check/
 # @example
 #   node.override['datadog']['http_check']['instances'] = [
 #     {
