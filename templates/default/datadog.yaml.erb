@@ -94,6 +94,7 @@ agent_config = @extra_config.merge({
   log_level: node['datadog']['log_level'],
   cmd_port: node['datadog']['cmd_port'],
   GUI_port: node['datadog']['gui_port'],
+  inventories_configuration_enabled: node['datadog']['inventories_configuration_enabled'],
 
   # log agent options
   logs_enabled: node['datadog']['enable_logs_agent'],
