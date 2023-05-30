@@ -47,7 +47,7 @@ RSpec.configure do |config|
     # recipes/repository.rb
     stub_command('rpm -q gpg-pubkey-current').and_return(false)
     stub_command('rpm -q gpg-pubkey-e09422b3').and_return(false)
-    stub_command('rpm -q gpg-pubkey-fd4bf915').and_return(false)
+    stub_command('rpm -q gpg-pubkey-b01082d3').and_return(false)
     stub_command('rpm -q gpg-pubkey-4172a230-55dd14f6').and_return(true)
     stub_command('apt-key adv --list-public-keys --with-fingerprint --with-colons | grep 382E94DE | grep pub').and_return(false)
   end
