@@ -27,6 +27,8 @@ shared_examples 'old debianoid' do
       'execute[import apt datadog key DATADOG_APT_KEY_CURRENT.public]').to(:run).immediately
     expect(chef_run.remote_file('remote_file_5F1E256061D813B125E156E8E6266D4AC0962C7D')).to notify(
       'execute[import apt datadog key 5F1E256061D813B125E156E8E6266D4AC0962C7D]').to(:run).immediately
+    expect(chef_run.remote_file('remote_file_D75CEA17048B9ACBF186794B32637D44F14F620E')).to notify(
+      'execute[import apt datadog key D75CEA17048B9ACBF186794B32637D44F14F620E]').to(:run).immediately
     expect(chef_run.remote_file('remote_file_A2923DFF56EDA6E76E55E492D3A80E30382E94DE')).to notify(
       'execute[import apt datadog key A2923DFF56EDA6E76E55E492D3A80E30382E94DE]').to(:run).immediately
   end
@@ -44,8 +46,50 @@ shared_examples 'new debianoid' do
       'execute[import apt datadog key DATADOG_APT_KEY_CURRENT.public]').to(:run).immediately
     expect(chef_run.remote_file('remote_file_5F1E256061D813B125E156E8E6266D4AC0962C7D')).to notify(
       'execute[import apt datadog key 5F1E256061D813B125E156E8E6266D4AC0962C7D]').to(:run).immediately
+    expect(chef_run.remote_file('remote_file_D75CEA17048B9ACBF186794B32637D44F14F620E')).to notify(
+      'execute[import apt datadog key D75CEA17048B9ACBF186794B32637D44F14F620E]').to(:run).immediately
     expect(chef_run.remote_file('remote_file_A2923DFF56EDA6E76E55E492D3A80E30382E94DE')).to notify(
       'execute[import apt datadog key A2923DFF56EDA6E76E55E492D3A80E30382E94DE]').to(:run).immediately
+  end
+end
+
+def handle_keys(key_list, install_gnupg = true)
+  for key in key_list do
+    if not key.eql? 'current'
+      it "sets the yumrepo_gpgkey_new attribute #{key}" do
+        expect(chef_run.node['datadog']["yumrepo_gpgkey_new_#{key}"]).to match(
+          /DATADOG_RPM_KEY_#{key.upcase}.public/
+        )
+      end
+
+      if install_gnupg
+        it "installs gnupg #{key.upcase}" do
+          expect(chef_run).to install_package('gnupg') if chef_run.node['packages']['gnupg2'].nil?
+        end
+      end
+    end
+
+    it "downloads the #{key} RPM key" do
+      expect(chef_run).to create_remote_file("remote_file_DATADOG_RPM_KEY_#{key.upcase}.public").with(path: ::File.join(Chef::Config[:file_cache_path], "DATADOG_RPM_KEY_#{key.upcase}.public"))
+    end
+
+    it "notifies the GPG key install if a new one is downloaded #{key.upcase}" do
+      keyfile_r = chef_run.remote_file("remote_file_DATADOG_RPM_KEY_#{key.upcase}.public")
+      expect(keyfile_r).to notify("execute[rpm-import datadog key #{key}]")
+        .to(:run).immediately
+    end
+
+    if key.eql? "current"
+      it 'execute[rpm-import datadog key *] by default CURRENT' do
+        keyfile_exec_r = chef_run.execute('rpm-import datadog key current')
+        expect(keyfile_exec_r).to do_nothing
+      end
+    else
+      it "doesn\'t execute[rpm-import datadog key *] by default #{key.upcase}" do
+        keyfile_exec_r = chef_run.execute("rpm-import datadog key #{key}")
+        expect(keyfile_exec_r).to do_nothing
+      end
+    end
   end
 end
 
@@ -73,6 +117,10 @@ describe 'datadog::repository' do
 
     it 'removes the datadog_apt_A2923DFF56EDA6E76E55E492D3A80E30382E94DE repo' do
       expect(chef_run).to remove_apt_repository('datadog_apt_A2923DFF56EDA6E76E55E492D3A80E30382E94DE')
+    end
+
+    it 'removes the datadog_apt_D75CEA17048B9ACBF186794B32637D44F14F620E repo' do
+      expect(chef_run).to remove_apt_repository('datadog_apt_D75CEA17048B9ACBF186794B32637D44F14F620E')
     end
 
     it 'removes the datadog_apt_5F1E256061D813B125E156E8E6266D4AC0962C7D repo' do
@@ -133,80 +181,19 @@ describe 'datadog::repository' do
           node.normal['datadog'] = { 'agent_major_version' => '7' }
         end.converge(described_recipe)
       end
-
+      
       # Key E09422B3
-      it 'sets the yumrepo_gpgkey_new attribute E09422B3' do
-        expect(chef_run.node['datadog']['yumrepo_gpgkey_new_e09422b3']).to match(
-          /DATADOG_RPM_KEY_E09422B3.public/
-        )
-      end
-
-      it 'installs gnupg E09422B3' do
-        epect(chef_run).to install_package('gnupg') if chef_run.node['packages']['gnupg2'].nil?
-      end
-
-      it 'downloads the current RPM key' do
-        expect(chef_run).to create_remote_file('remote_file_DATADOG_RPM_KEY_CURRENT.public').with(path: ::File.join(Chef::Config[:file_cache_path], 'DATADOG_RPM_KEY_CURRENT.public'))
-      end
-
-      it 'notifies the GPG key install if a new one is downloaded CURRENT' do
-        keyfile_r = chef_run.remote_file('remote_file_DATADOG_RPM_KEY_CURRENT.public')
-        expect(keyfile_r).to notify('execute[rpm-import datadog key current]')
-          .to(:run).immediately
-      end
-
-      it 'execute[rpm-import datadog key *] by default CURRENT' do
-        keyfile_exec_r = chef_run.execute('rpm-import datadog key current')
-        expect(keyfile_exec_r).to do_nothing
-      end
-
-      it 'downloads the new RPM key E09422B3' do
-        expect(chef_run).to create_remote_file('remote_file_DATADOG_RPM_KEY_E09422B3.public').with(path: ::File.join(Chef::Config[:file_cache_path], 'DATADOG_RPM_KEY_E09422B3.public'))
-      end
-
-      it 'notifies the GPG key install if a new one is downloaded E09422B3' do
-        keyfile_r = chef_run.remote_file('remote_file_DATADOG_RPM_KEY_E09422B3.public')
-        expect(keyfile_r).to notify('execute[rpm-import datadog key e09422b3]')
-          .to(:run).immediately
-      end
-
-      it 'doesn\'t execute[rpm-import datadog key *] by default E09422B3' do
-        keyfile_exec_r = chef_run.execute('rpm-import datadog key e09422b3')
-        expect(keyfile_exec_r).to do_nothing
-      end
-
-      # Key B01082D3 (2020-09-08)
-      it 'sets the yumrepo_gpgkey_new attribute b01082d3' do
-        expect(chef_run.node['datadog']['yumrepo_gpgkey_new_b01082d3']).to match(
-          /DATADOG_RPM_KEY_B01082D3.public/
-        )
-      end
-
-      it 'installs b01082d3' do
-        expect(chef_run).to install_package('gnupg') if chef_run.node['packages']['gnupg2'].nil?
-      end
-
-      it 'downloads the new RPM key b01082d3' do
-        expect(chef_run).to create_remote_file('remote_file_DATADOG_RPM_KEY_B01082D3.public').with(path: ::File.join(Chef::Config[:file_cache_path], 'DATADOG_RPM_KEY_B01082D3.public'))
-      end
-
-      it 'notifies the GPG key install if a new one is downloaded b01082d3' do
-        keyfile_r = chef_run.remote_file('remote_file_DATADOG_RPM_KEY_B01082D3.public')
-        expect(keyfile_r).to notify('execute[rpm-import datadog key b01082d3]')
-          .to(:run).immediately
-      end
-
-      it 'doesn\'t execute[rpm-import datadog key *] by default b01082d3' do
-        keyfile_exec_r = chef_run.execute('rpm-import datadog key b01082d3')
-        expect(keyfile_exec_r).to do_nothing
-      end
-
+      # Key FD4BF915 (from 2020-09-08 to 2024-09-07)
+      # Key B01082D3 (from 2023-04-20 to 2028-04-18)
+      handle_keys ['current', 'b01082d3', 'fd4bf915', 'e09422b3']
+      
       # prefer HTTPS on boxes that support TLS1.2
-      it 'sets up a yum repo E09422B3 and B01082D3' do
+      it 'sets up a yum repo E09422B3, FD4BF915 and B01082D3' do
         expect(chef_run).to create_yum_repository('datadog').with(
           gpgkey: [
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
           ]
         ).with(repo_gpgcheck: true)
@@ -223,56 +210,9 @@ describe 'datadog::repository' do
       end
 
       # Key E09422B3
-      it 'sets the yumrepo_gpgkey_new attribute E09422B3' do
-        expect(chef_run.node['datadog']['yumrepo_gpgkey_new_e09422b3']).to match(
-          /DATADOG_RPM_KEY_E09422B3.public/
-        )
-      end
-
-      it 'installs gnupg E09422B3' do
-        expect(chef_run).to install_package('gnupg') if chef_run.node['packages']['gnupg2'].nil?
-      end
-
-      it 'downloads the new RPM key E09422B3' do
-        expect(chef_run).to create_remote_file('remote_file_DATADOG_RPM_KEY_E09422B3.public').with(path: ::File.join(Chef::Config[:file_cache_path], 'DATADOG_RPM_KEY_E09422B3.public'))
-      end
-
-      it 'notifies the GPG key install if a new one is downloaded E09422B3' do
-        keyfile_r = chef_run.remote_file('remote_file_DATADOG_RPM_KEY_E09422B3.public')
-        expect(keyfile_r).to notify('execute[rpm-import datadog key e09422b3]')
-          .to(:run).immediately
-      end
-
-      it 'doesn\'t execute[rpm-import datadog key *] by default E09422B3' do
-        keyfile_exec_r = chef_run.execute('rpm-import datadog key e09422b3')
-        expect(keyfile_exec_r).to do_nothing
-      end
-
-      # Key B01082D3 (2020-09-08)
-      it 'sets the yumrepo_gpgkey_new attribute b01082d3' do
-        expect(chef_run.node['datadog']['yumrepo_gpgkey_new_b01082d3']).to match(
-          /DATADOG_RPM_KEY_B01082D3.public/
-        )
-      end
-
-      it 'installs gnupg b01082d3' do
-        expect(chef_run).to install_package('gnupg') if chef_run.node['packages']['gnupg2'].nil?
-      end
-
-      it 'downloads the new RPM key b01082d3' do
-        expect(chef_run).to create_remote_file('remote_file_DATADOG_RPM_KEY_B01082D3.public').with(path: ::File.join(Chef::Config[:file_cache_path], 'DATADOG_RPM_KEY_B01082D3.public'))
-      end
-
-      it 'notifies the GPG key install if a new one is downloaded b01082d3' do
-        keyfile_r = chef_run.remote_file('remote_file_DATADOG_RPM_KEY_B01082D3.public')
-        expect(keyfile_r).to notify('execute[rpm-import datadog key b01082d3]')
-          .to(:run).immediately
-      end
-
-      it 'doesn\'t execute[rpm-import datadog key *] by default b01082d3' do
-        keyfile_exec_r = chef_run.execute('rpm-import datadog key b01082d3')
-        expect(keyfile_exec_r).to do_nothing
-      end
+      # Key FD4BF915 (from 2020-09-08 to 2024-09-07)
+      # Key B01082D3 (from 2023-04-20 to 2028-04-18)
+      handle_keys ['b01082d3', 'fd4bf915', 'e09422b3']
 
       # prefer HTTPS on boxes that support TLS1.2
       it 'sets up a yum repo' do
@@ -296,56 +236,9 @@ describe 'datadog::repository' do
       end
 
       # Key E09422B3
-      it 'sets the yumrepo_gpgkey_new attribute E09422B3' do
-        expect(chef_run.node['datadog']['yumrepo_gpgkey_new_e09422b3']).to match(
-          /DATADOG_RPM_KEY_E09422B3.public/
-        )
-      end
-
-      it 'installs gnupg' do
-        expect(chef_run).to install_package('gnupg') if chef_run.node['packages']['gnupg2'].nil?
-      end
-
-      it 'downloads the new RPM key E09422B3' do
-        expect(chef_run).to create_remote_file('remote_file_DATADOG_RPM_KEY_E09422B3.public').with(path: ::File.join(Chef::Config[:file_cache_path], 'DATADOG_RPM_KEY_E09422B3.public'))
-      end
-
-      it 'notifies the GPG key install if a new one is downloaded E09422B3' do
-        keyfile_r = chef_run.remote_file('remote_file_DATADOG_RPM_KEY_E09422B3.public')
-        expect(keyfile_r).to notify('execute[rpm-import datadog key e09422b3]')
-          .to(:run).immediately
-      end
-
-      it 'doesn\'t execute[rpm-import datadog key *] by default E09422B3' do
-        keyfile_exec_r = chef_run.execute('rpm-import datadog key e09422b3')
-        expect(keyfile_exec_r).to do_nothing
-      end
-
-      # Key B01082D3 (2020-09-08)
-      it 'sets the yumrepo_gpgkey_new attribute b01082d3' do
-        expect(chef_run.node['datadog']['yumrepo_gpgkey_new_b01082d3']).to match(
-          /DATADOG_RPM_KEY_B01082D3.public/
-        )
-      end
-
-      it 'installs gnupg' do
-        expect(chef_run).to install_package('gnupg') if chef_run.node['packages']['gnupg2'].nil?
-      end
-
-      it 'downloads the new RPM key b01082d3' do
-        expect(chef_run).to create_remote_file('remote_file_DATADOG_RPM_KEY_B01082D3.public').with(path: ::File.join(Chef::Config[:file_cache_path], 'DATADOG_RPM_KEY_B01082D3.public'))
-      end
-
-      it 'notifies the GPG key install if a new one is downloaded b01082d3' do
-        keyfile_r = chef_run.remote_file('remote_file_DATADOG_RPM_KEY_B01082D3.public')
-        expect(keyfile_r).to notify('execute[rpm-import datadog key b01082d3]')
-          .to(:run).immediately
-      end
-
-      it 'doesn\'t execute[rpm-import datadog key *] by default b01082d3' do
-        keyfile_exec_r = chef_run.execute('rpm-import datadog key b01082d3')
-        expect(keyfile_exec_r).to do_nothing
-      end
+      # Key FD4BF915 (from 2020-09-08 to 2024-09-07)
+      # Key B01082D3 (from 2023-04-20 to 2028-04-18)
+      handle_keys ['b01082d3', 'fd4bf915', 'e09422b3']
 
       # RHEL5 has to use insecure HTTP due to lack of support for TLS1.2
       # https://github.com/DataDog/chef-datadog/blob/v2.8.1/attributes/default.rb#L85-L91
@@ -354,6 +247,7 @@ describe 'datadog::repository' do
           gpgkey: [
             'http://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
             'http://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
+            'http://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
             'http://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
           ]
         ).with(repo_gpgcheck: false)
@@ -375,6 +269,7 @@ describe 'datadog::repository' do
           gpgkey: [
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
           ]
         ).with(repo_gpgcheck: false)
@@ -396,6 +291,7 @@ describe 'datadog::repository' do
           gpgkey: [
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
           ]
         ).with(repo_gpgcheck: true)
@@ -417,6 +313,7 @@ describe 'datadog::repository' do
           gpgkey: [
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
           ]
         ).with(repo_gpgcheck: true)
@@ -438,6 +335,7 @@ describe 'datadog::repository' do
           gpgkey: [
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
           ]
         ).with(repo_gpgcheck: true)
@@ -459,49 +357,7 @@ describe 'datadog::repository' do
         end.converge(described_recipe)
       end
 
-      # Key E09422B3
-      it 'sets the yumrepo_gpgkey_new attribute E09422B3' do
-        expect(chef_run.node['datadog']['yumrepo_gpgkey_new_e09422b3']).to match(
-          /DATADOG_RPM_KEY_E09422B3.public/
-        )
-      end
-
-      it 'downloads the new RPM key E09422B3' do
-        expect(chef_run).to create_remote_file('remote_file_DATADOG_RPM_KEY_E09422B3.public').with(path: ::File.join(Chef::Config[:file_cache_path], 'DATADOG_RPM_KEY_E09422B3.public'))
-      end
-
-      it 'notifies the GPG key install if a new one is downloaded E09422B3' do
-        keyfile_r = chef_run.remote_file('remote_file_DATADOG_RPM_KEY_E09422B3.public')
-        expect(keyfile_r).to notify('execute[rpm-import datadog key e09422b3]')
-          .to(:run).immediately
-      end
-
-      it 'doesn\'t execute[rpm-import datadog key *] by default E09422B3' do
-        keyfile_exec_r = chef_run.execute('rpm-import datadog key e09422b3')
-        expect(keyfile_exec_r).to do_nothing
-      end
-
-      # Key B01082D3 (2020-09-08)
-      it 'sets the yumrepo_gpgkey_new attribute b01082d3' do
-        expect(chef_run.node['datadog']['yumrepo_gpgkey_new_b01082d3']).to match(
-          /DATADOG_RPM_KEY_B01082D3.public/
-        )
-      end
-
-      it 'downloads the new RPM key b01082d3' do
-        expect(chef_run).to create_remote_file('remote_file_DATADOG_RPM_KEY_B01082D3.public').with(path: ::File.join(Chef::Config[:file_cache_path], 'DATADOG_RPM_KEY_B01082D3.public'))
-      end
-
-      it 'notifies the GPG key install if a new one is downloaded b01082d3' do
-        keyfile_r = chef_run.remote_file('remote_file_DATADOG_RPM_KEY_B01082D3.public')
-        expect(keyfile_r).to notify('execute[rpm-import datadog key b01082d3]')
-          .to(:run).immediately
-      end
-
-      it 'doesn\'t execute[rpm-import datadog key *] by default b01082d3' do
-        keyfile_exec_r = chef_run.execute('rpm-import datadog key b01082d3')
-        expect(keyfile_exec_r).to do_nothing
-      end
+      handle_keys (['e09422b3', 'fd4bf915', 'b01082d3'], false)
 
       it 'deletes the old RPM GPG key 4172a230 if it exists' do
         expect(chef_run).to run_execute('rpm-remove old gpg key 4172a230-55dd14f6')

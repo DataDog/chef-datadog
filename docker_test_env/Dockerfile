@@ -1,4 +1,4 @@
-# docker run --rm -it -v /dev/vboxdrv:/dev/vboxdrv 
+# docker run --rm -it -v /dev/vboxdrv:/dev/vboxdrv
 ARG BASE_IMAGE=ubuntu:20.04
 FROM $BASE_IMAGE
 ARG TZ=America/New_York
@@ -9,7 +9,7 @@ ENV RUBY_VERSION=$RUBY_VERSION
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN apt-get update && apt-get install -y wget virtualbox git zlib1g-dev curl
+RUN apt-get update && apt-get install -y wget git zlib1g-dev curl gpg
 
 # RVM
 RUN gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
