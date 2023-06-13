@@ -115,16 +115,16 @@ describe 'datadog::repository' do
       expect(chef_run).to remove_apt_repository('datadog-beta')
     end
 
-    it 'removes the datadog_apt_A2923DFF56EDA6E76E55E492D3A80E30382E94DE repo' do
-      expect(chef_run).to remove_apt_repository('datadog_apt_A2923DFF56EDA6E76E55E492D3A80E30382E94DE')
+    it 'removes the datadog_apt_5F1E256061D813B125E156E8E6266D4AC0962C7D repo' do
+      expect(chef_run).to remove_apt_repository('datadog_apt_5F1E256061D813B125E156E8E6266D4AC0962C7D')
     end
 
     it 'removes the datadog_apt_D75CEA17048B9ACBF186794B32637D44F14F620E repo' do
       expect(chef_run).to remove_apt_repository('datadog_apt_D75CEA17048B9ACBF186794B32637D44F14F620E')
     end
 
-    it 'removes the datadog_apt_5F1E256061D813B125E156E8E6266D4AC0962C7D repo' do
-      expect(chef_run).to remove_apt_repository('datadog_apt_5F1E256061D813B125E156E8E6266D4AC0962C7D')
+    it 'removes the datadog_apt_A2923DFF56EDA6E76E55E492D3A80E30382E94DE repo' do
+      expect(chef_run).to remove_apt_repository('datadog_apt_A2923DFF56EDA6E76E55E492D3A80E30382E94DE')
     end
   end
 
@@ -182,9 +182,9 @@ describe 'datadog::repository' do
         end.converge(described_recipe)
       end
       
-      # Key E09422B3
-      # Key FD4BF915 (from 2020-09-08 to 2024-09-07)
       # Key B01082D3 (from 2023-04-20 to 2028-04-18)
+      # Key FD4BF915 (from 2020-09-08 to 2024-09-07)
+      # Key E09422B3
       handle_keys ['current', 'b01082d3', 'fd4bf915', 'e09422b3']
       
       # prefer HTTPS on boxes that support TLS1.2
@@ -192,9 +192,9 @@ describe 'datadog::repository' do
         expect(chef_run).to create_yum_repository('datadog').with(
           gpgkey: [
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
           ]
         ).with(repo_gpgcheck: true)
       end
@@ -209,9 +209,9 @@ describe 'datadog::repository' do
         end.converge(described_recipe)
       end
 
-      # Key E09422B3
-      # Key FD4BF915 (from 2020-09-08 to 2024-09-07)
       # Key B01082D3 (from 2023-04-20 to 2028-04-18)
+      # Key FD4BF915 (from 2020-09-08 to 2024-09-07)
+      # Key E09422B3
       handle_keys ['b01082d3', 'fd4bf915', 'e09422b3']
 
       # prefer HTTPS on boxes that support TLS1.2
@@ -219,8 +219,9 @@ describe 'datadog::repository' do
         expect(chef_run).to create_yum_repository('datadog').with(
           gpgkey: [
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
           ]
         ).with(repo_gpgcheck: true)
       end
@@ -235,9 +236,9 @@ describe 'datadog::repository' do
         end.converge(described_recipe)
       end
 
-      # Key E09422B3
-      # Key FD4BF915 (from 2020-09-08 to 2024-09-07)
       # Key B01082D3 (from 2023-04-20 to 2028-04-18)
+      # Key FD4BF915 (from 2020-09-08 to 2024-09-07)
+      # Key E09422B3
       handle_keys ['b01082d3', 'fd4bf915', 'e09422b3']
 
       # RHEL5 has to use insecure HTTP due to lack of support for TLS1.2
@@ -246,9 +247,9 @@ describe 'datadog::repository' do
         expect(chef_run).to create_yum_repository('datadog').with(
           gpgkey: [
             'http://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
-            'http://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
-            'http://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
             'http://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
+            'http://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
+            'http://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
           ]
         ).with(repo_gpgcheck: false)
       end
@@ -268,9 +269,9 @@ describe 'datadog::repository' do
         expect(chef_run).to create_yum_repository('datadog').with(
           gpgkey: [
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
           ]
         ).with(repo_gpgcheck: false)
       end
@@ -290,9 +291,9 @@ describe 'datadog::repository' do
         expect(chef_run).to create_yum_repository('datadog').with(
           gpgkey: [
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
           ]
         ).with(repo_gpgcheck: true)
       end
@@ -312,9 +313,9 @@ describe 'datadog::repository' do
         expect(chef_run).to create_yum_repository('datadog').with(
           gpgkey: [
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
           ]
         ).with(repo_gpgcheck: true)
       end
@@ -334,9 +335,9 @@ describe 'datadog::repository' do
         expect(chef_run).to create_yum_repository('datadog').with(
           gpgkey: [
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
           ]
         ).with(repo_gpgcheck: true)
       end
@@ -357,7 +358,7 @@ describe 'datadog::repository' do
         end.converge(described_recipe)
       end
 
-      handle_keys (['e09422b3', 'fd4bf915', 'b01082d3'], false)
+      handle_keys(['b01082d3', 'fd4bf915', 'e09422b3'], false)
 
       it 'deletes the old RPM GPG key 4172a230 if it exists' do
         expect(chef_run).to run_execute('rpm-remove old gpg key 4172a230-55dd14f6')

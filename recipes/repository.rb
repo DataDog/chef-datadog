@@ -48,9 +48,9 @@ apt_repo_uri = 'https://apt.datadoghq.com'
 # DATADOG_RPM_KEY_FD4BF915.public expires in 2024
 # DATADOG_RPM_KEY_B01082D3.public expires in 2028
 rpm_gpg_keys = [['DATADOG_RPM_KEY_CURRENT.public', 'current', ''],
-                ['DATADOG_RPM_KEY_E09422B3.public', 'e09422b3', 'A4C0 B90D 7443 CF6E 4E8A  A341 F106 8E14 E094 22B3'],
-                ['DATADOG_RPM_KEY_FD4BF915.public', 'fd4bf915', 'C655 9B69 0CA8 82F0 23BD  F3F6 3F4D 1729 FD4B F915']]
-                ['DATADOG_RPM_KEY_B01082D3.public', 'b01082d3', '7408 BFD5 6BC5 BF0C 361A  AAE8 5D88 EEA3 B010 82D3']]
+                ['DATADOG_RPM_KEY_B01082D3.public', 'b01082d3', '7408 BFD5 6BC5 BF0C 361A  AAE8 5D88 EEA3 B010 82D3'],
+                ['DATADOG_RPM_KEY_FD4BF915.public', 'fd4bf915', 'C655 9B69 0CA8 82F0 23BD  F3F6 3F4D 1729 FD4B F915'],
+                ['DATADOG_RPM_KEY_E09422B3.public', 'e09422b3', 'A4C0 B90D 7443 CF6E 4E8A  A341 F106 8E14 E094 22B3']]
 
 # Local file name of the key
 rpm_gpg_keys_name = 0
@@ -178,7 +178,7 @@ when 'debian'
     action :remove
   end
 
-  apt_repository 'datadog_apt_A2923DFF56EDA6E76E55E492D3A80E30382E94DE' do
+  apt_repository 'datadog_apt_5F1E256061D813B125E156E8E6266D4AC0962C7D' do
     action :remove
   end
 
@@ -186,7 +186,7 @@ when 'debian'
     action :remove
   end
 
-  apt_repository 'datadog_apt_5F1E256061D813B125E156E8E6266D4AC0962C7D' do
+  apt_repository 'datadog_apt_A2923DFF56EDA6E76E55E492D3A80E30382E94DE' do
     action :remove
   end
 
