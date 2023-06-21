@@ -178,10 +178,6 @@ when 'debian'
     action :remove
   end
 
-  apt_repository 'datadog_apt_5F1E256061D813B125E156E8E6266D4AC0962C7D' do
-    action :remove
-  end
-
   apt_repository 'datadog_apt_D75CEA17048B9ACBF186794B32637D44F14F620E' do
     action :remove
   end

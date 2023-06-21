@@ -53,7 +53,7 @@ shared_examples 'new debianoid' do
   end
 end
 
-def handle_keys(key_list, install_gnupg = true)
+def import_gpg_keys(key_list, install_gnupg = true)
   for key in key_list do
     if not key.eql? 'current'
       it "sets the yumrepo_gpgkey_new attribute #{key}" do
@@ -185,7 +185,12 @@ describe 'datadog::repository' do
       # Key B01082D3 (from 2023-04-20 to 2028-04-18)
       # Key FD4BF915 (from 2020-09-08 to 2024-09-07)
       # Key E09422B3
-      handle_keys ['current', 'b01082d3', 'fd4bf915', 'e09422b3']
+      import_gpg_keys([
+        'current',
+        'b01082d3',
+        'fd4bf915',
+        'e09422b3'
+      ])
       
       # prefer HTTPS on boxes that support TLS1.2
       it 'sets up a yum repo E09422B3, FD4BF915 and B01082D3' do
@@ -212,7 +217,11 @@ describe 'datadog::repository' do
       # Key B01082D3 (from 2023-04-20 to 2028-04-18)
       # Key FD4BF915 (from 2020-09-08 to 2024-09-07)
       # Key E09422B3
-      handle_keys ['b01082d3', 'fd4bf915', 'e09422b3']
+      import_gpg_keys([
+        'b01082d3',
+        'fd4bf915',
+        'e09422b3'
+      ])
 
       # prefer HTTPS on boxes that support TLS1.2
       it 'sets up a yum repo' do
@@ -239,7 +248,11 @@ describe 'datadog::repository' do
       # Key B01082D3 (from 2023-04-20 to 2028-04-18)
       # Key FD4BF915 (from 2020-09-08 to 2024-09-07)
       # Key E09422B3
-      handle_keys ['b01082d3', 'fd4bf915', 'e09422b3']
+      import_gpg_keys([
+        'b01082d3',
+        'fd4bf915',
+        'e09422b3'
+      ])
 
       # RHEL5 has to use insecure HTTP due to lack of support for TLS1.2
       # https://github.com/DataDog/chef-datadog/blob/v2.8.1/attributes/default.rb#L85-L91
@@ -358,7 +371,11 @@ describe 'datadog::repository' do
         end.converge(described_recipe)
       end
 
-      handle_keys(['b01082d3', 'fd4bf915', 'e09422b3'], false)
+      import_gpg_keys([
+        'b01082d3',
+        'fd4bf915',
+        'e09422b3'
+      ], false)
 
       it 'deletes the old RPM GPG key 4172a230 if it exists' do
         expect(chef_run).to run_execute('rpm-remove old gpg key 4172a230-55dd14f6')
