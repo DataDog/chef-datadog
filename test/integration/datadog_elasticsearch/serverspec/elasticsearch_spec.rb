@@ -23,6 +23,7 @@ describe file(AGENT_CONFIG) do
           'is_external' => false,
           'pshard_stats' => true,
           'index_stats' => true,
+          'pshard_graceful_timeout' => true,
           'shard_level_metrics' => true,
           'tags' => ['kitchen', 'sink']
         }

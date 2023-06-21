@@ -9,6 +9,7 @@ describe 'datadog::elasticsearch' do
         password: testpassword
         pshard_stats: true
         index_stats: true
+        pshard_graceful_timeout: true
         tags:
           - 'env:test'
 
@@ -31,6 +32,7 @@ describe 'datadog::elasticsearch' do
               password: 'testpassword',
               pshard_stats: true,
               index_stats: true,
+              pshard_graceful_timeout: true,
               tags: ['env:test']
             }
           ]

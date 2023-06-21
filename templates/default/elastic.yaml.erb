@@ -9,6 +9,9 @@ instances:
     <% unless i["pshard_stats"].nil? %>
     pshard_stats: <%= i["pshard_stats"] %>
     <% end %>
+    <% unless i['pshard_graceful_timeout'].nil? -%>
+    pshard_graceful_timeout:  <%= i['pshard_graceful_timeout'] %>
+    <% end -%>
     <% unless i['min_collection_interval'].nil? -%>
     min_collection_interval:  <%= i['min_collection_interval'] %>
     <% end -%>
