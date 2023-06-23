@@ -54,19 +54,9 @@ shared_examples 'new debianoid' do
 end
 
 def import_gpg_keys(key_list, install_gnupg = true)
-  for key in key_list do
-    if not key.eql? 'current'
-      it "sets the yumrepo_gpgkey_new attribute #{key}" do
-        expect(chef_run.node['datadog']["yumrepo_gpgkey_new_#{key}"]).to match(
-          /DATADOG_RPM_KEY_#{key.upcase}.public/
-        )
-      end
-
-      if install_gnupg
-        it "installs gnupg #{key.upcase}" do
-          expect(chef_run).to install_package('gnupg') if chef_run.node['packages']['gnupg2'].nil?
-        end
-      end
+  key_list.each do |key|
+    unless key.eql? 'current'
+      set_yum_repo_and_gnupg(key, install_gnupg)
     end
 
     it "downloads the #{key} RPM key" do
@@ -79,7 +69,7 @@ def import_gpg_keys(key_list, install_gnupg = true)
         .to(:run).immediately
     end
 
-    if key.eql? "current"
+    if key.eql? 'current'
       it 'execute[rpm-import datadog key *] by default CURRENT' do
         keyfile_exec_r = chef_run.execute('rpm-import datadog key current')
         expect(keyfile_exec_r).to do_nothing
@@ -89,6 +79,20 @@ def import_gpg_keys(key_list, install_gnupg = true)
         keyfile_exec_r = chef_run.execute("rpm-import datadog key #{key}")
         expect(keyfile_exec_r).to do_nothing
       end
+    end
+  end
+end
+
+def set_yum_repo_and_gnupg(key, install_gnupg)
+  it "sets the yumrepo_gpgkey_new attribute #{key}" do
+    expect(chef_run.node['datadog']["yumrepo_gpgkey_new_#{key}"]).to match(
+      /DATADOG_RPM_KEY_#{key.upcase}.public/
+    )
+  end
+
+  if install_gnupg
+    it "installs gnupg #{key.upcase}" do
+      expect(chef_run).to install_package('gnupg') if chef_run.node['packages']['gnupg2'].nil?
     end
   end
 end
@@ -181,7 +185,7 @@ describe 'datadog::repository' do
           node.normal['datadog'] = { 'agent_major_version' => '7' }
         end.converge(described_recipe)
       end
-      
+
       # Key B01082D3 (from 2023-04-20 to 2028-04-18)
       # Key FD4BF915 (from 2020-09-08 to 2024-09-07)
       # Key E09422B3
@@ -191,7 +195,7 @@ describe 'datadog::repository' do
         'fd4bf915',
         'e09422b3'
       ])
-      
+
       # prefer HTTPS on boxes that support TLS1.2
       it 'sets up a yum repo E09422B3, FD4BF915 and B01082D3' do
         expect(chef_run).to create_yum_repository('datadog').with(
