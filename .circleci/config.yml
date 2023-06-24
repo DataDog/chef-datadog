@@ -29,6 +29,13 @@ jobs:
           name: Execute Kitchen tests
           command: bundle exec rake circle
           no_output_timeout: 900
+      - run:
+          name: Display logs
+          command: |
+                    cat .kitchen/logs/dd-agent-handler5-rocky-8.log
+                    cat /etc/datadog-agent/install_info
+                    env PATH="/sbin:/usr/local/sbin:$PATH" /bin/sh -c systemctl\ status\ datadog-agent
+          when: on_fail
 
   style:
     machine:
