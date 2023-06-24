@@ -119,10 +119,6 @@ describe 'datadog::repository' do
       expect(chef_run).to remove_apt_repository('datadog-beta')
     end
 
-    it 'removes the datadog_apt_5F1E256061D813B125E156E8E6266D4AC0962C7D repo' do
-      expect(chef_run).to remove_apt_repository('datadog_apt_5F1E256061D813B125E156E8E6266D4AC0962C7D')
-    end
-
     it 'removes the datadog_apt_D75CEA17048B9ACBF186794B32637D44F14F620E repo' do
       expect(chef_run).to remove_apt_repository('datadog_apt_D75CEA17048B9ACBF186794B32637D44F14F620E')
     end
