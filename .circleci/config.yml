@@ -3,6 +3,7 @@ jobs:
   kitchen-docker-tests:
     machine:
       image: ubuntu-2004:202201-02
+    resource_class: large
     environment:
       CHEF_LICENSE: accept # newer versions of Chef client need explicit license accept to run
       KITCHEN_LOCAL_YAML: kitchen.docker.yml
