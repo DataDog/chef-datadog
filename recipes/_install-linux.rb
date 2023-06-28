@@ -45,9 +45,10 @@ when 'debian'
     action :upgrade
   end
 when 'rhel', 'fedora', 'amazon'
-  if platform_family?('rhel') && node['platform_version'].to_i >= 8 && !platform?('amazon') ||
-     platform_family?('fedora') && node['platform_version'].to_i >= 28
-    # yum_package doesn't work on RHEL 8 and Fedora >= 28
+  if (platform_family?('rhel')   && node['platform_version'].to_i >= 8)    ||
+     (platform_family?('fedora') && node['platform_version'].to_i >= 28)   ||
+     (platform_family?('amazon') && node['platform_version'].to_i >= 2023)
+    # yum_package doesn't work on RHEL >= 8, Fedora >= 28 and AmazonLinux >=2023
     # dnf_package only works on RHEL 8 / Fedora >= 28 if Chef 15+ is used
     dnf_package dd_agent_flavor do
       version dd_agent_version

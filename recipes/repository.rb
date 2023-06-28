@@ -174,16 +174,12 @@ when 'debian'
   end
 
   # Previous versions of the cookbook could create these repo files, make sure we remove it now
-  apt_repository 'datadog-beta' do
-    action :remove
-  end
-
-  apt_repository 'datadog_apt_D75CEA17048B9ACBF186794B32637D44F14F620E' do
-    action :remove
-  end
-
-  apt_repository 'datadog_apt_A2923DFF56EDA6E76E55E492D3A80E30382E94DE' do
-    action :remove
+  ['datadog-beta',
+   'datadog_apt_D75CEA17048B9ACBF186794B32637D44F14F620E',
+   'datadog_apt_A2923DFF56EDA6E76E55E492D3A80E30382E94DE'].each do |repo|
+    apt_repository repo do
+      action :remove
+    end
   end
 
 when 'rhel', 'fedora', 'amazon'
