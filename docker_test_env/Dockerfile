@@ -1,4 +1,4 @@
-# docker run --rm -it -v /dev/vboxdrv:/dev/vboxdrv 
+# docker run --rm -it -v /dev/vboxdrv:/dev/vboxdrv
 ARG BASE_IMAGE=ubuntu:20.04
 FROM $BASE_IMAGE
 ARG TZ=America/New_York
