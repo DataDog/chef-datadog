@@ -132,6 +132,10 @@ class Chef
         run_context.cookbook_collection['datadog'].version
       end
 
+      def systemd_platform?(node)
+        (node['platform'] == 'amazon' || node['platform_family'] == 'amazon') && node['platform_version'].to_i >= 2022
+      end
+
       def upstart_platform?(node)
         agent_major_version(node) > 5 &&
           (((node['platform'] == 'amazon' || node['platform_family'] == 'amazon') && node['platform_version'].to_i != 2) ||
@@ -146,6 +150,8 @@ class Chef
             service_provider = Chef::Provider::Service.const_get(specified_provider)
           end
           service_provider
+        elsif systemd_platform?(node)
+          Chef::Provider::Service::Systemd
         elsif upstart_platform?(node)
           Chef::Provider::Service::Upstart
         end

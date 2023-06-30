@@ -18,7 +18,6 @@
 #
 
 is_windows = platform_family?('windows')
-is_amazon_linux_2023 = platform_family?('amazon') && node['platform_version'].to_i >= 2023
 
 # Set the correct agent startup action
 cws_enabled = node['datadog']['security_agent']['cws']['enabled']
@@ -91,11 +90,6 @@ service_name = is_windows ? 'datadog-system-probe' : 'datadog-agent-sysprobe'
 
 service 'datadog-agent-sysprobe' do
   service_name service_name
-  if is_amazon_linux_2023
-    status_command "systemctl status #{service_name}"
-    start_command "systemctl start #{service_name}"
-    stop_command "systemctl stop #{service_name}"
-  end
   action [sysprobe_agent_start]
   provider service_provider unless service_provider.nil?
   if is_windows
