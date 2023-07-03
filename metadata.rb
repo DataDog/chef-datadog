@@ -22,10 +22,30 @@ issues_url       'https://github.com/DataDog/chef-datadog/issues'
   supports os
 end
 
-if Chef::VERSION < Gem::Version.new(14)
+current_chef_version = if Chef::VERSION.instance_of? String
+                         # For Chef < 13.1.33 Chef::VERSION was a String
+                         Gem::Version.new(Chef::VERSION.to_f)
+                       else
+                         # Else Chef::VERSION is already a VersionString
+                         Chef::VERSION
+                       end
+
+if current_chef_version < Gem::Version.new(14)
   # The chef_handler cookbook is shipped as part of Chef >= 14,
   # so from Chef >= 14 chef_handler cookbook is deprecated.
   depends 'chef_handler', '>= 1.2'
 end
-depends    'apt' # Use '< 6.0.0' with Chef < 12.9
-depends    'yum', '>= 3.0' # Use '< 5.0' with Chef < 12.14
+
+# Use '< 6.0.0' with Chef < 12.9
+if current_chef_version < Gem::Version.new(12.9)
+  depends 'apt', '< 6.0'
+else
+  depends 'apt'
+end
+
+# Use '< 5.0' with Chef < 12.14
+if current_chef_version < Gem::Version.new(12.14)
+  depends 'yum', '>= 3.0', '< 5.0'
+else
+  depends 'yum', '>= 3.0'
+end
