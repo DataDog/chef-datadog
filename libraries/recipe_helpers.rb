@@ -150,6 +150,7 @@ class Chef
             service_provider = Chef::Provider::Service.const_get(specified_provider)
           end
           service_provider
+        # Specific catch for Amazon Linux >= 2022 where Upstart doesn't work
         elsif systemd_platform?(node)
           Chef::Provider::Service::Systemd
         elsif upstart_platform?(node)
