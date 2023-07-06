@@ -43,9 +43,10 @@ else
   depends 'apt'
 end
 
-# Use '< 5.0' with Chef < 12.14
+# Must be '>= 3.0' and '< 5.0' with Chef < 12.14
+# Chef allows only one constraint and '~> 3.0' means '>= 3.0' and '< 4.0'
 if current_chef_version < Gem::Version.new(12.14)
-  depends 'yum', '>= 3.0', '< 5.0'
+  depends 'yum', '~> 3.0'
 else
   depends 'yum', '>= 3.0'
 end
