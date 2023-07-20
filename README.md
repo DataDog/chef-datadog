@@ -93,6 +93,21 @@ depends 'yum', '< 5.0'
 
 5. Wait for the next scheduled `chef-client` run or trigger it manually.
 
+#### Troubleshooting
+
+On some OS (for example Amazon Linux 2) you might have the following error during installation:
+```
+ValueError: unknown locale: UTF-8
+```
+
+You can fix this by running:
+```
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+```
+
+You can now restart the installation and it should be fine.
+
 ### Dockerized environment
 
 To build a Docker environment, use the files under `docker_test_env`:
