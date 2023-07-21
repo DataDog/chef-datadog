@@ -106,7 +106,7 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 ```
 
-You can now restart the installation and it should be fine.
+Then, restart the installation.
 
 ### Dockerized environment
 
