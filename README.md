@@ -95,7 +95,7 @@ depends 'yum', '< 5.0'
 
 #### Troubleshooting
 
-On some OS (for example Amazon Linux 2) you might have the following error during installation:
+On some operating systems such as Amazon Linux 2, you may encounter the following error during installation:
 ```
 ValueError: unknown locale: UTF-8
 ```
