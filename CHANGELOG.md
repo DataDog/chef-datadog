@@ -1,6 +1,15 @@
 Changes
 =======
 
+# 4.18.0 / 2023-07-25
+ * [BUGFIX] Syntax update to support old chef-infra versions [#898] [@chouetz]
+ * [FEATURE] Update recipes to support amazonlinux 2023 installation [#896] [@chouetz]
+ * [FEATURE] Add agent configuration value to config template [#888] [@nichols2k]
+ * [FEATURE] Actually enforce `apt` and `yum` versions in the `metadata.rb` file [#874] [@amenasria]
+ * [FEATURE] support weblogic integration [#891] [@vigohe]
+ * [FEATURE] Add new APT and RPM signing keys [#890] [@chouetz]
+ * [BUGFIX] Fix dead link in http_check.rb recipe [#887] [@amenasria]
+
 # 4.17.0 / 2023-02-20
 * [FEATURE] Added the option to enable Universal Service Monitoring (USM) [#876][] [@guyarb][]
 * [BUGFIX] Fix crash for jmx integrations with `init_config` attributes set [#869][] [@KSerrania][]
@@ -1052,6 +1061,19 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#860]: https://github.com/DataDog/chef-datadog/issues/860
 [#861]: https://github.com/DataDog/chef-datadog/issues/861
 [#863]: https://github.com/DataDog/chef-datadog/issues/863
+[#865]: https://github.com/DataDog/chef-datadog/issues/865
+[#867]: https://github.com/DataDog/chef-datadog/issues/867
+[#869]: https://github.com/DataDog/chef-datadog/issues/869
+[#874]: https://github.com/DataDog/chef-datadog/issues/874
+[#876]: https://github.com/DataDog/chef-datadog/issues/876
+[#877]: https://github.com/DataDog/chef-datadog/issues/877
+[#887]: https://github.com/DataDog/chef-datadog/issues/887
+[#888]: https://github.com/DataDog/chef-datadog/issues/888
+[#890]: https://github.com/DataDog/chef-datadog/issues/890
+[#891]: https://github.com/DataDog/chef-datadog/issues/891
+[#895]: https://github.com/DataDog/chef-datadog/issues/895
+[#896]: https://github.com/DataDog/chef-datadog/issues/896
+[#898]: https://github.com/DataDog/chef-datadog/issues/898
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@Azraeht]: https://github.com/Azraeht
@@ -1218,3 +1240,6 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@xt99]: https://github.com/xt99
 [@yannmh]: https://github.com/yannmh
 [@zshenker]: https://github.com/zshenker
+[@nichols2k]: https://github.com/nichols2k
+[@chouetz]: https://github.com/chouetz
+[@vigohe]: https://github.com/vigohe
