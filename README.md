@@ -49,7 +49,7 @@ The following Opscode cookbooks are dependencies:
 1. Add the cookbook to your Chef server with [Berkshelf][5] or [Knife][6]:
     ```text
     # Berksfile
-    cookbook 'datadog', '~> 4.0.0'
+    cookbook 'datadog', '~> 4.0'
     ```
 
     ```shell
