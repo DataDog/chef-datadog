@@ -42,7 +42,7 @@ default['datadog']['agent_major_version'] = nil # nil to autodetect based on 'ag
 default['datadog']['agent_version'] = nil # nil to install latest
 # Agent flavor to install, acceptable values are "datadog-agent", "datadog-iot-agent"
 default['datadog']['agent_flavor'] = 'datadog-agent' # "datadog-agent" to install the datadog-agent package
-# default['datadog']['fips_proxy_version'] = '0.1.0'
+default['datadog']['fips_proxy_version'] = nil
 default['datadog']['agent_version'] = nil # nil to install latest
 # Datadog FIPS proxy package name:
 default['datadog']['fips_proxy_package_name'] = 'datadog-fips-proxy' # "datadog-fips-proxy" to install the datadog-fips-proxy package
@@ -259,6 +259,12 @@ default['datadog']['agent_enable'] = true
 
 # Start agent or not
 default['datadog']['agent_start'] = true
+
+# Enable the fips-proxy to start at boot.
+default['datadog']['fips_proxy_enable'] = true
+
+# Start fips_proxy or not
+default['datadog']['fips_proxy_start'] = true
 
 # installation info
 default['datadog']['install_info_enabled'] = true

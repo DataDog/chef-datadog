@@ -44,6 +44,7 @@ file '/etc/datadog-fips-proxy/datadog-fips-proxy.cfg' do
   mode '0766'
   content lazy { ::File.open('/etc/datadog-fips-proxy/datadog-fips-proxy.cfg.example').read }
   not_if { ::File.exist?('/etc/datadog-fips-proxy/datadog-fips-proxy.cfg') }
+  notifies :restart, 'service[datadog-fips-proxy]' if node['datadog']['fips_proxy_start']
   action :create
 end
 
