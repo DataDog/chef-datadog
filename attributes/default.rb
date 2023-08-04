@@ -164,7 +164,7 @@ default['datadog']['yumrepo_repo_gpgcheck'] = nil
 default['datadog']['yumrepo_proxy'] = nil
 default['datadog']['yumrepo_proxy_username'] = nil
 default['datadog']['yumrepo_proxy_password'] = nil
-default['datadog']['windows_agent_url'] = 'https://s3.amazonaws.com/ddagent-windows-stable/'
+default['datadog']['windows_agent_url'] = 'https://windows-agent.datadoghq.com'
 
 # This attribute is unsupported and liable to change in patch or minor releases
 # The vast majority of use cases will never require you to set this attribute
