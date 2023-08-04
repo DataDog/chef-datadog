@@ -41,7 +41,7 @@ service_name = 'datadog-fips-proxy'
 file '/etc/datadog-fips-proxy/datadog-fips-proxy.cfg' do
   owner 'root'
   group 'root'
-  mode 0766
+  mode '0766'
   content lazy { ::File.open('/etc/datadog-fips-proxy/datadog-fips-proxy.cfg.example').read }
   not_if { ::File.exist?('/etc/datadog-fips-proxy/datadog-fips-proxy.cfg') }
   action :create
