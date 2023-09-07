@@ -1500,6 +1500,7 @@ describe 'test::monitor_add' do
     end
     it 'creates the config file at A7\'s path' do
       expect(chef_run).to render_file('/etc/datadog-agent/conf.d/potato.d/conf.yaml')
+      expect(chef_run).to render_file('/etc/datadog-agent/conf.d/potato.d/potato-one.yaml')
     end
   end
 end
@@ -1535,6 +1536,7 @@ describe 'test::monitor_remove' do
     end
     it 'creates the config file at A7\'s path' do
       expect(chef_run).to delete_file('/etc/datadog-agent/conf.d/potato.d/conf.yaml')
+      expect(chef_run).to delete_file('/etc/datadog-agent/conf.d/potato.d/potato-one.yaml')
     end
   end
 end
