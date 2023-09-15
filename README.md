@@ -107,6 +107,8 @@ The following methods are available for adding your [Datadog API and application
 
 **Note**: When using the run state to store your API and application keys, set them at compile time before `datadog::dd-handler` in the run list.
 
+**Note**: downgrade of Agent 6 is not supported on Windows.
+
 #### Extra configuration
 
 To add additional elements to the Agent configuration file (typically `datadog.yaml`) that are not directly available as attributes of the cookbook, use the `node['datadog']['extra_config']` attribute. This is a hash attribute, which is marshaled into the configuration file accordingly.
