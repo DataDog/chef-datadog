@@ -3,7 +3,7 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-#
+
 #     http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
@@ -201,7 +201,7 @@ class Chef
 
         def fetch_current_version
           raw_version = agent_get_version
-          return nil if raw_version.nil? 
+          return nil if raw_version.nil?
           match_data = raw_version.match(/^Agent ([^\s]*) (- Meta: ([^\s]*) )?- Commit/)
           # will fail if raw_version is empty (Line 199 fails)
           version = match_data[1] if match_data
