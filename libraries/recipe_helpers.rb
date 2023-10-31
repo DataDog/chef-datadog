@@ -195,15 +195,15 @@ class Chef
 
         include Chef::Mixin::ShellOut
         def agent_get_version
-          return nil unless File.exist?(WIN_BIN_PATH)
+          return nil unless File.file?(WIN_BIN_PATH)
           shell_out("\"#{WIN_BIN_PATH}\" version -n").stdout.strip
         end
 
         def fetch_current_version
           raw_version = agent_get_version
-          return nil if raw_version.nil? or raw_version == ""
+          return nil if raw_version.nil? 
           match_data = raw_version.match(/^Agent ([^\s]*) (- Meta: ([^\s]*) )?- Commit/)
-
+          # will fail if raw_version is empty (Line 199 fails)
           version = match_data[1] if match_data
           nightly_version = match_data[3] if match_data[2]
           # If the Meta tag is catched, we'll add it to the version to specify the nightly version we're using
