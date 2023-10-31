@@ -201,7 +201,7 @@ class Chef
 
         def fetch_current_version
           raw_version = agent_get_version
-          return nil if raw_version.nil?
+          return nil if raw_version.nil? or raw_version == ""
           match_data = raw_version.match(/^Agent ([^\s]*) (- Meta: ([^\s]*) )?- Commit/)
 
           version = match_data[1] if match_data
