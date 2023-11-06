@@ -21,7 +21,7 @@ require 'yaml' # Our erb templates need this
 
 is_windows = platform_family?('windows')
 
-# Install the agent
+# Install the fips-proxy
 if is_windows
   raise 'Windows currently unsupported for the datadog FIPS proxy.'
 else

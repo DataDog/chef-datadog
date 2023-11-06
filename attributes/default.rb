@@ -43,7 +43,6 @@ default['datadog']['agent_version'] = nil # nil to install latest
 # Agent flavor to install, acceptable values are "datadog-agent", "datadog-iot-agent"
 default['datadog']['agent_flavor'] = 'datadog-agent' # "datadog-agent" to install the datadog-agent package
 default['datadog']['fips_proxy_version'] = nil
-default['datadog']['agent_version'] = nil # nil to install latest
 # Datadog FIPS proxy package name:
 default['datadog']['fips_proxy_package_name'] = 'datadog-fips-proxy' # "datadog-fips-proxy" to install the datadog-fips-proxy package
 
@@ -56,8 +55,6 @@ default['datadog']['fips_proxy_package_action'] = 'install'
 # retries and retry_delay for package download/install
 default['datadog']['agent_package_retries'] = nil
 default['datadog']['agent_package_retry_delay'] = nil
-default['datadog']['fips_proxy_package_retries'] = nil
-default['datadog']['fips_proxy_package_retry_delay'] = nil
 
 # Allow downgrades of the agent (Linux only)
 # Note: on apt-based platforms, this will use the `--force-yes` option on the apt-get command. Use with caution.

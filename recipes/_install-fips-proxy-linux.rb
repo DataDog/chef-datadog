@@ -25,8 +25,8 @@ dd_fips_proxy_package_name = node['datadog']['fips_proxy_package_name']
 
 package_action = node['datadog']['fips_proxy_package_action']
 
-package_retries = node['datadog']['fips_proxy_package_retries']
-package_retry_delay = node['datadog']['fips_proxy_package_retry_delay']
+package_retries = node['datadog']['agent_package_retries']
+package_retry_delay = node['datadog']['agent_package_retry_delay']
 
 # Install the regular package
 case node['platform_family']
@@ -65,12 +65,15 @@ when 'rhel', 'fedora', 'amazon'
     end
   end
 when 'suse'
-  zypper_package dd_fips_proxy_package_name do # ~FC009
-    version dd_fips_proxy_version
-    retries package_retries unless package_retries.nil?
-    retry_delay package_retry_delay unless package_retry_delay.nil?
-    action package_action # default is :install
-    # allow_downgrade is only suported for zypper_package since Chef Client 13.6
-    allow_downgrade node['datadog']['fips_proxy_allow_downgrade'] if respond_to?(:allow_downgrade)
-  end
+  raise 'SuSE currently unsupported for the datadog FIPS proxy.'
+
+  ## Uncomment code below once SuSE support is added for FIPS proxy
+  # zypper_package dd_fips_proxy_package_name do # ~FC009
+  #   version dd_fips_proxy_version
+  #   retries package_retries unless package_retries.nil?
+  #   retry_delay package_retry_delay unless package_retry_delay.nil?
+  #   action package_action # default is :install
+  #   # allow_downgrade is only suported for zypper_package since Chef Client 13.6
+  #   allow_downgrade node['datadog']['fips_proxy_allow_downgrade'] if respond_to?(:allow_downgrade)
+  # end
 end
