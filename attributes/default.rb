@@ -42,9 +42,14 @@ default['datadog']['agent_major_version'] = nil # nil to autodetect based on 'ag
 default['datadog']['agent_version'] = nil # nil to install latest
 # Agent flavor to install, acceptable values are "datadog-agent", "datadog-iot-agent"
 default['datadog']['agent_flavor'] = 'datadog-agent' # "datadog-agent" to install the datadog-agent package
+default['datadog']['fips_proxy_version'] = nil
+# Datadog FIPS proxy package name:
+default['datadog']['fips_proxy_package_name'] = 'datadog-fips-proxy' # "datadog-fips-proxy" to install the datadog-fips-proxy package
 
 # Allow override with `upgrade` to get latest (Linux only)
 default['datadog']['agent_package_action'] = 'install'
+# Allow override with `upgrade` to get latest (Linux only)
+default['datadog']['fips_proxy_package_action'] = 'install'
 
 # Agent package options
 # retries and retry_delay for package download/install
@@ -54,6 +59,7 @@ default['datadog']['agent_package_retry_delay'] = nil
 # Allow downgrades of the agent (Linux only)
 # Note: on apt-based platforms, this will use the `--force-yes` option on the apt-get command. Use with caution.
 default['datadog']['agent_allow_downgrade'] = false
+default['datadog']['fips_proxy_allow_downgrade'] = false
 
 ########################################################################
 ###                 Agent 6/7 only attributes                        ###
@@ -250,6 +256,12 @@ default['datadog']['agent_enable'] = true
 
 # Start agent or not
 default['datadog']['agent_start'] = true
+
+# Enable the fips-proxy to start at boot.
+default['datadog']['fips_proxy_enable'] = true
+
+# Start fips_proxy or not
+default['datadog']['fips_proxy_start'] = true
 
 # installation info
 default['datadog']['install_info_enabled'] = true
