@@ -164,7 +164,7 @@ GEM
     logging (2.3.0)
       little-plugger (~> 1.1)
       multi_json (~> 1.14)
-    mini_portile2 (2.6.1)
+    mini_portile2 (2.8.5)
     minitar (0.9)
     minitest (5.14.2)
     mixlib-archive (1.0.7)
@@ -194,8 +194,8 @@ GEM
       net-ssh (>= 2.6.5)
       net-ssh-gateway (>= 1.2.0)
     net-telnet (0.1.1)
-    nokogiri (1.12.5)
-      mini_portile2 (~> 2.6.1)
+    nokogiri (1.15.5)
+      mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     nori (2.6.0)
     octokit (4.18.0)
@@ -223,7 +223,7 @@ GEM
     polyglot (0.3.5)
     proxifier (1.0.3)
     public_suffix (4.0.6)
-    racc (1.6.0)
+    racc (1.7.3)
     rack (2.2.3)
     rainbow (3.0.0)
     rake (13.0.1)
@@ -331,7 +331,7 @@ GEM
       tty-screen (~> 0.8)
       wisper (~> 2.0)
     tty-screen (0.8.1)
-    tzinfo (1.2.7)
+    tzinfo (1.2.11)
       thread_safe (~> 0.1)
     unicode-display_width (1.6.1)
     unicode_utils (1.4.0)
@@ -391,4 +391,4 @@ DEPENDENCIES
   yaml
 
 BUNDLED WITH
-   2.3.26
+   2.3.22
