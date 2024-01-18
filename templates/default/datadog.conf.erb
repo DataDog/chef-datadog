@@ -31,6 +31,9 @@ create_dd_check_tags: <%= node['datadog']['create_dd_check_tags'] %>
 <% if node['datadog']['collect_ec2_tags'] -%>
 collect_ec2_tags: <%= node['datadog']['collect_ec2_tags'] %>
 <% end -%>
+<% if node['datadog']['ec2_prefer_imdsv2'] -%>
+ec2_prefer_imdsv2: <%= node['datadog']['ec2_prefer_imdsv2'] %>
+<% end -%>
 
 <% if node['datadog']['web_proxy']['host'] -%>
 proxy_host: <%= node['datadog']['web_proxy']['host'] %>

@@ -122,6 +122,9 @@ default['datadog']['env'] = nil
 # Collect EC2 tags, set to 'yes' to collect
 default['datadog']['collect_ec2_tags'] = nil
 
+# Use IMDSv2 to collect instance metadata
+default['datadog']['ec2_prefer_imdsv2'] = nil
+
 # Set this regex to exclude some Chef node tags from the host tags that the datadog handler sends to Datadog
 # https://github.com/DataDog/chef-handler-datadog/issues/85
 # This means that all the metrics and service checks coming from the
