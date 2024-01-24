@@ -20,11 +20,17 @@
 is_windows = platform_family?('windows')
 
 # Set the correct agent startup action
-security_agent_enabled = !is_windows && node['datadog']['security_agent']['cws']['enabled'] || node['datadog']['security_agent']['cspm']['enabled']
+security_agent_enabled = node['datadog']['security_agent']['cws']['enabled'] || (!is_windows && node['datadog']['security_agent']['cspm']['enabled'])
+security_agent_start = security_agent_enabled && node['datadog']['agent_start'] && node['datadog']['agent_enable'] ? :start : :stop
 
 #
 # Configures security-agent agent
-security_agent_config_file = '/etc/datadog-agent/security-agent.yaml'
+security_agent_config_file =
+  if is_windows
+    'C:/ProgramData/Datadog/security-agent.yaml'
+  else
+    '/etc/datadog-agent/security-agent.yaml'
+  end
 security_agent_config_file_exists = ::File.exist?(security_agent_config_file)
 
 template security_agent_config_file do
@@ -52,9 +58,11 @@ template security_agent_config_file do
     compliance_extra_config: compliance_extra_config
   )
 
-  owner 'root'
-  group 'dd-agent'
-  mode '640'
+  unless is_windows
+    owner 'root'
+    group 'dd-agent'
+    mode '640'
+  end
 
   notifies :restart, 'service[datadog-agent-security]', :delayed if security_agent_enabled
 
@@ -65,14 +73,18 @@ end
 # Common configuration
 service_provider = Chef::Datadog.service_provider(node)
 
-service_name = 'datadog-agent-security'
+service_name = is_windows ? 'datadog-security-agent' : 'datadog-agent-security'
 
-if security_agent_enabled
-  service 'datadog-agent-security' do
-    service_name service_name
-    action :start
-    provider service_provider unless service_provider.nil?
+service 'datadog-agent-security' do
+  service_name service_name
+  action [security_agent_start]
+  provider service_provider unless service_provider.nil?
+  if is_windows
+    supports :restart => true, :start => true, :stop => true
+    restart_command "powershell restart-service #{service_name} -Force"
+    stop_command "powershell stop-service #{service_name} -Force"
+  else
     supports :restart => true, :status => true, :start => true, :stop => true
-    subscribes :restart, "template[#{security_agent_config_file}]", :delayed
   end
+  subscribes :restart, "template[#{security_agent_config_file}]", :delayed if security_agent_enabled
 end

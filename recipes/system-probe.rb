@@ -22,7 +22,7 @@ is_windows = platform_family?('windows')
 # Set the correct agent startup action
 cws_enabled = node['datadog']['security_agent']['cws']['enabled']
 sysprobe_enabled = if is_windows
-                     node['datadog']['system_probe']['network_enabled']
+                     node['datadog']['system_probe']['network_enabled'] || cws_enabled
                    else
                      node['datadog']['system_probe']['enabled'] || node['datadog']['system_probe']['network_enabled'] || node['datadog']['system_probe']['service_monitoring_enabled'] || cws_enabled
                    end
@@ -99,6 +99,5 @@ service 'datadog-agent-sysprobe' do
   else
     supports :restart => true, :status => true, :start => true, :stop => true
   end
-  supports :restart => true, :status => true, :start => true, :stop => true
   subscribes :restart, "template[#{system_probe_config_file}]", :delayed if sysprobe_enabled
 end
