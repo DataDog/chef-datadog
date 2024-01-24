@@ -107,6 +107,19 @@ suites:
         bpf_debug: true
         enable_conntrack: true
 
+- name: security-agent
+  run_list:
+    - recipe[datadog::dd-agent]
+  attributes:
+    datadog: &DATADOG
+      aptrepo: 'http://apt.datad0g.com'
+      aptrepo_dist: 'beta'
+      api_key: somenonnullapikeythats32charlong
+      application_key: alsonotnil
+      security_agent:
+        cws:
+          enabled: true
+
 - name: dd-handler
   run_list:
     - recipe[datadog::dd-handler]
