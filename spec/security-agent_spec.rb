@@ -50,8 +50,31 @@ describe 'datadog::security-agent' do
       end
     end
 
+    it 'system-probe.yaml is created' do
+      expect(chef_run).to create_template('/etc/datadog-agent/system-probe.yaml')
+    end
+
     it 'security-agent.yaml is created' do
       expect(chef_run).to create_template('/etc/datadog-agent/security-agent.yaml')
+    end
+
+    it 'system-probe.yaml contains expected YAML configuration' do
+      expected_yaml = <<-EOF
+      runtime_security_config:
+        enabled: true
+        activity_dump:
+          enabled: true
+      system_probe_config:
+        enabled: false
+        bpf_debug: false
+        debug_port: 0
+        enable_conntrack: false
+        sysprobe_socket: '/opt/datadog-agent/run/sysprobe.sock'
+      EOF
+
+      expect(chef_run).to(render_file('/etc/datadog-agent/system-probe.yaml').with_content { |content|
+        expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
+      })
     end
 
     it 'security-agent.yaml contains expected YAML configuration' do
