@@ -167,7 +167,7 @@ system_probe_supported = (agent_version_greater_than_6_11 && !is_windows) || (ag
 include_recipe '::system-probe' if system_probe_managed && system_probe_supported
 
 # security-agent is a dependency of the agent on Linux or Windows
-include_recipe '::security-agent'
+include_recipe '::security-agent' unless is_windows
 
 # Installation metadata to let know the agent about installation method and its version
 include_recipe '::install_info'
