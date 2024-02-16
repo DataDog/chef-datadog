@@ -20,8 +20,7 @@
 is_windows = platform_family?('windows')
 
 # Set the correct agent startup action
-security_agent_enabled = node['datadog']['security_agent']['cws']['enabled'] || (!is_windows && node['datadog']['security_agent']['cspm']['enabled'])
-security_agent_start = security_agent_enabled && node['datadog']['agent_start'] && node['datadog']['agent_enable'] ? :start : :stop
+security_agent_start = node['datadog']['agent_start'] && node['datadog']['agent_enable'] ? :start : :stop
 
 #
 # Configures security-agent agent
@@ -31,7 +30,6 @@ security_agent_config_file =
   else
     '/etc/datadog-agent/security-agent.yaml'
   end
-security_agent_config_file_exists = ::File.exist?(security_agent_config_file)
 
 template security_agent_config_file do
   runtime_security_extra_config = {}
@@ -64,10 +62,7 @@ template security_agent_config_file do
     mode '640'
   end
 
-  notifies :restart, 'service[datadog-agent-security]', :delayed if security_agent_enabled
-
-  # Security agent is not enabled and the file doesn't exists, don't create it
-  not_if { !security_agent_enabled && !security_agent_config_file_exists }
+  notifies :restart, 'service[datadog-agent-security]', :delayed
 end
 
 # Common configuration
@@ -86,5 +81,5 @@ service 'datadog-agent-security' do
   else
     supports :restart => true, :status => true, :start => true, :stop => true
   end
-  subscribes :restart, "template[#{security_agent_config_file}]", :delayed if security_agent_enabled
+  subscribes :restart, "template[#{security_agent_config_file}]", :delayed
 end

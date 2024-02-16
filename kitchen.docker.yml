@@ -48,6 +48,10 @@ platforms:
       require_chef_omnibus: 16.17.4
       image: 'datadog/docker-library:chef_kitchen_systemd_rocky_8'
       run_command: /root/start.sh
+      # workaround https://github.com/chef/chef/issues/14034 which has been
+      # fixed, but only for fresh Chef versions (>= 18)
+      provision_command:
+        - echo "CentOS Linux release 8" > /etc/redhat-release
 
 suites:
 <%

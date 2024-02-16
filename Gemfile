@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 chef_version = ENV.fetch('CHEF_VERSION', '14.10.9')
 
 gem 'rake'
+gem 'rspec-expectations', '< 3.12.4'
 gem 'chef', "= #{chef_version}"
 gem 'cucumber-core', '~> 3.2.1'
 gem 'yaml'
@@ -18,6 +19,10 @@ gem 'kitchen-docker', '~> 2.3.0'
 gem 'rbnacl', '~> 4.0.2'
 gem 'rbnacl-libsodium', '~> 1.0.16'
 gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
+
+if RUBY_VERSION >= '3.0.0' && RUBY_VERSION < '3.1.0'
+  gem 'uri', '= 0.10.1'
+end
 
 if RUBY_VERSION < '2.4'
   gem 'json', '~> 2.4.1'
