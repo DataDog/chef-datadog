@@ -30,7 +30,6 @@ security_agent_config_file =
   else
     '/etc/datadog-agent/security-agent.yaml'
   end
-security_agent_config_file_exists = ::File.exist?(security_agent_config_file)
 
 template security_agent_config_file do
   runtime_security_extra_config = {}
