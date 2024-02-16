@@ -168,10 +168,11 @@ system_probe_supported = (agent_version_greater_than_6_11 && !is_windows) || (ag
 include_recipe '::system-probe' if system_probe_managed && system_probe_supported
 
 # Security Agent requires at least agent 6.27 on Linux or 6.50 on Windows, before that it was unsupported.
+security_agent_managed = node['datadog']['security_agent']['cws']['enabled'] || (!is_windows && node['datadog']['security_agent']['cspm']['enabled'])
 security_agent_supported = (agent_version_greater_than_6_26 && !is_windows) || (agent_version_greater_than_6_49 && is_windows)
 
 # security-agent is a dependency of the agent on Linux or Windows
-include_recipe '::security-agent' && security_agent_supported
+include_recipe '::security-agent' if security_agent_managed && security_agent_supported
 
 # Installation metadata to let know the agent about installation method and its version
 include_recipe '::install_info'
