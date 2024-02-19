@@ -1,6 +1,10 @@
 Changes
 =======
 
+# 4.19.0 / 2024-02-19
+* [FEATURE] Add support for installation of the datadog-fips-proxy package [#853] [@truthbk]
+* [FEATURE] Add support for CWS on Windows [#907] [@paulcacheux]
+
 # 4.18.0 / 2023-07-25
  * [BUGFIX] Syntax update to support old chef-infra versions [#898] [@chouetz]
  * [FEATURE] Update recipes to support amazonlinux 2023 installation [#896] [@chouetz]
@@ -1243,3 +1247,4 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@nichols2k]: https://github.com/nichols2k
 [@chouetz]: https://github.com/chouetz
 [@vigohe]: https://github.com/vigohe
+[@paulcacheux]: https://github.com/paulcacheux
