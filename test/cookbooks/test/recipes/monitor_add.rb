@@ -15,3 +15,8 @@
 datadog_monitor 'potato' do
   action :add
 end
+
+datadog_monitor 'potato' do
+  action :add
+  config_name 'potato-one'
+end
