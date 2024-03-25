@@ -252,8 +252,11 @@ To uninstall the Agent, remove the `dd-agent` recipe and add the `remove-dd-agen
 
 ### Custom Agent Repository
 
-To use an agent from a different repository than stable, we can set the `aptrepo` option. By default this option is equal to `[signed-by=/usr/share/keyrings/datadog-archive-keyring.gpg] apt.datadoghq.com`, if a custom value is set, another `signed-by` keyring can be set `[signed-by=custom-repo-keyring-path] custom-repo`.
-Staging example :
+To use an agent from a different repository than stable, we can set the `aptrepo` option. 
+
+By default this option is equal to `[signed-by=/usr/share/keyrings/datadog-archive-keyring.gpg] apt.datadoghq.com`, if a custom value is set, another `signed-by` keyring can be set `[signed-by=custom-repo-keyring-path] custom-repo`.
+
+Using staging repository
 ```ruby
   default_attributes(
     'datadog' => {
