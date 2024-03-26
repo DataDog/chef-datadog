@@ -250,7 +250,7 @@ The following example downgrades to Agent v6. The same applies if you are downgr
 
 To uninstall the Agent, remove the `dd-agent` recipe and add the `remove-dd-agent` recipe with no attributes.
 
-### Custom Agent Repository
+### Custom Agent repository
 
 To use an agent from a different repository than stable, we can set the `aptrepo` option. 
 
