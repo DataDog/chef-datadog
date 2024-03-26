@@ -256,7 +256,8 @@ To use an Agent from a custom repository, you can set the `aptrepo` option.
 
 By default, this option is equal to `[signed-by=/usr/share/keyrings/datadog-archive-keyring.gpg] apt.datadoghq.com`. If a custom value is set, another `signed-by` keyring can also be set `[signed-by=custom-repo-keyring-path] custom-repo`.
 
-Using staging repository
+The example below uses the staging repository:
+
 ```ruby
   default_attributes(
     'datadog' => {
