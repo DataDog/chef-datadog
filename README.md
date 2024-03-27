@@ -80,23 +80,6 @@ The following Opscode cookbooks are dependencies:
 
 5. Wait for the next scheduled `chef-client` run or trigger it manually.
 
-### Dockerized environment
-
-To build a Docker environment, use the files under `docker_test_env`:
-
-```
-cd docker_test_env
-docker build -t chef-datadog-container .
-```
-
-To run the container use:
-
-```
-docker run -d -v /dev/vboxdrv:/dev/vboxdrv --privileged=true chef-datadog-container
-```
-
-Then attach a console to the container or use the VScode remote-container feature to develop inside the container.
-
 #### Datadog attributes
 
 The following methods are available for adding your [Datadog API and application keys][4]:
@@ -395,6 +378,25 @@ end
 To get the available versions of the integrations, see the integration-specific `CHANGELOG.md` in the [integrations-core repository][16].
 
 **Note**: For Chef Windows users, the `chef-client` must have read access to the `datadog.yaml` file when the `datadog-agent` binary available on the node is used by this resource.
+
+## Development
+
+### Dockerized environment
+
+To build a Docker environment, use the files under `docker_test_env`:
+
+```
+cd docker_test_env
+docker build -t chef-datadog-container .
+```
+
+To run the container use:
+
+```
+docker run -d -v /dev/vboxdrv:/dev/vboxdrv --privileged=true chef-datadog-container
+```
+
+Then attach a console to the container or use the VScode remote-container feature to develop inside the container.
 
 
 [1]: https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb
