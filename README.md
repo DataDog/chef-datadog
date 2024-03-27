@@ -396,7 +396,7 @@ To run the container use:
 docker run -d -v /dev/vboxdrv:/dev/vboxdrv --privileged=true chef-datadog-container
 ```
 
-Then attach a console to the container or use the VScode remote-container feature to develop inside the container.
+Then attach a console to the container or use the VS Code remote-container feature to develop inside the container.
 
 
 [1]: https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb
