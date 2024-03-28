@@ -250,6 +250,22 @@ The following example downgrades to Agent v6. The same applies if you are downgr
 
 To uninstall the Agent, remove the `dd-agent` recipe and add the `remove-dd-agent` recipe with no attributes.
 
+### Custom Agent repository
+
+To use an Agent from a custom repository, you can set the `aptrepo` option. 
+
+By default, this option is equal to `[signed-by=/usr/share/keyrings/datadog-archive-keyring.gpg] apt.datadoghq.com`. If a custom value is set, another `signed-by` keyring can also be set `[signed-by=custom-repo-keyring-path] custom-repo`.
+
+The example below uses the staging repository:
+
+```ruby
+  default_attributes(
+    'datadog' => {
+      'aptrepo' => '[signed-by=/usr/share/keyrings/datadog-archive-keyring.gpg] apt.datad0g.com',
+    }
+  }
+```
+
 ## Recipes
 
 Access the [Datadog Chef recipes on GitHub][7].
