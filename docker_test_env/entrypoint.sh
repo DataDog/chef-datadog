@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-. ~/.bash_profile
-
 git clone https://github.com/DataDog/chef-datadog.git
 cd chef-datadog
 bundle update --bundler
