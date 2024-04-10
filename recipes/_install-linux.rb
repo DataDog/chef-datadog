@@ -45,6 +45,21 @@ when 'debian'
     action :upgrade
   end
 when 'rhel', 'fedora', 'amazon'
+  # Centos < 7 was deprecated on agent {6,7}.52
+  agent_major_version = Chef::Datadog.agent_major_version(node)
+  if agent_major_version.to_i >= 6 && platform_family?('rhel') && node['platform_version'].to_i < 7
+    agent_minor_version = Chef::Datadog.agent_minor_version(node)
+    if dd_agent_version && agent_minor_version && agent_minor_version >= 52
+      # Error out with a useful message when the version was pinned to an unsupported one
+      Chef::Log.error("Agent versions #{agent_major_version}.52 and above not supported by current OS (RHEL < 7 equivalent).")
+      raise
+    else
+      # Set an upper bound for the package when the version was left unpinned
+      # Bounds like this one need to go on the package name, they're not supported on the version field
+      dd_agent_flavor = "#{dd_agent_flavor} < 1:#{agent_major_version}.52.0-1"
+    end
+  end
+
   if (platform_family?('rhel')   && node['platform_version'].to_i >= 8)    ||
      (platform_family?('fedora') && node['platform_version'].to_i >= 28)   ||
      (platform_family?('amazon') && node['platform_version'].to_i >= 2022)
