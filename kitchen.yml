@@ -12,7 +12,6 @@ platforms:
       ubuntu-14.04
       ubuntu-16.04
       centos-5.11
-      centos-6.6
       centos-7.1
       debian-7.8
       debian-9.13
