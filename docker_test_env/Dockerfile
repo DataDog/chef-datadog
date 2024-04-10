@@ -1,4 +1,3 @@
-# docker run --rm -it -v /dev/vboxdrv:/dev/vboxdrv
 ARG BASE_IMAGE=ubuntu:20.04
 FROM $BASE_IMAGE
 ARG TZ=America/New_York
@@ -9,7 +8,7 @@ ENV RUBY_VERSION=$RUBY_VERSION
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN apt-get update && apt-get install -y wget virtualbox git zlib1g-dev curl
+RUN apt-get update && apt-get install -y wget git zlib1g-dev curl gpg
 
 # RVM
 RUN gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
@@ -21,8 +20,12 @@ RUN /bin/bash -l -c "gem install bundler:2.3.26 --no-document"
 
 RUN /bin/bash -l -c "gem install nori:2.6.0 test-kitchen:2.7.2 octokit:4.18.0 semverse:3.0.0 chef:14.10.9 berkshelf:7.0.10 kitchen-vagrant:1.7.0 kitchen-docker:2.3.0"
 
-
-RUN wget https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_x86_64.deb && dpkg -i vagrant_2.2.9_x86_64.deb && rm vagrant_2.2.9_x86_64.deb
+# build with --build-arg INSTALL_VAGRANT=1 to get vagrant support (not needed for kitchen-docker-tests)
+# requires `-v /dev/vboxdrv:/dev/vboxdrv` when running
+ARG INSTALL_VAGRANT
+RUN if [ -n "${INSTALL_VAGRANT}" ]; then \
+    apt-get install -y virtualbox && wget https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_x86_64.deb && dpkg -i vagrant_2.2.9_x86_64.deb && rm vagrant_2.2.9_x86_64.deb \
+    ; fi
 
 # Install docker. Requires `-v /var/run/docker.sock:/var/run/docker.sock` when running to use the host's docker daemon
 RUN \

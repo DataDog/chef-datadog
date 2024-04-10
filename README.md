@@ -383,7 +383,7 @@ To get the available versions of the integrations, see the integration-specific 
 
 ### Dockerized environment
 
-To build a Docker environment, use the files under `docker_test_env`:
+To build a Docker environment with which to run kitchen tests, use the files under `docker_test_env`:
 
 ```
 cd docker_test_env
@@ -393,11 +393,18 @@ docker build -t chef-datadog-container .
 To run the container use:
 
 ```
-docker run -d -v /dev/vboxdrv:/dev/vboxdrv --privileged=true chef-datadog-container
+docker run -d -v /var/run/docker.sock:/var/run/docker.sock chef-datadog-container
 ```
 
 Then attach a console to the container or use the VS Code remote-container feature to develop inside the container.
 
+To run kitchen-docker tests from within the container:
+
+```
+# Note: Also set KITCHEN_DOCKER_HOSTNAME=host.docker.internal if on MacOS or Windows
+# Run this under a login shell (otherwise `bundle` won't be found)
+KITCHEN_LOCAL_YAML=kitchen.docker.yml bundle exec rake circle
+```
 
 [1]: https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb
 [2]: https://github.com/DataDog/chef-datadog/releases/tag/v2.18.0
