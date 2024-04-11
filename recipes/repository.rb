@@ -112,7 +112,6 @@ when 'debian'
   if agent_minor_version && agent_minor_version > 35
     apt_gpg_keys.pop
   end
- 
 
   apt_gpg_keys.each do |key_fingerprint, key_url|
     # Download the APT key
