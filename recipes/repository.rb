@@ -108,6 +108,12 @@ when 'debian'
     mode '0644'
   end
 
+  agent_minor_version = Chef::Datadog.agent_minor_version(node)
+  if agent_minor_version && agent_minor_version > 35
+    apt_gpg_keys.pop
+  end
+ 
+
   apt_gpg_keys.each do |key_fingerprint, key_url|
     # Download the APT key
     key_local_path = ::File.join(Chef::Config[:file_cache_path], key_fingerprint)
@@ -191,7 +197,10 @@ when 'rhel', 'fedora', 'amazon'
     action :install
     only_if { node['packages']['gnupg2'].nil? }
   end
-
+  agent_minor_version = Chef::Datadog.agent_minor_version(node)
+  if agent_minor_version && agent_minor_version > 35
+    rpm_gpg_keys.pop
+  end
   # Import new RPM key
   rpm_gpg_keys.each do |rpm_gpg_key|
     next unless node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}"]
@@ -276,6 +285,10 @@ when 'rhel', 'fedora', 'amazon'
 when 'suse'
   # The yumrepo_gpgkey parameter was removed because the DATADOG_RPM_KEY.public (4172a230) is not used anymore
   warn_deprecated_yumrepo_gpgkey()
+  agent_minor_version = Chef::Datadog.agent_minor_version(node)
+  if agent_minor_version && agent_minor_version > 35
+    rpm_gpg_keys.pop
+  end
 
   # Import new RPM key
   rpm_gpg_keys.each do |rpm_gpg_key|
