@@ -387,13 +387,13 @@ To build a Docker environment with which to run kitchen tests, use the files und
 
 ```
 cd docker_test_env
-docker build -t chef-datadog-container .
+docker build -t chef-datadog-test-env .
 ```
 
 To run the container use:
 
 ```
-docker run -d -v /var/run/docker.sock:/var/run/docker.sock chef-datadog-container
+docker run -d -v /var/run/docker.sock:/var/run/docker.sock chef-datadog-test-env
 ```
 
 Then attach a console to the container or use the VS Code remote-container feature to develop inside the container.
