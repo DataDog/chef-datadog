@@ -40,6 +40,12 @@ shared_examples_for 'rhellions no version set' do
   it_behaves_like 'rhellions datadog-agent'
 end
 
+shared_examples_for 'rhellions no version set rhel<7' do
+  it_behaves_like 'common linux resources'
+
+  it_behaves_like 'rhellions datadog-agent rhel<7'
+end
+
 shared_examples_for 'rhellions dnf no version set' do
   it_behaves_like 'common linux resources'
 
@@ -103,11 +109,11 @@ describe 'datadog::dd-agent' do
       it_behaves_like 'debianoids no version set'
     end
 
-    context 'on RedHat-family distro above 6.x' do
+    context 'on RedHat-family distro above 7.x' do
       cached(:chef_run) do
         ChefSpec::SoloRunner.new(
           :platform => 'centos',
-          :version => '6.9'
+          :version => '7.7'
         ) do |node|
           node.normal['datadog'] = { 'api_key' => 'somethingnotnil' }
           node.normal['languages'] = { 'python' => { 'version' => '2.6.2' } }
@@ -118,11 +124,11 @@ describe 'datadog::dd-agent' do
       it_behaves_like 'rhellions no version set'
     end
 
-    context 'on CentOS 5.11 distro' do
+    context 'on CentOS < 7 distro' do
       cached(:chef_run) do
         ChefSpec::SoloRunner.new(
           :platform => 'centos',
-          :version => '5.11'
+          :version => '6.10'
         ) do |node|
           node.normal['datadog'] = { 'api_key' => 'somethingnotnil' }
           node.normal['languages'] = { 'python' => { 'version' => '2.4.3' } }
@@ -130,7 +136,7 @@ describe 'datadog::dd-agent' do
       end
 
       it_behaves_like 'repo recipe'
-      it_behaves_like 'rhellions no version set'
+      it_behaves_like 'rhellions no version set rhel<7'
     end
 
     context 'on Fedora distro' do
@@ -484,7 +490,7 @@ describe 'datadog::dd-agent' do
       cached(:chef_run) do
         ChefSpec::SoloRunner.new(
           :platform => 'redhat',
-          :version => '6.10'
+          :version => '7.7'
         ) do |node|
           node.normal['datadog'] = {
             'agent_major_version' => 6,
@@ -914,7 +920,7 @@ describe 'datadog::dd-agent' do
         cached(:chef_run) do
           ChefSpec::SoloRunner.new(
             platform: 'centos',
-            version: '6.9'
+            version: '7.7'
           ) do |node|
             node.normal['datadog'] = { 'api_key' => 'somethingnotnil' }
             node.normal['languages'] = { 'python' => { 'version' => '2.6.2' } }
@@ -959,7 +965,7 @@ describe 'datadog::dd-agent' do
         cached(:chef_run) do
           ChefSpec::SoloRunner.new(
             platform: 'centos',
-            version: '6.9'
+            version: '7.7'
           ) do |node|
             node.normal['datadog'] = {
               'api_key' => 'somethingnotnil',

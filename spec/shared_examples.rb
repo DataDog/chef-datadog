@@ -108,6 +108,15 @@ shared_examples_for 'rhellions datadog-agent' do
   end
 end
 
+shared_examples_for 'rhellions datadog-agent rhel<7' do
+  it_behaves_like 'datadog-agent'
+
+  # Centos < 7 was deprecated on Agent 7.52
+  it 'installs the version-capped datadog-agent' do
+    expect(chef_run).to install_yum_package 'datadog-agent < 1:7.52.0-1'
+  end
+end
+
 shared_examples_for 'rhellions dnf datadog-agent' do
   it_behaves_like 'datadog-agent'
 
