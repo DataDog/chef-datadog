@@ -79,23 +79,7 @@ suites:
 - name: dd-agent-gpgcheck-recent
   run_list:
     - recipe[datadog::dd-agent]
-  attributes:
-    datadog: &DATADOG
-      api_key: somenonnullapikeythats32charlong
-      application_key: alsonotnil
-
-- name: dd-agent-gpgcheck-older
-  run_list:
-    - recipe[datadog::dd-agent]
-  attributes:
-    datadog: &DATADOG
-      api_key: somenonnullapikeythats32charlong
-      application_key: alsonotnil
-      agent_version: '7.20.0'
-
-- name: dd-agent-gpgcheck-recent
-  run_list:
-    - recipe[datadog::dd-agent]
+    - recipe[datadog::dd-handler]
   attributes:
     datadog: &DATADOG
       agent_major_version: 7
@@ -109,6 +93,7 @@ suites:
 - name: dd-agent-gpgcheck-older
   run_list:
     - recipe[datadog::dd-agent]
+    - recipe[datadog::dd-handler]
   attributes:
     datadog: &DATADOG
       agent_major_version: 7
