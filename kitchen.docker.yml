@@ -97,6 +97,7 @@ suites:
   attributes:
     datadog: &DATADOG
       agent_major_version: 7
+      agent_minor_version: 20.0
       api_key: somenonnullapikeythats32charlong
       application_key: alsonotnil
     excludes:
