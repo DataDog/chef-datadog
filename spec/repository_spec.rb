@@ -25,6 +25,8 @@ shared_examples 'old debianoid' do
     # see https://github.com/chefspec/chefspec/issues/541
     expect(chef_run.remote_file('remote_file_DATADOG_APT_KEY_CURRENT.public')).to notify(
       'execute[import apt datadog key DATADOG_APT_KEY_CURRENT.public]').to(:run).immediately
+    expect(chef_run.remote_file('remote_file_D18886567EABAD8B2D2526900D826EB906462314')).to notify(
+      'execute[import apt datadog key D18886567EABAD8B2D2526900D826EB906462314]').to(:run).immediately
     expect(chef_run.remote_file('remote_file_5F1E256061D813B125E156E8E6266D4AC0962C7D')).to notify(
       'execute[import apt datadog key 5F1E256061D813B125E156E8E6266D4AC0962C7D]').to(:run).immediately
     expect(chef_run.remote_file('remote_file_D75CEA17048B9ACBF186794B32637D44F14F620E')).to notify(
@@ -44,6 +46,8 @@ shared_examples 'new debianoid' do
 
     expect(chef_run.remote_file('remote_file_DATADOG_APT_KEY_CURRENT.public')).to notify(
       'execute[import apt datadog key DATADOG_APT_KEY_CURRENT.public]').to(:run).immediately
+    expect(chef_run.remote_file('remote_file_D18886567EABAD8B2D2526900D826EB906462314')).to notify(
+      'execute[import apt datadog key D18886567EABAD8B2D2526900D826EB906462314]').to(:run).immediately
     expect(chef_run.remote_file('remote_file_5F1E256061D813B125E156E8E6266D4AC0962C7D')).to notify(
       'execute[import apt datadog key 5F1E256061D813B125E156E8E6266D4AC0962C7D]').to(:run).immediately
     expect(chef_run.remote_file('remote_file_D75CEA17048B9ACBF186794B32637D44F14F620E')).to notify(
@@ -197,6 +201,7 @@ describe 'datadog::repository' do
         expect(chef_run).to create_yum_repository('datadog').with(
           gpgkey: [
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_4F09D16B.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
@@ -218,6 +223,7 @@ describe 'datadog::repository' do
       # Key FD4BF915 (from 2020-09-08 to 2024-09-07)
       # Key E09422B3
       import_gpg_keys([
+        '4F09D16B',
         'b01082d3',
         'fd4bf915',
         'e09422b3'
@@ -228,6 +234,7 @@ describe 'datadog::repository' do
         expect(chef_run).to create_yum_repository('datadog').with(
           gpgkey: [
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_4F09D16B.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
@@ -260,6 +267,7 @@ describe 'datadog::repository' do
         expect(chef_run).to create_yum_repository('datadog').with(
           gpgkey: [
             'http://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
+            'http://keys.datadoghq.com/DATADOG_RPM_KEY_4F09D16B.public',
             'http://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
             'http://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
             'http://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
@@ -282,6 +290,7 @@ describe 'datadog::repository' do
         expect(chef_run).to create_yum_repository('datadog').with(
           gpgkey: [
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_4F09D16B.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
@@ -304,6 +313,7 @@ describe 'datadog::repository' do
         expect(chef_run).to create_yum_repository('datadog').with(
           gpgkey: [
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_4F09D16B.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
@@ -326,6 +336,7 @@ describe 'datadog::repository' do
         expect(chef_run).to create_yum_repository('datadog').with(
           gpgkey: [
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_4F09D16B.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
@@ -348,6 +359,7 @@ describe 'datadog::repository' do
         expect(chef_run).to create_yum_repository('datadog').with(
           gpgkey: [
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
+            'https://keys.datadoghq.com/DATADOG_RPM_KEY_4F09D16B.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
