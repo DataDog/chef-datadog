@@ -51,7 +51,7 @@ apt_repo_uri = 'https://apt.datadoghq.com'
 # DATADOG_RPM_KEY_B01082D3.public expires in 2028
 # DATADOG_RPM_KEY_4F09D16B.public expires in 2033
 rpm_gpg_keys = [['DATADOG_RPM_KEY_CURRENT.public', 'current', ''],
-                ['DATADOG_RPM_KEY_4F09D16B.public', '4F09D16B', '2416 A377 57B1 BB02 68B3  634B 52AF C599 4F09 D16B'],
+                ['DATADOG_RPM_KEY_4F09D16B.public', '4f09d16b', '2416 A377 57B1 BB02 68B3  634B 52AF C599 4F09 D16B'],
                 ['DATADOG_RPM_KEY_B01082D3.public', 'b01082d3', '7408 BFD5 6BC5 BF0C 361A  AAE8 5D88 EEA3 B010 82D3'],
                 ['DATADOG_RPM_KEY_FD4BF915.public', 'fd4bf915', 'C655 9B69 0CA8 82F0 23BD  F3F6 3F4D 1729 FD4B F915'],
                 ['DATADOG_RPM_KEY_E09422B3.public', 'e09422b3', 'A4C0 B90D 7443 CF6E 4E8A  A341 F106 8E14 E094 22B3']]
