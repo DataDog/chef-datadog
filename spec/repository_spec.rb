@@ -191,6 +191,7 @@ describe 'datadog::repository' do
       # Key E09422B3
       import_gpg_keys([
         'current',
+        '4f09d16b',
         'b01082d3',
         'fd4bf915',
         'e09422b3'
@@ -223,7 +224,7 @@ describe 'datadog::repository' do
       # Key FD4BF915 (from 2020-09-08 to 2024-09-07)
       # Key E09422B3
       import_gpg_keys([
-        '4F09D16B',
+        '4f09d16b',
         'b01082d3',
         'fd4bf915',
         'e09422b3'
@@ -256,6 +257,7 @@ describe 'datadog::repository' do
       # Key FD4BF915 (from 2020-09-08 to 2024-09-07)
       # Key E09422B3
       import_gpg_keys([
+        '4f09d16b',
         'b01082d3',
         'fd4bf915',
         'e09422b3'
@@ -384,6 +386,7 @@ describe 'datadog::repository' do
       end
 
       import_gpg_keys([
+        '4f09d16b',
         'b01082d3',
         'fd4bf915',
         'e09422b3'
