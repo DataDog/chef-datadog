@@ -191,9 +191,9 @@ describe 'datadog::repository' do
       # Key E09422B3
       import_gpg_keys([
         'current',
-        '4f09d16b',
         'b01082d3',
         'fd4bf915',
+        '4f09d16b',
         'e09422b3'
       ])
 
