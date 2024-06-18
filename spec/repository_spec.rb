@@ -193,7 +193,6 @@ describe 'datadog::repository' do
         'current',
         'b01082d3',
         'fd4bf915',
-        '4f09d16b',
         'e09422b3'
       ])
 
