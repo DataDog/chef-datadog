@@ -6,7 +6,7 @@ The Datadog Chef recipes are used to deploy Datadog's components and configurati
 * Datadog Agent v6.x
 * Datadog Agent v5.x
 
-**Note**: This page may refer to features that are not available for your selected version. Check the README of the
+**Note**: This page may discuss features that are not available for your selected version. Check the README of the
 git tag or gem version for your version's documentation.
 
 ## Setup
@@ -19,10 +19,12 @@ The Datadog Chef cookbook is compatible with `chef-client` >= 12.7. If you need 
 
 The following platforms are supported:
 
+* AlmaLinux (requires Chef 16 >= 16.10.8 or Chef >= 17.0.69)
 * Amazon Linux
 * CentOS
 * Debian
 * RedHat (RHEL 8 requires Chef >= 15)
+* Rocky (requires Chef 16 >= 16.17.4 or Chef >= 17.1.35)
 * Scientific Linux
 * Ubuntu
 * Windows
@@ -40,29 +42,14 @@ The following Opscode cookbooks are dependencies:
 
 #### Chef
 
-**Chef 12 users**: Depending on your version of Chef 12, additional dependency constraints may apply:
-
-```ruby
-# Chef < 12.14
-depends 'yum', '< 5.0'
-```
-
-```ruby
-# Chef < 12.9
-depends 'apt', '< 6.0.0'
-depends 'yum', '< 5.0'
-```
-
 **Chef 13 users**: With Chef 13 and `chef_handler` 1.x, you may have trouble using the `dd-handler` recipe. The known workaround is to update your dependency to `chef_handler` >= 2.1.
-
-**Chef 14 and 15 users**: To support Chef 12 and 13, the `datadog` cookbook has a dependency to the `chef_handler` cookbook, which is shipped as a resource in Chef 14. Unfortunately, it displays a deprecation message to Chef 14 and 15 users.
 
 ### Installation
 
 1. Add the cookbook to your Chef server with [Berkshelf][5] or [Knife][6]:
     ```text
     # Berksfile
-    cookbook 'datadog', '~> 4.0.0'
+    cookbook 'datadog', '~> 4.0'
     ```
 
     ```shell
@@ -92,23 +79,6 @@ depends 'yum', '< 5.0'
     ```
 
 5. Wait for the next scheduled `chef-client` run or trigger it manually.
-
-### Dockerized environment
-
-To build a Docker environment, use the files under `docker_test_env`:
-
-```
-cd docker_test_env
-docker build -t chef-datadog-container .
-```
-
-To run the container use:
-
-```
-docker run -d -v /dev/vboxdrv:/dev/vboxdrv --privileged=true chef-datadog-container
-```
-
-Then attach a console to the container or use the VScode remote-container feature to develop inside the container.
 
 #### Datadog attributes
 
@@ -161,13 +131,13 @@ Follow the steps below to deploy the Datadog Agent with Chef on AWS OpsWorks:
 
 2. Include the recipe in the `install-lifecycle` recipe:
   ```ruby
-  include_recipe 'datadog::dd-agent'
+  include_recipe '::dd-agent'
   ```
 
 ### Integrations
 
 Enable Agent integrations by including the [recipe](#recipes) and configuration details in your role’s run-list and attributes.
-**Note**: You can create additional integration recipes by using the [datadog_monitor](#datadog-monitor) resource.
+**Note**: You can use the `datadog_monitor` resource for enabling Agent integrations without a recipe.
 
 Associate your recipes with the desired `roles`, for example `role:chef-client` should contain `datadog::dd-handler` and `role:base` should start the Agent with `datadog::dd-agent`. Below is an example role with the `dd-handler`, `dd-agent`, and `mongo` recipes:
 
@@ -222,7 +192,7 @@ Some attribute names have changed from version 3.x to 4.x of the cookbook. Use t
 | Pin agent version     | `'agent_version'` or `'agent6_version'`               | `'agent_version'` for all versions        |
 | Change package_action | `'agent_package_action'` or `'agent6_package_action'` | `'agent_package_action'` for all versions |
 | Change APT repo URL   | `'aptrepo'` or `'agent6_aptrepo'`                     | `'aptrepo'` for all versions              |
-| Change APT repo dist  | `'aptrepo_dist'` or `'agent6_aptrepo_dist'`           | `'aptrepo_dist'` for all versions         |
+| Change APT repo distribution  | `'aptrepo_dist'` or `'agent6_aptrepo_dist'`   | `'aptrepo_dist'` for all versions         |
 | Change YUM repo       | `'yumrepo'` or `'agent6_yumrepo'`                     | `'yumrepo'` for all versions              |
 | Change SUSE repo      | `'yumrepo_suse'` or `'agent6_yumrepo_suse'`           | `'yumrepo_suse'` for all versions         |
 
@@ -259,6 +229,26 @@ The following example downgrades to Agent v6. The same applies if you are downgr
   )
 ```
 
+### Uninstall
+
+To uninstall the Agent, remove the `dd-agent` recipe and add the `remove-dd-agent` recipe with no attributes.
+
+### Custom Agent repository
+
+To use an Agent from a custom repository, you can set the `aptrepo` option. 
+
+By default, this option is equal to `[signed-by=/usr/share/keyrings/datadog-archive-keyring.gpg] apt.datadoghq.com`. If a custom value is set, another `signed-by` keyring can also be set `[signed-by=custom-repo-keyring-path] custom-repo`.
+
+The example below uses the staging repository:
+
+```ruby
+  default_attributes(
+    'datadog' => {
+      'aptrepo' => '[signed-by=/usr/share/keyrings/datadog-archive-keyring.gpg] apt.datad0g.com',
+    }
+  }
+```
+
 ## Recipes
 
 Access the [Datadog Chef recipes on GitHub][7].
@@ -275,14 +265,14 @@ The [dd-agent recipe][9] installs the Datadog Agent on the target system, sets y
 
 ### Handler
 
-The [dd-handler recipe][11] installs the [chef-handler-datadog][12] gem and invokes the handler at the end of a Chef run to report the details to the newsfeed.
+The [dd-handler recipe][11] installs the [chef-handler-datadog][12] gem and invokes the handler at the end of a Chef run to report the details to the news feed.
 
 ### DogStatsD
 
 To install a language-specific library that interacts with DogStatsD:
 
 - Ruby: [dogstatsd-ruby recipe][13]
-- Python: Add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the resource below. For more details, refer to the [poise-python repository][14].
+- Python: Add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the resource below. For more details, see the [poise-python repository][14].
     ```ruby
     python_package 'dogstatsd-python' # assumes python and pip are installed
     ```
@@ -292,7 +282,7 @@ To install a language-specific library that interacts with DogStatsD:
 To install a language-specific library for application tracing (APM):
 
 - Ruby: [ddtrace-ruby recipe][15]
-- Python: Add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the resource below. For more details, refer to the [poise-python repository][14].
+- Python: Add a dependency on the `poise-python` cookbook to your custom/wrapper cookbook, and use the resource below. For more details, see the [poise-python repository][14].
     ```ruby
     python_package 'ddtrace' # assumes python and pip are installed
     ```
@@ -300,6 +290,16 @@ To install a language-specific library for application tracing (APM):
 ### Integrations
 
 There are many [recipes][7] to assist you with deploying Agent integration configuration files and dependencies.
+
+### System-probe
+
+The [system-probe recipe][17] is automatically included by default. It writes the `system-probe.yaml` file. This behavior can be disabled by setting `node['datadog']['system_probe']['manage_config']` to false.
+
+To enable [Network Performance Monitoring][7] (NPM) in `system-probe.yaml`, set `node['datadog']['system_probe']['network_enabled']` to true.
+
+To enable [Universal Service Monitoring][7] (USM) in `system-probe.yaml`, set `node['datadog']['system_probe']['service_monitoring_enabled']` to true.
+
+**Note for Windows users**: NPM is supported on Windows with Agent v6.27+ and v7.27+. It ships as an optional component that is only installed if `node['datadog']['system_probe']['network_enabled']` is set to true when the Agent is installed or upgraded. Because of this, existing installations might need to do an uninstall and reinstall of the Agent once to install the NPM component, unless the Agent is upgraded at the same time.
 
 ## Resources
 
@@ -332,7 +332,7 @@ end
 | `instances`                | The fields used to fill values under the `instances` section in the integration configuration file.                                                                                                                                                                                            |
 | `init_config`              | The fields used to fill values under the the `init_config` section in the integration configuration file.                                                                                                                                                                                      |
 | `logs`                     | The fields used to fill values under the the `logs` section in the integration configuration file.                                                                                                                                                                                             |
-| `use_integration_template` | Set to `true` (recommended) to use the default template, which writes the values of `instances`, `init_config`, and `logs` in the YAML under their respective keys. This defaults to `false` for backward compatibility, but will default to `true` in a future major version of the cookbook. |
+| `use_integration_template` | Set to `true` (recommended) to use the default template, which writes the values of `instances`, `init_config`, and `logs` in the YAML under their respective keys. This defaults to `false` for backward compatibility, but may default to `true` in a future major version of the cookbook. |
 
 #### Example
 
@@ -341,7 +341,7 @@ This example enables the ElasticSearch integration by using the `datadog_monitor
 **Note**: The Agent installation must be above this recipe in the run list.
 
 ```ruby
-include_recipe 'datadog::dd-agent'
+include_recipe '::dd-agent'
 
 datadog_monitor 'elastic' do
   instances  [{'url' => 'http://localhost:9200'}]
@@ -384,22 +384,48 @@ This example installs version `1.11.0` of the ElasticSearch integration by using
 **Note**: The Agent installation must be above this recipe in the run list.
 
 ```ruby
-include_recipe 'datadog::dd-agent'
+include_recipe '::dd-agent'
 
 datadog_integration 'datadog-elastic' do
   version '1.11.0'
 end
 ```
 
-To get the available versions of the integrations, refer to the integration-specific `CHANGELOG.md` in the [integrations-core repository][16].
+To get the available versions of the integrations, see the integration-specific `CHANGELOG.md` in the [integrations-core repository][16].
 
 **Note**: For Chef Windows users, the `chef-client` must have read access to the `datadog.yaml` file when the `datadog-agent` binary available on the node is used by this resource.
 
+## Development
+
+### Dockerized environment
+
+To build a Docker environment with which to run kitchen tests, use the files under `docker_test_env`:
+
+```
+cd docker_test_env
+docker build -t chef-datadog-test-env .
+```
+
+To run the container use:
+
+```
+docker run -d -v /var/run/docker.sock:/var/run/docker.sock chef-datadog-test-env
+```
+
+Then attach a console to the container or use the VS Code remote-container feature to develop inside the container.
+
+To run kitchen-docker tests from within the container:
+
+```
+# Note: Also set KITCHEN_DOCKER_HOSTNAME=host.docker.internal if on MacOS or Windows
+# Run this under a login shell (otherwise `bundle` won't be found)
+KITCHEN_LOCAL_YAML=kitchen.docker.yml bundle exec rake circle
+```
 
 [1]: https://github.com/DataDog/chef-datadog/blob/master/attributes/default.rb
 [2]: https://github.com/DataDog/chef-datadog/releases/tag/v2.18.0
 [3]: https://github.com/DataDog/chef-datadog/blob/master/CHANGELOG.md
-[4]: https://app.datadoghq.com/account/settings#api
+[4]: https://app.datadoghq.com/organization-settings/api-keys
 [5]: https://docs.chef.io/berkshelf/
 [6]: https://docs.chef.io/knife/
 [7]: https://github.com/DataDog/chef-datadog/tree/master/recipes
@@ -412,3 +438,4 @@ To get the available versions of the integrations, refer to the integration-spec
 [14]: https://github.com/poise/poise-python
 [15]: https://github.com/DataDog/chef-datadog/blob/master/recipes/ddtrace-ruby.rb
 [16]: https://github.com/DataDog/integrations-core
+[17]: https://github.com/DataDog/chef-datadog/blob/master/recipes/system-probe.rb

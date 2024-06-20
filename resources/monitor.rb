@@ -1,4 +1,24 @@
+# Copyright:: 2011-Present, Datadog
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 # Configure a service via its yaml file
+
+# enable unified mode on specific Chef versions.
+# See CHEF-33 Deprecation warning:
+# https://docs.chef.io/deprecations_unified_mode/
+
+unified_mode true if respond_to?(:unified_mode)
 
 require 'yaml' # Our erb templates need this
 
@@ -13,6 +33,7 @@ property :init_config, [Hash, nil], required: false, default: {}
 property :instances, Array, required: false, default: []
 property :version, [Integer, nil], required: false, default: nil
 property :use_integration_template, [TrueClass, FalseClass], required: false, default: false
+property :is_jmx, [TrueClass, FalseClass], required: false, default: false
 property :logs, [Array, nil], required: false, default: []
 
 action :add do
@@ -54,8 +75,14 @@ action :add do
       source "#{new_resource.name}.yaml.erb"
     end
 
+    init_config = new_resource.init_config
+    if new_resource.is_jmx
+      init_config ||= {}
+      init_config = init_config.merge({ 'is_jmx' => true, 'collect_default_metrics' => true })
+    end
+
     variables(
-      init_config: new_resource.init_config,
+      init_config: init_config,
       instances:   new_resource.instances,
       version:     new_resource.version,
       logs:        new_resource.logs

@@ -2,7 +2,7 @@
 # Cookbook:: datadog
 # Recipe:: install_info
 #
-# Copyright:: 2011-2020, Datadog
+# Copyright:: 2011-Present, Datadog
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

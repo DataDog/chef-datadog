@@ -1,21 +1,30 @@
 version: 2
 jobs:
   kitchen-docker-tests:
-    machine: true
+    machine:
+      image: ubuntu-2004:2024.01.2
+    resource_class: large
     environment:
+      CHEF_LICENSE: accept # newer versions of Chef client need explicit license accept to run
       KITCHEN_LOCAL_YAML: kitchen.docker.yml
       RUBY_VERSION: '2.6.3' # ruby used to invoke kitchen, not the version used in the tests
+      DOCKER_BUILDKIT: 0  # Disable buildkit for compatibility with version of kitchen we use
+    shell: /bin/bash --login -eo pipefail
     steps:
       - checkout
       - run:
           name: Set Ruby version
           command: |
                     echo "Using $RUBY_VERSION"
+                    gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+                    curl -sSL https://get.rvm.io | bash -s stable
+                    source /home/circleci/.rvm/scripts/rvm
+                    rvm reload
                     rvm install $RUBY_VERSION
                     echo . $(rvm $RUBY_VERSION do rvm env --path) >> $BASH_ENV
       - run:
           name: Install bundler
-          command: gem install bundler:1.17.3
+          command: gem install bundler:2.3.26
       - run:
           name: Install dependencies with bundler
           command: bundle install --path .bundle
@@ -25,7 +34,8 @@ jobs:
           no_output_timeout: 900
 
   style:
-    machine: true
+    machine:
+      image: ubuntu-2004:202201-02
     environment:
       CHEF_VERSION: '16.5.77'
       RUBY_VERSION: '2.6.3'
@@ -35,11 +45,15 @@ jobs:
           name: Set Ruby version
           command: |
                     echo "Using $RUBY_VERSION"
+                    curl -sSL https://rvm.io/pkuczynski.asc | gpg --import -
+                    # Update RVM. Using this path instead of https://get.rvm.io because the later uses the letsencrypt cert that breaks openssl 1.0
+                    curl -sSL https://raw.githubusercontent.com/rvm/rvm/master/binscripts/rvm-installer | bash -s stable
+                    rvm reload
                     rvm install $RUBY_VERSION
                     echo . $(rvm $RUBY_VERSION do rvm env --path) >> $BASH_ENV
       - run:
           name: Install bundler
-          command: gem install bundler:1.17.3
+          command: gem install bundler:2.3.26
       - run:
           name: Check bundler version
           command: bundle --version
@@ -56,7 +70,8 @@ jobs:
           command: bundle exec rake style
 
   specs-base: &specs
-    machine: true
+    machine:
+      image: ubuntu-2004:202201-02
     environment:
       CHEF_VERSION: 'needs-to-be-specified'
       RUBY_VERSION: 'needs-to-be-specified'
@@ -66,11 +81,15 @@ jobs:
           name: Set Ruby version
           command: |
                     echo "Using $RUBY_VERSION"
+                    curl -sSL https://rvm.io/pkuczynski.asc | gpg --import -
+                    # Update RVM. Using this path instead of https://get.rvm.io because the later uses the letsencrypt cert that breaks openssl 1.0
+                    curl -sSL https://raw.githubusercontent.com/rvm/rvm/master/binscripts/rvm-installer | bash -s stable
+                    rvm reload
                     rvm install $RUBY_VERSION
                     echo . $(rvm $RUBY_VERSION do rvm env --path) >> $BASH_ENV
       - run:
           name: Install bundler
-          command: gem install bundler:1.17.3
+          command: gem install bundler:2.3.26
       - run:
           name: Check bundler version
           command: bundle --version
@@ -85,6 +104,30 @@ jobs:
       - run:
           name: Run specs
           command: bundle exec rake spec
+
+  specs-ruby3.0.0-chef17.4.38:
+    <<: *specs
+    environment:
+      CHEF_VERSION: '17.4.38'
+      RUBY_VERSION: '3.0.0'
+
+  specs-ruby3.0.0-chef16.5.77:
+    <<: *specs
+    environment:
+      CHEF_VERSION: '16.5.77'
+      RUBY_VERSION: '3.0.0'
+
+  specs-ruby2.7.2-chef17.4.38:
+    <<: *specs
+    environment:
+      CHEF_VERSION: '17.4.38'
+      RUBY_VERSION: '2.7.2'
+
+  specs-ruby2.7.2-chef16.5.77:
+    <<: *specs
+    environment:
+      CHEF_VERSION: '16.5.77'
+      RUBY_VERSION: '2.7.2'
 
   specs-ruby2.6.3-chef16.5.77:
     <<: *specs
@@ -110,20 +153,17 @@ jobs:
       CHEF_VERSION: '13.12.14'
       RUBY_VERSION: '2.4.3'
 
-  specs-ruby2.3.6-chef13.12.14:
-    <<: *specs
-    environment:
-      CHEF_VERSION: '13.12.14'
-      RUBY_VERSION: '2.3.6'
-
 workflows:
   version: 2
   build_and_test:
     jobs:
       - kitchen-docker-tests
       - style
+      - specs-ruby3.0.0-chef17.4.38
+      - specs-ruby3.0.0-chef16.5.77
+      - specs-ruby2.7.2-chef17.4.38
+      - specs-ruby2.7.2-chef16.5.77
       - specs-ruby2.6.3-chef16.5.77
       - specs-ruby2.6.3-chef14.10.9
       - specs-ruby2.5.1-chef14.10.9
       - specs-ruby2.4.3-chef13.12.14
-      - specs-ruby2.3.6-chef13.12.14

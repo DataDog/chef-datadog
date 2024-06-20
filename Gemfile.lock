@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (6.0.3.4)
+    activesupport (6.0.6.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
@@ -78,6 +78,8 @@ GEM
       mixlib-config (>= 2.2.12, < 3.0)
       mixlib-shellout (~> 2.0)
       tomlrb (~> 1.2)
+    chef-utils (18.4.12)
+      concurrent-ruby
     chef-zero (14.0.17)
       ffi-yajl (~> 2.2)
       hashie (>= 2.0, < 4.0)
@@ -110,7 +112,7 @@ GEM
     cucumber-tag_expressions (1.1.1)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
-    diff-lcs (1.4.4)
+    diff-lcs (1.5.1)
     docile (1.3.2)
     ed25519 (1.2.4)
     equalizer (0.0.11)
@@ -118,7 +120,7 @@ GEM
     erubis (2.7.0)
     faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
-    fauxhai-ng (7.5.1)
+    fauxhai-ng (8.3.1)
       net-ssh
     ffi (1.13.1)
     ffi-yajl (2.3.4)
@@ -134,8 +136,9 @@ GEM
     gherkin (5.1.0)
     gssapi (1.3.0)
       ffi (>= 1.0.1)
-    gyoku (1.3.1)
+    gyoku (1.4.0)
       builder (>= 2.1.2)
+      rexml (~> 3.0)
     hashie (3.6.0)
     highline (1.7.10)
     httpclient (2.8.3)
@@ -164,9 +167,9 @@ GEM
     logging (2.3.0)
       little-plugger (~> 1.1)
       multi_json (~> 1.14)
-    mini_portile2 (2.5.0)
+    mini_portile2 (2.8.5)
     minitar (0.9)
-    minitest (5.14.2)
+    minitest (5.22.3)
     mixlib-archive (1.0.7)
       mixlib-log
     mixlib-authentication (2.1.1)
@@ -194,8 +197,8 @@ GEM
       net-ssh (>= 2.6.5)
       net-ssh-gateway (>= 1.2.0)
     net-telnet (0.1.1)
-    nokogiri (1.11.1)
-      mini_portile2 (~> 2.5.0)
+    nokogiri (1.13.10)
+      mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     nori (2.6.0)
     octokit (4.18.0)
@@ -223,19 +226,23 @@ GEM
     polyglot (0.3.5)
     proxifier (1.0.3)
     public_suffix (4.0.6)
-    racc (1.5.2)
+    racc (1.7.3)
     rack (2.2.3)
     rainbow (3.0.0)
-    rake (13.0.1)
+    rake (13.2.1)
+    rbnacl (4.0.2)
+      ffi
+    rbnacl-libsodium (1.0.16)
+      rbnacl (>= 3.0.1)
     retryable (3.0.5)
-    rexml (3.2.4)
+    rexml (3.2.5)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
       rspec-expectations (~> 3.9.0)
       rspec-mocks (~> 3.9.0)
     rspec-core (3.9.3)
       rspec-support (~> 3.9.3)
-    rspec-expectations (3.9.2)
+    rspec-expectations (3.9.4)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.9.0)
     rspec-its (1.3.0)
@@ -283,9 +290,9 @@ GEM
       net-ssh (>= 2.7)
       net-telnet (= 0.1.1)
       sfl
-    strings (0.2.0)
+    strings (0.2.1)
       strings-ansi (~> 0.2)
-      unicode-display_width (~> 1.5)
+      unicode-display_width (>= 1.5, < 3.0)
       unicode_utils (~> 1.4)
     strings-ansi (0.2.0)
     sync (0.5.0)
@@ -293,8 +300,9 @@ GEM
     systemu (2.6.5)
     term-ansicolor (1.7.1)
       tins (~> 1.0)
-    test-kitchen (2.7.2)
+    test-kitchen (2.12.0)
       bcrypt_pbkdf (~> 1.0)
+      chef-utils (>= 16.4.35)
       ed25519 (~> 1.2)
       license-acceptance (>= 1.0.11, < 3.0)
       mixlib-install (~> 3.6)
@@ -313,7 +321,7 @@ GEM
     tomlrb (1.3.0)
     treetop (1.6.11)
       polyglot (~> 0.3)
-    tty-box (0.6.0)
+    tty-box (0.7.0)
       pastel (~> 0.8)
       strings (~> 0.2.0)
       tty-cursor (~> 0.7)
@@ -327,7 +335,7 @@ GEM
       tty-screen (~> 0.8)
       wisper (~> 2.0)
     tty-screen (0.8.1)
-    tzinfo (1.2.7)
+    tzinfo (1.2.11)
       thread_safe (~> 0.1)
     unicode-display_width (1.6.1)
     unicode_utils (1.4.0)
@@ -358,30 +366,34 @@ GEM
     wisper (2.0.1)
     wmi-lite (1.0.5)
     yaml (0.1.0)
-    zeitwerk (2.4.0)
+    zeitwerk (2.6.13)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   activesupport (~> 6.0.3)
+  bcrypt_pbkdf (>= 1.0, < 2.0)
   berkshelf
   chef (= 14.10.9)
   chefspec
   cookstyle
   coveralls (~> 0.8.19)
   cucumber-core (~> 3.2.1)
-  fauxhai-ng (~> 7.5.1)
+  fauxhai-ng (~> 8.3.1)
   foodcritic (~> 16.3.0)
   inflecto
   json_spec (~> 1.1.4)
   kitchen-docker (~> 2.3.0)
   kitchen-vagrant
   rake
+  rbnacl (~> 4.0.2)
+  rbnacl-libsodium (~> 1.0.16)
+  rspec-expectations (< 3.12.4)
   rubocop (~> 0.80.1)
   test-kitchen
   virtus
   yaml
 
 BUNDLED WITH
-   1.17.3
+   2.3.26

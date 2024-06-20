@@ -1,0 +1,11 @@
+--- /usr/local/rvm/gems/ruby-2.6.3/gems/kitchen-docker-2.3.0/lib/kitchen/driver/docker.rb	2024-04-09 10:54:16.032712772 -0400
++++ /docker.rb	2024-04-09 10:53:25.988909160 -0400
+@@ -103,6 +103,6 @@
+         state[:ssh_key] = config[:private_key]
+         state[:image_id] = build_image(state) unless state[:image_id]
+         state[:container_id] = run_container(state) unless state[:container_id]
+-        state[:hostname] = remote_socket? ? socket_uri.host : 'localhost'
++        state[:hostname] = ENV['KITCHEN_DOCKER_HOSTNAME'] || (remote_socket? ? socket_uri.host : 'localhost')
+         state[:port] = container_ssh_port(state)
+         wait_for_sshd(state[:hostname], nil, :port => state[:port]) if config[:wait_for_sshd]
+       end

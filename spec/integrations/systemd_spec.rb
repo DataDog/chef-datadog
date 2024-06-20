@@ -1,3 +1,17 @@
+# Copyright:: 2011-Present, Datadog
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 describe 'datadog::systemd' do
   expected_yaml = <<-EOF
     init_config: ~
@@ -15,6 +29,9 @@ describe 'datadog::systemd' do
           mysocket.socket:
             exited: critical
             running: ok
+          mytimer.timer:
+            exited: critical
+            running: ok
         tags:
           - 'mykey1:myvalue1'
           - 'mykey2:myvalue2'
@@ -22,6 +39,7 @@ describe 'datadog::systemd' do
           - myservice1.service
           - myservice2.service
           - mysocket.socket
+          - mytimer.timer
     logs: ~
   EOF
 
@@ -40,7 +58,8 @@ describe 'datadog::systemd' do
               unit_names: [
                 'myservice1.service',
                 'myservice2.service',
-                'mysocket.socket'
+                'mysocket.socket',
+                'mytimer.timer'
               ],
               substate_status_mapping: [
                 services: [
@@ -58,6 +77,12 @@ describe 'datadog::systemd' do
                 ],
                 sockets: [
                   mysocket: {
+                    running: 'ok',
+                    exited: 'critical'
+                  }
+                ],
+                timers: [
+                  mytimer: {
                     running: 'ok',
                     exited: 'critical'
                   }

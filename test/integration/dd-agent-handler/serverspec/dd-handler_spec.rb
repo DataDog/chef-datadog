@@ -1,1 +1,0 @@
-../../dd-handler/serverspec/dd-handler_spec.rb

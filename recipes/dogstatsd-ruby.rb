@@ -2,7 +2,7 @@
 # Cookbook:: datadog
 # Recipe:: dogstatsd-ruby
 #
-# Copyright:: 2013-2015, Datadog
+# Copyright:: 2013-Present, Datadog
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

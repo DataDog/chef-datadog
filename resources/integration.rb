@@ -1,8 +1,28 @@
+# Copyright:: 2011-Present, Datadog
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 # Install/remove a Datadog integration
 # This resource basically wraps the datadog-agent integration command to be able
 # to install and remove integrations from a Chef recipe.
 # The datadog_resource must be used on a system where the datadog-agent has
 # already been setup.
+
+# enable unified mode on specific Chef versions.
+# See CHEF-33 Deprecation warning:
+# https://docs.chef.io/deprecations_unified_mode/
+
+unified_mode true if respond_to?(:unified_mode)
 
 default_action :install
 
@@ -27,6 +47,7 @@ action :install do
       output = shell_out("#{agent_exe_filepath} integration show -q #{new_resource.property_name}").stdout
       output.strip == new_resource.version
     }
+    notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
   end
 end
 
@@ -46,6 +67,7 @@ action :remove do
       output = shell_out("#{agent_exe_filepath} integration show -q #{new_resource.property_name}").stdout
       output.strip.empty?
     }
+    notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
   end
 end
 

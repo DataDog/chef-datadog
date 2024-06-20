@@ -2,7 +2,7 @@
 # Cookbook:: datadog
 # Attributes:: default
 #
-# Copyright:: 2011-2015, Datadog
+# Copyright:: 2011-Present, Datadog
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -42,9 +42,14 @@ default['datadog']['agent_major_version'] = nil # nil to autodetect based on 'ag
 default['datadog']['agent_version'] = nil # nil to install latest
 # Agent flavor to install, acceptable values are "datadog-agent", "datadog-iot-agent"
 default['datadog']['agent_flavor'] = 'datadog-agent' # "datadog-agent" to install the datadog-agent package
+default['datadog']['fips_proxy_version'] = nil
+# Datadog FIPS proxy package name:
+default['datadog']['fips_proxy_package_name'] = 'datadog-fips-proxy' # "datadog-fips-proxy" to install the datadog-fips-proxy package
 
 # Allow override with `upgrade` to get latest (Linux only)
 default['datadog']['agent_package_action'] = 'install'
+# Allow override with `upgrade` to get latest (Linux only)
+default['datadog']['fips_proxy_package_action'] = 'install'
 
 # Agent package options
 # retries and retry_delay for package download/install
@@ -54,6 +59,7 @@ default['datadog']['agent_package_retry_delay'] = nil
 # Allow downgrades of the agent (Linux only)
 # Note: on apt-based platforms, this will use the `--force-yes` option on the apt-get command. Use with caution.
 default['datadog']['agent_allow_downgrade'] = false
+default['datadog']['fips_proxy_allow_downgrade'] = false
 
 ########################################################################
 ###                 Agent 6/7 only attributes                        ###
@@ -140,7 +146,7 @@ default['datadog']['handler_extra_config'] = {}
 # If you're installing a pre-release version of the Agent (beta or RC), you need to:
 # * on debian: set node['datadog']['aptrepo_dist'] to 'beta' instead of 'stable'
 # * on RHEL: set node['datadog']['yumrepo'] to 'https://yum.datadoghq.com/beta/x86_64/'
-default['datadog']['aptrepo'] = 'http://apt.datadoghq.com'
+default['datadog']['aptrepo'] = nil # uses Datadog stable repos by default
 default['datadog']['aptrepo_dist'] = 'stable'
 default['datadog']['yumrepo'] = nil # uses Datadog stable repos by default
 default['datadog']['yumrepo_suse'] = nil # uses Datadog stable repos by default
@@ -157,10 +163,10 @@ yum_protocol =
 # to pin the version you're installing with node['datadog']['agent_version']
 default['datadog']['installrepo'] = true
 default['datadog']['aptrepo_retries'] = 4
-default['datadog']['aptrepo_use_backup_keyserver'] = false
-default['datadog']['aptrepo_keyserver'] = 'hkp://keyserver.ubuntu.com:80'
-default['datadog']['aptrepo_backup_keyserver'] = 'hkp://pool.sks-keyservers.net:80'
-default['datadog']['yumrepo_gpgkey'] = "#{yum_protocol}://keys.datadoghq.com/DATADOG_RPM_KEY.public"
+# When repo_gpgcheck set to nil, it will get turned on in the code when
+# not running on RHEL/CentOS <= 5 and not providing custom yumrepo.
+# You can set it to true/false explicitly to override this behaviour.
+default['datadog']['yumrepo_repo_gpgcheck'] = nil
 default['datadog']['yumrepo_proxy'] = nil
 default['datadog']['yumrepo_proxy_username'] = nil
 default['datadog']['yumrepo_proxy_password'] = nil
@@ -175,8 +181,10 @@ default['datadog']['windows_agent_installer_prefix'] = nil
 # of the Agent will be signed with this key.
 # DATADOG_RPM_KEY_CURRENT always contains the key that is used to sign repodata and latest packages
 default['datadog']['yumrepo_gpgkey_new_current'] = "#{yum_protocol}://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public"
-default['datadog']['yumrepo_gpgkey_new_e09422b3'] = "#{yum_protocol}://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public"
+default['datadog']['yumrepo_gpgkey_new_4f09d16b'] = "#{yum_protocol}://keys.datadoghq.com/DATADOG_RPM_KEY_4F09D16B.public"
+default['datadog']['yumrepo_gpgkey_new_b01082d3'] = "#{yum_protocol}://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public"
 default['datadog']['yumrepo_gpgkey_new_fd4bf915'] = "#{yum_protocol}://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public"
+default['datadog']['yumrepo_gpgkey_new_e09422b3'] = "#{yum_protocol}://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public"
 
 # Windows Agent Blacklist
 # Attribute to enforce silent failures on agent installs when attempting to install a
@@ -216,6 +224,8 @@ default['datadog']['windows_ddagentuser_name'] = nil
 default['datadog']['windows_ddagentuser_password'] = nil
 
 # Since 7.27, the MSI has a switch to install NPM driver. Default to not install. Specify "true" to install.
+# Note: If the Agent is already installed before setting this to true, this will have no effect until the Agent
+# is either upgraded or uninstalled and installed again. Use the `remove-dd-agent` recipe to uninstall the Agent.
 default['datadog']['windows_npm_install'] = nil
 
 # Chef handler version
@@ -247,6 +257,12 @@ default['datadog']['agent_enable'] = true
 
 # Start agent or not
 default['datadog']['agent_start'] = true
+
+# Enable the fips-proxy to start at boot.
+default['datadog']['fips_proxy_enable'] = true
+
+# Start fips_proxy or not
+default['datadog']['fips_proxy_start'] = true
 
 # installation info
 default['datadog']['install_info_enabled'] = true
@@ -357,14 +373,26 @@ default['datadog']['process_agent']['rtprocess_interval'] = nil
 default['datadog']['process_agent']['container_interval'] = nil
 default['datadog']['process_agent']['rtcontainer_interval'] = nil
 
+# Cloud Workload Security functionality settings
+default['datadog']['security_agent']['cws']['enabled'] = false
+default['datadog']['security_agent']['cspm']['enabled'] = false
+
 # System probe functionality settings
 
 # Whether this cookbook should write system-probe.yaml or not.
 # If set to false all other system-probe settings are ignored
 default['datadog']['system_probe']['manage_config'] = true
+# When `system_probe.enabled` is set to false and `network_enabled` is set to true,
+# the NPM module of system probe will still run.
 default['datadog']['system_probe']['enabled'] = false
 # sysprobe_socket defines the unix socket location
-default['datadog']['system_probe']['sysprobe_socket'] = '/opt/datadog-agent/run/sysprobe.sock'
+default['datadog']['system_probe']['sysprobe_socket'] =
+  if platform_family?('windows')
+    'localhost:3333'
+  else
+    '/opt/datadog-agent/run/sysprobe.sock'
+  end
+
 # debug_port is the http port for expvar, it is disabled if set to 0
 default['datadog']['system_probe']['debug_port'] = 0
 default['datadog']['system_probe']['bpf_debug'] = false
@@ -372,7 +400,10 @@ default['datadog']['system_probe']['enable_conntrack'] = false
 # Enable this switch will install NPM driver and sysprobe, as well as generate the config file.
 # Turning on this setting will effectively turn on the setting(s) automatically:
 # ['datadog']['system_probe']['enabled']
-default['datadog']['system_probe']['network_enabled'] = false
+# When this is set to nil (default), `network_config` won't be rendered in system-probe.yaml,
+# making the Agent use the default setting for this value.
+default['datadog']['system_probe']['network_enabled'] = nil
+default['datadog']['system_probe']['service_monitoring_enabled'] = nil
 
 # Logs functionality settings (Agent 6/7 only)
 # Set `enable_logs_agent` to:

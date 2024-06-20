@@ -1,3 +1,17 @@
+# Copyright:: 2011-Present, Datadog
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 require 'spec_helper'
 
 describe 'datadog::system-probe' do
@@ -29,6 +43,104 @@ describe 'datadog::system-probe' do
 
     it 'is NOT created' do
       expect(chef_run).not_to create_template('/etc/datadog-agent/system-probe.yaml')
+    end
+  end
+
+  context 'with service_monitoring_enabled set to true' do
+    cached(:solo) do
+      ChefSpec::SoloRunner.new(
+        platform: 'ubuntu',
+        version: '16.04'
+      ) do |node|
+        node.name 'chef-nodename' # expected to be used as the hostname in `datadog.yaml`
+        node.normal['datadog'] = {
+          'api_key' => 'somethingnotnil',
+          'agent_major_version' => 6,
+          'system_probe' => {
+            'debug_port' => 123,
+            'bpf_debug' => true,
+            'sysprobe_socket' => '/test/ing.sock',
+            'service_monitoring_enabled' => true,
+          }
+        }
+      end
+    end
+
+    cached(:chef_run) do
+      solo.converge(described_recipe) do
+        solo.resource_collection.insert(
+          Chef::Resource::Service.new('datadog-agent', solo.run_context))
+      end
+    end
+
+    it 'is created with enabled service_monitoring_enabled' do
+      expect(chef_run).to create_template('/etc/datadog-agent/system-probe.yaml')
+    end
+
+    it 'contains expected YAML configuration' do
+      expected_yaml = <<-EOF
+      service_monitoring_config:
+        enabled: true
+      system_probe_config:
+        bpf_debug: true
+        debug_port: 123
+        enable_conntrack: false
+        enabled: false
+        sysprobe_socket: "/test/ing.sock"
+      EOF
+
+      expect(chef_run).to(render_file('/etc/datadog-agent/system-probe.yaml').with_content { |content|
+        expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
+      })
+    end
+  end
+
+  context 'with network_enabled set to true' do
+    cached(:solo) do
+      ChefSpec::SoloRunner.new(
+        platform: 'ubuntu',
+        version: '16.04'
+      ) do |node|
+        node.name 'chef-nodename' # expected to be used as the hostname in `datadog.yaml`
+        node.normal['datadog'] = {
+          'api_key' => 'somethingnotnil',
+          'agent_major_version' => 6,
+          'system_probe' => {
+            'debug_port' => 123,
+            'bpf_debug' => true,
+            'sysprobe_socket' => '/test/ing.sock',
+            'network_enabled' => true,
+          }
+        }
+      end
+    end
+
+    cached(:chef_run) do
+      solo.converge(described_recipe) do
+        solo.resource_collection.insert(
+          Chef::Resource::Service.new('datadog-agent', solo.run_context))
+      end
+    end
+
+    it 'is created with enabled network_config' do
+      expect(chef_run).to create_template('/etc/datadog-agent/system-probe.yaml')
+    end
+
+    it 'contains expected YAML configuration' do
+      expected_yaml = <<-EOF
+      network_config:
+        enabled: true
+      system_probe_config:
+        bpf_debug: true
+        debug_port: 123
+        enable_conntrack: false
+        enabled: false
+        sysprobe_socket: "/test/ing.sock"
+      EOF
+
+      expect(chef_run).to(render_file('/etc/datadog-agent/system-probe.yaml').with_content { |content|
+        expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
+      })
     end
   end
 
@@ -65,8 +177,6 @@ describe 'datadog::system-probe' do
 
     it 'contains expected YAML configuration' do
       expected_yaml = <<-EOF
-      network_config:
-        enabled: false
       system_probe_config:
         bpf_debug: true
         debug_port: 123
@@ -116,8 +226,6 @@ describe 'datadog::system-probe' do
 
     it 'contains expected YAML configuration' do
       expected_yaml = <<-EOF
-      network_config:
-        enabled: false
       system_probe_config:
         bpf_debug: false
         debug_port: 0
@@ -128,6 +236,117 @@ describe 'datadog::system-probe' do
       EOF
 
       expect(chef_run).to(render_file('/etc/datadog-agent/system-probe.yaml').with_content { |content|
+        expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
+      })
+    end
+  end
+
+  context 'with CWS enabled' do
+    cached(:solo) do
+      ChefSpec::SoloRunner.new(
+        platform: 'ubuntu',
+        version: '16.04'
+      ) do |node|
+        node.name 'chef-nodename' # expected to be used as the hostname in `datadog.yaml`
+        node.normal['datadog'] = {
+          'api_key' => 'somethingnotnil',
+          'agent_major_version' => 6,
+          'security_agent' => {
+            'cws' => {
+              'enabled' => true,
+            }
+          },
+          'extra_config' => {
+            'security_agent' => {
+              'runtime_security_config' => {
+                'activity_dump' => {
+                  'enabled' => true,
+                }
+              }
+            }
+          }
+        }
+      end
+    end
+
+    cached(:chef_run) do
+      solo.converge(described_recipe) do
+        solo.resource_collection.insert(
+          Chef::Resource::Service.new('datadog-agent', solo.run_context))
+        solo.resource_collection.insert(
+          Chef::Resource::Service.new('datadog-agent-security', solo.run_context))
+      end
+    end
+
+    it 'system-probe.yaml is created' do
+      expect(chef_run).to create_template('/etc/datadog-agent/system-probe.yaml')
+    end
+
+    it 'system-probe.yaml contains expected YAML configuration' do
+      expected_yaml = <<-EOF
+      runtime_security_config:
+        enabled: true
+        activity_dump:
+          enabled: true
+      system_probe_config:
+        enabled: false
+        bpf_debug: false
+        debug_port: 0
+        enable_conntrack: false
+        sysprobe_socket: '/opt/datadog-agent/run/sysprobe.sock'
+      EOF
+
+      expect(chef_run).to(render_file('/etc/datadog-agent/system-probe.yaml').with_content { |content|
+        expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
+      })
+    end
+  end
+
+  context 'with CWS enabled on Windows' do
+    cached(:solo) do
+      ChefSpec::SoloRunner.new(
+        platform: 'windows',
+        version: '2012R2'
+      ) do |node|
+        node.name 'chef-nodename' # expected to be used as the hostname in `datadog.yaml`
+        node.normal['datadog'] = {
+          'api_key' => 'somethingnotnil',
+          'agent_major_version' => 6,
+          'security_agent' => {
+            'cws' => {
+              'enabled' => true,
+            }
+          }
+        }
+      end
+    end
+
+    cached(:chef_run) do
+      solo.converge(described_recipe) do
+        solo.resource_collection.insert(
+          Chef::Resource::Service.new('datadog-agent', solo.run_context))
+        solo.resource_collection.insert(
+          Chef::Resource::Service.new('datadog-agent-security', solo.run_context))
+      end
+    end
+
+    it 'system-probe.yaml is created' do
+      expect(chef_run).to create_template('C:/ProgramData/Datadog/system-probe.yaml')
+    end
+
+    it 'system-probe.yaml contains expected YAML configuration' do
+      expected_yaml = <<-EOF
+      runtime_security_config:
+        enabled: true
+      system_probe_config:
+        enabled: false
+        bpf_debug: false
+        debug_port: 0
+        enable_conntrack: false
+        sysprobe_socket: 'localhost:3333'
+      EOF
+
+      expect(chef_run).to(render_file('C:/ProgramData/Datadog/system-probe.yaml').with_content { |content|
         expect(YAML.safe_load(content).to_json).to be_json_eql(YAML.safe_load(expected_yaml).to_json)
       })
     end

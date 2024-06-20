@@ -1,3 +1,17 @@
+# Copyright:: 2011-Present, Datadog
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 require 'spec_helper'
 
 require_relative '../libraries/recipe_helpers'
@@ -37,15 +51,13 @@ describe Chef::Datadog::WindowsInstallHelpers do
     context 'when the agent is installed' do
       before do
         allow(Chef::Datadog::WindowsInstallHelpers)
-          .to receive(:agent_status)
-          .and_return(agent_status_string)
+          .to receive(:agent_get_version)
+          .and_return(agent_version_string)
       end
 
-      let(:agent_status_string) do
+      let(:agent_version_string) do
         %(
-.....
-Agent (v6.20.0)
-....
+Agent 6.20.0 - Commit: 3c29612 - Serialization version: v5.0.22 - Go version: go1.17.11
         )
       end
 
@@ -70,11 +82,9 @@ Agent (v6.20.0)
       end
 
       context 'when the current agent version is a nightly' do
-        let(:agent_status) do
+        let(:agent_get_version) do
           %(
-.....
-Agent (v6.20.0-devel+git.38.cd7f989)
-....
+Agent 6.20.0-devel - Meta: git.38.cd7f989 - Commit: cd7f98964 - Serialization version: v5.0.22 - Go version: go1.17.11
           )
         end
 
