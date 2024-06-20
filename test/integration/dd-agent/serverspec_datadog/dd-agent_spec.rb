@@ -31,7 +31,7 @@ end
 # The new APT keys are imported
 describe command('apt-key list'), :if => ['debian', 'ubuntu'].include?(os[:family]) do
   its(:exit_status) { should eq 0 }
-  its(:stdout) { should contain '06462314' }
+  its(:stdout) { should contain '06462314' }
   its(:stdout) { should contain 'C0962C7D' }
   its(:stdout) { should contain 'F14F620E' }
   its(:stdout) { should contain '382E94DE' }
