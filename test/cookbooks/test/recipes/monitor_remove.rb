@@ -15,3 +15,8 @@
 datadog_monitor 'potato' do
   action :remove
 end
+
+datadog_monitor 'potato' do
+  action :remove
+  config_name 'potato-one'
+end
