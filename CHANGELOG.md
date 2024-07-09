@@ -1,6 +1,9 @@
 Changes
 =======
 
+# 4.20.0 / 2024-07-09
+* [FEATURE] Add feature `ec2_prefer_imdsv2` collect instance metadata preferring the IMDSv2 endpoint.
+
 # 4.19.0 / 2024-02-19
 * [FEATURE] Add support for installation of the datadog-fips-proxy package [#853] [@truthbk]
 * [FEATURE] Add support for CWS on Windows [#907] [@paulcacheux]
