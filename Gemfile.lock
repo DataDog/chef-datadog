@@ -381,7 +381,7 @@ DEPENDENCIES
   cookstyle
   coveralls (~> 0.8.19)
   cucumber-core (~> 3.2.1)
-  dry-inflector
+  dry-inflector (~> 1.1.0)
   fauxhai-ng (~> 8.3.1)
   foodcritic (~> 16.3.0)
   inflecto
