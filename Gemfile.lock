@@ -148,7 +148,7 @@ GEM
     inflecto (0.0.2)
     iniparse (1.5.0)
     ipaddress (0.8.3)
-    jaro_winkler (1.5.4)
+    jaro_winkler (1.5.6)
     json (2.3.1)
     json_spec (1.1.5)
       multi_json (~> 1.0)
@@ -383,6 +383,7 @@ DEPENDENCIES
   fauxhai-ng (~> 8.3.1)
   foodcritic (~> 16.3.0)
   inflecto
+  jaro_winkler (~> 1.5.6)
   json_spec (~> 1.1.4)
   kitchen-docker (~> 2.3.0)
   kitchen-vagrant
