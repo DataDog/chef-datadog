@@ -1063,6 +1063,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#850]: https://github.com/DataDog/chef-datadog/issues/850
 [#852]: https://github.com/DataDog/chef-datadog/issues/852
 [#856]: https://github.com/DataDog/chef-datadog/issues/856
+[#857]: https://github.com/DataDog/chef-datadog/issues/857
 [#858]: https://github.com/DataDog/chef-datadog/issues/858
 [#859]: https://github.com/DataDog/chef-datadog/issues/859
 [#860]: https://github.com/DataDog/chef-datadog/issues/860
@@ -1251,3 +1252,4 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@chouetz]: https://github.com/chouetz
 [@vigohe]: https://github.com/vigohe
 [@paulcacheux]: https://github.com/paulcacheux
+[@whsbp]: https://github.com/whsbp
