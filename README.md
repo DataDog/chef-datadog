@@ -1,5 +1,6 @@
 # Datadog Chef Cookbook
 
+
 The Datadog Chef recipes are used to deploy Datadog's components and configuration automatically. The cookbook includes support for:
 
 * Datadog Agent v7.x (default)
@@ -172,11 +173,11 @@ run_list %w(
 By default, the current major version of this cookbook installs Agent v7. The following attributes are available to control the Agent version installed:
 
 | Parameter              | Description                                                                                                                                                                         |
-|------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `agent_major_version`  | Pin the major version of the Agent to 5, 6, or 7 (default).                                                                                                                         |
 | `agent_version`        | Pin a specific Agent version (recommended).                                                                                                                                         |
 | `agent_package_action` | (Linux only) Defaults to `'install'` (recommended), `'upgrade'` to get automatic Agent updates (not recommended, use the default and change the pinned `agent_version` to upgrade). |
-| `agent_flavor` | (Linux only) Defaults to `'datadog-agent'` to install the datadog-agent, can be set to `'datadog-iot-agent'` to install the IOT agent. |
+| `agent_flavor`         | (Linux only) Defaults to `'datadog-agent'` to install the datadog-agent, can be set to `'datadog-iot-agent'` to install the IOT agent.                                              |
 
 See the sample [attributes/default.rb][1] for your cookbook version for all available attributes.
 
@@ -184,17 +185,17 @@ See the sample [attributes/default.rb][1] for your cookbook version for all avai
 
 Some attribute names have changed from version 3.x to 4.x of the cookbook. Use this reference table to update your configuration:
 
-| Action                | Cookbook 3.x                                          | Cookbook 4.x                              |
-|-----------------------|-------------------------------------------------------|-------------------------------------------|
-| Install Agent 7.x     | Not supported                                         | `'agent_major_version' => 7`              |
-| Install Agent 6.x     | `'agent6' => true`                                    | `'agent_major_version' => 6`              |
-| Install Agent 5.x     | `'agent6' => false`                                   | `'agent_major_version' => 5`              |
-| Pin agent version     | `'agent_version'` or `'agent6_version'`               | `'agent_version'` for all versions        |
-| Change package_action | `'agent_package_action'` or `'agent6_package_action'` | `'agent_package_action'` for all versions |
-| Change APT repo URL   | `'aptrepo'` or `'agent6_aptrepo'`                     | `'aptrepo'` for all versions              |
-| Change APT repo distribution  | `'aptrepo_dist'` or `'agent6_aptrepo_dist'`   | `'aptrepo_dist'` for all versions         |
-| Change YUM repo       | `'yumrepo'` or `'agent6_yumrepo'`                     | `'yumrepo'` for all versions              |
-| Change SUSE repo      | `'yumrepo_suse'` or `'agent6_yumrepo_suse'`           | `'yumrepo_suse'` for all versions         |
+| Action                       | Cookbook 3.x                                          | Cookbook 4.x                              |
+| ---------------------------- | ----------------------------------------------------- | ----------------------------------------- |
+| Install Agent 7.x            | Not supported                                         | `'agent_major_version' => 7`              |
+| Install Agent 6.x            | `'agent6' => true`                                    | `'agent_major_version' => 6`              |
+| Install Agent 5.x            | `'agent6' => false`                                   | `'agent_major_version' => 5`              |
+| Pin agent version            | `'agent_version'` or `'agent6_version'`               | `'agent_version'` for all versions        |
+| Change package_action        | `'agent_package_action'` or `'agent6_package_action'` | `'agent_package_action'` for all versions |
+| Change APT repo URL          | `'aptrepo'` or `'agent6_aptrepo'`                     | `'aptrepo'` for all versions              |
+| Change APT repo distribution | `'aptrepo_dist'` or `'agent6_aptrepo_dist'`           | `'aptrepo_dist'` for all versions         |
+| Change YUM repo              | `'yumrepo'` or `'agent6_yumrepo'`                     | `'yumrepo'` for all versions              |
+| Change SUSE repo             | `'yumrepo_suse'` or `'agent6_yumrepo_suse'`           | `'yumrepo_suse'` for all versions         |
 
 Use one of the following methods to upgrade from Agent v6 to v7:
 
@@ -326,12 +327,12 @@ end
 
 #### Properties
 
-| Property                   | Description                                                                                                                                                                                                                                                                                    |
-|----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `'name'`                   | The name of the Agent integration to configure and enable.                                                                                                                                                                                                                                     |
-| `instances`                | The fields used to fill values under the `instances` section in the integration configuration file.                                                                                                                                                                                            |
-| `init_config`              | The fields used to fill values under the the `init_config` section in the integration configuration file.                                                                                                                                                                                      |
-| `logs`                     | The fields used to fill values under the the `logs` section in the integration configuration file.                                                                                                                                                                                             |
+| Property                   | Description                                                                                                                                                                                                                                                                                   |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `'name'`                   | The name of the Agent integration to configure and enable.                                                                                                                                                                                                                                    |
+| `instances`                | The fields used to fill values under the `instances` section in the integration configuration file.                                                                                                                                                                                           |
+| `init_config`              | The fields used to fill values under the the `init_config` section in the integration configuration file.                                                                                                                                                                                     |
+| `logs`                     | The fields used to fill values under the the `logs` section in the integration configuration file.                                                                                                                                                                                            |
 | `use_integration_template` | Set to `true` (recommended) to use the default template, which writes the values of `instances`, `init_config`, and `logs` in the YAML under their respective keys. This defaults to `false` for backward compatibility, but may default to `true` in a future major version of the cookbook. |
 
 #### Example
