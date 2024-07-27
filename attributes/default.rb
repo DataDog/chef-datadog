@@ -248,7 +248,7 @@ default['datadog']['bind_host'] = 'localhost'
 
 # Specify agent hostname
 # More information available here: http://docs.datadoghq.com/hostnames/#agent
-default['datadog']['hostname'] = node.name
+default['datadog']['hostname'] = nil
 
 # If running on ec2, if true, use the instance-id as the host identifier
 # rather than the hostname for chef-handler.
