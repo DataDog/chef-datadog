@@ -35,6 +35,7 @@ property :version, [Integer, nil], required: false, default: nil
 property :use_integration_template, [TrueClass, FalseClass], required: false, default: false
 property :is_jmx, [TrueClass, FalseClass], required: false, default: false
 property :logs, [Array, nil], required: false, default: []
+property :config_name, [String, nil], required: false, default: 'conf'
 
 action :add do
   Chef::Log.debug("Adding monitoring for #{new_resource.name}")
@@ -49,7 +50,7 @@ action :add do
         mode '755'
       end
     end
-    yaml_file = ::File.join(yaml_dir, "#{new_resource.name}.d", 'conf.yaml')
+    yaml_file = ::File.join(yaml_dir, "#{new_resource.name}.d", "#{new_resource.config_name}.yaml")
   else
     yaml_file = ::File.join(yaml_dir, "#{new_resource.name}.yaml")
   end
@@ -101,7 +102,7 @@ end
 
 action :remove do
   yaml_file = if Chef::Datadog.agent_major_version(node) != 5
-                ::File.join(yaml_dir, "#{new_resource.name}.d", 'conf.yaml')
+                ::File.join(yaml_dir, "#{new_resource.name}.d", "#{new_resource.config_name}.yaml")
               else
                 ::File.join(yaml_dir, "#{new_resource.name}.yaml")
               end
