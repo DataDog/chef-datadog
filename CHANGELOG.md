@@ -1,6 +1,9 @@
 Changes
 =======
 
+# 4.21.0 / 2024-08-12
+* [FEATURE] Add datadog_monitor option to override the config file name [#903] [@brentm5]
+
 # 4.20.0 / 2024-07-09
 * [FEATURE] Add feature `ec2_prefer_imdsv2` collect instance metadata preferring the IMDSv2 endpoint [#857] [@whsbp]
 
