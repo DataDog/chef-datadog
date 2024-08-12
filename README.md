@@ -320,19 +320,21 @@ datadog_monitor 'name' do
   instances                         Array # default value: []
   logs                              Array # default value: []
   use_integration_template          true, false # default value: false
+  config_name                       String # default value: 'conf'
   action                            Symbol # defaults to :add
 end
 ```
 
 #### Properties
 
-| Property                   | Description                                                                                                                                                                                                                                                                                    |
-|----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `'name'`                   | The name of the Agent integration to configure and enable.                                                                                                                                                                                                                                     |
-| `instances`                | The fields used to fill values under the `instances` section in the integration configuration file.                                                                                                                                                                                            |
-| `init_config`              | The fields used to fill values under the the `init_config` section in the integration configuration file.                                                                                                                                                                                      |
-| `logs`                     | The fields used to fill values under the the `logs` section in the integration configuration file.                                                                                                                                                                                             |
+| Property                   | Description                                                                                                                                                                                                                                                                                   |
+|----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `'name'`                   | The name of the Agent integration to configure and enable.                                                                                                                                                                                                                                    |
+| `instances`                | The fields used to fill values under the `instances` section in the integration configuration file.                                                                                                                                                                                           |
+| `init_config`              | The fields used to fill values under the the `init_config` section in the integration configuration file.                                                                                                                                                                                     |
+| `logs`                     | The fields used to fill values under the the `logs` section in the integration configuration file.                                                                                                                                                                                            |
 | `use_integration_template` | Set to `true` (recommended) to use the default template, which writes the values of `instances`, `init_config`, and `logs` in the YAML under their respective keys. This defaults to `false` for backward compatibility, but may default to `true` in a future major version of the cookbook. |
+| `config_name`              | The filename used when creating an integrations configuration file. Overriding this property allows the creation of multiple configuration files for a single integration.  This defaults to `conf`, which creates a configuration file named `conf.yaml`.                                    |
 
 #### Example
 
