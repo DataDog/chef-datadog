@@ -27,6 +27,22 @@ yum_a5_architecture_map.default = 'x86_64'
 
 agent_major_version = Chef::Datadog.agent_major_version(node)
 
+agent_version = node['datadog']["agent_version"]
+unless agent_version.nil?
+  match = agent_version.match(/([0-9]+:)?([0-9]+)\.([0-9]+)\.([0-9]+)([^-\s]+)?(?:-([0-9]+))?/)
+  if match.nil?
+    Chef::Log.warn "Couldn't infer agent_minor_version from agent_version '#{agent_version}'"
+  else
+    _epoch, _major, minor, _patch, _suffix, _release = match.captures
+    agent_minor_version = minor.to_i
+  end
+end
+log "DEBUGSTRING ========================================== #{agent_minor_version}" do
+    level :debug
+end
+
+
+
 # DATADOG_APT_KEY_CURRENT always contains the key that is used to sign repodata and latest packages
 # A2923DFF56EDA6E76E55E492D3A80E30382E94DE expires in 2022
 # D75CEA17048B9ACBF186794B32637D44F14F620E expires in 2032
@@ -112,7 +128,6 @@ when 'debian'
     mode '0644'
   end
 
-  agent_minor_version = Chef::Datadog.agent_minor_version(node)
   if agent_minor_version && agent_minor_version > 35
     apt_gpg_keys.pop
   end
@@ -200,10 +215,6 @@ when 'rhel', 'fedora', 'amazon'
     action :install
     only_if { node['packages']['gnupg2'].nil? }
   end
-  agent_minor_version = Chef::Datadog.agent_minor_version(node)
-  log "DEBUGSTRING ========================================== #{agent_minor_version}" do
-    level :debug
-  end
   # Import new RPM key
   rpm_gpg_keys.each do |rpm_gpg_key|
     next unless node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}"]
@@ -273,9 +284,9 @@ when 'rhel', 'fedora', 'amazon'
   yumrepo_gpgkeys = []
   if agent_major_version > 5
     rpm_gpg_keys.each do |rpm_gpg_key|
-    if agent_minor_version && agent_minor_version > 35 && rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == 'e09422b3'
-      next
-    end
+      if agent_minor_version && agent_minor_version > 35 && rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == 'e09422b3'
+        next
+      end
       yumrepo_gpgkeys.push(node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}"])
     end
   end
@@ -294,7 +305,6 @@ when 'rhel', 'fedora', 'amazon'
 when 'suse'
   # The yumrepo_gpgkey parameter was removed because the DATADOG_RPM_KEY.public (4172a230) is not used anymore
   warn_deprecated_yumrepo_gpgkey()
-  agent_minor_version = Chef::Datadog.agent_minor_version(node)
 
   # Import new RPM key
   rpm_gpg_keys.each do |rpm_gpg_key|
