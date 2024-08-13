@@ -201,6 +201,9 @@ when 'rhel', 'fedora', 'amazon'
     only_if { node['packages']['gnupg2'].nil? }
   end
   agent_minor_version = Chef::Datadog.agent_minor_version(node)
+  log "DEBUGSTRING ========================================== #{agent_minor_version}" do
+    level :debug
+  end
   # Import new RPM key
   rpm_gpg_keys.each do |rpm_gpg_key|
     next unless node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}"]
