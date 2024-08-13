@@ -114,6 +114,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.5.1)
     docile (1.3.2)
+    dry-inflector (0.2.1)
     ed25519 (1.2.4)
     equalizer (0.0.11)
     erubi (1.9.0)
@@ -148,7 +149,7 @@ GEM
     inflecto (0.0.2)
     iniparse (1.5.0)
     ipaddress (0.8.3)
-    jaro_winkler (1.5.4)
+    jaro_winkler (1.5.6)
     json (2.3.1)
     json_spec (1.1.5)
       multi_json (~> 1.0)
@@ -380,9 +381,11 @@ DEPENDENCIES
   cookstyle
   coveralls (~> 0.8.19)
   cucumber-core (~> 3.2.1)
+  dry-inflector (~> 0.2.0)
   fauxhai-ng (~> 8.3.1)
   foodcritic (~> 16.3.0)
   inflecto
+  jaro_winkler (~> 1.5.6)
   json_spec (~> 1.1.4)
   kitchen-docker (~> 2.3.0)
   kitchen-vagrant

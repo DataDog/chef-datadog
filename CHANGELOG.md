@@ -1,6 +1,12 @@
 Changes
 =======
 
+# 4.21.0 / 2024-08-12
+* [FEATURE] Add datadog_monitor option to override the config file name [#903] [@brentm5]
+
+# 4.20.0 / 2024-07-09
+* [FEATURE] Add feature `ec2_prefer_imdsv2` collect instance metadata preferring the IMDSv2 endpoint [#857] [@whsbp]
+
 # 4.19.0 / 2024-02-19
 * [FEATURE] Add support for installation of the datadog-fips-proxy package [#853] [@truthbk]
 * [FEATURE] Add support for CWS on Windows [#907] [@paulcacheux]
@@ -1060,6 +1066,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#850]: https://github.com/DataDog/chef-datadog/issues/850
 [#852]: https://github.com/DataDog/chef-datadog/issues/852
 [#856]: https://github.com/DataDog/chef-datadog/issues/856
+[#857]: https://github.com/DataDog/chef-datadog/issues/857
 [#858]: https://github.com/DataDog/chef-datadog/issues/858
 [#859]: https://github.com/DataDog/chef-datadog/issues/859
 [#860]: https://github.com/DataDog/chef-datadog/issues/860
@@ -1248,3 +1255,4 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@chouetz]: https://github.com/chouetz
 [@vigohe]: https://github.com/vigohe
 [@paulcacheux]: https://github.com/paulcacheux
+[@whsbp]: https://github.com/whsbp

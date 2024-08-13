@@ -46,6 +46,7 @@ RSpec.configure do |config|
 
     # recipes/repository.rb
     stub_command('rpm -q gpg-pubkey-current').and_return(false)
+    stub_command('rpm -q gpg-pubkey-4f09d16b').and_return(false)
     stub_command('rpm -q gpg-pubkey-b01082d3').and_return(false)
     stub_command('rpm -q gpg-pubkey-fd4bf915').and_return(false)
     stub_command('rpm -q gpg-pubkey-e09422b3').and_return(false)

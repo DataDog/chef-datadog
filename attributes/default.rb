@@ -122,6 +122,9 @@ default['datadog']['env'] = nil
 # Collect EC2 tags, set to 'yes' to collect
 default['datadog']['collect_ec2_tags'] = nil
 
+# Use IMDSv2 to collect instance metadata
+default['datadog']['ec2_prefer_imdsv2'] = nil
+
 # Set this regex to exclude some Chef node tags from the host tags that the datadog handler sends to Datadog
 # https://github.com/DataDog/chef-handler-datadog/issues/85
 # This means that all the metrics and service checks coming from the
@@ -181,6 +184,7 @@ default['datadog']['windows_agent_installer_prefix'] = nil
 # of the Agent will be signed with this key.
 # DATADOG_RPM_KEY_CURRENT always contains the key that is used to sign repodata and latest packages
 default['datadog']['yumrepo_gpgkey_new_current'] = "#{yum_protocol}://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public"
+default['datadog']['yumrepo_gpgkey_new_4f09d16b'] = "#{yum_protocol}://keys.datadoghq.com/DATADOG_RPM_KEY_4F09D16B.public"
 default['datadog']['yumrepo_gpgkey_new_b01082d3'] = "#{yum_protocol}://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public"
 default['datadog']['yumrepo_gpgkey_new_fd4bf915'] = "#{yum_protocol}://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public"
 default['datadog']['yumrepo_gpgkey_new_e09422b3'] = "#{yum_protocol}://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public"
