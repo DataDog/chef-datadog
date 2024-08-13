@@ -201,12 +201,12 @@ when 'rhel', 'fedora', 'amazon'
     only_if { node['packages']['gnupg2'].nil? }
   end
   agent_minor_version = Chef::Datadog.agent_minor_version(node)
-  if agent_minor_version && agent_minor_version > 35
-    rpm_gpg_keys.pop
-  end
   # Import new RPM key
   rpm_gpg_keys.each do |rpm_gpg_key|
     next unless node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}"]
+    if agent_minor_version && agent_minor_version > 35 && rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == 'e09422b3'
+      next
+    end
 
     # Download new RPM key
     key_local_path = ::File.join(Chef::Config[:file_cache_path], rpm_gpg_key[rpm_gpg_keys_name])
@@ -270,6 +270,9 @@ when 'rhel', 'fedora', 'amazon'
   yumrepo_gpgkeys = []
   if agent_major_version > 5
     rpm_gpg_keys.each do |rpm_gpg_key|
+    if agent_minor_version && agent_minor_version > 35 && rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == 'e09422b3'
+      next
+    end
       yumrepo_gpgkeys.push(node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}"])
     end
   end
@@ -289,14 +292,13 @@ when 'suse'
   # The yumrepo_gpgkey parameter was removed because the DATADOG_RPM_KEY.public (4172a230) is not used anymore
   warn_deprecated_yumrepo_gpgkey()
   agent_minor_version = Chef::Datadog.agent_minor_version(node)
-  if agent_minor_version && agent_minor_version > 35
-    rpm_gpg_keys.pop
-  end
 
   # Import new RPM key
   rpm_gpg_keys.each do |rpm_gpg_key|
     next unless node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}"]
-
+    if agent_minor_version && agent_minor_version > 35 && rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == 'e09422b3'
+      next
+    end
     # Download new RPM key
     new_key_local_path = ::File.join(Chef::Config[:file_cache_path], rpm_gpg_key[rpm_gpg_keys_name])
     remote_file "remote_file_#{rpm_gpg_key[rpm_gpg_keys_name]}" do
