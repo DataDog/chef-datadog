@@ -29,8 +29,8 @@ agent_major_version = Chef::Datadog.agent_major_version(node)
 
 agent_version = node['datadog']['agent_version']
 version_platform = node['platform_family']
-unless agent_version.nil? || !agent_version.key?(version_platform)
-  match = agent_version[version_platform].match(/([0-9]+:)?([0-9]+)\.([0-9]+)\.([0-9]+)([^-\s]+)?(?:-([0-9]+))?/)
+unless agent_version.nil? || !agent_version.kind_of?(String)
+  match = agent_version.match(/([0-9]+:)?([0-9]+)\.([0-9]+)\.([0-9]+)([^-\s]+)?(?:-([0-9]+))?/)
   if match.nil?
     Chef::Log.warn "Couldn't infer agent_minor_version from agent_version '#{agent_version}'"
   else
