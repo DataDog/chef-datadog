@@ -28,7 +28,6 @@ yum_a5_architecture_map.default = 'x86_64'
 agent_major_version = Chef::Datadog.agent_major_version(node)
 
 agent_minor_version = node['datadog']['agent_minor_version']
-version_platform = node['platform_family']
 unless agent_minor_version.nil? || !agent_minor_version.is_a?(String)
   agent_minor_version = agent_minor_version.to_i
 end

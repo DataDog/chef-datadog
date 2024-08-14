@@ -49,5 +49,4 @@ end
 
 describe command('rpm -q gpg-pubkey-e09422b3'), :if => os[:family] == 'redhat' do
   its(:exit_status) { should eq 1 }
-  its(:stdout) { should_not contain 'gpg-pubkey-e09422b3' }
 end
