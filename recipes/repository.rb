@@ -27,18 +27,12 @@ yum_a5_architecture_map.default = 'x86_64'
 
 agent_major_version = Chef::Datadog.agent_major_version(node)
 
-agent_version = node['datadog']['agent_version']
+agent_minor_version = node['datadog']['agent_minor_version']
 version_platform = node['platform_family']
-unless agent_version.nil? || !agent_version.kind_of?(String)
-  match = agent_version.match(/([0-9]+:)?([0-9]+)\.([0-9]+)\.([0-9]+)([^-\s]+)?(?:-([0-9]+))?/)
-  if match.nil?
-    Chef::Log.warn "Couldn't infer agent_minor_version from agent_version '#{agent_version}'"
-  else
-    _epoch, _major, minor, _patch, _suffix, _release = match.captures
-    agent_minor_version = minor.to_i
-  end
+unless agent_minor_version.nil? || !agent_minor_version.is_a?(String)
+    agent_minor_version = agent_minor_version.to_i
 end
-log "DEBUGSTRING ===================#{agent_version} #{version_platform} #{agent_minor_version}" do
+log "DEBUGSTRING ===================#{agent_version} / #{version_platform} / #{agent_minor_version} / #{node['datadog'].to_s}" do
   level :debug
 end
 
