@@ -186,6 +186,7 @@ describe 'datadog::repository' do
         end.converge(described_recipe)
       end
 
+      # Key 4F09D16B (from 2024-05-15 to 2033-05-13)
       # Key B01082D3 (from 2023-04-20 to 2028-04-18)
       # Key FD4BF915 (from 2020-09-08 to 2024-09-07)
       import_gpg_keys(
@@ -193,7 +194,7 @@ describe 'datadog::repository' do
       )
 
       # prefer HTTPS on boxes that support TLS1.2
-      it 'sets up a yum repo FD4BF915 and B01082D3' do
+      it 'sets up a yum repo 4F09D16B, FD4BF915 and B01082D3' do
         expect(chef_run).to create_yum_repository('datadog').with(
           gpgkey: [
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
@@ -214,6 +215,7 @@ describe 'datadog::repository' do
         end.converge(described_recipe)
       end
 
+      # Key 4F09D16B (from 2024-05-15 to 2033-05-13)
       # Key B01082D3 (from 2023-04-20 to 2028-04-18)
       # Key FD4BF915 (from 2020-09-08 to 2024-09-07)
       import_gpg_keys([
