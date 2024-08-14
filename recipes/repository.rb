@@ -32,7 +32,7 @@ version_platform = node['platform_family']
 unless agent_minor_version.nil? || !agent_minor_version.is_a?(String)
     agent_minor_version = agent_minor_version.to_i
 end
-log "DEBUGSTRING ===================#{agent_version} / #{version_platform} / #{agent_minor_version} / #{node['datadog'].to_s}" do
+log "DEBUGSTRING ===================#{version_platform} / #{agent_minor_version} / #{node['datadog'].to_s}" do
   level :debug
 end
 
