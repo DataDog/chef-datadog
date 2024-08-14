@@ -302,7 +302,7 @@ when 'suse'
   # Import new RPM key
   rpm_gpg_keys.each do |rpm_gpg_key|
     next unless node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}"]
-    if agent_minor_version.nil? || (agent_minor_version > 35 && rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == 'e09422b3'
+    if agent_minor_version.nil? || (agent_minor_version > 35 && rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == 'e09422b3')
       next
     end
     # Download new RPM key
