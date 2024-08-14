@@ -30,7 +30,7 @@ agent_major_version = Chef::Datadog.agent_major_version(node)
 agent_minor_version = node['datadog']['agent_minor_version']
 version_platform = node['platform_family']
 unless agent_minor_version.nil? || !agent_minor_version.is_a?(String)
-    agent_minor_version = agent_minor_version.to_i
+  agent_minor_version = agent_minor_version.to_i
 end
 log "DEBUGSTRING ===================#{version_platform} / #{agent_minor_version} / #{node['datadog'].to_s}" do
   level :debug
@@ -121,7 +121,7 @@ when 'debian'
     mode '0644'
   end
 
-  if agent_minor_version && agent_minor_version > 35
+  if agent_minor_version.nil? || agent_minor_version > 35
     apt_gpg_keys.pop
   end
 
@@ -211,7 +211,7 @@ when 'rhel', 'fedora', 'amazon'
   # Import new RPM key
   rpm_gpg_keys.each do |rpm_gpg_key|
     next unless node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}"]
-    if agent_minor_version && agent_minor_version > 35 && rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == 'e09422b3'
+    if agent_minor_version.nil? || (agent_minor_version > 35 && rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == 'e09422b3')
       next
     end
 
@@ -277,7 +277,7 @@ when 'rhel', 'fedora', 'amazon'
   yumrepo_gpgkeys = []
   if agent_major_version > 5
     rpm_gpg_keys.each do |rpm_gpg_key|
-      if agent_minor_version && agent_minor_version > 35 && rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == 'e09422b3'
+      if agent_minor_version.nil? || (agent_minor_version > 35 && rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == 'e09422b3')
         next
       end
       yumrepo_gpgkeys.push(node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}"])
@@ -302,7 +302,7 @@ when 'suse'
   # Import new RPM key
   rpm_gpg_keys.each do |rpm_gpg_key|
     next unless node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}"]
-    if agent_minor_version && agent_minor_version > 35 && rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == 'e09422b3'
+    if agent_minor_version.nil? || (agent_minor_version > 35 && rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == 'e09422b3'
       next
     end
     # Download new RPM key
