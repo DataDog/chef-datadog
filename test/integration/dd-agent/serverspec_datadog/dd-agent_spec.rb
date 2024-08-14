@@ -54,6 +54,5 @@ describe command('rpm -q gpg-pubkey-fd4bf915'), :if => os[:family] == 'redhat' d
 end
 
 describe command('rpm -q gpg-pubkey-e09422b3'), :if => os[:family] == 'redhat' do
-  its(:exit_status) { should eq 0 }
-  its(:stdout) { should contain 'gpg-pubkey-e09422b3' }
+  its(:exit_status) { should eq 1 }
 end

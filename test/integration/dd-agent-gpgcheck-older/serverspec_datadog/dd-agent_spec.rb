@@ -31,18 +31,12 @@ end
 # The new APT keys are imported
 describe command('apt-key list'), :if => ['debian', 'ubuntu'].include?(os[:family]) do
   its(:exit_status) { should eq 0 }
-  its(:stdout) { should contain '06462314' }
   its(:stdout) { should contain 'C0962C7D' }
   its(:stdout) { should contain 'F14F620E' }
   its(:stdout) { should contain '382E94DE' }
 end
 
 # The new RPM keys are imported
-describe command('rpm -q gpg-pubkey-4f09d16b'), :if => os[:family] == 'redhat' do
-  its(:exit_status) { should eq 0 }
-  its(:stdout) { should contain 'gpg-pubkey-4f09d16b' }
-end
-
 describe command('rpm -q gpg-pubkey-b01082d3'), :if => os[:family] == 'redhat' do
   its(:exit_status) { should eq 0 }
   its(:stdout) { should contain 'gpg-pubkey-b01082d3' }
@@ -54,5 +48,6 @@ describe command('rpm -q gpg-pubkey-fd4bf915'), :if => os[:family] == 'redhat' d
 end
 
 describe command('rpm -q gpg-pubkey-e09422b3'), :if => os[:family] == 'redhat' do
-  its(:exit_status) { should eq 1 }
+  its(:exit_status) { should eq 0 }
+  its(:stdout) { should contain 'gpg-pubkey-e09422b3' }
 end

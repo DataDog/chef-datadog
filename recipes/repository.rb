@@ -27,6 +27,11 @@ yum_a5_architecture_map.default = 'x86_64'
 
 agent_major_version = Chef::Datadog.agent_major_version(node)
 
+agent_minor_version = node['datadog']['agent_minor_version']
+unless agent_minor_version.nil? || !agent_minor_version.is_a?(String)
+  agent_minor_version = agent_minor_version.to_i
+end
+
 # DATADOG_APT_KEY_CURRENT always contains the key that is used to sign repodata and latest packages
 # A2923DFF56EDA6E76E55E492D3A80E30382E94DE expires in 2022
 # D75CEA17048B9ACBF186794B32637D44F14F620E expires in 2032
@@ -195,10 +200,12 @@ when 'rhel', 'fedora', 'amazon'
     action :install
     only_if { node['packages']['gnupg2'].nil? }
   end
-
   # Import new RPM key
   rpm_gpg_keys.each do |rpm_gpg_key|
     next unless node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}"]
+    if (agent_minor_version.nil? || agent_minor_version > 35) && rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == 'e09422b3'
+      next
+    end
 
     # Download new RPM key
     key_local_path = ::File.join(Chef::Config[:file_cache_path], rpm_gpg_key[rpm_gpg_keys_name])
@@ -262,6 +269,9 @@ when 'rhel', 'fedora', 'amazon'
   yumrepo_gpgkeys = []
   if agent_major_version > 5
     rpm_gpg_keys.each do |rpm_gpg_key|
+      if (agent_minor_version.nil? || agent_minor_version > 35) && rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == 'e09422b3'
+        next
+      end
       yumrepo_gpgkeys.push(node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}"])
     end
   end
@@ -284,7 +294,9 @@ when 'suse'
   # Import new RPM key
   rpm_gpg_keys.each do |rpm_gpg_key|
     next unless node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}"]
-
+    if (agent_minor_version.nil? || agent_minor_version > 35) && rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == 'e09422b3'
+      next
+    end
     # Download new RPM key
     new_key_local_path = ::File.join(Chef::Config[:file_cache_path], rpm_gpg_key[rpm_gpg_keys_name])
     remote_file "remote_file_#{rpm_gpg_key[rpm_gpg_keys_name]}" do
