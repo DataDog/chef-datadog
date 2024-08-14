@@ -32,9 +32,6 @@ version_platform = node['platform_family']
 unless agent_minor_version.nil? || !agent_minor_version.is_a?(String)
   agent_minor_version = agent_minor_version.to_i
 end
-log "DEBUGSTRING ===================#{version_platform} / #{agent_minor_version} / #{node['datadog'].to_s}" do
-  level :debug
-end
 
 # DATADOG_APT_KEY_CURRENT always contains the key that is used to sign repodata and latest packages
 # A2923DFF56EDA6E76E55E492D3A80E30382E94DE expires in 2022
@@ -207,7 +204,7 @@ when 'rhel', 'fedora', 'amazon'
   # Import new RPM key
   rpm_gpg_keys.each do |rpm_gpg_key|
     next unless node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}"]
-    if agent_minor_version.nil? || (agent_minor_version > 35 && rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == 'e09422b3')
+    if (agent_minor_version.nil? || agent_minor_version > 35) && rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == 'e09422b3'
       next
     end
 
@@ -273,7 +270,7 @@ when 'rhel', 'fedora', 'amazon'
   yumrepo_gpgkeys = []
   if agent_major_version > 5
     rpm_gpg_keys.each do |rpm_gpg_key|
-      if agent_minor_version.nil? || (agent_minor_version > 35 && rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == 'e09422b3')
+      if (agent_minor_version.nil? || agent_minor_version > 35) && rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == 'e09422b3'
         next
       end
       yumrepo_gpgkeys.push(node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}"])
@@ -298,7 +295,7 @@ when 'suse'
   # Import new RPM key
   rpm_gpg_keys.each do |rpm_gpg_key|
     next unless node['datadog']["yumrepo_gpgkey_new_#{rpm_gpg_key[rpm_gpg_keys_short_fingerprint]}"]
-    if agent_minor_version.nil? || (agent_minor_version > 35 && rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == 'e09422b3')
+    if (agent_minor_version.nil? || agent_minor_version > 35) && rpm_gpg_key[rpm_gpg_keys_short_fingerprint] == 'e09422b3'
       next
     end
     # Download new RPM key
