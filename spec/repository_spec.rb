@@ -188,20 +188,18 @@ describe 'datadog::repository' do
 
       # Key B01082D3 (from 2023-04-20 to 2028-04-18)
       # Key FD4BF915 (from 2020-09-08 to 2024-09-07)
-      # Key E09422B3
       import_gpg_keys(
-        %w[current 4f09d16b b01082d3 fd4bf915 e09422b3]
+        %w[current 4f09d16b b01082d3 fd4bf915]
       )
 
       # prefer HTTPS on boxes that support TLS1.2
-      it 'sets up a yum repo E09422B3, FD4BF915 and B01082D3' do
+      it 'sets up a yum repo FD4BF915 and B01082D3' do
         expect(chef_run).to create_yum_repository('datadog').with(
           gpgkey: [
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_4F09D16B.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
           ]
         ).with(repo_gpgcheck: true)
       end
@@ -218,12 +216,10 @@ describe 'datadog::repository' do
 
       # Key B01082D3 (from 2023-04-20 to 2028-04-18)
       # Key FD4BF915 (from 2020-09-08 to 2024-09-07)
-      # Key E09422B3
       import_gpg_keys([
         '4f09d16b',
         'b01082d3',
         'fd4bf915',
-        'e09422b3'
       ])
 
       # prefer HTTPS on boxes that support TLS1.2
@@ -234,7 +230,6 @@ describe 'datadog::repository' do
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_4F09D16B.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
           ]
         ).with(repo_gpgcheck: true)
       end
@@ -251,12 +246,10 @@ describe 'datadog::repository' do
 
       # Key B01082D3 (from 2023-04-20 to 2028-04-18)
       # Key FD4BF915 (from 2020-09-08 to 2024-09-07)
-      # Key E09422B3
       import_gpg_keys([
         '4f09d16b',
         'b01082d3',
         'fd4bf915',
-        'e09422b3'
       ])
 
       # RHEL5 has to use insecure HTTP due to lack of support for TLS1.2
@@ -268,7 +261,6 @@ describe 'datadog::repository' do
             'http://keys.datadoghq.com/DATADOG_RPM_KEY_4F09D16B.public',
             'http://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
             'http://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
-            'http://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
           ]
         ).with(repo_gpgcheck: false)
       end
@@ -291,7 +283,6 @@ describe 'datadog::repository' do
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_4F09D16B.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
           ]
         ).with(repo_gpgcheck: false)
       end
@@ -314,7 +305,6 @@ describe 'datadog::repository' do
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_4F09D16B.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
           ]
         ).with(repo_gpgcheck: true)
       end
@@ -337,7 +327,6 @@ describe 'datadog::repository' do
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_4F09D16B.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
           ]
         ).with(repo_gpgcheck: true)
       end
@@ -360,7 +349,6 @@ describe 'datadog::repository' do
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_4F09D16B.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_B01082D3.public',
             'https://keys.datadoghq.com/DATADOG_RPM_KEY_FD4BF915.public',
-            'https://keys.datadoghq.com/DATADOG_RPM_KEY_E09422B3.public',
           ]
         ).with(repo_gpgcheck: true)
       end
@@ -385,7 +373,6 @@ describe 'datadog::repository' do
         '4f09d16b',
         'b01082d3',
         'fd4bf915',
-        'e09422b3'
       ], false)
 
       it 'deletes the old RPM GPG key 4172a230 if it exists' do
