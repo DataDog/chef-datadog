@@ -27,7 +27,7 @@ yum_a5_architecture_map.default = 'x86_64'
 
 agent_major_version = Chef::Datadog.agent_major_version(node)
 
-agent_version = node['datadog']["agent_version"]
+agent_version = node['datadog']['agent_version']
 unless agent_version.nil?
   match = agent_version.match(/([0-9]+:)?([0-9]+)\.([0-9]+)\.([0-9]+)([^-\s]+)?(?:-([0-9]+))?/)
   if match.nil?
@@ -38,10 +38,8 @@ unless agent_version.nil?
   end
 end
 log "DEBUGSTRING ========================================== #{agent_minor_version}" do
-    level :debug
+  level :debug
 end
-
-
 
 # DATADOG_APT_KEY_CURRENT always contains the key that is used to sign repodata and latest packages
 # A2923DFF56EDA6E76E55E492D3A80E30382E94DE expires in 2022
