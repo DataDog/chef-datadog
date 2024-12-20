@@ -53,7 +53,7 @@ if ddagentuser_name
       Windows::Helper.new.clean_user(Chef.run_context)
     end
   end
-  ruby_block 'Store Datadog User Password' do
+  ruby_block 'Store Datadog User Name' do
     block do
       node.run_state['datadog']['windows_ddagentuser_name'] = ddagentuser_name
     end
