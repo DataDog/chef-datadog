@@ -35,7 +35,7 @@ jobs:
 
   style:
     machine:
-      image: ubuntu-2004:202201-02
+      image: ubuntu-2004:2024.08.1
     environment:
       CHEF_VERSION: '16.5.77'
       RUBY_VERSION: '2.6.3'
@@ -45,9 +45,9 @@ jobs:
           name: Set Ruby version
           command: |
                     echo "Using $RUBY_VERSION"
-                    curl -sSL https://rvm.io/pkuczynski.asc | gpg --import -
-                    # Update RVM. Using this path instead of https://get.rvm.io because the later uses the letsencrypt cert that breaks openssl 1.0
-                    curl -sSL https://raw.githubusercontent.com/rvm/rvm/master/binscripts/rvm-installer | bash -s stable
+                    gpg --keyserver keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+                    curl -sSL https://get.rvm.io | bash -s stable
+                    source /home/circleci/.rvm/scripts/rvm
                     rvm reload
                     rvm install $RUBY_VERSION
                     echo . $(rvm $RUBY_VERSION do rvm env --path) >> $BASH_ENV
