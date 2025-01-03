@@ -18,7 +18,7 @@ RUN /bin/bash -l -c "rvm requirements" # || cat /usr/local/rvm/log/*/*.log && fa
 RUN /bin/bash -l -c "rvm install ${RUBY_VERSION} && rvm cleanup all"
 RUN /bin/bash -l -c "gem install bundler:2.3.26 --no-document"
 
-RUN /bin/bash -l -c "gem install nori:2.6.0 test-kitchen:2.7.2 octokit:4.18.0 semverse:3.0.0 chef:14.10.9 berkshelf:7.0.10 kitchen-vagrant:1.7.0 kitchen-docker:2.3.0"
+RUN /bin/bash -l -c "gem install nori:2.6.0 test-kitchen:2.7.2 octokit:4.18.0 semverse:3.0.0 chef:14.10.9 berkshelf:7.0.10 kitchen-vagrant:1.7.0 kitchen-docker:2.3.0 spec-its:1.3.1"
 
 # build with --build-arg INSTALL_VAGRANT=1 to get vagrant support (not needed for kitchen-docker-tests)
 # requires `-v /dev/vboxdrv:/dev/vboxdrv` when running
