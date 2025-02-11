@@ -1,6 +1,11 @@
 Changes
 =======
 
+# 4.22.0 / 2025-02-12
+* [FEATURE] Install relevant GPG keys [#930] [@Pythyu]
+* [MISC] Upgrade rubocop child dependencies [#931] [@metavida]
+* [MISC] Bump rack from 2.2.3 to 2.2.8.1 [#938] [] 
+
 # 4.21.0 / 2024-08-12
 * [FEATURE] Add datadog_monitor option to override the config file name [#903] [@brentm5]
 
