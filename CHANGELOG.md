@@ -1,6 +1,11 @@
 Changes
 =======
 
+# 4.22.0 / 2025-02-12
+* [FEATURE] Install relevant GPG keys [#930] [@Pythyu]
+* [MISC] Upgrade rubocop child dependencies [#931] [@metavida]
+* [MISC] Bump rack from 2.2.3 to 2.2.8.1 [#938] [] 
+
 # 4.21.0 / 2024-08-12
 * [FEATURE] Add datadog_monitor option to override the config file name [#903] [@brentm5]
 
@@ -1065,6 +1070,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#843]: https://github.com/DataDog/chef-datadog/issues/843
 [#850]: https://github.com/DataDog/chef-datadog/issues/850
 [#852]: https://github.com/DataDog/chef-datadog/issues/852
+[#853]: https://github.com/DataDog/chef-datadog/issues/853
 [#856]: https://github.com/DataDog/chef-datadog/issues/856
 [#857]: https://github.com/DataDog/chef-datadog/issues/857
 [#858]: https://github.com/DataDog/chef-datadog/issues/858
@@ -1085,6 +1091,11 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#895]: https://github.com/DataDog/chef-datadog/issues/895
 [#896]: https://github.com/DataDog/chef-datadog/issues/896
 [#898]: https://github.com/DataDog/chef-datadog/issues/898
+[#903]: https://github.com/DataDog/chef-datadog/issues/903
+[#907]: https://github.com/DataDog/chef-datadog/issues/907
+[#930]: https://github.com/DataDog/chef-datadog/issues/930
+[#931]: https://github.com/DataDog/chef-datadog/issues/931
+[#938]: https://github.com/DataDog/chef-datadog/issues/938
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@Azraeht]: https://github.com/Azraeht
@@ -1099,6 +1110,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@NBParis]: https://github.com/NBParis
 [@NathanielMichael]: https://github.com/NathanielMichael
 [@Nibons]: https://github.com/Nibons
+[@Pythyu]: https://github.com/Pythyu
 [@RedWhiteMiko]: https://github.com/RedWhiteMiko
 [@SelerityMichael]: https://github.com/SelerityMichael
 [@SupermanScott]: https://github.com/SupermanScott
@@ -1124,6 +1136,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@brentm5]: https://github.com/brentm5
 [@ccannell67]: https://github.com/ccannell67
 [@cdonadeo]: https://github.com/cdonadeo
+[@chouetz]: https://github.com/chouetz
 [@chrissnell]: https://github.com/chrissnell
 [@clmoreno]: https://github.com/clmoreno
 [@clofresh]: https://github.com/clofresh
@@ -1198,6 +1211,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@martinisoft]: https://github.com/martinisoft
 [@mattrobenolt]: https://github.com/mattrobenolt
 [@mbaitelman]: https://github.com/mbaitelman
+[@metavida]: https://github.com/metavida
 [@mfischer-zd]: https://github.com/mfischer-zd
 [@mhebbar1]: https://github.com/mhebbar1
 [@mikelaning]: https://github.com/mikelaning
@@ -1209,6 +1223,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@mstepniowski]: https://github.com/mstepniowski
 [@mtougeron]: https://github.com/mtougeron
 [@nicholas-devlin]: https://github.com/nicholas-devlin
+[@nichols2k]: https://github.com/nichols2k
 [@nickmarden]: https://github.com/nickmarden
 [@nilskuehme]: https://github.com/nilskuehme
 [@nkts]: https://github.com/nkts
@@ -1217,6 +1232,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@opsline-radek]: https://github.com/opsline-radek
 [@otterdude97]: https://github.com/otterdude97
 [@p-lambert]: https://github.com/p-lambert
+[@paulcacheux]: https://github.com/paulcacheux
 [@phlipper]: https://github.com/phlipper
 [@qqfr2507]: https://github.com/qqfr2507
 [@raycrawford]: https://github.com/raycrawford
@@ -1246,13 +1262,10 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [@truthbk]: https://github.com/truthbk
 [@tymartin-novu]: https://github.com/tymartin-novu
 [@uzyexe]: https://github.com/uzyexe
+[@vigohe]: https://github.com/vigohe
+[@whsbp]: https://github.com/whsbp
 [@wk8]: https://github.com/wk8
 [@wolf31o2]: https://github.com/wolf31o2
 [@xt99]: https://github.com/xt99
 [@yannmh]: https://github.com/yannmh
 [@zshenker]: https://github.com/zshenker
-[@nichols2k]: https://github.com/nichols2k
-[@chouetz]: https://github.com/chouetz
-[@vigohe]: https://github.com/vigohe
-[@paulcacheux]: https://github.com/paulcacheux
-[@whsbp]: https://github.com/whsbp
