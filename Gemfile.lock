@@ -123,7 +123,7 @@ GEM
       multipart-post (>= 1.2, < 3)
     fauxhai-ng (8.3.1)
       net-ssh
-    ffi (1.13.1)
+    ffi (1.17.1)
     ffi-yajl (2.3.4)
       libyajl2 (~> 1.2)
     foodcritic (16.3.0)
@@ -384,6 +384,7 @@ DEPENDENCIES
   cucumber-core (~> 3.2.1)
   dry-inflector (~> 0.2.0)
   fauxhai-ng (~> 8.3.1)
+  ffi (~> 1.17.0)
   foodcritic (~> 16.3.0)
   inflecto
   jaro_winkler (~> 1.5.6)
@@ -400,4 +401,4 @@ DEPENDENCIES
   yaml
 
 BUNDLED WITH
-   2.3.26
+   2.4.13
