@@ -21,7 +21,7 @@ gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
 gem 'jaro_winkler', '~> 1.5.6'
 gem 'dry-inflector', '~> 0.2.0'
 
-if RUBY_VERSION < '2.4.0'
+if RUBY_VERSION < '2.5.0'
   gem 'ffi', '= 1.15.5'
 else
   gem 'ffi', '~> 1.17.0'
