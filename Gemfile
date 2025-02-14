@@ -20,6 +20,7 @@ gem 'rbnacl-libsodium', '~> 1.0.16'
 gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
 gem 'jaro_winkler', '~> 1.5.6'
 gem 'dry-inflector', '~> 0.2.0'
+gem 'ffi', '~> 1.17.0'
 
 if RUBY_VERSION < '2.6.4'
   gem 'term-ansicolor', '~> 1.8.0'
