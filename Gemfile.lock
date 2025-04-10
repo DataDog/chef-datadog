@@ -237,7 +237,7 @@ GEM
     rbnacl-libsodium (1.0.16)
       rbnacl (>= 3.0.1)
     retryable (3.0.5)
-    rexml (3.3.7)
+    rexml (3.3.9)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
       rspec-expectations (~> 3.9.0)
