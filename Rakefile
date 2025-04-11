@@ -28,13 +28,13 @@ namespace :style do
       require 'foodcritic'
 
       FoodCritic::Rake::LintTask.new(:internal_chef_lint) do |t|
-      t.options = {
-        fail_tags: ['correctness'],
-        tags: [
-          '~FC121', # Disables: Cookbook depends on cookbook made obsolete by Chef 14 (chef_handler)
-          '~FC014', # Disables: Consider extracting long ruby_block to library
-        ]
-      }
+        t.options = {
+          fail_tags: ['correctness'],
+          tags: [
+            '~FC121', # Disables: Cookbook depends on cookbook made obsolete by Chef 14 (chef_handler)
+            '~FC014'  # Disables: Consider extracting long ruby_block to library
+          ]
+        }
       end
       Rake::Task[:internal_chef_lint].invoke
     rescue LoadError
