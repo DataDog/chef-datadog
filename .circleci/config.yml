@@ -27,7 +27,7 @@ jobs:
           command: gem install bundler:2.3.26
       - run:
           name: Install dependencies with bundler
-          command: bundle install --path .bundle
+          command: bundle install --path .bundle --without=chef_lint
       - run:
           name: Execute Kitchen tests
           command: bundle exec rake circle
@@ -61,7 +61,7 @@ jobs:
           name: Install dependencies with bundler without Gemfile.lock
           command: |
                     rm Gemfile.lock
-                    bundle install --path .bundle --without=development
+                    bundle install --path .bundle --without=development --with=chef_lint
       - run:
           name: Showing gems versions in bundle
           command: bundle list

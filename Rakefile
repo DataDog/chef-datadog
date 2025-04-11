@@ -1,7 +1,6 @@
 #!/usr/bin/env rake
 
 require 'fileutils'
-require 'foodcritic'
 require 'kitchen/rake_tasks'
 require 'rake/clean'
 require 'rspec/core/rake_task'
@@ -24,14 +23,23 @@ namespace :style do
   RuboCop::RakeTask.new(:ruby)
 
   desc 'Run Chef style checks'
-  FoodCritic::Rake::LintTask.new(:chef) do |t|
-    t.options = {
-      fail_tags: ['correctness'],
-      tags: [
-        '~FC121', # Disables: Cookbook depends on cookbook made obsolete by Chef 14 (chef_handler)
-        '~FC014', # Disables: Consider extracting long ruby_block to library
-      ]
-    }
+  task :chef do
+    begin
+      require 'foodcritic'
+
+      FoodCritic::Rake::LintTask.new(:internal_chef_lint) do |t|
+      t.options = {
+        fail_tags: ['correctness'],
+        tags: [
+          '~FC121', # Disables: Cookbook depends on cookbook made obsolete by Chef 14 (chef_handler)
+          '~FC014', # Disables: Consider extracting long ruby_block to library
+        ]
+      }
+      end
+      Rake::Task[:internal_chef_lint].invoke
+    rescue LoadError
+      puts 'foodcritic not found, skipping chef style checks'
+    end
   end
 end
 

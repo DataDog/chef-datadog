@@ -34,7 +34,10 @@ if RUBY_VERSION < '2.4'
   gem 'json', '~> 2.4.1'
 end
 
-gem 'foodcritic', (RUBY_VERSION >= '2.4' ? '~> 16.3.0' : '~> 11.4.0')
+group :chef_lint do
+  gem 'foodcritic', (RUBY_VERSION >= '2.4' ? '~> 16.3.0' : '~> 11.4.0')
+end
+
 gem 'rubocop', (RUBY_VERSION >= '2.4' ? '~> 0.80.1' : '~> 0.49.1')
 
 if Gem::Version.new(chef_version) >= Gem::Version.new('14.10.9')
