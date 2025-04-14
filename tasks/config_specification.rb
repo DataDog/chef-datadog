@@ -14,7 +14,6 @@
 
 require 'inflecto'
 require 'virtus'
-require 'active_support/core_ext'
 require 'pp'
 
 module ConfigSpecification
