@@ -39,7 +39,6 @@ gem 'rubocop', (RUBY_VERSION >= '2.4' ? '~> 0.80.1' : '~> 0.49.1')
 
 if Gem::Version.new(chef_version) >= Gem::Version.new('14.10.9')
   group :development do
-    gem 'activesupport', '~> 6.0.3'
     gem 'virtus'
     gem 'inflecto'
   end
