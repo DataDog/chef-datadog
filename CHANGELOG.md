@@ -1,6 +1,12 @@
 Changes
 =======
 
+# 4.22.2 / 2025-04-17
+* [MISC] Clean-up activesupport removal [#951]
+* [MISC] Drop activesupport dependency [#950]
+* [MISC] Bump rack from 2.2.8.1 to 2.2.13 in the bundler group across 1 directory [#946]
+* [MISC] Bump rexml from 3.3.7 to 3.3.9 in the bundler group across 1 directory [#945]
+
 # 4.22.1 / 2025-04-07
 * [MISC] Bump nokogiri from 1.13.10 to 1.18.4 [#943]
 
@@ -1100,6 +1106,10 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#931]: https://github.com/DataDog/chef-datadog/issues/931
 [#938]: https://github.com/DataDog/chef-datadog/issues/938
 [#943]: https://github.com/DataDog/chef-datadog/issues/943
+[#945]: https://github.com/DataDog/chef-datadog/issues/945
+[#946]: https://github.com/DataDog/chef-datadog/issues/946
+[#950]: https://github.com/DataDog/chef-datadog/issues/950
+[#951]: https://github.com/DataDog/chef-datadog/issues/951
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@Azraeht]: https://github.com/Azraeht
