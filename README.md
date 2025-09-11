@@ -1,5 +1,9 @@
 # Datadog Chef Cookbook
 
+
+The Datadog Chef cookbook automates the installation and configuration of the Datadog Agent across supported Linux and Windows platforms. The cookbook is compatible with `chef-client >= 12.7`, and supports Windows and Linux platforms. For full attribute references, recipes, usage examples, and integration configuration patterns, see the [Advanced configurations section](#advanced-configurations).
+
+
 The Datadog Chef recipes are used to deploy Datadog's components and configuration automatically. The cookbook includes support for:
 
 * Datadog Agent v7.x (default)
@@ -9,9 +13,7 @@ The Datadog Chef recipes are used to deploy Datadog's components and configurati
 **Note**: This page may discuss features that are not available for your selected version. Check the README of the
 git tag or gem version for your version's documentation.
 
-## Setup
-
-### Requirements
+## Prerequisites
 
 The Datadog Chef cookbook is compatible with `chef-client` >= 12.7. If you need support for Chef < 12.7, use a [release 2.x of the cookbook][2]. See the [CHANGELOG][3] for more info.
 
@@ -43,6 +45,8 @@ The following Opscode cookbooks are dependencies:
 #### Chef
 
 **Chef 13 users**: With Chef 13 and `chef_handler` 1.x, you may have trouble using the `dd-handler` recipe. The known workaround is to update your dependency to `chef_handler` >= 2.1.
+
+## Setup
 
 ### Installation
 
@@ -80,7 +84,7 @@ The following Opscode cookbooks are dependencies:
 
 5. Wait for the next scheduled `chef-client` run or trigger it manually.
 
-#### Datadog attributes
+### Datadog attributes
 
 The following methods are available for adding your [Datadog API and application keys][4]:
 
@@ -90,11 +94,11 @@ The following methods are available for adding your [Datadog API and application
 
 **Note**: When using the run state to store your API and application keys, set them at compile time before `datadog::dd-handler` in the run list.
 
-#### Extra configuration
+## Advanced configurations
 
 To add additional elements to the Agent configuration file (typically `datadog.yaml`) that are not directly available as attributes of the cookbook, use the `node['datadog']['extra_config']` attribute. This is a hash attribute, which is marshaled into the configuration file accordingly.
 
-##### Examples
+### Examples
 
 The following code sets the field `secret_backend_command` in the configuration file `datadog.yaml`:
 
@@ -120,7 +124,7 @@ For nested attributes, use object syntax. The following code sets the field `log
 default['datadog']['extra_config']['logs_config'] = { 'use_port_443' => true }
 ```
 
-#### AWS OpsWorks Chef deployment
+### AWS OpsWorks Chef deployment
 
 Follow the steps below to deploy the Datadog Agent with Chef on AWS OpsWorks:
 
@@ -167,7 +171,7 @@ run_list %w(
 
 **Note**: `data_bags` are not used in this recipe because it is unlikely to have multiple API keys with only one application key.
 
-## Versions
+### Versions
 
 By default, the current major version of this cookbook installs Agent v7. The following attributes are available to control the Agent version installed:
 
@@ -180,7 +184,7 @@ By default, the current major version of this cookbook installs Agent v7. The fo
 
 See the sample [attributes/default.rb][1] for your cookbook version for all available attributes.
 
-### Upgrade
+#### Upgrade
 
 Some attribute names have changed from version 3.x to 4.x of the cookbook. Use this reference table to update your configuration:
 
@@ -213,7 +217,7 @@ default_attributes(
 )
 ```
 
-### Downgrade
+#### Downgrade
 
 To downgrade the Agent version, set the `'agent_major_version'`, `'agent_version'`, and `'agent_allow_downgrade'`.
 
@@ -229,11 +233,11 @@ The following example downgrades to Agent v6. The same applies if you are downgr
   )
 ```
 
-### Uninstall
+#### Uninstall
 
 To uninstall the Agent, remove the `dd-agent` recipe and add the `remove-dd-agent` recipe with no attributes.
 
-### Custom Agent repository
+#### Custom Agent repository
 
 To use an Agent from a custom repository, you can set the `aptrepo` option. 
 
@@ -249,25 +253,25 @@ The example below uses the staging repository:
   }
 ```
 
-## Recipes
+### Recipes
 
 Access the [Datadog Chef recipes on GitHub][7].
 
-### Default
+#### Default
 
 The [default recipe][8] is a placeholder.
 
-### Agent
+#### Agent
 
 The [dd-agent recipe][9] installs the Datadog Agent on the target system, sets your [Datadog API key][4], and starts the service to report on local system metrics.
 
 **Note**: Windows users upgrading the Agent from versions <= 5.10.1 to >= 5.12.0, set the `windows_agent_use_exe` attribute to `true`. For more details, see the [dd-agent wiki][10].
 
-### Handler
+#### Handler
 
 The [dd-handler recipe][11] installs the [chef-handler-datadog][12] gem and invokes the handler at the end of a Chef run to report the details to the news feed.
 
-### DogStatsD
+#### DogStatsD
 
 To install a language-specific library that interacts with DogStatsD:
 
@@ -277,7 +281,7 @@ To install a language-specific library that interacts with DogStatsD:
     python_package 'dogstatsd-python' # assumes python and pip are installed
     ```
 
-### Tracing
+#### Tracing
 
 To install a language-specific library for application tracing (APM):
 
@@ -287,11 +291,11 @@ To install a language-specific library for application tracing (APM):
     python_package 'ddtrace' # assumes python and pip are installed
     ```
 
-### Integrations
+#### Integrations
 
 There are many [recipes][7] to assist you with deploying Agent integration configuration files and dependencies.
 
-### System-probe
+#### System-probe
 
 The [system-probe recipe][17] is automatically included by default. It writes the `system-probe.yaml` file. This behavior can be disabled by setting `node['datadog']['system_probe']['manage_config']` to false.
 
@@ -301,18 +305,18 @@ To enable [Universal Service Monitoring][7] (USM) in `system-probe.yaml`, set `n
 
 **Note for Windows users**: NPM is supported on Windows with Agent v6.27+ and v7.27+. It ships as an optional component that is only installed if `node['datadog']['system_probe']['network_enabled']` is set to true when the Agent is installed or upgraded. Because of this, existing installations might need to do an uninstall and reinstall of the Agent once to install the NPM component, unless the Agent is upgraded at the same time.
 
-## Resources
+### Resources
 
-### Integrations without recipes
+#### Integrations without recipes
 
 Use the `datadog_monitor` resource for enabling Agent integrations without a recipe.
 
-#### Actions
+##### Actions
 
 - `:add`: (default) Enables the integration by setting up the configuration file, adding the correct permissions to the file, and restarting the Agent.
 - `:remove`: Disables an integration.
 
-#### Syntax
+##### Syntax
 
 ```ruby
 datadog_monitor 'name' do
@@ -325,7 +329,7 @@ datadog_monitor 'name' do
 end
 ```
 
-#### Properties
+##### Properties
 
 | Property                   | Description                                                                                                                                                                                                                                                                                   |
 |----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -336,7 +340,7 @@ end
 | `use_integration_template` | Set to `true` (recommended) to use the default template, which writes the values of `instances`, `init_config`, and `logs` in the YAML under their respective keys. This defaults to `false` for backward compatibility, but may default to `true` in a future major version of the cookbook. |
 | `config_name`              | The filename used when creating an integrations configuration file. Overriding this property allows the creation of multiple configuration files for a single integration.  This defaults to `conf`, which creates a configuration file named `conf.yaml`.                                    |
 
-#### Example
+##### Example
 
 This example enables the ElasticSearch integration by using the `datadog_monitor` resource. It provides the instance configuration (in this case: the URL to connect to ElasticSearch) and sets the `use_integration_template` flag to use the default configuration template. Also, it notifies the `service[datadog-agent]` resource to restart the Agent.
 
@@ -354,16 +358,16 @@ end
 
 See the [Datadog integration Chef recipes][7] for additional examples.
 
-### Integration versions
+#### Integration versions
 
 To install a specific version of a Datadog integration, use the `datadog_integration` resource.
 
-#### Actions
+##### Actions
 
 - `:install`: (default) Installs an integration with the specified version.
 - `:remove`: Removes an integration.
 
-#### Syntax
+##### Syntax
 
 ```ruby
 datadog_integration 'name' do
@@ -373,13 +377,13 @@ datadog_integration 'name' do
 end
 ```
 
-#### Properties
+##### Properties
 
 - `'name'`: The name of the Agent integration to install, for example: `datadog-apache`.
 - `version`: The version of the integration to install (only required with the `:install` action).
 - `third_party`: Set to false if installing a Datadog integration, true otherwise. Available for Datadog Agents version 6.21/7.21 and higher only.
 
-#### Example
+##### Example
 
 This example installs version `1.11.0` of the ElasticSearch integration by using the `datadog_integration` resource.
 
@@ -397,9 +401,9 @@ To get the available versions of the integrations, see the integration-specific 
 
 **Note**: For Chef Windows users, the `chef-client` must have read access to the `datadog.yaml` file when the `datadog-agent` binary available on the node is used by this resource.
 
-## Development
+### Development
 
-### Dockerized environment
+#### Dockerized environment
 
 To build a Docker environment with which to run kitchen tests, use the files under `docker_test_env`:
 
