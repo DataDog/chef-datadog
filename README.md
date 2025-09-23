@@ -50,39 +50,7 @@ The following Opscode cookbooks are dependencies:
 
 ### Installation
 
-1. Add the cookbook to your Chef server with [Berkshelf][5] or [Knife][6]:
-    ```text
-    # Berksfile
-    cookbook 'datadog', '~> 4.0'
-    ```
-
-    ```shell
-    # Knife
-    knife cookbook site install datadog
-    ```
-
-2. Set the [Datadog-specific attributes](#datadog-attributes) in a role, environment, or another recipe:
-    ```text
-    node.default['datadog']['api_key'] = "<YOUR_DD_API_KEY>"
-
-    node.default['datadog']['application_key'] = "<YOUR_DD_APP_KEY>"
-    ```
-
-3. Upload the updated cookbook to your Chef server:
-    ```shell
-    berks upload
-    # or
-    knife cookbook upload datadog
-    ```
-
-4. After uploading, add the cookbook to your node's `run_list` or `role`:
-    ```text
-    "run_list": [
-      "recipe[datadog::dd-agent]"
-    ]
-    ```
-
-5. Wait for the next scheduled `chef-client` run or trigger it manually.
+To install the Datadog Agent with Chef, follow the [in-app flow in Fleet Automation][18] setup guide for Berkshelf or Knife. This setup guide allows you to select observability features, and generates the necessary attributes and commands for your environment.
 
 ### Datadog attributes
 
@@ -445,3 +413,4 @@ KITCHEN_LOCAL_YAML=kitchen.docker.yml bundle exec rake circle
 [15]: https://github.com/DataDog/chef-datadog/blob/master/recipes/ddtrace-ruby.rb
 [16]: https://github.com/DataDog/integrations-core
 [17]: https://github.com/DataDog/chef-datadog/blob/master/recipes/system-probe.rb
+[18]: https://app.datadoghq.com/fleet/install-agent/latest?platform=chef
