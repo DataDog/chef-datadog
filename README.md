@@ -52,6 +52,36 @@ The following Opscode cookbooks are dependencies:
 
 To install the Datadog Agent with Chef, follow the [in-app flow in Fleet Automation][18] setup guide for Berkshelf or Knife. This setup guide allows you to select observability features, and generates the necessary attributes and commands for your environment.
 
+These setup steps are also listed below:
+
+```text
+    # Berksfile
+    cookbook 'datadog', '~> 4.0'
+    ```
+    ```shell
+    # Knife
+    knife cookbook site install datadog
+    ```
+2. Set the [Datadog-specific attributes](#datadog-attributes) in a role, environment, or another recipe:
+    ```text
+    node.default['datadog']['api_key'] = "<YOUR_DD_API_KEY>"
+    node.default['datadog']['application_key'] = "<YOUR_DD_APP_KEY>"
+    ```
+3. Upload the updated cookbook to your Chef server:
+    ```shell
+    berks upload
+    # or
+    knife cookbook upload datadog
+    ```
+4. After uploading, add the cookbook to your node's `run_list` or `role`:
+    ```text
+    "run_list": [
+      "recipe[datadog::dd-agent]"
+    ]
+    ```
+5. Wait for the next scheduled `chef-client` run or trigger it manually.
+
+
 ### Datadog attributes
 
 The following methods are available for adding your [Datadog API and application keys][4]:
