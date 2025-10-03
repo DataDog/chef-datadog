@@ -28,6 +28,17 @@ package_action = node['datadog']['agent_package_action']
 package_retries = node['datadog']['agent_package_retries']
 package_retry_delay = node['datadog']['agent_package_retry_delay']
 
+# Remove Python bytecode cache dir prior to installing/upgrading Agent (Linux only)
+directory '/opt/datadog-agent/python-scripts/__pycache__' do
+  action :delete
+  recursive true
+  ignore_failure true
+  only_if do
+    platform_family?('debian', 'rhel', 'fedora', 'amazon', 'suse') &&
+      ![:remove, :purge].include?((package_action.is_a?(Symbol) ? package_action : package_action.to_sym))
+  end
+end
+
 # Install the regular package
 case node['platform_family']
 when 'debian'
