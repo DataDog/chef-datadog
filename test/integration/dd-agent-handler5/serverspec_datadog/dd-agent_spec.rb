@@ -27,6 +27,22 @@ end
 describe command('/etc/init.d/datadog-agent info | grep -v "API Key is invalid" | grep -v "not sure how to interpret line"'), :if => os[:family] != 'windows' do
   its(:exit_status) { should eq 0 }
   its(:stdout) { should contain 'OK' }
+  
+  it 'dumps full output for debugging before ERROR check' do
+    output = subject.stdout
+    puts "\n" + "="*80
+    puts "FULL DATADOG AGENT INFO OUTPUT (#{output.length} chars)"
+    puts "="*80
+    puts output
+    puts "="*80
+    if output.include?('ERROR')
+      puts "\nERROR LINES FOUND:"
+      output.lines.each_with_index do |line, idx|
+        puts "[#{idx + 1}] #{line}" if line.upcase.include?('ERROR')
+      end
+    end
+  end
+  
   its(:stdout) { should_not contain 'ERROR' }
 end
 
