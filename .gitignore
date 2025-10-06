@@ -40,3 +40,6 @@ coverage/
 # Local environment managaers
 .env
 .envrc
+
+# JetBrains IDEs
+.idea
