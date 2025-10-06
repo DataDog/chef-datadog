@@ -1,6 +1,13 @@
 Changes
 =======
 
+# 4.22.3 / 2025-10-06
+
+* [MISC] Bump nokogiri from 1.15.7 to 1.18.8 [#953]
+* [MISC] Remove pycache during upgrades [#959]
+* [MISC] Fix for Agent 5 `kitchen-docker-tests` [#961]
+* [MISC] Documentation changes [#957], [#958]
+
 # 4.22.2 / 2025-04-17
 * [MISC] Clean-up activesupport removal [#951]
 * [MISC] Drop activesupport dependency [#950]
@@ -1110,6 +1117,11 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#946]: https://github.com/DataDog/chef-datadog/issues/946
 [#950]: https://github.com/DataDog/chef-datadog/issues/950
 [#951]: https://github.com/DataDog/chef-datadog/issues/951
+[#953]: https://github.com/DataDog/chef-datadog/issues/953
+[#957]: https://github.com/DataDog/chef-datadog/issues/957
+[#958]: https://github.com/DataDog/chef-datadog/issues/958
+[#959]: https://github.com/DataDog/chef-datadog/issues/959
+[#961]: https://github.com/DataDog/chef-datadog/issues/961
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@Azraeht]: https://github.com/Azraeht
