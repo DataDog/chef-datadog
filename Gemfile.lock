@@ -221,7 +221,7 @@ GEM
     proxifier (1.0.3)
     public_suffix (4.0.6)
     racc (1.8.1)
-    rack (2.2.18)
+    rack (2.2.21)
     rainbow (3.1.1)
     rake (13.2.1)
     rbnacl (4.0.2)
@@ -379,6 +379,7 @@ DEPENDENCIES
   json_spec (~> 1.1.4)
   kitchen-docker (~> 2.3.0)
   kitchen-vagrant
+  rack (>= 2.2.20)
   rake
   rbnacl (~> 4.0.2)
   rbnacl-libsodium (~> 1.0.16)
@@ -389,4 +390,4 @@ DEPENDENCIES
   yaml
 
 BUNDLED WITH
-   2.3.26
+   2.3.27
