@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 chef_version = ENV.fetch('CHEF_VERSION', '14.10.9')
 
 gem 'rake'
+gem 'rack', '>= 2.2.20'
 gem 'rspec-expectations', '< 3.12.4'
 gem 'chef', "= #{chef_version}"
 gem 'cucumber-core', '~> 3.2.1'
