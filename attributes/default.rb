@@ -40,7 +40,7 @@ default['datadog']['agent_major_version'] = nil # nil to autodetect based on 'ag
 # Example:
 # default['datadog']['agent_version'] = '7.16.0'
 default['datadog']['agent_version'] = nil # nil to install latest
-# Agent flavor to install, acceptable values are "datadog-agent", "datadog-iot-agent"
+# Agent flavor to install, acceptable values are "datadog-agent", "datadog-iot-agent", "datadog-fips-agent"
 default['datadog']['agent_flavor'] = 'datadog-agent' # "datadog-agent" to install the datadog-agent package
 default['datadog']['fips_proxy_version'] = nil
 # Datadog FIPS proxy package name:

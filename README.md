@@ -178,7 +178,7 @@ By default, the current major version of this cookbook installs Agent v7. The fo
 | `agent_major_version`  | Pin the major version of the Agent to 5, 6, or 7 (default).                                                                                                                         |
 | `agent_version`        | Pin a specific Agent version (recommended).                                                                                                                                         |
 | `agent_package_action` | (Linux only) Defaults to `'install'` (recommended), `'upgrade'` to get automatic Agent updates (not recommended, use the default and change the pinned `agent_version` to upgrade). |
-| `agent_flavor` | (Linux only) Defaults to `'datadog-agent'` to install the datadog-agent, can be set to `'datadog-iot-agent'` to install the IOT agent. |
+| `agent_flavor` | (Linux only) Defaults to `'datadog-agent'` to install the datadog-agent, can be set to `'datadog-iot-agent'` to install the IOT agent and `'datadog-fips-agent'` |
 
 See the sample [attributes/default.rb][1] for your cookbook version for all available attributes.
 
