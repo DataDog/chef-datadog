@@ -30,13 +30,11 @@ end
 module Windows
   class Helper
     def clean_user(context)
-      resource = context.resource_collection.lookup('windows_env[DDAGENTUSER_NAME]')
-      resource.run_action(:delete)
+      context.node.run_state['datadog']['windows_ddagentuser_name'] = nil
     end
 
     def clean_password(context)
-      resource = context.resource_collection.lookup('windows_env[DDAGENTUSER_PASSWORD]')
-      resource.run_action(:delete)
+      context.node.run_state['datadog']['windows_ddagentuser_password'] = nil
     end
 
     def unmute_host(context)
@@ -55,9 +53,12 @@ if ddagentuser_name
       Windows::Helper.new.clean_user(Chef.run_context)
     end
   end
-  windows_env 'DDAGENTUSER_NAME' do
-    value ddagentuser_name
+  ruby_block 'Store Datadog User Name' do
+    block do
+      node.run_state['datadog']['windows_ddagentuser_name'] = ddagentuser_name
+    end
     sensitive true
+    action :run
   end
 end
 
@@ -67,9 +68,12 @@ if ddagentuser_password
       Windows::Helper.new.clean_password(Chef.run_context)
     end
   end
-  windows_env 'DDAGENTUSER_PASSWORD' do
-    value ddagentuser_password
+  ruby_block 'Store Datadog User Password' do
+    block do
+      node.run_state['datadog']['windows_ddagentuser_password'] = ddagentuser_password
+    end
     sensitive true
+    action :run
   end
 end
 
@@ -247,19 +251,5 @@ windows_package 'Datadog Agent' do # ~FC009
     Chef::Log.warn("\n#{fix_message}\nContinuing without installing Datadog Agent.") if unsafe
 
     unsafe
-  end
-end
-
-if ddagentuser_name
-  windows_env 'DDAGENTUSER_NAME' do
-    action :delete
-    sensitive true
-  end
-end
-
-if ddagentuser_password
-  windows_env 'DDAGENTUSER_PASSWORD' do
-    action :delete
-    sensitive true
   end
 end
