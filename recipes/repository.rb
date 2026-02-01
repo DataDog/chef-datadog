@@ -156,6 +156,15 @@ when 'debian'
     Chef::Log.error("agent_major_version '#{agent_major_version}' not supported.")
   end
 
+
+  apt_gpg_keys.each do |key|
+    key_short = key[-8..-1] # last 8 chars, since some versions of apt-key add dashes between key sections
+    execute "apt-key import key #{key_short}" do
+      command "apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 #{key}"
+      not_if "apt-key adv --list-public-keys --with-fingerprint --with-colons | grep #{key_short} | grep pub"
+    end
+  end
+
   retries = node['datadog']['aptrepo_retries']
 
   # Add APT repositories
