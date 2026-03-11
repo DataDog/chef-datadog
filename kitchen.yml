@@ -75,6 +75,17 @@ suites:
       api_key: somenonnullapikeythats32charlong
       application_key: alsonotnil
 
+- name: dd-fips-agent
+  run_list:
+    - recipe[datadog::dd-agent]
+  attributes:
+    datadog: &DATADOG
+      api_key: somenonnullapikeythats32charlong
+      application_key: alsonotnil
+      install_info_enabled: true
+      agent_flavor: datadog-fips-agent
+      agent_version: '7.20.0~rc.3'
+
 - name: dd-agent-iot
   run_list:
     - recipe[datadog::dd-agent]

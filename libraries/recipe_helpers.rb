@@ -18,6 +18,7 @@ class Chef
     class << self
       ACCEPTABLE_AGENT_FLAVORS = %w[
         datadog-agent
+        datadog-fips-agent
         datadog-iot-agent
       ].freeze
 
