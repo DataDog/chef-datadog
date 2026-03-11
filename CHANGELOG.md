@@ -1,7 +1,13 @@
 Changes
 =======
 
-# 4.22.3 / 2026-01-21
+# 4.22.5 / 2026-03-11
+* [MISC] Bump rack 2.2.21 to 2.2.22 [#968]
+* [MISC] Bump nokogiri 1.18.9 to 1.19.1 [#968]
+* [MISC] Bump faraday 1.0.1 to 1.10.5 [#968]
+* [MISC] Bump thor 1.0.1 to 1.5.0 [#968]
+
+# 4.22.4 / 2026-01-21
 * [MISC] Bump rack to 2.2.20 [#966]
 * [MISC] Bump nokogiri from 1.18.8 to 1.18.9, rexml from 3.3.9 to 3.4.2, rack from 2.2.13 to 2.2.18 [#962]
 
@@ -1128,6 +1134,7 @@ A fix has gone in to `apt` 2.1.0 that relaxes this condition, and plays well wit
 [#961]: https://github.com/DataDog/chef-datadog/issues/961
 [#962]: https://github.com/DataDog/chef-datadog/issues/962
 [#966]: https://github.com/DataDog/chef-datadog/issues/966
+[#968]: https://github.com/DataDog/chef-datadog/issues/968
 [@ABrehm264]: https://github.com/ABrehm264
 [@AlexBevan]: https://github.com/AlexBevan
 [@Azraeht]: https://github.com/Azraeht
