@@ -44,7 +44,7 @@ action :install do
     user      'dd-agent' unless platform_family?('windows')
 
     not_if {
-      output = shell_out("#{agent_exe_filepath} integration show -q #{new_resource.property_name}").stdout
+      output = shell_out("\"#{agent_exe_filepath}\" integration show -q #{new_resource.property_name}").stdout 
       output.strip == new_resource.version
     }
     notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
@@ -73,9 +73,8 @@ end
 
 def agent_exe_filepath
   if platform_family?('windows')
-    # The Windows Agent will always be setup in this path if the _install-windows.rb
-    # has been used to install it.
-    "C:\\Program\ Files\\Datadog\\Datadog\ Agent\\embedded\\agent.exe"
+    # This will use the definition of the Service in the machine registry
+    registry_get_values('HKLM\\SYSTEM\\CurrentControlSet\\Services\\DatadogAgent').select { |v| v[:name] == "ImagePath" }.first[:data].gsub('"', '').sub(/\.exe/i, '')
   else
     '/opt/datadog-agent/bin/agent/agent'
   end
