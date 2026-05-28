@@ -113,5 +113,4 @@ describe 'datadog_integration' do
     end
     it { is_expected.to run_execute('integration install').with(command: '/opt/datadog-agent/bin/agent/agent integration install --local-wheel /path/to/foo-bar.whl') }
   end
-
 end

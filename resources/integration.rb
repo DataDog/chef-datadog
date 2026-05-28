@@ -41,12 +41,12 @@ action :install do
 
   
   install_params = if new_resource.local_wheel
-    # The Agent cannot perform any verification on local wheels.
-    "--local-wheel #{new_resource.local_wheel}"
-  else
-    # Space at the end of '--third-party ' is intentional, so that if --third-party is not specified, no additional space is added to the command line
-    "#{'--third-party ' if new_resource.third_party}#{new_resource.property_name}==#{new_resource.version}"
-  end
+                     # The Agent cannot perform any verification on local wheels.
+                     "--local-wheel #{new_resource.local_wheel}"
+                   else
+                     # Space at the end of '--third-party ' is intentional, so that if --third-party is not specified, no additional space is added to the command line
+                     "#{'--third-party ' if new_resource.third_party}#{new_resource.property_name}==#{new_resource.version}"
+                   end
 
   execute 'integration install' do
     command   "#{agent_exe_filepath} integration install #{install_params}"
