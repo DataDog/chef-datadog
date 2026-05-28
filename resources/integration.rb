@@ -40,11 +40,11 @@ action :install do
 
   execute 'integration install' do
     # Space at the end of '--third-party ' is intentional, so that if --third-party is not specified, no additional space is added to the command line
-    command   "\"#{agent_exe_filepath}\" integration install #{'--third-party ' if new_resource.third_party}#{new_resource.property_name}==#{new_resource.version}"
+    command   "#{agent_exe_filepath} integration install #{'--third-party ' if new_resource.third_party}#{new_resource.property_name}==#{new_resource.version}"
     user      'dd-agent' unless platform_family?('windows')
 
     not_if {
-      output = shell_out("\"#{agent_exe_filepath}\" integration show -q #{new_resource.property_name}").stdout
+      output = shell_out("#{agent_exe_filepath} integration show -q #{new_resource.property_name}").stdout
       output.strip == new_resource.version
     }
     notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
@@ -60,7 +60,7 @@ action :remove do
   Chef::Log.debug("Removing integration #{new_resource.property_name}")
 
   execute 'integration remove' do
-    command   "\"#{agent_exe_filepath}\" integration remove #{new_resource.property_name}"
+    command   "#{agent_exe_filepath} integration remove #{new_resource.property_name}"
     user      'dd-agent' unless platform_family?('windows')
 
     not_if {
@@ -74,7 +74,7 @@ end
 def agent_exe_filepath
   if platform_family?('windows')
     # This will use the definition of the Service in the machine registry
-    registry_get_values('HKLM\\SYSTEM\\CurrentControlSet\\Services\\DatadogAgent').select { |v| v[:name] == 'ImagePath' }.first[:data].gsub('"', '')
+    registry_get_values('HKLM\\SYSTEM\\CurrentControlSet\\Services\\DatadogAgent').select { |v| v[:name] == 'ImagePath' }.first[:data]
   else
     '/opt/datadog-agent/bin/agent/agent'
   end
