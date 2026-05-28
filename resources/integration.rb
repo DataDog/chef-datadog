@@ -39,7 +39,6 @@ action :install do
 
   Chef::Log.debug("Getting integration #{new_resource.property_name}")
 
-
   install_params = if new_resource.local_wheel
                      # The Agent cannot perform any verification on local wheels.
                      "--local-wheel #{new_resource.local_wheel}"
