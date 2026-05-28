@@ -29,7 +29,7 @@ describe 'datadog_integration' do
         version '1.0.0'
       end
     end
-    it { is_expected.to run_execute('integration install').with(command: '"/opt/datadog-agent/bin/agent/agent" integration install datadog-foobar==1.0.0') }
+    it { is_expected.to run_execute('integration install').with(command: '/opt/datadog-agent/bin/agent/agent integration install datadog-foobar==1.0.0') }
   end
 
   context 'with third party integration that is not installed' do
@@ -42,7 +42,7 @@ describe 'datadog_integration' do
         third_party true
       end
     end
-    it { is_expected.to run_execute('integration install').with(command: '"/opt/datadog-agent/bin/agent/agent" integration install --third-party foo-bar==1.0.0') }
+    it { is_expected.to run_execute('integration install').with(command: '/opt/datadog-agent/bin/agent/agent integration install --third-party foo-bar==1.0.0') }
   end
 
   context 'with third party integration that is already installed' do
@@ -70,7 +70,7 @@ describe 'datadog_integration' do
         third_party true
       end
     end
-    it { is_expected.to run_execute('integration install').with(command: '"/opt/datadog-agent/bin/agent/agent" integration install --third-party foo-bar==1.0.0') }
+    it { is_expected.to run_execute('integration install').with(command: '/opt/datadog-agent/bin/agent/agent integration install --third-party foo-bar==1.0.0') }
   end
 
   context 'with local wheel file integration that is not installed' do
@@ -83,7 +83,7 @@ describe 'datadog_integration' do
         local_wheel '/path/to/foo-bar.whl'
       end
     end
-    it { is_expected.to run_execute('integration install').with(command: '"/opt/datadog-agent/bin/agent/agent" integration install --local-wheel /path/to/foo-bar.whl') }
+    it { is_expected.to run_execute('integration install').with(command: '/opt/datadog-agent/bin/agent/agent integration install --local-wheel /path/to/foo-bar.whl') }
   end
 
   context 'with local wheel file integration that is already installed' do
@@ -111,7 +111,7 @@ describe 'datadog_integration' do
         local_wheel '/path/to/foo-bar.whl'
       end
     end
-    it { is_expected.to run_execute('integration install').with(command: '"/opt/datadog-agent/bin/agent/agent" integration install --local-wheel /path/to/foo-bar.whl') }
+    it { is_expected.to run_execute('integration install').with(command: '/opt/datadog-agent/bin/agent/agent integration install --local-wheel /path/to/foo-bar.whl') }
   end
 
 end
