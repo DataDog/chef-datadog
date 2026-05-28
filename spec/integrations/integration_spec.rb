@@ -76,6 +76,8 @@ describe 'datadog_integration' do
   context 'with local wheel file integration that is not installed' do
     stubs_for_resource('execute[integration install]') do |resource|
       allow(resource).to receive_shell_out('/opt/datadog-agent/bin/agent/agent integration show -q foo-bar')
+      allow(File).to receive(:exist?).and_call_original
+      allow(File).to receive(:exist?).with("/path/to/foo-bar.whl").and_return(true)
     end
     recipe do
       datadog_integration 'foo-bar' do
@@ -104,6 +106,8 @@ describe 'datadog_integration' do
     stubs_for_resource('execute[integration install]') do |resource|
       allow(resource).to receive_shell_out('/opt/datadog-agent/bin/agent/agent integration show -q foo-bar')
         .and_return(Mock::ShellCommandResult.new('0.9.0'))
+      allow(File).to receive(:exist?).and_call_original
+      allow(File).to receive(:exist?).with("/path/to/foo-bar.whl").and_return(true)
     end
     recipe do
       datadog_integration 'foo-bar' do
