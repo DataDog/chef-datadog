@@ -29,6 +29,7 @@ default_action :install
 property :property_name, String, name_property: true
 property :version, String, required: true
 property :third_party, [true, false], required: false, default: false
+property :local_wheel, String, required: false
 
 action :install do
   if Chef::Datadog.agent_major_version(node) == 5
@@ -38,9 +39,17 @@ action :install do
 
   Chef::Log.debug("Getting integration #{new_resource.property_name}")
 
-  execute 'integration install' do
+  
+  install_params = if new_resource.local_wheel
+    # The Agent cannot perform any verification on local wheels.
+    "--local-wheel #{new_resource.local_wheel}"
+  else
     # Space at the end of '--third-party ' is intentional, so that if --third-party is not specified, no additional space is added to the command line
-    command   "#{agent_exe_filepath} integration install #{'--third-party ' if new_resource.third_party}#{new_resource.property_name}==#{new_resource.version}"
+    "#{'--third-party ' if new_resource.third_party}#{new_resource.property_name}==#{new_resource.version}"
+  end
+
+  execute 'integration install' do
+    command   "#{agent_exe_filepath} integration install #{install_params}"
     user      'dd-agent' unless platform_family?('windows')
 
     not_if {
