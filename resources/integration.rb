@@ -40,6 +40,12 @@ action :install do
   Chef::Log.debug("Getting integration #{new_resource.property_name}")
 
   install_params = if new_resource.local_wheel
+                     unless ::File.exist?(new_resource.local_wheel)
+                      error_message = "The local_wheel value \"#{new_resource.local_wheel}\" file not found"
+                      Chef::Log.fatal(error_message)
+                      raise error_message
+                     end
+
                      # The Agent cannot perform any verification on local wheels.
                      "--local-wheel \"#{new_resource.local_wheel}\""
                    else
