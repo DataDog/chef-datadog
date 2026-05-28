@@ -74,7 +74,7 @@ end
 def agent_exe_filepath
   if platform_family?('windows')
     # This will use the definition of the Service in the machine registry
-    registry_get_values('HKLM\\SYSTEM\\CurrentControlSet\\Services\\DatadogAgent').select { |v| v[:name] == "ImagePath" }.first[:data].gsub('"', '').sub(/\.exe/i, '')
+    registry_get_values('HKLM\\SYSTEM\\CurrentControlSet\\Services\\DatadogAgent').select { |v| v[:name] == "ImagePath" }.first[:data].gsub('"', '')
   else
     '/opt/datadog-agent/bin/agent/agent'
   end
