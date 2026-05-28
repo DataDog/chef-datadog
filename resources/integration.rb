@@ -49,11 +49,11 @@ action :install do
   end
 
   execute 'integration install' do
-    command   "#{agent_exe_filepath} integration install #{install_params}"
+    command   "\"#{agent_exe_filepath}\" integration install #{install_params}"
     user      'dd-agent' unless platform_family?('windows')
 
     not_if {
-      output = shell_out("#{agent_exe_filepath} integration show -q #{new_resource.property_name}").stdout
+      output = shell_out("\"#{agent_exe_filepath}\" integration show -q #{new_resource.property_name}").stdout
       output.strip == new_resource.version
     }
     notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
@@ -69,11 +69,11 @@ action :remove do
   Chef::Log.debug("Removing integration #{new_resource.property_name}")
 
   execute 'integration remove' do
-    command   "#{agent_exe_filepath} integration remove #{new_resource.property_name}"
+    command   "\"#{agent_exe_filepath}\" integration remove #{new_resource.property_name}"
     user      'dd-agent' unless platform_family?('windows')
 
     not_if {
-      output = shell_out("#{agent_exe_filepath} integration show -q #{new_resource.property_name}").stdout
+      output = shell_out("\"#{agent_exe_filepath}\" integration show -q #{new_resource.property_name}").stdout
       output.strip.empty?
     }
     notifies :restart, 'service[datadog-agent]' if node['datadog']['agent_start']
