@@ -29,6 +29,7 @@ default_action :install
 property :property_name, String, name_property: true
 property :version, String, required: true
 property :third_party, [true, false], required: false, default: false
+property :local_wheel, String, required: false
 
 action :install do
   if Chef::Datadog.agent_major_version(node) == 5
@@ -38,9 +39,22 @@ action :install do
 
   Chef::Log.debug("Getting integration #{new_resource.property_name}")
 
+  install_params = if new_resource.local_wheel
+                     unless ::File.exist?(new_resource.local_wheel)
+                       error_message = "The local_wheel value \"#{new_resource.local_wheel}\" file not found"
+                       Chef::Log.fatal(error_message)
+                       raise error_message
+                     end
+
+                     # The Agent cannot perform any verification on local wheels.
+                     "--local-wheel \"#{new_resource.local_wheel}\""
+                   else
+                     # Space at the end of '--third-party ' is intentional, so that if --third-party is not specified, no additional space is added to the command line
+                     "#{'--third-party ' if new_resource.third_party}#{new_resource.property_name}==#{new_resource.version}"
+                   end
+
   execute 'integration install' do
-    # Space at the end of '--third-party ' is intentional, so that if --third-party is not specified, no additional space is added to the command line
-    command   "\"#{agent_exe_filepath}\" integration install #{'--third-party ' if new_resource.third_party}#{new_resource.property_name}==#{new_resource.version}"
+    command   "#{agent_exe_filepath} integration install #{install_params}"
     user      'dd-agent' unless platform_family?('windows')
 
     not_if {
@@ -60,7 +74,7 @@ action :remove do
   Chef::Log.debug("Removing integration #{new_resource.property_name}")
 
   execute 'integration remove' do
-    command   "\"#{agent_exe_filepath}\" integration remove #{new_resource.property_name}"
+    command   "#{agent_exe_filepath} integration remove #{new_resource.property_name}"
     user      'dd-agent' unless platform_family?('windows')
 
     not_if {
@@ -73,9 +87,8 @@ end
 
 def agent_exe_filepath
   if platform_family?('windows')
-    # The Windows Agent will always be setup in this path if the _install-windows.rb
-    # has been used to install it.
-    "C:\\Program\ Files\\Datadog\\Datadog\ Agent\\embedded\\agent.exe"
+    # This will use the definition of the Service in the machine registry, which is wrapped in quotes for the space in path issue.
+    registry_get_values('HKLM\\SYSTEM\\CurrentControlSet\\Services\\DatadogAgent').select { |v| v[:name] == 'ImagePath' }.first[:data]
   else
     '/opt/datadog-agent/bin/agent/agent'
   end
