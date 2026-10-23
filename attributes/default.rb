@@ -166,6 +166,7 @@ yum_protocol =
 # to pin the version you're installing with node['datadog']['agent_version']
 default['datadog']['installrepo'] = true
 default['datadog']['aptrepo_retries'] = 4
+default['datadog']['rpm_import_retries'] = 4
 # When repo_gpgcheck set to nil, it will get turned on in the code when
 # not running on RHEL/CentOS <= 5 and not providing custom yumrepo.
 # You can set it to true/false explicitly to override this behaviour.
